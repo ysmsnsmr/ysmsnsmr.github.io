@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ポートフォリオサイト</title>
+  <!-- SEO対策用 metaタグ -->
+  <meta name="description" content="ようこそ、私のポートフォリオへ。">
+  <meta name="keywords" content="ポートフォリオ, 就職, 転職, ブランディング">
+  <!-- Bootstrap CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- カスタムCSS -->
+  <style>
+    body {
+      font-family: "Noto Sans JP", sans-serif;
+      color: #333;
+    }
+    header {
+      background-color: #002E5D; /* ネイビー */
+      color: #fff;
+    }
+    .hero {
+      background-color: #F4F4F4;
+      padding: 100px 0;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 1.2rem;
+    }
+    .section-title {
+      margin: 40px 0 20px;
+    }
+    footer {
+      background-color: #002E5D;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+      <h1 class="h3 mb-0">My Portfolio</h1>
+      <nav>
+        <ul class="nav">
+          <li class="nav-item"><a class="nav-link text-white" href="#home">ホーム</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="#profile">プロフィール</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="#blog">ブログ</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="#contact">問い合わせ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ヒーローセクション -->
+  <section id="home" class="hero">
+    <div class="container">
+      <h1>ようこそ、私のポートフォリオへ</h1>
+      <p></p>
+    </div>
+  </section>
+
+  <!-- プロフィールセクション -->
+  <section id="profile" class="py-5">
+    <div class="container">
+      <h2 class="section-title text-center">プロフィール</h2>
+      <div class="row">
+        <div class="col-md-4 text-center">
+          <img src="profile.jpg" alt="プロフィール写真" class="img-fluid rounded-circle mb-3">
+        </div>
+        <div class="col-md-8">
+          <p>ここに自己紹介や経歴、スキルなどの情報を記載します。信頼感と実績をアピールする内容に仕上げましょう。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ブログセクション -->
+  <section id="blog" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="section-title text-center">ブログ</h2>
+      <div class="row">
+        <!-- ブログ記事カード1 -->
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <img src="blog1.jpg" class="card-img-top" alt="ブログ記事1">
+            <div class="card-body">
+              <h5 class="card-title">記事タイトル1</h5>
+              <p class="card-text">記事の概要をここに記載します。</p>
+              <a href="#" class="btn btn-primary">続きを読む</a>
+            </div>
+          </div>
+        </div>
+        <!-- ブログ記事カード2 -->
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <img src="blog2.jpg" class="card-img-top" alt="ブログ記事2">
+            <div class="card-body">
+              <h5 class="card-title">記事タイトル2</h5>
+              <p class="card-text">記事の概要をここに記載します。</p>
+              <a href="#" class="btn btn-primary">続きを読む</a>
+            </div>
+          </div>
+        </div>
+        <!-- ブログ記事カード3 -->
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <img src="blog3.jpg" class="card-img-top" alt="ブログ記事3">
+            <div class="card-body">
+              <h5 class="card-title">記事タイトル3</h5>
+              <p class="card-text">記事の概要をここに記載します。</p>
+              <a href="#" class="btn btn-primary">続きを読む</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 問い合わせセクション -->
+  <section id="contact" class="py-5">
+    <div class="container">
+      <h2 class="section-title text-center">問い合わせ</h2>
+      <form>
+        <div class="mb-3">
+          <label for="name" class="form-label">お名前</label>
+          <input type="text" class="form-control" id="name" placeholder="例: 山田太郎">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">メールアドレス</label>
+          <input type="email" class="form-control" id="email" placeholder="example@example.com">
+        </div>
+        <div class="mb-3">
+          <label for="message" class="form-label">メッセージ</label>
+          <textarea class="form-control" id="message" rows="5"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">送信</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- フッター -->
+  <footer>
+    <div class="container">
+      <p class="mb-0">© 2025 My Portfolio. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS (Popper.js付き) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
