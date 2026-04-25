@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Starbreaker</title>
+  <style>
+    :root {
+      --bg-top: #07111f;
+      --bg-bottom: #02050b;
+      --panel: rgba(7, 17, 31, 0.72);
+      --line: rgba(130, 214, 255, 0.26);
+      --text: #eff9ff;
+      --accent: #5de4c7;
+      --accent-2: #ffcf5a;
+      --danger: #ff6f91;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: "Trebuchet MS", "Hiragino Kaku Gothic ProN", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(79, 172, 254, 0.18), transparent 30%),
+        radial-gradient(circle at 20% 30%, rgba(93, 228, 199, 0.12), transparent 24%),
+        linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+      overflow: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    body::before {
+      background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.7) 0 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(93, 228, 199, 0.4) 0 1px, transparent 1.5px);
+      background-size: 140px 140px, 210px 210px;
+      background-position: 0 0, 45px 60px;
+      opacity: 0.34;
+      animation: drift 18s linear infinite;
+    }
+
+    body::after {
+      background:
+        linear-gradient(120deg, transparent 0 46%, rgba(255, 255, 255, 0.04) 50%, transparent 54%);
+      transform: translateX(-100%);
+      animation: sheen 8s ease-in-out infinite;
+    }
+
+    @keyframes drift {
+      from { transform: translateY(0); }
+      to { transform: translateY(140px); }
+    }
+
+    @keyframes sheen {
+      0%, 75%, 100% { transform: translateX(-100%); }
+      88% { transform: translateX(100%); }
+    }
+
+    .shell {
+      width: min(92vw, 920px);
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(10, 21, 39, 0.82), rgba(5, 11, 22, 0.9));
+      box-shadow:
+        0 28px 80px rgba(0, 0, 0, 0.42),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
+    }
+
+    .hud {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      margin: 4px 0 0;
+      color: rgba(239, 249, 255, 0.72);
+      font-size: 0.95rem;
+    }
+
+    .stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      min-width: 112px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: var(--panel);
+    }
+
+    .chip-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.62;
+    }
+
+    .chip-value {
+      display: block;
+      margin-top: 2px;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .arena {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(130, 214, 255, 0.2);
+      background: radial-gradient(circle at top, rgba(17, 44, 80, 0.6), rgba(4, 10, 20, 0.96) 62%);
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 3;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: linear-gradient(180deg, rgba(3, 9, 18, 0.2), rgba(3, 9, 18, 0.82));
+      text-align: center;
+      transition: opacity 180ms ease;
+    }
+
+    .overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .panel {
+      width: min(100%, 420px);
+      padding: 26px 24px;
+      border-radius: 24px;
+      background: rgba(4, 12, 24, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
+    }
+
+    .panel h2 {
+      margin: 0 0 10px;
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    }
+
+    .panel p {
+      margin: 8px 0;
+      line-height: 1.6;
+      color: rgba(239, 249, 255, 0.8);
+    }
+
+    .panel strong {
+      color: var(--accent-2);
+    }
+
+    button {
+      margin-top: 16px;
+      padding: 13px 22px;
+      border: 0;
+      border-radius: 999px;
+      font: inherit;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #04111d;
+      background: linear-gradient(135deg, var(--accent), #7df8ff);
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(93, 228, 199, 0.28);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 32px rgba(93, 228, 199, 0.34);
+    }
+
+    .controls {
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: rgba(239, 249, 255, 0.72);
+      font-size: 0.92rem;
+    }
+
+    .controls span {
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: 96vw;
+        padding: 16px;
+        border-radius: 22px;
+      }
+
+      .chip {
+        min-width: 96px;
+      }
+
+      .controls {
+        font-size: 0.84rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hud">
+      <div>
+        <h1 class="title">Starbreaker</h1>
+        <p class="subtitle">きのこ軍団を撃ち抜いて、できるだけ長く生き残ろう。</p>
+      </div>
+      <div class="stats">
+        <div class="chip">
+          <span class="chip-label">Score</span>
+          <span class="chip-value" id="score">0</span>
+        </div>
+        <div class="chip">
+          <span class="chip-label">Lives</span>
+          <span class="chip-value" id="lives">3</span>
+        </div>
+        <div class="chip">
+          <span class="chip-label">Level</span>
+          <span class="chip-value" id="level">1</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="arena">
+      <canvas id="game" width="800" height="600" aria-label="シューティングゲーム"></canvas>
+      <div class="overlay" id="overlay">
+        <div class="panel">
+          <h2 id="overlay-title">Mission Start</h2>
+          <p id="overlay-text">左右移動で飛来するきのこをかわしながらショットを連射。敵や敵弾に3回当たるとゲームオーバーです。</p>
+          <p><strong>操作:</strong> 矢印キー または A/D で移動、スペースで開始・再開</p>
+          <button id="start-button" type="button">Play</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="controls">
+      <span>Move: `←` `→` or `A` `D`</span>
+      <span>Shot: auto fire</span>
+      <span>Restart: `Space` after game over</span>
+    </section>
+  </main>
+
+  <script>
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    const overlay = document.getElementById("overlay");
+    const overlayTitle = document.getElementById("overlay-title");
+    const overlayText = document.getElementById("overlay-text");
+    const startButton = document.getElementById("start-button");
+    const scoreEl = document.getElementById("score");
+    const livesEl = document.getElementById("lives");
+    const levelEl = document.getElementById("level");
+
+    const state = {
+      running: false,
+      gameOver: false,
+      score: 0,
+      lives: 3,
+      level: 1,
+      keys: new Set(),
+      stars: [],
+      bullets: [],
+      enemies: [],
+      enemyBullets: [],
+      flashes: [],
+      enemySpawnTimer: 0,
+      elapsed: 0,
+      player: null,
+      lastTime: 0
+    };
+
+    function resetGame() {
+      state.running = false;
+      state.gameOver = false;
+      state.score = 0;
+      state.lives = 3;
+      state.level = 1;
+      state.elapsed = 0;
+      state.enemySpawnTimer = 0;
+      state.bullets = [];
+      state.enemies = [];
+      state.enemyBullets = [];
+      state.flashes = [];
+      state.player = {
+        x: canvas.width / 2,
+        y: canvas.height - 82,
+        radius: 18,
+        speed: 360,
+        cooldown: 0
+      };
+      state.stars = Array.from({ length: 70 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2 + 1,
+        speed: Math.random() * 40 + 20
+      }));
+      syncHud();
+      showOverlay("Mission Start", "左右移動で飛来するきのこを撃ち落とそう。スペースまたはボタンで開始。", true);
+    }
+
+    function syncHud() {
+      scoreEl.textContent = state.score.toString();
+      livesEl.textContent = state.lives.toString();
+      levelEl.textContent = state.level.toString();
+    }
+
+    function showOverlay(title, text, showButton) {
+      overlayTitle.textContent = title;
+      overlayText.textContent = text;
+      startButton.style.display = showButton ? "inline-flex" : "none";
+      overlay.classList.remove("hidden");
+    }
+
+    function hideOverlay() {
+      overlay.classList.add("hidden");
+    }
+
+    function startGame() {
+      if (!state.gameOver) {
+        state.running = true;
+        hideOverlay();
+      } else {
+        resetGame();
+      }
+    }
+
+    function spawnEnemy() {
+      const spread = Math.max(120, 240 - state.level * 8);
+      const x = Math.random() * (canvas.width - 80) + 40;
+      const typeRoll = Math.random();
+      const elite = typeRoll > 0.82;
+      const enemy = {
+        x,
+        y: -30,
+        radius: elite ? 24 : 18,
+        speed: (elite ? 92 : 136) + state.level * 12,
+        hp: elite ? 3 : 1,
+        drift: (Math.random() - 0.5) * 70,
+        fireRate: Math.random() * 1.6 + 1.4,
+        fireTimer: Math.random() * 1.2,
+        points: elite ? 35 : 10,
+        capColor: elite ? "#ffcf5a" : "#ff6f91",
+        stemColor: elite ? "#fff1c2" : "#f4ead2",
+        spotColor: elite ? "#ff8d57" : "#fff5ee",
+        isElite: elite
+      };
+      enemy.moveBand = spread;
+      state.enemies.push(enemy);
+    }
+
+    function firePlayerBullet() {
+      const player = state.player;
+      state.bullets.push({
+        x: player.x,
+        y: player.y - 18,
+        radius: 4,
+        speed: 520
+      });
+    }
+
+    function fireEnemyBullet(enemy) {
+      state.enemyBullets.push({
+        x: enemy.x,
+        y: enemy.y + enemy.radius,
+        radius: 5,
+        vx: (state.player.x - enemy.x) * 0.22,
+        vy: 230 + state.level * 18
+      });
+    }
+
+    function addFlash(x, y, color) {
+      state.flashes.push({
+        x,
+        y,
+        radius: 10,
+        life: 0.35,
+        color
+      });
+    }
+
+    function hitPlayer() {
+      if (state.gameOver) return;
+      state.lives -= 1;
+      addFlash(state.player.x, state.player.y, "#7df8ff");
+      syncHud();
+      if (state.lives <= 0) {
+        state.running = false;
+        state.gameOver = true;
+        showOverlay("Game Over", `最終スコア: ${state.score}。スペースかボタンで再挑戦できます。`, true);
+      }
+    }
+
+    function update(dt) {
+      state.elapsed += dt;
+      state.level = 1 + Math.floor(state.elapsed / 18);
+
+      for (const star of state.stars) {
+        star.y += star.speed * dt;
+        if (star.y > canvas.height) {
+          star.y = -4;
+          star.x = Math.random() * canvas.width;
+        }
+      }
+
+      if (!state.running) {
+        syncHud();
+        return;
+      }
+
+      const player = state.player;
+      const movingLeft = state.keys.has("ArrowLeft") || state.keys.has("a") || state.keys.has("A");
+      const movingRight = state.keys.has("ArrowRight") || state.keys.has("d") || state.keys.has("D");
+
+      if (movingLeft) player.x -= player.speed * dt;
+      if (movingRight) player.x += player.speed * dt;
+      player.x = Math.max(player.radius + 10, Math.min(canvas.width - player.radius - 10, player.x));
+
+      player.cooldown -= dt;
+      if (player.cooldown <= 0) {
+        firePlayerBullet();
+        player.cooldown = 0.18;
+      }
+
+      state.enemySpawnTimer -= dt;
+      if (state.enemySpawnTimer <= 0) {
+        spawnEnemy();
+        state.enemySpawnTimer = Math.max(0.28, 1.1 - state.level * 0.05);
+      }
+
+      for (const bullet of state.bullets) {
+        bullet.y -= bullet.speed * dt;
+      }
+      state.bullets = state.bullets.filter((bullet) => bullet.y > -20);
+
+      for (const enemy of state.enemies) {
+        enemy.y += enemy.speed * dt;
+        enemy.x += Math.sin(state.elapsed * 2 + enemy.y / enemy.moveBand) * enemy.drift * dt;
+        enemy.fireTimer -= dt;
+        if (enemy.fireTimer <= 0) {
+          fireEnemyBullet(enemy);
+          enemy.fireTimer = enemy.fireRate;
+        }
+      }
+
+      for (const bullet of state.enemyBullets) {
+        bullet.x += bullet.vx * dt;
+        bullet.y += bullet.vy * dt;
+      }
+      state.enemyBullets = state.enemyBullets.filter((bullet) => bullet.y < canvas.height + 30);
+
+      for (const flash of state.flashes) {
+        flash.life -= dt;
+        flash.radius += 85 * dt;
+      }
+      state.flashes = state.flashes.filter((flash) => flash.life > 0);
+
+      for (const bullet of state.bullets) {
+        for (const enemy of state.enemies) {
+          if (distance(bullet, enemy) < bullet.radius + enemy.radius) {
+            bullet.hit = true;
+            enemy.hp -= 1;
+            addFlash(bullet.x, bullet.y, enemy.capColor);
+            if (enemy.hp <= 0) {
+              enemy.dead = true;
+              state.score += enemy.points;
+            }
+          }
+        }
+      }
+
+      for (const bullet of state.enemyBullets) {
+        if (distance(bullet, player) < bullet.radius + player.radius) {
+          bullet.hit = true;
+          hitPlayer();
+        }
+      }
+
+      for (const enemy of state.enemies) {
+        if (distance(enemy, player) < enemy.radius + player.radius) {
+          enemy.dead = true;
+          hitPlayer();
+        } else if (enemy.y > canvas.height + 40) {
+          enemy.dead = true;
+          state.score = Math.max(0, state.score - 5);
+        }
+      }
+
+      state.bullets = state.bullets.filter((bullet) => !bullet.hit);
+      state.enemyBullets = state.enemyBullets.filter((bullet) => !bullet.hit);
+      state.enemies = state.enemies.filter((enemy) => !enemy.dead);
+
+      syncHud();
+    }
+
+    function distance(a, b) {
+      const dx = a.x - b.x;
+      const dy = a.y - b.y;
+      return Math.hypot(dx, dy);
+    }
+
+    function drawBackground() {
+      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      gradient.addColorStop(0, "#102745");
+      gradient.addColorStop(1, "#030913");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (const star of state.stars) {
+        ctx.fillStyle = "rgba(255,255,255,0.8)";
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function drawPlayer() {
+      const { player } = state;
+      ctx.save();
+      ctx.translate(player.x, player.y);
+
+      ctx.fillStyle = "#5de4c7";
+      ctx.beginPath();
+      ctx.moveTo(0, -24);
+      ctx.lineTo(18, 18);
+      ctx.lineTo(0, 10);
+      ctx.lineTo(-18, 18);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = "#c8f7ff";
+      ctx.beginPath();
+      ctx.moveTo(0, -12);
+      ctx.lineTo(8, 10);
+      ctx.lineTo(-8, 10);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = "rgba(125, 248, 255, 0.4)";
+      ctx.beginPath();
+      ctx.ellipse(0, 18, 16, 8, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function drawEnemies() {
+      for (const enemy of state.enemies) {
+        ctx.save();
+        ctx.translate(enemy.x, enemy.y);
+
+        ctx.fillStyle = enemy.stemColor;
+        ctx.beginPath();
+        ctx.roundRect(
+          -enemy.radius * 0.25,
+          -enemy.radius * 0.05,
+          enemy.radius * 0.5,
+          enemy.radius * 1.15,
+          enemy.radius * 0.18
+        );
+        ctx.fill();
+
+        ctx.fillStyle = enemy.capColor;
+        ctx.beginPath();
+        ctx.moveTo(-enemy.radius * 1.15, -enemy.radius * 0.1);
+        ctx.quadraticCurveTo(0, -enemy.radius * 1.3, enemy.radius * 1.15, -enemy.radius * 0.1);
+        ctx.quadraticCurveTo(enemy.radius * 0.9, enemy.radius * 0.45, 0, enemy.radius * 0.32);
+        ctx.quadraticCurveTo(-enemy.radius * 0.9, enemy.radius * 0.45, -enemy.radius * 1.15, -enemy.radius * 0.1);
+        ctx.fill();
+
+        ctx.fillStyle = enemy.spotColor;
+        const spots = enemy.isElite
+          ? [
+              { x: -enemy.radius * 0.45, y: -enemy.radius * 0.38, r: enemy.radius * 0.2 },
+              { x: enemy.radius * 0.15, y: -enemy.radius * 0.48, r: enemy.radius * 0.24 },
+              { x: enemy.radius * 0.52, y: -enemy.radius * 0.1, r: enemy.radius * 0.17 }
+            ]
+          : [
+              { x: -enemy.radius * 0.35, y: -enemy.radius * 0.3, r: enemy.radius * 0.17 },
+              { x: enemy.radius * 0.28, y: -enemy.radius * 0.22, r: enemy.radius * 0.14 }
+            ];
+
+        for (const spot of spots) {
+          ctx.beginPath();
+          ctx.arc(spot.x, spot.y, spot.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        ctx.fillStyle = "#20191a";
+        ctx.beginPath();
+        ctx.arc(-enemy.radius * 0.14, enemy.radius * 0.22, enemy.radius * 0.07, 0, Math.PI * 2);
+        ctx.arc(enemy.radius * 0.14, enemy.radius * 0.22, enemy.radius * 0.07, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = "rgba(32, 25, 26, 0.85)";
+        ctx.lineWidth = Math.max(1.2, enemy.radius * 0.06);
+        ctx.beginPath();
+        ctx.moveTo(-enemy.radius * 0.18, enemy.radius * 0.44);
+        ctx.quadraticCurveTo(0, enemy.radius * 0.58, enemy.radius * 0.18, enemy.radius * 0.44);
+        ctx.stroke();
+
+        ctx.restore();
+      }
+    }
+
+    function drawBullets() {
+      for (const bullet of state.bullets) {
+        ctx.fillStyle = "#7df8ff";
+        ctx.beginPath();
+        ctx.arc(bullet.x, bullet.y, bullet.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      for (const bullet of state.enemyBullets) {
+        ctx.fillStyle = "#ff8cab";
+        ctx.beginPath();
+        ctx.arc(bullet.x, bullet.y, bullet.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function drawFlashes() {
+      for (const flash of state.flashes) {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, flash.life * 2);
+        ctx.strokeStyle = flash.color;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(flash.x, flash.y, flash.radius, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    function draw() {
+      drawBackground();
+      drawBullets();
+      drawEnemies();
+      drawPlayer();
+      drawFlashes();
+    }
+
+    function frame(timestamp) {
+      if (!state.lastTime) state.lastTime = timestamp;
+      const dt = Math.min((timestamp - state.lastTime) / 1000, 0.033);
+      state.lastTime = timestamp;
+      update(dt);
+      draw();
+      requestAnimationFrame(frame);
+    }
+
+    startButton.addEventListener("click", () => {
+      if (state.gameOver) {
+        resetGame();
+      }
+      state.running = true;
+      hideOverlay();
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (["ArrowLeft", "ArrowRight", "a", "A", "d", "D", " "].includes(event.key)) {
+        event.preventDefault();
+      }
+      state.keys.add(event.key);
+      if (event.key === " ") {
+        if (state.gameOver) {
+          resetGame();
+        }
+        state.running = true;
+        hideOverlay();
+      }
+    });
+
+    window.addEventListener("keyup", (event) => {
+      state.keys.delete(event.key);
+    });
+
+    resetGame();
+    requestAnimationFrame(frame);
+  </script>
+</body>
+</html>
