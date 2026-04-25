@@ -1,0 +1,375 @@
+:root {
+  --bg-top: #fff6d6;
+  --bg-bottom: #ffd3a8;
+  --panel: rgba(255, 251, 239, 0.82);
+  --text: #4f2f1f;
+  --accent: #ff8c42;
+  --accent-deep: #e85f2a;
+  --good: #ffc83d;
+  --danger: #ff5d6c;
+  --shadow: rgba(102, 54, 23, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  font-family: "Hiragino Maru Gothic ProN", "Yu Gothic", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.95), transparent 30%),
+    linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+}
+
+.game-shell {
+  width: min(92vw, 820px);
+  display: grid;
+  gap: 18px;
+}
+
+.hud,
+.controls {
+  background: var(--panel);
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  border-radius: 24px;
+  box-shadow: 0 18px 40px var(--shadow);
+  backdrop-filter: blur(10px);
+}
+
+.hud {
+  padding: 18px 20px;
+  display: grid;
+  gap: 14px;
+}
+
+.hud__row {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.hud__item {
+  display: grid;
+  gap: 8px;
+}
+
+.hud__item--compact {
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.label {
+  font-size: 0.88rem;
+  letter-spacing: 0.08em;
+}
+
+.hud strong {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+}
+
+.meter {
+  height: 18px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(109, 59, 30, 0.12);
+}
+
+.meter__fill {
+  height: 100%;
+  width: 0%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ffe066, #ff9f43, #ff6b6b);
+  transition: width 120ms ease;
+}
+
+.play-area {
+  position: relative;
+  min-height: 480px;
+  overflow: hidden;
+  border-radius: 36px;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 15%, rgba(255, 255, 255, 0.75), transparent 20%),
+    radial-gradient(circle at bottom, rgba(166, 208, 120, 0.7), transparent 32%),
+    linear-gradient(180deg, #ffeab5 0%, #ffd49b 48%, #ffc08b 100%);
+  box-shadow: 0 24px 46px var(--shadow);
+}
+
+.stage-glow {
+  position: absolute;
+  inset: 10% 15%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 245, 186, 0.8), transparent 65%);
+  filter: blur(12px);
+}
+
+.message {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(255, 251, 239, 0.88);
+  box-shadow: 0 10px 22px rgba(96, 56, 31, 0.15);
+  font-weight: 700;
+}
+
+.mushroom {
+  position: relative;
+  width: min(54vw, 290px);
+  aspect-ratio: 0.86;
+  border: 0;
+  background: transparent;
+  cursor: grab;
+  touch-action: none;
+  transition: transform 120ms ease;
+}
+
+.mushroom:active {
+  cursor: grabbing;
+}
+
+.mushroom.is-rubbing {
+  transform: scale(1.02) rotate(var(--tilt, 0deg));
+}
+
+.mushroom.is-overload {
+  animation: shake 220ms linear infinite;
+}
+
+.mushroom__cap {
+  position: absolute;
+  inset: 4% 7% 35%;
+  border-radius: 50% 50% 42% 42%;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.9), transparent 18%),
+    linear-gradient(180deg, #ffab7a 0%, #f77243 55%, #d74a28 100%);
+  box-shadow: inset 0 -18px 0 rgba(138, 37, 21, 0.18);
+}
+
+.mushroom__spots,
+.mushroom__spots::before,
+.mushroom__spots::after {
+  position: absolute;
+  display: block;
+  width: 38px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 245, 226, 0.92);
+  content: "";
+}
+
+.mushroom__spots--one {
+  top: 18%;
+  left: 26%;
+}
+
+.mushroom__spots--one::before {
+  top: -10px;
+  left: 68px;
+}
+
+.mushroom__spots--one::after {
+  top: 42px;
+  left: 124px;
+}
+
+.mushroom__spots--two {
+  top: 31%;
+  left: 18%;
+}
+
+.mushroom__spots--two::before {
+  top: 28px;
+  left: 54px;
+}
+
+.mushroom__spots--two::after {
+  top: -20px;
+  left: 158px;
+}
+
+.mushroom__stem {
+  position: absolute;
+  inset: 46% 27% 8%;
+  border-radius: 45% 45% 30% 30%;
+  background: linear-gradient(180deg, #fff8e4 0%, #f8e2bd 60%, #efc98d 100%);
+  box-shadow: inset 0 -16px 0 rgba(201, 157, 94, 0.22);
+}
+
+.mushroom__face {
+  position: absolute;
+  inset: 60% 31% 18%;
+}
+
+.eye {
+  position: absolute;
+  top: 8%;
+  width: 14px;
+  height: 26px;
+  border-radius: 50%;
+  background: #543325;
+}
+
+.eye--left {
+  left: 23%;
+}
+
+.eye--right {
+  right: 23%;
+}
+
+.mouth {
+  position: absolute;
+  left: 50%;
+  bottom: 20%;
+  width: 44px;
+  height: 22px;
+  transform: translateX(-50%);
+  border-bottom: 5px solid #8d4c37;
+  border-radius: 0 0 30px 30px;
+}
+
+.mushroom__shadow {
+  position: absolute;
+  left: 50%;
+  right: 8%;
+  bottom: 1%;
+  height: 28px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: rgba(102, 54, 23, 0.16);
+  filter: blur(3px);
+}
+
+.mushroom__sparkle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  opacity: 0;
+}
+
+.mushroom__sparkle--a {
+  top: 6%;
+  right: 18%;
+}
+
+.mushroom__sparkle--b {
+  top: 18%;
+  left: 12%;
+}
+
+.mushroom.is-rubbing .mushroom__sparkle {
+  animation: twinkle 500ms ease-out;
+}
+
+.floating-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.float-text {
+  position: absolute;
+  font-weight: 900;
+  font-size: 1.2rem;
+  color: var(--accent-deep);
+  animation: pop 650ms ease-out forwards;
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.8);
+}
+
+.controls {
+  padding: 16px 20px 20px;
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  text-align: center;
+}
+
+.controls p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.restart {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font: inherit;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(180deg, var(--accent), var(--accent-deep));
+  box-shadow: 0 12px 18px rgba(217, 91, 45, 0.28);
+  cursor: pointer;
+}
+
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.6);
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -62px) scale(1.18);
+  }
+}
+
+@keyframes shake {
+  0% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(-4px) rotate(-2deg); }
+  50% { transform: translateX(4px) rotate(2deg); }
+  75% { transform: translateX(-3px) rotate(-1deg); }
+  100% { transform: translateX(0) rotate(0deg); }
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  35% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+
+@media (max-width: 720px) {
+  .hud__row {
+    grid-template-columns: 1fr;
+  }
+
+  .play-area {
+    min-height: 430px;
+  }
+
+  .mushroom {
+    width: min(72vw, 260px);
+  }
+
+  .message {
+    width: calc(100% - 28px);
+    text-align: center;
+  }
+}
