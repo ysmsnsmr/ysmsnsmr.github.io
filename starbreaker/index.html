@@ -138,6 +138,7 @@
       overflow: hidden;
       border: 1px solid rgba(130, 214, 255, 0.2);
       background: radial-gradient(circle at top, rgba(17, 44, 80, 0.6), rgba(4, 10, 20, 0.96) 62%);
+      touch-action: none;
     }
 
     canvas {
@@ -145,6 +146,7 @@
       width: 100%;
       height: auto;
       aspect-ratio: 4 / 3;
+      touch-action: none;
     }
 
     .overlay {
@@ -287,6 +289,7 @@
   <script>
     const canvas = document.getElementById("game");
     const ctx = canvas.getContext("2d");
+    const arena = document.querySelector(".arena");
     const overlay = document.getElementById("overlay");
     const overlayTitle = document.getElementById("overlay-title");
     const overlayText = document.getElementById("overlay-text");
@@ -310,8 +313,42 @@
       enemySpawnTimer: 0,
       elapsed: 0,
       player: null,
-      lastTime: 0
+      lastTime: 0,
+      pointerActive: false
     };
+
+    function screenToCanvas(clientX) {
+      const rect = canvas.getBoundingClientRect();
+      const ratio = canvas.width / rect.width;
+      return (clientX - rect.left) * ratio;
+    }
+
+    function beginPointerControl(clientX) {
+      state.pointerActive = true;
+      if (!state.running) {
+        if (state.gameOver) {
+          resetGame();
+        }
+        state.running = true;
+        hideOverlay();
+      }
+      state.player.x = Math.max(
+        state.player.radius + 10,
+        Math.min(canvas.width - state.player.radius - 10, screenToCanvas(clientX))
+      );
+    }
+
+    function movePointerControl(clientX) {
+      if (!state.pointerActive || !state.running) return;
+      state.player.x = Math.max(
+        state.player.radius + 10,
+        Math.min(canvas.width - state.player.radius - 10, screenToCanvas(clientX))
+      );
+    }
+
+    function endPointerControl() {
+      state.pointerActive = false;
+    }
 
     function resetGame() {
       state.running = false;
@@ -717,6 +754,20 @@
     window.addEventListener("keyup", (event) => {
       state.keys.delete(event.key);
     });
+
+    arena.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      beginPointerControl(event.clientX);
+    });
+
+    arena.addEventListener("pointermove", (event) => {
+      event.preventDefault();
+      movePointerControl(event.clientX);
+    });
+
+    arena.addEventListener("pointerup", endPointerControl);
+    arena.addEventListener("pointercancel", endPointerControl);
+    arena.addEventListener("pointerleave", endPointerControl);
 
     resetGame();
     requestAnimationFrame(frame);
