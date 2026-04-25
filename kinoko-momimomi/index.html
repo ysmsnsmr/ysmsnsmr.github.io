@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>きのこモミモミ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game-shell">
+    <section class="hud">
+      <div class="hud__item">
+        <span class="label">きもちよさ</span>
+        <div class="meter">
+          <div class="meter__fill" id="joy-fill"></div>
+        </div>
+      </div>
+      <div class="hud__row">
+        <div class="hud__item hud__item--compact">
+          <span class="label">のこり時間</span>
+          <strong id="time-left">20.0</strong>
+        </div>
+        <div class="hud__item hud__item--compact">
+          <span class="label">スコア</span>
+          <strong id="score">0</strong>
+        </div>
+        <div class="hud__item hud__item--compact">
+          <span class="label">ベスト</span>
+          <strong id="best-score">0</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="play-area">
+      <div class="stage-glow"></div>
+      <button id="mushroom" class="mushroom" aria-label="きのこをモミモミする">
+        <span class="mushroom__sparkle mushroom__sparkle--a"></span>
+        <span class="mushroom__sparkle mushroom__sparkle--b"></span>
+        <span class="mushroom__cap"></span>
+        <span class="mushroom__spots mushroom__spots--one"></span>
+        <span class="mushroom__spots mushroom__spots--two"></span>
+        <span class="mushroom__face">
+          <span class="eye eye--left"></span>
+          <span class="eye eye--right"></span>
+          <span class="mouth"></span>
+        </span>
+        <span class="mushroom__stem"></span>
+        <span class="mushroom__shadow"></span>
+      </button>
+
+      <div id="floating-layer" class="floating-layer" aria-hidden="true"></div>
+      <div class="message" id="message">ドラッグか連打でモミモミ開始</div>
+    </section>
+
+    <section class="controls">
+      <p>
+        ドラッグすると高得点。早すぎるときのこが赤くなって逃げるので、リズムよくモミモミしてください。
+      </p>
+      <button id="restart" class="restart">もういちど</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
