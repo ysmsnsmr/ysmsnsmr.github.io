@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>きのこモミモミ</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #26222a;
+      --paper: #fffaf4;
+      --leaf: #3f8f72;
+      --mushroom-scale: 1;
+      --pull-x: 0px;
+      --pull-y: 0px;
+      --squish-x: 1;
+      --squish-y: 1;
+      --lean: 0deg;
+      --cap-warp: 0px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      min-height: 100svh;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(255, 216, 128, 0.42), transparent 28%),
+        radial-gradient(circle at 82% 18%, rgba(126, 205, 185, 0.32), transparent 26%),
+        linear-gradient(160deg, #f9f3dc 0%, #e6f4df 43%, #d7edf2 100%);
+      color: var(--ink);
+      font-family: ui-rounded, "Hiragino Maru Gothic ProN", "Yu Gothic", system-ui, sans-serif;
+    }
+
+    .game {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      width: 100%;
+      max-width: 100vw;
+      height: 100svh;
+      min-height: 580px;
+      padding: clamp(14px, 3vw, 28px);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hud {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
+      width: 100%;
+      max-width: 100%;
+      z-index: 5;
+    }
+
+    .meter {
+      min-width: 0;
+      padding: 10px 12px;
+      border: 2px solid rgba(38, 34, 42, 0.12);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.68);
+      box-shadow: 0 8px 22px rgba(63, 91, 64, 0.12);
+      backdrop-filter: blur(12px);
+    }
+
+    .meter__label {
+      display: block;
+      margin-bottom: 3px;
+      color: rgba(38, 34, 42, 0.62);
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+
+    .meter__value {
+      display: block;
+      overflow: hidden;
+      font-size: clamp(1.25rem, 3.3vw, 2rem);
+      font-weight: 950;
+      line-height: 1;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .stage {
+      position: relative;
+      display: grid;
+      place-items: end center;
+      min-height: 0;
+      padding-bottom: clamp(46px, 8vh, 78px);
+      touch-action: none;
+    }
+
+    .status {
+      position: absolute;
+      top: clamp(18px, 5vh, 46px);
+      left: 50%;
+      z-index: 6;
+      width: min(88vw, 520px);
+      min-height: 38px;
+      padding: 9px 14px;
+      border: 2px solid rgba(38, 34, 42, 0.1);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.56);
+      box-shadow: 0 10px 30px rgba(69, 94, 82, 0.11);
+      color: rgba(38, 34, 42, 0.72);
+      font-size: clamp(0.86rem, 2.2vw, 1rem);
+      font-weight: 850;
+      text-align: center;
+      transform: translateX(-50%);
+      transition: transform 180ms ease, color 180ms ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .status.is-hot {
+      color: #bd3950;
+      transform: translateX(-50%) scale(1.03);
+    }
+
+    .mushroom-zone {
+      position: relative;
+      display: grid;
+      place-items: end center;
+      width: min(82vw, 560px);
+      height: min(66vh, 590px);
+      min-height: 390px;
+    }
+
+    .mushroom {
+      position: relative;
+      width: clamp(220px, 45vmin, 390px);
+      height: clamp(275px, 58vmin, 500px);
+      cursor: grab;
+      transform:
+        translate(var(--pull-x), var(--pull-y))
+        rotate(var(--lean))
+        scale(calc(var(--mushroom-scale) * var(--squish-x)), calc(var(--mushroom-scale) * var(--squish-y)));
+      transform-origin: 50% 86%;
+      transition:
+        transform 130ms cubic-bezier(0.18, 0.9, 0.18, 1.2),
+        filter 180ms ease;
+      will-change: transform, filter;
+    }
+
+    .mushroom:active {
+      cursor: grabbing;
+    }
+
+    .mushroom.is-dragging {
+      transition: transform 70ms cubic-bezier(0.13, 0.96, 0.18, 1);
+      filter: saturate(1.08) brightness(1.03);
+    }
+
+    .mushroom.is-bad {
+      animation: badShake 360ms ease;
+      filter: saturate(1.24) hue-rotate(-8deg);
+    }
+
+    .cap {
+      position: absolute;
+      left: 50%;
+      top: 6%;
+      width: 94%;
+      height: 43%;
+      border: 3px solid rgba(105, 44, 65, 0.18);
+      border-radius: 54% 54% 43% 43% / 74% 74% 31% 31%;
+      background:
+        radial-gradient(circle at 28% 34%, #fff6b9 0 8%, transparent 8.7%),
+        radial-gradient(circle at 62% 26%, #fff0a1 0 10%, transparent 10.7%),
+        radial-gradient(circle at 47% 55%, #fff4bb 0 7%, transparent 7.8%),
+        linear-gradient(145deg, #f07286 0%, #d84665 58%, #b83156 100%);
+      box-shadow:
+        inset 0 -16px 22px rgba(125, 31, 63, 0.18),
+        inset 16px 18px 18px rgba(255, 255, 255, 0.16),
+        0 26px 36px rgba(74, 62, 62, 0.2);
+      transform: translateX(calc(-50% + var(--cap-warp))) scaleX(calc(1 + (var(--squish-y) - 1) * 0.55)) scaleY(calc(1 + (1 - var(--squish-y)) * 0.28));
+      transform-origin: 50% 70%;
+      transition: transform 120ms cubic-bezier(0.18, 0.9, 0.18, 1.15);
+      pointer-events: none;
+    }
+
+    .cap::before {
+      content: "";
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      bottom: -5%;
+      height: 24%;
+      border-radius: 50%;
+      background: linear-gradient(180deg, rgba(255, 245, 217, 0.98), rgba(240, 211, 175, 0.92));
+      box-shadow: inset 0 -8px 14px rgba(156, 108, 91, 0.18);
+    }
+
+    .cap::after {
+      content: "";
+      position: absolute;
+      left: 21%;
+      top: 18%;
+      width: 48%;
+      height: 30%;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.35), transparent 68%);
+      transform: rotate(-15deg);
+    }
+
+    .stem {
+      position: absolute;
+      left: 50%;
+      bottom: 8%;
+      width: 44%;
+      height: 61%;
+      border: 3px solid rgba(116, 82, 66, 0.16);
+      border-radius: 45% 45% 34% 34% / 18% 18% 22% 22%;
+      background:
+        radial-gradient(ellipse at 50% 16%, rgba(255, 255, 255, 0.9), transparent 32%),
+        linear-gradient(95deg, #f2c99c 0%, #ffe9c5 39%, #f4ce9e 72%, #dca977 100%);
+      box-shadow:
+        inset -16px 0 20px rgba(158, 99, 67, 0.13),
+        inset 16px 0 17px rgba(255, 255, 255, 0.42),
+        0 18px 24px rgba(76, 63, 46, 0.14);
+      transform:
+        translateX(calc(-50% + var(--pull-x) * 0.18))
+        skewX(calc(var(--lean) * -0.5))
+        scaleX(calc(1 + (1 - var(--squish-x)) * 0.45));
+      transform-origin: 50% 100%;
+      transition: transform 120ms cubic-bezier(0.18, 0.9, 0.18, 1.15);
+      pointer-events: none;
+    }
+
+    .face {
+      position: absolute;
+      left: 50%;
+      top: 54%;
+      width: 45%;
+      height: 20%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .eye {
+      position: absolute;
+      top: 30%;
+      width: 13%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #443039;
+      box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .eye:first-child {
+      left: 18%;
+    }
+
+    .eye:nth-child(2) {
+      right: 18%;
+    }
+
+    .mouth {
+      position: absolute;
+      left: 50%;
+      bottom: 14%;
+      width: 24%;
+      height: 18%;
+      border-bottom: 4px solid #7b4051;
+      border-radius: 0 0 999px 999px;
+      transform: translateX(-50%);
+    }
+
+    .shadow {
+      position: absolute;
+      left: 50%;
+      bottom: 1%;
+      width: 82%;
+      height: 12%;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(58, 88, 64, 0.28), transparent 70%);
+      transform: translateX(-50%) scaleX(calc(0.94 + var(--mushroom-scale) * 0.14));
+      pointer-events: none;
+    }
+
+    .danger {
+      position: absolute;
+      z-index: 7;
+      display: grid;
+      place-items: center;
+      width: clamp(42px, 9vw, 56px);
+      aspect-ratio: 1;
+      border: 3px solid rgba(127, 11, 35, 0.24);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 30%, #ff9a94, #e43d59 62%, #b91f42);
+      box-shadow:
+        0 10px 18px rgba(153, 29, 63, 0.25),
+        inset 0 -8px 10px rgba(95, 10, 42, 0.22);
+      transform: translate(-50%, -50%) scale(0);
+      animation: dangerPop 260ms cubic-bezier(0.18, 0.9, 0.2, 1.35) forwards, dangerPulse 860ms ease-in-out 260ms infinite;
+      cursor: pointer;
+      touch-action: none;
+    }
+
+    .danger__mark {
+      position: relative;
+      z-index: 1;
+      color: #fffaf4;
+      font-family: "Apple Color Emoji", "Segoe UI Symbol", "Noto Color Emoji", ui-rounded, sans-serif;
+      font-size: clamp(1.35rem, 4.7vw, 1.8rem);
+      font-weight: 950;
+      line-height: 1;
+      text-shadow: 0 2px 0 rgba(92, 7, 33, 0.28);
+    }
+
+    .danger.is-hit {
+      pointer-events: none;
+      animation: dangerHit 260ms ease forwards;
+    }
+
+    .float-score {
+      position: absolute;
+      z-index: 9;
+      left: 50%;
+      top: 50%;
+      color: #226b58;
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      font-weight: 950;
+      text-shadow: 0 2px 0 rgba(255, 255, 255, 0.8);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: floatAway 760ms ease forwards;
+    }
+
+    .float-score.is-minus {
+      color: #c93654;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      z-index: 5;
+    }
+
+    .button {
+      min-width: min(78vw, 250px);
+      min-height: 46px;
+      border: 0;
+      border-radius: 8px;
+      background: #266d5b;
+      box-shadow: 0 9px 0 #154c41, 0 16px 22px rgba(18, 61, 49, 0.18);
+      color: #fffaf4;
+      font: inherit;
+      font-size: 1rem;
+      font-weight: 950;
+      cursor: pointer;
+      transition: transform 100ms ease, box-shadow 100ms ease;
+    }
+
+    .button:active {
+      transform: translateY(5px);
+      box-shadow: 0 4px 0 #154c41, 0 9px 16px rgba(18, 61, 49, 0.16);
+    }
+
+    @keyframes badShake {
+      0%, 100% { transform: translate(var(--pull-x), var(--pull-y)) rotate(var(--lean)) scale(calc(var(--mushroom-scale) * var(--squish-x)), calc(var(--mushroom-scale) * var(--squish-y))); }
+      22% { transform: translate(calc(var(--pull-x) - 12px), var(--pull-y)) rotate(-4deg) scale(calc(var(--mushroom-scale) * 1.04), calc(var(--mushroom-scale) * 0.96)); }
+      48% { transform: translate(calc(var(--pull-x) + 13px), var(--pull-y)) rotate(4deg) scale(calc(var(--mushroom-scale) * 0.97), calc(var(--mushroom-scale) * 1.03)); }
+      74% { transform: translate(calc(var(--pull-x) - 7px), var(--pull-y)) rotate(-2deg) scale(calc(var(--mushroom-scale) * 1.02), calc(var(--mushroom-scale) * 0.98)); }
+    }
+
+    @keyframes dangerPop {
+      to { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    @keyframes dangerPulse {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.16); }
+    }
+
+    @keyframes dangerHit {
+      to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.7) rotate(22deg);
+      }
+    }
+
+    @keyframes floatAway {
+      to {
+        opacity: 0;
+        transform: translate(-50%, calc(-50% - 52px)) scale(1.12);
+      }
+    }
+
+    @media (max-width: 680px) {
+      .game {
+        min-height: 520px;
+        padding: 12px;
+      }
+
+      .hud {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 7px;
+      }
+
+      .meter {
+        padding: 8px 6px;
+      }
+
+      .meter__label {
+        font-size: 0.66rem;
+      }
+
+      .meter__value {
+        font-size: clamp(0.92rem, 4.6vw, 1.3rem);
+      }
+
+      .stage {
+        padding-bottom: 42px;
+      }
+
+      .status {
+        top: 18px;
+        font-size: 0.82rem;
+      }
+
+      .mushroom-zone {
+        width: 96vw;
+        height: 62vh;
+        min-height: 350px;
+      }
+
+      .mushroom {
+        width: clamp(175px, 60vw, 275px);
+        height: clamp(235px, 76vw, 360px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="game" aria-label="きのこモミモミ">
+    <section class="hud" aria-label="ゲーム情報">
+      <div class="meter">
+        <span class="meter__label">スコア</span>
+        <span class="meter__value" id="score">0</span>
+      </div>
+      <div class="meter">
+        <span class="meter__label">コンボ</span>
+        <span class="meter__value" id="combo">0</span>
+      </div>
+      <div class="meter">
+        <span class="meter__label">ぷに</span>
+        <span class="meter__value" id="puni">0%</span>
+      </div>
+      <div class="meter">
+        <span class="meter__label">TIME</span>
+        <span class="meter__value" id="time">30</span>
+      </div>
+    </section>
+
+    <section class="stage" id="stage" aria-live="polite">
+      <div class="status" id="status">きのこをやさしくモミモミ</div>
+      <div class="mushroom-zone" id="zone">
+        <div class="shadow"></div>
+        <div class="mushroom" id="mushroom" role="button" tabindex="0" aria-label="きのこをモミモミする">
+          <div class="stem"></div>
+          <div class="cap"></div>
+          <div class="face" aria-hidden="true">
+            <span class="eye"></span>
+            <span class="eye"></span>
+            <span class="mouth"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="controls">
+      <button class="button" id="reset" type="button">リセット</button>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const stage = document.getElementById("stage");
+    const zone = document.getElementById("zone");
+    const mushroom = document.getElementById("mushroom");
+    const scoreEl = document.getElementById("score");
+    const comboEl = document.getElementById("combo");
+    const puniEl = document.getElementById("puni");
+    const timeEl = document.getElementById("time");
+    const statusEl = document.getElementById("status");
+    const resetButton = document.getElementById("reset");
+
+    const GAME_SECONDS = 30;
+    const MAX_DANGERS = 5;
+
+    const state = {
+      score: 0,
+      combo: 0,
+      puni: 0,
+      scale: 1,
+      timeLeft: GAME_SECONDS,
+      isGameOver: false,
+      activePointer: null,
+      isDragging: false,
+      startX: 0,
+      startY: 0,
+      lastX: 0,
+      lastY: 0,
+      dragDistance: 0,
+      lastRubAt: 0,
+      hitDangerDuringDrag: false,
+      countdownTimer: null,
+      spawnTimer: null,
+      dangers: new Set(),
+      dangerTimers: new Map()
+    };
+
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function updateHud() {
+      scoreEl.textContent = String(state.score);
+      comboEl.textContent = String(state.combo);
+      puniEl.textContent = `${Math.round(state.puni)}%`;
+      timeEl.textContent = String(state.timeLeft);
+      root.style.setProperty("--mushroom-scale", state.scale.toFixed(3));
+    }
+
+    function setStatus(message, danger = false) {
+      statusEl.textContent = message;
+      statusEl.classList.toggle("is-hot", danger);
+    }
+
+    function setSquish(x, y, lean = 0, pullX = 0, pullY = 0, capWarp = 0) {
+      root.style.setProperty("--squish-x", x.toFixed(3));
+      root.style.setProperty("--squish-y", y.toFixed(3));
+      root.style.setProperty("--lean", `${lean.toFixed(2)}deg`);
+      root.style.setProperty("--pull-x", `${pullX.toFixed(1)}px`);
+      root.style.setProperty("--pull-y", `${pullY.toFixed(1)}px`);
+      root.style.setProperty("--cap-warp", `${capWarp.toFixed(1)}px`);
+    }
+
+    function relaxMushroom() {
+      mushroom.classList.remove("is-dragging");
+      setSquish(1, 1, 0, 0, 0, 0);
+    }
+
+    function floatScore(text, x, y, negative = false) {
+      const label = document.createElement("div");
+      label.className = `float-score${negative ? " is-minus" : ""}`;
+      label.textContent = text;
+      label.style.left = `${x}px`;
+      label.style.top = `${y}px`;
+      stage.append(label);
+      label.addEventListener("animationend", () => label.remove(), { once: true });
+    }
+
+    function addScore(points, x, y, message) {
+      if (state.isGameOver) return;
+      state.score += points;
+      state.combo += 1;
+      state.puni = clamp(state.puni + points * 1.9 + state.combo * 0.45, 0, 100);
+      state.scale = clamp(1 + state.score / 220, 0.72, 1.62);
+      updateHud();
+      setStatus(message);
+      floatScore(`+${points}`, x, y);
+    }
+
+    function subtractScore(points, x, y) {
+      if (state.isGameOver) return;
+      state.score = Math.max(0, state.score - points);
+      state.combo = 0;
+      state.puni = clamp(state.puni - 28, 0, 100);
+      state.scale = clamp(state.scale - 0.16, 0.72, 1.62);
+      updateHud();
+      setStatus("そこはイタイ！ -減点-", true);
+      floatScore(`-${points}`, x, y, true);
+      mushroom.classList.remove("is-bad");
+      void mushroom.offsetWidth;
+      mushroom.classList.add("is-bad");
+      setTimeout(() => {
+        mushroom.classList.remove("is-bad");
+        statusEl.classList.remove("is-hot");
+      }, 420);
+    }
+
+    function tapMushroom(event) {
+      if (state.isGameOver) return;
+      const rect = stage.getBoundingClientRect();
+      addScore(1, event.clientX - rect.left, event.clientY - rect.top, "ぷにっ");
+      setSquish(1.08, 0.92, 0, 0, 5, 0);
+      window.setTimeout(relaxMushroom, prefersReducedMotion ? 40 : 150);
+    }
+
+    function pointerToLocal(event) {
+      const rect = mushroom.getBoundingClientRect();
+      return {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top,
+        width: rect.width,
+        height: rect.height
+      };
+    }
+
+    function updateDragShape(event) {
+      const local = pointerToLocal(event);
+      const centerX = local.width / 2;
+      const centerY = local.height * 0.5;
+      const dx = event.clientX - state.startX;
+      const dy = event.clientY - state.startY;
+      const pullX = clamp((local.x - centerX) * 0.16, -24, 24);
+      const pullY = clamp((local.y - centerY) * 0.12, -20, 22);
+      const pressure = clamp(Math.hypot(dx, dy) / 140, 0, 1);
+      const squeeze = 1 + pressure * 0.12;
+      const stretch = 1 - pressure * 0.1;
+      const lean = clamp(dx * 0.045, -8, 8);
+      const capWarp = clamp((local.x - centerX) * 0.08, -14, 14);
+
+      setSquish(squeeze, stretch, lean, pullX, pullY, capWarp);
+    }
+
+    function rubMushroom(event) {
+      if (state.isGameOver) return;
+      const now = performance.now();
+      const step = Math.hypot(event.clientX - state.lastX, event.clientY - state.lastY);
+      state.dragDistance += step;
+      state.lastX = event.clientX;
+      state.lastY = event.clientY;
+      updateDragShape(event);
+
+      if (step > 3) {
+        state.puni = clamp(state.puni + step * 0.18, 0, 100);
+        updateHud();
+      }
+
+      if (state.dragDistance > 44 && now - state.lastRubAt > 130) {
+        const rect = stage.getBoundingClientRect();
+        const points = state.combo > 14 ? 4 : state.combo > 6 ? 3 : 2;
+        addScore(points, event.clientX - rect.left, event.clientY - rect.top, "もちもちモミモミ");
+        state.dragDistance = 0;
+        state.lastRubAt = now;
+      }
+    }
+
+    function onPointerDown(event) {
+      if (state.isGameOver) return;
+      if (event.target.closest(".danger")) return;
+      event.preventDefault();
+      state.activePointer = event.pointerId;
+      state.isDragging = false;
+      state.startX = event.clientX;
+      state.startY = event.clientY;
+      state.lastX = event.clientX;
+      state.lastY = event.clientY;
+      state.dragDistance = 0;
+      state.hitDangerDuringDrag = false;
+      mushroom.classList.add("is-dragging");
+      mushroom.setPointerCapture(event.pointerId);
+      setSquish(1.06, 0.94, 0, 0, 6, 0);
+    }
+
+    function onPointerMove(event) {
+      if (state.activePointer !== event.pointerId) return;
+      event.preventDefault();
+      const moved = Math.hypot(event.clientX - state.startX, event.clientY - state.startY);
+      if (moved > 6) state.isDragging = true;
+      if (checkDangerCollision(event.clientX, event.clientY)) {
+        state.hitDangerDuringDrag = true;
+        state.dragDistance = 0;
+        state.lastX = event.clientX;
+        state.lastY = event.clientY;
+        return;
+      }
+      rubMushroom(event);
+    }
+
+    function onPointerUp(event) {
+      if (state.activePointer !== event.pointerId) return;
+      event.preventDefault();
+      const wasDragging = state.isDragging;
+      state.activePointer = null;
+      if (!wasDragging) {
+        tapMushroom(event);
+      } else if (state.hitDangerDuringDrag) {
+        window.setTimeout(relaxMushroom, prefersReducedMotion ? 30 : 110);
+      } else {
+        setStatus(state.combo > 10 ? "いいモミ具合！" : "ふわっと戻った");
+        window.setTimeout(relaxMushroom, prefersReducedMotion ? 30 : 110);
+      }
+    }
+
+    function removeDanger(danger, hit = false) {
+      if (!danger || !state.dangers.has(danger)) return;
+      state.dangers.delete(danger);
+      window.clearTimeout(state.dangerTimers.get(danger));
+      state.dangerTimers.delete(danger);
+
+      if (hit) {
+        danger.classList.add("is-hit");
+        danger.addEventListener("animationend", () => danger.remove(), { once: true });
+      } else {
+        danger.remove();
+      }
+    }
+
+    function clearDangers() {
+      for (const danger of [...state.dangers]) {
+        removeDanger(danger);
+      }
+    }
+
+    function hitDanger(danger) {
+      if (!danger || state.isGameOver || !state.dangers.has(danger)) return false;
+      const dangerRect = danger.getBoundingClientRect();
+      const stageRect = stage.getBoundingClientRect();
+      subtractScore(9, dangerRect.left - stageRect.left + dangerRect.width / 2, dangerRect.top - stageRect.top + dangerRect.height / 2);
+      removeDanger(danger, true);
+      return true;
+    }
+
+    function checkDangerCollision(clientX, clientY) {
+      for (const danger of [...state.dangers]) {
+        const rect = danger.getBoundingClientRect();
+        const padding = 2;
+        const touchesX = clientX >= rect.left - padding && clientX <= rect.right + padding;
+        const touchesY = clientY >= rect.top - padding && clientY <= rect.bottom + padding;
+        if (touchesX && touchesY) {
+          hitDanger(danger);
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function spawnDanger() {
+      if (state.isGameOver || state.dangers.size >= MAX_DANGERS) return;
+      const danger = document.createElement("button");
+      danger.type = "button";
+      danger.className = "danger";
+      danger.setAttribute("aria-label", "ドクロの減点ポイント");
+      danger.innerHTML = '<span class="danger__mark" aria-hidden="true">☠</span>';
+
+      const zoneRect = zone.getBoundingClientRect();
+      const stageRect = stage.getBoundingClientRect();
+      const x = clamp(zoneRect.left - stageRect.left + zoneRect.width * (0.22 + Math.random() * 0.56), 36, stageRect.width - 36);
+      const y = clamp(zoneRect.top - stageRect.top + zoneRect.height * (0.18 + Math.random() * 0.55), 72, stageRect.height - 92);
+      danger.style.left = `${x}px`;
+      danger.style.top = `${y}px`;
+
+      danger.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        hitDanger(danger);
+      });
+
+      stage.append(danger);
+      state.dangers.add(danger);
+      setStatus("ドクロに触ると減点！");
+      const timer = window.setTimeout(() => {
+        removeDanger(danger);
+        if (!state.isGameOver) setStatus("セーフ。モミモミ再開");
+      }, 2400);
+      state.dangerTimers.set(danger, timer);
+    }
+
+    function dangerLoop() {
+      if (state.isGameOver) return;
+      const delay = 820 + Math.random() * 1050;
+      state.spawnTimer = window.setTimeout(() => {
+        const spawnCount = Math.random() > 0.62 ? 2 : 1;
+        for (let i = 0; i < spawnCount; i += 1) {
+          spawnDanger();
+        }
+        dangerLoop();
+      }, delay);
+    }
+
+    function startTimer() {
+      window.clearInterval(state.countdownTimer);
+      state.countdownTimer = window.setInterval(() => {
+        state.timeLeft -= 1;
+        updateHud();
+        if (state.timeLeft <= 5 && state.timeLeft > 0) {
+          setStatus(`あと${state.timeLeft}秒！`);
+        }
+        if (state.timeLeft <= 0) {
+          finishGame();
+        }
+      }, 1000);
+    }
+
+    function finishGame() {
+      if (state.isGameOver) return;
+      state.isGameOver = true;
+      state.timeLeft = 0;
+      state.activePointer = null;
+      window.clearInterval(state.countdownTimer);
+      window.clearTimeout(state.spawnTimer);
+      clearDangers();
+      relaxMushroom();
+      updateHud();
+      setStatus(`終了！スコア ${state.score}`);
+      resetButton.textContent = "もう一回";
+    }
+
+    function resetGame() {
+      window.clearInterval(state.countdownTimer);
+      window.clearTimeout(state.spawnTimer);
+      state.score = 0;
+      state.combo = 0;
+      state.puni = 0;
+      state.scale = 1;
+      state.timeLeft = GAME_SECONDS;
+      state.isGameOver = false;
+      state.activePointer = null;
+      state.isDragging = false;
+      state.dragDistance = 0;
+      state.hitDangerDuringDrag = false;
+      clearDangers();
+      relaxMushroom();
+      setStatus("30秒でモミモミ高得点！");
+      updateHud();
+      resetButton.textContent = "リセット";
+      startTimer();
+      dangerLoop();
+    }
+
+    mushroom.addEventListener("pointerdown", onPointerDown);
+    mushroom.addEventListener("pointermove", onPointerMove);
+    mushroom.addEventListener("pointerup", onPointerUp);
+    mushroom.addEventListener("pointercancel", (event) => {
+      if (state.activePointer === event.pointerId) {
+        state.activePointer = null;
+        relaxMushroom();
+      }
+    });
+
+    mushroom.addEventListener("keydown", (event) => {
+      if (event.key !== " " && event.key !== "Enter") return;
+      event.preventDefault();
+      const rect = stage.getBoundingClientRect();
+      tapMushroom({
+        clientX: rect.left + rect.width / 2,
+        clientY: rect.top + rect.height / 2
+      });
+    });
+
+    resetButton.addEventListener("click", resetGame);
+
+    resetGame();
+  </script>
+</body>
+</html>
