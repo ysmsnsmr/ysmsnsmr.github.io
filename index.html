@@ -10,42 +10,52 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ポートフォリオサイト</title>
-  <!-- SEO対策用 metaタグ -->
-  <meta name="description" content="こちらはポートフォリオです。">
-  <meta name="keywords" content="ポートフォリオ, 就職, 転職, ブランディング">
+  <title>Yas Learning Portfolio</title>
+  <meta name="description" content="Yasの個人学習ポートフォリオです。AI/Codex実験、Web開発メモ、Meta Ads/GTM練習、マレーシア生活ニュースメモをまとめています。">
+  <meta name="keywords" content="AI, Codex, Web development, Meta Ads, GTM, Malaysia, learning portfolio">
   <!-- Bootstrap CSS CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- カスタムCSS -->
   <style>
     body {
       font-family: "Noto Sans JP", sans-serif;
-      color: #333;
+      color: #2f3135;
+      background-color: #f8f9fb;
     }
-    header {
-      background-color: #002E5D; /* ネイビー */
+    header,
+    footer {
+      background-color: #183153;
       color: #fff;
+    }
+    .nav-link {
+      color: #fff;
+    }
+    .nav-link:hover,
+    .nav-link:focus {
+      color: #d9e8ff;
     }
     .hero {
-      background-color: #F4F4F4;
-      padding: 100px 0;
-      text-align: center;
-    }
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-    }
-    .hero p {
-      font-size: 1.2rem;
+      background-color: #eef4fb;
+      padding: 80px 0;
     }
     .section-title {
-      margin: 40px 0 20px;
+      margin-bottom: 1rem;
     }
-    footer {
-      background-color: #002E5D;
-      color: #fff;
-      padding: 20px 0;
-      text-align: center;
+    .card {
+      border: 1px solid #dde3ea;
+      border-radius: 8px;
+    }
+    .tag {
+      background-color: #e6f0fa;
+      color: #183153;
+      border-radius: 999px;
+      display: inline-block;
+      font-size: 0.875rem;
+      padding: 0.35rem 0.75rem;
+    }
+    .wip-note {
+      background-color: #fff8e6;
+      border-left: 4px solid #d99a00;
     }
   </style>
 </head>
@@ -56,122 +66,148 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
   <!-- ヘッダー -->
   <header class="py-3">
-    <div class="container d-flex justify-content-between align-items-center">
-      <h1 class="h3 mb-0">Portfolio</h1>
-      <nav>
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <h1 class="h3 mb-0">Yas Learning Portfolio</h1>
+      <nav aria-label="メインナビゲーション">
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link text-white" href="#home">ホーム</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="#profile">プロフィール</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="#blog">ブログ</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="#contact">問い合わせ</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="product.html">商品販売</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="reservation.html">サービス予約</a></li>
+          <li class="nav-item"><a class="nav-link px-2" href="#about">概要</a></li>
+          <li class="nav-item"><a class="nav-link px-2" href="#logs">学習ログ</a></li>
+          <li class="nav-item"><a class="nav-link px-2" href="#links">リンク</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <!-- ヒーローセクション -->
-  <section id="home" class="hero">
+  <!-- ヒーロー -->
+  <section class="hero">
     <div class="container">
-      <h1>こちらはポートフォリオです。</h1>
-      <p></p>
-    </div>
-  </section>
-
-  <!-- プロフィールセクション -->
-  <section id="profile" class="py-5">
-    <div class="container">
-      <h2 class="section-title text-center">プロフィール</h2>
-      <div class="row">
-        <div class="col-md-4 text-center">
-          <img src="profile.jpg" alt="プロフィール写真" class="img-fluid rounded-circle mb-3">
-        </div>
-        <div class="col-md-8">
-          <p>ここに自己紹介や経歴などを記載します。</p>
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <p class="tag mb-3">Personal learning portfolio</p>
+          <h2 class="display-5 fw-bold mb-3">こんにちは、Yasです。</h2>
+          <p class="lead mb-3">AIとWebの学習を少しずつ記録しながら、実験したことや気づいたことをまとめていく場所です。</p>
+          <p class="mb-0">This is my personal learning portfolio: AI/Codex experiments, web development notes, Meta Ads/GTM practice, and Malaysia daily-life news notes.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ブログセクション -->
-  <section id="blog" class="py-5 bg-light">
-    <div class="container">
-      <h2 class="section-title text-center">ブログ</h2>
-      <div class="row">
-        <!-- ブログ記事カード1 -->
-        <div class="col-md-4">
-          <div class="card mb-4">
-            <img src="blog1.jpg" class="card-img-top" alt="ブログ記事1">
-            <div class="card-body">
-              <h5 class="card-title">記事タイトル1</h5>
-              <p class="card-text">記事の概要をここに記載します。</p>
-              <a href="#" class="btn btn-primary">続きを読む</a>
+  <main>
+    <!-- サイト概要 -->
+    <section id="about" class="py-5">
+      <div class="container">
+        <h2 class="section-title">このサイトについて</h2>
+        <p class="mb-4">このサイトでは、学習中のテーマを小さく整理して公開していきます。完成した作品だけでなく、練習中のメモや試したことも残していきます。</p>
+        <div class="row g-3">
+          <div class="col-md-6 col-lg-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <h3 class="h5">AI / Codex</h3>
+                <p class="mb-0">Codexを使った作業、AIとの実験、改善メモをまとめます。</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <h3 class="h5">Web開発</h3>
+                <p class="mb-0">HTML、CSS、Bootstrap、静的サイト制作の学習メモを残します。</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <h3 class="h5">Meta Ads / GTM</h3>
+                <p class="mb-0">広告やGoogle Tag Managerの練習、計測まわりの確認を行います。</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <h3 class="h5">Malaysia notes</h3>
+                <p class="mb-0">マレーシアの日常生活ニュースや気になる話題をメモします。</p>
+              </div>
             </div>
           </div>
         </div>
-        <!-- ブログ記事カード2 -->
-        <div class="col-md-4">
-          <div class="card mb-4">
-            <img src="blog2.jpg" class="card-img-top" alt="ブログ記事2">
-            <div class="card-body">
-              <h5 class="card-title">記事タイトル2</h5>
-              <p class="card-text">記事の概要をここに記載します。</p>
-              <a href="#" class="btn btn-primary">続きを読む</a>
+      </div>
+    </section>
+
+    <!-- 学習ログ -->
+    <section id="logs" class="py-5 bg-white">
+      <div class="container">
+        <h2 class="section-title">Latest learning logs</h2>
+        <p class="mb-4">ここには、これから学習ログを追加していきます。</p>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <p class="tag mb-3">Coming soon</p>
+                <h3 class="h5">CodexでREADMEを整理</h3>
+                <p class="mb-0">リポジトリの目的を短く説明する練習ログを追加予定です。</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <p class="tag mb-3">Coming soon</p>
+                <h3 class="h5">Bootstrapでホームページ更新</h3>
+                <p class="mb-0">静的なホームページを少しずつ改善するメモを追加予定です。</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <p class="tag mb-3">Coming soon</p>
+                <h3 class="h5">GTMの基本確認</h3>
+                <p class="mb-0">タグ設置やページ確認の練習内容を追加予定です。</p>
+              </div>
             </div>
           </div>
         </div>
-        <!-- ブログ記事カード3 -->
-        <div class="col-md-4">
-          <div class="card mb-4">
-            <img src="blog3.jpg" class="card-img-top" alt="ブログ記事3">
-            <div class="card-body">
-              <h5 class="card-title">記事タイトル3</h5>
-              <p class="card-text">記事の概要をここに記載します。</p>
-              <a href="#" class="btn btn-primary">続きを読む</a>
-            </div>
+      </div>
+    </section>
+
+    <!-- クイックリンク -->
+    <section id="links" class="py-5">
+      <div class="container">
+        <h2 class="section-title">Quick links</h2>
+        <div class="row g-3">
+          <div class="col-md-6 col-lg-3">
+            <a class="btn btn-outline-primary w-100" href="#about">サイト概要</a>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <a class="btn btn-outline-primary w-100" href="kinoko-momimomi/">Kinoko Momimomi</a>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <a class="btn btn-outline-primary w-100" href="mushroom-puni/">Mushroom Puni</a>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <a class="btn btn-outline-primary w-100" href="starbreaker/">Starbreaker</a>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 問い合わせセクション -->
-  <section id="contact" class="py-5">
-  <div class="container">
-    <h2 class="section-title text-center">問い合わせ</h2>
-    <form id="contactForm">
-      <div class="mb-3">
-        <label for="name" class="form-label">お名前</label>
-        <input type="text" class="form-control" id="name" placeholder="例:北九次男">
+    <!-- WIP -->
+    <section class="py-5">
+      <div class="container">
+        <div class="wip-note p-4">
+          <h2 class="h4">Work in progress</h2>
+          <p class="mb-0">このサイトは学習しながら少しずつ更新しています。内容やページ構成は、練習の進み具合に合わせて変えていきます。</p>
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">メールアドレス</label>
-        <input type="email" class="form-control" id="email" placeholder="kitakyujinan@jp.com">
-      </div>
-      <div class="mb-3">
-        <label for="message" class="form-label">メッセージ</label>
-        <textarea class="form-control" id="message" rows="5"></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">送信</button>
-    </form>
-  </div>
-</section>
-
-<script>
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault(); // フォームの通常の送信処理をキャンセル
-    // 必要に応じてここでAJAX送信などの処理を追加可能
-
-    // サンクスページへリダイレクト
-    window.location.href = "https://ysmsnsmr.github.io/thanks.html";
-  });
-</script>
+    </section>
+  </main>
 
   <!-- フッター -->
-  <footer>
+  <footer class="py-4 text-center">
     <div class="container">
-      <p class="mb-0">© 2025 My Portfolio. All rights reserved.</p>
+      <p class="mb-0">© 2026 Yas Learning Portfolio.</p>
     </div>
   </footer>
 
