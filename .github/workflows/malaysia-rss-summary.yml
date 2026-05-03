@@ -1,0 +1,61 @@
+name: Malaysia RSS Summary
+
+on:
+  schedule:
+    # 07:30 MYT = 23:30 UTC on the previous day.
+    - cron: "30 23 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: malaysia-rss-summary
+  cancel-in-progress: false
+
+jobs:
+  summarize:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate Malaysia RSS summary
+        id: generate
+        shell: bash
+        run: |
+          set -euo pipefail
+          today="$(TZ=Asia/Kuala_Lumpur date +%F)"
+          output_path="news/malaysia/${today}.md"
+          python3 -B scripts/malaysia_rss_summary.py --diagnostics --output "${output_path}"
+          if grep -q "::inbox-item" "${output_path}"; then
+            echo "::error::Generated Markdown must not contain ::inbox-item metadata."
+            exit 1
+          fi
+          echo "output_path=${output_path}" >> "${GITHUB_OUTPUT}"
+
+      - name: Commit generated summary
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- news/malaysia/ && [ -z "$(git ls-files --others --exclude-standard news/malaysia/)" ]; then
+            echo "No changes under news/malaysia/."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add news/malaysia/
+          git commit -m "Add Malaysia RSS summary for $(TZ=Asia/Kuala_Lumpur date +%F)"
+          if ! git push; then
+            echo "::error::git push failed. Repository Settings > Actions > General > Workflow permissions を確認してください。"
+            exit 1
+          fi

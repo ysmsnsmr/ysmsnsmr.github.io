@@ -1,0 +1,531 @@
+#!/usr/bin/env python3
+import argparse
+import email.utils
+import html
+import re
+import ssl
+import subprocess
+import sys
+import urllib.error
+import urllib.request
+import xml.etree.ElementTree as ET
+from collections import Counter
+from dataclasses import dataclass
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+from typing import Optional
+
+
+UA = "Mozilla/5.0"
+SOURCES = [
+    ("Malay Mail", "Malay Mail Malaysia", "https://www.malaymail.com/feed/rss/malaysia"),
+    ("Malay Mail", "Malay Mail Money", "https://www.malaymail.com/feed/rss/money"),
+    ("Astro Awani", "Astro Awani National", "https://www.astroawani.com/rss/national/public"),
+]
+MYT = timezone(timedelta(hours=8))
+
+
+@dataclass
+class FetchResult:
+    ok: bool
+    url: str
+    data: bytes = b""
+    status: str = ""
+    content_type: str = ""
+    method: str = ""
+    error: str = ""
+
+
+@dataclass
+class Item:
+    source: str
+    feed: str
+    title: str
+    description: str
+    pub_date: datetime
+    pub_raw: str
+    link: str
+    score: int = 0
+    category: str = ""
+
+
+def diagnostic_lines() -> list[str]:
+    lines = [
+        f"Python version: {sys.version.split()[0]}",
+        f"ssl.OPENSSL_VERSION: {ssl.OPENSSL_VERSION}",
+    ]
+    try:
+        proc = subprocess.run(
+            ["curl", "--version"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+            check=False,
+        )
+        first = (proc.stdout or proc.stderr).splitlines()[0] if (proc.stdout or proc.stderr) else ""
+    except Exception as exc:
+        first = f"ERROR: {type(exc).__name__}: {exc}"
+    lines.append(f"curl --version: {first}")
+    return lines
+
+
+def fetch_urllib(url: str) -> FetchResult:
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    try:
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            return FetchResult(
+                ok=True,
+                url=url,
+                data=resp.read(),
+                status=str(getattr(resp, "status", "")),
+                content_type=resp.headers.get("content-type", ""),
+                method="urllib",
+            )
+    except Exception as exc:
+        status = ""
+        content_type = ""
+        body = b""
+        if isinstance(exc, urllib.error.HTTPError):
+            status = str(exc.code)
+            content_type = exc.headers.get("content-type", "") if exc.headers else ""
+            try:
+                body = exc.read()
+            except Exception:
+                body = b""
+        return FetchResult(
+            ok=False,
+            url=url,
+            data=body,
+            status=status,
+            content_type=content_type,
+            method="urllib",
+            error=f"{type(exc).__name__}: {exc}",
+        )
+
+
+def fetch_curl(url: str) -> FetchResult:
+    try:
+        proc = subprocess.run(
+            [
+                "curl",
+                "-L",
+                "--max-time",
+                "20",
+                "-sS",
+                "-A",
+                UA,
+                "-D",
+                "-",
+                url,
+            ],
+            capture_output=True,
+            timeout=30,
+            check=False,
+        )
+    except Exception as exc:
+        return FetchResult(ok=False, url=url, method="curl", error=f"{type(exc).__name__}: {exc}")
+
+    raw = proc.stdout
+    header_blob, _, body = raw.rpartition(b"\r\n\r\n")
+    headers_text = header_blob.decode("iso-8859-1", "replace")
+    status = ""
+    content_type = ""
+    for line in headers_text.splitlines():
+        if line.startswith("HTTP/"):
+            parts = line.split()
+            if len(parts) >= 2:
+                status = parts[1]
+        elif line.lower().startswith("content-type:"):
+            content_type = line.split(":", 1)[1].strip()
+    if proc.returncode == 0 and body:
+        return FetchResult(
+            ok=True,
+            url=url,
+            data=body,
+            status=status,
+            content_type=content_type,
+            method="curl",
+        )
+    err = proc.stderr.decode("utf-8", "replace").strip()
+    return FetchResult(
+        ok=False,
+        url=url,
+        data=body,
+        status=status,
+        content_type=content_type,
+        method="curl",
+        error=f"curl exit {proc.returncode}: {err}",
+    )
+
+
+def fetch_rss(url: str) -> FetchResult:
+    first = fetch_urllib(url)
+    if first.ok:
+        return first
+    fallback = fetch_curl(url)
+    if fallback.ok:
+        fallback.error = f"urllib failed; fallback used: {first.error}"
+        return fallback
+    fallback.error = f"urllib failed: {first.error}; curl failed: {fallback.error}"
+    return fallback
+
+
+def lenient_xml(data: bytes) -> ET.Element:
+    data = data.strip()
+    try:
+        return ET.fromstring(data)
+    except ET.ParseError:
+        text = data.decode("utf-8", "ignore").strip()
+        text = re.sub(r"&(?!amp;|lt;|gt;|quot;|apos;|#\d+;|#x[0-9a-fA-F]+;)", "&amp;", text)
+        return ET.fromstring(text.encode("utf-8"))
+
+
+def text_of(item: ET.Element, tag: str) -> str:
+    child = item.find(tag)
+    if child is None:
+        return ""
+    return clean("".join(child.itertext()))
+
+
+def clean(value: str) -> str:
+    value = html.unescape(value or "")
+    value = re.sub(r"<[^>]+>", " ", value)
+    return re.sub(r"\s+", " ", value).strip()
+
+
+def parse_date(value: str) -> Optional[datetime]:
+    try:
+        parsed = email.utils.parsedate_to_datetime(value)
+    except Exception:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=MYT)
+    return parsed.astimezone(MYT)
+
+
+def parse_items(source: str, feed: str, data: bytes) -> list[Item]:
+    root = lenient_xml(data)
+    items: list[Item] = []
+    for node in root.findall(".//item"):
+        title = text_of(node, "title")
+        description = text_of(node, "description")
+        link = text_of(node, "link")
+        pub_raw = text_of(node, "pubDate")
+        pub_date = parse_date(pub_raw)
+        if title and link and pub_date:
+            items.append(Item(source, feed, title, description, pub_date, pub_raw, link))
+    return items
+
+
+def key_for(item: Item) -> str:
+    text = (item.title + " " + item.description).lower()
+    groups = [
+        ("heat", r"heat|cuaca panas|strok haba"),
+        ("weather", r"metmalaysia|ribut|hujan lebat|thunderstorm|heavy rain|strong winds"),
+        ("mara", r"\bmara\b|akta mara"),
+        ("myjpj", r"mydigital|myjpj"),
+        ("palm-oil-road", r"palm oil|minyak sawit|bandar sultan suleiman"),
+        ("self-employed-social-security", r"keselamatan sosial pekerjaan sendiri|self[- ]employed social"),
+        ("badal-haji-scam", r"badal haji"),
+        ("bukit-kiara", r"bukit kiara|ttdi"),
+        ("sabah-electricity", r"sabah electricity|electricity bills"),
+        ("doctor-shortage", r"doctor shortage|shortages of doctors|medical specialists"),
+        ("ringgit", r"ringgit"),
+        ("bursa", r"bursa malaysia|fbm klci"),
+        ("ai-workers", r"ai and automation|talentcorp|automation"),
+        ("monkey-malaria", r"monkey malaria"),
+    ]
+    for name, pattern in groups:
+        if re.search(pattern, text):
+            return name
+    return re.sub(r"[^a-z0-9]+", " ", item.title.lower()).strip()[:90] or item.link
+
+
+def score_item(item: Item) -> int:
+    text = (item.title + " " + item.description).lower()
+    score = 0
+    weighted = [
+        (r"metmalaysia|warning|amaran|ribut|hujan|thunderstorm|heavy rain|strong winds|heat|cuaca panas|strok haba", 8),
+        (r"traffic|road closure|lrt|mrt|ktm|klia|nkve|public transport|palm oil|minyak sawit", 7),
+        (r"mydigital|myjpj|social security|keselamatan sosial|akta|act|tariff|bill|bil|electricity", 7),
+        (r"klang valley|kuala lumpur|selangor|subang|shah alam|klang|pj|putrajaya|ttdi|bukit kiara|kl sentral", 3),
+        (r"doctor shortage|health ministry|medical|monkey malaria|sabah electricity|\bai\b|artificial intelligence|automation|talentcorp|ringgit|bursa malaysia|imf|m40 women|childcare|tax relief|urban|development|dbkl", 5),
+        (r"murder|bunuh|stab|tikaman|fatal|killed|dead|drowns|lemas|maut|kemalangan|accident|hit-and-run|bullying|suspect|remand", -8),
+        (r"umno|ge16|party|political cooperation|red lines|khairy|johari|election|kerajaan madani", -5),
+    ]
+    for pattern, value in weighted:
+        if re.search(pattern, text):
+            score += value
+    return score
+
+
+def should_exclude_item(item: Item) -> bool:
+    text = (item.title + " " + item.description).lower()
+    if item.feed == "Malay Mail Money" and not re.search(
+        r"malaysia|malaysian|kuala lumpur|ringgit|bursa|fbm klci|talentcorp|imf|semiconductor",
+        text,
+    ):
+        return True
+
+    practical_exception = re.search(
+        r"metmalaysia|warning|amaran|road closure|traffic disruption|public transport|palm oil|minyak sawit|"
+        r"health ministry|cuaca panas|heat|strok haba|monkey malaria|mcmc|3r",
+        text,
+    )
+    individual_incident = re.search(
+        r"murder|bunuh|stab|tikaman|fatal|killed|dead|drowns|lemas|maut|kemalangan|accident|"
+        r"hit-and-run|bullying|suspect|remand|fire|blaze|terbakar|police chase|swept away|"
+        r"search continues|search radius|missing|armed|knife|jumps out",
+        text,
+    )
+    if individual_incident and not practical_exception:
+        return True
+
+    policy_exception = re.search(
+        r"mara|social security|keselamatan sosial|health ministry|doctor shortage|dbkl|bukit kiara|"
+        r"m40 women|childcare|tax relief|budi madani|mydigital|myjpj|spm|moral studies|education",
+        text,
+    )
+    political_news = re.search(
+        r"umno|ge16|election|political cooperation|party|khairy|johari|negeri sembilan|"
+        r"unity government|kerajaan madani|red lines",
+        text,
+    )
+    if political_news and not policy_exception:
+        return True
+    return False
+
+
+def category_for(item: Item) -> str:
+    text = (item.title + " " + item.description).lower()
+    if re.search(r"metmalaysia|warning|amaran|ribut|hujan lebat|thunderstorm|heavy rain|strong winds|heat|cuaca panas|strok haba", text):
+        if not re.search(r"murder|bunuh|accident|kemalangan", text):
+            return "【速報】"
+    if re.search(r"traffic|road|jalan|mydigital|myjpj|electricity|bill|tariff|social security|badal haji|mcmc|3r|haji|palm oil|minyak sawit", text):
+        return "【生活インパクト】"
+    return "【知っておくと得】"
+
+
+def select_items(items: list[Item], now: datetime) -> list[Item]:
+    cutoff = now - timedelta(hours=48)
+    recent = [item for item in items if cutoff <= item.pub_date <= now]
+    by_key: dict[str, Item] = {}
+    for item in recent:
+        item.score = score_item(item)
+        key = key_for(item)
+        current = by_key.get(key)
+        if current is None or (item.score, item.pub_date) > (current.score, current.pub_date):
+            by_key[key] = item
+
+    candidates = [item for item in by_key.values() if item.score >= 3 and not should_exclude_item(item)]
+    candidates.sort(key=lambda item: (item.score, item.pub_date), reverse=True)
+
+    selected: list[Item] = []
+    source_counts: Counter[str] = Counter()
+    category_limits = {"【速報】": 10, "【生活インパクト】": 20, "【知っておくと得】": 40}
+    category_counts: Counter[str] = Counter()
+    for item in candidates:
+        category = category_for(item)
+        if source_counts[item.source] >= 24:
+            continue
+        if category_counts[category] >= category_limits[category]:
+            continue
+        item.category = category
+        selected.append(item)
+        source_counts[item.source] += 1
+        category_counts[category] += 1
+        if len(selected) >= 40:
+            break
+    return selected
+
+
+def japanese_summary(item: Item) -> tuple[str, str, str, str]:
+    text = (item.title + " " + item.description).lower()
+    if "metmalaysia" in text or "ribut" in text or "hujan" in text or "thunderstorm" in text:
+        return (
+            "KLを含む複数地域で雷雨・大雨・強風への注意が必要です。",
+            "MetMalaysiaが悪天候への注意を出しました。\n対象地域では短時間の強い雨や突風が見込まれています。",
+            "冠水、渋滞、屋外予定の中断に注意が必要です。",
+            "移動前にMetMalaysiaと道路状況を確認。",
+        )
+    if "heat" in text or "cuaca panas" in text or "strok haba" in text:
+        return (
+            "全国で熱中症関連の健康リスクが高まっています。",
+            "保健省が熱中症・熱疲労などの発生状況を公表しました。\n屋外活動や運動時の発症が主なリスクとして挙げられています。",
+            "学校行事、屋外勤務、子どもや高齢者の外出管理に影響します。",
+            "水分補給、屋外活動の短縮、車内放置防止を徹底。",
+        )
+    if "mydigital" in text or "myjpj" in text:
+        return (
+            "MyDigital IDとMyJPJの連携が稼働しています。",
+            "MyJPJアプリ向けにMyDigital IDのシングルサインオン連携が始まりました。\n当局は導入後の運用は順調だとしています。",
+            "車両・免許関連のオンライン手続きでログイン導線が変わる可能性があります。",
+            "",
+        )
+    if "palm oil" in text or "minyak sawit" in text:
+        return (
+            "Klang周辺で道路上への油流出に注意が必要です。",
+            "パーム油タンクローリー関連の事故で、道路に油が流れました。\n周辺の生活道路・物流動線に影響する可能性があります。",
+            "路面の滑りやすさ、片側規制、渋滞に注意が必要です。",
+            "",
+        )
+    if "3r" in text or "mcmc" in text:
+        return (
+            "3R関連の挑発的投稿に対し、当局が監視・摘発を強めます。",
+            "人種・宗教・王室に関する挑発的投稿を作成・拡散しないよう注意喚起されました。\n違反時には法的処分の可能性があります。",
+            "SNS投稿や転送でも法的リスクが生じる可能性があります。",
+            "真偽不明の3R関連投稿は共有しない。",
+        )
+    if "badal haji" in text:
+        return (
+            "安すぎる代理ハジサービスへの詐欺注意が出ています。",
+            "不自然に安い代理巡礼サービスへの注意が呼びかけられました。\n家族のためにサービスを探す人が標的になり得ます。",
+            "送金後にサービスが実行されないなど、金銭被害の恐れがあります。",
+            "登録・送金前に正規事業者か確認。",
+        )
+    if "keselamatan sosial" in text or "self-employed" in text:
+        return (
+            "自営業者向け社会保障法の改正案が次期国会に提出予定です。",
+            "人的資源相が、改正案を閣議承認後に国会へ出すと説明しました。\n自営業者やギグワーカーの保護に関わる制度です。",
+            "個人事業主、配達員、フリーランスの保障や拠出に影響する可能性があります。",
+            "",
+        )
+    if "mara" in text:
+        return (
+            "MARA法改正はガバナンス強化と支援制度の再整理が焦点です。",
+            "MARA法改正の草案提出や制度見直しが報じられています。\n教育、起業支援、中小企業支援に関わる政策です。",
+            "ブミプトラ関連の教育・事業支援制度に影響する可能性があります。",
+            "",
+        )
+    if "bukit kiara" in text or "ttdi" in text:
+        return (
+            "DBKLがBukit Kiara開発案に300mの緩衝帯を設定しました。",
+            "TTDI住民の懸念を受け、開発計画にバッファーゾーンが課されました。\n都市開発と住環境保護の調整が進められています。",
+            "TTDI、Bukit Kiara周辺の住環境、緑地、交通に関わります。",
+            "",
+        )
+    if "electricity" in text or "bill" in text:
+        return (
+            "Sabahの電気代上昇懸念について、料金表は変わっていないと説明されました。",
+            "Sabah Electricityは、請求額増加への懸念に対し料金自体は未変更だと説明しました。\n暑さによるエアコン使用増が主因とみられています。",
+            "暑い時期は家庭の電気代が上がりやすくなります。",
+            "",
+        )
+    if "doctor" in text or "medical" in text:
+        return (
+            "保健省が医師・専門医不足に対応するタスクフォースを設置しました。",
+            "医師不足や人材定着を検討する省庁横断タスクフォースが立ち上がりました。\n特にSabahの医療人材不足が重点課題とされています。",
+            "地方医療、待ち時間、専門医アクセスに関わる中長期課題です。",
+            "",
+        )
+    if "ringgit" in text:
+        return (
+            "リンギット相場と経済見通しが引き続き注目されています。",
+            "リンギットの動きや経済見通しについて、慎重または前向きな評価が報じられました。\n外部指標や政策判断が為替材料になります。",
+            "海外送金、旅行、輸入品、外貨建て支払いに影響する可能性があります。",
+            "",
+        )
+    if "bursa" in text:
+        return (
+            "Bursa Malaysiaは慎重な値動きが見込まれています。",
+            "西アジア情勢などの外部要因を背景に、レンジ相場の見方が報じられました。\n市場心理は不透明感に左右されやすい状況です。",
+            "投資信託、株式投資、企業景況感を見ている人には参考になります。",
+            "",
+        )
+    if re.search(r"\bai\b|artificial intelligence|automation|talentcorp", text):
+        return (
+            "AI・自動化で一部労働者の再学習ニーズが高まっています。",
+            "AIと自動化が雇用構造を変えつつあると報じられました。\n今後は適応力やスキル更新が重要になります。",
+            "事務・定型業務に関わる人は、学び直しの必要性が高まりそうです。",
+            "",
+        )
+    return (
+        item.title,
+        f"{item.description or item.title}\nRSS内のタイトルと説明をもとに整理しました。",
+        "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+        "",
+    )
+
+
+def render(selected: list[Item], processed_count: int, failed_sources: list[str]) -> str:
+    lines: list[str] = []
+    ordered_categories = ["【速報】", "【生活インパクト】", "【知っておくと得】"]
+    for category in ordered_categories:
+        group = [item for item in selected if item.category == category]
+        lines.append(category)
+        lines.append("")
+        for item in group:
+            conclusion, what, impact, action = japanese_summary(item)
+            lines.append(f"- 結論：{conclusion}")
+            for line in what.splitlines()[:2]:
+                lines.append(f"- 何が起きた：{line}")
+            lines.append(f"- 生活への影響：{impact}")
+            if action:
+                lines.append(f"- 次アクション：{action}")
+            pub = f"{item.pub_date.year}年{item.pub_date.month}月{item.pub_date.day}日"
+            lines.append(f"- 出典：{item.source}（{pub}）")
+            lines.append(f"- 出典元URL：{item.link}")
+            lines.append("")
+    lines.append(f"処理対象件数：{processed_count}件")
+    lines.append(f"要約対象件数：{len(selected)}件")
+    lines.append(f"失敗したソース一覧：{', '.join(failed_sources) if failed_sources else 'なし'}")
+    return "\n".join(lines).strip()
+
+
+def diagnose_fetch(results: list[FetchResult]) -> str:
+    lines = diagnostic_lines()
+    for result in results:
+        head = result.data.decode("utf-8", "replace")[:100].replace("\n", "\\n").replace("\r", "\\r")
+        state = "OK" if result.ok else "FAIL"
+        lines.append(
+            f"{result.url}\n{state} | method={result.method} | status={result.status or 'None'} "
+            f"| content-type={result.content_type} | head={head} | error={result.error}"
+        )
+    return "\n".join(lines)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(add_help=True)
+    parser.add_argument("--diagnostics", action="store_true")
+    parser.add_argument("--diagnose-fetch", action="store_true")
+    parser.add_argument("--output", help="Write the final Markdown summary to this path.")
+    args = parser.parse_args()
+
+    results = [(source, feed, fetch_rss(url)) for source, feed, url in SOURCES]
+    if args.diagnose_fetch:
+        print(diagnose_fetch([result for _, _, result in results]))
+        return 0
+
+    all_items: list[Item] = []
+    failed_sources: list[str] = []
+    for source, feed, result in results:
+        if not result.ok:
+            failed_sources.append(f"{feed}: {result.error}")
+            continue
+        try:
+            all_items.extend(parse_items(source, feed, result.data))
+        except Exception as exc:
+            failed_sources.append(f"{feed}: parse failed: {type(exc).__name__}: {exc}")
+
+    now = datetime.now(MYT)
+    processed_count = sum(1 for item in all_items if now - timedelta(hours=48) <= item.pub_date <= now)
+    selected = select_items(all_items, now)
+    if args.diagnostics:
+        print("\n".join(diagnostic_lines()))
+        print("")
+    output = render(selected, processed_count, failed_sources)
+    if args.output:
+        output_path = Path(args.output)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(output + "\n", encoding="utf-8")
+        print(f"Wrote summary: {output_path}")
+        print(f"処理対象件数：{processed_count}件")
+        print(f"要約対象件数：{len(selected)}件")
+        print(f"失敗したソース一覧：{', '.join(failed_sources) if failed_sources else 'なし'}")
+    else:
+        print(output)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
