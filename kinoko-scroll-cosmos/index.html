@@ -1,0 +1,1021 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>きのこスクロール宇宙</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #fff8df;
+      --muted: rgba(255, 248, 223, 0.72);
+      --panel: rgba(19, 29, 45, 0.68);
+      --panel-border: rgba(255, 248, 223, 0.16);
+      --mint: #78ffd8;
+      --gold: #ffd166;
+      --coral: #ff7a6b;
+      --danger: #ff4f72;
+      --deep: #111827;
+      --cosmos-spin: 0deg;
+      --cosmos-drift: 0px;
+      --mushroom-squish-x: 1;
+      --mushroom-squish-y: 1;
+      --mushroom-tilt: 0deg;
+      --overheat: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    body {
+      min-height: 100svh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 20% 16%, rgba(120, 255, 216, 0.2), transparent 24%),
+        radial-gradient(circle at 78% 24%, rgba(255, 209, 102, 0.18), transparent 22%),
+        linear-gradient(150deg, #111827 0%, #1b2540 46%, #243a38 100%);
+      font-family: ui-rounded, "Hiragino Maru Gothic ProN", "Yu Gothic", system-ui, sans-serif;
+    }
+
+    .game {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      width: 100%;
+      height: 100svh;
+      min-height: 600px;
+      padding: clamp(12px, 2.6vw, 26px);
+      overflow: hidden;
+      isolation: isolate;
+      touch-action: none;
+    }
+
+    .starfield,
+    .cosmos {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    .starfield {
+      background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.84) 0 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(120, 255, 216, 0.62) 0 1px, transparent 1.7px),
+        radial-gradient(circle, rgba(255, 209, 102, 0.72) 0 1px, transparent 1.6px);
+      background-position: 0 0, 34px 54px, 86px 22px;
+      background-size: 120px 120px, 160px 160px, 190px 190px;
+      opacity: 0.58;
+      transform: translateY(calc(var(--cosmos-drift) * -0.12));
+    }
+
+    .cosmos {
+      display: grid;
+      place-items: center;
+      z-index: -1;
+    }
+
+    .ring {
+      position: absolute;
+      width: min(92vmin, 760px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 2px dashed rgba(120, 255, 216, 0.22);
+      transform: rotate(var(--cosmos-spin));
+    }
+
+    .ring::before,
+    .ring::after {
+      content: "";
+      position: absolute;
+      inset: 8%;
+      border-radius: inherit;
+      border: 2px dotted rgba(255, 209, 102, 0.2);
+      transform: rotate(34deg);
+    }
+
+    .ring::after {
+      inset: 20%;
+      border-color: rgba(255, 122, 107, 0.2);
+      transform: rotate(-47deg);
+    }
+
+    .spore {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: clamp(10px, 2.2vw, 18px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle at 34% 30%, #fffdf1, var(--gold) 52%, #d98d31);
+      box-shadow: 0 0 18px rgba(255, 209, 102, 0.55);
+      transform:
+        rotate(calc(var(--angle) + var(--cosmos-spin)))
+        translateX(var(--radius))
+        rotate(calc((var(--angle) + var(--cosmos-spin)) * -1));
+      opacity: 0.88;
+    }
+
+    .hud {
+      z-index: 6;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 9px;
+      width: 100%;
+    }
+
+    .meter {
+      min-width: 0;
+      padding: 9px 10px;
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+      backdrop-filter: blur(12px);
+    }
+
+    .meter__label {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 850;
+    }
+
+    .meter__value {
+      display: block;
+      overflow: hidden;
+      font-size: clamp(1rem, 2.9vw, 1.7rem);
+      font-weight: 950;
+      line-height: 1;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .meter--heat {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .meter--heat::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: calc(var(--overheat) * 1%);
+      height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--coral), var(--danger));
+      transition: width 130ms ease;
+    }
+
+    .stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 0;
+      touch-action: none;
+    }
+
+    .message {
+      position: absolute;
+      top: clamp(16px, 5vh, 42px);
+      left: 50%;
+      z-index: 7;
+      width: min(90vw, 560px);
+      min-height: 40px;
+      padding: 9px 14px;
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      background: rgba(19, 29, 45, 0.62);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
+      color: var(--muted);
+      font-size: clamp(0.82rem, 2.2vw, 1rem);
+      font-weight: 850;
+      text-align: center;
+      transform: translateX(-50%);
+      backdrop-filter: blur(12px);
+    }
+
+    .message.is-warning {
+      color: #ffe1e8;
+      border-color: rgba(255, 79, 114, 0.42);
+      background: rgba(82, 17, 34, 0.7);
+    }
+
+    .mushroom-zone {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: min(92vw, 620px);
+      height: min(68vh, 620px);
+      min-height: 390px;
+    }
+
+    .mushroom {
+      position: relative;
+      z-index: 4;
+      width: clamp(210px, 44vmin, 380px);
+      height: clamp(260px, 56vmin, 500px);
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      touch-action: none;
+      transform:
+        rotate(var(--mushroom-tilt))
+        scale(var(--mushroom-squish-x), var(--mushroom-squish-y));
+      transform-origin: 50% 84%;
+      transition: transform 120ms cubic-bezier(0.2, 0.88, 0.16, 1.18), filter 150ms ease;
+    }
+
+    .mushroom.is-tapped {
+      filter: saturate(1.18) brightness(1.08);
+    }
+
+    .mushroom.is-warning {
+      animation: panic 280ms linear infinite;
+      filter: hue-rotate(-18deg) saturate(1.34);
+    }
+
+    .cap,
+    .stem,
+    .face,
+    .shadow {
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .cap {
+      left: 50%;
+      top: 7%;
+      width: 92%;
+      height: 42%;
+      border: 3px solid rgba(255, 255, 255, 0.15);
+      border-radius: 54% 54% 44% 44% / 72% 72% 33% 33%;
+      background:
+        radial-gradient(circle at 25% 35%, #fff9c6 0 8%, transparent 8.8%),
+        radial-gradient(circle at 58% 25%, #fff4a8 0 10%, transparent 10.8%),
+        radial-gradient(circle at 49% 55%, #fff7bd 0 7%, transparent 7.8%),
+        linear-gradient(145deg, #ff8a79 0%, #df486a 58%, #9f345e 100%);
+      box-shadow:
+        inset 0 -16px 22px rgba(95, 22, 55, 0.26),
+        inset 17px 18px 18px rgba(255, 255, 255, 0.18),
+        0 30px 48px rgba(0, 0, 0, 0.28),
+        0 0 42px rgba(255, 122, 107, 0.24);
+      transform: translateX(-50%);
+    }
+
+    .cap::after {
+      content: "";
+      position: absolute;
+      left: 11%;
+      right: 11%;
+      bottom: -5%;
+      height: 25%;
+      border-radius: 50%;
+      background: linear-gradient(180deg, rgba(255, 244, 213, 0.98), rgba(232, 198, 166, 0.95));
+      box-shadow: inset 0 -8px 14px rgba(111, 76, 71, 0.2);
+    }
+
+    .stem {
+      left: 50%;
+      bottom: 8%;
+      width: 44%;
+      height: 61%;
+      border: 3px solid rgba(255, 255, 255, 0.14);
+      border-radius: 45% 45% 34% 34% / 18% 18% 22% 22%;
+      background:
+        radial-gradient(ellipse at 50% 16%, rgba(255, 255, 255, 0.86), transparent 32%),
+        linear-gradient(95deg, #e9bf90 0%, #fff0c9 39%, #efc795 72%, #c98e67 100%);
+      box-shadow:
+        inset -16px 0 20px rgba(126, 75, 61, 0.16),
+        inset 16px 0 17px rgba(255, 255, 255, 0.38),
+        0 18px 24px rgba(0, 0, 0, 0.18);
+      transform: translateX(-50%);
+    }
+
+    .face {
+      left: 50%;
+      top: 54%;
+      width: 45%;
+      height: 20%;
+      transform: translateX(-50%);
+    }
+
+    .eye {
+      position: absolute;
+      top: 30%;
+      width: 13%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #40303b;
+      box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.38);
+    }
+
+    .eye:first-child {
+      left: 18%;
+    }
+
+    .eye:nth-child(2) {
+      right: 18%;
+    }
+
+    .mouth {
+      position: absolute;
+      left: 50%;
+      bottom: 14%;
+      width: 24%;
+      height: 18%;
+      border-bottom: 4px solid #724052;
+      border-radius: 0 0 999px 999px;
+      transform: translateX(-50%);
+    }
+
+    .shadow {
+      left: 50%;
+      bottom: 3%;
+      z-index: 2;
+      width: 74%;
+      height: 11%;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(4, 9, 16, 0.42), transparent 70%);
+      transform: translateX(-50%);
+    }
+
+    .scroll-comet {
+      position: absolute;
+      z-index: 3;
+      left: 50%;
+      top: 50%;
+      width: 22px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fffdf1, var(--mint) 58%, transparent 70%);
+      box-shadow: 0 0 26px rgba(120, 255, 216, 0.7);
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .scroll-comet.is-active {
+      opacity: 1;
+      animation: cometPulse 220ms ease;
+    }
+
+    .danger {
+      position: absolute;
+      z-index: 8;
+      display: grid;
+      place-items: center;
+      width: clamp(42px, 8vw, 58px);
+      aspect-ratio: 1;
+      border: 2px solid rgba(255, 225, 232, 0.4);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 34% 30%, #ffb1ba, #ff4f72 58%, #9e183e);
+      box-shadow:
+        0 0 30px rgba(255, 79, 114, 0.42),
+        inset 0 -9px 12px rgba(84, 9, 35, 0.34);
+      color: #fff8df;
+      font-family: "Apple Color Emoji", "Segoe UI Symbol", "Noto Color Emoji", ui-rounded, sans-serif;
+      font-size: clamp(1.3rem, 4.4vw, 1.85rem);
+      cursor: pointer;
+      transform: translate(-50%, -50%) scale(0);
+      animation: dangerIn 220ms cubic-bezier(0.2, 0.92, 0.2, 1.24) forwards, dangerPulse 880ms ease-in-out 220ms infinite;
+      touch-action: none;
+    }
+
+    .danger.is-hit {
+      pointer-events: none;
+      animation: dangerHit 260ms ease forwards;
+    }
+
+    .float-text {
+      position: absolute;
+      z-index: 10;
+      left: 50%;
+      top: 50%;
+      color: var(--mint);
+      font-size: clamp(1rem, 3vw, 1.45rem);
+      font-weight: 950;
+      text-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: floatAway 760ms ease forwards;
+    }
+
+    .float-text.is-minus {
+      color: #ffccd6;
+    }
+
+    .controls {
+      z-index: 6;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+    }
+
+    .button {
+      min-width: min(78vw, 250px);
+      min-height: 46px;
+      border: 0;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #5fd7bc, #237a72);
+      box-shadow: 0 9px 0 #155153, 0 16px 24px rgba(0, 0, 0, 0.22);
+      color: #061a1a;
+      font: inherit;
+      font-weight: 950;
+      cursor: pointer;
+      transition: transform 100ms ease, box-shadow 100ms ease;
+    }
+
+    .button:active {
+      transform: translateY(5px);
+      box-shadow: 0 4px 0 #155153, 0 9px 16px rgba(0, 0, 0, 0.18);
+    }
+
+    .game.is-overheated .stage {
+      animation: worldWarning 420ms linear infinite;
+    }
+
+    @keyframes dangerIn {
+      to { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    @keyframes dangerPulse {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.18); }
+    }
+
+    @keyframes dangerHit {
+      to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.72) rotate(24deg);
+      }
+    }
+
+    @keyframes floatAway {
+      to {
+        opacity: 0;
+        transform: translate(-50%, calc(-50% - 58px)) scale(1.1);
+      }
+    }
+
+    @keyframes cometPulse {
+      50% { transform: translate(-50%, -50%) scale(1.35); }
+    }
+
+    @keyframes panic {
+      0%, 100% { transform: rotate(var(--mushroom-tilt)) scale(var(--mushroom-squish-x), var(--mushroom-squish-y)); }
+      33% { transform: rotate(calc(var(--mushroom-tilt) - 4deg)) scale(calc(var(--mushroom-squish-x) * 1.03), calc(var(--mushroom-squish-y) * 0.97)); }
+      66% { transform: rotate(calc(var(--mushroom-tilt) + 4deg)) scale(calc(var(--mushroom-squish-x) * 0.98), calc(var(--mushroom-squish-y) * 1.02)); }
+    }
+
+    @keyframes worldWarning {
+      0%, 100% { filter: saturate(1) brightness(1); }
+      50% { filter: saturate(1.2) brightness(1.12); }
+    }
+
+    @media (max-width: 720px) {
+      .game {
+        min-height: 540px;
+        padding: 10px;
+      }
+
+      .hud {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 6px;
+      }
+
+      .meter {
+        padding: 8px 5px;
+      }
+
+      .meter__label {
+        font-size: 0.58rem;
+      }
+
+      .meter__value {
+        font-size: clamp(0.86rem, 4.4vw, 1.18rem);
+      }
+
+      .message {
+        top: 14px;
+        font-size: 0.78rem;
+      }
+
+      .mushroom-zone {
+        width: 98vw;
+        height: 66vh;
+        min-height: 360px;
+      }
+
+      .mushroom {
+        width: clamp(178px, 58vw, 278px);
+        height: clamp(230px, 76vw, 366px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 1ms !important;
+        transition-duration: 1ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="game" id="game" aria-label="きのこスクロール宇宙">
+    <div class="starfield" aria-hidden="true"></div>
+    <div class="cosmos" aria-hidden="true">
+      <div class="ring"></div>
+      <span class="spore" style="--angle: 8deg; --radius: min(34vmin, 270px);"></span>
+      <span class="spore" style="--angle: 48deg; --radius: min(39vmin, 315px);"></span>
+      <span class="spore" style="--angle: 92deg; --radius: min(30vmin, 235px);"></span>
+      <span class="spore" style="--angle: 146deg; --radius: min(42vmin, 330px);"></span>
+      <span class="spore" style="--angle: 206deg; --radius: min(35vmin, 280px);"></span>
+      <span class="spore" style="--angle: 266deg; --radius: min(45vmin, 350px);"></span>
+      <span class="spore" style="--angle: 318deg; --radius: min(31vmin, 245px);"></span>
+    </div>
+
+    <section class="hud" aria-label="ゲーム情報">
+      <div class="meter">
+        <span class="meter__label">スコア</span>
+        <span class="meter__value" id="score">0</span>
+      </div>
+      <div class="meter">
+        <span class="meter__label">コンボ</span>
+        <span class="meter__value" id="combo">0</span>
+      </div>
+      <div class="meter meter--heat">
+        <span class="meter__label">過モミ</span>
+        <span class="meter__value" id="heat">0%</span>
+      </div>
+      <div class="meter">
+        <span class="meter__label">TIME</span>
+        <span class="meter__value" id="time">30.0</span>
+      </div>
+      <div class="meter">
+        <span class="meter__label">BEST</span>
+        <span class="meter__value" id="best">0</span>
+      </div>
+    </section>
+
+    <section class="stage" id="stage" aria-live="polite">
+      <div class="message" id="message">タップでモミモミ、スクロールで胞子宇宙を回す</div>
+      <div class="mushroom-zone" id="zone">
+        <div class="scroll-comet" id="scroll-comet" aria-hidden="true"></div>
+        <button class="mushroom" id="mushroom" type="button" aria-label="きのこをモミモミする">
+          <span class="shadow"></span>
+          <span class="stem"></span>
+          <span class="cap"></span>
+          <span class="face" aria-hidden="true">
+            <span class="eye"></span>
+            <span class="eye"></span>
+            <span class="mouth"></span>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <div class="controls">
+      <button class="button" id="restart" type="button">リスタート</button>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const game = document.getElementById("game");
+    const stage = document.getElementById("stage");
+    const zone = document.getElementById("zone");
+    const mushroom = document.getElementById("mushroom");
+    const comet = document.getElementById("scroll-comet");
+    const scoreEl = document.getElementById("score");
+    const comboEl = document.getElementById("combo");
+    const heatEl = document.getElementById("heat");
+    const timeEl = document.getElementById("time");
+    const bestEl = document.getElementById("best");
+    const messageEl = document.getElementById("message");
+    const restartButton = document.getElementById("restart");
+
+    const GAME_SECONDS = 30;
+    const BEST_KEY = "kinoko-scroll-cosmos-best";
+    const MAX_DANGERS = 5;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const state = {
+      score: 0,
+      combo: 0,
+      overheat: 0,
+      timeLeft: GAME_SECONDS,
+      playing: true,
+      lastInputAt: 0,
+      lastTapAt: 0,
+      cosmosSpin: 0,
+      cosmosDrift: 0,
+      scrollEnergy: 0,
+      activePointer: null,
+      pointerStartedOnMushroom: false,
+      pointerMoved: false,
+      lastPointerY: 0,
+      raf: 0,
+      previousFrame: 0,
+      spawnTimer: 0,
+      dangers: new Set(),
+      dangerTimers: new Map()
+    };
+
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+    const random = (min, max) => min + Math.random() * (max - min);
+
+    function loadBest() {
+      return Number(localStorage.getItem(BEST_KEY) || 0);
+    }
+
+    function saveBest() {
+      const best = loadBest();
+      if (state.score > best) {
+        localStorage.setItem(BEST_KEY, String(state.score));
+        bestEl.textContent = String(state.score);
+        return true;
+      }
+      return false;
+    }
+
+    function setMessage(text, warning = false) {
+      messageEl.textContent = text;
+      messageEl.classList.toggle("is-warning", warning);
+    }
+
+    function setMushroomShape(squishX, squishY, tilt) {
+      root.style.setProperty("--mushroom-squish-x", squishX.toFixed(3));
+      root.style.setProperty("--mushroom-squish-y", squishY.toFixed(3));
+      root.style.setProperty("--mushroom-tilt", `${tilt.toFixed(2)}deg`);
+    }
+
+    function relaxMushroom() {
+      mushroom.classList.remove("is-tapped");
+      setMushroomShape(1, 1, 0);
+    }
+
+    function render() {
+      scoreEl.textContent = String(state.score);
+      comboEl.textContent = String(state.combo);
+      heatEl.textContent = `${Math.round(state.overheat)}%`;
+      timeEl.textContent = state.timeLeft.toFixed(1);
+      root.style.setProperty("--overheat", state.overheat.toFixed(1));
+      root.style.setProperty("--cosmos-spin", `${state.cosmosSpin.toFixed(2)}deg`);
+      root.style.setProperty("--cosmos-drift", `${state.cosmosDrift.toFixed(1)}px`);
+
+      const warning = state.overheat >= 72;
+      game.classList.toggle("is-overheated", warning);
+      mushroom.classList.toggle("is-warning", warning);
+      if (warning && state.playing) {
+        setMessage("揉みすぎ注意。少し間をあけて宇宙をなだめて", true);
+      }
+    }
+
+    function floatText(text, x, y, negative = false) {
+      const label = document.createElement("span");
+      label.className = `float-text${negative ? " is-minus" : ""}`;
+      label.textContent = text;
+      label.style.left = `${x}px`;
+      label.style.top = `${y}px`;
+      stage.append(label);
+      label.addEventListener("animationend", () => label.remove(), { once: true });
+    }
+
+    function addScore(points, x, y, label) {
+      if (!state.playing) return;
+      state.score += points;
+      state.combo += 1;
+      setMessage(label);
+      floatText(`+${points}`, x, y);
+      render();
+    }
+
+    function subtractScore(points, x, y) {
+      if (!state.playing) return;
+      state.score = Math.max(0, state.score - points);
+      state.combo = 0;
+      state.overheat = clamp(state.overheat + 8, 0, 100);
+      setMessage("ドクロ接触。胞子軌道が乱れた", true);
+      floatText(`-${points}`, x, y, true);
+      render();
+    }
+
+    function addHeat(amount) {
+      if (!state.playing) return;
+      state.overheat = clamp(state.overheat + amount, 0, 100);
+      if (state.overheat >= 100) {
+        finishGame("揉みすぎ崩壊。きのこ宇宙が閉じました");
+      }
+      render();
+    }
+
+    function stagePoint(clientX, clientY) {
+      const rect = stage.getBoundingClientRect();
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+
+    function tapMushroom(clientX, clientY) {
+      if (!state.playing) return;
+      const now = performance.now();
+      const interval = now - state.lastTapAt;
+      state.lastTapAt = now;
+      state.lastInputAt = now;
+
+      const point = stagePoint(clientX, clientY);
+      const rhythmBonus = interval > 120 && interval < 420 ? 2 : 0;
+      const points = 3 + Math.min(8, Math.floor(state.combo / 7)) + rhythmBonus;
+      addScore(points, point.x, point.y, rhythmBonus ? "いい間合いのモミモミ" : "ぷにっと加点");
+
+      const heatGain = interval < 95 ? 13 : interval < 150 ? 6 : 2.5;
+      addHeat(heatGain);
+      mushroom.classList.add("is-tapped");
+      setMushroomShape(1.08, 0.92, random(-3, 3));
+      window.setTimeout(relaxMushroom, prefersReducedMotion ? 20 : 130);
+      checkDangerCollision(clientX, clientY, 5);
+    }
+
+    function moveComet(delta, sourceX, sourceY) {
+      const zoneRect = zone.getBoundingClientRect();
+      const stageRect = stage.getBoundingClientRect();
+      const radius = Math.min(zoneRect.width, zoneRect.height) * 0.34;
+      const angle = state.cosmosSpin * Math.PI / 180;
+      const x = sourceX ?? zoneRect.left - stageRect.left + zoneRect.width / 2 + Math.cos(angle) * radius;
+      const y = sourceY ?? zoneRect.top - stageRect.top + zoneRect.height / 2 + Math.sin(angle) * radius;
+
+      comet.style.left = `${x}px`;
+      comet.style.top = `${y}px`;
+      comet.classList.remove("is-active");
+      void comet.offsetWidth;
+      comet.classList.add("is-active");
+      window.clearTimeout(comet._timer);
+      comet._timer = window.setTimeout(() => comet.classList.remove("is-active"), 180);
+
+      checkDangerCollision(stageRect.left + x, stageRect.top + y, 16 + Math.min(18, Math.abs(delta) * 0.06));
+      return { x, y };
+    }
+
+    function processScroll(deltaY, clientX = null, clientY = null) {
+      if (!state.playing) return;
+      const now = performance.now();
+      const absDelta = Math.abs(deltaY);
+      if (absDelta < 1) return;
+
+      const previousInputGap = now - state.lastInputAt;
+      state.lastInputAt = now;
+      state.scrollEnergy = clamp(state.scrollEnergy + absDelta * 0.18, 0, 180);
+      state.cosmosSpin += clamp(deltaY * 0.22, -30, 30);
+      state.cosmosDrift += clamp(deltaY, -90, 90);
+
+      const stageRect = stage.getBoundingClientRect();
+      const localX = clientX === null ? null : clientX - stageRect.left;
+      const localY = clientY === null ? null : clientY - stageRect.top;
+      const cometPoint = moveComet(deltaY, localX, localY);
+
+      const paced = absDelta >= 10 && absDelta <= 80 && previousInputGap > 42;
+      const points = paced ? 7 : Math.max(2, Math.round(clamp(absDelta / 26, 1, 8)));
+      addScore(points, cometPoint.x, cometPoint.y, paced ? "胞子スクロール成功" : "胞子が流れた");
+
+      const heatGain = absDelta > 95 ? absDelta * 0.11 : previousInputGap < 30 ? 7 : 1.6;
+      addHeat(heatGain);
+      setMushroomShape(
+        clamp(1 + absDelta * 0.0018, 1, 1.14),
+        clamp(1 - absDelta * 0.0014, 0.88, 1),
+        clamp(deltaY * 0.04, -8, 8)
+      );
+      window.setTimeout(relaxMushroom, prefersReducedMotion ? 20 : 140);
+    }
+
+    function removeDanger(danger, hit = false) {
+      if (!danger || !state.dangers.has(danger)) return;
+      state.dangers.delete(danger);
+      window.clearTimeout(state.dangerTimers.get(danger));
+      state.dangerTimers.delete(danger);
+      if (hit) {
+        danger.classList.add("is-hit");
+        danger.addEventListener("animationend", () => danger.remove(), { once: true });
+      } else {
+        danger.remove();
+      }
+    }
+
+    function clearDangers() {
+      for (const danger of [...state.dangers]) {
+        removeDanger(danger);
+      }
+    }
+
+    function hitDanger(danger) {
+      if (!danger || !state.playing || !state.dangers.has(danger)) return false;
+      const rect = danger.getBoundingClientRect();
+      const point = stagePoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
+      subtractScore(18, point.x, point.y);
+      removeDanger(danger, true);
+      setMessage("ドクロ接触。胞子軌道が乱れた", true);
+      return true;
+    }
+
+    function checkDangerCollision(clientX, clientY, padding = 0) {
+      for (const danger of [...state.dangers]) {
+        const rect = danger.getBoundingClientRect();
+        const insideX = clientX >= rect.left - padding && clientX <= rect.right + padding;
+        const insideY = clientY >= rect.top - padding && clientY <= rect.bottom + padding;
+        if (insideX && insideY) {
+          hitDanger(danger);
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function spawnDanger() {
+      if (!state.playing || state.dangers.size >= MAX_DANGERS) return;
+      const danger = document.createElement("button");
+      danger.type = "button";
+      danger.className = "danger";
+      danger.setAttribute("aria-label", "ドクロの減点ポイント");
+      danger.textContent = "☠";
+
+      const stageRect = stage.getBoundingClientRect();
+      const zoneRect = zone.getBoundingClientRect();
+      const centerX = zoneRect.left - stageRect.left + zoneRect.width / 2;
+      const centerY = zoneRect.top - stageRect.top + zoneRect.height / 2;
+      const radius = random(Math.min(zoneRect.width, zoneRect.height) * 0.22, Math.min(zoneRect.width, zoneRect.height) * 0.42);
+      const angle = random(0, Math.PI * 2);
+      const x = clamp(centerX + Math.cos(angle) * radius, 36, stageRect.width - 36);
+      const y = clamp(centerY + Math.sin(angle) * radius, 72, stageRect.height - 72);
+
+      danger.style.left = `${x}px`;
+      danger.style.top = `${y}px`;
+      danger.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        hitDanger(danger);
+      });
+
+      stage.append(danger);
+      state.dangers.add(danger);
+      setMessage("ドクロに触れると減点。スクロール軌道にも注意", state.overheat >= 72);
+      const lifetime = Math.max(1300, 2600 - (GAME_SECONDS - state.timeLeft) * 28);
+      const timer = window.setTimeout(() => removeDanger(danger), lifetime);
+      state.dangerTimers.set(danger, timer);
+    }
+
+    function scheduleDanger() {
+      window.clearTimeout(state.spawnTimer);
+      if (!state.playing) return;
+      const progress = 1 - state.timeLeft / GAME_SECONDS;
+      const delay = random(900 - progress * 280, 1650 - progress * 420);
+      state.spawnTimer = window.setTimeout(() => {
+        spawnDanger();
+        if (progress > 0.58 && Math.random() > 0.64) spawnDanger();
+        scheduleDanger();
+      }, Math.max(420, delay));
+    }
+
+    function finishGame(reason) {
+      if (!state.playing) return;
+      state.playing = false;
+      window.cancelAnimationFrame(state.raf);
+      window.clearTimeout(state.spawnTimer);
+      clearDangers();
+      relaxMushroom();
+      game.classList.remove("is-overheated");
+      mushroom.classList.remove("is-warning");
+      state.activePointer = null;
+      const bestUpdated = saveBest();
+      setMessage(bestUpdated ? `${reason} ベスト更新: ${state.score}` : `${reason} スコア: ${state.score}`, state.overheat >= 100);
+      restartButton.textContent = "もう一回";
+      render();
+    }
+
+    function frame(now) {
+      if (!state.playing) return;
+      if (!state.previousFrame) state.previousFrame = now;
+      const delta = (now - state.previousFrame) / 1000;
+      state.previousFrame = now;
+      state.timeLeft = Math.max(0, state.timeLeft - delta);
+      state.overheat = Math.max(0, state.overheat - delta * 9.5);
+      state.scrollEnergy = Math.max(0, state.scrollEnergy - delta * 80);
+      state.cosmosSpin += delta * (8 + state.scrollEnergy * 0.08);
+      state.cosmosDrift += delta * state.scrollEnergy * 0.25;
+
+      if (state.timeLeft <= 0) {
+        finishGame("時間切れ。胞子宇宙の旅はここまで");
+        return;
+      }
+
+      if (state.timeLeft <= 5 && state.timeLeft > 4.85) {
+        setMessage("あと5秒。無理な連打は禁物");
+      }
+
+      render();
+      state.raf = window.requestAnimationFrame(frame);
+    }
+
+    function resetGame() {
+      window.cancelAnimationFrame(state.raf);
+      window.clearTimeout(state.spawnTimer);
+      clearDangers();
+      state.score = 0;
+      state.combo = 0;
+      state.overheat = 0;
+      state.timeLeft = GAME_SECONDS;
+      state.playing = true;
+      state.lastInputAt = 0;
+      state.lastTapAt = 0;
+      state.cosmosSpin = 0;
+      state.cosmosDrift = 0;
+      state.scrollEnergy = 0;
+      state.activePointer = null;
+      state.pointerStartedOnMushroom = false;
+      state.pointerMoved = false;
+      state.previousFrame = 0;
+      restartButton.textContent = "リスタート";
+      bestEl.textContent = String(loadBest());
+      relaxMushroom();
+      setMessage("タップでモミモミ、スクロールで胞子宇宙を回す");
+      render();
+      scheduleDanger();
+      state.raf = window.requestAnimationFrame(frame);
+    }
+
+    stage.addEventListener("wheel", (event) => {
+      event.preventDefault();
+      processScroll(event.deltaY, null, null);
+    }, { passive: false });
+
+    stage.addEventListener("pointerdown", (event) => {
+      if (!state.playing) return;
+      if (event.target.closest(".danger")) return;
+      event.preventDefault();
+      state.activePointer = event.pointerId;
+      state.pointerMoved = false;
+      state.pointerStartedOnMushroom = Boolean(event.target.closest("#mushroom"));
+      state.lastPointerY = event.clientY;
+      stage.setPointerCapture(event.pointerId);
+    });
+
+    stage.addEventListener("pointermove", (event) => {
+      if (state.activePointer !== event.pointerId) return;
+      event.preventDefault();
+      const dy = state.lastPointerY - event.clientY;
+      state.lastPointerY = event.clientY;
+      if (Math.abs(dy) > 3) {
+        state.pointerMoved = true;
+        processScroll(dy, event.clientX, event.clientY);
+      }
+      checkDangerCollision(event.clientX, event.clientY, 2);
+    });
+
+    stage.addEventListener("pointerup", (event) => {
+      if (state.activePointer !== event.pointerId) return;
+      event.preventDefault();
+      if (stage.hasPointerCapture(event.pointerId)) {
+        stage.releasePointerCapture(event.pointerId);
+      }
+      const shouldTap = state.pointerStartedOnMushroom && !state.pointerMoved;
+      state.activePointer = null;
+      if (shouldTap) {
+        tapMushroom(event.clientX, event.clientY);
+      }
+    });
+
+    stage.addEventListener("pointercancel", (event) => {
+      if (state.activePointer === event.pointerId) {
+        state.activePointer = null;
+        relaxMushroom();
+      }
+    });
+
+    mushroom.addEventListener("keydown", (event) => {
+      if (event.key !== " " && event.key !== "Enter") return;
+      event.preventDefault();
+      const rect = mushroom.getBoundingClientRect();
+      tapMushroom(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    });
+
+    restartButton.addEventListener("click", resetGame);
+
+    resetGame();
+  </script>
+</body>
+</html>
