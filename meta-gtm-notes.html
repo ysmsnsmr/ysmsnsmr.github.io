@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N787TD4T');</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meta Ads &amp; GTM Notes | Yas Learning Portfolio</title>
+  <meta name="description" content="Meta Ads、Meta Pixel、Google Tag Managerの練習メモです。イベント例とデバッグチェックリストをまとめています。">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: "Noto Sans JP", sans-serif;
+      color: #2f3135;
+      background-color: #f8f9fb;
+    }
+    header,
+    footer {
+      background-color: #183153;
+      color: #fff;
+    }
+    .nav-link {
+      color: #fff;
+    }
+    .nav-link:hover,
+    .nav-link:focus {
+      color: #d9e8ff;
+    }
+    .hero {
+      background-color: #eef4fb;
+      padding: 64px 0;
+    }
+    .card {
+      border: 1px solid #dde3ea;
+      border-radius: 8px;
+    }
+    .tag {
+      background-color: #e6f0fa;
+      color: #183153;
+      border-radius: 999px;
+      display: inline-block;
+      font-size: 0.875rem;
+      padding: 0.35rem 0.75rem;
+    }
+    .note-panel {
+      background-color: #fff8e6;
+      border-left: 4px solid #d99a00;
+    }
+    @media (max-width: 767.98px) {
+      header nav {
+        width: 100%;
+      }
+      .nav {
+        flex-wrap: wrap;
+        row-gap: 0.25rem;
+      }
+      .nav-item {
+        flex: 0 0 auto;
+      }
+      .nav-link {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N787TD4T"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  <header class="py-3">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <h1 class="h3 mb-0">Yas Learning Portfolio</h1>
+      <nav aria-label="メインナビゲーション">
+        <ul class="nav flex-wrap">
+          <li class="nav-item"><a class="nav-link px-2" href="/index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link px-2" href="/learning-logs.html">Learning Logs</a></li>
+          <li class="nav-item"><a class="nav-link px-2" href="/experiments.html">AI/Codex</a></li>
+          <li class="nav-item"><a class="nav-link px-2" href="/meta-gtm-notes.html">Meta Ads &amp; GTM</a></li>
+          <li class="nav-item"><a class="nav-link px-2" href="/news/malaysia/">Malaysia News</a></li>
+          <li class="nav-item"><a class="nav-link px-2" href="/links.html">Links</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <p class="tag mb-3">Meta Ads / GTM practice</p>
+      <h2 class="display-6 fw-bold mb-3">計測まわりの練習メモ</h2>
+      <p class="lead mb-0">このサイトは、GTMやMeta Pixelの設置・イベント確認を練習する場所として始まりました。</p>
+    </div>
+  </section>
+
+  <main class="py-5">
+    <div class="container">
+      <div class="note-panel p-4 mb-4">
+        <h3 class="h4">Current setup note</h3>
+        <p class="mb-0">既存ページでは Google Tag Manager ID <strong>GTM-N787TD4T</strong> を使っています。v1でもこのIDを維持します。</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <section class="card h-100">
+            <div class="card-body">
+              <h3 class="h4">GTM / Pixel setup notes</h3>
+              <ul class="mb-0">
+                <li>GTMのhead用scriptとbody直後のnoscriptをセットで確認する。</li>
+                <li>ページを追加したら、同じGTM IDが入っているか確認する。</li>
+                <li>Meta Pixelを使う場合は、GTM経由で発火条件を整理する。</li>
+              </ul>
+            </div>
+          </section>
+        </div>
+
+        <div class="col-lg-6">
+          <section class="card h-100">
+            <div class="card-body">
+              <h3 class="h4">Event examples</h3>
+              <ul class="mb-0">
+                <li>PageView: 各ページ表示時の基本イベント。</li>
+                <li>Lead: 問い合わせや登録完了ページで使う想定。</li>
+                <li>Custom event: 学習ログ閲覧、実験ページ閲覧などの練習用。</li>
+              </ul>
+            </div>
+          </section>
+        </div>
+
+        <div class="col-lg-6">
+          <section class="card h-100">
+            <div class="card-body">
+              <h3 class="h4">Debugging checklist</h3>
+              <ul class="mb-0">
+                <li>GTM Previewで対象ページに接続できるか。</li>
+                <li>Tag AssistantでGTMコンテナが検出されるか。</li>
+                <li>イベント名と発火条件がメモ通りか。</li>
+                <li>本番URLとローカルURLを混同していないか。</li>
+              </ul>
+            </div>
+          </section>
+        </div>
+
+        <div class="col-lg-6">
+          <section class="card h-100">
+            <div class="card-body">
+              <h3 class="h4">Mistakes and fixes</h3>
+              <ul class="mb-0">
+                <li>古いデモページの目的が分かりにくい場合は、v1ナビから外す。</li>
+                <li>新規ページを作ったらGTMのnoscriptを入れ忘れていないか確認する。</li>
+                <li>外部ツールで確認するときは、公開URLとファイルパスの違いに注意する。</li>
+              </ul>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 text-center">
+    <div class="container">
+      <p class="mb-0">© 2026 Yas Learning Portfolio.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

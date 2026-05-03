@@ -57,6 +57,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       background-color: #fff8e6;
       border-left: 4px solid #d99a00;
     }
+    @media (max-width: 767.98px) {
+      header nav {
+        width: 100%;
+      }
+      .nav {
+        flex-wrap: wrap;
+        row-gap: 0.25rem;
+      }
+      .nav-item {
+        flex: 0 0 auto;
+      }
+      .nav-link {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -69,10 +85,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
       <h1 class="h3 mb-0">Yas Learning Portfolio</h1>
       <nav aria-label="メインナビゲーション">
-        <ul class="nav">
-          <li class="nav-item"><a class="nav-link px-2" href="#about">概要</a></li>
-          <li class="nav-item"><a class="nav-link px-2" href="#logs">学習ログ</a></li>
-          <li class="nav-item"><a class="nav-link px-2" href="#links">リンク</a></li>
+        <ul class="nav flex-wrap">
+          <li class="nav-item"><a class="nav-link px-2" href="/index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link px-2" href="/learning-logs.html">Learning Logs</a></li>
+          <li class="nav-item"><a class="nav-link px-2" href="/experiments.html">AI/Codex</a></li>
+          <li class="nav-item"><a class="nav-link px-2" href="/meta-gtm-notes.html">Meta Ads &amp; GTM</a></li>
+          <li class="nav-item"><a class="nav-link px-2" href="/news/malaysia/">Malaysia News</a></li>
+          <li class="nav-item"><a class="nav-link px-2" href="/links.html">Links</a></li>
         </ul>
       </nav>
     </div>
@@ -178,19 +197,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h2 class="section-title">Quick links</h2>
         <div class="row g-3">
           <div class="col-md-6 col-lg-3">
-            <a class="btn btn-outline-primary w-100" href="#about">サイト概要</a>
+            <a class="btn btn-outline-primary w-100" href="/learning-logs.html">Learning Logs</a>
           </div>
           <div class="col-md-6 col-lg-3">
-            <a class="btn btn-outline-primary w-100" href="kinoko-momimomi/">Kinoko Momimomi</a>
+            <a class="btn btn-outline-primary w-100" href="/experiments.html">AI/Codex</a>
           </div>
           <div class="col-md-6 col-lg-3">
-            <a class="btn btn-outline-primary w-100" href="mushroom-puni/">Mushroom Puni</a>
+            <a class="btn btn-outline-primary w-100" href="/meta-gtm-notes.html">Meta Ads &amp; GTM</a>
           </div>
           <div class="col-md-6 col-lg-3">
-            <a class="btn btn-outline-primary w-100" href="kinoko-scroll-cosmos/">Kinoko Scroll Cosmos</a>
+            <a class="btn btn-outline-primary w-100" href="/news/malaysia/">Malaysia News</a>
           </div>
           <div class="col-md-6 col-lg-3">
-            <a class="btn btn-outline-primary w-100" href="starbreaker/">Starbreaker</a>
+            <a class="btn btn-outline-primary w-100" href="/links.html">Links</a>
           </div>
         </div>
       </div>
