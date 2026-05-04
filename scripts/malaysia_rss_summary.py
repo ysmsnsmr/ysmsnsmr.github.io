@@ -10,7 +10,7 @@ import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
 from collections import Counter
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional
@@ -47,6 +47,19 @@ class Item:
     link: str
     score: int = 0
     category: str = ""
+    tags: list[str] = field(default_factory=list)
+    reasons: list[str] = field(default_factory=list)
+    penalties: list[str] = field(default_factory=list)
+    source_count: int = 1
+    is_official: bool = False
+    published_at: datetime | None = None
+    effective_at: datetime | None = None
+    expires_at: datetime | None = None
+    active_until: datetime | None = None
+
+    def __post_init__(self) -> None:
+        if self.published_at is None:
+            self.published_at = self.pub_date
 
 
 def diagnostic_lines() -> list[str]:
@@ -241,22 +254,88 @@ def key_for(item: Item) -> str:
     return re.sub(r"[^a-z0-9]+", " ", item.title.lower()).strip()[:90] or item.link
 
 
-def score_item(item: Item) -> int:
+def add_unique(values: list[str], value: str) -> None:
+    if value not in values:
+        values.append(value)
+
+
+def evaluate_item(item: Item) -> Item:
     text = (item.title + " " + item.description).lower()
     score = 0
     weighted = [
-        (r"metmalaysia|warning|amaran|ribut|hujan|thunderstorm|heavy rain|strong winds|heat|cuaca panas|strok haba", 8),
-        (r"traffic|road closure|lrt|mrt|ktm|klia|nkve|public transport|palm oil|minyak sawit", 7),
-        (r"mydigital|myjpj|social security|keselamatan sosial|akta|act|tariff|bill|bil|electricity", 7),
-        (r"klang valley|kuala lumpur|selangor|subang|shah alam|klang|pj|putrajaya|ttdi|bukit kiara|kl sentral", 3),
-        (r"doctor shortage|health ministry|medical|monkey malaria|sabah electricity|\bai\b|artificial intelligence|automation|talentcorp|ringgit|bursa malaysia|imf|m40 women|childcare|tax relief|urban|development|dbkl", 5),
-        (r"murder|bunuh|stab|tikaman|fatal|killed|dead|drowns|lemas|maut|kemalangan|accident|hit-and-run|bullying|suspect|remand", -8),
-        (r"umno|ge16|party|political cooperation|red lines|khairy|johari|election|kerajaan madani", -5),
+        (
+            r"metmalaysia|warning|amaran|ribut|hujan|thunderstorm|heavy rain|strong winds|heat|cuaca panas|strok haba",
+            8,
+            ["weather", "health"],
+            "公式警報・天候・暑熱リスク",
+        ),
+        (
+            r"traffic|road closure|lrt|mrt|ktm|klia|nkve|public transport|palm oil|minyak sawit",
+            7,
+            ["public_transport", "road_closure"],
+            "交通・道路・移動に影響",
+        ),
+        (
+            r"mydigital|myjpj|social security|keselamatan sosial|akta|act|tariff|bill|bil|electricity",
+            7,
+            ["jpj", "social_security", "electricity", "prices"],
+            "制度・手続き・料金に影響",
+        ),
+        (
+            r"klang valley|kuala lumpur|selangor|subang|shah alam|klang|pj|putrajaya|ttdi|bukit kiara|kl sentral",
+            3,
+            ["klang_valley"],
+            "Klang Valley周辺に関連",
+        ),
+        (
+            r"doctor shortage|health ministry|medical|monkey malaria|sabah electricity|\bai\b|artificial intelligence|automation|talentcorp|ringgit|bursa malaysia|imf|m40 women|childcare|tax relief|urban|development|dbkl",
+            5,
+            ["health", "employment", "currency", "economy", "urban_development"],
+            "医療・雇用・経済・都市生活の背景価値",
+        ),
+        (
+            r"murder|bunuh|stab|tikaman|fatal|killed|dead|drowns|lemas|maut|kemalangan|accident|hit-and-run|bullying|suspect|remand",
+            -8,
+            [],
+            "単発事件・事故の可能性",
+        ),
+        (
+            r"umno|ge16|party|political cooperation|red lines|khairy|johari|election|kerajaan madani",
+            -5,
+            [],
+            "発言ベースの政治ニュースの可能性",
+        ),
     ]
-    for pattern, value in weighted:
+
+    item.tags = []
+    item.reasons = []
+    item.penalties = []
+    item.is_official = bool(
+        re.search(
+            r"metmalaysia|health ministry|moh|mcmc|dbkl|jpj|myjpj|immigration|police|polis|"
+            r"ministry|kementerian|menteri|suruhanjaya|jabatan",
+            text,
+        )
+    )
+    if item.is_official:
+        add_unique(item.reasons, "公的機関・公式発表に関連")
+
+    for pattern, value, tags, reason in weighted:
         if re.search(pattern, text):
             score += value
-    return score
+            for tag in tags:
+                add_unique(item.tags, tag)
+            if value >= 0:
+                add_unique(item.reasons, reason)
+            else:
+                add_unique(item.penalties, reason)
+    item.score = score
+    return item
+
+
+def score_item(item: Item) -> int:
+    evaluate_item(item)
+    return item.score
 
 
 def should_exclude_item(item: Item) -> bool:
@@ -310,12 +389,18 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
     cutoff = now - timedelta(hours=48)
     recent = [item for item in items if cutoff <= item.pub_date <= now]
     by_key: dict[str, Item] = {}
+    sources_by_key: dict[str, set[str]] = {}
     for item in recent:
-        item.score = score_item(item)
+        evaluate_item(item)
         key = key_for(item)
+        sources_by_key.setdefault(key, set()).add(item.source)
         current = by_key.get(key)
         if current is None or (item.score, item.pub_date) > (current.score, current.pub_date):
             by_key[key] = item
+    for key, item in by_key.items():
+        item.source_count = len(sources_by_key.get(key, {item.source}))
+        if item.source_count > 1:
+            add_unique(item.reasons, "複数媒体で同一論点を報道")
 
     candidates = [item for item in by_key.values() if item.score >= 3 and not should_exclude_item(item)]
     candidates.sort(key=lambda item: (item.score, item.pub_date), reverse=True)
@@ -337,6 +422,27 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
         if len(selected) >= 40:
             break
     return selected
+
+
+def selection_summary(items: list[Item], selected: list[Item], now: datetime) -> str:
+    cutoff = now - timedelta(hours=48)
+    recent = [item for item in items if cutoff <= item.pub_date <= now]
+    unique_keys = {key_for(item) for item in recent}
+    category_counts = Counter(item.category for item in selected)
+    tag_counts: Counter[str] = Counter()
+    for item in selected:
+        tag_counts.update(item.tags)
+    top_tags = ", ".join(f"{tag}:{count}" for tag, count in tag_counts.most_common(8)) or "なし"
+    return "\n".join(
+        [
+            "selection_summary:",
+            f"- recent_items: {len(recent)}",
+            f"- unique_topics: {len(unique_keys)}",
+            f"- selected_items: {len(selected)}",
+            f"- categories: 速報={category_counts['【速報】']}, 生活インパクト={category_counts['【生活インパクト】']}, 知っておくと得={category_counts['【知っておくと得】']}",
+            f"- top_tags: {top_tags}",
+        ]
+    )
 
 
 def japanese_summary(item: Item) -> tuple[str, str, str, str]:
@@ -512,6 +618,8 @@ def main() -> int:
     selected = select_items(all_items, now)
     if args.diagnostics:
         print("\n".join(diagnostic_lines()))
+        print("")
+        print(selection_summary(all_items, selected, now))
         print("")
     output = render(selected, processed_count, failed_sources)
     if args.output:
