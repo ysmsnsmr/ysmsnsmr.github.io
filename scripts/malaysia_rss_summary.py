@@ -31,6 +31,11 @@ FLAG_ROAD_ISSUE = "is_road_issue"
 FLAG_UTILITY_BILL = "is_utility_bill"
 FLAG_SABAH_ELECTRICITY = "is_sabah_electricity"
 FLAG_JPJ = "is_jpj"
+FLAG_MYDIGITAL_INTEGRATION = "is_mydigital_integration"
+FLAG_MCMC = "is_mcmc"
+FLAG_MCMC_3R = "is_mcmc_3r"
+FLAG_MCMC_SERVICE_QUALITY = "is_mcmc_service_quality"
+FLAG_MCMC_WSIS = "is_mcmc_wsis"
 FLAG_SOCIAL_SECURITY = "is_social_security"
 FLAG_SCAM = "is_scam"
 FLAG_CURRENCY = "is_currency"
@@ -51,6 +56,11 @@ ALL_FLAGS = [
     FLAG_UTILITY_BILL,
     FLAG_SABAH_ELECTRICITY,
     FLAG_JPJ,
+    FLAG_MYDIGITAL_INTEGRATION,
+    FLAG_MCMC,
+    FLAG_MCMC_3R,
+    FLAG_MCMC_SERVICE_QUALITY,
+    FLAG_MCMC_WSIS,
     FLAG_SOCIAL_SECURITY,
     FLAG_SCAM,
     FLAG_CURRENCY,
@@ -297,6 +307,82 @@ def has_any(text: str, phrases: list[str]) -> bool:
     return any(has_phrase(text, phrase) for phrase in phrases)
 
 
+def match_count(text: str, phrases: list[str]) -> int:
+    return sum(1 for phrase in phrases if has_phrase(text, phrase))
+
+
+def matches_template(text: str, spec: dict[str, object]) -> bool:
+    if has_any(text, spec.get("negative_any", [])):
+        return False
+    for group in spec.get("required_groups", []):
+        if not has_any(text, group):
+            return False
+    context_any = spec.get("context_any", [])
+    if context_any and not has_any(text, context_any):
+        return False
+    return True
+
+
+MYDIGITAL_TEMPLATE = {
+    "required_groups": [
+        ["mydigital id", "digital identity"],
+        ["myjpj", "jpj app"],
+        ["single sign on", "sso", "login", "integration", "integrated", "linked"],
+    ],
+    "negative_any": [
+        "foreign licence conversion",
+        "foreign license conversion",
+        "driving licence conversion",
+        "driving license conversion",
+        "conversion applications",
+        "licence application",
+        "license application",
+        "jpj counter",
+        "jpj counters",
+        "transport ministry",
+        "foreign driving licence",
+        "foreign driving license",
+        "malaysians nationwide from june 1",
+    ],
+}
+
+MCMC_3R_CONTEXT = [
+    "provocative",
+    "seditious",
+    "social media",
+    "monitor",
+    "monitoring",
+    "enforcement",
+    "investigation",
+    "do not share",
+    "hate speech",
+    "offensive post",
+    "fake news",
+]
+
+MCMC_NEGATIVE = [
+    "wsis prizes",
+    "service quality standards",
+    "consumer protection",
+    "telecommunications",
+    "telco",
+    "broadband",
+    "internet quality",
+    "shortlisted projects",
+    "vote",
+    "digital infrastructure",
+    "communications service",
+    "network coverage",
+]
+
+
+def matches_mcmc_3r_template(text: str) -> bool:
+    if has_any(text, MCMC_NEGATIVE):
+        return False
+    has_3r_subject = has_phrase(text, "3r") or match_count(text, ["race", "religion", "royalty"]) >= 2
+    return has_3r_subject and has_any(text, MCMC_3R_CONTEXT)
+
+
 def build_flags(item: Item) -> dict[str, bool]:
     text = item_text(item)
     flags = dict.fromkeys(ALL_FLAGS, False)
@@ -347,7 +433,12 @@ def build_flags(item: Item) -> dict[str, bool]:
         has_phrase(text, "sabah")
         and has_any(text, ["electricity bill", "electricity bills", "bil elektrik", "tariff unchanged", "aircon", "electricity tariff"])
     )
-    flags[FLAG_JPJ] = has_any(text, ["myjpj", "jpj", "mydigital id", "mydigital"])
+    flags[FLAG_JPJ] = has_any(text, ["myjpj", "jpj", "jpj app", "mydigital id", "mydigital"])
+    flags[FLAG_MYDIGITAL_INTEGRATION] = matches_template(text, MYDIGITAL_TEMPLATE)
+    flags[FLAG_MCMC] = has_phrase(text, "mcmc")
+    flags[FLAG_MCMC_3R] = matches_mcmc_3r_template(text)
+    flags[FLAG_MCMC_SERVICE_QUALITY] = flags[FLAG_MCMC] and has_any(text, ["service quality standards", "consumer protection", "telecommunications", "communications service", "network coverage"])
+    flags[FLAG_MCMC_WSIS] = flags[FLAG_MCMC] and has_any(text, ["wsis prizes", "shortlisted projects", "vote"])
     flags[FLAG_SOCIAL_SECURITY] = has_any(text, ["social security", "keselamatan sosial", "self employed social", "pekerjaan sendiri"])
     flags[FLAG_SCAM] = has_any(text, ["scam", "penipuan", "badal haji"])
     flags[FLAG_CURRENCY] = has_phrase(text, "ringgit") and has_any(
@@ -421,7 +512,7 @@ def key_for(item: Item) -> str:
     flag_groups = [
         ("heat", FLAG_HEAT),
         ("weather", FLAG_WEATHER),
-        ("myjpj", FLAG_JPJ),
+        ("myjpj", FLAG_MYDIGITAL_INTEGRATION),
         ("sabah-electricity", FLAG_SABAH_ELECTRICITY),
         ("self-employed-social-security", FLAG_SOCIAL_SECURITY),
         ("ringgit", FLAG_CURRENCY),
@@ -656,7 +747,7 @@ def japanese_summary(item: Item) -> tuple[str, str, str, str]:
             "学校行事、屋外勤務、子どもや高齢者の外出管理に影響します。",
             "水分補給、屋外活動の短縮、車内放置防止を徹底。",
         )
-    if flags[FLAG_JPJ]:
+    if flags[FLAG_MYDIGITAL_INTEGRATION]:
         return (
             "MyDigital IDとMyJPJの連携が稼働しています。",
             "MyJPJアプリ向けにMyDigital IDのシングルサインオン連携が始まりました。\n当局は導入後の運用は順調だとしています。",
@@ -670,7 +761,7 @@ def japanese_summary(item: Item) -> tuple[str, str, str, str]:
             "路面の滑りやすさ、片側規制、渋滞に注意が必要です。",
             "",
         )
-    if has_any(text, ["3r", "mcmc"]):
+    if flags[FLAG_MCMC_3R]:
         return (
             "3R関連の挑発的投稿に対し、当局が監視・摘発を強めます。",
             "人種・宗教・王室に関する挑発的投稿を作成・拡散しないよう注意喚起されました。\n違反時には法的処分の可能性があります。",
@@ -841,6 +932,47 @@ def self_test() -> int:
     evaluate_item(market_item)
     check("Bursa triggers market", market_item.flags[FLAG_MARKET])
     check("Bursa summary fires", "Bursa Malaysia" in japanese_summary(market_item)[0])
+
+    jpj_conversion = item(
+        "Transport Ministry: JPJ to accept foreign licence conversion applications for Malaysians nationwide from June 1"
+    )
+    evaluate_item(jpj_conversion)
+    check("JPJ conversion keeps JPJ flag", jpj_conversion.flags[FLAG_JPJ])
+    check("JPJ conversion does not trigger MyDigital integration", not jpj_conversion.flags[FLAG_MYDIGITAL_INTEGRATION])
+    check("JPJ conversion does not use MyDigital summary", "MyDigital IDとMyJPJ" not in japanese_summary(jpj_conversion)[0])
+
+    jpj_counter = item("JPJ counters to handle driving licence conversion applications")
+    evaluate_item(jpj_counter)
+    check("JPJ counter keeps JPJ flag", jpj_counter.flags[FLAG_JPJ])
+    check("JPJ counter does not trigger MyDigital integration", not jpj_counter.flags[FLAG_MYDIGITAL_INTEGRATION])
+    check("JPJ counter does not use MyDigital summary", "MyDigital IDとMyJPJ" not in japanese_summary(jpj_counter)[0])
+
+    mydigital_item = item("MyDigital ID single sign-on integration begins for MyJPJ app")
+    evaluate_item(mydigital_item)
+    check("MyDigital integration flag triggers", mydigital_item.flags[FLAG_MYDIGITAL_INTEGRATION])
+    check("MyDigital integration summary fires", "MyDigital IDとMyJPJ" in japanese_summary(mydigital_item)[0])
+
+    mcmc_quality = item("MCMC enhances service quality standards to strengthen consumer protection")
+    evaluate_item(mcmc_quality)
+    check("MCMC quality keeps MCMC flag", mcmc_quality.flags[FLAG_MCMC])
+    check("MCMC quality does not trigger 3R", not mcmc_quality.flags[FLAG_MCMC_3R])
+    check("MCMC quality does not use 3R summary", "3R関連" not in japanese_summary(mcmc_quality)[0])
+
+    mcmc_wsis = item("MCMC urges Malaysians to vote for nation's shortlisted projects at WSIS Prizes 2026")
+    evaluate_item(mcmc_wsis)
+    check("MCMC WSIS keeps MCMC flag", mcmc_wsis.flags[FLAG_MCMC])
+    check("MCMC WSIS does not trigger 3R", not mcmc_wsis.flags[FLAG_MCMC_3R])
+    check("MCMC WSIS does not use 3R summary", "3R関連" not in japanese_summary(mcmc_wsis)[0])
+
+    mcmc_3r = item("MCMC warns against sharing provocative 3R posts on race, religion and royalty")
+    evaluate_item(mcmc_3r)
+    check("MCMC 3R flag triggers", mcmc_3r.flags[FLAG_MCMC_3R])
+    check("MCMC 3R summary fires", "3R関連" in japanese_summary(mcmc_3r)[0])
+
+    mcmc_race_guard = item("MCMC announces race entries for digital innovation contest")
+    evaluate_item(mcmc_race_guard)
+    check("MCMC race guard keeps MCMC flag", mcmc_race_guard.flags[FLAG_MCMC])
+    check("MCMC race guard does not trigger 3R", not mcmc_race_guard.flags[FLAG_MCMC_3R])
 
     if failures:
         print("self-test failed:")
