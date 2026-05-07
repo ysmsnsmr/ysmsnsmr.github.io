@@ -24,6 +24,46 @@ SOURCES = [
 ]
 MYT = timezone(timedelta(hours=8))
 
+FLAG_WEATHER = "is_weather"
+FLAG_HEAT = "is_heat"
+FLAG_PUBLIC_TRANSPORT = "is_public_transport"
+FLAG_ROAD_ISSUE = "is_road_issue"
+FLAG_UTILITY_BILL = "is_utility_bill"
+FLAG_SABAH_ELECTRICITY = "is_sabah_electricity"
+FLAG_JPJ = "is_jpj"
+FLAG_SOCIAL_SECURITY = "is_social_security"
+FLAG_SCAM = "is_scam"
+FLAG_CURRENCY = "is_currency"
+FLAG_MARKET = "is_market"
+FLAG_AI_ECONOMY = "is_ai_economy"
+FLAG_HEALTH_SYSTEM = "is_health_system"
+FLAG_URBAN_DEVELOPMENT = "is_urban_development"
+FLAG_KLANG_VALLEY = "is_klang_valley"
+FLAG_OFFICIAL = "is_official"
+FLAG_INDIVIDUAL_INCIDENT = "is_individual_incident"
+FLAG_POLITICAL_NOISE = "is_political_noise"
+
+ALL_FLAGS = [
+    FLAG_WEATHER,
+    FLAG_HEAT,
+    FLAG_PUBLIC_TRANSPORT,
+    FLAG_ROAD_ISSUE,
+    FLAG_UTILITY_BILL,
+    FLAG_SABAH_ELECTRICITY,
+    FLAG_JPJ,
+    FLAG_SOCIAL_SECURITY,
+    FLAG_SCAM,
+    FLAG_CURRENCY,
+    FLAG_MARKET,
+    FLAG_AI_ECONOMY,
+    FLAG_HEALTH_SYSTEM,
+    FLAG_URBAN_DEVELOPMENT,
+    FLAG_KLANG_VALLEY,
+    FLAG_OFFICIAL,
+    FLAG_INDIVIDUAL_INCIDENT,
+    FLAG_POLITICAL_NOISE,
+]
+
 
 @dataclass
 class FetchResult:
@@ -56,6 +96,7 @@ class Item:
     effective_at: datetime | None = None
     expires_at: datetime | None = None
     active_until: datetime | None = None
+    flags: dict[str, bool] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         if self.published_at is None:
@@ -230,26 +271,176 @@ def parse_items(source: str, feed: str, data: bytes) -> list[Item]:
     return items
 
 
+def normalized(value: str) -> str:
+    value = html.unescape(value or "").lower()
+    value = value.replace("‑", "-").replace("–", "-").replace("—", "-")
+    value = re.sub(r"[-_/]+", " ", value)
+    return re.sub(r"\s+", " ", value).strip()
+
+
+def item_text(item: Item) -> str:
+    return normalized(f"{item.title} {item.description}")
+
+
+def phrase_pattern(phrase: str) -> str:
+    escaped_words = [re.escape(part) for part in normalized(phrase).split()]
+    return r"(?<![a-z0-9])" + r"\s+".join(escaped_words) + r"(?![a-z0-9])"
+
+
+def has_phrase(text: str, phrase: str) -> bool:
+    if not phrase:
+        return False
+    return bool(re.search(phrase_pattern(phrase), normalized(text)))
+
+
+def has_any(text: str, phrases: list[str]) -> bool:
+    return any(has_phrase(text, phrase) for phrase in phrases)
+
+
+def build_flags(item: Item) -> dict[str, bool]:
+    text = item_text(item)
+    flags = dict.fromkeys(ALL_FLAGS, False)
+    flags[FLAG_WEATHER] = has_any(
+        text,
+        [
+            "metmalaysia",
+            "thunderstorm",
+            "heavy rain",
+            "strong winds",
+            "ribut petir",
+            "hujan lebat",
+            "amaran cuaca",
+            "amaran ribut",
+            "amaran hujan",
+            "weather warning",
+            "storm warning",
+            "rain warning",
+        ],
+    )
+    flags[FLAG_HEAT] = has_any(
+        text,
+        ["cuaca panas", "strok haba", "heat stroke", "heat related", "hot weather"],
+    ) or (has_phrase(text, "heat") and has_any(text, ["illness", "stroke", "weather", "related", "death", "deaths"]))
+    flags[FLAG_PUBLIC_TRANSPORT] = has_any(
+        text,
+        ["public transport", "lrt", "mrt", "ktm", "monorail", "rapid kl", "myrapid", "bus service"],
+    )
+    flags[FLAG_ROAD_ISSUE] = has_any(
+        text,
+        [
+            "road closure",
+            "traffic disruption",
+            "jalan ditutup",
+            "kesesakan",
+            "nkve",
+            "palm oil",
+            "minyak sawit",
+            "bandar sultan suleiman",
+        ],
+    )
+    utility_bill = has_any(text, ["electricity bill", "electricity bills", "utility bill", "utility bills", "water bill", "water bills", "bil elektrik"])
+    utility_tariff = has_any(text, ["electricity tariff", "water tariff", "tariff unchanged", "tarif elektrik"]) or (
+        has_any(text, ["tariff", "tariffs", "tarif"]) and has_any(text, ["electricity", "water", "sabah electricity", "bill", "bills", "bil"])
+    )
+    flags[FLAG_UTILITY_BILL] = utility_bill or utility_tariff or has_phrase(text, "sabah electricity")
+    flags[FLAG_SABAH_ELECTRICITY] = has_phrase(text, "sabah electricity") or (
+        has_phrase(text, "sabah")
+        and has_any(text, ["electricity bill", "electricity bills", "bil elektrik", "tariff unchanged", "aircon", "electricity tariff"])
+    )
+    flags[FLAG_JPJ] = has_any(text, ["myjpj", "jpj", "mydigital id", "mydigital"])
+    flags[FLAG_SOCIAL_SECURITY] = has_any(text, ["social security", "keselamatan sosial", "self employed social", "pekerjaan sendiri"])
+    flags[FLAG_SCAM] = has_any(text, ["scam", "penipuan", "badal haji"])
+    flags[FLAG_CURRENCY] = has_phrase(text, "ringgit") and has_any(
+        text,
+        ["trade", "trading", "rise", "rises", "strengthen", "strengthening", "forecast", "expected", "range", "us data", "imf", "economy"],
+    )
+    flags[FLAG_MARKET] = has_phrase(text, "bursa malaysia") or (
+        has_phrase(text, "fbm klci") and has_any(text, ["trade", "trading", "range bound", "market", "index"])
+    )
+    flags[FLAG_AI_ECONOMY] = (has_phrase(text, "ai") or has_phrase(text, "artificial intelligence")) and has_any(
+        text,
+        ["gdp", "economy", "economic", "rm", "billion", "contribute", "contribution", "automation", "talentcorp", "workers", "jobs"],
+    )
+    flags[FLAG_HEALTH_SYSTEM] = has_any(text, ["doctor shortage", "shortages of doctors", "medical specialists", "health ministry", "monkey malaria", "wabak", "kesihatan"])
+    flags[FLAG_URBAN_DEVELOPMENT] = has_any(text, ["dbkl", "bukit kiara", "ttdi", "urban development", "development project"])
+    flags[FLAG_KLANG_VALLEY] = has_any(
+        text,
+        ["klang valley", "kuala lumpur", "selangor", "subang", "shah alam", "klang", "petaling jaya", "pj", "putrajaya", "ttdi", "bukit kiara", "kl sentral"],
+    )
+    flags[FLAG_OFFICIAL] = has_any(
+        text,
+        ["metmalaysia", "health ministry", "moh", "mcmc", "dbkl", "jpj", "myjpj", "immigration", "police", "polis", "ministry", "kementerian", "menteri", "suruhanjaya", "jabatan"],
+    )
+    flags[FLAG_INDIVIDUAL_INCIDENT] = has_any(
+        text,
+        [
+            "murder",
+            "bunuh",
+            "stab",
+            "tikaman",
+            "fatal",
+            "killed",
+            "dead",
+            "drowns",
+            "lemas",
+            "maut",
+            "kemalangan",
+            "accident",
+            "hit and run",
+            "bullying",
+            "suspect",
+            "remand",
+            "fire",
+            "blaze",
+            "terbakar",
+            "police chase",
+            "swept away",
+            "search continues",
+            "search radius",
+            "missing",
+            "armed",
+            "knife",
+            "jumps out",
+        ],
+    )
+    flags[FLAG_POLITICAL_NOISE] = has_any(
+        text,
+        ["umno", "ge16", "election", "political cooperation", "party", "khairy", "johari", "negeri sembilan", "unity government", "kerajaan madani", "red lines"],
+    )
+    item.flags = flags
+    return flags
+
+
+def ensure_flags(item: Item) -> dict[str, bool]:
+    return item.flags if item.flags else build_flags(item)
+
+
 def key_for(item: Item) -> str:
-    text = (item.title + " " + item.description).lower()
-    groups = [
-        ("heat", r"heat|cuaca panas|strok haba"),
-        ("weather", r"metmalaysia|ribut|hujan lebat|thunderstorm|heavy rain|strong winds"),
-        ("mara", r"\bmara\b|akta mara"),
-        ("myjpj", r"mydigital|myjpj"),
-        ("palm-oil-road", r"palm oil|minyak sawit|bandar sultan suleiman"),
-        ("self-employed-social-security", r"keselamatan sosial pekerjaan sendiri|self[- ]employed social"),
-        ("badal-haji-scam", r"badal haji"),
-        ("bukit-kiara", r"bukit kiara|ttdi"),
-        ("sabah-electricity", r"sabah electricity|electricity bills"),
-        ("doctor-shortage", r"doctor shortage|shortages of doctors|medical specialists"),
-        ("ringgit", r"ringgit"),
-        ("bursa", r"bursa malaysia|fbm klci"),
-        ("ai-workers", r"ai and automation|talentcorp|automation"),
-        ("monkey-malaria", r"monkey malaria"),
+    text = item_text(item)
+    flags = ensure_flags(item)
+    flag_groups = [
+        ("heat", FLAG_HEAT),
+        ("weather", FLAG_WEATHER),
+        ("myjpj", FLAG_JPJ),
+        ("sabah-electricity", FLAG_SABAH_ELECTRICITY),
+        ("self-employed-social-security", FLAG_SOCIAL_SECURITY),
+        ("ringgit", FLAG_CURRENCY),
+        ("bursa", FLAG_MARKET),
+        ("ai-workers", FLAG_AI_ECONOMY),
     ]
-    for name, pattern in groups:
-        if re.search(pattern, text):
+    for name, flag in flag_groups:
+        if flags[flag]:
+            return name
+    phrase_groups = [
+        ("mara", ["mara", "akta mara"]),
+        ("palm-oil-road", ["palm oil", "minyak sawit", "bandar sultan suleiman"]),
+        ("badal-haji-scam", ["badal haji"]),
+        ("bukit-kiara", ["bukit kiara", "ttdi"]),
+        ("doctor-shortage", ["doctor shortage", "shortages of doctors", "medical specialists"]),
+        ("monkey-malaria", ["monkey malaria"]),
+    ]
+    for name, phrases in phrase_groups:
+        if has_any(text, phrases):
             return name
     return re.sub(r"[^a-z0-9]+", " ", item.title.lower()).strip()[:90] or item.link
 
@@ -260,75 +451,72 @@ def add_unique(values: list[str], value: str) -> None:
 
 
 def evaluate_item(item: Item) -> Item:
-    text = (item.title + " " + item.description).lower()
+    flags = build_flags(item)
     score = 0
-    weighted = [
-        (
-            r"metmalaysia|warning|amaran|ribut|hujan|thunderstorm|heavy rain|strong winds|heat|cuaca panas|strok haba",
-            8,
-            ["weather", "health"],
-            "公式警報・天候・暑熱リスク",
-        ),
-        (
-            r"traffic|road closure|lrt|mrt|ktm|klia|nkve|public transport|palm oil|minyak sawit",
-            7,
-            ["public_transport", "road_closure"],
-            "交通・道路・移動に影響",
-        ),
-        (
-            r"mydigital|myjpj|social security|keselamatan sosial|akta|act|tariff|bill|bil|electricity",
-            7,
-            ["jpj", "social_security", "electricity", "prices"],
-            "制度・手続き・料金に影響",
-        ),
-        (
-            r"klang valley|kuala lumpur|selangor|subang|shah alam|klang|pj|putrajaya|ttdi|bukit kiara|kl sentral",
-            3,
-            ["klang_valley"],
-            "Klang Valley周辺に関連",
-        ),
-        (
-            r"doctor shortage|health ministry|medical|monkey malaria|sabah electricity|\bai\b|artificial intelligence|automation|talentcorp|ringgit|bursa malaysia|imf|m40 women|childcare|tax relief|urban|development|dbkl",
-            5,
-            ["health", "employment", "currency", "economy", "urban_development"],
-            "医療・雇用・経済・都市生活の背景価値",
-        ),
-        (
-            r"murder|bunuh|stab|tikaman|fatal|killed|dead|drowns|lemas|maut|kemalangan|accident|hit-and-run|bullying|suspect|remand",
-            -8,
-            [],
-            "単発事件・事故の可能性",
-        ),
-        (
-            r"umno|ge16|party|political cooperation|red lines|khairy|johari|election|kerajaan madani",
-            -5,
-            [],
-            "発言ベースの政治ニュースの可能性",
-        ),
-    ]
-
     item.tags = []
     item.reasons = []
     item.penalties = []
-    item.is_official = bool(
-        re.search(
-            r"metmalaysia|health ministry|moh|mcmc|dbkl|jpj|myjpj|immigration|police|polis|"
-            r"ministry|kementerian|menteri|suruhanjaya|jabatan",
-            text,
-        )
-    )
+    item.is_official = flags[FLAG_OFFICIAL]
     if item.is_official:
         add_unique(item.reasons, "公的機関・公式発表に関連")
 
-    for pattern, value, tags, reason in weighted:
-        if re.search(pattern, text):
-            score += value
-            for tag in tags:
-                add_unique(item.tags, tag)
-            if value >= 0:
-                add_unique(item.reasons, reason)
-            else:
-                add_unique(item.penalties, reason)
+    def add_score(value: int, tags: list[str], reason: str) -> None:
+        nonlocal score
+        score += value
+        for tag in tags:
+            add_unique(item.tags, tag)
+        if value >= 0:
+            add_unique(item.reasons, reason)
+        else:
+            add_unique(item.penalties, reason)
+
+    if flags[FLAG_WEATHER]:
+        add_score(8, ["weather"], "公式警報・天候リスク")
+    if flags[FLAG_HEAT]:
+        add_score(8, ["health"], "暑熱・熱中症リスク")
+    if flags[FLAG_PUBLIC_TRANSPORT] or flags[FLAG_ROAD_ISSUE]:
+        tags = []
+        if flags[FLAG_PUBLIC_TRANSPORT]:
+            tags.append("public_transport")
+        if flags[FLAG_ROAD_ISSUE]:
+            tags.append("road_closure")
+        add_score(7, tags, "交通・道路・移動に影響")
+    if flags[FLAG_JPJ] or flags[FLAG_SOCIAL_SECURITY] or flags[FLAG_UTILITY_BILL] or flags[FLAG_SABAH_ELECTRICITY]:
+        tags = []
+        if flags[FLAG_JPJ]:
+            tags.append("jpj")
+        if flags[FLAG_SOCIAL_SECURITY]:
+            tags.append("social_security")
+        if flags[FLAG_UTILITY_BILL] or flags[FLAG_SABAH_ELECTRICITY]:
+            tags.extend(["electricity", "prices"])
+        add_score(7, tags, "制度・手続き・料金に影響")
+    if flags[FLAG_KLANG_VALLEY]:
+        add_score(3, ["klang_valley"], "Klang Valley周辺に関連")
+    if (
+        flags[FLAG_HEALTH_SYSTEM]
+        or flags[FLAG_AI_ECONOMY]
+        or flags[FLAG_CURRENCY]
+        or flags[FLAG_MARKET]
+        or flags[FLAG_URBAN_DEVELOPMENT]
+    ):
+        tags = []
+        if flags[FLAG_HEALTH_SYSTEM]:
+            tags.append("health")
+        if flags[FLAG_AI_ECONOMY]:
+            tags.extend(["employment", "economy"])
+        if flags[FLAG_CURRENCY]:
+            tags.append("currency")
+        if flags[FLAG_MARKET]:
+            tags.append("economy")
+        if flags[FLAG_URBAN_DEVELOPMENT]:
+            tags.append("urban_development")
+        add_score(5, tags, "医療・雇用・経済・都市生活の背景価値")
+    if flags[FLAG_SCAM]:
+        add_score(7, ["scam"], "詐欺・注意喚起")
+    if flags[FLAG_INDIVIDUAL_INCIDENT]:
+        add_score(-8, [], "単発事件・事故の可能性")
+    if flags[FLAG_POLITICAL_NOISE]:
+        add_score(-5, [], "発言ベースの政治ニュースの可能性")
     item.score = score
     return item
 
@@ -339,48 +527,54 @@ def score_item(item: Item) -> int:
 
 
 def should_exclude_item(item: Item) -> bool:
-    text = (item.title + " " + item.description).lower()
-    if item.feed == "Malay Mail Money" and not re.search(
-        r"malaysia|malaysian|kuala lumpur|ringgit|bursa|fbm klci|talentcorp|imf|semiconductor",
-        text,
+    text = item_text(item)
+    flags = ensure_flags(item)
+    if item.feed == "Malay Mail Money" and not (
+        has_any(text, ["malaysia", "malaysian", "kuala lumpur", "semiconductor"])
+        or flags[FLAG_CURRENCY]
+        or flags[FLAG_MARKET]
+        or flags[FLAG_AI_ECONOMY]
     ):
         return True
 
-    practical_exception = re.search(
-        r"metmalaysia|warning|amaran|road closure|traffic disruption|public transport|palm oil|minyak sawit|"
-        r"health ministry|cuaca panas|heat|strok haba|monkey malaria|mcmc|3r",
-        text,
+    practical_exception = (
+        flags[FLAG_WEATHER]
+        or flags[FLAG_HEAT]
+        or flags[FLAG_PUBLIC_TRANSPORT]
+        or flags[FLAG_ROAD_ISSUE]
+        or flags[FLAG_HEALTH_SYSTEM]
+        or flags[FLAG_SCAM]
+        or has_any(text, ["mcmc", "3r"])
     )
-    individual_incident = re.search(
-        r"murder|bunuh|stab|tikaman|fatal|killed|dead|drowns|lemas|maut|kemalangan|accident|"
-        r"hit-and-run|bullying|suspect|remand|fire|blaze|terbakar|police chase|swept away|"
-        r"search continues|search radius|missing|armed|knife|jumps out",
-        text,
-    )
-    if individual_incident and not practical_exception:
+    if flags[FLAG_INDIVIDUAL_INCIDENT] and not practical_exception:
         return True
 
-    policy_exception = re.search(
-        r"mara|social security|keselamatan sosial|health ministry|doctor shortage|dbkl|bukit kiara|"
-        r"m40 women|childcare|tax relief|budi madani|mydigital|myjpj|spm|moral studies|education",
-        text,
+    policy_exception = (
+        has_any(text, ["mara", "akta mara", "m40 women", "childcare", "tax relief", "budi madani", "spm", "moral studies", "education"])
+        or flags[FLAG_SOCIAL_SECURITY]
+        or flags[FLAG_HEALTH_SYSTEM]
+        or flags[FLAG_URBAN_DEVELOPMENT]
+        or flags[FLAG_JPJ]
     )
-    political_news = re.search(
-        r"umno|ge16|election|political cooperation|party|khairy|johari|negeri sembilan|"
-        r"unity government|kerajaan madani|red lines",
-        text,
-    )
-    if political_news and not policy_exception:
+    if flags[FLAG_POLITICAL_NOISE] and not policy_exception:
         return True
     return False
 
 
 def category_for(item: Item) -> str:
-    text = (item.title + " " + item.description).lower()
-    if re.search(r"metmalaysia|warning|amaran|ribut|hujan lebat|thunderstorm|heavy rain|strong winds|heat|cuaca panas|strok haba", text):
-        if not re.search(r"murder|bunuh|accident|kemalangan", text):
-            return "【速報】"
-    if re.search(r"traffic|road|jalan|mydigital|myjpj|electricity|bill|tariff|social security|badal haji|mcmc|3r|haji|palm oil|minyak sawit", text):
+    flags = ensure_flags(item)
+    if (flags[FLAG_WEATHER] or flags[FLAG_HEAT]) and not flags[FLAG_INDIVIDUAL_INCIDENT]:
+        return "【速報】"
+    if (
+        flags[FLAG_PUBLIC_TRANSPORT]
+        or flags[FLAG_ROAD_ISSUE]
+        or flags[FLAG_JPJ]
+        or flags[FLAG_UTILITY_BILL]
+        or flags[FLAG_SABAH_ELECTRICITY]
+        or flags[FLAG_SOCIAL_SECURITY]
+        or flags[FLAG_SCAM]
+        or has_any(item_text(item), ["mcmc", "3r", "haji"])
+    ):
         return "【生活インパクト】"
     return "【知っておくと得】"
 
@@ -446,99 +640,100 @@ def selection_summary(items: list[Item], selected: list[Item], now: datetime) ->
 
 
 def japanese_summary(item: Item) -> tuple[str, str, str, str]:
-    text = (item.title + " " + item.description).lower()
-    if "metmalaysia" in text or "ribut" in text or "hujan" in text or "thunderstorm" in text:
+    text = item_text(item)
+    flags = ensure_flags(item)
+    if flags[FLAG_WEATHER]:
         return (
             "KLを含む複数地域で雷雨・大雨・強風への注意が必要です。",
             "MetMalaysiaが悪天候への注意を出しました。\n対象地域では短時間の強い雨や突風が見込まれています。",
             "冠水、渋滞、屋外予定の中断に注意が必要です。",
             "移動前にMetMalaysiaと道路状況を確認。",
         )
-    if "heat" in text or "cuaca panas" in text or "strok haba" in text:
+    if flags[FLAG_HEAT]:
         return (
             "全国で熱中症関連の健康リスクが高まっています。",
             "保健省が熱中症・熱疲労などの発生状況を公表しました。\n屋外活動や運動時の発症が主なリスクとして挙げられています。",
             "学校行事、屋外勤務、子どもや高齢者の外出管理に影響します。",
             "水分補給、屋外活動の短縮、車内放置防止を徹底。",
         )
-    if "mydigital" in text or "myjpj" in text:
+    if flags[FLAG_JPJ]:
         return (
             "MyDigital IDとMyJPJの連携が稼働しています。",
             "MyJPJアプリ向けにMyDigital IDのシングルサインオン連携が始まりました。\n当局は導入後の運用は順調だとしています。",
             "車両・免許関連のオンライン手続きでログイン導線が変わる可能性があります。",
             "",
         )
-    if "palm oil" in text or "minyak sawit" in text:
+    if flags[FLAG_ROAD_ISSUE] and has_any(text, ["palm oil", "minyak sawit"]):
         return (
             "Klang周辺で道路上への油流出に注意が必要です。",
             "パーム油タンクローリー関連の事故で、道路に油が流れました。\n周辺の生活道路・物流動線に影響する可能性があります。",
             "路面の滑りやすさ、片側規制、渋滞に注意が必要です。",
             "",
         )
-    if "3r" in text or "mcmc" in text:
+    if has_any(text, ["3r", "mcmc"]):
         return (
             "3R関連の挑発的投稿に対し、当局が監視・摘発を強めます。",
             "人種・宗教・王室に関する挑発的投稿を作成・拡散しないよう注意喚起されました。\n違反時には法的処分の可能性があります。",
             "SNS投稿や転送でも法的リスクが生じる可能性があります。",
             "真偽不明の3R関連投稿は共有しない。",
         )
-    if "badal haji" in text:
+    if flags[FLAG_SCAM] and has_phrase(text, "badal haji"):
         return (
             "安すぎる代理ハジサービスへの詐欺注意が出ています。",
             "不自然に安い代理巡礼サービスへの注意が呼びかけられました。\n家族のためにサービスを探す人が標的になり得ます。",
             "送金後にサービスが実行されないなど、金銭被害の恐れがあります。",
             "登録・送金前に正規事業者か確認。",
         )
-    if "keselamatan sosial" in text or "self-employed" in text:
+    if flags[FLAG_SOCIAL_SECURITY]:
         return (
             "自営業者向け社会保障法の改正案が次期国会に提出予定です。",
             "人的資源相が、改正案を閣議承認後に国会へ出すと説明しました。\n自営業者やギグワーカーの保護に関わる制度です。",
             "個人事業主、配達員、フリーランスの保障や拠出に影響する可能性があります。",
             "",
         )
-    if "mara" in text:
+    if has_any(text, ["mara", "akta mara"]):
         return (
             "MARA法改正はガバナンス強化と支援制度の再整理が焦点です。",
             "MARA法改正の草案提出や制度見直しが報じられています。\n教育、起業支援、中小企業支援に関わる政策です。",
             "ブミプトラ関連の教育・事業支援制度に影響する可能性があります。",
             "",
         )
-    if "bukit kiara" in text or "ttdi" in text:
+    if flags[FLAG_URBAN_DEVELOPMENT] and has_any(text, ["bukit kiara", "ttdi"]):
         return (
             "DBKLがBukit Kiara開発案に300mの緩衝帯を設定しました。",
             "TTDI住民の懸念を受け、開発計画にバッファーゾーンが課されました。\n都市開発と住環境保護の調整が進められています。",
             "TTDI、Bukit Kiara周辺の住環境、緑地、交通に関わります。",
             "",
         )
-    if "electricity" in text or "bill" in text:
+    if flags[FLAG_SABAH_ELECTRICITY]:
         return (
             "Sabahの電気代上昇懸念について、料金表は変わっていないと説明されました。",
             "Sabah Electricityは、請求額増加への懸念に対し料金自体は未変更だと説明しました。\n暑さによるエアコン使用増が主因とみられています。",
             "暑い時期は家庭の電気代が上がりやすくなります。",
             "",
         )
-    if "doctor" in text or "medical" in text:
+    if flags[FLAG_HEALTH_SYSTEM] and has_any(text, ["doctor shortage", "shortages of doctors", "medical specialists"]):
         return (
             "保健省が医師・専門医不足に対応するタスクフォースを設置しました。",
             "医師不足や人材定着を検討する省庁横断タスクフォースが立ち上がりました。\n特にSabahの医療人材不足が重点課題とされています。",
             "地方医療、待ち時間、専門医アクセスに関わる中長期課題です。",
             "",
         )
-    if "ringgit" in text:
+    if flags[FLAG_CURRENCY]:
         return (
             "リンギット相場と経済見通しが引き続き注目されています。",
             "リンギットの動きや経済見通しについて、慎重または前向きな評価が報じられました。\n外部指標や政策判断が為替材料になります。",
             "海外送金、旅行、輸入品、外貨建て支払いに影響する可能性があります。",
             "",
         )
-    if "bursa" in text:
+    if flags[FLAG_MARKET]:
         return (
             "Bursa Malaysiaは慎重な値動きが見込まれています。",
             "西アジア情勢などの外部要因を背景に、レンジ相場の見方が報じられました。\n市場心理は不透明感に左右されやすい状況です。",
             "投資信託、株式投資、企業景況感を見ている人には参考になります。",
             "",
         )
-    if re.search(r"\bai\b|artificial intelligence|automation|talentcorp", text):
+    if flags[FLAG_AI_ECONOMY]:
         return (
             "AI・自動化で一部労働者の再学習ニーズが高まっています。",
             "AIと自動化が雇用構造を変えつつあると報じられました。\n今後は適応力やスキル更新が重要になります。",
@@ -590,12 +785,82 @@ def diagnose_fetch(results: list[FetchResult]) -> str:
     return "\n".join(lines)
 
 
+def self_test() -> int:
+    now = datetime(2026, 5, 7, 12, 0, tzinfo=MYT)
+    failures: list[str] = []
+
+    def item(title: str, description: str = "") -> Item:
+        return Item("Test", "Test Feed", title, description, now, "raw", "https://example.test/item")
+
+    def check(name: str, condition: bool) -> None:
+        if not condition:
+            failures.append(name)
+
+    ai_item = item(
+        "AI expected to contribute up to RM20b yearly to Malaysia's GDP by 2030, says Gobind",
+        "KUALA LUMPUR, May 5 - Artificial intelligence is expected to contribute up to RM20b yearly to Malaysia's GDP.",
+    )
+    evaluate_item(ai_item)
+    check("AI/GDP is not weather", not ai_item.flags[FLAG_WEATHER])
+    check("AI/GDP is not breaking", category_for(ai_item) != "【速報】")
+    check("AI/GDP uses AI economy flag", ai_item.flags[FLAG_AI_ECONOMY])
+    check("AI/GDP does not use weather summary", "雷雨" not in japanese_summary(ai_item)[0])
+
+    for word in ["contribute", "contribution", "contributed", "distribute", "distribution", "attribute", "attributed"]:
+        test_item = item(f"{word} expected in Malaysia economy")
+        evaluate_item(test_item)
+        check(f"{word} does not trigger weather", not test_item.flags[FLAG_WEATHER])
+        check(f"{word} key is not weather", key_for(test_item) != "weather")
+
+    for phrase in ["separation bill", "amendment bill", "supply bill", "parliamentary bill", "bill tabled in Parliament"]:
+        test_item = item(phrase, "The proposal was discussed by lawmakers.")
+        evaluate_item(test_item)
+        check(f"{phrase} is not utility bill", not test_item.flags[FLAG_UTILITY_BILL])
+        check(f"{phrase} does not use Sabah electricity summary", "Sabahの電気代" not in japanese_summary(test_item)[0])
+
+    weather_item = item("Ribut petir, hujan lebat di KL hingga petang - MetMalaysia")
+    evaluate_item(weather_item)
+    check("BM weather triggers weather", weather_item.flags[FLAG_WEATHER])
+    check("BM weather can be breaking", category_for(weather_item) == "【速報】")
+
+    heat_item = item("Cuaca panas: 56 kes, dua kematian akibat strok haba")
+    evaluate_item(heat_item)
+    check("BM heat triggers heat", heat_item.flags[FLAG_HEAT])
+
+    sabah_item = item("Sabah electricity bills rising?", "Tariff unchanged; aircon use is the likeliest reason.")
+    evaluate_item(sabah_item)
+    check("Sabah electricity triggers Sabah flag", sabah_item.flags[FLAG_SABAH_ELECTRICITY])
+    check("Sabah electricity summary fires", "Sabahの電気代" in japanese_summary(sabah_item)[0])
+
+    ringgit_item = item("Ringgit expected to trade in RM3.96-RM3.98 range next week ahead of US data")
+    evaluate_item(ringgit_item)
+    check("Ringgit forecast triggers currency", ringgit_item.flags[FLAG_CURRENCY])
+    check("Ringgit summary fires", "リンギット" in japanese_summary(ringgit_item)[0])
+
+    market_item = item("Bursa Malaysia seen trading range-bound between 1,700 and 1,730 next week")
+    evaluate_item(market_item)
+    check("Bursa triggers market", market_item.flags[FLAG_MARKET])
+    check("Bursa summary fires", "Bursa Malaysia" in japanese_summary(market_item)[0])
+
+    if failures:
+        print("self-test failed:")
+        for failure in failures:
+            print(f"- {failure}")
+        return 1
+    print("self-test passed")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(add_help=True)
     parser.add_argument("--diagnostics", action="store_true")
     parser.add_argument("--diagnose-fetch", action="store_true")
+    parser.add_argument("--self-test", action="store_true")
     parser.add_argument("--output", help="Write the final Markdown summary to this path.")
     args = parser.parse_args()
+
+    if args.self_test:
+        return self_test()
 
     results = [(source, feed, fetch_rss(url)) for source, feed, url in SOURCES]
     if args.diagnose_fetch:
