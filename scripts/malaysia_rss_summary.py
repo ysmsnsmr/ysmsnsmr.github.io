@@ -79,6 +79,28 @@ ALL_FLAGS = [
 LAST_FINALIZE_STATS: dict[str, object] = {}
 CATEGORY_PRIORITY = {"【速報】": 0, "【生活インパクト】": 1, "【知っておくと得】": 2}
 FINANCIAL_LIMITS = {"ringgit": 2, "bursa": 1, "bnm_policy": 2}
+PRACTICAL_LIFE_TAGS = {
+    "weather",
+    "flood",
+    "road_closure",
+    "public_transport",
+    "water",
+    "electricity",
+    "health",
+    "public_health",
+    "prices",
+    "social_security",
+    "social_support",
+    "education",
+    "immigration",
+    "jpj",
+    "mykad",
+    "mydigital",
+    "food_supply",
+    "agriculture",
+    "scam",
+    "urban_development",
+}
 
 
 @dataclass
@@ -548,6 +570,19 @@ def key_for(item: Item) -> str:
         and has_any(text, ["pavilion kl", "pavilion kuala lumpur", "quranic madani", "event", "traffic restriction", "traffic restrictions", "road users", "plan journeys"])
     ):
         return "jalan-bukit-bintang-closure"
+    if has_any(text, ["cloud seeding", "drought"]) and has_any(
+        text,
+        [
+            "kedah",
+            "perlis",
+            "rice bowl",
+            "dams hit alert levels",
+            "dam hit alert levels",
+            "dams hit",
+            "alert levels",
+        ],
+    ):
+        return "cloud-seeding-drought-rice-bowl"
     flag_groups = [
         ("heat", FLAG_HEAT),
         ("flood-impact", FLAG_FLOOD_IMPACT),
@@ -699,6 +734,56 @@ def has_background_value(item: Item) -> bool:
             "gig workers",
             "workers",
             "employment",
+        ],
+    ):
+        return True
+    return has_concrete_policy_value(item)
+
+
+def has_practical_life_value(item: Item) -> bool:
+    flags = ensure_flags(item)
+    text = item_text(item)
+    if any(tag in PRACTICAL_LIFE_TAGS for tag in item.tags):
+        return True
+    if (
+        flags[FLAG_WEATHER]
+        or flags[FLAG_HEAT]
+        or flags[FLAG_PUBLIC_TRANSPORT]
+        or flags[FLAG_ROAD_ISSUE]
+        or flags[FLAG_FLOOD_IMPACT]
+        or flags[FLAG_UTILITY_BILL]
+        or flags[FLAG_SABAH_ELECTRICITY]
+        or flags[FLAG_JPJ]
+        or flags[FLAG_MYDIGITAL_INTEGRATION]
+        or flags[FLAG_SOCIAL_SECURITY]
+        or flags[FLAG_SCAM]
+        or flags[FLAG_HEALTH_SYSTEM]
+        or flags[FLAG_URBAN_DEVELOPMENT]
+    ):
+        return True
+    if flags[FLAG_CURRENCY] or flags[FLAG_MARKET]:
+        return True
+    if has_any(
+        text,
+        [
+            "mykad",
+            "myjpj",
+            "mydigital id",
+            "jualan rahmah",
+            "kos sara hidup",
+            "cost of living",
+            "housing ministry",
+            "option to purchase clause",
+            "public health",
+            "food supply",
+            "rice bowl",
+            "agriculture",
+            "cloud seeding",
+            "drought",
+            "bnm",
+            "bank negara",
+            "opr",
+            "ringgit",
         ],
     ):
         return True
@@ -887,6 +972,8 @@ def evaluate_item(item: Item) -> Item:
         if has_any(item_text(item), ["drought", "cloud seeding", "food supply", "rice bowl", "agriculture"]):
             tags.append("food_supply")
         add_score(5, tags, "医療・雇用・経済・都市生活の背景価値")
+    if has_any(item_text(item), ["dams hit alert levels", "dam hit alert levels", "alert levels", "rice bowl", "drought grips"]):
+        add_score(2, ["food_supply"], "水資源・食料供給への生活影響が明確")
     if flags[FLAG_SCAM]:
         add_score(7, ["scam"], "詐欺・注意喚起")
     if flags[FLAG_INDIVIDUAL_INCIDENT]:
@@ -985,8 +1072,33 @@ def final_sort_key(item: Item) -> tuple[int, int, float]:
     return (CATEGORY_PRIORITY.get(item.category, 9), -item.score, -item.pub_date.timestamp())
 
 
+def is_forced_final_noise(item: Item) -> bool:
+    text = item_text(item)
+    has_practical_value = has_practical_life_value(item)
+    noise_checks = [
+        has_any(text, ["ipo oversubscribed", "initial public offering", "ipo"]) and has_any(text, ["oversubscribed", "initial public offering"]),
+        has_any(text, ["appoints", "appointed", "appointment", "names"])
+        and has_any(text, ["chairman", "president and group ceo", "group ceo", "chief executive", "new president", "ceo"]),
+        has_any(text, ["civil service appointments", "senior civil service appointments", "chief secretary"])
+        and has_any(text, ["appointments", "appointed", "unveiled", "names"]),
+        has_any(text, ["queen praises", "king praises", "expressed admiration", "beauty islamic heritage and hospitality", "royal visit", "courtesy visit"]),
+        has_any(text, ["drug syndicate", "drug syndicates", "dadah", "rampas dadah", "sindiket", "serbuan", "kg bernilai", "narcotics raid"]),
+        has_any(text, ["tourism group", "perception matters", "expensive", "social media suggesting malaysia has become too expensive"]),
+        has_any(text, ["reputation", "record low", "ipsos survey", "china surges", "united states has suffered", "favourability survey", "favorability survey"]),
+        has_any(text, ["no malaysians aboard", "hantavirus linked cruise ship", "hantavirus", "overseas infection ship", "foreign infection ship"]),
+    ]
+    if any(noise_checks) and not has_practical_value:
+        return True
+    return uses_generic_fallback(item) and not has_practical_value
+
+
+def final_noise_gate(items: list[Item]) -> list[Item]:
+    return [item for item in items if not is_forced_final_noise(item)]
+
+
 def finalize_selected_items(selected: list[Item]) -> list[Item]:
     global LAST_FINALIZE_STATS
+    gated = final_noise_gate(selected)
     seen_links: set[str] = set()
     seen_keys: set[str] = set()
     financial_counts: Counter[str] = Counter()
@@ -994,12 +1106,13 @@ def finalize_selected_items(selected: list[Item]) -> list[Item]:
     stats = {
         "input_items": len(selected),
         "output_items": 0,
+        "removed_noise_gate": len(selected) - len(gated),
         "removed_duplicate_url": 0,
         "removed_duplicate_key": 0,
         "removed_financial_cap": 0,
         "validation_errors": [],
     }
-    for item in sorted(selected, key=final_sort_key):
+    for item in sorted(gated, key=final_sort_key):
         link_key = normalized(item.link)
         canonical_key = key_for(item)
         if link_key and link_key in seen_links:
@@ -1075,11 +1188,14 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
 
     selected: list[Item] = []
     source_counts: Counter[str] = Counter()
-    category_limits = {"【速報】": 10, "【生活インパクト】": 20, "【知っておくと得】": 40}
+    category_limits = {"【速報】": 3, "【生活インパクト】": 5, "【知っておくと得】": 8}
     category_counts: Counter[str] = Counter()
     financial_counts: Counter[str] = Counter()
     for item in candidates:
         category = category_for(item)
+        item.category = category
+        if is_forced_final_noise(item):
+            continue
         financial_bucket = financial_topic_bucket(item) if category == "【知っておくと得】" else ""
         if source_counts[item.source] >= 24:
             continue
@@ -1087,13 +1203,12 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
             continue
         if financial_bucket and financial_counts[financial_bucket] >= FINANCIAL_LIMITS[financial_bucket]:
             continue
-        item.category = category
         selected.append(item)
         source_counts[item.source] += 1
         category_counts[category] += 1
         if financial_bucket:
             financial_counts[financial_bucket] += 1
-        if len(selected) >= 40:
+        if len(selected) >= 15:
             break
     return finalize_selected_items(selected)
 
@@ -1117,6 +1232,7 @@ def selection_summary(items: list[Item], selected: list[Item], now: datetime) ->
             f"- selected_items: {len(selected)}",
             f"- categories: 速報={category_counts['【速報】']}, 生活インパクト={category_counts['【生活インパクト】']}, 知っておくと得={category_counts['【知っておくと得】']}",
             f"- top_tags: {top_tags}",
+            f"- final_removed_noise_gate: {LAST_FINALIZE_STATS.get('removed_noise_gate', 0)}",
             f"- final_removed_duplicate_url: {LAST_FINALIZE_STATS.get('removed_duplicate_url', 0)}",
             f"- final_removed_duplicate_key: {LAST_FINALIZE_STATS.get('removed_duplicate_key', 0)}",
             f"- final_removed_financial_cap: {LAST_FINALIZE_STATS.get('removed_financial_cap', 0)}",
@@ -1623,6 +1739,49 @@ def self_test() -> int:
         test_item.category = "【知っておくと得】"
     finalized_ringgit = finalize_selected_items(ringgit_final_items)
     check("Final Ringgit items stay within cap", sum(1 for test_item in finalized_ringgit if financial_topic_bucket(test_item) == "ringgit") <= 2)
+
+    final_noise_titles = [
+        "SkyeChip IPO oversubscribed by 20 times",
+        "Petronas Dagangan appoints new chairman",
+        "PNB names new president and group CEO",
+        "Six senior civil service appointments unveiled by chief secretary",
+        "Queen praises Uzbekistan for beauty, Islamic heritage and hospitality",
+        "Polis Selangor rampas dadah 100kg bernilai RM5 juta dalam serbuan",
+        "Malaysia is expensive? Local tourism group says perception matters",
+        "US reputation in Malaysia hits record low as China surges, Ipsos survey shows",
+    ]
+    for title in final_noise_titles:
+        test_item = item(title)
+        evaluate_item(test_item)
+        test_item.category = category_for(test_item)
+        check(f"Final noise gate removes {title}", not final_noise_gate([test_item]))
+
+    keep_titles = [
+        "MBPJ activates 24-hour flood hotline after flash floods",
+        "MetMalaysia warns of severe weather and heavy rain in Klang Valley",
+        "KTMB rolls out 186 extra trains for Hari Raya Aidiladha",
+        "Road closure for KL Run: road users advised to plan journeys",
+        "Jalan Bukit Bintang closed from midnight near Pavilion KL",
+        "Grab Group Ride expands commuting options in Klang Valley",
+        "PKPS expands Jualan Rahmah to ease kos sara hidup",
+        "Housing ministry studies option to purchase clause for home buyers",
+    ]
+    for title in keep_titles:
+        test_item = item(title)
+        evaluate_item(test_item)
+        test_item.category = category_for(test_item)
+        check(f"Final noise gate keeps {title}", bool(final_noise_gate([test_item])))
+
+    cloud_seeding = item("Cloud seeding set for Perlis and Kedah as dry spell continues")
+    drought_rice = item("As drought grips Kedah, rice bowl dams hit alert levels")
+    evaluate_item(cloud_seeding)
+    evaluate_item(drought_rice)
+    cloud_seeding.category = "【知っておくと得】"
+    drought_rice.category = "【知っておくと得】"
+    finalized_drought = finalize_selected_items([cloud_seeding, drought_rice])
+    check("Cloud seeding and drought rice bowl share canonical key", key_for(cloud_seeding) == key_for(drought_rice))
+    check("Cloud seeding and drought rice bowl finalize to one item", len(finalized_drought) == 1)
+    check("Drought rice bowl item is preferred", finalized_drought[0].title == drought_rice.title)
 
     weather_guard = item("Ribut petir, hujan lebat di KL hingga petang - MetMalaysia")
     evaluate_item(weather_guard)
