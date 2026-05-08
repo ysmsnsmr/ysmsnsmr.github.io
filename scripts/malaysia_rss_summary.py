@@ -42,6 +42,7 @@ FLAG_SCAM = "is_scam"
 FLAG_CURRENCY = "is_currency"
 FLAG_MARKET = "is_market"
 FLAG_AI_ECONOMY = "is_ai_economy"
+FLAG_COST_OF_LIVING = "is_cost_of_living"
 FLAG_HEALTH_SYSTEM = "is_health_system"
 FLAG_URBAN_DEVELOPMENT = "is_urban_development"
 FLAG_KLANG_VALLEY = "is_klang_valley"
@@ -68,6 +69,7 @@ ALL_FLAGS = [
     FLAG_CURRENCY,
     FLAG_MARKET,
     FLAG_AI_ECONOMY,
+    FLAG_COST_OF_LIVING,
     FLAG_HEALTH_SYSTEM,
     FLAG_URBAN_DEVELOPMENT,
     FLAG_KLANG_VALLEY,
@@ -506,6 +508,23 @@ def build_flags(item: Item) -> dict[str, bool]:
         text,
         ["gdp", "economy", "economic", "rm", "billion", "contribute", "contribution", "automation", "talentcorp", "workers", "jobs"],
     )
+    flags[FLAG_COST_OF_LIVING] = has_any(
+        text,
+        [
+            "jualan rahmah",
+            "rahmah",
+            "kos sara hidup",
+            "barang keperluan",
+            "harga lebih rendah",
+            "jualan murah",
+            "pkps",
+            "rakan strategik",
+            "cost of living",
+            "basic necessities",
+            "lower prices",
+            "cheap sale",
+        ],
+    )
     flags[FLAG_HEALTH_SYSTEM] = has_any(text, ["doctor shortage", "shortages of doctors", "medical specialists", "health ministry", "monkey malaria", "wabak", "kesihatan"])
     flags[FLAG_URBAN_DEVELOPMENT] = has_any(text, ["dbkl", "bukit kiara", "ttdi", "urban development", "development project"])
     flags[FLAG_KLANG_VALLEY] = has_any(
@@ -670,6 +689,8 @@ def has_background_value(item: Item) -> bool:
         "economy",
         "currency",
         "urban_development",
+        "cost_of_living",
+        "social_support",
         "public_transport",
         "road_closure",
         "flood",
@@ -687,6 +708,7 @@ def has_background_value(item: Item) -> bool:
         or flags[FLAG_CURRENCY]
         or flags[FLAG_MARKET]
         or flags[FLAG_AI_ECONOMY]
+        or flags[FLAG_COST_OF_LIVING]
         or flags[FLAG_URBAN_DEVELOPMENT]
         or flags[FLAG_PUBLIC_TRANSPORT]
         or flags[FLAG_ROAD_ISSUE]
@@ -713,8 +735,14 @@ def has_background_value(item: Item) -> bool:
             "interest rate",
             "lpg",
             "jualan rahmah",
+            "rahmah",
             "kos sara hidup",
             "cost of living",
+            "barang keperluan",
+            "harga lebih rendah",
+            "jualan murah",
+            "pkps",
+            "rakan strategik",
             "public health",
             "drought",
             "cloud seeding",
@@ -759,6 +787,7 @@ def has_practical_life_value(item: Item) -> bool:
         or flags[FLAG_SCAM]
         or flags[FLAG_HEALTH_SYSTEM]
         or flags[FLAG_URBAN_DEVELOPMENT]
+        or flags[FLAG_COST_OF_LIVING]
     ):
         return True
     if flags[FLAG_CURRENCY] or flags[FLAG_MARKET]:
@@ -770,8 +799,14 @@ def has_practical_life_value(item: Item) -> bool:
             "myjpj",
             "mydigital id",
             "jualan rahmah",
+            "rahmah",
             "kos sara hidup",
             "cost of living",
+            "barang keperluan",
+            "harga lebih rendah",
+            "jualan murah",
+            "pkps",
+            "rakan strategik",
             "housing ministry",
             "option to purchase clause",
             "public health",
@@ -898,6 +933,8 @@ def uses_generic_fallback(item: Item) -> bool:
         return False
     if flags[FLAG_HEALTH_SYSTEM] and has_any(text, ["doctor shortage", "shortages of doctors", "medical specialists"]):
         return False
+    if flags[FLAG_COST_OF_LIVING]:
+        return False
     if flags[FLAG_CURRENCY] or flags[FLAG_MARKET] or flags[FLAG_AI_ECONOMY]:
         return False
     return True
@@ -954,6 +991,7 @@ def evaluate_item(item: Item) -> Item:
         or flags[FLAG_CURRENCY]
         or flags[FLAG_MARKET]
         or flags[FLAG_URBAN_DEVELOPMENT]
+        or flags[FLAG_COST_OF_LIVING]
         or has_any(item_text(item), ["jualan rahmah", "kos sara hidup", "cost of living", "bnm", "bank negara", "opr", "lpg", "drought", "cloud seeding", "food supply", "rice bowl", "agriculture"])
     ):
         tags = []
@@ -967,8 +1005,9 @@ def evaluate_item(item: Item) -> Item:
             tags.append("economy")
         if flags[FLAG_URBAN_DEVELOPMENT]:
             tags.append("urban_development")
-        if has_any(item_text(item), ["jualan rahmah", "kos sara hidup", "cost of living", "lpg"]):
+        if flags[FLAG_COST_OF_LIVING] or has_any(item_text(item), ["jualan rahmah", "kos sara hidup", "cost of living", "lpg"]):
             tags.extend(["prices", "social_support"])
+            tags.append("cost_of_living")
         if has_any(item_text(item), ["drought", "cloud seeding", "food supply", "rice bowl", "agriculture"]):
             tags.append("food_supply")
         add_score(5, tags, "医療・雇用・経済・都市生活の背景価値")
@@ -1072,8 +1111,70 @@ def final_sort_key(item: Item) -> tuple[int, int, float]:
     return (CATEGORY_PRIORITY.get(item.category, 9), -item.score, -item.pub_date.timestamp())
 
 
+def final_noise_text(item: Item) -> str:
+    return normalized(f"{item.title} {item.description} {item.link}")
+
+
+def has_corporate_appointment_exception(text: str) -> bool:
+    return has_any(
+        text,
+        [
+            "tariff",
+            "tariffs",
+            "fare",
+            "fares",
+            "price revision",
+            "price increase",
+            "price cut",
+            "service disruption",
+            "service disruptions",
+            "service change",
+            "service changes",
+            "service quality",
+            "customer impact",
+            "consumer impact",
+            "user impact",
+            "employment impact",
+            "job cuts",
+            "layoffs",
+            "public transport",
+            "telecommunications",
+            "communications service",
+            "electricity",
+            "water supply",
+            "utility",
+            "utilities",
+            "subsidy",
+            "aid",
+            "application",
+            "registration",
+        ],
+    )
+
+
+def is_corporate_appointment_noise(item: Item) -> bool:
+    text = final_noise_text(item)
+    is_appointment = has_any(text, ["appoints", "appointed", "appointment", "names", "named"])
+    is_corporate_role = has_any(
+        text,
+        [
+            "chairman",
+            "board chairman",
+            "group ceo",
+            "president and group ceo",
+            "chief executive",
+            "chief executive officer",
+            "new president",
+            "ceo",
+        ],
+    )
+    return is_appointment and is_corporate_role and not has_corporate_appointment_exception(text)
+
+
 def is_forced_final_noise(item: Item) -> bool:
-    text = item_text(item)
+    text = final_noise_text(item)
+    if is_corporate_appointment_noise(item):
+        return True
     has_practical_value = has_practical_life_value(item)
     noise_checks = [
         has_any(text, ["ipo oversubscribed", "initial public offering", "ipo"]) and has_any(text, ["oversubscribed", "initial public offering"]),
@@ -1743,7 +1844,12 @@ def self_test() -> int:
     final_noise_titles = [
         "SkyeChip IPO oversubscribed by 20 times",
         "Petronas Dagangan appoints new chairman",
+        "Petronas Dagangan appoints Sazali Hamzah as chairman",
         "PNB names new president and group CEO",
+        "PNB names Rizal Rickman as new president and group CEO",
+        "Board appointed veteran executive as chairman",
+        "Company appoints Tan Sri Ahmad as chairman",
+        "Company names new group CEO",
         "Six senior civil service appointments unveiled by chief secretary",
         "Queen praises Uzbekistan for beauty, Islamic heritage and hospitality",
         "Polis Selangor rampas dadah 100kg bernilai RM5 juta dalam serbuan",
@@ -1755,6 +1861,8 @@ def self_test() -> int:
         evaluate_item(test_item)
         test_item.category = category_for(test_item)
         check(f"Final noise gate removes {title}", not final_noise_gate([test_item]))
+        if has_any(title, ["petronas dagangan", "pnb names", "board appointed", "company appoints", "company names"]):
+            check(f"Corporate appointment helper removes {title}", is_corporate_appointment_noise(test_item))
 
     keep_titles = [
         "MBPJ activates 24-hour flood hotline after flash floods",
@@ -1765,12 +1873,22 @@ def self_test() -> int:
         "Grab Group Ride expands commuting options in Klang Valley",
         "PKPS expands Jualan Rahmah to ease kos sara hidup",
         "Housing ministry studies option to purchase clause for home buyers",
+        "PKPS perkukuh rangkaian jualan murah, 122 rakan strategik bantu rakyat hadapi kos sara hidup",
+        "Jualan Rahmah offers barang keperluan at harga lebih rendah",
+        "Kos sara hidup eased through jualan murah in Selangor",
     ]
     for title in keep_titles:
         test_item = item(title)
         evaluate_item(test_item)
         test_item.category = category_for(test_item)
         check(f"Final noise gate keeps {title}", bool(final_noise_gate([test_item])))
+
+    cost_of_living_item = item("PKPS perkukuh rangkaian jualan murah, 122 rakan strategik bantu rakyat hadapi kos sara hidup")
+    evaluate_item(cost_of_living_item)
+    check("PKPS cost-of-living flag triggers", cost_of_living_item.flags[FLAG_COST_OF_LIVING])
+    check("PKPS cost-of-living has background value", cost_of_living_item.background_value)
+    check("PKPS cost-of-living is not excluded", not should_exclude_item(cost_of_living_item))
+    check("PKPS cost-of-living is selectable", bool(select_items([cost_of_living_item], now)))
 
     cloud_seeding = item("Cloud seeding set for Perlis and Kedah as dry spell continues")
     drought_rice = item("As drought grips Kedah, rice bowl dams hit alert levels")
