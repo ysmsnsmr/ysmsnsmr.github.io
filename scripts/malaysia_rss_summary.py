@@ -412,7 +412,23 @@ def build_flags(item: Item) -> dict[str, bool]:
     ) or (has_phrase(text, "heat") and has_any(text, ["illness", "stroke", "weather", "related", "death", "deaths"]))
     flags[FLAG_PUBLIC_TRANSPORT] = has_any(
         text,
-        ["public transport", "commuting", "grab group ride", "lrt", "mrt", "ktm", "monorail", "rapid kl", "myrapid", "bus service"],
+        [
+            "public transport",
+            "commuting",
+            "grab group ride",
+            "ktmb",
+            "extra trains",
+            "hari raya aidiladha",
+            "school holidays",
+            "train services",
+            "lrt",
+            "mrt",
+            "ktm",
+            "monorail",
+            "rapid kl",
+            "myrapid",
+            "bus service",
+        ],
     )
     flags[FLAG_ROAD_ISSUE] = has_any(
         text,
@@ -521,6 +537,13 @@ def ensure_flags(item: Item) -> dict[str, bool]:
 def key_for(item: Item) -> str:
     text = item_text(item)
     flags = ensure_flags(item)
+    if (
+        has_phrase(text, "bukit bintang")
+        and has_any(text, ["closed", "ditutup", "road closure", "jalan ditutup", "road closed"])
+        and has_any(text, ["midnight", "from midnight", "tengah malam", "mulai tengah malam"])
+        and has_any(text, ["pavilion kl", "event", "traffic restriction", "traffic restrictions", "road users", "plan journeys"])
+    ):
+        return "jalan-bukit-bintang-closure"
     flag_groups = [
         ("heat", FLAG_HEAT),
         ("flood-impact", FLAG_FLOOD_IMPACT),
@@ -714,6 +737,7 @@ def is_low_value_fallback(item: Item) -> bool:
         ["drug syndicate", "drug syndicates", "drug bust", "narcotics raid"],
         ["assault", "hurt", "injured", "stabbing", "stabbed", "murder", "killed", "dead"],
         ["compensation claim", "compensation claims", "awaiting court decision", "court decision pending"],
+        ["cruise ship infection", "overseas infection ship", "foreign infection ship"],
     ]
     if any(has_any(text, group) for group in hard_exclusion_groups):
         return True
@@ -740,6 +764,8 @@ def is_low_value_fallback(item: Item) -> bool:
         ["queen praises", "king praises", "royal visit", "courtesy visit", "royal audience", "uzbekistan"],
         ["donation", "donations", "bereaved family", "grieving family", "medical episode"],
         ["national convention", "party convention", "election preparation", "election preparations", "poll", "survey", "favourability survey", "favorability survey"],
+        ["ipo oversubscribed", "oversubscribed", "ipo application", "ipo applications"],
+        ["tourism image", "tourism reputation", "reputation survey", "favourability ranking", "favorability ranking"],
         [
             "criticised",
             "criticized",
@@ -762,6 +788,8 @@ def uses_generic_fallback(item: Item) -> bool:
     text = item_text(item)
     flags = ensure_flags(item)
     if flags[FLAG_WEATHER] or flags[FLAG_HEAT] or flags[FLAG_MYDIGITAL_INTEGRATION]:
+        return False
+    if flags[FLAG_PUBLIC_TRANSPORT] or flags[FLAG_ROAD_ISSUE] or flags[FLAG_FLOOD_IMPACT]:
         return False
     if flags[FLAG_ROAD_ISSUE] and has_any(text, ["palm oil", "minyak sawit"]):
         return False
@@ -937,6 +965,18 @@ def category_for(item: Item) -> str:
     return "【知っておくと得】"
 
 
+def financial_topic_bucket(item: Item) -> str:
+    text = item_text(item)
+    flags = ensure_flags(item)
+    if flags[FLAG_MARKET]:
+        return "bursa"
+    if has_any(text, ["bnm", "bank negara", "opr", "monetary policy", "loan costs", "targeted solutions"]):
+        return "bnm_policy"
+    if flags[FLAG_CURRENCY]:
+        return "ringgit"
+    return ""
+
+
 def select_items(items: list[Item], now: datetime) -> list[Item]:
     cutoff = now - timedelta(hours=48)
     recent = [item for item in items if cutoff <= item.pub_date <= now]
@@ -961,16 +1001,23 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
     source_counts: Counter[str] = Counter()
     category_limits = {"【速報】": 10, "【生活インパクト】": 20, "【知っておくと得】": 40}
     category_counts: Counter[str] = Counter()
+    financial_limits = {"ringgit": 2, "bursa": 1, "bnm_policy": 2}
+    financial_counts: Counter[str] = Counter()
     for item in candidates:
         category = category_for(item)
+        financial_bucket = financial_topic_bucket(item) if category == "【知っておくと得】" else ""
         if source_counts[item.source] >= 24:
             continue
         if category_counts[category] >= category_limits[category]:
+            continue
+        if financial_bucket and financial_counts[financial_bucket] >= financial_limits[financial_bucket]:
             continue
         item.category = category
         selected.append(item)
         source_counts[item.source] += 1
         category_counts[category] += 1
+        if financial_bucket:
+            financial_counts[financial_bucket] += 1
         if len(selected) >= 40:
             break
     return selected
@@ -1402,6 +1449,56 @@ def self_test() -> int:
     check("BNM targeted solutions has background value", bnm_targeted.background_value)
     check("BNM targeted solutions is not excluded", not should_exclude_item(bnm_targeted))
     check("BNM targeted solutions has selectable score", bnm_targeted.score >= 3)
+
+    bukit_bintang_bm = item("Jalan Bukit Bintang ditutup mulai tengah malam berhampiran Pavilion KL")
+    bukit_bintang_en = item("Jalan Bukit Bintang closed from midnight near Pavilion KL")
+    evaluate_item(bukit_bintang_bm)
+    evaluate_item(bukit_bintang_en)
+    check("Bukit Bintang BM/EN closures dedup", key_for(bukit_bintang_bm) == key_for(bukit_bintang_en))
+
+    bukit_bintang_plain = item("Bukit Bintang welcomes weekend shoppers")
+    evaluate_item(bukit_bintang_plain)
+    check("Bukit Bintang plain item does not use closure key", key_for(bukit_bintang_plain) != "jalan-bukit-bintang-closure")
+
+    ktmb_extra = item("KTMB rolls out 186 extra trains for Hari Raya Aidiladha and school holidays")
+    evaluate_item(ktmb_extra)
+    check("KTMB extra trains triggers public transport", ktmb_extra.flags[FLAG_PUBLIC_TRANSPORT])
+    check("KTMB extra trains is life impact", category_for(ktmb_extra) == "【生活インパクト】")
+
+    petronas_chairman = item("Petronas Dagangan appoints new chairman")
+    evaluate_item(petronas_chairman)
+    check("Petronas chairman is excluded", should_exclude_item(petronas_chairman))
+
+    skyechip_ipo = item("SkyeChip IPO oversubscribed by 20 times")
+    evaluate_item(skyechip_ipo)
+    check("SkyeChip IPO is excluded", should_exclude_item(skyechip_ipo))
+
+    road_low_value_guard = item("Road users advised to plan journeys despite poll event near Padang Merbok")
+    evaluate_item(road_low_value_guard)
+    check("Road impact overrides low-value fallback", not should_exclude_item(road_low_value_guard))
+
+    ringgit_items = [
+        item("Ringgit expected to trade in narrow range ahead of US data"),
+        item("Ringgit strengthens as Malaysia economy outlook improves"),
+        item("Ringgit forecast revised after IMF economy update"),
+    ]
+    selected_ringgit = select_items(ringgit_items, now)
+    check("Ringgit selected items stay within cap", sum(1 for test_item in selected_ringgit if financial_topic_bucket(test_item) == "ringgit") <= 2)
+
+    bursa_items = [
+        item("Bursa Malaysia seen trading range-bound between 1,700 and 1,730"),
+        item("Bursa Malaysia market index expected to trade cautiously"),
+    ]
+    selected_bursa = select_items(bursa_items, now)
+    check("Bursa selected items stay within cap", sum(1 for test_item in selected_bursa if financial_topic_bucket(test_item) == "bursa") <= 1)
+
+    bnm_items = [
+        item("BNM targeted solutions aim to help households manage loan costs"),
+        item("Bank Negara OPR unchanged as households monitor loan costs"),
+        item("BNM monetary policy update focuses on loan costs"),
+    ]
+    selected_bnm = select_items(bnm_items, now)
+    check("BNM selected items stay within cap", sum(1 for test_item in selected_bnm if financial_topic_bucket(test_item) == "bnm_policy") <= 2)
 
     weather_guard = item("Ribut petir, hujan lebat di KL hingga petang - MetMalaysia")
     evaluate_item(weather_guard)
