@@ -76,6 +76,10 @@ ALL_FLAGS = [
     FLAG_POLITICAL_NOISE,
 ]
 
+LAST_FINALIZE_STATS: dict[str, object] = {}
+CATEGORY_PRIORITY = {"【速報】": 0, "【生活インパクト】": 1, "【知っておくと得】": 2}
+FINANCIAL_LIMITS = {"ringgit": 2, "bursa": 1, "bnm_policy": 2}
+
 
 @dataclass
 class FetchResult:
@@ -538,10 +542,10 @@ def key_for(item: Item) -> str:
     text = item_text(item)
     flags = ensure_flags(item)
     if (
-        has_phrase(text, "bukit bintang")
+        has_any(text, ["jalan bukit bintang", "bukit bintang"])
         and has_any(text, ["closed", "ditutup", "road closure", "jalan ditutup", "road closed"])
-        and has_any(text, ["midnight", "from midnight", "tengah malam", "mulai tengah malam"])
-        and has_any(text, ["pavilion kl", "event", "traffic restriction", "traffic restrictions", "road users", "plan journeys"])
+        and has_any(text, ["midnight", "from midnight", "tengah malam", "12 tengah malam", "mulai tengah malam", "5 pagi"])
+        and has_any(text, ["pavilion kl", "pavilion kuala lumpur", "quranic madani", "event", "traffic restriction", "traffic restrictions", "road users", "plan journeys"])
     ):
         return "jalan-bukit-bintang-closure"
     flag_groups = [
@@ -737,7 +741,7 @@ def is_low_value_fallback(item: Item) -> bool:
         ["drug syndicate", "drug syndicates", "drug bust", "narcotics raid"],
         ["assault", "hurt", "injured", "stabbing", "stabbed", "murder", "killed", "dead"],
         ["compensation claim", "compensation claims", "awaiting court decision", "court decision pending"],
-        ["cruise ship infection", "overseas infection ship", "foreign infection ship"],
+        ["cruise ship infection", "overseas infection ship", "foreign infection ship", "no malaysians aboard", "hantavirus linked cruise ship", "hantavirus linked", "hantavirus"],
     ]
     if any(has_any(text, group) for group in hard_exclusion_groups):
         return True
@@ -765,7 +769,7 @@ def is_low_value_fallback(item: Item) -> bool:
         ["donation", "donations", "bereaved family", "grieving family", "medical episode"],
         ["national convention", "party convention", "election preparation", "election preparations", "poll", "survey", "favourability survey", "favorability survey"],
         ["ipo oversubscribed", "oversubscribed", "ipo application", "ipo applications"],
-        ["tourism image", "tourism reputation", "reputation survey", "favourability ranking", "favorability ranking"],
+        ["tourism image", "tourism reputation", "reputation survey", "favourability ranking", "favorability ranking", "favourability survey", "favorability survey", "international favourability", "international favorability"],
         [
             "criticised",
             "criticized",
@@ -977,6 +981,78 @@ def financial_topic_bucket(item: Item) -> str:
     return ""
 
 
+def final_sort_key(item: Item) -> tuple[int, int, float]:
+    return (CATEGORY_PRIORITY.get(item.category, 9), -item.score, -item.pub_date.timestamp())
+
+
+def finalize_selected_items(selected: list[Item]) -> list[Item]:
+    global LAST_FINALIZE_STATS
+    seen_links: set[str] = set()
+    seen_keys: set[str] = set()
+    financial_counts: Counter[str] = Counter()
+    finalized: list[Item] = []
+    stats = {
+        "input_items": len(selected),
+        "output_items": 0,
+        "removed_duplicate_url": 0,
+        "removed_duplicate_key": 0,
+        "removed_financial_cap": 0,
+        "validation_errors": [],
+    }
+    for item in sorted(selected, key=final_sort_key):
+        link_key = normalized(item.link)
+        canonical_key = key_for(item)
+        if link_key and link_key in seen_links:
+            stats["removed_duplicate_url"] += 1
+            continue
+        if canonical_key and canonical_key in seen_keys:
+            stats["removed_duplicate_key"] += 1
+            continue
+        financial_bucket = financial_topic_bucket(item) if item.category == "【知っておくと得】" else ""
+        if financial_bucket and financial_counts[financial_bucket] >= FINANCIAL_LIMITS[financial_bucket]:
+            stats["removed_financial_cap"] += 1
+            continue
+        finalized.append(item)
+        if link_key:
+            seen_links.add(link_key)
+        if canonical_key:
+            seen_keys.add(canonical_key)
+        if financial_bucket:
+            financial_counts[financial_bucket] += 1
+    stats["output_items"] = len(finalized)
+    stats["validation_errors"] = validate_final_items(finalized)
+    LAST_FINALIZE_STATS = stats
+    return finalized
+
+
+def validate_final_items(selected: list[Item]) -> list[str]:
+    errors: list[str] = []
+    links = [normalized(item.link) for item in selected if item.link]
+    keys = [key_for(item) for item in selected]
+    if len(links) != len(set(links)):
+        errors.append("duplicate_url")
+    if len(keys) != len(set(keys)):
+        errors.append("duplicate_canonical_key")
+    category_by_key: dict[str, str] = {}
+    for item in selected:
+        key = key_for(item)
+        previous = category_by_key.get(key)
+        if previous and previous != item.category:
+            errors.append("duplicate_item_across_categories")
+            break
+        category_by_key[key] = item.category
+    financial_counts: Counter[str] = Counter()
+    for item in selected:
+        if item.category == "【知っておくと得】":
+            bucket = financial_topic_bucket(item)
+            if bucket:
+                financial_counts[bucket] += 1
+    for bucket, limit in FINANCIAL_LIMITS.items():
+        if financial_counts[bucket] > limit:
+            errors.append(f"{bucket}_limit_exceeded")
+    return errors
+
+
 def select_items(items: list[Item], now: datetime) -> list[Item]:
     cutoff = now - timedelta(hours=48)
     recent = [item for item in items if cutoff <= item.pub_date <= now]
@@ -1001,7 +1077,6 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
     source_counts: Counter[str] = Counter()
     category_limits = {"【速報】": 10, "【生活インパクト】": 20, "【知っておくと得】": 40}
     category_counts: Counter[str] = Counter()
-    financial_limits = {"ringgit": 2, "bursa": 1, "bnm_policy": 2}
     financial_counts: Counter[str] = Counter()
     for item in candidates:
         category = category_for(item)
@@ -1010,7 +1085,7 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
             continue
         if category_counts[category] >= category_limits[category]:
             continue
-        if financial_bucket and financial_counts[financial_bucket] >= financial_limits[financial_bucket]:
+        if financial_bucket and financial_counts[financial_bucket] >= FINANCIAL_LIMITS[financial_bucket]:
             continue
         item.category = category
         selected.append(item)
@@ -1020,7 +1095,7 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
             financial_counts[financial_bucket] += 1
         if len(selected) >= 40:
             break
-    return selected
+    return finalize_selected_items(selected)
 
 
 def selection_summary(items: list[Item], selected: list[Item], now: datetime) -> str:
@@ -1032,6 +1107,8 @@ def selection_summary(items: list[Item], selected: list[Item], now: datetime) ->
     for item in selected:
         tag_counts.update(item.tags)
     top_tags = ", ".join(f"{tag}:{count}" for tag, count in tag_counts.most_common(8)) or "なし"
+    validation_errors = LAST_FINALIZE_STATS.get("validation_errors", [])
+    validation_text = ", ".join(validation_errors) if validation_errors else "なし"
     return "\n".join(
         [
             "selection_summary:",
@@ -1040,6 +1117,10 @@ def selection_summary(items: list[Item], selected: list[Item], now: datetime) ->
             f"- selected_items: {len(selected)}",
             f"- categories: 速報={category_counts['【速報】']}, 生活インパクト={category_counts['【生活インパクト】']}, 知っておくと得={category_counts['【知っておくと得】']}",
             f"- top_tags: {top_tags}",
+            f"- final_removed_duplicate_url: {LAST_FINALIZE_STATS.get('removed_duplicate_url', 0)}",
+            f"- final_removed_duplicate_key: {LAST_FINALIZE_STATS.get('removed_duplicate_key', 0)}",
+            f"- final_removed_financial_cap: {LAST_FINALIZE_STATS.get('removed_financial_cap', 0)}",
+            f"- final_validation_errors: {validation_text}",
         ]
     )
 
@@ -1224,8 +1305,9 @@ def self_test() -> int:
     now = datetime(2026, 5, 7, 12, 0, tzinfo=MYT)
     failures: list[str] = []
 
-    def item(title: str, description: str = "") -> Item:
-        return Item("Test", "Test Feed", title, description, now, "raw", "https://example.test/item")
+    def item(title: str, description: str = "", link: str = "") -> Item:
+        slug = re.sub(r"[^a-z0-9]+", "-", normalized(title)).strip("-")[:80] or "item"
+        return Item("Test", "Test Feed", title, description, now, "raw", link or f"https://example.test/{slug}")
 
     def check(name: str, condition: bool) -> None:
         if not condition:
@@ -1499,6 +1581,48 @@ def self_test() -> int:
     ]
     selected_bnm = select_items(bnm_items, now)
     check("BNM selected items stay within cap", sum(1 for test_item in selected_bnm if financial_topic_bucket(test_item) == "bnm_policy") <= 2)
+
+    ktmb_life = item("KTMB rolls out 186 extra trains for Hari Raya Aidiladha", link="https://example.test/ktmb")
+    ktmb_info = item("KTMB rolls out 186 extra trains for Hari Raya Aidiladha", link="https://example.test/ktmb")
+    evaluate_item(ktmb_life)
+    evaluate_item(ktmb_info)
+    ktmb_life.category = "【生活インパクト】"
+    ktmb_info.category = "【知っておくと得】"
+    finalized_ktmb = finalize_selected_items([ktmb_info, ktmb_life])
+    check("Duplicate KTMB finalizes to one item", len(finalized_ktmb) == 1)
+    check("Duplicate KTMB keeps life impact", finalized_ktmb[0].category == "【生活インパクト】")
+
+    duplicate_url_a = item("Road users advised to plan journeys around Padang Merbok", link="https://example.test/same-url")
+    duplicate_url_b = item("Road users advised to plan journeys around Padang Merbok", link="https://example.test/same-url")
+    evaluate_item(duplicate_url_a)
+    evaluate_item(duplicate_url_b)
+    duplicate_url_a.category = "【生活インパクト】"
+    duplicate_url_b.category = "【知っておくと得】"
+    finalized_url = finalize_selected_items([duplicate_url_b, duplicate_url_a])
+    check("Duplicate URL finalizes to one item", len(finalized_url) == 1)
+    check("Duplicate URL does not cross categories", len({test_item.category for test_item in finalized_url}) == 1)
+
+    bintang_bm_quranic = item("Jalan Bukit Bintang ditutup tengah malam hingga 5 pagi untuk Quranic Madani di Pavilion Kuala Lumpur")
+    bintang_en_quranic = item("Jalan Bukit Bintang closed from midnight to 5am for Quranic Madani near Pavilion KL")
+    evaluate_item(bintang_bm_quranic)
+    evaluate_item(bintang_en_quranic)
+    check("Quranic Madani Bukit Bintang BM/EN closures dedup", key_for(bintang_bm_quranic) == key_for(bintang_en_quranic))
+
+    cruise_ship = item("No Malaysians aboard hantavirus-linked cruise ship")
+    evaluate_item(cruise_ship)
+    check("No Malaysians cruise ship has no background value", not cruise_ship.background_value)
+    check("No Malaysians cruise ship is excluded", should_exclude_item(cruise_ship))
+
+    ringgit_final_items = [
+        item("Ringgit expected to trade in narrow range ahead of US data", link="https://example.test/ringgit-1"),
+        item("Ringgit strengthens as Malaysia economy outlook improves", link="https://example.test/ringgit-2"),
+        item("Ringgit forecast revised after IMF economy update", link="https://example.test/ringgit-3"),
+    ]
+    for test_item in ringgit_final_items:
+        evaluate_item(test_item)
+        test_item.category = "【知っておくと得】"
+    finalized_ringgit = finalize_selected_items(ringgit_final_items)
+    check("Final Ringgit items stay within cap", sum(1 for test_item in finalized_ringgit if financial_topic_bucket(test_item) == "ringgit") <= 2)
 
     weather_guard = item("Ribut petir, hujan lebat di KL hingga petang - MetMalaysia")
     evaluate_item(weather_guard)
