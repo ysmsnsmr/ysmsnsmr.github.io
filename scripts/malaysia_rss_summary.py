@@ -102,6 +102,7 @@ class Item:
     penalties: list[str] = field(default_factory=list)
     source_count: int = 1
     is_official: bool = False
+    background_value: bool = False
     published_at: datetime | None = None
     effective_at: datetime | None = None
     expires_at: datetime | None = None
@@ -541,12 +542,165 @@ def add_unique(values: list[str], value: str) -> None:
         values.append(value)
 
 
+def has_concrete_policy_value(item: Item) -> bool:
+    text = item_text(item)
+    return has_any(
+        text,
+        [
+            "application",
+            "applications",
+            "registration",
+            "deadline",
+            "effective",
+            "implemented",
+            "from june",
+            "from may",
+            "allowance",
+            "aid",
+            "cash aid",
+            "bantuan",
+            "subsidy",
+            "subsidi",
+            "tax relief",
+            "fine",
+            "penalty",
+            "penalties",
+            "tariff",
+            "tarif",
+            "fee",
+            "fees",
+            "social security",
+            "keselamatan sosial",
+            "health ministry",
+            "moh",
+            "education",
+            "pendidikan",
+        ],
+    )
+
+
+def has_background_value(item: Item) -> bool:
+    flags = ensure_flags(item)
+    text = item_text(item)
+    tag_values = {
+        "jpj",
+        "social_security",
+        "electricity",
+        "prices",
+        "health",
+        "employment",
+        "economy",
+        "currency",
+        "urban_development",
+        "public_transport",
+        "road_closure",
+        "weather",
+        "klang_valley",
+    }
+    if any(tag in tag_values for tag in item.tags):
+        return True
+    if (
+        flags[FLAG_JPJ]
+        or flags[FLAG_HEALTH_SYSTEM]
+        or flags[FLAG_SOCIAL_SECURITY]
+        or flags[FLAG_UTILITY_BILL]
+        or flags[FLAG_SABAH_ELECTRICITY]
+        or flags[FLAG_CURRENCY]
+        or flags[FLAG_MARKET]
+        or flags[FLAG_AI_ECONOMY]
+        or flags[FLAG_URBAN_DEVELOPMENT]
+        or flags[FLAG_PUBLIC_TRANSPORT]
+        or flags[FLAG_ROAD_ISSUE]
+    ):
+        return True
+    if flags[FLAG_SCAM] and has_any(text, ["warning", "warns", "beware", "waspada", "alert", "do not share"]):
+        return True
+    if has_any(
+        text,
+        [
+            "mykad",
+            "identity card",
+            "digital identity",
+            "kkm",
+            "licence application",
+            "license application",
+            "driving licence",
+            "driving license",
+            "administrative procedure",
+            "public service",
+            "bnm",
+            "opr",
+            "interest rate",
+            "lpg",
+            "food aid",
+            "farmer aid",
+            "farmers",
+            "medical officer",
+            "medical officers",
+            "healthcare system",
+            "school",
+            "schools",
+            "spm",
+            "education system",
+            "gig workers",
+            "workers",
+            "employment",
+        ],
+    ):
+        return True
+    return has_concrete_policy_value(item)
+
+
+def is_low_value_fallback(item: Item) -> bool:
+    text = item_text(item)
+    if has_concrete_policy_value(item):
+        return False
+    low_value_groups = [
+        ["court", "trial", "lawsuit", "suit", "charged", "charges", "appeal", "sentenced", "convicted"],
+        ["corruption", "graft", "bribery", "probe", "investigation", "remand", "suspect", "arrested"],
+        ["fraud case", "scam case", "cheating case", "victim lost", "losses"],
+        ["assault", "hurt", "injured", "stabbing", "stabbed", "murder", "killed", "dead"],
+        ["defence procurement", "defense procurement", "fighter jet", "military procurement", "defence assets", "defense assets"],
+        ["appointed", "appointment", "resigns", "resigned", "ceo", "chairman", "board member", "corporate"],
+        ["criticised", "criticized", "slams", "hits back", "rebuts", "denies", "political cooperation", "party polls", "internal party"],
+        ["celebrity", "entertainment", "sports", "football"],
+    ]
+    return any(has_any(text, group) for group in low_value_groups)
+
+
+def uses_generic_fallback(item: Item) -> bool:
+    text = item_text(item)
+    flags = ensure_flags(item)
+    if flags[FLAG_WEATHER] or flags[FLAG_HEAT] or flags[FLAG_MYDIGITAL_INTEGRATION]:
+        return False
+    if flags[FLAG_ROAD_ISSUE] and has_any(text, ["palm oil", "minyak sawit"]):
+        return False
+    if flags[FLAG_MCMC_3R]:
+        return False
+    if flags[FLAG_SCAM] and has_phrase(text, "badal haji"):
+        return False
+    if flags[FLAG_SOCIAL_SECURITY]:
+        return False
+    if has_any(text, ["mara", "akta mara"]):
+        return False
+    if flags[FLAG_URBAN_DEVELOPMENT] and has_any(text, ["bukit kiara", "ttdi"]):
+        return False
+    if flags[FLAG_SABAH_ELECTRICITY]:
+        return False
+    if flags[FLAG_HEALTH_SYSTEM] and has_any(text, ["doctor shortage", "shortages of doctors", "medical specialists"]):
+        return False
+    if flags[FLAG_CURRENCY] or flags[FLAG_MARKET] or flags[FLAG_AI_ECONOMY]:
+        return False
+    return True
+
+
 def evaluate_item(item: Item) -> Item:
     flags = build_flags(item)
     score = 0
     item.tags = []
     item.reasons = []
     item.penalties = []
+    item.background_value = False
     item.is_official = flags[FLAG_OFFICIAL]
     if item.is_official:
         add_unique(item.reasons, "公的機関・公式発表に関連")
@@ -608,6 +762,13 @@ def evaluate_item(item: Item) -> Item:
         add_score(-8, [], "単発事件・事故の可能性")
     if flags[FLAG_POLITICAL_NOISE]:
         add_score(-5, [], "発言ベースの政治ニュースの可能性")
+    item.background_value = has_background_value(item)
+    if item.background_value:
+        add_unique(item.reasons, "生活者向けの背景価値")
+    elif uses_generic_fallback(item):
+        add_unique(item.penalties, "汎用フォールバックだが生活影響が薄い")
+    if uses_generic_fallback(item) and is_low_value_fallback(item):
+        add_score(-6, [], "個別事件・政局発言・低優先トピックの可能性")
     item.score = score
     return item
 
@@ -649,6 +810,11 @@ def should_exclude_item(item: Item) -> bool:
     )
     if flags[FLAG_POLITICAL_NOISE] and not policy_exception:
         return True
+    if uses_generic_fallback(item):
+        if is_low_value_fallback(item):
+            return True
+        if not item.background_value:
+            return True
     return False
 
 
@@ -834,7 +1000,9 @@ def japanese_summary(item: Item) -> tuple[str, str, str, str]:
     return (
         item.title,
         f"{item.description or item.title}\nRSS内のタイトルと説明をもとに整理しました。",
-        "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+        "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。"
+        if item.background_value
+        else "RSS内の情報だけでは生活への直接影響は確認できません。",
         "",
     )
 
@@ -973,6 +1141,56 @@ def self_test() -> int:
     evaluate_item(mcmc_race_guard)
     check("MCMC race guard keeps MCMC flag", mcmc_race_guard.flags[FLAG_MCMC])
     check("MCMC race guard does not trigger 3R", not mcmc_race_guard.flags[FLAG_MCMC_3R])
+
+    mykad_item = item("MyKad renewal applications open nationwide from June 1")
+    evaluate_item(mykad_item)
+    check("MyKad has background value", mykad_item.background_value)
+
+    kkm_item = item("KKM announces medical officer shift system improvements")
+    evaluate_item(kkm_item)
+    check("KKM medical system has background value", kkm_item.background_value)
+
+    bnm_item = item("BNM keeps OPR unchanged as households watch interest rates")
+    evaluate_item(bnm_item)
+    check("BNM OPR has background value", bnm_item.background_value)
+
+    utility_item = item("Water tariff adjustment for households begins next month")
+    evaluate_item(utility_item)
+    check("Public utility tariff has background value", utility_item.background_value)
+
+    education_item = item("Education Ministry updates school assessment system")
+    evaluate_item(education_item)
+    check("Education system has background value", education_item.background_value)
+
+    court_item = item("Former officer's corruption trial continues in court")
+    evaluate_item(court_item)
+    check("Individual court case has no background value", not court_item.background_value)
+    check("Individual court case is excluded as fallback", should_exclude_item(court_item))
+
+    procurement_item = item("Defence procurement of new military assets under review")
+    evaluate_item(procurement_item)
+    check("Defence procurement has no background value", not procurement_item.background_value)
+    check("Defence procurement is excluded as fallback", should_exclude_item(procurement_item))
+
+    corporate_item = item("Company appoints new chairman after board reshuffle")
+    evaluate_item(corporate_item)
+    check("Corporate appointment has no background value", not corporate_item.background_value)
+    check("Corporate appointment is excluded as fallback", should_exclude_item(corporate_item))
+
+    policy_speech = item("Minister says cash aid applications open for low-income households")
+    evaluate_item(policy_speech)
+    check("Concrete aid speech has background value", policy_speech.background_value)
+    check("Concrete aid speech is not excluded", not should_exclude_item(policy_speech))
+
+    political_attack = item("Party leader slams rival over internal party dispute")
+    evaluate_item(political_attack)
+    check("Party dispute has no background value", not political_attack.background_value)
+    check("Party dispute is excluded", should_exclude_item(political_attack))
+
+    weather_guard = item("Ribut petir, hujan lebat di KL hingga petang - MetMalaysia")
+    evaluate_item(weather_guard)
+    weather_guard.background_value = False
+    check("Template weather is not excluded by generic fallback rule", not should_exclude_item(weather_guard))
 
     if failures:
         print("self-test failed:")
