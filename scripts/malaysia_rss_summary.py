@@ -571,6 +571,10 @@ def has_concrete_policy_value(item: Item) -> bool:
             "fees",
             "social security",
             "keselamatan sosial",
+            "filial responsibility law",
+            "moh guidelines",
+            "house officers",
+            "working hours",
             "health ministry",
             "moh",
             "education",
@@ -653,16 +657,74 @@ def has_background_value(item: Item) -> bool:
 
 def is_low_value_fallback(item: Item) -> bool:
     text = item_text(item)
-    if has_concrete_policy_value(item):
-        return False
-    low_value_groups = [
-        ["court", "trial", "lawsuit", "suit", "charged", "charges", "appeal", "sentenced", "convicted"],
-        ["corruption", "graft", "bribery", "probe", "investigation", "remand", "suspect", "arrested"],
+    hard_exclusion_groups = [
+        [
+            "court",
+            "trial",
+            "lawsuit",
+            "suit",
+            "charged",
+            "charges",
+            "charged with",
+            "pleaded not guilty",
+            "court to decide",
+            "high court",
+            "bid to stay",
+            "appeal",
+            "sentenced",
+            "convicted",
+        ],
+        [
+            "corruption",
+            "graft",
+            "bribery",
+            "macc",
+            "sprm",
+            "recording his statement",
+            "probe",
+            "investigation",
+            "remand",
+            "suspect",
+            "arrested",
+        ],
         ["fraud case", "scam case", "cheating case", "victim lost", "losses"],
         ["assault", "hurt", "injured", "stabbing", "stabbed", "murder", "killed", "dead"],
-        ["defence procurement", "defense procurement", "fighter jet", "military procurement", "defence assets", "defense assets"],
-        ["appointed", "appointment", "resigns", "resigned", "ceo", "chairman", "board member", "corporate"],
-        ["criticised", "criticized", "slams", "hits back", "rebuts", "denies", "political cooperation", "party polls", "internal party"],
+    ]
+    if any(has_any(text, group) for group in hard_exclusion_groups):
+        return True
+
+    if has_concrete_policy_value(item) or has_background_value(item):
+        return False
+
+    low_value_groups = [
+        [
+            "defence procurement",
+            "defense procurement",
+            "defence minister",
+            "defense minister",
+            "fighter jet",
+            "missile",
+            "naval strike missiles",
+            "lcs project",
+            "military procurement",
+            "defence assets",
+            "defense assets",
+            "cabinet to discuss",
+        ],
+        ["appointed", "appointment", "names", "new president", "group ceo", "resigns", "resigned", "ceo", "chairman", "board member", "corporate"],
+        [
+            "criticised",
+            "criticized",
+            "slams",
+            "hits back",
+            "rebuts",
+            "denies",
+            "dismisses opposition criticism",
+            "pas no better",
+            "political cooperation",
+            "party polls",
+            "internal party",
+        ],
         ["celebrity", "entertainment", "sports", "football"],
     ]
     return any(has_any(text, group) for group in low_value_groups)
@@ -1186,6 +1248,46 @@ def self_test() -> int:
     evaluate_item(political_attack)
     check("Party dispute has no background value", not political_attack.background_value)
     check("Party dispute is excluded", should_exclude_item(political_attack))
+
+    najib_trial = item("Najib pleaded not guilty as High Court hears bid to stay corruption trial")
+    evaluate_item(najib_trial)
+    check("Najib trial has no background value", not najib_trial.background_value)
+    check("Najib trial is excluded", should_exclude_item(najib_trial))
+
+    macc_statement = item("Rafizi called by MACC for recording his statement in ongoing probe")
+    evaluate_item(macc_statement)
+    check("MACC statement has no background value", not macc_statement.background_value)
+    check("MACC statement is excluded", should_exclude_item(macc_statement))
+
+    defence_missile = item("Defence minister says cabinet to discuss Naval Strike Missiles for LCS project")
+    evaluate_item(defence_missile)
+    check("Defence missile item has no background value", not defence_missile.background_value)
+    check("Defence missile item is excluded", should_exclude_item(defence_missile))
+
+    pnb_ceo = item("PNB names new president and group CEO")
+    evaluate_item(pnb_ceo)
+    check("PNB CEO appointment has no background value", not pnb_ceo.background_value)
+    check("PNB CEO appointment is excluded", should_exclude_item(pnb_ceo))
+
+    zahid_criticism = item("Zahid dismisses opposition criticism, says PAS no better")
+    evaluate_item(zahid_criticism)
+    check("Zahid criticism has no background value", not zahid_criticism.background_value)
+    check("Zahid criticism is excluded", should_exclude_item(zahid_criticism))
+
+    filial_law = item("Minister says cabinet to discuss filial responsibility law for elderly care")
+    evaluate_item(filial_law)
+    check("Filial responsibility law has background value", filial_law.background_value)
+    check("Filial responsibility law is not excluded", not should_exclude_item(filial_law))
+
+    moh_guidelines = item("MOH guidelines set house officers working hours in public hospitals")
+    evaluate_item(moh_guidelines)
+    check("MOH house officers working hours has background value", moh_guidelines.background_value)
+    check("MOH house officers working hours is not excluded", not should_exclude_item(moh_guidelines))
+
+    bank_negara_opr = item("Bank Negara keeps OPR unchanged as households monitor loan costs")
+    evaluate_item(bank_negara_opr)
+    check("Bank Negara OPR has background value", bank_negara_opr.background_value)
+    check("Bank Negara OPR is not excluded", not should_exclude_item(bank_negara_opr))
 
     weather_guard = item("Ribut petir, hujan lebat di KL hingga petang - MetMalaysia")
     evaluate_item(weather_guard)
