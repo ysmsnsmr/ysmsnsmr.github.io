@@ -28,6 +28,7 @@ FLAG_WEATHER = "is_weather"
 FLAG_HEAT = "is_heat"
 FLAG_PUBLIC_TRANSPORT = "is_public_transport"
 FLAG_ROAD_ISSUE = "is_road_issue"
+FLAG_FLOOD_IMPACT = "is_flood_impact"
 FLAG_UTILITY_BILL = "is_utility_bill"
 FLAG_SABAH_ELECTRICITY = "is_sabah_electricity"
 FLAG_JPJ = "is_jpj"
@@ -53,6 +54,7 @@ ALL_FLAGS = [
     FLAG_HEAT,
     FLAG_PUBLIC_TRANSPORT,
     FLAG_ROAD_ISSUE,
+    FLAG_FLOOD_IMPACT,
     FLAG_UTILITY_BILL,
     FLAG_SABAH_ELECTRICITY,
     FLAG_JPJ,
@@ -410,21 +412,30 @@ def build_flags(item: Item) -> dict[str, bool]:
     ) or (has_phrase(text, "heat") and has_any(text, ["illness", "stroke", "weather", "related", "death", "deaths"]))
     flags[FLAG_PUBLIC_TRANSPORT] = has_any(
         text,
-        ["public transport", "lrt", "mrt", "ktm", "monorail", "rapid kl", "myrapid", "bus service"],
+        ["public transport", "commuting", "grab group ride", "lrt", "mrt", "ktm", "monorail", "rapid kl", "myrapid", "bus service"],
     )
     flags[FLAG_ROAD_ISSUE] = has_any(
         text,
         [
+            "road users advised",
+            "plan journeys",
             "road closure",
+            "road closed",
+            "closed from midnight",
             "traffic disruption",
+            "traffic congestion",
             "jalan ditutup",
             "kesesakan",
             "nkve",
             "palm oil",
             "minyak sawit",
             "bandar sultan suleiman",
+            "padang merbok",
+            "bukit bintang",
+            "pavilion kl",
         ],
     )
+    flags[FLAG_FLOOD_IMPACT] = has_any(text, ["flash floods", "toppled trees", "flood hotline", "mbpj"])
     utility_bill = has_any(text, ["electricity bill", "electricity bills", "utility bill", "utility bills", "water bill", "water bills", "bil elektrik"])
     utility_tariff = has_any(text, ["electricity tariff", "water tariff", "tariff unchanged", "tarif elektrik"]) or (
         has_any(text, ["tariff", "tariffs", "tarif"]) and has_any(text, ["electricity", "water", "sabah electricity", "bill", "bills", "bil"])
@@ -512,6 +523,7 @@ def key_for(item: Item) -> str:
     flags = ensure_flags(item)
     flag_groups = [
         ("heat", FLAG_HEAT),
+        ("flood-impact", FLAG_FLOOD_IMPACT),
         ("weather", FLAG_WEATHER),
         ("myjpj", FLAG_MYDIGITAL_INTEGRATION),
         ("sabah-electricity", FLAG_SABAH_ELECTRICITY),
@@ -598,6 +610,7 @@ def has_background_value(item: Item) -> bool:
         "urban_development",
         "public_transport",
         "road_closure",
+        "flood",
         "weather",
         "klang_valley",
     }
@@ -615,6 +628,7 @@ def has_background_value(item: Item) -> bool:
         or flags[FLAG_URBAN_DEVELOPMENT]
         or flags[FLAG_PUBLIC_TRANSPORT]
         or flags[FLAG_ROAD_ISSUE]
+        or flags[FLAG_FLOOD_IMPACT]
     ):
         return True
     if flags[FLAG_SCAM] and has_any(text, ["warning", "warns", "beware", "waspada", "alert", "do not share"]):
@@ -636,6 +650,15 @@ def has_background_value(item: Item) -> bool:
             "opr",
             "interest rate",
             "lpg",
+            "jualan rahmah",
+            "kos sara hidup",
+            "cost of living",
+            "public health",
+            "drought",
+            "cloud seeding",
+            "food supply",
+            "rice bowl",
+            "agriculture",
             "food aid",
             "farmer aid",
             "farmers",
@@ -688,7 +711,9 @@ def is_low_value_fallback(item: Item) -> bool:
             "arrested",
         ],
         ["fraud case", "scam case", "cheating case", "victim lost", "losses"],
+        ["drug syndicate", "drug syndicates", "drug bust", "narcotics raid"],
         ["assault", "hurt", "injured", "stabbing", "stabbed", "murder", "killed", "dead"],
+        ["compensation claim", "compensation claims", "awaiting court decision", "court decision pending"],
     ]
     if any(has_any(text, group) for group in hard_exclusion_groups):
         return True
@@ -712,6 +737,9 @@ def is_low_value_fallback(item: Item) -> bool:
             "cabinet to discuss",
         ],
         ["appointed", "appointment", "names", "new president", "group ceo", "resigns", "resigned", "ceo", "chairman", "board member", "corporate"],
+        ["queen praises", "king praises", "royal visit", "courtesy visit", "royal audience", "uzbekistan"],
+        ["donation", "donations", "bereaved family", "grieving family", "medical episode"],
+        ["national convention", "party convention", "election preparation", "election preparations", "poll", "survey", "favourability survey", "favorability survey"],
         [
             "criticised",
             "criticized",
@@ -738,6 +766,8 @@ def uses_generic_fallback(item: Item) -> bool:
     if flags[FLAG_ROAD_ISSUE] and has_any(text, ["palm oil", "minyak sawit"]):
         return False
     if flags[FLAG_MCMC_3R]:
+        return False
+    if flags[FLAG_FLOOD_IMPACT]:
         return False
     if flags[FLAG_SCAM] and has_phrase(text, "badal haji"):
         return False
@@ -781,12 +811,14 @@ def evaluate_item(item: Item) -> Item:
         add_score(8, ["weather"], "公式警報・天候リスク")
     if flags[FLAG_HEAT]:
         add_score(8, ["health"], "暑熱・熱中症リスク")
-    if flags[FLAG_PUBLIC_TRANSPORT] or flags[FLAG_ROAD_ISSUE]:
+    if flags[FLAG_PUBLIC_TRANSPORT] or flags[FLAG_ROAD_ISSUE] or flags[FLAG_FLOOD_IMPACT]:
         tags = []
         if flags[FLAG_PUBLIC_TRANSPORT]:
             tags.append("public_transport")
         if flags[FLAG_ROAD_ISSUE]:
             tags.append("road_closure")
+        if flags[FLAG_FLOOD_IMPACT]:
+            tags.append("flood")
         add_score(7, tags, "交通・道路・移動に影響")
     if flags[FLAG_JPJ] or flags[FLAG_SOCIAL_SECURITY] or flags[FLAG_UTILITY_BILL] or flags[FLAG_SABAH_ELECTRICITY]:
         tags = []
@@ -805,18 +837,23 @@ def evaluate_item(item: Item) -> Item:
         or flags[FLAG_CURRENCY]
         or flags[FLAG_MARKET]
         or flags[FLAG_URBAN_DEVELOPMENT]
+        or has_any(item_text(item), ["jualan rahmah", "kos sara hidup", "cost of living", "bnm", "bank negara", "opr", "lpg", "drought", "cloud seeding", "food supply", "rice bowl", "agriculture"])
     ):
         tags = []
         if flags[FLAG_HEALTH_SYSTEM]:
             tags.append("health")
         if flags[FLAG_AI_ECONOMY]:
             tags.extend(["employment", "economy"])
-        if flags[FLAG_CURRENCY]:
+        if flags[FLAG_CURRENCY] or has_any(item_text(item), ["bnm", "bank negara", "opr"]):
             tags.append("currency")
         if flags[FLAG_MARKET]:
             tags.append("economy")
         if flags[FLAG_URBAN_DEVELOPMENT]:
             tags.append("urban_development")
+        if has_any(item_text(item), ["jualan rahmah", "kos sara hidup", "cost of living", "lpg"]):
+            tags.extend(["prices", "social_support"])
+        if has_any(item_text(item), ["drought", "cloud seeding", "food supply", "rice bowl", "agriculture"]):
+            tags.append("food_supply")
         add_score(5, tags, "医療・雇用・経済・都市生活の背景価値")
     if flags[FLAG_SCAM]:
         add_score(7, ["scam"], "詐欺・注意喚起")
@@ -856,6 +893,7 @@ def should_exclude_item(item: Item) -> bool:
         or flags[FLAG_HEAT]
         or flags[FLAG_PUBLIC_TRANSPORT]
         or flags[FLAG_ROAD_ISSUE]
+        or flags[FLAG_FLOOD_IMPACT]
         or flags[FLAG_HEALTH_SYSTEM]
         or flags[FLAG_SCAM]
         or has_any(text, ["mcmc", "3r"])
@@ -887,6 +925,7 @@ def category_for(item: Item) -> str:
     if (
         flags[FLAG_PUBLIC_TRANSPORT]
         or flags[FLAG_ROAD_ISSUE]
+        or flags[FLAG_FLOOD_IMPACT]
         or flags[FLAG_JPJ]
         or flags[FLAG_UTILITY_BILL]
         or flags[FLAG_SABAH_ELECTRICITY]
@@ -961,6 +1000,20 @@ def selection_summary(items: list[Item], selected: list[Item], now: datetime) ->
 def japanese_summary(item: Item) -> tuple[str, str, str, str]:
     text = item_text(item)
     flags = ensure_flags(item)
+    if flags[FLAG_FLOOD_IMPACT] and has_any(text, ["flood hotline", "mbpj"]):
+        return (
+            "洪水時の連絡先・対応窓口を確認しておく必要があります。",
+            "自治体が洪水対応のホットラインや連絡体制を案内しています。\n大雨時の冠水や倒木など、地域の生活動線に影響する可能性があります。",
+            "居住地や通勤経路が対象地域に近い場合、自治体の最新案内を確認してください。",
+            "緊急時の連絡先と迂回経路を控えておく。",
+        )
+    if flags[FLAG_FLOOD_IMPACT]:
+        return (
+            "冠水・倒木などで道路や生活動線に影響が出る可能性があります。",
+            "大雨に伴うflash floodsや倒木などの影響が報じられています。\n周辺道路では渋滞や通行支障が起きる可能性があります。",
+            "車移動、通勤、送迎では遅延や迂回を見込む必要があります。",
+            "出発前に自治体・道路情報を確認。",
+        )
     if flags[FLAG_WEATHER]:
         return (
             "KLを含む複数地域で雷雨・大雨・強風への注意が必要です。",
@@ -987,6 +1040,20 @@ def japanese_summary(item: Item) -> tuple[str, str, str, str]:
             "Klang周辺で道路上への油流出に注意が必要です。",
             "パーム油タンクローリー関連の事故で、道路に油が流れました。\n周辺の生活道路・物流動線に影響する可能性があります。",
             "路面の滑りやすさ、片側規制、渋滞に注意が必要です。",
+            "",
+        )
+    if flags[FLAG_ROAD_ISSUE]:
+        return (
+            "道路閉鎖や渋滞により、移動計画の見直しが必要です。",
+            "道路利用者に移動計画の調整や迂回が呼びかけられています。\n対象道路や周辺エリアでは混雑や通行規制が起きる可能性があります。",
+            "通勤、送迎、買い物、都心部への移動時間に影響します。",
+            "出発前に道路状況と迂回路を確認。",
+        )
+    if flags[FLAG_PUBLIC_TRANSPORT]:
+        return (
+            "公共交通や通勤手段の選び方に影響する可能性があります。",
+            "公共交通や移動サービスに関する案内が報じられています。\n通勤・通学・都心移動の選択肢を確認しておくと安心です。",
+            "混雑回避や移動費、所要時間の見直しに関わります。",
             "",
         )
     if flags[FLAG_MCMC_3R]:
@@ -1288,6 +1355,53 @@ def self_test() -> int:
     evaluate_item(bank_negara_opr)
     check("Bank Negara OPR has background value", bank_negara_opr.background_value)
     check("Bank Negara OPR is not excluded", not should_exclude_item(bank_negara_opr))
+
+    pnb_exact = item("PNB names new president and group CEO")
+    evaluate_item(pnb_exact)
+    check("PNB exact CEO item is excluded", should_exclude_item(pnb_exact))
+
+    queen_visit = item("Queen praises Uzbekistan during courtesy visit")
+    evaluate_item(queen_visit)
+    check("Queen visit has no background value", not queen_visit.background_value)
+    check("Queen visit is excluded", should_exclude_item(queen_visit))
+
+    drug_bust = item("Police bust drug syndicates in major narcotics raid")
+    evaluate_item(drug_bust)
+    check("Drug syndicate bust has no background value", not drug_bust.background_value)
+    check("Drug syndicate bust is excluded", should_exclude_item(drug_bust))
+
+    pakatan_convention = item("Pakatan national convention sets election preparations")
+    evaluate_item(pakatan_convention)
+    check("Pakatan convention has no background value", not pakatan_convention.background_value)
+    check("Pakatan convention is excluded", should_exclude_item(pakatan_convention))
+
+    road_advisory = item("Road users advised to plan journeys around Padang Merbok")
+    evaluate_item(road_advisory)
+    check("Road journey advisory triggers road issue", road_advisory.flags[FLAG_ROAD_ISSUE])
+    check("Road journey advisory is life impact", category_for(road_advisory) == "【生活インパクト】")
+
+    bukit_bintang_closure = item("Jalan Bukit Bintang closed from midnight near Pavilion KL")
+    evaluate_item(bukit_bintang_closure)
+    check("Bukit Bintang closure triggers road issue", bukit_bintang_closure.flags[FLAG_ROAD_ISSUE])
+    check("Bukit Bintang closure is life impact", category_for(bukit_bintang_closure) == "【生活インパクト】")
+
+    mbpj_hotline = item("MBPJ activates 24-hour flood hotline after flash floods and toppled trees")
+    evaluate_item(mbpj_hotline)
+    check("MBPJ flood hotline triggers flood impact", mbpj_hotline.flags[FLAG_FLOOD_IMPACT])
+    check("MBPJ flood hotline is life impact", category_for(mbpj_hotline) == "【生活インパクト】")
+    check("MBPJ flood hotline uses hotline summary", "ホットライン" in japanese_summary(mbpj_hotline)[1])
+
+    jualan_rahmah = item("PKPS expands Jualan Rahmah to ease kos sara hidup")
+    evaluate_item(jualan_rahmah)
+    check("Jualan Rahmah has background value", jualan_rahmah.background_value)
+    check("Jualan Rahmah is not excluded", not should_exclude_item(jualan_rahmah))
+    check("Jualan Rahmah has selectable score", jualan_rahmah.score >= 3)
+
+    bnm_targeted = item("BNM targeted solutions aim to help households manage loan costs")
+    evaluate_item(bnm_targeted)
+    check("BNM targeted solutions has background value", bnm_targeted.background_value)
+    check("BNM targeted solutions is not excluded", not should_exclude_item(bnm_targeted))
+    check("BNM targeted solutions has selectable score", bnm_targeted.score >= 3)
 
     weather_guard = item("Ribut petir, hujan lebat di KL hingga petang - MetMalaysia")
     evaluate_item(weather_guard)
