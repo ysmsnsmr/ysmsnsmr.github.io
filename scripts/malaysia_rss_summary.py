@@ -80,7 +80,7 @@ ALL_FLAGS = [
 
 LAST_FINALIZE_STATS: dict[str, object] = {}
 CATEGORY_PRIORITY = {"【速報】": 0, "【生活インパクト】": 1, "【知っておくと得】": 2}
-FINANCIAL_LIMITS = {"ringgit": 1, "bursa": 1, "bnm_policy": 2}
+FINANCIAL_LIMITS = {"ringgit": 2, "bursa": 1, "bnm_policy": 2}
 PRACTICAL_LIFE_TAGS = {
     "weather",
     "flood",
@@ -499,7 +499,7 @@ def build_flags(item: Item) -> dict[str, bool]:
     flags[FLAG_SCAM] = has_any(text, ["scam", "penipuan", "badal haji"])
     flags[FLAG_CURRENCY] = has_phrase(text, "ringgit") and has_any(
         text,
-        ["trade", "trading", "rise", "rises", "strengthen", "strengthening", "forecast", "expected", "range", "us data", "imf", "economy", "opens", "eases", "close", "closes", "greenback", "payrolls"],
+        ["trade", "trading", "rise", "rises", "strengthen", "strengthening", "forecast", "expected", "range", "us data", "imf", "economy"],
     )
     flags[FLAG_MARKET] = has_phrase(text, "bursa malaysia") or (
         has_phrase(text, "fbm klci") and has_any(text, ["trade", "trading", "range bound", "market", "index"])
@@ -1011,8 +1011,6 @@ def evaluate_item(item: Item) -> Item:
         if has_any(item_text(item), ["drought", "cloud seeding", "food supply", "rice bowl", "agriculture"]):
             tags.append("food_supply")
         add_score(5, tags, "医療・雇用・経済・都市生活の背景価値")
-    if flags[FLAG_COST_OF_LIVING]:
-        add_score(4, ["prices", "social_support", "cost_of_living"], "生活費・日用品価格への実用性")
     if has_any(item_text(item), ["dams hit alert levels", "dam hit alert levels", "alert levels", "rice bowl", "drought grips"]):
         add_score(2, ["food_supply"], "水資源・食料供給への生活影響が明確")
     if flags[FLAG_SCAM]:
@@ -1091,7 +1089,6 @@ def category_for(item: Item) -> str:
         or flags[FLAG_SABAH_ELECTRICITY]
         or flags[FLAG_SOCIAL_SECURITY]
         or flags[FLAG_SCAM]
-        or flags[FLAG_COST_OF_LIVING]
         or has_any(item_text(item), ["mcmc", "3r", "haji"])
     ):
         return "【生活インパクト】"
@@ -1110,25 +1107,8 @@ def financial_topic_bucket(item: Item) -> str:
     return ""
 
 
-def ringgit_update_priority(item: Item) -> int:
-    if financial_topic_bucket(item) != "ringgit":
-        return 0
-    text = item_text(item)
-    if has_any(text, ["at the close", "closes", "close"]):
-        return 0
-    if has_phrase(text, "eases"):
-        return 1
-    if has_any(text, ["opens", "opens higher", "opens lower"]):
-        return 5
-    return 2
-
-
-def representative_rank(item: Item) -> tuple[int, int, datetime]:
-    return (item.score, -ringgit_update_priority(item), item.pub_date)
-
-
-def final_sort_key(item: Item) -> tuple[int, int, int, float]:
-    return (CATEGORY_PRIORITY.get(item.category, 9), ringgit_update_priority(item), -item.score, -item.pub_date.timestamp())
+def final_sort_key(item: Item) -> tuple[int, int, float]:
+    return (CATEGORY_PRIORITY.get(item.category, 9), -item.score, -item.pub_date.timestamp())
 
 
 def final_noise_text(item: Item) -> str:
@@ -1217,56 +1197,6 @@ def final_noise_gate(items: list[Item]) -> list[Item]:
     return [item for item in items if not is_forced_final_noise(item)]
 
 
-def is_cost_of_living_item(item: Item) -> bool:
-    return ensure_flags(item)[FLAG_COST_OF_LIVING]
-
-
-def cost_rescue_drop_priority(item: Item) -> tuple[int, int, int, float]:
-    text = item_text(item)
-    bucket = financial_topic_bucket(item)
-    if item.category != "【知っておくと得】":
-        return (100, CATEGORY_PRIORITY.get(item.category, 9), item.score, item.pub_date.timestamp())
-    if bucket == "ringgit" and has_any(text, ["opens", "opens higher", "opens lower"]):
-        return (0, 0, item.score, item.pub_date.timestamp())
-    if bucket == "ringgit":
-        return (1, 0, item.score, item.pub_date.timestamp())
-    if bucket == "bursa":
-        return (2, 0, item.score, item.pub_date.timestamp())
-    if bucket == "bnm_policy" and has_any(text, ["reserves", "foreign reserves", "statistics"]):
-        return (3, 0, item.score, item.pub_date.timestamp())
-    if uses_generic_fallback(item):
-        return (4, 0, item.score, item.pub_date.timestamp())
-    return (50, 0, item.score, item.pub_date.timestamp())
-
-
-def ensure_cost_of_living_item(selected: list[Item], candidates: list[Item]) -> list[Item]:
-    if any(is_cost_of_living_item(item) for item in selected):
-        return selected
-    selected_links = {normalized(item.link) for item in selected if item.link}
-    selected_keys = {key_for(item) for item in selected}
-    cost_candidates = [
-        item
-        for item in candidates
-        if is_cost_of_living_item(item)
-        and not is_forced_final_noise(item)
-        and normalized(item.link) not in selected_links
-        and key_for(item) not in selected_keys
-    ]
-    if not cost_candidates:
-        return selected
-    cost_item = max(cost_candidates, key=lambda item: (item.score, item.pub_date))
-    life_count = sum(1 for item in selected if item.category == "【生活インパクト】")
-    cost_item.category = "【生活インパクト】" if life_count < 5 else "【知っておくと得】"
-    if len(selected) < 15:
-        return selected + [cost_item]
-    drop_index, drop_item = min(enumerate(selected), key=lambda pair: cost_rescue_drop_priority(pair[1]))
-    if cost_rescue_drop_priority(drop_item)[0] >= 100:
-        return selected
-    rescued = list(selected)
-    rescued[drop_index] = cost_item
-    return rescued
-
-
 def finalize_selected_items(selected: list[Item]) -> list[Item]:
     global LAST_FINALIZE_STATS
     gated = final_noise_gate(selected)
@@ -1347,7 +1277,7 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
         key = key_for(item)
         sources_by_key.setdefault(key, set()).add(item.source)
         current = by_key.get(key)
-        if current is None or representative_rank(item) > representative_rank(current):
+        if current is None or (item.score, item.pub_date) > (current.score, current.pub_date):
             by_key[key] = item
     for key, item in by_key.items():
         item.source_count = len(sources_by_key.get(key, {item.source}))
@@ -1381,7 +1311,6 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
             financial_counts[financial_bucket] += 1
         if len(selected) >= 15:
             break
-    selected = ensure_cost_of_living_item(selected, candidates)
     return finalize_selected_items(selected)
 
 
@@ -1959,39 +1888,7 @@ def self_test() -> int:
     check("PKPS cost-of-living flag triggers", cost_of_living_item.flags[FLAG_COST_OF_LIVING])
     check("PKPS cost-of-living has background value", cost_of_living_item.background_value)
     check("PKPS cost-of-living is not excluded", not should_exclude_item(cost_of_living_item))
-    check("PKPS cost-of-living is life impact", category_for(cost_of_living_item) == "【生活インパクト】")
     check("PKPS cost-of-living is selectable", bool(select_items([cost_of_living_item], now)))
-
-    jualan_simple = item("Jualan Rahmah offers barang keperluan at harga lebih rendah")
-    evaluate_item(jualan_simple)
-    check("Jualan Rahmah simple item is selectable", bool(select_items([jualan_simple], now)))
-
-    selected_without_cost = [
-        item("Ringgit opens higher against euro, pound and yen but slips versus greenback", link="https://example.test/rescue-ringgit-open"),
-        item("Bursa Malaysia market index expected to trade cautiously", link="https://example.test/rescue-bursa"),
-        item("BNM foreign reserves statistics updated for the week", link="https://example.test/rescue-bnm"),
-    ]
-    selected_without_cost.extend(
-        item(f"Generic background update for households {number}", link=f"https://example.test/rescue-generic-{number}")
-        for number in range(12)
-    )
-    for test_item in selected_without_cost:
-        evaluate_item(test_item)
-        test_item.category = "【知っておくと得】"
-    rescue_cost = item(
-        "PKPS perkukuh rangkaian jualan murah, 122 rakan strategik bantu rakyat hadapi kos sara hidup",
-        link="https://example.test/rescue-cost",
-    )
-    evaluate_item(rescue_cost)
-    rescued = ensure_cost_of_living_item(selected_without_cost, selected_without_cost + [rescue_cost])
-    check("Cost-of-living rescue inserts one item", any(is_cost_of_living_item(test_item) for test_item in rescued))
-    check("Cost-of-living rescue can replace low priority finance", len(rescued) == len(selected_without_cost))
-
-    ringgit_open = item("Ringgit opens higher against euro, pound, yen; slips vs greenback", link="https://example.test/ringgit-open")
-    ringgit_eases = item("Ringgit eases ahead of US payrolls report amid fresh tensions in West Asia at the close", link="https://example.test/ringgit-eases")
-    selected_daily_ringgit = select_items([ringgit_open, ringgit_eases], now)
-    check("Daily Ringgit updates collapse to one item", sum(1 for test_item in selected_daily_ringgit if financial_topic_bucket(test_item) == "ringgit") == 1)
-    check("Daily Ringgit prefers eases/close over opens", selected_daily_ringgit and selected_daily_ringgit[0].title == ringgit_eases.title)
 
     cloud_seeding = item("Cloud seeding set for Perlis and Kedah as dry spell continues")
     drought_rice = item("As drought grips Kedah, rice bowl dams hit alert levels")
