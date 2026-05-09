@@ -1,0 +1,41 @@
+# Local environment files
+.env
+.env.*
+
+# Local Codex and Lazyweb MCP state
+.codex/
+.lazyweb/
+
+# Design research originals and generated drafts
+design-references/screenshots/
+assets/generated/_drafts/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+tmp/
+temp/
+
+# Caches
+.cache/
+.parcel-cache/
+.eslintcache
+
+# Dependencies and build output
+node_modules/
+dist/
+build/
