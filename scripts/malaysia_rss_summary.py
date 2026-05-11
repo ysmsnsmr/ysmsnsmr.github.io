@@ -2,6 +2,7 @@
 import argparse
 import email.utils
 import html
+import json
 import re
 import ssl
 import subprocess
@@ -1481,6 +1482,69 @@ def japanese_summary(item: Item) -> tuple[str, str, str, str]:
     )
 
 
+def selected_summary_json(item: Item) -> dict[str, object]:
+    conclusion, what, impact, action = japanese_summary(item)
+    return {
+        "conclusion": conclusion,
+        "what_happened": what.splitlines()[:2],
+        "life_impact": impact,
+        "next_action": action or "",
+    }
+
+
+def item_json(item: Item) -> dict[str, object]:
+    return {
+        "category": item.category,
+        "source": item.source,
+        "published_date": f"{item.pub_date.year}年{item.pub_date.month}月{item.pub_date.day}日",
+        "published_at": item.pub_date.isoformat(),
+        "title": item.title,
+        "description": item.description,
+        "link": item.link,
+        "canonical_key": key_for(item),
+        "tags": item.tags,
+        "flags": ensure_flags(item),
+        "score": item.score,
+        "reasons": item.reasons,
+        "penalties": item.penalties,
+        "background_value": item.background_value,
+        "selected_summary": selected_summary_json(item),
+    }
+
+
+def build_selected_items_json(
+    selected: list[Item],
+    processed_count: int,
+    failed_sources: list[str],
+    now: datetime,
+) -> dict[str, object]:
+    return {
+        "schema_version": "2b0_selected_items_v1",
+        "generated_at": now.isoformat(),
+        "date": now.date().isoformat(),
+        "timezone": "Asia/Kuala_Lumpur",
+        "source_policy": {
+            "uses_rss_only": True,
+            "fetches_article_body": False,
+        },
+        "counts": {
+            "processed": processed_count,
+            "selected": len(selected),
+            "failed_sources": len(failed_sources),
+        },
+        "failed_sources": failed_sources,
+        "items": [item_json(item) for item in selected],
+    }
+
+
+def write_json_output(path: str, data: dict[str, object]) -> None:
+    output_path = Path(path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("w", encoding="utf-8") as output_file:
+        json.dump(data, output_file, ensure_ascii=False, indent=2)
+        output_file.write("\n")
+
+
 def render(selected: list[Item], processed_count: int, failed_sources: list[str]) -> str:
     lines: list[str] = []
     ordered_categories = ["【速報】", "【生活インパクト】", "【知っておくと得】"]
@@ -1906,6 +1970,16 @@ def self_test() -> int:
     weather_guard.background_value = False
     check("Template weather is not excluded by generic fallback rule", not should_exclude_item(weather_guard))
 
+    weather_guard.category = category_for(weather_guard)
+    json_payload = build_selected_items_json([weather_guard], 1, [], now)
+    json_item = json_payload["items"][0]
+    selected_summary = json_item["selected_summary"]
+    check("JSON payload uses selected items only", json_payload["counts"]["selected"] == 1 and len(json_payload["items"]) == 1)
+    check("JSON item has canonical key", bool(json_item["canonical_key"]))
+    check("JSON item keeps internal metadata", "score" in json_item and "flags" in json_item)
+    check("JSON selected summary has next_action key", "next_action" in selected_summary)
+    check("JSON selected summary splits what_happened like render", len(selected_summary["what_happened"]) <= 2)
+
     if failures:
         print("self-test failed:")
         for failure in failures:
@@ -1921,6 +1995,7 @@ def main() -> int:
     parser.add_argument("--diagnose-fetch", action="store_true")
     parser.add_argument("--self-test", action="store_true")
     parser.add_argument("--output", help="Write the final Markdown summary to this path.")
+    parser.add_argument("--json-output", help="Write selected final items as intermediate JSON to this path.")
     args = parser.parse_args()
 
     if args.self_test:
@@ -1961,6 +2036,12 @@ def main() -> int:
         print(f"失敗したソース一覧：{', '.join(failed_sources) if failed_sources else 'なし'}")
     else:
         print(output)
+    if args.json_output:
+        write_json_output(
+            args.json_output,
+            build_selected_items_json(selected, processed_count, failed_sources, now),
+        )
+        print(f"Wrote JSON: {args.json_output}")
     return 0
 
 
