@@ -10,7 +10,9 @@ from typing import Any
 CATEGORIES = ["【速報】", "【生活インパクト】", "【知っておくと得】"]
 TOPIC_ORDER = [
     "flood",
-    "weather",
+    "storm_weather",
+    "heat_weather",
+    "oil_spill",
     "road_closure",
     "public_transport",
     "cost_of_living",
@@ -20,17 +22,29 @@ TOPIC_ORDER = [
 ]
 
 TOPIC_TEXT = {
-    "weather": {
-        "conclusion": "天候悪化への注意が必要です。",
+    "storm_weather": {
+        "conclusion": "雷雨や大雨への注意が必要です。",
         "what_happened": ["RSSでは、雷雨・大雨などの天候リスクが伝えられています。"],
         "life_impact": "外出や移動は、急な雨や強風による遅れに注意が必要です。",
         "next_action": "外出前に最新の気象情報を確認してください。",
+    },
+    "heat_weather": {
+        "conclusion": "暑さによる健康リスクに注意が必要です。",
+        "what_happened": ["RSSでは、暑さや熱中症リスクに関する情報が伝えられています。"],
+        "life_impact": "屋外活動や通勤・通学では、体調管理に注意が必要です。",
+        "next_action": "水分補給を意識し、体調不良時は無理な外出を避けてください。",
     },
     "flood": {
         "conclusion": "洪水や冠水への注意が必要です。",
         "what_happened": ["RSSでは、洪水・冠水に関する注意情報が伝えられています。"],
         "life_impact": "低地や冠水しやすい道路では、移動に時間がかかる可能性があります。",
         "next_action": "移動前に自治体や交通情報を確認してください。",
+    },
+    "oil_spill": {
+        "conclusion": "油流出による道路影響に注意が必要です。",
+        "what_happened": ["RSSでは、タンクローリー事故などによる油流出が伝えられています。"],
+        "life_impact": "対象道路では滑りやすさや渋滞、迂回が発生する可能性があります。",
+        "next_action": "周辺を通る場合は交通情報を確認してください。",
     },
     "road_closure": {
         "conclusion": "道路閉鎖や交通規制に注意が必要です。",
@@ -144,6 +158,10 @@ def item_tokens(item: dict[str, Any]) -> set[str]:
     return tokens
 
 
+def has_topic_token(tokens: set[str], phrases: set[str]) -> bool:
+    return bool(tokens & phrases)
+
+
 def looks_english_heavy(text: str) -> bool:
     if not text:
         return True
@@ -177,6 +195,60 @@ def should_replace_lines_with_topic_text(lines: list[str]) -> bool:
     return all(should_replace_with_topic_text(line) for line in lines)
 
 
+def is_storm_weather_topic(text: str, tokens: set[str]) -> bool:
+    return (
+        has_topic_token(tokens, {"storm_weather", "weather_storm", "thunderstorm", "heavy_rain"})
+        or has_any_phrase(text, ["thunderstorm", "heavy rain", "ribut petir", "hujan lebat", "amaran ribut", "amaran hujan"])
+    )
+
+
+def is_heat_weather_topic(text: str, tokens: set[str]) -> bool:
+    return (
+        has_topic_token(tokens, {"heat_weather", "heat", "is_heat"})
+        or has_any_phrase(text, ["hot weather", "cuaca panas", "tahap 1", "heatstroke", "heat stroke", "strok haba", "heat-related illness", "熱中症"])
+    )
+
+
+def is_maritime_context(text: str) -> bool:
+    return has_any_phrase(text, ["selat hormuz", "strait", "kapal", "vessel", "shipping lane", "laluan kapal", "maritime"])
+
+
+def is_road_closure_topic(text: str, tokens: set[str]) -> bool:
+    if is_maritime_context(text):
+        return False
+    road_context = has_topic_token(tokens, {"road_closure", "road_issue", "is_road_issue"}) or has_any_phrase(
+        text,
+        ["road", "jalan", "lane", "traffic"],
+    )
+    closure_context = has_any_phrase(
+        text,
+        ["closure", "closed", "tutup", "ditutup", "sesak", "congestion", "road closure", "jalan ditutup", "traffic congestion"],
+    )
+    return road_context and closure_context
+
+
+def is_oil_spill_topic(text: str, tokens: set[str]) -> bool:
+    if has_any_phrase(text, ["sawit", "oil palm"]) and not has_any_phrase(text, ["spill", "tumpah", "tanker", "accident"]):
+        return False
+    spill_context = has_topic_token(tokens, {"oil_spill"}) or has_any_phrase(text, ["spill", "tumpah"])
+    incident_context = has_any_phrase(text, ["accident", "tanker", "lorry", "truck", "overturned"])
+    road_context = has_any_phrase(text, ["road", "jalan", "klang"])
+    return spill_context and incident_context and road_context
+
+
+def is_public_transport_crime_context(text: str) -> bool:
+    return has_any_phrase(text, ["molester", "harassment", "crime", "jail", "caning", "sexual assault", "assault"])
+
+
+def is_public_transport_service_topic(text: str, tokens: set[str]) -> bool:
+    if is_public_transport_crime_context(text):
+        return False
+    return (
+        has_topic_token(tokens, {"public_transport", "is_public_transport"})
+        or has_any_phrase(text, ["rapid kl", "mrt", "lrt", "ktmb", "bus stop", "route", "schedule", "extra trains", "train services"])
+    )
+
+
 def detect_topic(item: dict[str, Any]) -> str:
     tokens = item_tokens(item)
     text = normalized_text_blob(item)
@@ -185,18 +257,11 @@ def detect_topic(item: dict[str, Any]) -> str:
             {"flood", "flood_impact", "is_flood_impact"} & tokens
             or has_any_phrase(text, ["flash flood", "flash floods", "flood hotline", "banjir", "冠水", "洪水"])
         ),
-        "weather": (
-            {"weather", "is_weather", "heat", "is_heat"} & tokens
-            or has_any_phrase(text, ["metmalaysia", "thunderstorm", "heavy rain", "ribut petir", "hujan lebat", "heatstroke", "heat stroke", "熱中症"])
-        ),
-        "road_closure": (
-            {"road_closure", "road_issue", "is_road_issue"} & tokens
-            or has_any_phrase(text, ["road closed", "road closure", "jalan ditutup", "traffic congestion", "closed from midnight", "道路閉鎖", "交通規制"])
-        ),
-        "public_transport": (
-            {"public_transport", "is_public_transport"} & tokens
-            or has_any_phrase(text, ["public transport", "ktmb", "extra trains", "train services", "commuting", "grab group ride"])
-        ),
+        "storm_weather": is_storm_weather_topic(text, tokens),
+        "heat_weather": is_heat_weather_topic(text, tokens),
+        "oil_spill": is_oil_spill_topic(text, tokens),
+        "road_closure": is_road_closure_topic(text, tokens),
+        "public_transport": is_public_transport_service_topic(text, tokens),
         "cost_of_living": (
             {"cost_of_living", "prices", "social_support", "aid", "subsidy", "is_cost_of_living"} & tokens
             or has_any_phrase(text, ["jualan rahmah", "kos sara hidup", "cost of living", "barang keperluan", "harga lebih rendah", "jualan murah", "日用品", "生活費"])
@@ -271,9 +336,48 @@ def render_item(item: dict[str, Any]) -> list[str]:
     return lines
 
 
-def render(data: dict[str, Any]) -> str:
+def selected_items_from_data(data: dict[str, Any]) -> list[dict[str, Any]]:
     raw_items = data.get("items", [])
-    items = [item for item in raw_items if isinstance(item, dict)] if isinstance(raw_items, list) else []
+    return [item for item in raw_items if isinstance(item, dict)] if isinstance(raw_items, list) else []
+
+
+def semantic_duplicate_bucket(item: dict[str, Any]) -> str:
+    text = normalized_text_blob(item)
+    if has_any_phrase(text, ["mykad", "kad pengenalan", "national registration identity card"]):
+        return "MyKad BM/English"
+    if has_phrase(text, "dbkl") and has_any_phrase(text, ["bus stop", "hentian bas", "bas stop"]):
+        return "DBKL bus stop BM/English"
+    if has_phrase(text, "ringgit"):
+        return "Ringgit multiple items"
+    if has_any_phrase(text, ["ron95", "budi95", "budi 95"]):
+        return "RON95/BUDI95 multiple items"
+    return ""
+
+
+def print_diagnostics(data: dict[str, Any]) -> None:
+    buckets: dict[str, list[dict[str, Any]]] = {}
+    for item in selected_items_from_data(data):
+        bucket = semantic_duplicate_bucket(item)
+        if bucket:
+            buckets.setdefault(bucket, []).append(item)
+
+    duplicate_buckets = {name: items for name, items in buckets.items() if len(items) > 1}
+    if not duplicate_buckets:
+        print("diagnostics: semantic_duplicate_candidates=0", file=sys.stderr)
+        return
+
+    print("diagnostics: semantic_duplicate_candidates:", file=sys.stderr)
+    for name, items in duplicate_buckets.items():
+        print(f"- {name}: {len(items)} items", file=sys.stderr)
+        for item in items:
+            title = clean_display_text(item.get("title")) or clean_display_text(item.get("link"))
+            source = clean_display_text(item.get("source"))
+            published_date = clean_display_text(item.get("published_date"))
+            print(f"  - {source} {published_date}: {title}", file=sys.stderr)
+
+
+def render(data: dict[str, Any]) -> str:
+    items = selected_items_from_data(data)
     counts = data.get("counts", {})
     if not isinstance(counts, dict):
         counts = {}
@@ -302,9 +406,14 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--json-input", required=True, help="Read selected Malaysia news items JSON from this path.")
     parser.add_argument("--output", help="Write rendered Markdown to this path. Defaults to stdout.")
+    parser.add_argument("--diagnostics", action="store_true", help="Write semantic duplicate candidates to stderr.")
     args = parser.parse_args()
 
-    markdown = render(load_json(args.json_input))
+    data = load_json(args.json_input)
+    if args.diagnostics:
+        print_diagnostics(data)
+
+    markdown = render(data)
     if args.output:
         output_path = Path(args.output)
         output_path.parent.mkdir(parents=True, exist_ok=True)
