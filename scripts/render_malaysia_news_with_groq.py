@@ -16,6 +16,7 @@ import render_malaysia_news_from_json as fallback_renderer
 
 DEFAULT_MODEL = "llama-3.3-70b-versatile"
 GROQ_CHAT_COMPLETIONS_URL = "https://api.groq.com/openai/v1/chat/completions"
+GROQ_USER_AGENT = "ysmsnsmr-malaysia-news/0.1 (+https://ysmsnsmr.github.io/news/malaysia/)"
 MAX_RESPONSE_CHARS = 4000
 TIMEOUT_SECONDS = 30
 
@@ -124,6 +125,7 @@ def request_groq_summary(item: dict[str, Any], api_key: str, model: str) -> dict
         headers={
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
+            "User-Agent": GROQ_USER_AGENT,
         },
         method="POST",
     )
@@ -188,7 +190,10 @@ def render_with_groq(data: dict[str, Any], api_key: str, model: str, force_all: 
         try:
             item["selected_summary"] = request_groq_summary(item, api_key, model)
             accepted += 1
-        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, KeyError, IndexError, TypeError, ValueError, json.JSONDecodeError) as error:
+        except urllib.error.HTTPError as error:
+            failed += 1
+            safe_log(f"groq: item {index + 1} fallback (HTTP {error.code}).")
+        except (urllib.error.URLError, TimeoutError, KeyError, IndexError, TypeError, ValueError, json.JSONDecodeError) as error:
             failed += 1
             safe_log(f"groq: item {index + 1} fallback ({error.__class__.__name__}).")
     safe_log(f"groq: requested={requested} accepted={accepted} fallback={failed}")
