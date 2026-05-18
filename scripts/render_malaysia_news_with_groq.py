@@ -104,7 +104,30 @@ def groq_payload_for_item(item: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def request_groq_summary(item: dict[str, Any], api_key: str, model: str) -> dict[str, Any]:
+def strip_json_code_fence(content: str) -> str:
+    text = content.strip()
+    fence_match = re.fullmatch(r"```(?:json)?\s*(.*?)\s*```", text, flags=re.DOTALL | re.IGNORECASE)
+    return fence_match.group(1).strip() if fence_match else text
+
+
+def debug_groq_payload(index: int, item: dict[str, Any], parsed: Any | None = None, reason: str = "") -> None:
+    title = clean_text(item.get("title"))[:80]
+    if parsed is None:
+        keys_text = "n/a"
+    elif isinstance(parsed, dict):
+        keys_text = ", ".join(sorted(str(key) for key in parsed.keys()))
+    else:
+        keys_text = type(parsed).__name__
+    reason_text = f" reason={reason}" if reason else ""
+    safe_log(f"groq-debug: item={index + 1} title={title!r} parsed_keys={keys_text}{reason_text}")
+
+
+def parse_groq_content(content: str) -> Any:
+    cleaned_content = strip_json_code_fence(content)
+    return json.loads(cleaned_content)
+
+
+def request_groq_summary(item: dict[str, Any], api_key: str, model: str, debug: bool = False, index: int = 0) -> dict[str, Any]:
     body = {
         "model": model,
         "messages": [
@@ -139,24 +162,32 @@ def request_groq_summary(item: dict[str, Any], api_key: str, model: str) -> dict
         raise ValueError("Groq response content is empty")
     if len(content) > MAX_RESPONSE_CHARS:
         raise ValueError("Groq message content too long")
-    return validate_groq_summary(json.loads(content))
+    parsed_content = parse_groq_content(content)
+    if debug:
+        debug_groq_payload(index, item, parsed_content)
+    return validate_groq_summary(parsed_content)
 
 
 def validate_groq_summary(value: Any) -> dict[str, Any]:
     if not isinstance(value, dict):
-        raise ValueError("Groq summary is not an object")
+        raise ValueError("summary is not object")
+    if isinstance(value.get("selected_summary"), dict):
+        value = value["selected_summary"]
     conclusion = clean_text(value.get("conclusion"))
-    what_happened = summary_lines(value.get("what_happened"))
+    raw_what_happened = value.get("what_happened")
+    if isinstance(raw_what_happened, str):
+        raw_what_happened = [raw_what_happened]
+    what_happened = summary_lines(raw_what_happened)
     life_impact = clean_text(value.get("life_impact"))
     next_action = clean_text(value.get("next_action"))
     if not conclusion:
-        raise ValueError("Groq summary conclusion is empty")
-    if not isinstance(value.get("what_happened"), list):
-        raise ValueError("Groq summary what_happened is not a list")
+        raise ValueError("missing conclusion")
+    if not isinstance(raw_what_happened, list):
+        raise ValueError("what_happened is not list")
     if not what_happened:
-        raise ValueError("Groq summary what_happened is empty")
+        raise ValueError("missing what_happened")
     if not life_impact:
-        raise ValueError("Groq summary life_impact is empty")
+        raise ValueError("missing life_impact")
     return {
         "conclusion": conclusion,
         "what_happened": what_happened[:2],
@@ -169,7 +200,7 @@ def safe_log(message: str) -> None:
     print(message, file=sys.stderr)
 
 
-def render_with_groq(data: dict[str, Any], api_key: str, model: str, force_all: bool) -> dict[str, Any]:
+def render_with_groq(data: dict[str, Any], api_key: str, model: str, force_all: bool, debug: bool) -> dict[str, Any]:
     rendered_data = copy.deepcopy(data)
     items = rendered_data.get("items", [])
     if not isinstance(items, list):
@@ -188,12 +219,18 @@ def render_with_groq(data: dict[str, Any], api_key: str, model: str, force_all: 
             continue
         requested += 1
         try:
-            item["selected_summary"] = request_groq_summary(item, api_key, model)
+            item["selected_summary"] = request_groq_summary(item, api_key, model, debug, index)
             accepted += 1
         except urllib.error.HTTPError as error:
             failed += 1
             safe_log(f"groq: item {index + 1} fallback (HTTP {error.code}).")
-        except (urllib.error.URLError, TimeoutError, KeyError, IndexError, TypeError, ValueError, json.JSONDecodeError) as error:
+        except ValueError as error:
+            failed += 1
+            reason = str(error) or "validation failed"
+            safe_log(f"groq: item {index + 1} fallback (ValueError: {reason}).")
+            if debug:
+                debug_groq_payload(index, item, reason=reason)
+        except (urllib.error.URLError, TimeoutError, KeyError, IndexError, TypeError) as error:
             failed += 1
             safe_log(f"groq: item {index + 1} fallback ({error.__class__.__name__}).")
     safe_log(f"groq: requested={requested} accepted={accepted} fallback={failed}")
@@ -206,12 +243,13 @@ def main() -> int:
     parser.add_argument("--output", help="Write rendered Markdown to this path. Defaults to stdout.")
     parser.add_argument("--model", help="Groq model name. Defaults to GROQ_MODEL or llama-3.3-70b-versatile.")
     parser.add_argument("--force-all", action="store_true", help="Send all items to Groq for local comparison.")
+    parser.add_argument("--debug-groq", action="store_true", help="Write short Groq validation diagnostics to stderr.")
     args = parser.parse_args()
 
     data = fallback_renderer.load_json(args.json_input)
     model = args.model or os.environ.get("GROQ_MODEL") or DEFAULT_MODEL
     api_key = os.environ.get("GROQ_API_KEY", "")
-    rendered_data = render_with_groq(data, api_key, model, args.force_all)
+    rendered_data = render_with_groq(data, api_key, model, args.force_all, args.debug_groq)
     markdown = fallback_renderer.render(rendered_data)
 
     if args.output:
