@@ -34,6 +34,14 @@ what_happenedはRSS title/descriptionにある事実だけで、最大2文にし
 life_impactでは「生活・仕事・家計に関わる背景ニュース」のような汎用文を避けてください。
 影響が分からない場合は「制度や進学条件に関わる背景情報として確認しておく価値があります。」程度にしてください。
 RSSにない事実、対象者、影響、次アクションを足さないでください。
+“lost students”, “losing students” は死亡を意味すると明確でない限り、「生徒の利用が減った」「利用者を失った」「生徒が乗らなくなった」のように訳してください。
+死亡、事故、被害、収入減などはRSSに明記されていない限り書かないでください。
+個人の苦境・個別事例では、life_impactは広げすぎず「関連制度や当局対応を知る背景情報です」程度に留めてください。
+“funeral transport” は文脈上「葬儀関連の送迎」「葬儀向け送迎」など、車両そのものを断定しすぎない表現にしてください。
+conclusionは自然な日本語にしつつ、titleにない因果関係を強めないでください。
+what_happenedは重複した内容を2行にしないでください。2行目が1行目と同じ意味なら1行だけにしてください。
+life_impactはRSSに具体的な生活影響がない場合、無理に個人の収入・生活への影響を作らないでください。
+個別事例では、読者の生活への直接影響を断定せず、制度・当局対応・地域事情の背景情報として控えめに述べてください。
 出力はJSONのみです。"""
 
 
@@ -135,6 +143,61 @@ def parse_groq_content(content: str) -> Any:
     return json.loads(cleaned_content)
 
 
+def item_source_text(item: dict[str, Any]) -> str:
+    return " ".join(
+        [
+            clean_text(item.get("title")),
+            clean_text(item.get("description")),
+        ]
+    ).lower()
+
+
+def summary_text(summary: dict[str, Any]) -> str:
+    return " ".join(
+        [
+            clean_text(summary.get("conclusion")),
+            " ".join(summary_lines(summary.get("what_happened"))),
+            clean_text(summary.get("life_impact")),
+            clean_text(summary.get("next_action")),
+        ]
+    )
+
+
+def has_any_text(text: str, phrases: list[str]) -> bool:
+    return any(phrase.lower() in text for phrase in phrases)
+
+
+def validate_summary_against_source(item: dict[str, Any], summary: dict[str, Any]) -> None:
+    source_text = item_source_text(item)
+    rendered_text = summary_text(summary)
+    rendered_lower = rendered_text.lower()
+
+    if "学生を失った" in rendered_text and not has_any_text(source_text, ["death", "dead", "died", "killed", "fatal", "meninggal", "maut"]):
+        raise ValueError("unsafe losing students wording")
+
+    guarded_claims = {
+        "death": ["死亡", "亡くな", "死者"],
+        "accident": ["事故"],
+        "damage": ["被害"],
+        "income_loss": ["収入減", "収入が減", "所得減", "売上減"],
+    }
+    source_evidence = {
+        "death": ["death", "dead", "died", "killed", "fatal", "meninggal", "maut"],
+        "accident": ["accident", "crash", "collision", "kemalangan"],
+        "damage": ["damage", "damaged", "losses", "kerosakan", "被害"],
+        "income_loss": ["income", "revenue", "earnings", "salary", "wage", "fare", "lost students", "losing students"],
+    }
+    for claim, phrases in guarded_claims.items():
+        if any(phrase in rendered_text for phrase in phrases) and not has_any_text(source_text, source_evidence[claim]):
+            raise ValueError(f"unsupported {claim} claim")
+
+    if has_any_text(rendered_lower, ["生活への影響が大きい", "家計に直接影響", "収入に影響", "生活を圧迫"]) and not has_any_text(
+        source_text,
+        ["cost", "price", "fare", "income", "revenue", "salary", "wage", "living", "kos sara hidup", "tambang"],
+    ):
+        raise ValueError("unsupported life impact")
+
+
 def request_groq_summary(item: dict[str, Any], api_key: str, model: str, debug: bool = False, index: int = 0) -> dict[str, Any]:
     body = {
         "model": model,
@@ -173,7 +236,9 @@ def request_groq_summary(item: dict[str, Any], api_key: str, model: str, debug: 
     parsed_content = parse_groq_content(content)
     if debug:
         debug_groq_payload(index, item, parsed_content)
-    return validate_groq_summary(parsed_content)
+    summary = validate_groq_summary(parsed_content)
+    validate_summary_against_source(item, summary)
+    return summary
 
 
 def validate_groq_summary(value: Any) -> dict[str, Any]:
