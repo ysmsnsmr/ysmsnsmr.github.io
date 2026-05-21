@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>オレンジ瓶詰めラボ</title>
+  <meta name="description" content="空き瓶にオレンジを詰めていく、タップとクリックで遊べるブラウザゲームです。">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game" aria-label="オレンジ瓶詰めラボ">
+    <section class="topbar" aria-label="スコア情報">
+      <a class="home-link" href="../experiments.html" aria-label="実験一覧へ戻る">←</a>
+      <div class="metric">
+        <span>スコア</span>
+        <strong id="score">0</strong>
+      </div>
+      <div class="metric">
+        <span>ベスト</span>
+        <strong id="best-score">0</strong>
+      </div>
+      <div class="metric">
+        <span>残り</span>
+        <strong id="time-left">35.0</strong>
+      </div>
+    </section>
+
+    <section class="stage" id="stage">
+      <div class="sun-ribbon" aria-hidden="true"></div>
+      <div class="pressure-wrap" aria-label="瓶の圧力">
+        <div class="pressure-track">
+          <div class="pressure-fill" id="pressure-fill"></div>
+        </div>
+        <span>圧力</span>
+      </div>
+
+      <div class="jar-zone">
+        <div class="target-ring" id="target-ring" aria-hidden="true"></div>
+        <div class="jar" id="jar" aria-label="空き瓶">
+          <div class="jar-neck"></div>
+          <div class="jar-shine"></div>
+          <div class="jar-lip"></div>
+          <div class="jar-body">
+            <div class="juice-fill" id="juice-fill"></div>
+            <div class="orange-layer" id="orange-layer"></div>
+            <div class="crack crack-a"></div>
+            <div class="crack crack-b"></div>
+          </div>
+          <div class="jar-bottom"></div>
+        </div>
+      </div>
+
+      <button class="tap-zone" id="tap-zone" aria-label="オレンジを詰める">
+        <span class="tap-label" id="tap-label">TAP</span>
+      </button>
+
+      <div class="float-layer" id="float-layer" aria-hidden="true"></div>
+      <div class="status" id="status">READY</div>
+    </section>
+
+    <section class="bottom-panel" aria-label="ゲーム操作">
+      <div class="gauge">
+        <span>充填</span>
+        <div class="gauge-track">
+          <div class="gauge-fill" id="fill-gauge"></div>
+        </div>
+      </div>
+      <button class="sound-button" id="sound-button" type="button" aria-pressed="true">VOICE ON</button>
+      <button class="restart-button" id="restart-button" type="button">RETRY</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
