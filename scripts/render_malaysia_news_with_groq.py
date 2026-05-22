@@ -33,6 +33,59 @@ FINANCIAL_MARKET_PHRASES = [
     "us dollar",
     "greenback",
 ]
+INCIDENT_PHRASES = [
+    "accident",
+    "crash",
+    "collision",
+    "murder",
+    "rape",
+    "molest",
+    "molester",
+    "harassment",
+    "drug bust",
+    "drug syndicate",
+    "syndicate",
+    "court",
+    "charged",
+    "pleaded",
+    "jail",
+    "caning",
+    "probe",
+    "macc",
+    "sprm",
+    "police arrested",
+    "arrested",
+]
+POLITICS_PHRASES = [
+    "umno",
+    "pas",
+    "dap",
+    "pkr",
+    "bersatu",
+    "election",
+    "by-election",
+    "parliament",
+    "mp says",
+    "minister says",
+    "opposition",
+    "criticism",
+    "party",
+    "cabinet",
+]
+INTERNATIONAL_INCIDENT_PHRASES = [
+    "gaza",
+    "israel",
+    "iran",
+    "strait of hormuz",
+    "selat hormuz",
+    "vessel",
+    "shipping lane",
+    "war",
+    "missile",
+    "attack",
+    "cruise ship",
+    "hantavirus",
+]
 
 SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュースダッシュボードの日本語編集者です。
 入力はRSSのtitle、description、既存summaryだけです。
@@ -181,6 +234,20 @@ def has_any_text(text: str, phrases: list[str]) -> bool:
     return any(phrase.lower() in text for phrase in phrases)
 
 
+def has_search_phrase(text: str, phrase: str) -> bool:
+    normalized_phrase = re.sub(r"\s+", " ", phrase.strip().lower())
+    if not normalized_phrase:
+        return False
+    if re.search(r"[a-z0-9]", normalized_phrase):
+        pattern = rf"(?<![a-z0-9]){re.escape(normalized_phrase)}(?![a-z0-9])"
+        return re.search(pattern, text) is not None
+    return normalized_phrase in text
+
+
+def has_any_search_phrase(text: str, phrases: list[str]) -> bool:
+    return any(has_search_phrase(text, phrase) for phrase in phrases)
+
+
 def item_search_text(item: dict[str, Any]) -> str:
     parts = [
         clean_text(item.get("title")),
@@ -206,7 +273,31 @@ def item_search_text(item: dict[str, Any]) -> str:
 
 
 def is_financial_market_item(item: dict[str, Any]) -> bool:
-    return has_any_text(item_search_text(item), FINANCIAL_MARKET_PHRASES)
+    return has_any_search_phrase(item_search_text(item), FINANCIAL_MARKET_PHRASES)
+
+
+def is_incident_item(item: dict[str, Any]) -> bool:
+    return has_any_search_phrase(item_search_text(item), INCIDENT_PHRASES)
+
+
+def is_politics_item(item: dict[str, Any]) -> bool:
+    return has_any_search_phrase(item_search_text(item), POLITICS_PHRASES)
+
+
+def is_international_incident_item(item: dict[str, Any]) -> bool:
+    return has_any_search_phrase(item_search_text(item), INTERNATIONAL_INCIDENT_PHRASES)
+
+
+def groq_exclusion_reason(item: dict[str, Any]) -> str:
+    if is_financial_market_item(item):
+        return "financial_market"
+    if is_incident_item(item):
+        return "incident"
+    if is_politics_item(item):
+        return "politics"
+    if is_international_incident_item(item):
+        return "international_incident"
+    return ""
 
 
 def validate_summary_against_source(item: dict[str, Any], summary: dict[str, Any]) -> None:
@@ -330,9 +421,10 @@ def render_with_groq(data: dict[str, Any], api_key: str, model: str, force_all: 
     for index, item in enumerate(items):
         if not isinstance(item, dict):
             continue
-        if is_financial_market_item(item):
+        reason = groq_exclusion_reason(item)
+        if reason:
             if debug:
-                safe_log(f"groq-debug: item {index + 1} skipped financial_market")
+                safe_log(f"groq-debug: item={index + 1} skipped {reason}")
             continue
         if not force_all and not item_needs_groq(item):
             continue
