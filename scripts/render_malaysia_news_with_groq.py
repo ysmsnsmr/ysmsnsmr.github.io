@@ -86,6 +86,162 @@ INTERNATIONAL_INCIDENT_PHRASES = [
     "cruise ship",
     "hantavirus",
 ]
+TOPIC_ALIASES = {
+    "storm_weather": "storm_weather",
+    "weather": "storm_weather",
+    "storm": "storm_weather",
+    "heavy_rain": "storm_weather",
+    "rain": "storm_weather",
+    "heat_weather": "heat_weather",
+    "heat": "heat_weather",
+    "hot_weather": "heat_weather",
+    "flood": "flood",
+    "flood_impact": "flood",
+    "road_closure": "road_closure",
+    "road": "road_closure",
+    "road_issue": "road_closure",
+    "public_transport": "public_transport",
+    "transport": "public_transport",
+    "cost_of_living": "cost_of_living",
+    "prices": "cost_of_living",
+    "health": "health",
+    "public_health": "health",
+    "currency": "currency",
+    "market": "market",
+}
+WEATHER_IMPACT_WORDS = [
+    "weather",
+    "rain",
+    "storm",
+    "thunderstorm",
+    "heavy rain",
+    "ribut",
+    "hujan",
+    "天候",
+    "気象",
+    "雨",
+    "大雨",
+    "雷雨",
+    "強風",
+    "警報",
+    "外出",
+]
+HEAT_IMPACT_WORDS = [
+    "heat",
+    "hot weather",
+    "heatstroke",
+    "heat stroke",
+    "strok haba",
+    "暑さ",
+    "熱中症",
+    "水分",
+    "屋外",
+    "体調",
+]
+FLOOD_IMPACT_WORDS = [
+    "flood",
+    "flash flood",
+    "banjir",
+    "冠水",
+    "洪水",
+    "浸水",
+    "低地",
+    "排水",
+]
+ROAD_TRANSPORT_IMPACT_WORDS = [
+    "road",
+    "jalan",
+    "traffic",
+    "closure",
+    "closed",
+    "congestion",
+    "route",
+    "commute",
+    "public transport",
+    "train",
+    "bus",
+    "mrt",
+    "lrt",
+    "ktmb",
+    "道路",
+    "閉鎖",
+    "交通",
+    "渋滞",
+    "迂回",
+    "移動",
+    "通勤",
+    "通学",
+    "運行",
+    "公共交通",
+]
+FINANCIAL_IMPACT_WORDS = [
+    "market",
+    "investment",
+    "investor",
+    "stock",
+    "currency",
+    "ringgit",
+    "bursa",
+    "forex",
+    "投資",
+    "投資判断",
+    "市場",
+    "株式",
+    "為替",
+    "金融",
+    "相場",
+]
+POLICY_EDUCATION_IMPACT_WORDS = [
+    "policy",
+    "application",
+    "education",
+    "school",
+    "admission",
+    "制度",
+    "申請",
+    "手続",
+    "進学",
+    "教育制度",
+    "入学",
+]
+COST_IMPACT_WORDS = [
+    "cost of living",
+    "price",
+    "prices",
+    "subsidy",
+    "aid",
+    "rahmah",
+    "kos sara hidup",
+    "家計",
+    "生活費",
+    "日用品",
+    "価格",
+    "物価",
+    "支援",
+    "補助",
+    "買い物",
+]
+HEALTH_IMPACT_WORDS = [
+    "health",
+    "healthcare",
+    "medical",
+    "hospital",
+    "disease",
+    "infection",
+    "健康",
+    "医療",
+    "体調",
+    "感染",
+    "症状",
+    "公衆衛生",
+    "医療機関",
+]
+BACKGROUND_IMPACT_WORDS = [
+    "背景情報",
+    "当局対応",
+    "関連制度",
+    "確認しておく価値",
+]
 
 SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュースダッシュボードの日本語編集者です。
 入力はRSSのtitle、description、既存summaryだけです。
@@ -248,6 +404,14 @@ def has_any_search_phrase(text: str, phrases: list[str]) -> bool:
     return any(has_search_phrase(text, phrase) for phrase in phrases)
 
 
+def contains_any(text: str, words: list[str]) -> bool:
+    return has_any_search_phrase(text.lower(), words)
+
+
+def normalize_topic(topic: str) -> str:
+    return TOPIC_ALIASES.get(clean_text(topic).lower(), "")
+
+
 def item_search_text(item: dict[str, Any]) -> str:
     parts = [
         clean_text(item.get("title")),
@@ -300,6 +464,69 @@ def groq_exclusion_reason(item: dict[str, Any]) -> str:
     return ""
 
 
+def reject_life_impact_reason(topic: str, item: dict[str, Any], life_impact: str) -> str:
+    normalized_topic = normalize_topic(topic)
+    impact_text = clean_text(life_impact).lower()
+    if not normalized_topic or not impact_text:
+        return ""
+    if contains_any(impact_text, BACKGROUND_IMPACT_WORDS):
+        return ""
+
+    source_text = item_source_text(item)
+
+    def source_supports(words: list[str]) -> bool:
+        return contains_any(source_text, words)
+
+    topic_expected_words = {
+        "storm_weather": WEATHER_IMPACT_WORDS + ROAD_TRANSPORT_IMPACT_WORDS,
+        "heat_weather": HEAT_IMPACT_WORDS + HEALTH_IMPACT_WORDS,
+        "flood": FLOOD_IMPACT_WORDS + ROAD_TRANSPORT_IMPACT_WORDS + WEATHER_IMPACT_WORDS,
+        "road_closure": ROAD_TRANSPORT_IMPACT_WORDS,
+        "public_transport": ROAD_TRANSPORT_IMPACT_WORDS,
+        "cost_of_living": COST_IMPACT_WORDS,
+        "health": HEALTH_IMPACT_WORDS,
+        "currency": FINANCIAL_IMPACT_WORDS,
+        "market": FINANCIAL_IMPACT_WORDS,
+    }
+    if contains_any(impact_text, topic_expected_words.get(normalized_topic, [])):
+        return ""
+
+    mismatches = {
+        "storm_weather": [
+            ("financial", FINANCIAL_IMPACT_WORDS),
+            ("policy_education", POLICY_EDUCATION_IMPACT_WORDS),
+        ],
+        "heat_weather": [
+            ("road_transport", ROAD_TRANSPORT_IMPACT_WORDS),
+            ("flood", FLOOD_IMPACT_WORDS),
+            ("financial", FINANCIAL_IMPACT_WORDS),
+        ],
+        "road_closure": [
+            ("health", HEALTH_IMPACT_WORDS),
+            ("financial", FINANCIAL_IMPACT_WORDS),
+            ("policy_education", POLICY_EDUCATION_IMPACT_WORDS),
+        ],
+        "public_transport": [
+            ("financial", FINANCIAL_IMPACT_WORDS),
+            ("health", HEALTH_IMPACT_WORDS),
+            ("weather", WEATHER_IMPACT_WORDS + HEAT_IMPACT_WORDS),
+        ],
+        "cost_of_living": [
+            ("road_transport", ROAD_TRANSPORT_IMPACT_WORDS),
+            ("weather", WEATHER_IMPACT_WORDS + HEAT_IMPACT_WORDS),
+            ("health", HEALTH_IMPACT_WORDS),
+        ],
+        "health": [
+            ("financial", FINANCIAL_IMPACT_WORDS),
+            ("road_transport", ROAD_TRANSPORT_IMPACT_WORDS),
+        ],
+    }
+    for reason, words in mismatches.get(normalized_topic, []):
+        if contains_any(impact_text, words) and not source_supports(words):
+            return reason
+    return ""
+
+
 def validate_summary_against_source(item: dict[str, Any], summary: dict[str, Any]) -> None:
     source_text = item_source_text(item)
     rendered_text = summary_text(summary)
@@ -329,6 +556,11 @@ def validate_summary_against_source(item: dict[str, Any], summary: dict[str, Any
         ["cost", "price", "fare", "income", "revenue", "salary", "wage", "living", "kos sara hidup", "tambang"],
     ):
         raise ValueError("unsupported life impact")
+
+    topic = normalize_topic(fallback_renderer.detect_topic(item))
+    reason = reject_life_impact_reason(topic, item, summary["life_impact"])
+    if reason:
+        raise ValueError(f"life_impact topic mismatch: {reason}")
 
 
 def request_groq_summary(item: dict[str, Any], api_key: str, model: str, debug: bool = False, index: int = 0) -> dict[str, Any]:
