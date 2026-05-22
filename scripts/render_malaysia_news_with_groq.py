@@ -19,6 +19,20 @@ GROQ_CHAT_COMPLETIONS_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_USER_AGENT = "ysmsnsmr-malaysia-news/0.1 (+https://ysmsnsmr.github.io/news/malaysia/)"
 MAX_RESPONSE_CHARS = 4000
 TIMEOUT_SECONDS = 30
+FINANCIAL_MARKET_PHRASES = [
+    "ringgit",
+    "bursa",
+    "fbm klci",
+    "foreign exchange",
+    "forex",
+    "currency",
+    "stock market",
+    "equities",
+    "shares",
+    "market sentiment",
+    "us dollar",
+    "greenback",
+]
 
 SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュースダッシュボードの日本語編集者です。
 入力はRSSのtitle、description、既存summaryだけです。
@@ -167,6 +181,34 @@ def has_any_text(text: str, phrases: list[str]) -> bool:
     return any(phrase.lower() in text for phrase in phrases)
 
 
+def item_search_text(item: dict[str, Any]) -> str:
+    parts = [
+        clean_text(item.get("title")),
+        clean_text(item.get("description")),
+    ]
+    summary = item.get("selected_summary")
+    if isinstance(summary, dict):
+        parts.extend(
+            [
+                clean_text(summary.get("conclusion")),
+                " ".join(summary_lines(summary.get("what_happened"))),
+                clean_text(summary.get("life_impact")),
+                clean_text(summary.get("next_action")),
+            ]
+        )
+    tags = item.get("tags")
+    if isinstance(tags, list):
+        parts.extend(clean_text(tag) for tag in tags)
+    flags = item.get("flags")
+    if isinstance(flags, dict):
+        parts.extend(clean_text(key) for key, value in flags.items() if value)
+    return " ".join(part for part in parts if part).lower()
+
+
+def is_financial_market_item(item: dict[str, Any]) -> bool:
+    return has_any_text(item_search_text(item), FINANCIAL_MARKET_PHRASES)
+
+
 def validate_summary_against_source(item: dict[str, Any], summary: dict[str, Any]) -> None:
     source_text = item_source_text(item)
     rendered_text = summary_text(summary)
@@ -287,6 +329,10 @@ def render_with_groq(data: dict[str, Any], api_key: str, model: str, force_all: 
     failed = 0
     for index, item in enumerate(items):
         if not isinstance(item, dict):
+            continue
+        if is_financial_market_item(item):
+            if debug:
+                safe_log(f"groq-debug: item {index + 1} skipped financial_market")
             continue
         if not force_all and not item_needs_groq(item):
             continue
