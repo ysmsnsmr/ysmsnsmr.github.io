@@ -701,7 +701,7 @@ def render_with_groq(
             item["selected_summary"] = improved_summary
             accepted_records.append(
                 {
-                    "index": index,
+                    "index": index + 1,
                     "category": item.get("category", ""),
                     "source": item.get("source", ""),
                     "published_date": item.get("published_date", ""),
