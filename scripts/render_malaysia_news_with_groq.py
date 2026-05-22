@@ -7,6 +7,7 @@ import re
 import sys
 import urllib.error
 import urllib.request
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -638,14 +639,47 @@ def safe_log(message: str) -> None:
     print(message, file=sys.stderr)
 
 
-def render_with_groq(data: dict[str, Any], api_key: str, model: str, force_all: bool, debug: bool) -> dict[str, Any]:
+def build_improved_items_payload(
+    accepted_records: list[dict[str, Any]],
+    model: str,
+    stats: dict[str, int],
+    now: datetime,
+) -> dict[str, Any]:
+    return {
+        "schema_version": "malaysia-groq-improved-items/v1",
+        "generated_at": now.astimezone().isoformat(timespec="seconds"),
+        "model": model,
+        "counts": {
+            "requested": stats.get("requested", 0),
+            "accepted": stats.get("accepted", 0),
+            "fallback": stats.get("fallback", 0),
+        },
+        "items": accepted_records,
+    }
+
+
+def write_json(path: str, payload: dict[str, Any]) -> None:
+    output_path = Path(path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def render_with_groq(
+    data: dict[str, Any],
+    api_key: str,
+    model: str,
+    force_all: bool,
+    debug: bool,
+) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str, int]]:
     rendered_data = copy.deepcopy(data)
+    accepted_records: list[dict[str, Any]] = []
+    stats = {"requested": 0, "accepted": 0, "fallback": 0}
     items = rendered_data.get("items", [])
     if not isinstance(items, list):
-        return rendered_data
+        return rendered_data, accepted_records, stats
     if not api_key:
         safe_log("groq: GROQ_API_KEY is not set; using fallback renderer for all items.")
-        return rendered_data
+        return rendered_data, accepted_records, stats
 
     requested = 0
     accepted = 0
@@ -662,7 +696,21 @@ def render_with_groq(data: dict[str, Any], api_key: str, model: str, force_all: 
             continue
         requested += 1
         try:
-            item["selected_summary"] = request_groq_summary(item, api_key, model, debug, index)
+            original_summary = copy.deepcopy(item.get("selected_summary", {}))
+            improved_summary = request_groq_summary(item, api_key, model, debug, index)
+            item["selected_summary"] = improved_summary
+            accepted_records.append(
+                {
+                    "index": index,
+                    "category": item.get("category", ""),
+                    "source": item.get("source", ""),
+                    "published_date": item.get("published_date", ""),
+                    "title": item.get("title", ""),
+                    "link": item.get("link", ""),
+                    "original_summary": original_summary,
+                    "improved_summary": improved_summary,
+                }
+            )
             accepted += 1
         except urllib.error.HTTPError as error:
             failed += 1
@@ -677,7 +725,8 @@ def render_with_groq(data: dict[str, Any], api_key: str, model: str, force_all: 
             failed += 1
             safe_log(f"groq: item {index + 1} fallback ({error.__class__.__name__}).")
     safe_log(f"groq: requested={requested} accepted={accepted} fallback={failed}")
-    return rendered_data
+    stats = {"requested": requested, "accepted": accepted, "fallback": failed}
+    return rendered_data, accepted_records, stats
 
 
 def main() -> int:
@@ -687,12 +736,16 @@ def main() -> int:
     parser.add_argument("--model", help="Groq model name. Defaults to GROQ_MODEL or llama-3.3-70b-versatile.")
     parser.add_argument("--force-all", action="store_true", help="Send all items to Groq for local comparison.")
     parser.add_argument("--debug-groq", action="store_true", help="Write short Groq validation diagnostics to stderr.")
+    parser.add_argument("--improved-items-output", help="Write accepted Groq summary improvements to this JSON path.")
     args = parser.parse_args()
 
     data = fallback_renderer.load_json(args.json_input)
     model = args.model or os.environ.get("GROQ_MODEL") or DEFAULT_MODEL
     api_key = os.environ.get("GROQ_API_KEY", "")
-    rendered_data = render_with_groq(data, api_key, model, args.force_all, args.debug_groq)
+    rendered_data, accepted_records, stats = render_with_groq(data, api_key, model, args.force_all, args.debug_groq)
+    if args.improved_items_output:
+        payload = build_improved_items_payload(accepted_records, model, stats, datetime.now().astimezone())
+        write_json(args.improved_items_output, payload)
     markdown = fallback_renderer.render(rendered_data)
 
     if args.output:
