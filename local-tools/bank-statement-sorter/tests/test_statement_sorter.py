@@ -13,6 +13,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from statement_sorter.categorize import RuleError, categorize_transactions, load_rules
 from statement_sorter.export import write_csv
 from statement_sorter.models import CSV_COLUMNS
+from statement_sorter.monthly_summary import (
+    build_monthly_summaries,
+    _clean_description_for_display,
+    read_statement_csv as read_monthly_csv,
+    render_monthly_summary,
+    write_monthly_summary,
+)
 from statement_sorter.parser import parse_transactions, split_transaction_blocks
 from statement_sorter.review_report import (
     main as review_report_main,
@@ -575,6 +582,126 @@ class ReviewReportTests(unittest.TestCase):
             self.assertEqual(rules_path.read_text(encoding="utf-8"), rules_text)
 
 
+class MonthlySummaryTests(unittest.TestCase):
+    def test_groups_by_month_and_uses_treatment_semantics(self) -> None:
+        rows = _monthly_rows()
+
+        summaries, invalid_rows = build_monthly_summaries(rows)
+        april = next(summary for summary in summaries if summary.month == "2026-04")
+        may = next(summary for summary in summaries if summary.month == "2026-05")
+
+        self.assertEqual(len(invalid_rows), 1)
+        self.assertEqual(len(april.rows), 8)
+        self.assertEqual(april.income_total, _decimal("5000.00"))
+        self.assertEqual(april.transfer_in_total, _decimal("1000.00"))
+        self.assertEqual(april.unknown_in_total, _decimal("200.00"))
+        self.assertEqual(april.expense_total, _decimal("1250.50"))
+        self.assertEqual(april.transfer_out_total, _decimal("300.00"))
+        self.assertEqual(april.unknown_out_total, _decimal("25.00"))
+        self.assertEqual(april.account_cashflow, _decimal("4624.50"))
+        self.assertEqual(april.living_balance, _decimal("3749.50"))
+        self.assertEqual(len(may.rows), 1)
+
+    def test_rendered_report_contains_monthly_sections_warnings_and_no_raw_text(self) -> None:
+        rows = _monthly_rows()
+        rows[0]["raw_text"] = "SECRET RAW TEXT"
+
+        report = render_monthly_summary(rows, "outputs/statement.csv")
+
+        self.assertIn("# Bank Statement Monthly Summary", report)
+        self.assertIn("| 2026-04 | 8 | 2 | 4624.50 | 3749.50 | 5000.00 | 1250.50 | 1000.00 | 300.00 | 200.00 | 25.00 |", report)
+        self.assertIn("## 2026-04", report)
+        self.assertIn("| Dining | 3 | 0.00 | 1250.50 |", report)
+        self.assertIn("| transfer | 2 | 1000.00 | 300.00 |", report)
+        self.assertIn("- Review rows included in totals: 2", report)
+        self.assertIn("- Unknown treatment rows included in account cashflow only: 2", report)
+        self.assertIn("- Invalid or missing date rows excluded from month totals: 1", report)
+        self.assertNotIn("SECRET RAW TEXT", report)
+        self.assertNotIn("raw_text", report)
+
+    def test_top_expenses_sort_by_money_out_and_exclude_transfers(self) -> None:
+        report = render_monthly_summary(_monthly_rows(), "outputs/statement.csv")
+
+        rent_position = report.index("RENT")
+        groceries_position = report.index("GROCERIES")
+        transfer_position = report.find("BROKERAGE OUT")
+
+        self.assertLess(rent_position, groceries_position)
+        self.assertEqual(transfer_position, -1)
+
+    def test_top_expense_descriptions_are_cleaned_for_display_only(self) -> None:
+        rows = [
+            _monthly_row(
+                "2026-04-01",
+                "QR PAYMENT | HIB-123ABC | SEJIWA MEET & DINE PLT DWQR-20260408HBMBMYKL0300QR68743212 REF EB01-31858",
+                "",
+                "39.60",
+                "Dining",
+                "expense",
+                "auto",
+            ),
+            _monthly_row(
+                "2026-04-02",
+                "VISA POS Shopee MY Marketplace REF A895-36492",
+                "",
+                "23.80",
+                "Shopping",
+                "expense",
+                "auto",
+            ),
+        ]
+
+        report = render_monthly_summary(rows, "outputs/statement.csv")
+
+        self.assertIn("SEJIWA MEET & DINE PLT", report)
+        self.assertIn("Shopee MY Marketplace", report)
+        self.assertNotIn("QR PAYMENT", report)
+        self.assertNotIn("HIB-123ABC", report)
+        self.assertNotIn("DWQR-20260408HBMBMYKL0300QR68743212", report)
+        self.assertNotIn("REF EB01-31858", report)
+        self.assertEqual(
+            rows[0]["description"],
+            "QR PAYMENT | HIB-123ABC | SEJIWA MEET & DINE PLT DWQR-20260408HBMBMYKL0300QR68743212 REF EB01-31858",
+        )
+
+    def test_clean_description_removes_statement_artifacts(self) -> None:
+        description = (
+            "QR PAYMENT HIB-ABC Restoran Mazeela Bistro BALANCE CARRIEDFORWARD "
+            "HSBC <x> Amanah 013562 Statement Details Re BALANCE BROUGHTFORWARD"
+        )
+
+        self.assertEqual(_clean_description_for_display(description), "Restoran Mazeela Bistro 013562 Re")
+
+    def test_write_monthly_summary_requires_outputs_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            bad_path = Path(tmp_dir) / "monthly-summary.md"
+
+            with self.assertRaises(ValueError):
+                write_monthly_summary([], "statement.csv", bad_path)
+
+    def test_write_monthly_summary_does_not_modify_input_csv_or_rules_file(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            csv_path = base / "statement.csv"
+            rules_path = base / "rules.yml"
+            out_path = base / "outputs" / "monthly-summary.md"
+            with csv_path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=CSV_COLUMNS)
+                writer.writeheader()
+                for row in _monthly_rows():
+                    writer.writerow(row)
+            rules_text = "rules:\n  - pattern: \"X\"\n    category: \"Other\"\n    treatment: \"unknown\"\n"
+            rules_path.write_text(rules_text, encoding="utf-8")
+            original_csv = csv_path.read_text(encoding="utf-8")
+
+            rows = read_monthly_csv(csv_path)
+            write_monthly_summary(rows, csv_path, out_path)
+
+            self.assertTrue(out_path.exists())
+            self.assertEqual(csv_path.read_text(encoding="utf-8"), original_csv)
+            self.assertEqual(rules_path.read_text(encoding="utf-8"), rules_text)
+
+
 def _csv_row(
     description: str,
     money_out: str,
@@ -594,6 +721,49 @@ def _csv_row(
         "status": status,
         "raw_text": description,
     }
+
+
+def _monthly_rows() -> list[dict[str, str]]:
+    return [
+        _monthly_row("2026-04-01", "SALARY", "5,000.00", "", "Income", "income", "auto"),
+        _monthly_row("2026-04-02", "BROKERAGE IN", "1,000.00", "", "Transfer", "transfer", "auto"),
+        _monthly_row("2026-04-03", "UNKNOWN IN", "200.00", "", "Other", "unknown", "review"),
+        _monthly_row("2026-04-04", "RENT", "", "1,200.50", "Dining", "expense", "auto"),
+        _monthly_row("2026-04-05", "GROCERIES", "", "50.00", "Dining", "expense", "auto"),
+        _monthly_row("2026-04-06", "BROKERAGE OUT", "", "300.00", "Transfer", "transfer", "auto"),
+        _monthly_row("2026-04-07", "UNKNOWN OUT", "", "25.00", "Other", "unknown", "review"),
+        _monthly_row("2026-04-08", "MISSING AMOUNT", "", "", "Dining", "expense", "auto"),
+        _monthly_row("2026-05-01", "MAY FOOD", "", "10.00", "Dining", "expense", "auto"),
+        _monthly_row("not-a-date", "BAD DATE", "", "99.00", "Dining", "expense", "auto"),
+    ]
+
+
+def _monthly_row(
+    date: str,
+    description: str,
+    money_in: str,
+    money_out: str,
+    category: str,
+    treatment: str,
+    status: str,
+) -> dict[str, str]:
+    return {
+        "date": date,
+        "description": description,
+        "money_in": money_in,
+        "money_out": money_out,
+        "balance": "100.00",
+        "category": category,
+        "treatment": treatment,
+        "status": status,
+        "raw_text": f"RAW {description}",
+    }
+
+
+def _decimal(value: str):
+    from decimal import Decimal
+
+    return Decimal(value)
 
 
 if __name__ == "__main__":
