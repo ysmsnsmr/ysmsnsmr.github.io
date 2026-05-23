@@ -34,8 +34,20 @@ temp/
 .cache/
 .parcel-cache/
 .eslintcache
+__pycache__/
+*.py[cod]
 
 # Dependencies and build output
 node_modules/
 dist/
 build/
+
+# Local bank statement sorter private data
+local-tools/bank-statement-sorter/.venv/
+local-tools/bank-statement-sorter/data/
+local-tools/bank-statement-sorter/outputs/
+local-tools/bank-statement-sorter/*.pdf
+local-tools/bank-statement-sorter/**/*.ocr.txt
+local-tools/bank-statement-sorter/**/*.statement.csv
+local-tools/bank-statement-sorter/**/*.statement.json
+local-tools/bank-statement-sorter/**/*.pdf

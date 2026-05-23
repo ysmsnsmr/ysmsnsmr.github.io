@@ -1,0 +1,16 @@
+rules:
+  - pattern: "SALARY"
+    category: "Income"
+    treatment: "income"
+
+  - pattern: "CRE CARD PAYMENT"
+    category: "Transfer"
+    treatment: "transfer"
+
+  - pattern: "HOTLINK"
+    category: "Bills"
+    treatment: "expense"
+
+  - pattern: "SHOPEE"
+    category: "Shopping"
+    treatment: "expense"
