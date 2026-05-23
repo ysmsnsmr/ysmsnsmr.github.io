@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import contextlib
 import csv
+import io
 from pathlib import Path
 import sys
 import tempfile
@@ -12,6 +14,13 @@ from statement_sorter.categorize import RuleError, categorize_transactions, load
 from statement_sorter.export import write_csv
 from statement_sorter.models import CSV_COLUMNS
 from statement_sorter.parser import parse_transactions, split_transaction_blocks
+from statement_sorter.review_report import (
+    main as review_report_main,
+    read_statement_csv as read_report_csv,
+    render_review_report,
+    review_reasons,
+    write_review_report,
+)
 from statement_sorter.suggest_rules import (
     read_statement_csv,
     suggest_rule_candidates,
@@ -480,6 +489,90 @@ class SuggestRulesTests(unittest.TestCase):
             rows = read_statement_csv(csv_path)
 
         self.assertEqual(rows[0]["description"], "QR PAYMENT CAFE DELTA")
+
+
+class ReviewReportTests(unittest.TestCase):
+    def test_review_reasons_cover_each_review_condition(self) -> None:
+        self.assertEqual(review_reasons(_csv_row("KNOWN REVIEW", "1.00", "Dining", "expense", "review")), ["status=review"])
+        self.assertEqual(review_reasons(_csv_row("OTHER AUTO", "2.00", "Other", "expense", "auto")), ["category=Other"])
+        self.assertEqual(
+            review_reasons(_csv_row("UNKNOWN AUTO", "3.00", "Dining", "unknown", "auto")),
+            ["treatment=unknown"],
+        )
+        self.assertEqual(
+            review_reasons(_csv_row("MISSING AMOUNT", "", "Dining", "expense", "auto")),
+            ["missing amount"],
+        )
+
+    def test_markdown_includes_summary_review_table_and_totals(self) -> None:
+        rows = [
+            _csv_row("AUTO DINING", "1,200.50", "Dining", "expense", "auto"),
+            _csv_row("OTHER | MERCHANT", "20.00", "Other", "expense", "auto"),
+            _csv_row("UNKNOWN INCOME", "", "Income", "unknown", "review", money_in="2,500.25"),
+            _csv_row("MISSING MONEY", "", "Dining", "expense", "auto"),
+        ]
+
+        report = render_review_report(rows, "outputs/statement.csv")
+
+        self.assertIn("| Total rows | 4 |", report)
+        self.assertIn("| Review rows | 3 |", report)
+        self.assertIn("| Auto rows | 3 |", report)
+        self.assertIn("| All rows | 2500.25 | 1220.50 |", report)
+        self.assertIn("| Review rows | 2500.25 | 20.00 |", report)
+        self.assertIn("OTHER \\| MERCHANT", report)
+        self.assertIn("status=review, treatment=unknown", report)
+        self.assertIn("missing amount", report)
+
+    def test_raw_text_is_not_rendered(self) -> None:
+        row = _csv_row("SAFE DESCRIPTION", "4.00", "Other", "unknown", "review")
+        row["raw_text"] = "SECRET RAW TEXT SHOULD NOT APPEAR"
+
+        report = render_review_report([row], "outputs/statement.csv")
+
+        self.assertIn("SAFE DESCRIPTION", report)
+        self.assertNotIn("SECRET RAW TEXT SHOULD NOT APPEAR", report)
+        self.assertNotIn("raw_text", report)
+
+    def test_write_report_requires_outputs_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            bad_path = Path(tmp_dir) / "review-report.md"
+
+            with self.assertRaises(ValueError):
+                write_review_report([], "statement.csv", bad_path)
+
+    def test_cli_requires_out_argument(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            csv_path = Path(tmp_dir) / "statement.csv"
+            with csv_path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=CSV_COLUMNS)
+                writer.writeheader()
+
+            with contextlib.redirect_stderr(io.StringIO()):
+                with self.assertRaises(SystemExit) as raised:
+                    review_report_main([str(csv_path)])
+
+        self.assertNotEqual(raised.exception.code, 0)
+
+    def test_write_report_does_not_modify_input_csv_or_rules_file(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            csv_path = base / "statement.csv"
+            rules_path = base / "rules.yml"
+            out_path = base / "outputs" / "review-report.md"
+            with csv_path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=CSV_COLUMNS)
+                writer.writeheader()
+                writer.writerow(_csv_row("REPORT ROW", "5.00", "Other", "unknown", "review"))
+            rules_text = "rules:\n  - pattern: \"X\"\n    category: \"Other\"\n    treatment: \"unknown\"\n"
+            rules_path.write_text(rules_text, encoding="utf-8")
+            original_csv = csv_path.read_text(encoding="utf-8")
+
+            rows = read_report_csv(csv_path)
+            write_review_report(rows, csv_path, out_path)
+
+            self.assertTrue(out_path.exists())
+            self.assertEqual(csv_path.read_text(encoding="utf-8"), original_csv)
+            self.assertEqual(rules_path.read_text(encoding="utf-8"), rules_text)
 
 
 def _csv_row(
