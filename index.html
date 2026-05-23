@@ -57,6 +57,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       background-color: #fff8e6;
       border-left: 4px solid #d99a00;
     }
+    .build-meta {
+      color: #5f6b7a;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+    .status-pill {
+      background-color: #edf7ef;
+      color: #20643a;
+      border-radius: 999px;
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.3rem 0.65rem;
+    }
     @media (max-width: 767.98px) {
       header nav {
         width: 100%;
@@ -187,6 +202,69 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <p class="mb-0">タグ設置やページ確認の練習内容を追加予定です。</p>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 最近のビルド -->
+    <section id="recent-builds" class="py-5">
+      <div class="container">
+        <div class="d-flex flex-column flex-md-row justify-content-between gap-2 mb-4">
+          <div>
+            <h2 class="section-title">Recent Builds</h2>
+            <p class="mb-0">GitHubの更新をそのまま並べるのではなく、5月に育てている機能を短くまとめます。</p>
+          </div>
+          <p class="tag align-self-start mb-0">May 2026 snapshot</p>
+        </div>
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <article class="card h-100">
+              <div class="card-body">
+                <p class="build-meta">May 2026</p>
+                <h3 class="h5">Malaysia News workflow improvements</h3>
+                <p class="build-meta">What changed</p>
+                <p>日次ニュースメモを継続しやすくするため、記事選定と表示の流れを少しずつ整えています。</p>
+                <p class="build-meta">Why it matters</p>
+                <p>生活者目線のニュース記録を、あとから学習ログや発信素材に戻しやすくするためです。</p>
+                <div class="d-flex justify-content-between align-items-center gap-3">
+                  <a href="/news/malaysia/">Related page</a>
+                  <span class="status-pill">Working</span>
+                </div>
+              </div>
+            </article>
+          </div>
+          <div class="col-lg-4">
+            <article class="card h-100">
+              <div class="card-body">
+                <p class="build-meta">May 2026</p>
+                <h3 class="h5">Groq-assisted news observation renderer</h3>
+                <p class="build-meta">What changed</p>
+                <p>AI補助で作ったニュース観察メモを、人間が確認しやすい形に整える実験を進めています。</p>
+                <p class="build-meta">Why it matters</p>
+                <p>AI要約をそのまま信じるのではなく、観察・確認・改善の流れを残す練習になります。</p>
+                <div class="d-flex justify-content-between align-items-center gap-3">
+                  <a href="/experiments.html">Related note</a>
+                  <span class="status-pill">In progress</span>
+                </div>
+              </div>
+            </article>
+          </div>
+          <div class="col-lg-4">
+            <article class="card h-100">
+              <div class="card-body">
+                <p class="build-meta">May 2026</p>
+                <h3 class="h5">Lazyweb reference / header brief experiments</h3>
+                <p class="build-meta">What changed</p>
+                <p>外部参照をコピーせず、抽象パターンだけを画像ブリーフや記事づくりに活かす運用を試しています。</p>
+                <p class="build-meta">Why it matters</p>
+                <p>著作権と出典に気をつけながら、見せ方の改善を安全に学ぶための土台になります。</p>
+                <div class="d-flex justify-content-between align-items-center gap-3">
+                  <a href="/media-hub.html">Related hub</a>
+                  <span class="status-pill">Documented</span>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </div>
