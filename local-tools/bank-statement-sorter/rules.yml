@@ -14,3 +14,43 @@ rules:
   - pattern: "SHOPEE"
     category: "Shopping"
     treatment: "expense"
+
+  - pattern: "RESTORAN MAZEELA BISTRO"
+    category: "Dining"
+    treatment: "expense"
+
+  - pattern: "JANS BURGER"
+    category: "Dining"
+    treatment: "expense"
+
+  - pattern: "ZHONG GU YUAN SDN B"
+    category: "Dining"
+    treatment: "expense"
+
+  - pattern: "H&L FOOD"
+    category: "Dining"
+    treatment: "expense"
+
+  - pattern: "SEJIWA MEET & DINE PLT"
+    category: "Dining"
+    treatment: "expense"
+
+  - pattern: "TAYYIBAH TRADING"
+    category: "Dining"
+    treatment: "expense"
+
+  - pattern: "GLOBAL MONEY TRANSFER INTERACTIVE BROKERS"
+    category: "Transfer"
+    treatment: "transfer"
+
+  - pattern: "TAX REFUND"
+    category: "Income"
+    treatment: "income"
+
+  - pattern: "CONCENTRIX CVG"
+    category: "Income"
+    treatment: "income"
+
+  - pattern: "AKAUN KERAJAAN"
+    category: "Income"
+    treatment: "income"
