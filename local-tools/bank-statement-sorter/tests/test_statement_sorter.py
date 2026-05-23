@@ -12,6 +12,11 @@ from statement_sorter.categorize import RuleError, categorize_transactions, load
 from statement_sorter.export import write_csv
 from statement_sorter.models import CSV_COLUMNS
 from statement_sorter.parser import parse_transactions, split_transaction_blocks
+from statement_sorter.suggest_rules import (
+    read_statement_csv,
+    suggest_rule_candidates,
+    write_candidate_yaml,
+)
 
 
 FIXTURE_TEXT = """
@@ -326,6 +331,176 @@ class ExportTests(unittest.TestCase):
                 header = next(reader)
 
         self.assertEqual(header, CSV_COLUMNS)
+
+
+class SuggestRulesTests(unittest.TestCase):
+    def test_suggests_candidates_only_from_other_unknown_or_review_rows(self) -> None:
+        rows = [
+            _csv_row("QR PAYMENT CAFE ALPHA", "12.00", "Other", "unknown", "review"),
+            _csv_row("VISA POS BOOK SHOP", "22.50", "Shopping", "expense", "auto"),
+            _csv_row("MEPS-ATM CASH", "100.00", "Cash", "cash", "review"),
+        ]
+
+        candidates = suggest_rule_candidates(rows, existing_rules=[])
+
+        self.assertEqual([candidate.pattern for candidate in candidates], ["ATM CASH", "CAFE ALPHA"])
+
+    def test_aggregates_candidate_counts_and_amounts(self) -> None:
+        rows = [
+            _csv_row("QR PAYMENT CAFE ALPHA", "12.00", "Other", "unknown", "review"),
+            _csv_row("QR PAYMENT CAFE ALPHA", "8.50", "Other", "unknown", "review"),
+            _csv_row("SALARY ACME", "", "Other", "unknown", "review", money_in="500.00"),
+        ]
+
+        candidates = suggest_rule_candidates(rows, existing_rules=[])
+        qr_candidate = next(candidate for candidate in candidates if candidate.pattern == "CAFE ALPHA")
+        salary_candidate = next(candidate for candidate in candidates if candidate.pattern == "SALARY ACME")
+
+        self.assertEqual(qr_candidate.count, 2)
+        self.assertEqual(str(qr_candidate.money_out), "20.50")
+        self.assertEqual(str(qr_candidate.money_in), "0.00")
+        self.assertEqual(salary_candidate.count, 1)
+        self.assertEqual(str(salary_candidate.money_in), "500.00")
+
+    def test_existing_rules_are_excluded_and_candidate_yaml_is_loadable(self) -> None:
+        rows = [
+            _csv_row("VISA POS SHOPEE MARKET", "30.00", "Other", "unknown", "review"),
+            _csv_row("QR PAYMENT CAFE BETA", "9.00", "Other", "unknown", "review"),
+        ]
+        candidates = suggest_rule_candidates(
+            rows,
+            existing_rules=[{"pattern": "SHOPEE", "category": "Shopping", "treatment": "expense"}],
+        )
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            out_path = Path(tmp_dir) / "rule-candidates.yml"
+            write_candidate_yaml(candidates, out_path)
+            loaded = load_rules(out_path)
+
+        self.assertEqual([candidate.pattern for candidate in candidates], ["CAFE BETA"])
+        self.assertEqual(loaded[0]["pattern"], "CAFE BETA")
+        self.assertEqual(loaded[0]["category"], "Other")
+        self.assertEqual(loaded[0]["treatment"], "unknown")
+
+    def test_normalizes_qr_payment_references_to_reusable_merchant_patterns(self) -> None:
+        rows = [
+            _csv_row(
+                "QR PAYMENT HIB- 340026277XF 1M5C3K5B RESTORAN MAZEELA BISTRO",
+                "15.00",
+                "Other",
+                "unknown",
+                "review",
+            ),
+            _csv_row(
+                "QR PAYMENT HIB- 665497298XNP2NCR1A0 JANS BURGER DWAOR-20260408HBMBMYKL0300QR68872219 REF",
+                "9.50",
+                "Other",
+                "unknown",
+                "review",
+            ),
+        ]
+
+        candidates = suggest_rule_candidates(rows, existing_rules=[])
+
+        self.assertEqual(
+            [candidate.pattern for candidate in candidates],
+            ["JANS BURGER", "RESTORAN MAZEELA BISTRO"],
+        )
+
+    def test_strips_payment_markers_and_preserves_marker_comment(self) -> None:
+        rows = [
+            _csv_row(
+                "QR PAYMENT HIB- 340026277XF 1M5C3K5B RESTORAN MAZEELA BISTRO",
+                "15.00",
+                "Other",
+                "unknown",
+                "review",
+            ),
+        ]
+        candidates = suggest_rule_candidates(rows, existing_rules=[])
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            out_path = Path(tmp_dir) / "rule-candidates.yml"
+            write_candidate_yaml(candidates, out_path)
+            output = out_path.read_text(encoding="utf-8")
+
+        self.assertEqual(candidates[0].pattern, "RESTORAN MAZEELA BISTRO")
+        self.assertIn('marker="QR PAYMENT"', output)
+
+    def test_normalizes_visa_pos_to_merchant_pattern(self) -> None:
+        rows = [
+            _csv_row("VISA POS Shopee MY Marketplace", "30.00", "Other", "unknown", "review"),
+        ]
+
+        candidates = suggest_rule_candidates(rows, existing_rules=[])
+
+        self.assertEqual([candidate.pattern for candidate in candidates], ["SHOPEE MY MARKETPLACE"])
+
+    def test_multiple_payment_markers_for_same_merchant_collapse(self) -> None:
+        rows = [
+            _csv_row("QR PAYMENT CAFE ALPHA", "12.00", "Other", "unknown", "review"),
+            _csv_row("VISA POS CAFE ALPHA", "8.50", "Other", "unknown", "review"),
+            _csv_row("FPX- CAFE ALPHA", "3.00", "Other", "unknown", "review"),
+        ]
+
+        candidates = suggest_rule_candidates(rows, existing_rules=[])
+
+        self.assertEqual(len(candidates), 1)
+        self.assertEqual(candidates[0].pattern, "CAFE ALPHA")
+        self.assertEqual(candidates[0].count, 3)
+        self.assertEqual(candidates[0].markers, {"FPX", "QR PAYMENT", "VISA POS"})
+
+    def test_candidate_generation_does_not_modify_existing_rules_file(self) -> None:
+        rows = [_csv_row("QR PAYMENT CAFE GAMMA", "11.00", "Other", "unknown", "review")]
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            rules_path = Path(tmp_dir) / "rules.yml"
+            out_path = Path(tmp_dir) / "rule-candidates.yml"
+            original_rules = (
+                "rules:\n"
+                "  - pattern: \"SHOPEE\"\n"
+                "    category: \"Shopping\"\n"
+                "    treatment: \"expense\"\n"
+            )
+            rules_path.write_text(original_rules, encoding="utf-8")
+            candidates = suggest_rule_candidates(rows, existing_rules=load_rules(rules_path))
+            write_candidate_yaml(candidates, out_path)
+
+            self.assertEqual(rules_path.read_text(encoding="utf-8"), original_rules)
+            self.assertTrue(out_path.exists())
+
+    def test_reads_statement_csv_fixture(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            csv_path = Path(tmp_dir) / "statement.csv"
+            with csv_path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=CSV_COLUMNS)
+                writer.writeheader()
+                writer.writerow(_csv_row("QR PAYMENT CAFE DELTA", "7.00", "Other", "unknown", "review"))
+
+            rows = read_statement_csv(csv_path)
+
+        self.assertEqual(rows[0]["description"], "QR PAYMENT CAFE DELTA")
+
+
+def _csv_row(
+    description: str,
+    money_out: str,
+    category: str,
+    treatment: str,
+    status: str,
+    money_in: str = "",
+) -> dict[str, str]:
+    return {
+        "date": "2026-05-01",
+        "description": description,
+        "money_in": money_in,
+        "money_out": money_out,
+        "balance": "100.00",
+        "category": category,
+        "treatment": treatment,
+        "status": status,
+        "raw_text": description,
+    }
 
 
 if __name__ == "__main__":
