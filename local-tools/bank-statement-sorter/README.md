@@ -43,6 +43,32 @@ date, description, money_in, money_out, balance, category, treatment, status, ra
 
 `status` is `auto` only when a rule matched and the parser did not mark the block as uncertain. Otherwise it is `review`.
 
+## Normal operation
+
+Run commands from the tool directory:
+
+```sh
+cd local-tools/bank-statement-sorter
+```
+
+Extract a bank/debit statement:
+
+```sh
+.venv/bin/python -m statement_sorter /path/to/2026-05-06_Statement.pdf \
+  --out outputs/2026-05-06.statement.csv \
+  --ocr-text outputs/2026-05-06.ocr.txt
+```
+
+Extract a credit card statement with a `.card.` filename prefix:
+
+```sh
+.venv/bin/python -m statement_sorter /path/to/2026-05-21_Statement.pdf \
+  --out outputs/2026-05-21.card.statement.csv \
+  --ocr-text outputs/2026-05-21.card.ocr.txt
+```
+
+The CLI auto-detects supported HSBC credit card OCR and uses the credit card parser. Credit card rows use the same CSV schema: normal charges go to `money_out`, `CR` rows go to `money_in`, and `balance` is empty.
+
 ## Rules
 
 Rules are evaluated from top to bottom. `pattern` is matched case-insensitively against both `description` and `raw_text`.
@@ -67,11 +93,55 @@ To grow `rules.yml`, generate candidates from a local CSV output:
 ```sh
 .venv/bin/python -m statement_sorter.suggest_rules \
   outputs/2026-05-06.statement.csv \
-  --out outputs/rule-candidates.yml
+  --out outputs/2026-05-06.rule-candidates.yml
 ```
 
 The candidate command never updates `rules.yml`. It writes a Git-ignored YAML file for manual review, then you can copy only the rules you want into `rules.yml`.
 
+For credit card CSVs:
+
+```sh
+.venv/bin/python -m statement_sorter.suggest_rules \
+  outputs/2026-05-21.card.statement.csv \
+  --out outputs/2026-05-21.card.rule-candidates.yml
+```
+
+Review candidates manually before editing `rules.yml`. Add only confirmed reusable merchant or payee patterns. Do not add personal-name QR payments unless they are confirmed transfers, page or statement artifacts, card text, OCR debris, transaction IDs, or over-specific reference strings.
+
+## Reports
+
+Generate a privacy-safe review report:
+
+```sh
+.venv/bin/python -m statement_sorter.review_report \
+  outputs/2026-05-21.card.statement.csv \
+  --out outputs/2026-05-21.card.review.md
+```
+
+Generate a monthly summary:
+
+```sh
+.venv/bin/python -m statement_sorter.monthly_summary \
+  outputs/2026-05-21.card.statement.csv \
+  --out outputs/2026-05-21.card.summary.md
+```
+
+Reports do not render `raw_text`. They include descriptions only where useful for review or top-expense display.
+
+## Recommended run order
+
+1. Extract the statement CSV and optional OCR text into `outputs/`.
+2. Generate rule candidates from the CSV.
+3. Manually copy only confirmed candidates into `rules.yml`.
+4. Re-run extraction so the updated rules are applied.
+5. Regenerate rule candidates and confirm only expected review rows remain.
+6. Generate review and monthly summary reports.
+7. Inspect remaining `review`, `Other`, `unknown`, and missing-amount rows.
+
 ## Notes
 
-The parser extracts transaction blocks from one transaction start date up to the next transaction start date. `raw_text` contains the complete OCR block used for each row.
+The bank/debit parser extracts transaction blocks from one transaction start date up to the next transaction start date. `raw_text` contains the complete OCR block used for each row.
+
+`outputs/` is Git-ignored. Do not commit PDFs, OCR text, CSVs, candidate YAML files, or generated Markdown reports.
+
+Combined monthly summaries from multiple CSVs are not implemented yet. The likely future path is extending `statement_sorter.monthly_summary` to accept multiple CSV inputs while keeping the current single-CSV usage working.
