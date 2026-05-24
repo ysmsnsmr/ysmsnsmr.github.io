@@ -5,6 +5,7 @@ import csv
 from collections import Counter
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
+import re
 import sys
 
 
@@ -19,6 +20,12 @@ REQUIRED_COLUMNS = {
     "status",
     "raw_text",
 }
+AMOUNT_RE = re.compile(r"(?<!\w)(?:RM\s*)?[+-]?\(?\d[\d,]*\.\d{2}\)?(?!\w)")
+MULTIPLE_TRANSACTION_MARKER_RE = re.compile(
+    r"\bQR PAYMENT\b|\bTNG\b|\bMEPS\b|\bJOMPAY\b|\bLP\b|\bINTERBANK GIRO\b|\bGLOBAL MONEY TRANSFER\b",
+    re.IGNORECASE,
+)
+BALANCE_TOLERANCE = Decimal("0.01")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -60,9 +67,16 @@ def write_review_report(rows: list[dict[str, str]], csv_path: str | Path, out_pa
 
 
 def render_review_report(rows: list[dict[str, str]], csv_path: str | Path) -> str:
-    review_rows = [row for row in rows if review_reasons(row)]
+    reasons_by_row = _review_reasons_by_row(rows)
+    review_rows = [row for row in rows if reasons_by_row[id(row)]]
     category_counts = Counter(_display_value(row.get("category", "")) for row in rows)
     treatment_counts = Counter(_display_value(row.get("treatment", "")) for row in rows)
+    diagnostic_counts = Counter(
+        reason
+        for row in rows
+        for reason in reasons_by_row[id(row)]
+        if reason.startswith("diagnostic=")
+    )
 
     lines = [
         "# Bank Statement Review Report",
@@ -87,11 +101,27 @@ def render_review_report(rows: list[dict[str, str]], csv_path: str | Path) -> st
         f"| All rows | {_format_decimal(_sum_amount(rows, 'money_in'))} | {_format_decimal(_sum_amount(rows, 'money_out'))} |",
         f"| Review rows | {_format_decimal(_sum_amount(review_rows, 'money_in'))} | {_format_decimal(_sum_amount(review_rows, 'money_out'))} |",
         "",
-        "## Category Summary",
+        "## Missing Amount Diagnostics",
         "",
-        "| Category | Count |",
+        "| Diagnostic | Count |",
         "| --- | ---: |",
     ]
+    if diagnostic_counts:
+        lines.extend(
+            f"| {_escape_markdown_cell(diagnostic)} | {count} |"
+            for diagnostic, count in sorted(diagnostic_counts.items())
+        )
+    else:
+        lines.append("| No missing amount diagnostics | 0 |")
+    lines.extend(
+        [
+            "",
+            "## Category Summary",
+            "",
+            "| Category | Count |",
+            "| --- | ---: |",
+        ]
+    )
     lines.extend(f"| {_escape_markdown_cell(category)} | {count} |" for category, count in sorted(category_counts.items()))
     lines.extend(
         [
@@ -127,7 +157,7 @@ def render_review_report(rows: list[dict[str, str]], csv_path: str | Path) -> st
                         _escape_markdown_cell(row.get("balance", "")),
                         _escape_markdown_cell(row.get("category", "")),
                         _escape_markdown_cell(row.get("treatment", "")),
-                        _escape_markdown_cell(", ".join(review_reasons(row))),
+                        _escape_markdown_cell(", ".join(reasons_by_row[id(row)])),
                     ]
                 )
                 + " |"
@@ -161,6 +191,91 @@ def review_reasons(row: dict[str, str]) -> list[str]:
     return reasons
 
 
+def _review_reasons_by_row(rows: list[dict[str, str]]) -> dict[int, list[str]]:
+    reasons_by_row: dict[int, list[str]] = {}
+    previous_balance: Decimal | None = None
+    previous_balance_present = False
+    previous_balance_numeric = True
+
+    for row in rows:
+        reasons = review_reasons(row)
+        if _missing_amount(row):
+            reasons.extend(
+                _missing_amount_diagnostics(
+                    row,
+                    previous_balance=previous_balance,
+                    previous_balance_present=previous_balance_present,
+                    previous_balance_numeric=previous_balance_numeric,
+                )
+            )
+        reasons_by_row[id(row)] = reasons
+
+        balance_text = row.get("balance", "")
+        if balance_text.strip():
+            previous_balance_present = True
+            previous_balance = _parse_optional_amount(balance_text)
+            previous_balance_numeric = previous_balance is not None
+
+    return reasons_by_row
+
+
+def _missing_amount_diagnostics(
+    row: dict[str, str],
+    previous_balance: Decimal | None,
+    previous_balance_present: bool,
+    previous_balance_numeric: bool,
+) -> list[str]:
+    diagnostics: list[str] = []
+    raw_text = row.get("raw_text", "")
+    amount_candidates = AMOUNT_RE.findall(raw_text)
+    current_balance_text = row.get("balance", "")
+    current_balance = _parse_optional_amount(current_balance_text)
+
+    if _has_multiple_transaction_markers(raw_text):
+        diagnostics.append("diagnostic=multiple transaction markers")
+    if not amount_candidates:
+        diagnostics.append("diagnostic=no amount candidates")
+    elif len(amount_candidates) == 1:
+        diagnostics.append("diagnostic=single amount candidate")
+
+    if not current_balance_text.strip():
+        diagnostics.append("diagnostic=missing current balance")
+    elif current_balance is None:
+        diagnostics.append("diagnostic=non-numeric balance")
+
+    if not previous_balance_present:
+        diagnostics.append("diagnostic=missing previous balance")
+    elif not previous_balance_numeric or previous_balance is None:
+        diagnostics.append("diagnostic=non-numeric balance")
+
+    if (
+        amount_candidates
+        and current_balance is not None
+        and previous_balance is not None
+        and previous_balance_numeric
+    ):
+        candidate_values = [
+            value
+            for value in (_parse_optional_amount(candidate) for candidate in amount_candidates)
+            if value is not None
+        ]
+        withdrawal_delta = previous_balance - current_balance
+        deposit_delta = current_balance - previous_balance
+        if not any(
+            delta >= Decimal("0") and abs(candidate - delta) <= BALANCE_TOLERANCE
+            for candidate in candidate_values
+            for delta in (withdrawal_delta, deposit_delta)
+        ):
+            diagnostics.append("diagnostic=balance delta mismatch")
+
+    return list(dict.fromkeys(diagnostics))
+
+
+def _has_multiple_transaction_markers(raw_text: str) -> bool:
+    markers = [match.group(0).upper() for match in MULTIPLE_TRANSACTION_MARKER_RE.finditer(raw_text)]
+    return len(markers) > 1
+
+
 def _validate_outputs_path(path: Path) -> None:
     if "outputs" not in path.parts:
         raise ValueError("--out must be under an outputs/ directory.")
@@ -189,6 +304,20 @@ def _parse_amount(value: str) -> Decimal:
         return Decimal(value)
     except InvalidOperation:
         return Decimal("0.00")
+
+
+def _parse_optional_amount(value: str) -> Decimal | None:
+    value = value.strip().replace(",", "")
+    if not value:
+        return None
+    negative = value.startswith("(") and value.endswith(")")
+    value = value.strip("()")
+    if negative and not value.startswith("-"):
+        value = f"-{value}"
+    try:
+        return Decimal(value)
+    except InvalidOperation:
+        return None
 
 
 def _format_decimal(value: Decimal) -> str:

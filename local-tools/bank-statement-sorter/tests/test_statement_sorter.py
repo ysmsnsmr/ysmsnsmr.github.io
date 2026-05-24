@@ -671,6 +671,77 @@ class ReviewReportTests(unittest.TestCase):
         self.assertIn("status=review, treatment=unknown", report)
         self.assertIn("missing amount", report)
 
+    def test_missing_amount_diagnostics_are_added_to_review_report(self) -> None:
+        rows = [
+            _review_diagnostic_row(
+                "MISSING PREVIOUS BALANCE",
+                balance="1,000.00",
+                raw_text="QR PAYMENT FIRST MISSING 10.00",
+            ),
+            _review_diagnostic_row(
+                "PREVIOUS GOOD BALANCE",
+                money_out="10.00",
+                balance="1,000.00",
+                raw_text="PREVIOUS GOOD BALANCE 10.00 1,000.00",
+            ),
+            _review_diagnostic_row(
+                "NO AMOUNT CANDIDATES",
+                balance="990.00",
+                raw_text="QR PAYMENT NO MONEY TEXT",
+            ),
+            _review_diagnostic_row(
+                "SINGLE AMOUNT CANDIDATE",
+                balance="980.00",
+                raw_text="QR PAYMENT SINGLE 10.00",
+            ),
+            _review_diagnostic_row(
+                "MISSING CURRENT BALANCE",
+                balance="",
+                raw_text="QR PAYMENT MISSING CURRENT 10.00",
+            ),
+            _review_diagnostic_row(
+                "NON NUMERIC CURRENT BALANCE",
+                balance="not-a-balance",
+                raw_text="QR PAYMENT BAD CURRENT 10.00",
+            ),
+            _review_diagnostic_row(
+                "PREVIOUS NON NUMERIC BALANCE",
+                money_out="1.00",
+                balance="not-a-balance",
+                raw_text="PREVIOUS BAD BALANCE 1.00",
+            ),
+            _review_diagnostic_row(
+                "CURRENT AFTER BAD PREVIOUS",
+                balance="950.00",
+                raw_text="QR PAYMENT AFTER BAD 10.00",
+            ),
+            _review_diagnostic_row(
+                "BALANCE DELTA MISMATCH",
+                balance="900.00",
+                raw_text="QR PAYMENT MISMATCH 10.00 900.00",
+            ),
+            _review_diagnostic_row(
+                "MULTIPLE MARKERS",
+                balance="890.00",
+                raw_text="QR PAYMENT DINNER TNG WALLET MEPS JOMPAY LP Interbank GIRO GLOBAL MONEY TRANSFER 10.00",
+            ),
+        ]
+
+        report = render_review_report(rows, "outputs/statement.csv")
+
+        self.assertIn("## Missing Amount Diagnostics", report)
+        self.assertIn("| diagnostic=no amount candidates | 1 |", report)
+        self.assertIn("| diagnostic=single amount candidate | 6 |", report)
+        self.assertIn("| diagnostic=missing current balance | 1 |", report)
+        self.assertIn("| diagnostic=missing previous balance | 1 |", report)
+        self.assertIn("| diagnostic=non-numeric balance | 2 |", report)
+        self.assertIn("| diagnostic=balance delta mismatch | 1 |", report)
+        self.assertIn("| diagnostic=multiple transaction markers | 1 |", report)
+        self.assertIn("missing amount, diagnostic=no amount candidates", report)
+        self.assertIn("diagnostic=multiple transaction markers", report)
+        self.assertNotIn("QR PAYMENT MISMATCH 10.00 900.00", report)
+        self.assertNotIn("Interbank GIRO GLOBAL MONEY TRANSFER", report)
+
     def test_raw_text_is_not_rendered(self) -> None:
         row = _csv_row("SAFE DESCRIPTION", "4.00", "Other", "unknown", "review")
         row["raw_text"] = "SECRET RAW TEXT SHOULD NOT APPEAR"
@@ -950,6 +1021,26 @@ def _csv_row(
         "treatment": treatment,
         "status": status,
         "raw_text": description,
+    }
+
+
+def _review_diagnostic_row(
+    description: str,
+    balance: str,
+    raw_text: str,
+    money_out: str = "",
+    money_in: str = "",
+) -> dict[str, str]:
+    return {
+        "date": "2026-05-01",
+        "description": description,
+        "money_in": money_in,
+        "money_out": money_out,
+        "balance": balance,
+        "category": "Dining",
+        "treatment": "expense",
+        "status": "auto",
+        "raw_text": raw_text,
     }
 
 
