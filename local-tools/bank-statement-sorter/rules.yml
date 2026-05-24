@@ -54,3 +54,63 @@ rules:
   - pattern: "AKAUN KERAJAAN"
     category: "Income"
     treatment: "income"
+
+  - pattern: "PAYMENT - THANK YOU"
+    category: "Transfer"
+    treatment: "transfer"
+
+  - pattern: "CASH BACK"
+    category: "Income"
+    treatment: "income"
+
+- pattern: "CASHBACK CREDIT"
+  category: "Income"
+  treatment: "income"
+
+- pattern: "99 SPEEDMART"
+  category: "Groceries"
+  treatment: "expense"
+
+- pattern: "LOTUS"
+  category: "Groceries"
+  treatment: "expense"
+
+- pattern: "SUKI-YA"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "TOOT BAGELS & COFFEE"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "WATSON"
+  category: "Health"
+  treatment: "expense"
+
+- pattern: "HEALTH LANE"
+  category: "Health"
+  treatment: "expense"
+
+- pattern: "QUALITAS"
+  category: "Medical"
+  treatment: "expense"
+
+- pattern: "NETFLIX.COM"
+  category: "Subscription"
+  treatment: "expense"
+
+- pattern: "HARVEY NORMAN"
+  category: "Shopping"
+  treatment: "expense"
+
+- pattern: "ECOSHOP"
+  category: "Shopping"
+  treatment: "expense"
+
+- pattern: "POS SHOP"
+  category: "Postage"
+  treatment: "expense"
+
+- pattern: "MYAIA"
+  category: "Insurance"
+  treatment: "expense"
