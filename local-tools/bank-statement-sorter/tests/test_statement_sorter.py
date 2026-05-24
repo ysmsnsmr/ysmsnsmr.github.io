@@ -11,6 +11,7 @@ import unittest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from statement_sorter.categorize import RuleError, categorize_transactions, load_rules
+from statement_sorter.credit_card_parser import parse_transactions as parse_credit_card_transactions
 from statement_sorter.export import write_csv
 from statement_sorter.models import CSV_COLUMNS
 from statement_sorter.monthly_summary import (
@@ -33,6 +34,7 @@ from statement_sorter.suggest_rules import (
     suggest_rule_candidates,
     write_candidate_yaml,
 )
+from statement_sorter.statement_type import is_credit_card_statement
 
 
 FIXTURE_TEXT = """
@@ -133,6 +135,29 @@ BALANCE BROUGHT FORWARD 200.00
 30.00 170.00
 QR PAYMENT DINNER
 5.00 165.00
+"""
+
+CREDIT_CARD_OCR = """
+Account Statement
+Card Number Statement Date 21 MAY 2026 Page 2
+HSBC Amanah Cash Back Summary Minimum Payment & Overlimit Summary (RM)
+Your Previous Statement Balance 3,000.00
+Post Date Transaction Date Transaction Details Amount
+06 MAY 06 MAY PAYMENT - THANK YOU 3,000.00CR
+12 APR 11 APR SUKI-YA PARADIGM PETALING JAYA MY 92.50
+13 APR 12 APR LONG MERCHANT NAME 10.00
+CONTINUED LOCATION MY
+15 APR 15 APR CASH BACK EVERYDAY 12.34CR
+Your charge(s) for this month RM 102.50
+Total credit limit used RM2,111.00CR
+"""
+
+CREDIT_CARD_JANUARY_OCR = """
+Account Statement
+Statement Date 05 JAN 2026 Payment Due Date 25 JAN 2026
+Card Number 1234 5678 9012 3456
+Minimum Monthly Payment RM100.00
+31 DEC 30 DEC YEAR END SHOP MY 45.00
 """
 
 
@@ -293,6 +318,62 @@ class ParserTests(unittest.TestCase):
         self.assertEqual(len(transactions), 1)
         self.assertEqual(transactions[0].description, "FPX-HOTLINK TOP UP")
         self.assertEqual(transactions[0].money_out, "10.00")
+
+
+class StatementTypeTests(unittest.TestCase):
+    def test_detects_hsbc_credit_card_statement(self) -> None:
+        self.assertTrue(is_credit_card_statement(CREDIT_CARD_OCR))
+
+    def test_bank_debit_ocr_is_not_detected_as_credit_card(self) -> None:
+        self.assertFalse(is_credit_card_statement(HSBC_OCR_DATE_VARIANTS))
+        self.assertFalse(is_credit_card_statement(FIXTURE_TEXT))
+
+
+class CreditCardParserTests(unittest.TestCase):
+    def test_parses_credit_card_charges_as_money_out(self) -> None:
+        transactions = parse_credit_card_transactions(CREDIT_CARD_OCR)
+        charge = transactions[1]
+
+        self.assertEqual(charge.date, "2026-04-11")
+        self.assertEqual(charge.description, "SUKI-YA PARADIGM PETALING JAYA MY")
+        self.assertEqual(charge.money_out, "92.50")
+        self.assertEqual(charge.money_in, "")
+        self.assertEqual(charge.balance, "")
+
+    def test_parses_credit_card_cr_rows_as_money_in(self) -> None:
+        transactions = parse_credit_card_transactions(CREDIT_CARD_OCR)
+
+        self.assertEqual(transactions[0].description, "PAYMENT - THANK YOU")
+        self.assertEqual(transactions[0].date, "2026-05-06")
+        self.assertEqual(transactions[0].money_in, "3,000.00")
+        self.assertEqual(transactions[0].money_out, "")
+        self.assertEqual(transactions[3].description, "CASH BACK EVERYDAY")
+        self.assertEqual(transactions[3].money_in, "12.34")
+
+    def test_preserves_transaction_block_raw_text_and_continuation_description(self) -> None:
+        transactions = parse_credit_card_transactions(CREDIT_CARD_OCR)
+        transaction = transactions[2]
+
+        self.assertEqual(transaction.description, "LONG MERCHANT NAME CONTINUED LOCATION MY")
+        self.assertIn("13 APR 12 APR LONG MERCHANT NAME 10.00", transaction.raw_text)
+        self.assertIn("CONTINUED LOCATION MY", transaction.raw_text)
+
+    def test_excludes_credit_card_headers_summaries_and_balance_rows(self) -> None:
+        transactions = parse_credit_card_transactions(CREDIT_CARD_OCR)
+        joined_raw_text = "\n".join(transaction.raw_text for transaction in transactions)
+
+        self.assertEqual(len(transactions), 4)
+        self.assertNotIn("Your Previous Statement Balance", joined_raw_text)
+        self.assertNotIn("Post Date Transaction Date", joined_raw_text)
+        self.assertNotIn("Your charge(s) for this month", joined_raw_text)
+        self.assertNotIn("Total credit limit used", joined_raw_text)
+
+    def test_uses_previous_year_for_december_transactions_on_january_statement(self) -> None:
+        transactions = parse_credit_card_transactions(CREDIT_CARD_JANUARY_OCR)
+
+        self.assertEqual(len(transactions), 1)
+        self.assertEqual(transactions[0].date, "2025-12-30")
+        self.assertEqual(transactions[0].money_out, "45.00")
 
 
 class CategorizerTests(unittest.TestCase):
@@ -465,6 +546,43 @@ class SuggestRulesTests(unittest.TestCase):
         self.assertEqual(candidates[0].pattern, "CAFE ALPHA")
         self.assertEqual(candidates[0].count, 3)
         self.assertEqual(candidates[0].markers, {"FPX", "QR PAYMENT", "VISA POS"})
+
+    def test_normalizes_credit_card_merchant_locations_and_store_numbers(self) -> None:
+        cases = [
+            ("99 SPEEDMART-1096 SELANGOR MY", "99 SPEEDMART"),
+            ("SUKI-YA 2@PARADIGM 2 PETALING JAYA MY", "SUKI-YA"),
+            ("HEALTH LANE ARA JAYA PETALING JAYA MY", "HEALTH LANE"),
+            ("TOOT BAGELS & COFFEE KUALALUMPUR MY", "TOOT BAGELS & COFFEE"),
+            ("NETFLIX.COM Singapore SG", "NETFLIX.COM"),
+            ("WATSON'S PARADIGM MALL SELANGOR MY", "WATSON"),
+            ("LOTUS'S PARADIGM PETALING JAYA MY", "LOTUS"),
+            ("HARVEY NORMAN-PARADIGM PETALING JAYA MY", "HARVEY NORMAN"),
+        ]
+
+        for description, expected_pattern in cases:
+            with self.subTest(description=description):
+                candidates = suggest_rule_candidates(
+                    [_csv_row(description, "10.00", "Other", "unknown", "review")],
+                    existing_rules=[],
+                )
+
+                self.assertEqual([candidate.pattern for candidate in candidates], [expected_pattern])
+
+    def test_normalizes_credit_card_processor_and_page_artifacts(self) -> None:
+        rows = [
+            _csv_row("IPY*QUALITAS ACC EVESU SELANGOR MY", "10.00", "Other", "unknown", "review"),
+            _csv_row(
+                "AMANAH MPOWER PLATINUM CARD-I 1234567890123456",
+                "10.00",
+                "Other",
+                "unknown",
+                "review",
+            ),
+        ]
+
+        candidates = suggest_rule_candidates(rows, existing_rules=[])
+
+        self.assertEqual([candidate.pattern for candidate in candidates], ["QUALITAS"])
 
     def test_candidate_generation_does_not_modify_existing_rules_file(self) -> None:
         rows = [_csv_row("QR PAYMENT CAFE GAMMA", "11.00", "Other", "unknown", "review")]

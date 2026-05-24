@@ -26,22 +26,46 @@ REFERENCE_PREFIX_RE = re.compile(
     re.IGNORECASE,
 )
 BANK_ARTIFACT_WORDS = {
+    "ACC",
+    "AMANAH",
     "HSBC",
     "HBMB",
     "HBMBMYKL",
+    "IPY",
     "BANK",
     "MALAYSIA",
     "BERHAD",
     "BHD",
+    "CARD-I",
     "DEBIT",
     "CREDIT",
+    "EVESU",
     "CHARGE",
+    "MPOWER",
     "PAGE",
+    "PLATINUM",
     "REF",
     "REFERENCE",
     "DATE",
     "TIME",
 }
+LOCATION_SUFFIX_PHRASES = (
+    ("KUALA", "LUMPUR"),
+    ("PETALING", "JAYA"),
+    ("KUALALUMPUR",),
+    ("KLUMPUR",),
+    ("SINGAPORE",),
+    ("SELANGOR",),
+    ("MY",),
+    ("SG",),
+)
+MALL_LOCATION_PHRASES = (
+    ("PARADIGM", "MALL"),
+    ("ARA", "JAYA"),
+    ("BRICKFIELDS",),
+    ("PARADIGM",),
+    ("MALL",),
+)
 REQUIRED_COLUMNS = {
     "description",
     "money_in",
@@ -194,8 +218,9 @@ def _normalize_candidate_text(value: str) -> str:
     value = REFERENCE_PREFIX_RE.sub(" ", value)
     value = re.sub(r"[_|{}()[\]~§/=]+", " ", value)
     value = re.sub(r"[^A-Z0-9&+.' -]+", " ", value)
-    tokens = [_strip_reference_edges(token) for token in _normalize_space(value).split()]
+    tokens = [_normalize_merchant_token(token) for token in _normalize_space(value).split()]
     tokens = [token for token in tokens if token and not _is_artifact_token(token)]
+    tokens = _strip_card_merchant_noise(tokens)
     return " ".join(tokens)
 
 
@@ -219,6 +244,45 @@ def _normalize_marker(value: str) -> str:
 
 def _strip_reference_edges(token: str) -> str:
     return token.strip(" -.'")
+
+
+def _normalize_merchant_token(token: str) -> str:
+    token = _strip_reference_edges(token)
+    token = re.sub(r"^(.+?)-\d{2,}$", r"\1", token)
+    token = re.sub(r"^(.+?)-(?:PARADIGM|BRICKFIELDS|ARA)$", r"\1", token)
+    if token.endswith("'S"):
+        token = token[:-2]
+    return _strip_reference_edges(token)
+
+
+def _strip_card_merchant_noise(tokens: list[str]) -> list[str]:
+    tokens = _strip_nonleading_single_digit_tokens(tokens)
+    tokens = _strip_suffix_phrases(tokens, LOCATION_SUFFIX_PHRASES)
+    tokens = _strip_suffix_phrases(tokens, MALL_LOCATION_PHRASES)
+    tokens = _strip_suffix_phrases(tokens, LOCATION_SUFFIX_PHRASES)
+    return tokens
+
+
+def _strip_nonleading_single_digit_tokens(tokens: list[str]) -> list[str]:
+    return [
+        token
+        for index, token in enumerate(tokens)
+        if index == 0 or not token.isdigit() or len(token) != 1
+    ]
+
+
+def _strip_suffix_phrases(tokens: list[str], phrases: tuple[tuple[str, ...], ...]) -> list[str]:
+    result = tokens[:]
+    changed = True
+    while changed and result:
+        changed = False
+        for phrase in sorted(phrases, key=len, reverse=True):
+            phrase_length = len(phrase)
+            if phrase_length <= len(result) and tuple(result[-phrase_length:]) == phrase:
+                result = result[:-phrase_length]
+                changed = True
+                break
+    return result
 
 
 def _is_artifact_token(token: str) -> bool:
