@@ -7,6 +7,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -22,6 +23,10 @@ from statement_sorter.monthly_summary import (
     read_statement_csvs as read_monthly_csvs,
     render_monthly_summary,
     write_monthly_summary,
+)
+from statement_sorter.monthly_run import (
+    build_output_paths as build_monthly_run_output_paths,
+    main as monthly_run_main,
 )
 from statement_sorter.parser import parse_transactions, split_transaction_blocks
 from statement_sorter.review_report import (
@@ -139,6 +144,70 @@ QR PAYMENT DINNER
 5.00 165.00
 """
 
+SAME_DAY_MYDEBIT_QR_WITH_ATM_ARTIFACT = """
+BALANCE BROUGHT FORWARD 200.00
+14Apr2026 MYDEBIT POS 7-ELEVEN
+12.00 188.00
+QR PAYMENT Sukishi
+20.00 168.00
+ATM 008888 |
+"""
+
+QR_WITH_TRAILING_ATM_ARTIFACT = """
+BALANCE BROUGHT FORWARD 100.00
+03Jun2025 QR PAYMENT CAFE
+44.20 55.80
+ATM 008888 |
+"""
+
+MYDEBIT_WITH_TRAILING_ATM_ARTIFACT = """
+BALANCE BROUGHT FORWARD 100.00
+03Jun2025 MYDEBIT POS MINI MARKET
+44.20 55.80
+ATM 008888 |
+"""
+
+ATM_008888_ONLY_TEXT = """
+BALANCE BROUGHT FORWARD 200.00
+14Apr2026 ATM 008888
+ATM 008888 |
+"""
+
+DATED_ATM_008888_PIPE_ONLY_TEXT = """
+BALANCE BROUGHT FORWARD 200.00
+03Jun2025 |ATM 008888
+"""
+
+DATED_ATM_008888_JSLASH_ONLY_TEXT = """
+BALANCE BROUGHT FORWARD 200.00
+13Jun2025 j/ATM 008888
+"""
+
+DATED_ATM_008888_JPIPE_ONLY_TEXT = """
+BALANCE BROUGHT FORWARD 200.00
+16Jun2025 j|ATM 008888
+"""
+
+SAME_DAY_EXPANDED_SECOND_LEVEL_MARKERS = """
+BALANCE BROUGHT FORWARD 1000.00
+14Apr2026 JOMPAY BILLER
+10.00 990.00
+FPX-GPAY TOP UP
+20.00 970.00
+LP KAUB PAYMENT
+30.00 940.00
+IN-HOUSE TRANSFER SAVINGS
+40.00 900.00
+GLOBAL MONEY TRANSFER FAMILY
+50.00 850.00
+transfer HIB- RENT
+60.00 790.00
+MEPS CASH
+70.00 720.00
+TNG WALLET
+80.00 640.00
+"""
+
 BANK_FOOTER_CONTINUATION_TEXT = """
 BALANCE BROUGHT FORWARD 100.00
 06May2026 QR PAYMENT DINNER
@@ -240,6 +309,14 @@ Post Date Transaction Date Transaction Details Amount
 HSBC statement Cash Back earned Cash Back diperolehi Overlimit Melebihi Had Kredit
 Bonus Cash Back Cash Back bonus Page Halaman Amanah MPower Platinum Card-i
 17 MAY 17 MAY HEALTH LANE ARA JAYA PETALING JAYA MY 20.00
+"""
+
+MONTHLY_RUN_BANK_OCR = """
+BALANCE BROUGHT FORWARD 100.00
+01May2026 QR PAYMENT CAFE
+10.00 90.00
+02May2026 UNKNOWN MERCHANT
+something without money
 """
 
 
@@ -393,6 +470,72 @@ class ParserTests(unittest.TestCase):
         self.assertEqual(transactions[0].money_out, "30.00")
         self.assertEqual(transactions[1].description, "QR PAYMENT DINNER")
         self.assertEqual(transactions[1].money_out, "5.00")
+
+    def test_splits_mydebit_followed_by_qr_payment_and_drops_atm_artifact(self) -> None:
+        transactions = parse_transactions(SAME_DAY_MYDEBIT_QR_WITH_ATM_ARTIFACT)
+
+        self.assertEqual(len(transactions), 2)
+        self.assertEqual([transaction.date for transaction in transactions], ["2026-04-14", "2026-04-14"])
+        self.assertEqual(transactions[0].description, "MYDEBIT POS 7-ELEVEN")
+        self.assertEqual(transactions[0].money_out, "12.00")
+        self.assertEqual(transactions[1].description, "QR PAYMENT Sukishi")
+        self.assertEqual(transactions[1].money_out, "20.00")
+        joined_raw_text = "\n".join(transaction.raw_text for transaction in transactions)
+        joined_description = " ".join(transaction.description for transaction in transactions)
+        self.assertNotIn("ATM 008888", joined_raw_text)
+        self.assertNotIn("ATM 008888", joined_description)
+
+    def test_qr_transaction_followed_by_atm_artifact_keeps_transaction_only(self) -> None:
+        transactions = parse_transactions(QR_WITH_TRAILING_ATM_ARTIFACT)
+
+        self.assertEqual(len(transactions), 1)
+        self.assertEqual(transactions[0].description, "QR PAYMENT CAFE")
+        self.assertEqual(transactions[0].money_out, "44.20")
+        self.assertNotIn("ATM 008888", transactions[0].raw_text)
+        self.assertNotIn("ATM 008888", transactions[0].description)
+
+    def test_mydebit_transaction_followed_by_atm_artifact_keeps_transaction_only(self) -> None:
+        transactions = parse_transactions(MYDEBIT_WITH_TRAILING_ATM_ARTIFACT)
+
+        self.assertEqual(len(transactions), 1)
+        self.assertEqual(transactions[0].description, "MYDEBIT POS MINI MARKET")
+        self.assertEqual(transactions[0].money_out, "44.20")
+        self.assertNotIn("ATM 008888", transactions[0].raw_text)
+        self.assertNotIn("ATM 008888", transactions[0].description)
+
+    def test_atm_008888_alone_does_not_emit_transaction(self) -> None:
+        self.assertEqual(parse_transactions(ATM_008888_ONLY_TEXT), [])
+
+    def test_dated_atm_008888_pipe_artifact_does_not_emit_transaction(self) -> None:
+        self.assertEqual(parse_transactions(DATED_ATM_008888_PIPE_ONLY_TEXT), [])
+
+    def test_dated_atm_008888_jslash_artifact_does_not_emit_transaction(self) -> None:
+        self.assertEqual(parse_transactions(DATED_ATM_008888_JSLASH_ONLY_TEXT), [])
+
+    def test_dated_atm_008888_jpipe_artifact_does_not_emit_transaction(self) -> None:
+        self.assertEqual(parse_transactions(DATED_ATM_008888_JPIPE_ONLY_TEXT), [])
+
+    def test_expanded_second_level_markers_split_merged_bank_block(self) -> None:
+        transactions = parse_transactions(SAME_DAY_EXPANDED_SECOND_LEVEL_MARKERS)
+
+        self.assertEqual(
+            [transaction.description for transaction in transactions],
+            [
+                "JOMPAY BILLER",
+                "FPX-GPAY TOP UP",
+                "LP KAUB PAYMENT",
+                "IN-HOUSE TRANSFER SAVINGS",
+                "GLOBAL MONEY TRANSFER FAMILY",
+                "transfer HIB- RENT",
+                "MEPS CASH",
+                "TNG WALLET",
+            ],
+        )
+        self.assertEqual([transaction.date for transaction in transactions], ["2026-04-14"] * 8)
+        self.assertEqual(
+            [transaction.money_out for transaction in transactions],
+            ["10.00", "20.00", "30.00", "40.00", "50.00", "60.00", "70.00", "80.00"],
+        )
 
     def test_single_transaction_block_behavior_does_not_regress(self) -> None:
         transactions = parse_transactions(REAL_OUTPUT_SHAPE_TEXT)
@@ -1144,6 +1287,197 @@ class MonthlySummaryTests(unittest.TestCase):
             self.assertIn("Source CSVs: 2026-05-06.statement.csv, 2026-05-21.card.statement.csv", report)
 
 
+class MonthlyRunTests(unittest.TestCase):
+    def test_derives_output_paths_from_pdf_date_prefixes(self) -> None:
+        paths = build_monthly_run_output_paths(
+            "/statements/2026-05-06_Statement.pdf",
+            "/statements/2026-05-21_Statement.pdf",
+            "outputs",
+        )
+
+        self.assertEqual(paths.bank_csv, Path("outputs/2026-05-06.statement.csv"))
+        self.assertEqual(paths.bank_ocr, Path("outputs/2026-05-06.ocr.txt"))
+        self.assertEqual(paths.bank_rule_candidates, Path("outputs/2026-05-06.rule-candidates.yml"))
+        self.assertEqual(paths.bank_review, Path("outputs/2026-05-06.review.md"))
+        self.assertEqual(paths.card_csv, Path("outputs/2026-05-21.card.statement.csv"))
+        self.assertEqual(paths.card_ocr, Path("outputs/2026-05-21.card.ocr.txt"))
+        self.assertEqual(paths.card_rule_candidates, Path("outputs/2026-05-21.card.rule-candidates.yml"))
+        self.assertEqual(paths.card_review, Path("outputs/2026-05-21.card.review.md"))
+        self.assertEqual(paths.combined_summary, Path("outputs/2026-05.combined.summary.md"))
+
+    def test_derives_combined_summary_from_explicit_month(self) -> None:
+        paths = build_monthly_run_output_paths(
+            "/statements/2026-04-30_Statement.pdf",
+            "/statements/2026-05-21_Statement.pdf",
+            "outputs",
+            month="2026-05",
+        )
+
+        self.assertEqual(paths.bank_csv, Path("outputs/2026-04-30.statement.csv"))
+        self.assertEqual(paths.combined_summary, Path("outputs/2026-05.combined.summary.md"))
+
+    def test_monthly_run_rejects_pdf_without_leading_date(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            out_dir = Path(tmp_dir) / "outputs"
+            stderr = io.StringIO()
+
+            with contextlib.redirect_stderr(stderr):
+                exit_code = monthly_run_main(
+                    [
+                        "--bank-pdf",
+                        str(Path(tmp_dir) / "bank.pdf"),
+                        "--card-pdf",
+                        str(Path(tmp_dir) / "2026-05-21_Statement.pdf"),
+                        "--out-dir",
+                        str(out_dir),
+                    ]
+                )
+
+        self.assertNotEqual(exit_code, 0)
+        self.assertIn("PDF filename must start with YYYY-MM-DD", stderr.getvalue())
+
+    def test_monthly_run_rejects_invalid_month_format(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            out_dir = Path(tmp_dir) / "outputs"
+            stderr = io.StringIO()
+
+            with contextlib.redirect_stderr(stderr):
+                exit_code = monthly_run_main(
+                    [
+                        "--bank-pdf",
+                        str(Path(tmp_dir) / "2026-05-06_Statement.pdf"),
+                        "--card-pdf",
+                        str(Path(tmp_dir) / "2026-05-21_Statement.pdf"),
+                        "--out-dir",
+                        str(out_dir),
+                        "--month",
+                        "2026-5",
+                    ]
+                )
+
+        self.assertNotEqual(exit_code, 0)
+        self.assertIn("--month must use YYYY-MM format", stderr.getvalue())
+
+    def test_monthly_run_refuses_to_overwrite_existing_outputs_without_force(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            out_dir = base / "outputs"
+            out_dir.mkdir()
+            existing = out_dir / "2026-05-06.statement.csv"
+            existing.write_text("already here", encoding="utf-8")
+            rules_path = _write_monthly_run_rules(base)
+
+            stderr = io.StringIO()
+            with mock.patch("statement_sorter.monthly_run.ocr_pdf") as mocked_ocr:
+                with contextlib.redirect_stderr(stderr):
+                    exit_code = monthly_run_main(
+                        [
+                            "--bank-pdf",
+                            str(base / "2026-05-06_Statement.pdf"),
+                            "--card-pdf",
+                            str(base / "2026-05-21_Statement.pdf"),
+                            "--rules",
+                            str(rules_path),
+                            "--out-dir",
+                            str(out_dir),
+                        ]
+                    )
+
+            self.assertNotEqual(exit_code, 0)
+            self.assertIn("refusing to overwrite existing output", stderr.getvalue())
+            mocked_ocr.assert_not_called()
+
+    def test_monthly_run_generates_all_outputs_and_quality_summary(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            bank_pdf = base / "2026-05-06_Statement.pdf"
+            card_pdf = base / "2026-05-21_Statement.pdf"
+            out_dir = base / "outputs"
+            rules_path = _write_monthly_run_rules(base)
+            rules_before = rules_path.read_text(encoding="utf-8")
+
+            def fake_ocr(pdf_path: Path, language: str, dpi: int) -> str:
+                self.assertEqual(language, "eng")
+                self.assertEqual(dpi, 250)
+                if Path(pdf_path).name.startswith("2026-05-06"):
+                    return MONTHLY_RUN_BANK_OCR
+                return CREDIT_CARD_OCR
+
+            stdout = io.StringIO()
+            with mock.patch("statement_sorter.monthly_run.ocr_pdf", side_effect=fake_ocr):
+                with contextlib.redirect_stdout(stdout):
+                    exit_code = monthly_run_main(
+                        [
+                            "--bank-pdf",
+                            str(bank_pdf),
+                            "--card-pdf",
+                            str(card_pdf),
+                            "--rules",
+                            str(rules_path),
+                            "--out-dir",
+                            str(out_dir),
+                        ]
+                    )
+
+            self.assertEqual(exit_code, 0)
+            paths = build_monthly_run_output_paths(bank_pdf, card_pdf, out_dir)
+            for output_path in paths.all_outputs():
+                self.assertTrue(output_path.exists(), output_path)
+
+            self.assertIn("QR PAYMENT CAFE", paths.bank_csv.read_text(encoding="utf-8"))
+            self.assertIn("PAYMENT - THANK YOU", paths.card_csv.read_text(encoding="utf-8"))
+            self.assertIn("QR PAYMENT CAFE", paths.bank_ocr.read_text(encoding="utf-8"))
+            self.assertIn("Card Number", paths.card_ocr.read_text(encoding="utf-8"))
+            self.assertIn("rules:", paths.bank_rule_candidates.read_text(encoding="utf-8"))
+            self.assertIn("# Bank Statement Review Report", paths.bank_review.read_text(encoding="utf-8"))
+            self.assertIn("# Bank Statement Monthly Summary", paths.combined_summary.read_text(encoding="utf-8"))
+            self.assertEqual(rules_path.read_text(encoding="utf-8"), rules_before)
+
+            output = stdout.getvalue()
+            self.assertIn("bank: rows=2 auto=1 review=1 missing_amount=1", output)
+            self.assertIn("card: rows=", output)
+            self.assertIn("auto=", output)
+            self.assertIn("review=", output)
+            self.assertIn("missing_amount=", output)
+            self.assertIn(str(paths.bank_csv), output)
+            self.assertIn(str(paths.card_csv), output)
+            self.assertIn(str(paths.combined_summary), output)
+
+    def test_monthly_run_accepts_explicit_month_for_combined_summary(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            bank_pdf = base / "2026-04-30_Statement.pdf"
+            card_pdf = base / "2026-05-21_Statement.pdf"
+            out_dir = base / "outputs"
+            rules_path = _write_monthly_run_rules(base)
+
+            def fake_ocr(pdf_path: Path, language: str, dpi: int) -> str:
+                if Path(pdf_path).name.startswith("2026-04-30"):
+                    return MONTHLY_RUN_BANK_OCR
+                return CREDIT_CARD_OCR
+
+            with mock.patch("statement_sorter.monthly_run.ocr_pdf", side_effect=fake_ocr):
+                with contextlib.redirect_stdout(io.StringIO()):
+                    exit_code = monthly_run_main(
+                        [
+                            "--bank-pdf",
+                            str(bank_pdf),
+                            "--card-pdf",
+                            str(card_pdf),
+                            "--rules",
+                            str(rules_path),
+                            "--out-dir",
+                            str(out_dir),
+                            "--month",
+                            "2026-05",
+                        ]
+                    )
+
+            self.assertEqual(exit_code, 0)
+            self.assertTrue((out_dir / "2026-05.combined.summary.md").exists())
+            self.assertFalse((out_dir / "2026-04.combined.summary.md").exists())
+
+
 def _csv_row(
     description: str,
     money_out: str,
@@ -1220,6 +1554,26 @@ def _monthly_row(
         "status": status,
         "raw_text": f"RAW {description}",
     }
+
+
+def _write_monthly_run_rules(base: Path) -> Path:
+    rules_path = base / "rules.yml"
+    rules_path.write_text(
+        "\n".join(
+            [
+                "rules:",
+                "  - pattern: \"QR PAYMENT\"",
+                "    category: \"Dining\"",
+                "    treatment: \"expense\"",
+                "  - pattern: \"PAYMENT - THANK YOU\"",
+                "    category: \"Transfer\"",
+                "    treatment: \"transfer\"",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    return rules_path
 
 
 def _decimal(value: str):

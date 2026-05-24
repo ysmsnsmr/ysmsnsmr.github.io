@@ -137,6 +137,21 @@ Generate a combined monthly summary from multiple CSVs:
 
 Reports do not render `raw_text`. They include descriptions only where useful for review or top-expense display.
 
+## Monthly run helper
+
+For months that have both a bank/debit statement PDF and a credit card statement PDF, run the full monthly flow with:
+
+```sh
+.venv/bin/python -m statement_sorter.monthly_run \
+  --bank-pdf statement_PDF/2026-05-06_Statement.pdf \
+  --card-pdf statement_PDF/2026-05-21_Statement.pdf \
+  --month 2026-05
+```
+
+The helper derives statement output names from the leading `YYYY-MM-DD` in each PDF filename, writes bank/card CSV and OCR text, generates bank/card rule candidates and review reports, then writes the combined monthly summary. Use `--month YYYY-MM` to choose the combined summary filename; if omitted, the helper uses the bank PDF month. It refuses to overwrite any generated output unless `--force` is passed.
+
+The monthly run helper expects both bank and card PDFs for now. If only one statement type exists for a month, use the individual commands above.
+
 ## Recommended run order
 
 1. Extract the statement CSV and optional OCR text into `outputs/`.
