@@ -114,3 +114,43 @@ rules:
 - pattern: "MYAIA"
   category: "Insurance"
   treatment: "expense"
+
+- pattern: "CREDIT CARD PAYMENT"
+  category: "Transfer"
+  treatment: "transfer"
+
+- pattern: "CARD PAYMENT"
+  category: "Transfer"
+  treatment: "transfer"
+
+- pattern: "GLOBAL MONEY TRANSFER"
+  category: "Transfer"
+  treatment: "transfer"
+
+- pattern: "CARD ACQUISITION PROMO"
+  category: "Income"
+  treatment: "income"
+
+- pattern: "7 ELEVEN"
+  category: "Groceries"
+  treatment: "expense"
+
+- pattern: "MIXUE"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "MR DIY"
+  category: "Shopping"
+  treatment: "expense"
+
+- pattern: "RAMEN HITOYOSHI"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "SEIROCK-YA"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "SUSHIRO"
+  category: "Dining"
+  treatment: "expense"
