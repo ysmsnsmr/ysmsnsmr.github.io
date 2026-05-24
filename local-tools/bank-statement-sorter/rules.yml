@@ -154,3 +154,71 @@ rules:
 - pattern: "SUSHIRO"
   category: "Dining"
   treatment: "expense"
+
+- pattern: "U MOBILE"
+  category: "Bills"
+  treatment: "expense"
+
+- pattern: "UNIQLO"
+  category: "Shopping"
+  treatment: "expense"
+
+- pattern: "COCO ZEN"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "PUXIANWEI RESTAURANT"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "ZUS COFFEE"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "MCDONALDS"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "KAISON"
+  category: "Shopping"
+  treatment: "expense"
+
+- pattern: "PETER'S PORK NOODLE"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "TONKOTSU RAMEN SHORAKU"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "TOOT COFFEE"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "TEA TIME CAFE"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "TEA THAMBI"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "RISE & SIP CAFE"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "DECATHLON"
+  category: "Shopping"
+  treatment: "expense"
+
+- pattern: "MYBURGERLAB"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "TENAGA NASIONAL"
+  category: "Bills"
+  treatment: "expense"
+
+- pattern: "SWITCH"
+  category: "Shopping"
+  treatment: "expense"
