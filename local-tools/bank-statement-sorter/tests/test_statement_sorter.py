@@ -17,7 +17,9 @@ from statement_sorter.models import CSV_COLUMNS
 from statement_sorter.monthly_summary import (
     build_monthly_summaries,
     _clean_description_for_display,
+    main as monthly_summary_main,
     read_statement_csv as read_monthly_csv,
+    read_statement_csvs as read_monthly_csvs,
     render_monthly_summary,
     write_monthly_summary,
 )
@@ -158,6 +160,17 @@ Statement Date 05 JAN 2026 Payment Due Date 25 JAN 2026
 Card Number 1234 5678 9012 3456
 Minimum Monthly Payment RM100.00
 31 DEC 30 DEC YEAR END SHOP MY 45.00
+"""
+
+CREDIT_CARD_CASHBACK_SUMMARY_ARTIFACT_OCR = """
+Account Statement
+Card Number Statement Date 21 MAY 2026 Page 2
+HSBC Amanah Cash Back Summary Minimum Payment & Overlimit Summary (RM)
+Post Date Transaction Date Transaction Details Amount
+16 MAY 16 MAY 99 SPEEDMART-1096 SELANGOR MY 173.95
+HSBC statement Cash Back earned Cash Back diperolehi Overlimit Melebihi Had Kredit
+Bonus Cash Back Cash Back bonus Page Halaman Amanah MPower Platinum Card-i
+17 MAY 17 MAY HEALTH LANE ARA JAYA PETALING JAYA MY 20.00
 """
 
 
@@ -367,6 +380,16 @@ class CreditCardParserTests(unittest.TestCase):
         self.assertNotIn("Post Date Transaction Date", joined_raw_text)
         self.assertNotIn("Your charge(s) for this month", joined_raw_text)
         self.assertNotIn("Total credit limit used", joined_raw_text)
+
+    def test_excludes_cashback_summary_artifacts_from_credit_card_transaction_blocks(self) -> None:
+        transactions = parse_credit_card_transactions(CREDIT_CARD_CASHBACK_SUMMARY_ARTIFACT_OCR)
+
+        self.assertEqual(len(transactions), 2)
+        self.assertEqual(transactions[0].description, "99 SPEEDMART-1096 SELANGOR MY")
+        self.assertEqual(transactions[0].money_out, "173.95")
+        self.assertNotIn("Cash Back earned", transactions[0].raw_text)
+        self.assertNotIn("Overlimit", transactions[0].raw_text)
+        self.assertNotIn("MPower Platinum", transactions[0].raw_text)
 
     def test_uses_previous_year_for_december_transactions_on_january_statement(self) -> None:
         transactions = parse_credit_card_transactions(CREDIT_CARD_JANUARY_OCR)
@@ -727,6 +750,8 @@ class MonthlySummaryTests(unittest.TestCase):
         report = render_monthly_summary(rows, "outputs/statement.csv")
 
         self.assertIn("# Bank Statement Monthly Summary", report)
+        self.assertIn("Source CSV count: 1", report)
+        self.assertIn("Source CSVs: statement.csv", report)
         self.assertIn("| 2026-04 | 8 | 2 | 4624.50 | 3749.50 | 5000.00 | 1250.50 | 1000.00 | 300.00 | 200.00 | 25.00 |", report)
         self.assertIn("## 2026-04", report)
         self.assertIn("| Dining | 3 | 0.00 | 1250.50 |", report)
@@ -736,6 +761,44 @@ class MonthlySummaryTests(unittest.TestCase):
         self.assertIn("- Invalid or missing date rows excluded from month totals: 1", report)
         self.assertNotIn("SECRET RAW TEXT", report)
         self.assertNotIn("raw_text", report)
+
+    def test_rendered_report_combines_multiple_csv_sources(self) -> None:
+        bank_rows = [
+            _monthly_row("2026-05-01", "SALARY", "5,000.00", "", "Income", "income", "auto"),
+            _monthly_row("2026-05-02", "CARD PAYMENT", "", "1,000.00", "Transfer", "transfer", "auto"),
+            _monthly_row("bad-date", "BAD DATE", "", "8.00", "Dining", "expense", "auto"),
+        ]
+        card_rows = [
+            _monthly_row("2026-05-03", "CARD GROCERIES", "", "120.00", "Groceries", "expense", "auto"),
+            _monthly_row("2026-05-04", "CARD UNKNOWN", "", "30.00", "Other", "unknown", "review"),
+            _monthly_row("2026-05-05", "BROKERAGE REFUND", "200.00", "", "Transfer", "transfer", "auto"),
+        ]
+
+        report = render_monthly_summary(
+            [*bank_rows, *card_rows],
+            ["outputs/2026-05-06.statement.csv", "outputs/2026-05-21.card.statement.csv"],
+        )
+
+        self.assertIn("Source CSV count: 2", report)
+        self.assertIn("Source CSVs: 2026-05-06.statement.csv, 2026-05-21.card.statement.csv", report)
+        self.assertIn("| 2026-05 | 5 | 1 | 4050.00 | 4880.00 | 5000.00 | 120.00 | 200.00 | 1000.00 | 0.00 | 30.00 |", report)
+        self.assertIn("| Groceries | 1 | 0.00 | 120.00 |", report)
+        self.assertIn("| unknown | 1 | 0.00 | 30.00 |", report)
+        self.assertIn("- Review rows included in totals: 1", report)
+        self.assertIn("- Invalid or missing date rows excluded from month totals: 1", report)
+        self.assertNotIn("RAW CARD GROCERIES", report)
+        self.assertNotIn("raw_text", report)
+
+    def test_top_expenses_sort_across_multiple_csv_sources(self) -> None:
+        report = render_monthly_summary(
+            [
+                _monthly_row("2026-05-01", "BANK FOOD", "", "20.00", "Dining", "expense", "auto"),
+                _monthly_row("2026-05-02", "CARD BIG SHOP", "", "200.00", "Shopping", "expense", "auto"),
+            ],
+            ["outputs/2026-05-06.statement.csv", "outputs/2026-05-21.card.statement.csv"],
+        )
+
+        self.assertLess(report.index("CARD BIG SHOP"), report.index("BANK FOOD"))
 
     def test_top_expenses_sort_by_money_out_and_exclude_transfers(self) -> None:
         report = render_monthly_summary(_monthly_rows(), "outputs/statement.csv")
@@ -790,6 +853,14 @@ class MonthlySummaryTests(unittest.TestCase):
 
         self.assertEqual(_clean_description_for_display(description), "Restoran Mazeela Bistro 013562 Re")
 
+    def test_clean_description_removes_credit_card_artifacts_for_display_only(self) -> None:
+        description = (
+            "99 SPEEDMART-1096 _ SELANGOR _ MY 5 4617729026633785 "
+            "goO00000000 OOO0000000 Amanah MPower Platinum Card-i cera number"
+        )
+
+        self.assertEqual(_clean_description_for_display(description), "99 SPEEDMART-1096 SELANGOR MY")
+
     def test_write_monthly_summary_requires_outputs_directory(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             bad_path = Path(tmp_dir) / "monthly-summary.md"
@@ -818,6 +889,47 @@ class MonthlySummaryTests(unittest.TestCase):
             self.assertTrue(out_path.exists())
             self.assertEqual(csv_path.read_text(encoding="utf-8"), original_csv)
             self.assertEqual(rules_path.read_text(encoding="utf-8"), rules_text)
+
+    def test_reads_multiple_statement_csvs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            first_path = base / "first.csv"
+            second_path = base / "second.csv"
+            for path, row in [
+                (first_path, _monthly_row("2026-05-01", "FIRST", "1.00", "", "Income", "income", "auto")),
+                (second_path, _monthly_row("2026-05-02", "SECOND", "", "2.00", "Dining", "expense", "auto")),
+            ]:
+                with path.open("w", encoding="utf-8", newline="") as handle:
+                    writer = csv.DictWriter(handle, fieldnames=CSV_COLUMNS)
+                    writer.writeheader()
+                    writer.writerow(row)
+
+            rows = read_monthly_csvs([first_path, second_path])
+
+            self.assertEqual([row["description"] for row in rows], ["FIRST", "SECOND"])
+
+    def test_monthly_summary_cli_accepts_multiple_csv_inputs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            first_path = base / "2026-05-06.statement.csv"
+            second_path = base / "2026-05-21.card.statement.csv"
+            out_path = base / "outputs" / "2026-05.combined.summary.md"
+            for path, row in [
+                (first_path, _monthly_row("2026-05-01", "FIRST", "1.00", "", "Income", "income", "auto")),
+                (second_path, _monthly_row("2026-05-02", "SECOND", "", "2.00", "Dining", "expense", "auto")),
+            ]:
+                with path.open("w", encoding="utf-8", newline="") as handle:
+                    writer = csv.DictWriter(handle, fieldnames=CSV_COLUMNS)
+                    writer.writeheader()
+                    writer.writerow(row)
+
+            with contextlib.redirect_stdout(io.StringIO()):
+                exit_code = monthly_summary_main([str(first_path), str(second_path), "--out", str(out_path)])
+
+            self.assertEqual(exit_code, 0)
+            report = out_path.read_text(encoding="utf-8")
+            self.assertIn("Source CSV count: 2", report)
+            self.assertIn("Source CSVs: 2026-05-06.statement.csv, 2026-05-21.card.statement.csv", report)
 
 
 def _csv_row(

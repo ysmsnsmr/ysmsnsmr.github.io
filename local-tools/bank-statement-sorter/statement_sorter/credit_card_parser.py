@@ -48,8 +48,15 @@ NON_TRANSACTION_PHRASES = (
     "CREDIT LIMIT USED",
     "STATEMENT BALANCE",
     "CASH BACK SUMMARY",
+    "CASH BACK EARNED",
+    "CASH BACK DIPEROLEHI",
+    "BONUS CASH BACK",
+    "CASH BACK BONUS",
     "TOTAL CASH BACK BALANCE",
     "TOTAL CREDIT LIMIT USED",
+    "OVERLIMIT",
+    "MELEBIHI HAD KREDIT",
+    "PAGE HALAMAN",
     "YOUR CHARGE(S) FOR THIS MONTH",
     "POST DATE",
     "TRANSACTION DATE",
@@ -120,6 +127,10 @@ def _split_credit_card_rows(ocr_text: str) -> list[_CreditCardRow]:
             if current:
                 rows.append(current)
             current = parsed
+            continue
+        if current and _is_non_transaction_line(line):
+            rows.append(current)
+            current = None
             continue
         if current and _is_continuation_line(line):
             row = current
