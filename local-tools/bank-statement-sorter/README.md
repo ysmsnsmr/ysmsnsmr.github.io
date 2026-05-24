@@ -126,6 +126,15 @@ Generate a monthly summary:
   --out outputs/2026-05-21.card.summary.md
 ```
 
+Generate a combined monthly summary from multiple CSVs:
+
+```sh
+.venv/bin/python -m statement_sorter.monthly_summary \
+  outputs/2026-05-06.statement.csv \
+  outputs/2026-05-21.card.statement.csv \
+  --out outputs/2026-05.combined.summary.md
+```
+
 Reports do not render `raw_text`. They include descriptions only where useful for review or top-expense display.
 
 ## Recommended run order
@@ -144,4 +153,4 @@ The bank/debit parser extracts transaction blocks from one transaction start dat
 
 `outputs/` is Git-ignored. Do not commit PDFs, OCR text, CSVs, candidate YAML files, or generated Markdown reports.
 
-Combined monthly summaries from multiple CSVs are not implemented yet. The likely future path is extending `statement_sorter.monthly_summary` to accept multiple CSV inputs while keeping the current single-CSV usage working.
+Monthly summaries accept one or more statement CSVs. Multiple inputs are combined without deduplication, so pass each statement CSV only once.
