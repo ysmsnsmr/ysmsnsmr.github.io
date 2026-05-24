@@ -139,6 +139,75 @@ QR PAYMENT DINNER
 5.00 165.00
 """
 
+BANK_FOOTER_CONTINUATION_TEXT = """
+BALANCE BROUGHT FORWARD 100.00
+06May2026 QR PAYMENT DINNER
+10.00 90.00
+END OF STATEMENT
+Important notes: long statement footer should not continue the transaction
+07May2026 QR PAYMENT AFTER FOOTER
+5.00 85.00
+"""
+
+BANK_PAGE_ARTIFACT_BOUNDARY_TEXT = """
+BALANCE BROUGHT FORWARD 100.00
+06May2026 QR PAYMENT DINNER
+10.00 90.00
+BALANCE CARRIEDFORWARD
+HSBC <x> Amanah 013562 Statement Details Re
+BALANCE BROUGHTFORWARD
+07May2026 QR PAYMENT BREAKFAST
+5.00 85.00
+"""
+
+BANK_BOUNDARY_THEN_LATER_TRANSACTION_TEXT = """
+BALANCE BROUGHT FORWARD 200.00
+06May2026 QR PAYMENT FIRST
+20.00 180.00
+Transaction Turnover Transaction Count 2 38
+Protected by PIDM up to RM250K for each depositor
+AMANAH ADVANCE A/C-I 015-000000-000
+07May2026 QR PAYMENT SECOND
+30.00 150.00
+"""
+
+BANK_INCOMPLETE_TRANSACTION_CONTINUES_ACROSS_PAGE_BOUNDARY_TEXT = """
+BALANCE BROUGHT FORWARD 300.00
+06May2026 QR PAYMENT
+HIB- 123456789
+BALANCE CARRIEDFORWARD 300.00
+Page 2
+Statement Details
+AMANAH ADVANCE A/C-I 015-000000-000 Protected by PIDM up to RM250K for each depositor
+MERCHANT AFTER PAGE
+REF EB01-11111 20.00 280.00
+07May2026 QR PAYMENT SECOND
+30.00 250.00
+"""
+
+BANK_PAGE_BOUNDARIES_KEEP_EXTRACTIONS_TEXT = """
+BALANCE BROUGHT FORWARD 300.00
+06May2026 QR PAYMENT FIRST
+20.00 280.00
+Page 1 of 3
+07May2026 QR PAYMENT SECOND
+30.00 250.00
+BALANCE CARRIED FORWARD 250.00
+Statement Details
+BALANCE BROUGHT FORWARD 250.00
+08May2026 QR PAYMENT THIRD
+40.00 210.00
+"""
+
+BANK_PIDM_FOOTER_STOP_TEXT = """
+BALANCE BROUGHT FORWARD 100.00
+06May2026 QR PAYMENT BEFORE FOOTER
+10.00 90.00
+PIDM footer notice
+07May2026 QR PAYMENT AFTER FOOTER
+5.00 85.00
+"""
+
 CREDIT_CARD_OCR = """
 Account Statement
 Card Number Statement Date 21 MAY 2026 Page 2
@@ -331,6 +400,78 @@ class ParserTests(unittest.TestCase):
         self.assertEqual(len(transactions), 1)
         self.assertEqual(transactions[0].description, "FPX-HOTLINK TOP UP")
         self.assertEqual(transactions[0].money_out, "10.00")
+
+    def test_footer_hard_stop_excludes_footer_and_stops_parsing(self) -> None:
+        transactions = parse_transactions(BANK_FOOTER_CONTINUATION_TEXT)
+
+        self.assertEqual(len(transactions), 1)
+        self.assertEqual(transactions[0].date, "2026-05-06")
+        self.assertEqual(transactions[0].money_out, "10.00")
+        self.assertNotIn("END OF STATEMENT", transactions[0].raw_text)
+        self.assertNotIn("Important notes", transactions[0].raw_text)
+        self.assertNotIn("AFTER FOOTER", transactions[0].raw_text)
+
+    def test_page_artifact_boundaries_do_not_enter_raw_text_or_description(self) -> None:
+        transactions = parse_transactions(BANK_PAGE_ARTIFACT_BOUNDARY_TEXT)
+
+        self.assertEqual(len(transactions), 2)
+        self.assertEqual([transaction.date for transaction in transactions], ["2026-05-06", "2026-05-07"])
+        self.assertEqual(transactions[0].money_out, "10.00")
+        self.assertEqual(transactions[1].money_out, "5.00")
+        joined_raw_text = "\n".join(transaction.raw_text for transaction in transactions)
+        joined_description = " ".join(transaction.description for transaction in transactions)
+        self.assertNotIn("BALANCE CARRIEDFORWARD", joined_raw_text)
+        self.assertNotIn("Statement Details", joined_raw_text)
+        self.assertNotIn("BALANCE BROUGHTFORWARD", joined_raw_text)
+        self.assertNotIn("BALANCE CARRIEDFORWARD", joined_description)
+        self.assertNotIn("Statement Details", joined_description)
+
+    def test_boundary_artifact_allows_later_valid_transaction_date(self) -> None:
+        transactions = parse_transactions(BANK_BOUNDARY_THEN_LATER_TRANSACTION_TEXT)
+
+        self.assertEqual(len(transactions), 2)
+        self.assertEqual(transactions[0].description, "QR PAYMENT FIRST")
+        self.assertEqual(transactions[1].description, "QR PAYMENT SECOND")
+        self.assertEqual(transactions[1].money_out, "30.00")
+        joined_raw_text = "\n".join(transaction.raw_text for transaction in transactions)
+        self.assertNotIn("Transaction Turnover", joined_raw_text)
+        self.assertNotIn("AMANAH ADVANCE A/C-I", joined_raw_text)
+
+    def test_incomplete_transaction_continues_across_page_boundary(self) -> None:
+        transactions = parse_transactions(BANK_INCOMPLETE_TRANSACTION_CONTINUES_ACROSS_PAGE_BOUNDARY_TEXT)
+
+        self.assertEqual(len(transactions), 2)
+        self.assertEqual(transactions[0].date, "2026-05-06")
+        self.assertIn("MERCHANT AFTER PAGE", transactions[0].description)
+        self.assertEqual(transactions[0].money_out, "20.00")
+        self.assertEqual(transactions[1].date, "2026-05-07")
+        joined_raw_text = "\n".join(transaction.raw_text for transaction in transactions)
+        self.assertNotIn("BALANCE CARRIEDFORWARD", joined_raw_text)
+        self.assertNotIn("Page 2", joined_raw_text)
+        self.assertNotIn("Statement Details", joined_raw_text)
+        self.assertNotIn("Protected by PIDM", joined_raw_text)
+
+    def test_page_and_balance_boundaries_do_not_collapse_extraction_count(self) -> None:
+        transactions = parse_transactions(BANK_PAGE_BOUNDARIES_KEEP_EXTRACTIONS_TEXT)
+
+        self.assertEqual(len(transactions), 3)
+        self.assertEqual(
+            [transaction.description for transaction in transactions],
+            ["QR PAYMENT FIRST", "QR PAYMENT SECOND", "QR PAYMENT THIRD"],
+        )
+        self.assertEqual([transaction.money_out for transaction in transactions], ["20.00", "30.00", "40.00"])
+        joined_raw_text = "\n".join(transaction.raw_text for transaction in transactions)
+        self.assertNotIn("Page 1 of 3", joined_raw_text)
+        self.assertNotIn("BALANCE CARRIED FORWARD", joined_raw_text)
+        self.assertNotIn("Statement Details", joined_raw_text)
+
+    def test_pidm_footer_hard_stop_stops_parsing(self) -> None:
+        transactions = parse_transactions(BANK_PIDM_FOOTER_STOP_TEXT)
+
+        self.assertEqual(len(transactions), 1)
+        self.assertEqual(transactions[0].description, "QR PAYMENT BEFORE FOOTER")
+        self.assertNotIn("Protected by PIDM", transactions[0].raw_text)
+        self.assertNotIn("AFTER FOOTER", transactions[0].raw_text)
 
 
 class StatementTypeTests(unittest.TestCase):

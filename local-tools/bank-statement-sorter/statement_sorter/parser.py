@@ -40,10 +40,28 @@ NON_TRANSACTION_START_PHRASES = (
     "DEPOSITS AND INVESTMENTS",
     "TOTAL DEPOSITS",
     "ACCOUNT NUMBER",
-    "PAGE",
     "BALANCE BROUGHT FORWARD",
     "BALANCE CARRIED FORWARD",
     "CLOSING BALANCE",
+)
+BLOCK_BOUNDARY_ARTIFACT_PHRASES = (
+    "BALANCE BROUGHT FORWARD",
+    "BALANCE BROUGHTFORWARD",
+    "BALANCE CARRIED FORWARD",
+    "BALANCE CARRIEDFORWARD",
+    "STATEMENT DETAILS",
+    "TRANSACTION TURNOVER",
+    "TRANSACTION COUNT",
+    "PROTECTED BY PIDM UP TO",
+    "AMANAH ADVANCE A/C-I",
+)
+FOOTER_HARD_STOP_PHRASES = (
+    "END OF STATEMENT",
+    "IMPORTANT NOTES",
+    "NOTA PENTING",
+    "TERMS AND CONDITIONS",
+    "PIDM",
+    "UNIVERSAL TERMS AND CONDITIONS",
 )
 ACCOUNT_SUMMARY_MARKERS = (
     "DEMAND DEPOSITS",
@@ -84,6 +102,13 @@ def split_transaction_blocks(ocr_text: str) -> list[list[str]]:
     for raw_line in ocr_text.splitlines():
         line = _clean_line(raw_line)
         if not line:
+            continue
+        if _is_footer_hard_stop_line(line):
+            if current:
+                blocks.append(current)
+                current = []
+            break
+        if _is_block_boundary_artifact_line(line):
             continue
         if _is_non_transaction_start_line(line):
             continue
@@ -421,6 +446,21 @@ def _looks_like_table_header(line: str) -> bool:
 def _is_non_transaction_start_line(line: str) -> bool:
     normalized = re.sub(r"\s+", " ", line).strip().upper()
     return any(phrase in normalized for phrase in NON_TRANSACTION_START_PHRASES)
+
+
+def _is_block_boundary_artifact_line(line: str) -> bool:
+    normalized = re.sub(r"\s+", " ", line).strip().upper()
+    return (
+        any(phrase in normalized for phrase in BLOCK_BOUNDARY_ARTIFACT_PHRASES)
+        or re.match(r"^PAGE(?:\b|\s+\d)", normalized) is not None
+    )
+
+
+def _is_footer_hard_stop_line(line: str) -> bool:
+    normalized = re.sub(r"\s+", " ", line).strip().upper()
+    if "PROTECTED BY PIDM UP TO" in normalized:
+        return False
+    return any(phrase in normalized for phrase in FOOTER_HARD_STOP_PHRASES)
 
 
 def _is_account_summary_block(raw_text: str) -> bool:
