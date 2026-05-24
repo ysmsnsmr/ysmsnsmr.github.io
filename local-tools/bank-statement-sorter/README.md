@@ -147,6 +147,77 @@ Reports do not render `raw_text`. They include descriptions only where useful fo
 6. Generate review and monthly summary reports.
 7. Inspect remaining `review`, `Other`, `unknown`, and missing-amount rows.
 
+## Past statement backfill and rule hardening
+
+Backfill old statements gradually. Start with only one or two past months, with one bank/debit PDF and one credit card PDF per month. The goal is not to perfectly classify all historical data at once. Use the run to check parser stability across months, grow safe reusable rules, collect missing-amount and review patterns, and identify parser fixes that repeat across multiple months.
+
+For each month, run the same local flow:
+
+```sh
+.venv/bin/python -m statement_sorter /path/to/bank.pdf \
+  --out outputs/YYYY-MM-DD.statement.csv \
+  --ocr-text outputs/YYYY-MM-DD.ocr.txt
+
+.venv/bin/python -m statement_sorter /path/to/card.pdf \
+  --out outputs/YYYY-MM-DD.card.statement.csv \
+  --ocr-text outputs/YYYY-MM-DD.card.ocr.txt
+
+.venv/bin/python -m statement_sorter.suggest_rules \
+  outputs/YYYY-MM-DD.statement.csv \
+  --out outputs/YYYY-MM-DD.rule-candidates.yml
+
+.venv/bin/python -m statement_sorter.suggest_rules \
+  outputs/YYYY-MM-DD.card.statement.csv \
+  --out outputs/YYYY-MM-DD.card.rule-candidates.yml
+
+.venv/bin/python -m statement_sorter.review_report \
+  outputs/YYYY-MM-DD.statement.csv \
+  --out outputs/YYYY-MM-DD.review.md
+
+.venv/bin/python -m statement_sorter.review_report \
+  outputs/YYYY-MM-DD.card.statement.csv \
+  --out outputs/YYYY-MM-DD.card.review.md
+
+.venv/bin/python -m statement_sorter.monthly_summary \
+  outputs/YYYY-MM-DD.statement.csv \
+  outputs/YYYY-MM-DD.card.statement.csv \
+  --out outputs/YYYY-MM.combined.summary.md
+```
+
+Review these quality metrics after each run:
+
+```sh
+.venv/bin/python - <<'PY'
+import csv
+from collections import Counter
+
+paths = [
+    "outputs/YYYY-MM-DD.statement.csv",
+    "outputs/YYYY-MM-DD.card.statement.csv",
+]
+
+for path in paths:
+    print("\n==", path, "==")
+    with open(path, newline="", encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
+
+    print("transactions:", len(rows))
+    print("status:", Counter(row.get("status", "") for row in rows))
+    print("treatment:", Counter(row.get("treatment", "") for row in rows))
+    print("category:", Counter(row.get("category", "") for row in rows))
+    print("missing amount:", sum(1 for row in rows if not row.get("money_in") and not row.get("money_out")))
+    print("balance nonempty:", sum(1 for row in rows if row.get("balance")))
+PY
+```
+
+For bank/debit CSVs, check transactions, `auto` vs `review`, treatment/category distribution, missing amount, and nonempty balance count. For credit card CSVs, missing amount should normally be `0`, and `balance` should normally be empty for every row.
+
+For combined summaries, check that `Living Balance` is not extreme, `Transfer Out` contains card payments, account movement, and brokerage transfers instead of living expenses, `Unknown Out` is small enough to trust the report, and card payments are not mixed into `expense`.
+
+Only add confirmed reusable merchant or payee patterns to `rules.yml`, such as stable grocery, dining, utilities, telco, or subscription names. Do not add personal names with unclear meaning, OCR noise, transaction IDs, one-off long strings, page/card artifacts, or candidates that only appeared in missing-amount rows.
+
+Treat parser changes conservatively. A one-off OCR failure should usually remain a review item. Open a parser follow-up only when the same failure pattern repeats across two or three months.
+
 ## Notes
 
 The bank/debit parser extracts transaction blocks from one transaction start date up to the next transaction start date. `raw_text` contains the complete OCR block used for each row.
