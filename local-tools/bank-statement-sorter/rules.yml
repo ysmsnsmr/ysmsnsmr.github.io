@@ -222,3 +222,7 @@ rules:
 - pattern: "SWITCH"
   category: "Shopping"
   treatment: "expense"
+
+- pattern: "WFE"
+  category: "Groceries"
+  treatment: "expense"
