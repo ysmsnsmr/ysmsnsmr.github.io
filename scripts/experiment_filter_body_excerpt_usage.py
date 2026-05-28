@@ -78,6 +78,23 @@ MARKET_OR_OVERSEAS_PHRASES = [
     "shares",
     "equities",
 ]
+OIL_PRICE_PHRASES = [
+    "oil prices",
+    "oil jumps",
+    "crude",
+    "brent",
+]
+GEOPOLITICS_NOISE_PHRASES = [
+    "middle east",
+    "iran",
+    "military",
+    "conflict",
+    "strikes",
+    "strike",
+    "war",
+    "ceasefire",
+    "strait of hormuz",
+]
 COST_OR_SUBSIDY_PHRASES = [
     "ron95",
     "ron97",
@@ -94,6 +111,20 @@ COST_OR_SUBSIDY_PHRASES = [
     "rahmah",
     "kos sara hidup",
     "cost of living",
+]
+FINANCIAL_SERVICE_ACCESS_PHRASES = [
+    "bank",
+    "banking",
+    "branch",
+    "premier centre",
+    "premier center",
+    "wealth",
+    "financial service",
+    "financial services",
+    "investment service",
+    "investment services",
+    "customer service",
+    "hsbc",
 ]
 PUBLIC_SERVICE_PHRASES = [
     "ministry",
@@ -114,8 +145,6 @@ TRANSPORT_OR_INFRA_PHRASES = [
     "road",
     "jalan",
     "traffic",
-    "closure",
-    "closed",
     "train",
     "bus",
     "mrt",
@@ -129,6 +158,34 @@ TRANSPORT_OR_INFRA_PHRASES = [
     "venues",
     "infrastructure",
     "concert",
+]
+TRANSPORT_CLOSURE_PHRASES = [
+    "closure",
+    "closed",
+    "tutup",
+]
+TRANSPORT_CONTEXT_PHRASES = [
+    "road",
+    "lane",
+    "jalan",
+    "traffic",
+    "route",
+    "highway",
+    "bridge",
+    "station",
+]
+AGRICULTURE_OR_PUBLIC_HEALTH_PHRASES = [
+    "pig farm",
+    "pig farms",
+    "farm",
+    "farms",
+    "livestock",
+    "animals",
+    "veterinary",
+    "agriculture",
+    "public health",
+    "environment",
+    "tanjong sepat",
 ]
 CONSUMER_OR_CROSSBORDER_SERVICE_PHRASES = [
     "payment",
@@ -263,6 +320,16 @@ def has_any(text: str, phrases: list[str]) -> bool:
     return any(has_phrase(text, phrase) for phrase in phrases)
 
 
+def is_oil_geopolitics_market_noise(text: str) -> bool:
+    return has_any(text, OIL_PRICE_PHRASES) and has_any(text, GEOPOLITICS_NOISE_PHRASES)
+
+
+def is_transport_or_infra(text: str) -> bool:
+    if has_any(text, TRANSPORT_CLOSURE_PHRASES):
+        return has_any(text, TRANSPORT_CONTEXT_PHRASES)
+    return has_any(text, TRANSPORT_OR_INFRA_PHRASES)
+
+
 def classify_article_body_item(item: dict[str, Any]) -> tuple[str, str]:
     text = normalized_blob(item)
 
@@ -270,13 +337,19 @@ def classify_article_body_item(item: dict[str, Any]) -> tuple[str, str]:
         return RSS_ONLY, "blocked_crime_or_court"
     if has_any(text, INCIDENT_PHRASES):
         return RSS_ONLY, "blocked_incident"
+    if is_oil_geopolitics_market_noise(text):
+        return RSS_ONLY, "blocked_oil_geopolitics"
+    if has_any(text, FINANCIAL_SERVICE_ACCESS_PHRASES):
+        return USE_BODY, "allowed_financial_service_access"
+    if has_any(text, AGRICULTURE_OR_PUBLIC_HEALTH_PHRASES):
+        return USE_BODY, "allowed_agriculture_or_public_health"
     if has_any(text, COST_OR_SUBSIDY_PHRASES):
         return USE_BODY, "allowed_cost_or_subsidy"
     if has_any(text, CONSUMER_OR_CROSSBORDER_SERVICE_PHRASES):
         return USE_BODY, "allowed_consumer_or_crossborder_service"
     if has_any(text, VEHICLE_OR_TRANSPORT_SERVICE_PHRASES):
         return USE_BODY, "allowed_vehicle_or_transport_service"
-    if has_any(text, TRANSPORT_OR_INFRA_PHRASES):
+    if is_transport_or_infra(text):
         return USE_BODY, "allowed_transport_or_infra"
     if has_any(text, PUBLIC_SERVICE_PHRASES):
         return USE_BODY, "allowed_public_service"
