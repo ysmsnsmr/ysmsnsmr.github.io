@@ -245,9 +245,10 @@ BACKGROUND_IMPACT_WORDS = [
 ]
 
 SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュースダッシュボードの日本語編集者です。
-入力はRSSのtitle、description、既存summaryだけです。
-記事本文は読んでいません。
-RSSにない事実を追加しないでください。
+入力はRSSのtitle、description、既存summary、必要に応じて短い本文excerptだけです。
+本文excerptがない場合はRSSの情報だけを使ってください。
+excerptにない事実や生活影響を推測で足さないでください。
+入力にない事実を追加しないでください。
 カテゴリ、出典、URL、日付は変更しないでください。
 英語またはマレー語の文を、自然で短い日本語に整えてください。
 dateline（例: KUALA LUMPUR, May 17 — / クアラルンプール、5月17日 -）は出力しないでください。
@@ -332,7 +333,7 @@ def item_needs_groq(item: dict[str, Any]) -> bool:
 
 
 def groq_payload_for_item(item: dict[str, Any]) -> dict[str, Any]:
-    return {
+    payload = {
         "category": item.get("category"),
         "source": item.get("source"),
         "published_date": item.get("published_date"),
@@ -342,6 +343,47 @@ def groq_payload_for_item(item: dict[str, Any]) -> dict[str, Any]:
         "tags": item.get("tags") if isinstance(item.get("tags"), list) else [],
         "flags": item.get("flags") if isinstance(item.get("flags"), dict) else {},
     }
+    if item.get("body_excerpt_policy") == "use_body" and clean_text(item.get("body_excerpt")):
+        payload["body_excerpt"] = item.get("body_excerpt")
+        payload["content_source"] = item.get("content_source")
+    return payload
+
+
+def is_enriched_json(data: Any) -> bool:
+    if not isinstance(data, dict):
+        return False
+    if isinstance(data.get("body_enrichment"), dict):
+        return True
+    items = data.get("items")
+    if not isinstance(items, list):
+        return False
+    return any(isinstance(item, dict) and "body_excerpt_policy" in item for item in items)
+
+
+def resolve_json_input(path: str) -> Path:
+    input_path = Path(path)
+    if not input_path.exists():
+        return input_path
+    try:
+        data = fallback_renderer.load_json(str(input_path))
+    except Exception:
+        return input_path
+    if is_enriched_json(data):
+        return input_path
+    enriched_candidates = [
+        input_path.with_name(f"{input_path.stem}_enriched{input_path.suffix}"),
+        input_path.with_name("selected_items_enriched.json"),
+    ]
+    for enriched_path in enriched_candidates:
+        if not enriched_path.exists():
+            continue
+        try:
+            enriched_data = fallback_renderer.load_json(str(enriched_path))
+        except Exception:
+            continue
+        if is_enriched_json(enriched_data):
+            return enriched_path
+    return input_path
 
 
 def strip_json_code_fence(content: str) -> str:
@@ -739,7 +781,9 @@ def main() -> int:
     parser.add_argument("--improved-items-output", help="Write accepted Groq summary improvements to this JSON path.")
     args = parser.parse_args()
 
-    data = fallback_renderer.load_json(args.json_input)
+    resolved_json_input = resolve_json_input(args.json_input)
+    safe_log(f"groq: reading JSON {resolved_json_input}")
+    data = fallback_renderer.load_json(str(resolved_json_input))
     model = args.model or os.environ.get("GROQ_MODEL") or DEFAULT_MODEL
     api_key = os.environ.get("GROQ_API_KEY", "")
     rendered_data, accepted_records, stats = render_with_groq(data, api_key, model, args.force_all, args.debug_groq)
