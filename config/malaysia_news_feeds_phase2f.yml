@@ -1,0 +1,75 @@
+source_sets:
+  current_set:
+    - id: malay_mail_malaysia
+      name: Malay Mail Malaysia
+      url: https://www.malaymail.com/feed/rss/malaysia
+      language: en
+      source_type: general_news
+      role: current_primary
+      priority: high
+      enabled: true
+    - id: malay_mail_money
+      name: Malay Mail Money
+      url: https://www.malaymail.com/feed/rss/money
+      language: en
+      source_type: money_news
+      role: current_finance
+      priority: medium
+      enabled: true
+    - id: astro_awani_national
+      name: Astro Awani National
+      url: https://www.astroawani.com/rss/national/public
+      language: ms
+      source_type: national_news
+      role: current_primary
+      priority: high
+      enabled: true
+  english_expansion_set:
+    - id: malay_mail_malaysia
+      name: Malay Mail Malaysia
+      url: https://www.malaymail.com/feed/rss/malaysia
+      language: en
+      source_type: general_news
+      role: english_primary
+      priority: high
+      enabled: true
+    - id: bernama_english
+      name: BERNAMA English
+      url: https://www.bernama.com/en/index.php/rssfeed.php
+      language: en
+      source_type: national_news
+      role: official_source_hold
+      priority: low
+      enabled: false
+    - id: malay_mail_money
+      name: Malay Mail Money
+      url: https://www.malaymail.com/feed/rss/money
+      language: en
+      source_type: money_news
+      role: english_finance
+      priority: medium
+      enabled: true
+    - id: imoney_articles
+      name: iMoney Articles
+      url: https://www.imoney.my/articles/feed
+      language: en
+      source_type: personal_finance
+      role: english_living_money_candidate
+      priority: medium
+      enabled: true
+    - id: the_edge_malaysia
+      name: The Edge Malaysia
+      url: https://theedgemalaysia.com/feed
+      language: en
+      source_type: business_finance
+      role: rejected_business_feed_candidate
+      priority: low
+      enabled: false
+    - id: harian_metro_mutakhir
+      name: Harian Metro Mutakhir
+      url: https://www.hmetro.com.my/mutakhir.xml
+      language: ms
+      source_type: malay_news
+      role: experimental_malay_fallback
+      priority: low
+      enabled: false
