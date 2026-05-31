@@ -578,6 +578,24 @@ def validate_summary_against_source(item: dict[str, Any], summary: dict[str, Any
     if "学生を失った" in rendered_text and not has_any_text(source_text, ["death", "dead", "died", "killed", "fatal", "meninggal", "maut"]):
         raise ValueError("unsafe losing students wording")
 
+    english_lead_markers = [
+        "KUALA LUMPUR, May ",
+        "PUTRAJAYA, May ",
+        "IPOH, May ",
+        "ALOR SETAR, May ",
+        "GEORGE TOWN, May ",
+        "JOHOR BARU, May ",
+        "KOTA KINABALU, May ",
+        "KUCHING, May ",
+        "— The ",
+        "— A ",
+        "— An ",
+        "— Prime Minister ",
+        "The Domestic Trade and Cost of Living Ministry",
+    ]
+    if any(marker in rendered_text for marker in english_lead_markers):
+        raise ValueError("english lead leakage")
+
     guarded_claims = {
         "death": ["死亡", "亡くな", "死者"],
         "accident": ["事故"],
@@ -600,11 +618,112 @@ def validate_summary_against_source(item: dict[str, Any], summary: dict[str, Any
     ):
         raise ValueError("unsupported life impact")
 
+
+    life_impact_text = summary.get("life_impact", "")
+    if "進学条件" in life_impact_text:
+        admission_evidence = [
+            "admission",
+            "entrance",
+            "university entry",
+            "school requirement",
+            "exam requirement",
+            "entry requirement",
+            "入学",
+            "進学",
+            "受験",
+            "出願",
+            "入試",
+        ]
+        if not has_any_text(source_text, admission_evidence):
+            raise ValueError("unsupported admission requirement claim")
+
     topic = normalize_topic(fallback_renderer.detect_topic(item))
     reason = reject_life_impact_reason(topic, item, summary["life_impact"])
     if reason:
         raise ValueError(f"life_impact topic mismatch: {reason}")
 
+
+
+def collect_item_text(item: dict[str, Any]) -> str:
+    """Return a compact lower-cased text blob for conservative local guards."""
+    parts: list[str] = []
+    for key in ("title", "description", "source", "category"):
+        value = item.get(key)
+        if isinstance(value, str):
+            parts.append(value)
+    selected_summary = item.get("selected_summary")
+    if isinstance(selected_summary, dict):
+        for value in selected_summary.values():
+            if isinstance(value, str):
+                parts.append(value)
+            elif isinstance(value, list):
+                parts.extend(str(part) for part in value if part)
+    return " ".join(parts).lower()
+
+
+def is_enforcement_or_misuse_item(item: dict[str, Any]) -> bool:
+    """Skip Groq for narrow enforcement/misuse articles where display gains are low."""
+    text = collect_item_text(item)
+    keywords = [
+        "raid",
+        "raids",
+        "seized",
+        "seize",
+        "siphon",
+        "siphoning",
+        "misuse",
+        "fleet card",
+        "enforcement",
+        "probe",
+        "probes",
+        "investigate",
+        "investigating",
+        "spot check",
+        "spot checks",
+    ]
+    return any(keyword in text for keyword in keywords)
+
+
+def normalize_malaysia_terms_in_text(text: str, item: dict[str, Any]) -> str:
+    """Normalize recurring Malaysia-government terms after Groq generation."""
+    if not text:
+        return text
+
+    source_text = collect_item_text(item)
+
+    replacements = {
+        "国内取引・生活費省": "国内貿易・生活費省",
+        "国内取引省": "国内貿易省",
+        "車両カード": "フリートカード",
+        "油価": "石油価格",
+    }
+
+    if "kpdn" in source_text or "domestic trade" in source_text:
+        replacements.update(
+            {
+                "商務省": "国内貿易・生活費省",
+                "ケダ州商務省": "ケダ州国内貿易・生活費省",
+            }
+        )
+
+    for old, new in replacements.items():
+        text = text.replace(old, new)
+    return text
+
+
+def normalize_malaysia_terms(summary: dict[str, Any], item: dict[str, Any]) -> dict[str, Any]:
+    """Normalize terms in a Groq summary while preserving the summary schema."""
+    normalized = dict(summary)
+    for key in ("conclusion", "life_impact", "next_action"):
+        if isinstance(normalized.get(key), str):
+            normalized[key] = normalize_malaysia_terms_in_text(normalized[key], item)
+    if isinstance(normalized.get("what_happened"), list):
+        normalized["what_happened"] = [
+            normalize_malaysia_terms_in_text(str(line), item)
+            for line in normalized["what_happened"]
+            if line
+        ]
+    return normalized
 
 def request_groq_summary(item: dict[str, Any], api_key: str, model: str, debug: bool = False, index: int = 0) -> dict[str, Any]:
     body = {
@@ -619,8 +738,13 @@ def request_groq_summary(item: dict[str, Any], api_key: str, model: str, debug: 
         "temperature": 0.2,
         "max_tokens": 500,
         "stream": False,
-        "response_format": {"type": "json_object"},
     }
+    if model.startswith("openai/gpt-oss-"):
+        body["include_reasoning"] = False
+        body["reasoning_effort"] = "low"
+    else:
+        body["response_format"] = {"type": "json_object"}
+
     request = urllib.request.Request(
         GROQ_CHAT_COMPLETIONS_URL,
         data=json.dumps(body, ensure_ascii=False).encode("utf-8"),
@@ -645,6 +769,7 @@ def request_groq_summary(item: dict[str, Any], api_key: str, model: str, debug: 
     if debug:
         debug_groq_payload(index, item, parsed_content)
     summary = validate_groq_summary(parsed_content)
+    summary = normalize_malaysia_terms(summary, item)
     validate_summary_against_source(item, summary)
     return summary
 
@@ -736,6 +861,11 @@ def render_with_groq(
             continue
         if not force_all and not item_needs_groq(item):
             continue
+        if is_enforcement_or_misuse_item(item):
+            if debug:
+                safe_log(f"groq-debug: item={index + 1} skipped enforcement_misuse")
+            continue
+
         requested += 1
         try:
             original_summary = copy.deepcopy(item.get("selected_summary", {}))
