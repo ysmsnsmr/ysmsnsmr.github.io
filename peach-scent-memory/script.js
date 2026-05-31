@@ -11,8 +11,10 @@ const phaseLabel = document.getElementById("phase-label");
 const currentScentLabel = document.getElementById("current-scent");
 const hintLabel = document.getElementById("hint");
 const statusLabel = document.getElementById("status");
-const depthMarker = document.getElementById("depth-marker");
 const floatingLayer = document.getElementById("floating-layer");
+const prevScentButton = document.getElementById("prev-scent");
+const nextScentButton = document.getElementById("next-scent");
+const sniffButton = document.getElementById("sniff-button");
 
 const bestKey = "peach-scent-memory-best";
 const scents = [
@@ -32,32 +34,32 @@ let sequence = [];
 let answerIndex = 0;
 let currentLayerIndex = 0;
 let phase = "memorize";
-let scrollProgress = 0;
-let wheelDepth = 0;
 let memoryTimers = [];
 
 bestScoreLabel.textContent = String(loadBestScore());
 startRound();
 
-window.addEventListener("scroll", updateScrollDepth, { passive: true });
-window.addEventListener("resize", updateScrollDepth);
-stage.addEventListener("wheel", onStageWheel, { passive: false });
 stage.addEventListener("pointerdown", onSniff);
 restartButton.addEventListener("click", resetGame);
+prevScentButton.addEventListener("click", () => shiftScent(-1));
+nextScentButton.addEventListener("click", () => shiftScent(1));
+sniffButton.addEventListener("click", () => {
+  const center = getStageCenter();
+  sniffCurrent(center.x, center.y);
+});
 
 function startRound() {
   clearMemoryTimers();
   phase = "memorize";
   answerIndex = 0;
   currentLayerIndex = 0;
-  wheelDepth = 0;
   sequence = buildSequence(Math.min(7, round + 2));
   stage.classList.remove("is-complete", "is-wrong");
   stage.classList.add("is-memorizing");
   phaseLabel.textContent = "記憶";
   currentScentLabel.textContent = "桃";
   hintLabel.textContent = "桃から現れる香りの順を覚えてください";
-  statusLabel.textContent = "香り札を見届けたら、巻物をスクロールして同じ順に嗅ぎます。";
+  statusLabel.textContent = "香り札を見届けたら、ボタンで香り名を表示して同じ順に嗅ぎます。";
   renderMemoryStrip();
   renderScentField(sequence[0]);
   render();
@@ -86,9 +88,10 @@ function playMemorySequence() {
     phase = "search";
     stage.classList.remove("is-memorizing");
     phaseLabel.textContent = "探索";
-    hintLabel.textContent = "スクロールで香りの層を合わせ、タップで嗅ぐ";
-    statusLabel.textContent = "スクロールで霞の深さを変えて、最初の香りを探してください。";
-    updateScrollDepth();
+    currentLayerIndex = 0;
+    hintLabel.textContent = "ボタンで香り名をめくり、タップで嗅ぐ";
+    statusLabel.textContent = "香りをめくって候補を表示し、合っていると思ったら嗅いでください。";
+    renderScentField(currentLayerIndex);
     renderMemoryStrip();
     render();
   }, 1000 + sequence.length * 920);
@@ -96,37 +99,24 @@ function playMemorySequence() {
   memoryTimers.push(finishTimer);
 }
 
-function onStageWheel(event) {
+function shiftScent(direction) {
   if (phase !== "search") {
     return;
   }
 
-  event.preventDefault();
-  wheelDepth = clamp(wheelDepth + event.deltaY * 0.0018, 0, 1);
-  scrollProgress = wheelDepth;
-  updateLayerFromProgress();
-}
-
-function updateScrollDepth() {
-  if (phase !== "search") {
-    return;
-  }
-
-  const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-  scrollProgress = clamp(window.scrollY / maxScroll, 0, 1);
-  wheelDepth = scrollProgress;
-  updateLayerFromProgress();
-}
-
-function updateLayerFromProgress() {
-  currentLayerIndex = Math.round(scrollProgress * (scents.length - 1));
+  currentLayerIndex = (currentLayerIndex + direction + scents.length) % scents.length;
   renderScentField(currentLayerIndex);
+  statusLabel.textContent = `${scents[currentLayerIndex].name}を表示しました。合っていると思ったら嗅いでください。`;
   render();
 }
 
 function onSniff(event) {
+  sniffCurrent(event.clientX, event.clientY);
+}
+
+function sniffCurrent(clientX, clientY) {
   if (phase === "memorize") {
-    spawnFloating(event.clientX, event.clientY, "まだ記憶");
+    spawnFloating(clientX, clientY, "まだ記憶");
     return;
   }
 
@@ -141,7 +131,7 @@ function onSniff(event) {
   if (actual === expected) {
     const gained = 120 + round * 18 + answerIndex * 12 + Math.round(focus * 0.6);
     score += gained;
-    spawnFloating(event.clientX, event.clientY, `+${gained} ${scents[actual].name}`);
+    spawnFloating(clientX, clientY, `+${gained} ${scents[actual].name}`);
     answerIndex += 1;
     statusLabel.textContent = answerIndex >= sequence.length
       ? "香りを一帖ぶん結びました。"
@@ -155,7 +145,7 @@ function onSniff(event) {
     stage.classList.remove("is-wrong");
     stage.offsetWidth;
     stage.classList.add("is-wrong");
-    spawnFloating(event.clientX, event.clientY, "霞んだ");
+    spawnFloating(clientX, clientY, "霞んだ");
     statusLabel.textContent = `${scents[actual].name}ではありません。記憶が少し霞みました。`;
 
     if (focus <= 0) {
@@ -205,9 +195,6 @@ function resetGame() {
   sequence = [];
   answerIndex = 0;
   currentLayerIndex = 0;
-  scrollProgress = 0;
-  wheelDepth = 0;
-  window.scrollTo({ top: 0, behavior: "auto" });
   startRound();
 }
 
@@ -233,14 +220,21 @@ function render() {
   scoreLabel.textContent = String(score);
   roundLabel.textContent = String(round);
   focusLabel.textContent = String(focus);
-  depthMarker.style.setProperty("--depth", `${scrollProgress * 100}%`);
+  renderControls();
 
   if (phase === "search") {
     const scent = scents[currentLayerIndex];
     phaseLabel.textContent = "探索";
     currentScentLabel.textContent = scent.name;
-    scentLayer.style.setProperty("--drift", `${(scrollProgress - 0.5) * -70}px`);
+    scentLayer.style.setProperty("--drift", `${(currentLayerIndex - 3) * -10}px`);
   }
+}
+
+function renderControls() {
+  const canChoose = phase === "search";
+  prevScentButton.disabled = !canChoose;
+  nextScentButton.disabled = !canChoose;
+  sniffButton.disabled = !canChoose;
 }
 
 function renderMemoryStrip(revealThrough = -1, activeIndex = -1) {
@@ -305,6 +299,14 @@ function spawnFloating(clientX, clientY, text) {
   setTimeout(() => floatText.remove(), 900);
 }
 
+function getStageCenter() {
+  const rect = stage.getBoundingClientRect();
+  return {
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height / 2
+  };
+}
+
 function saveBestScore() {
   const best = loadBestScore();
 
@@ -325,8 +327,4 @@ function clearMemoryTimers() {
 
 function randomBetween(min, max) {
   return min + Math.random() * (max - min);
-}
-
-function clamp(value, min, max) {
-  return Math.min(max, Math.max(min, value));
 }

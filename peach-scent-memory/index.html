@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>桃香記憶帖</title>
-  <meta name="description" content="スクロールで香りの層を探し、タップで桃の香りを嗅ぎ当てる、夢っぽい和風の記憶パズルです。">
+  <meta name="description" content="ボタンで香り名をめくり、タップで桃の香りを嗅ぎ当てる、夢っぽい和風の記憶パズルです。">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -30,7 +30,6 @@
     </section>
 
     <section class="stage-wrap">
-      <div class="scroll-spacer" aria-hidden="true"></div>
       <button id="stage" class="stage" type="button" aria-label="現在の香りを嗅ぐ">
         <div class="paper-grain" aria-hidden="true"></div>
         <div class="moon-seal" aria-hidden="true"></div>
@@ -49,19 +48,19 @@
           <small id="hint">桃から現れる香りの順を覚えてください</small>
         </div>
 
-        <div class="depth-rail" aria-hidden="true">
-          <span></span>
-          <i id="depth-marker"></i>
-        </div>
-
         <div id="floating-layer" class="floating-layer" aria-hidden="true"></div>
       </button>
     </section>
 
     <section class="bottom-panel" aria-label="記憶と操作">
       <div id="memory-strip" class="memory-strip" aria-label="記憶した香りの順番"></div>
+      <div class="scent-controls" aria-label="香りを選ぶ">
+        <button id="prev-scent" class="scent-control" type="button">前の香り</button>
+        <button id="next-scent" class="scent-control" type="button">香りをめくる</button>
+        <button id="sniff-button" class="scent-control scent-control--primary" type="button">この香りを嗅ぐ</button>
+      </div>
       <div class="actions">
-        <p id="status">香り札を見届けたら、巻物をスクロールして同じ順に嗅ぎます。</p>
+        <p id="status">香り札を見届けたら、ボタンで香り名を表示して同じ順に嗅ぎます。</p>
         <button id="restart-button" type="button">はじめから</button>
       </div>
     </section>

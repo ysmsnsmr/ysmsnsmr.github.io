@@ -23,7 +23,7 @@ html {
 
 body {
   margin: 0;
-  min-height: 190vh;
+  min-height: 100vh;
   overflow-x: hidden;
   color: var(--ink);
   font-family: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", serif;
@@ -98,17 +98,10 @@ a {
 }
 
 .stage-wrap {
-  position: sticky;
-  top: 10px;
+  position: relative;
   z-index: 2;
   width: min(100%, 840px);
   margin: 0 auto;
-}
-
-.scroll-spacer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
 }
 
 .stage {
@@ -123,7 +116,7 @@ a {
   border-radius: 8px;
   color: var(--ink);
   cursor: pointer;
-  touch-action: pan-y;
+  touch-action: manipulation;
   background:
     linear-gradient(90deg, rgba(95, 74, 59, 0.14) 0 18px, transparent 18px calc(100% - 18px), rgba(95, 74, 59, 0.14) calc(100% - 18px)),
     radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.8), transparent 24%),
@@ -307,36 +300,6 @@ a {
   font-size: 0.82rem;
 }
 
-.depth-rail {
-  position: absolute;
-  z-index: 4;
-  top: 10%;
-  left: 28px;
-  width: 7px;
-  height: 70%;
-  border-radius: 999px;
-  background: rgba(71, 76, 67, 0.1);
-}
-
-.depth-rail span {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(180deg, rgba(247, 163, 142, 0.22), rgba(110, 167, 154, 0.48), rgba(44, 49, 49, 0.14));
-}
-
-.depth-rail i {
-  position: absolute;
-  left: 50%;
-  top: var(--depth, 0%);
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  background: #fff8e9;
-  box-shadow: 0 0 0 1px rgba(78, 62, 52, 0.2), 0 6px 16px rgba(78, 62, 52, 0.18);
-}
-
 .floating-layer {
   position: absolute;
   inset: 0;
@@ -400,6 +363,40 @@ a {
 
 .memory-card.is-current {
   box-shadow: inset 0 -4px 0 var(--jade);
+}
+
+.scent-controls {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.scent-control {
+  min-height: 46px;
+  padding: 0 10px;
+  border: 1px solid rgba(44, 49, 49, 0.18);
+  border-radius: 8px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.38);
+  cursor: pointer;
+  font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+  font-size: clamp(0.78rem, 2vw, 0.95rem);
+  font-weight: 700;
+}
+
+.scent-control--primary {
+  color: var(--paper);
+  background: var(--jade);
+}
+
+.scent-control:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.scent-control:focus-visible {
+  outline: 3px solid rgba(110, 167, 154, 0.78);
+  outline-offset: 3px;
 }
 
 .actions {
@@ -490,7 +487,7 @@ a {
 
 @media (max-width: 680px) {
   body {
-    min-height: 210vh;
+    min-height: 100vh;
   }
 
   .game {
@@ -518,18 +515,8 @@ a {
     font-size: 0.64rem;
   }
 
-  .stage-wrap {
-    top: 8px;
-  }
-
   .stage {
     min-height: 61vh;
-  }
-
-  .depth-rail {
-    left: 15px;
-    top: 13%;
-    height: 62%;
   }
 
   .scent-reader {
@@ -540,6 +527,10 @@ a {
 
   .memory-strip {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .scent-controls {
+    grid-template-columns: 1fr;
   }
 
   .actions {
