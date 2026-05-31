@@ -1,0 +1,222 @@
+name: Malaysia Groq Manual Verify
+
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: "Groq model(s) to verify"
+        required: true
+        default: "both"
+        type: choice
+        options:
+          - both
+          - llama
+          - gpt-oss
+      force_all:
+        description: "Send all eligible items to Groq"
+        required: true
+        default: true
+        type: boolean
+      debug_groq:
+        description: "Capture Groq debug diagnostics"
+        required: true
+        default: true
+        type: boolean
+      date_label:
+        description: "Optional artifact label date, e.g. 2026-05-31"
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: malaysia-groq-manual-verify
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Prepare run directory
+        id: prep
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${GROQ_API_KEY:-}" ]; then
+            echo "::error::GROQ_API_KEY secret is required for manual Groq verification."
+            exit 1
+          fi
+
+          label="${{ inputs.date_label }}"
+          if [ -z "${label}" ]; then
+            label="$(TZ=Asia/Kuala_Lumpur date +%F)"
+          fi
+          safe_label="$(printf '%s' "${label}" | tr -c 'A-Za-z0-9_.-' '-')"
+          run_dir="${RUNNER_TEMP}/malaysia-groq-manual-verify-${safe_label}"
+          mkdir -p "${run_dir}"
+
+          echo "label=${safe_label}" >> "${GITHUB_OUTPUT}"
+          echo "run_dir=${run_dir}" >> "${GITHUB_OUTPUT}"
+
+      - name: Generate RSS baseline and selected JSON
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_dir="${{ steps.prep.outputs.run_dir }}"
+          python3 -B scripts/malaysia_rss_summary.py \
+            --output "${run_dir}/original.md" \
+            --json-output "${run_dir}/selected_items.json" \
+            > "${run_dir}/generate_stdout.log" \
+            2> "${run_dir}/generate_stderr.log"
+
+      - name: Run selected Groq model checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_dir="${{ steps.prep.outputs.run_dir }}"
+          model_input="${{ inputs.model }}"
+          force_all="${{ inputs.force_all }}"
+          debug_groq="${{ inputs.debug_groq }}"
+
+          models=()
+          if [ "${model_input}" = "both" ] || [ "${model_input}" = "llama" ]; then
+            models+=("llama:llama-3.3-70b-versatile")
+          fi
+          if [ "${model_input}" = "both" ] || [ "${model_input}" = "gpt-oss" ]; then
+            models+=("gptoss:openai/gpt-oss-20b")
+          fi
+
+          printf '%s\n' "${models[@]}" > "${run_dir}/models_requested.txt"
+
+          for model_spec in "${models[@]}"; do
+            short_name="${model_spec%%:*}"
+            model_name="${model_spec#*:}"
+            args=(
+              python3 -B scripts/render_malaysia_news_with_groq.py
+              --json-input "${run_dir}/selected_items.json"
+              --output "${run_dir}/${short_name}.md"
+              --model "${model_name}"
+              --improved-items-output "${run_dir}/${short_name}_improved_items.json"
+            )
+            if [ "${force_all}" = "true" ]; then
+              args+=(--force-all)
+            fi
+            if [ "${debug_groq}" = "true" ]; then
+              args+=(--debug-groq)
+            fi
+            "${args[@]}" > "${run_dir}/${short_name}_stdout.log" 2> "${run_dir}/${short_name}_stderr.log"
+          done
+
+      - name: Build verification summary
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_dir="${{ steps.prep.outputs.run_dir }}"
+          summary="${run_dir}/summary.md"
+
+          python3 - <<'PY' "${run_dir}" > "${summary}"
+          import json
+          import re
+          import sys
+          from pathlib import Path
+
+          run_dir = Path(sys.argv[1])
+          selected_path = run_dir / "selected_items.json"
+          selected = json.loads(selected_path.read_text(encoding="utf-8"))
+          items = selected.get("items", []) if isinstance(selected, dict) else []
+          models = [
+              line.strip().split(":", 1)
+              for line in (run_dir / "models_requested.txt").read_text(encoding="utf-8").splitlines()
+              if line.strip()
+          ]
+
+          print("# Malaysia Groq Manual Verification")
+          print("")
+          print(f"- selected items: {len(items)}")
+          print(f"- models run: {', '.join(short for short, _ in models)}")
+          print("")
+          print("## Model Counts")
+          print("")
+          print("| model | requested | accepted | fallback |")
+          print("| --- | ---: | ---: | ---: |")
+          for short, _ in models:
+              improved_path = run_dir / f"{short}_improved_items.json"
+              if not improved_path.exists():
+                  print(f"| {short} | n/a | n/a | n/a |")
+                  continue
+              improved = json.loads(improved_path.read_text(encoding="utf-8"))
+              counts = improved.get("counts", {})
+              print(
+                  f"| {short} | {counts.get('requested', 0)} | "
+                  f"{counts.get('accepted', 0)} | {counts.get('fallback', 0)} |"
+              )
+
+          guard_patterns = [
+              "enforcement_misuse",
+              "english lead leakage",
+              "life_impact topic mismatch",
+              "unsupported admission requirement claim",
+              "進学条件",
+          ]
+          print("")
+          print("## Guard Log Snippets")
+          for short, _ in models:
+              log_path = run_dir / f"{short}_stderr.log"
+              print("")
+              print(f"### {short}")
+              if not log_path.exists():
+                  print("- no stderr log")
+                  continue
+              lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()
+              matches = [
+                  line for line in lines
+                  if any(pattern in line for pattern in guard_patterns)
+              ]
+              if not matches:
+                  print("- no guard snippets matched")
+              else:
+                  for line in matches[:20]:
+                      print(f"- `{line[:240]}`")
+
+          dateline_re = re.compile(r"(PUTRAJAYA, May|KUALA LUMPUR, May|ALOR SETAR, May|— The|— A|— An)")
+          print("")
+          print("## Dateline Leakage Grep")
+          for short, _ in models:
+              md_path = run_dir / f"{short}.md"
+              print("")
+              print(f"### {short}")
+              if not md_path.exists():
+                  print("- rendered Markdown missing")
+                  continue
+              matches = [
+                  line for line in md_path.read_text(encoding="utf-8", errors="replace").splitlines()
+                  if dateline_re.search(line)
+              ]
+              if not matches:
+                  print("- no obvious dateline leakage found")
+              else:
+                  for line in matches[:20]:
+                      print(f"- `{line[:240]}`")
+          PY
+
+      - name: Upload verification artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: malaysia-groq-manual-verify-${{ steps.prep.outputs.label }}-${{ inputs.model }}
+          path: ${{ steps.prep.outputs.run_dir }}
+          if-no-files-found: error
