@@ -444,6 +444,17 @@
       box-shadow: 0 4px 0 #155153, 0 9px 16px rgba(0, 0, 0, 0.18);
     }
 
+    .button--secondary {
+      min-width: 104px;
+      background: linear-gradient(180deg, #ffd166, #c58128);
+      box-shadow: 0 9px 0 #7d4d18, 0 16px 24px rgba(0, 0, 0, 0.22);
+      color: #24170b;
+    }
+
+    .button--secondary:active {
+      box-shadow: 0 4px 0 #7d4d18, 0 9px 16px rgba(0, 0, 0, 0.18);
+    }
+
     .game.is-overheated .stage {
       animation: worldWarning 420ms linear infinite;
     }
@@ -592,6 +603,7 @@
 
     <div class="controls">
       <button class="button" id="restart" type="button">リスタート</button>
+      <button class="button button--secondary" id="sound-toggle" type="button" aria-pressed="true">音 ON</button>
     </div>
   </main>
 
@@ -609,10 +621,11 @@
     const bestEl = document.getElementById("best");
     const messageEl = document.getElementById("message");
     const restartButton = document.getElementById("restart");
+    const soundToggle = document.getElementById("sound-toggle");
 
     const GAME_SECONDS = 30;
     const BEST_KEY = "kinoko-scroll-cosmos-best";
-    const MAX_DANGERS = 5;
+    const MAX_DANGERS = 7;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const state = {
@@ -634,7 +647,11 @@
       previousFrame: 0,
       spawnTimer: 0,
       dangers: new Set(),
-      dangerTimers: new Map()
+      dangerTimers: new Map(),
+      soundEnabled: true,
+      audioContext: null,
+      lastScrollSoundAt: 0,
+      lastAngryAt: Number.NEGATIVE_INFINITY
     };
 
     const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
@@ -657,6 +674,72 @@
     function setMessage(text, warning = false) {
       messageEl.textContent = text;
       messageEl.classList.toggle("is-warning", warning);
+    }
+
+    function ensureAudio() {
+      if (!state.soundEnabled) return null;
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return null;
+      if (!state.audioContext) {
+        state.audioContext = new AudioContextClass();
+      }
+      if (state.audioContext.state === "suspended") {
+        state.audioContext.resume();
+      }
+      return state.audioContext;
+    }
+
+    function playTone(frequency, duration, type = "sine", volume = 0.05, endRatio = 1) {
+      const context = ensureAudio();
+      if (!context) return;
+      const now = context.currentTime;
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+      oscillator.type = type;
+      oscillator.frequency.setValueAtTime(frequency, now);
+      oscillator.frequency.exponentialRampToValueAtTime(Math.max(20, frequency * endRatio), now + duration);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(volume, now + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+      oscillator.connect(gain);
+      gain.connect(context.destination);
+      oscillator.start(now);
+      oscillator.stop(now + duration + 0.02);
+    }
+
+    function playTapSound() {
+      playTone(420 + Math.min(state.combo, 18) * 9, 0.07, "triangle", 0.045, 1.24);
+    }
+
+    function playScrollSound() {
+      const now = performance.now();
+      if (now - state.lastScrollSoundAt < 90) return;
+      state.lastScrollSoundAt = now;
+      playTone(170 + Math.min(state.scrollEnergy, 120) * 1.8, 0.08, "sawtooth", 0.026, 1.55);
+    }
+
+    function playDangerSound() {
+      playTone(120, 0.16, "square", 0.055, 0.42);
+      window.setTimeout(() => playTone(82, 0.12, "sawtooth", 0.042, 0.7), 55);
+    }
+
+    function playGameOverSound() {
+      playTone(220, 0.16, "sawtooth", 0.06, 0.7);
+      window.setTimeout(() => playTone(120, 0.24, "square", 0.05, 0.55), 120);
+    }
+
+    function speakAngry(text, force = false) {
+      if (!state.soundEnabled || !("speechSynthesis" in window)) return;
+      const now = performance.now();
+      if (!force && now - state.lastAngryAt < 2600) return;
+      state.lastAngryAt = now;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "ja-JP";
+      utterance.rate = 1.12;
+      utterance.pitch = 0.58;
+      utterance.volume = 0.95;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utterance);
     }
 
     function setMushroomShape(squishX, squishY, tilt) {
@@ -710,15 +793,20 @@
       if (!state.playing) return;
       state.score = Math.max(0, state.score - points);
       state.combo = 0;
-      state.overheat = clamp(state.overheat + 8, 0, 100);
+      state.overheat = clamp(state.overheat + 5, 0, 100);
       setMessage("ドクロ接触。胞子軌道が乱れた", true);
       floatText(`-${points}`, x, y, true);
+      playDangerSound();
       render();
     }
 
     function addHeat(amount) {
       if (!state.playing) return;
+      const previous = state.overheat;
       state.overheat = clamp(state.overheat + amount, 0, 100);
+      if (previous < 72 && state.overheat >= 72) {
+        speakAngry("モミすぎ！");
+      }
       if (state.overheat >= 100) {
         finishGame("揉みすぎ崩壊。きのこ宇宙が閉じました");
       }
@@ -735,6 +823,7 @@
 
     function tapMushroom(clientX, clientY) {
       if (!state.playing) return;
+      ensureAudio();
       const now = performance.now();
       const interval = now - state.lastTapAt;
       state.lastTapAt = now;
@@ -745,8 +834,9 @@
       const points = 3 + Math.min(8, Math.floor(state.combo / 7)) + rhythmBonus;
       addScore(points, point.x, point.y, rhythmBonus ? "いい間合いのモミモミ" : "ぷにっと加点");
 
-      const heatGain = interval < 95 ? 13 : interval < 150 ? 6 : 2.5;
+      const heatGain = interval < 95 ? 7.5 : interval < 150 ? 3.8 : 1.2;
       addHeat(heatGain);
+      playTapSound();
       mushroom.classList.add("is-tapped");
       setMushroomShape(1.08, 0.92, random(-3, 3));
       window.setTimeout(relaxMushroom, prefersReducedMotion ? 20 : 130);
@@ -775,6 +865,7 @@
 
     function processScroll(deltaY, clientX = null, clientY = null) {
       if (!state.playing) return;
+      ensureAudio();
       const now = performance.now();
       const absDelta = Math.abs(deltaY);
       if (absDelta < 1) return;
@@ -794,8 +885,9 @@
       const points = paced ? 7 : Math.max(2, Math.round(clamp(absDelta / 26, 1, 8)));
       addScore(points, cometPoint.x, cometPoint.y, paced ? "胞子スクロール成功" : "胞子が流れた");
 
-      const heatGain = absDelta > 95 ? absDelta * 0.11 : previousInputGap < 30 ? 7 : 1.6;
+      const heatGain = absDelta > 95 ? absDelta * 0.055 : previousInputGap < 30 ? 3.2 : 0.7;
       addHeat(heatGain);
+      playScrollSound();
       setMushroomShape(
         clamp(1 + absDelta * 0.0018, 1, 1.14),
         clamp(1 - absDelta * 0.0014, 0.88, 1),
@@ -874,7 +966,7 @@
       stage.append(danger);
       state.dangers.add(danger);
       setMessage("ドクロに触れると減点。スクロール軌道にも注意", state.overheat >= 72);
-      const lifetime = Math.max(1300, 2600 - (GAME_SECONDS - state.timeLeft) * 28);
+      const lifetime = Math.max(1450, 2800 - (GAME_SECONDS - state.timeLeft) * 18);
       const timer = window.setTimeout(() => removeDanger(danger), lifetime);
       state.dangerTimers.set(danger, timer);
     }
@@ -883,12 +975,13 @@
       window.clearTimeout(state.spawnTimer);
       if (!state.playing) return;
       const progress = 1 - state.timeLeft / GAME_SECONDS;
-      const delay = random(900 - progress * 280, 1650 - progress * 420);
+      const delay = random(560 - progress * 160, 1180 - progress * 360);
       state.spawnTimer = window.setTimeout(() => {
         spawnDanger();
-        if (progress > 0.58 && Math.random() > 0.64) spawnDanger();
+        if (Math.random() > 0.48) spawnDanger();
+        if (progress > 0.42 && Math.random() > 0.7) spawnDanger();
         scheduleDanger();
-      }, Math.max(420, delay));
+      }, Math.max(300, delay));
     }
 
     function finishGame(reason) {
@@ -903,6 +996,10 @@
       state.activePointer = null;
       const bestUpdated = saveBest();
       setMessage(bestUpdated ? `${reason} ベスト更新: ${state.score}` : `${reason} スコア: ${state.score}`, state.overheat >= 100);
+      if (state.overheat >= 100) {
+        speakAngry("もう無理！", true);
+      }
+      playGameOverSound();
       restartButton.textContent = "もう一回";
       render();
     }
@@ -945,6 +1042,8 @@
       state.cosmosSpin = 0;
       state.cosmosDrift = 0;
       state.scrollEnergy = 0;
+      state.lastScrollSoundAt = 0;
+      state.lastAngryAt = Number.NEGATIVE_INFINITY;
       state.activePointer = null;
       state.pointerStartedOnMushroom = false;
       state.pointerMoved = false;
@@ -1014,6 +1113,18 @@
     });
 
     restartButton.addEventListener("click", resetGame);
+
+    soundToggle.addEventListener("click", () => {
+      state.soundEnabled = !state.soundEnabled;
+      soundToggle.textContent = state.soundEnabled ? "音 ON" : "音 OFF";
+      soundToggle.setAttribute("aria-pressed", String(state.soundEnabled));
+      if (state.soundEnabled) {
+        ensureAudio();
+        playTone(360, 0.08, "triangle", 0.04, 1.28);
+      } else if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    });
 
     resetGame();
   </script>
