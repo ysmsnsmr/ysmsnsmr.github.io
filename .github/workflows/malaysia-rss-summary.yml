@@ -35,7 +35,7 @@ jobs:
           set -euo pipefail
           today="$(TZ=Asia/Kuala_Lumpur date +%F)"
           output_path="news/malaysia/${today}.md"
-          python3 -B scripts/malaysia_rss_summary.py --diagnostics --output "${output_path}"
+          python3 -B scripts/malaysia_rss_summary.py --include-paul-tan --diagnostics --output "${output_path}"
           python3 -B scripts/build_malaysia_news_index.py
           if grep -q "::inbox-item" "${output_path}"; then
             echo "::error::Generated Markdown must not contain ::inbox-item metadata."

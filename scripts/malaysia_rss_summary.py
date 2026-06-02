@@ -492,6 +492,14 @@ def paul_tan_signal_groups(item: Item) -> set[str]:
     return set(positive_groups)
 
 
+def paul_tan_display_description(item: Item) -> str:
+    if not is_paul_tan_item(item):
+        return item.description
+    value = item.description or item.title
+    value = re.sub(r"\s*The post .+? appeared first on Paul Tan'?s Automotive News\s*\.?\s*$", "", value, flags=re.IGNORECASE)
+    return clean(value)
+
+
 def match_count(text: str, phrases: list[str]) -> int:
     return sum(1 for phrase in phrases if has_phrase(text, phrase))
 
@@ -1523,6 +1531,43 @@ def selection_summary(items: list[Item], selected: list[Item], now: datetime) ->
 def japanese_summary(item: Item) -> tuple[str, str, str, str]:
     text = item_text(item)
     flags = ensure_flags(item)
+    if is_paul_tan_item(item) and paul_tan_gate_decision(item) == "accept":
+        signal_groups = paul_tan_signal_groups(item)
+        if "fuel_subsidy" in signal_groups:
+            return (
+                "燃料制度・燃料仕様の変更が、車利用者の確認事項になります。",
+                "Paul TanのRSSで、燃料補助や燃料仕様に関する変更が報じられています。\nRON95、diesel、B15 biodieselなど、車利用者の費用や給油判断に関わる内容として扱います。",
+                "対象燃料を使う人は、開始時期、対象地域、補助条件、車両互換性の案内を確認する必要があります。",
+                "給油前に政府・燃料会社・車両メーカーの最新案内を確認。",
+            )
+        if "public_transport" in signal_groups:
+            return (
+                "公共交通の運行や通勤手段に影響する可能性があります。",
+                "Paul TanのRSSで、公共交通や運行状況に関する情報が報じられています。\nLRT、MRT、Rapid KL、KTMBなどの公共交通に関わる移動情報として扱います。",
+                "通勤・通学・都心移動では、遅延、代替ルート、運行再開時期を確認しておく必要があります。",
+                "出発前に運行会社の公式情報を確認。",
+            )
+        if "driver_obligations" in signal_groups:
+            return (
+                "JPJや車両関連手続きで、運転者の確認事項が出る可能性があります。",
+                "Paul TanのRSSで、運転者の手続きや義務に関する情報が報じられています。\nJPJ、licence、road tax、inspection、summonsなど、運転者の義務や手続きに関わる内容として扱います。",
+                "対象者は期限、必要書類、罰則、オンライン手続きの有無を確認する必要があります。",
+                "JPJや関係機関の公式案内を確認。",
+            )
+        if "road_toll" in signal_groups:
+            return (
+                "道路・料金所・通行ルートの確認が必要になる可能性があります。",
+                "Paul TanのRSSで、道路や料金所に関する情報が報じられています。\n道路閉鎖、toll、RFID、SmartTAG、交通規制など、車移動に関わる内容として扱います。",
+                "通勤、送迎、長距離移動では、迂回、料金支払い方法、混雑を見込む必要があります。",
+                "出発前に道路・高速道路会社の最新案内を確認。",
+            )
+        if "safety_recall" in signal_groups:
+            return (
+                "車両リコールや安全不具合について、所有者の確認が必要です。",
+                "Paul TanのRSSで、車両リコールや安全不具合に関する情報が報じられています。\nリコールや安全不具合など、車両所有者の対応に関わる内容として扱います。",
+                "対象車種の所有者は、点検・修理の対象か、販売店やメーカーの案内を確認する必要があります。",
+                "車台番号や対象モデルをメーカー公式情報で確認。",
+            )
     if flags[FLAG_FLOOD_IMPACT] and has_any(text, ["flood hotline", "mbpj"]):
         return (
             "洪水時の連絡先・対応窓口を確認しておく必要があります。",
@@ -1676,7 +1721,7 @@ def item_json(item: Item) -> dict[str, object]:
         "published_date": f"{item.pub_date.year}年{item.pub_date.month}月{item.pub_date.day}日",
         "published_at": item.pub_date.isoformat(),
         "title": item.title,
-        "description": item.description,
+        "description": paul_tan_display_description(item) if is_paul_tan_item(item) else item.description,
         "link": item.link,
         "canonical_key": key_for(item),
         "tags": item.tags,
@@ -2020,6 +2065,18 @@ def self_test() -> int:
     check("Paul Tan RON95 gate accepts", paul_tan_gate_decision(paul_ron95) == "accept")
     check("Paul Tan RON95 maps to fuel and prices", "fuel" in paul_ron95.tags and "prices" in paul_ron95.tags)
     check("Paul Tan RON95 is selectable", bool(select_items([paul_ron95], now)))
+
+    paul_b15 = paul_item(
+        "Biodiesel B15 rollout begins June 1 - govt says no issue with compatibility",
+        "Malaysia is set to raise the biodiesel blend rate from B10 to B15. The post Biodiesel B15 rollout begins June 1 appeared first on Paul Tan's Automotive News.",
+    )
+    evaluate_item(paul_b15)
+    b15_summary = japanese_summary(paul_b15)
+    b15_json = item_json(paul_b15)
+    check("Paul Tan B15 display uses Japanese fuel summary", "燃料制度" in b15_summary[0])
+    check("Paul Tan B15 summary strips WordPress boilerplate", "appeared first" not in " ".join(b15_summary))
+    check("Paul Tan B15 summary does not echo English RSS description", "Malaysia is set" not in " ".join(b15_summary))
+    check("Paul Tan B15 JSON description strips WordPress boilerplate", "appeared first" not in str(b15_json["description"]))
 
     paul_recall = paul_item("Honda SUV recall in Malaysia over airbag safety defect")
     evaluate_item(paul_recall)
