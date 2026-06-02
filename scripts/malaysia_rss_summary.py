@@ -23,6 +23,7 @@ SOURCES = [
     ("Malay Mail", "Malay Mail Money", "https://www.malaymail.com/feed/rss/money"),
     ("Astro Awani", "Astro Awani National", "https://www.astroawani.com/rss/national/public"),
 ]
+PAUL_TAN_SOURCE = ("Paul Tan", "Paul Tan", "https://paultan.org/feed/")
 MYT = timezone(timedelta(hours=8))
 
 FLAG_WEATHER = "is_weather"
@@ -82,6 +83,7 @@ ALL_FLAGS = [
 LAST_FINALIZE_STATS: dict[str, object] = {}
 CATEGORY_PRIORITY = {"【速報】": 0, "【生活インパクト】": 1, "【知っておくと得】": 2}
 FINANCIAL_LIMITS = {"ringgit": 2, "bursa": 1, "bnm_policy": 2}
+SOURCE_LIMITS = {"Paul Tan": 1}
 PRACTICAL_LIFE_TAGS = {
     "weather",
     "flood",
@@ -103,6 +105,113 @@ PRACTICAL_LIFE_TAGS = {
     "agriculture",
     "scam",
     "urban_development",
+    "fuel",
+    "vehicle_safety",
+}
+
+PAUL_TAN_POSITIVE_GROUPS = {
+    "public_transport": [
+        "bus",
+        "ktmb",
+        "lrt",
+        "mrt",
+        "public transport",
+        "rail",
+        "rapid kl",
+        "service disruption",
+        "service update",
+        "train",
+    ],
+    "road_toll": [
+        "highway",
+        "lane closure",
+        "rfid",
+        "road closure",
+        "road closures",
+        "road users",
+        "smart tag",
+        "smarttag",
+        "toll",
+        "traffic diversion",
+        "traffic enforcement",
+    ],
+    "driver_obligations": [
+        "insurance",
+        "jpj",
+        "licence",
+        "license",
+        "puspakom",
+        "road tax",
+        "saman",
+        "summons",
+        "vehicle inspection",
+    ],
+    "fuel_subsidy": [
+        "b15",
+        "biodiesel",
+        "budi madani",
+        "budi95",
+        "diesel",
+        "fuel subsidy",
+        "petrol",
+        "ron95",
+        "subsidy",
+    ],
+    "safety_recall": [
+        "airbag",
+        "brake",
+        "recall",
+        "safety defect",
+        "safety recall",
+        "vehicle recall",
+    ],
+}
+
+PAUL_TAN_NOISE_GROUPS = {
+    "launch_review": [
+        "first drive",
+        "launch",
+        "launched",
+        "preview",
+        "review",
+        "spied",
+        "spyshot",
+        "test drive",
+    ],
+    "sales_pricing": [
+        "drive sale",
+        "mega drive sale",
+        "pre-owned",
+        "priced at",
+        "pricing",
+        "promotion",
+        "rebate",
+        "sale",
+        "sales event",
+        "showroom",
+        "specs",
+        "variant",
+        "variants",
+    ],
+    "enthusiast_business": [
+        "brand",
+        "cbu",
+        "ckd",
+        "concept",
+        "factory",
+        "motorsport",
+        "plant",
+        "production capacity",
+        "teaser",
+    ],
+    "ordinary_vehicle": [
+        "ev",
+        "hatchback",
+        "mpv",
+        "pickup",
+        "sedan",
+        "suv",
+    ],
 }
 
 
@@ -337,6 +446,50 @@ def has_phrase(text: str, phrase: str) -> bool:
 
 def has_any(text: str, phrases: list[str]) -> bool:
     return any(has_phrase(text, phrase) for phrase in phrases)
+
+
+def matching_phrases(text: str, phrases: list[str]) -> list[str]:
+    return [phrase for phrase in phrases if has_phrase(text, phrase)]
+
+
+def grouped_phrase_matches(text: str, groups: dict[str, list[str]]) -> dict[str, list[str]]:
+    matches: dict[str, list[str]] = {}
+    for group, phrases in groups.items():
+        group_matches = matching_phrases(text, phrases)
+        if group_matches:
+            matches[group] = group_matches
+    return matches
+
+
+def is_paul_tan_item(item: Item) -> bool:
+    return item.source == "Paul Tan" or item.feed == "Paul Tan"
+
+
+def paul_tan_gate(item: Item) -> tuple[str, dict[str, list[str]], dict[str, list[str]]]:
+    if not is_paul_tan_item(item):
+        return "not_applicable", {}, {}
+    text = item_text(item)
+    positive_groups = grouped_phrase_matches(text, PAUL_TAN_POSITIVE_GROUPS)
+    noise_groups = grouped_phrase_matches(text, PAUL_TAN_NOISE_GROUPS)
+    if positive_groups and not noise_groups:
+        return "accept", positive_groups, noise_groups
+    if positive_groups and noise_groups:
+        if set(noise_groups) <= {"ordinary_vehicle"}:
+            return "accept", positive_groups, noise_groups
+        return "review", positive_groups, noise_groups
+    if noise_groups:
+        return "reject", positive_groups, noise_groups
+    return "reject", positive_groups, noise_groups
+
+
+def paul_tan_gate_decision(item: Item) -> str:
+    decision, _, _ = paul_tan_gate(item)
+    return decision
+
+
+def paul_tan_signal_groups(item: Item) -> set[str]:
+    _, positive_groups, _ = paul_tan_gate(item)
+    return set(positive_groups)
 
 
 def match_count(text: str, phrases: list[str]) -> int:
@@ -697,6 +850,8 @@ def has_background_value(item: Item) -> bool:
         "flood",
         "weather",
         "klang_valley",
+        "fuel",
+        "vehicle_safety",
     }
     if any(tag in tag_values for tag in item.tags):
         return True
@@ -1016,6 +1171,25 @@ def evaluate_item(item: Item) -> Item:
         add_score(2, ["food_supply"], "水資源・食料供給への生活影響が明確")
     if flags[FLAG_SCAM]:
         add_score(7, ["scam"], "詐欺・注意喚起")
+    if is_paul_tan_item(item):
+        decision, positive_groups, noise_groups = paul_tan_gate(item)
+        if decision == "accept":
+            tags = []
+            if "public_transport" in positive_groups:
+                tags.append("public_transport")
+            if "road_toll" in positive_groups:
+                tags.append("road_closure")
+            if "driver_obligations" in positive_groups:
+                tags.append("jpj")
+            if "fuel_subsidy" in positive_groups:
+                tags.extend(["prices", "fuel"])
+            if "safety_recall" in positive_groups:
+                tags.append("vehicle_safety")
+            add_score(7, tags, "Paul Tan source-specific gate accepted")
+        elif decision == "review":
+            add_unique(item.penalties, "Paul Tan source-specific gate requires review")
+        else:
+            add_unique(item.penalties, "Paul Tan source-specific gate rejected")
     if flags[FLAG_INDIVIDUAL_INCIDENT]:
         add_score(-8, [], "単発事件・事故の可能性")
     if flags[FLAG_POLITICAL_NOISE]:
@@ -1039,6 +1213,8 @@ def score_item(item: Item) -> int:
 def should_exclude_item(item: Item) -> bool:
     text = item_text(item)
     flags = ensure_flags(item)
+    if is_paul_tan_item(item) and paul_tan_gate_decision(item) != "accept":
+        return True
     if item.feed == "Malay Mail Money" and not (
         has_any(text, ["malaysia", "malaysian", "kuala lumpur", "semiconductor"])
         or flags[FLAG_CURRENCY]
@@ -1299,7 +1475,8 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
         if is_forced_final_noise(item):
             continue
         financial_bucket = financial_topic_bucket(item) if category == "【知っておくと得】" else ""
-        if source_counts[item.source] >= 24:
+        source_limit = SOURCE_LIMITS.get(item.source, 24)
+        if source_counts[item.source] >= source_limit:
             continue
         if category_counts[category] >= category_limits[category]:
             continue
@@ -1590,6 +1767,10 @@ def self_test() -> int:
         slug = re.sub(r"[^a-z0-9]+", "-", normalized(title)).strip("-")[:80] or "item"
         return Item("Test", "Test Feed", title, description, now, "raw", link or f"https://example.test/{slug}")
 
+    def paul_item(title: str, description: str = "", link: str = "") -> Item:
+        slug = re.sub(r"[^a-z0-9]+", "-", normalized(title)).strip("-")[:80] or "item"
+        return Item("Paul Tan", "Paul Tan", title, description, now, "raw", link or f"https://paultan.org/{slug}")
+
     def check(name: str, condition: bool) -> None:
         if not condition:
             failures.append(name)
@@ -1828,6 +2009,41 @@ def self_test() -> int:
     check("KTMB extra trains triggers public transport", ktmb_extra.flags[FLAG_PUBLIC_TRANSPORT])
     check("KTMB extra trains is life impact", category_for(ktmb_extra) == "【生活インパクト】")
 
+    paul_lrt = paul_item("Independent task force formed to investigate LRT derailment, led by Loke")
+    evaluate_item(paul_lrt)
+    check("Paul Tan LRT gate accepts", paul_tan_gate_decision(paul_lrt) == "accept")
+    check("Paul Tan LRT is not excluded", not should_exclude_item(paul_lrt))
+    check("Paul Tan LRT maps to public transport", "public_transport" in paul_lrt.tags)
+
+    paul_ron95 = paul_item("RON95 subsidy adjustment is last resort: PMO adviser")
+    evaluate_item(paul_ron95)
+    check("Paul Tan RON95 gate accepts", paul_tan_gate_decision(paul_ron95) == "accept")
+    check("Paul Tan RON95 maps to fuel and prices", "fuel" in paul_ron95.tags and "prices" in paul_ron95.tags)
+    check("Paul Tan RON95 is selectable", bool(select_items([paul_ron95], now)))
+
+    paul_recall = paul_item("Honda SUV recall in Malaysia over airbag safety defect")
+    evaluate_item(paul_recall)
+    check("Paul Tan recall with ordinary vehicle wording accepts", paul_tan_gate_decision(paul_recall) == "accept")
+    check("Paul Tan recall maps to vehicle safety", "vehicle_safety" in paul_recall.tags)
+
+    paul_launch = paul_item("New SUV launched in Malaysia, priced at RM120k")
+    evaluate_item(paul_launch)
+    check("Paul Tan launch noise is rejected", paul_tan_gate_decision(paul_launch) == "reject")
+    check("Paul Tan launch noise is excluded", should_exclude_item(paul_launch))
+
+    paul_review = paul_item("First drive review of new EV sedan in Malaysia")
+    evaluate_item(paul_review)
+    check("Paul Tan review noise is rejected", paul_tan_gate_decision(paul_review) == "reject")
+    check("Paul Tan review noise is excluded", should_exclude_item(paul_review))
+
+    paul_pricing_review = paul_item("2026 Kawasaki Z650S in Malaysia, priced at RM35,600", "Insurance and road tax estimates included.")
+    evaluate_item(paul_pricing_review)
+    check("Paul Tan mixed pricing item requires review", paul_tan_gate_decision(paul_pricing_review) == "review")
+    check("Paul Tan review decision is excluded", should_exclude_item(paul_pricing_review))
+
+    paul_selected = select_items([paul_lrt, paul_ron95, paul_recall], now)
+    check("Paul Tan source cap keeps at most one item", sum(1 for test_item in paul_selected if test_item.source == "Paul Tan") <= 1)
+
     petronas_chairman = item("Petronas Dagangan appoints new chairman")
     evaluate_item(petronas_chairman)
     check("Petronas chairman is excluded", should_exclude_item(petronas_chairman))
@@ -1994,6 +2210,7 @@ def main() -> int:
     parser.add_argument("--diagnostics", action="store_true")
     parser.add_argument("--diagnose-fetch", action="store_true")
     parser.add_argument("--self-test", action="store_true")
+    parser.add_argument("--include-paul-tan", action="store_true", help="Locally opt in to the gated Paul Tan RSS source.")
     parser.add_argument("--output", help="Write the final Markdown summary to this path.")
     parser.add_argument("--json-output", help="Write selected final items as intermediate JSON to this path.")
     args = parser.parse_args()
@@ -2001,7 +2218,8 @@ def main() -> int:
     if args.self_test:
         return self_test()
 
-    results = [(source, feed, fetch_rss(url)) for source, feed, url in SOURCES]
+    sources = SOURCES + ([PAUL_TAN_SOURCE] if args.include_paul_tan else [])
+    results = [(source, feed, fetch_rss(url)) for source, feed, url in sources]
     if args.diagnose_fetch:
         print(diagnose_fetch([result for _, _, result in results]))
         return 0
