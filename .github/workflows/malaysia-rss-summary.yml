@@ -5,6 +5,35 @@ on:
     # 07:30 MYT = 23:30 UTC on the previous day.
     - cron: "30 23 * * *"
   workflow_dispatch:
+    inputs:
+      enable_body_enrichment:
+        description: "Run optional article body enrichment diagnostics"
+        required: false
+        default: false
+        type: boolean
+      enable_groq_rendering:
+        description: "Run optional Groq rendering diagnostics"
+        required: false
+        default: false
+        type: boolean
+      groq_model:
+        description: "Groq model for optional rendering"
+        required: false
+        default: "llama"
+        type: choice
+        options:
+          - llama
+          - gpt-oss
+      force_all_groq:
+        description: "Send all selected items to Groq when optional rendering is enabled"
+        required: false
+        default: false
+        type: boolean
+      debug_groq:
+        description: "Capture Groq debug diagnostics when optional rendering is enabled"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -28,6 +57,79 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Prepare optional diagnostics
+        id: optional
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_ENABLE_BODY_ENRICHMENT: ${{ github.event.inputs.enable_body_enrichment }}
+          INPUT_ENABLE_GROQ_RENDERING: ${{ github.event.inputs.enable_groq_rendering }}
+          INPUT_FORCE_ALL_GROQ: ${{ github.event.inputs.force_all_groq }}
+          INPUT_DEBUG_GROQ: ${{ github.event.inputs.debug_groq }}
+          INPUT_GROQ_MODEL: ${{ github.event.inputs.groq_model }}
+          VAR_ENABLE_BODY_ENRICHMENT: ${{ vars.MALAYSIA_NEWS_ENABLE_BODY_ENRICHMENT }}
+          VAR_ENABLE_GROQ_RENDERING: ${{ vars.MALAYSIA_NEWS_ENABLE_GROQ_RENDERING }}
+          VAR_FORCE_ALL_GROQ: ${{ vars.MALAYSIA_NEWS_FORCE_ALL_GROQ }}
+          VAR_DEBUG_GROQ: ${{ vars.MALAYSIA_NEWS_DEBUG_GROQ }}
+          VAR_GROQ_MODEL: ${{ vars.MALAYSIA_NEWS_GROQ_MODEL }}
+        run: |
+          set -euo pipefail
+
+          bool_value() {
+            case "${1,,}" in
+              true|1|yes|on) printf 'true' ;;
+              *) printf 'false' ;;
+            esac
+          }
+
+          if [ "${EVENT_NAME}" = "workflow_dispatch" ]; then
+            enable_body="$(bool_value "${INPUT_ENABLE_BODY_ENRICHMENT:-false}")"
+            enable_groq="$(bool_value "${INPUT_ENABLE_GROQ_RENDERING:-false}")"
+            force_all="$(bool_value "${INPUT_FORCE_ALL_GROQ:-false}")"
+            debug_groq="$(bool_value "${INPUT_DEBUG_GROQ:-false}")"
+            model_input="${INPUT_GROQ_MODEL:-llama}"
+          else
+            enable_body="$(bool_value "${VAR_ENABLE_BODY_ENRICHMENT:-false}")"
+            enable_groq="$(bool_value "${VAR_ENABLE_GROQ_RENDERING:-false}")"
+            force_all="$(bool_value "${VAR_FORCE_ALL_GROQ:-false}")"
+            debug_groq="$(bool_value "${VAR_DEBUG_GROQ:-false}")"
+            model_input="${VAR_GROQ_MODEL:-llama}"
+          fi
+
+          case "${model_input}" in
+            gpt-oss|gptoss|openai/gpt-oss-20b)
+              model_short="gptoss"
+              model_name="openai/gpt-oss-20b"
+              ;;
+            *)
+              model_short="llama"
+              model_name="llama-3.3-70b-versatile"
+              ;;
+          esac
+
+          today="$(TZ=Asia/Kuala_Lumpur date +%F)"
+          run_dir="${RUNNER_TEMP}/malaysia-rss-summary-optional-${today}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          mkdir -p "${run_dir}"
+
+          {
+            echo "# Optional diagnostics status"
+            echo ""
+            echo "- event: ${EVENT_NAME}"
+            echo "- enable_body_enrichment: ${enable_body}"
+            echo "- enable_groq_rendering: ${enable_groq}"
+            echo "- force_all_groq: ${force_all}"
+            echo "- debug_groq: ${debug_groq}"
+            echo "- groq_model: ${model_name}"
+          } > "${run_dir}/optional_status.md"
+
+          echo "run_dir=${run_dir}" >> "${GITHUB_OUTPUT}"
+          echo "enable_body_enrichment=${enable_body}" >> "${GITHUB_OUTPUT}"
+          echo "enable_groq_rendering=${enable_groq}" >> "${GITHUB_OUTPUT}"
+          echo "force_all_groq=${force_all}" >> "${GITHUB_OUTPUT}"
+          echo "debug_groq=${debug_groq}" >> "${GITHUB_OUTPUT}"
+          echo "groq_model_short=${model_short}" >> "${GITHUB_OUTPUT}"
+          echo "groq_model_name=${model_name}" >> "${GITHUB_OUTPUT}"
+
       - name: Generate Malaysia RSS summary
         id: generate
         shell: bash
@@ -35,7 +137,12 @@ jobs:
           set -euo pipefail
           today="$(TZ=Asia/Kuala_Lumpur date +%F)"
           output_path="news/malaysia/${today}.md"
-          python3 -B scripts/malaysia_rss_summary.py --include-paul-tan --diagnostics --output "${output_path}"
+          run_dir="${{ steps.optional.outputs.run_dir }}"
+          python3 -B scripts/malaysia_rss_summary.py \
+            --include-paul-tan \
+            --diagnostics \
+            --output "${output_path}" \
+            --json-output "${run_dir}/selected_items.json"
           python3 -B scripts/build_malaysia_news_index.py
           if grep -q "::inbox-item" "${output_path}"; then
             echo "::error::Generated Markdown must not contain ::inbox-item metadata."
@@ -46,6 +153,94 @@ jobs:
             exit 1
           fi
           echo "output_path=${output_path}" >> "${GITHUB_OUTPUT}"
+
+      - name: Install body enrichment dependencies
+        if: steps.optional.outputs.enable_body_enrichment == 'true'
+        shell: bash
+        run: |
+          set -u
+          run_dir="${{ steps.optional.outputs.run_dir }}"
+          if python3 -m pip install newspaper3k lxml_html_clean > "${run_dir}/body_dependency_install_stdout.log" 2> "${run_dir}/body_dependency_install_stderr.log"; then
+            echo "success" > "${run_dir}/body_dependency_install_status.txt"
+          else
+            echo "failed" > "${run_dir}/body_dependency_install_status.txt"
+            echo "::warning::Optional body enrichment dependency install failed; RSS-only output will continue."
+          fi
+
+      - name: Run optional body enrichment
+        if: steps.optional.outputs.enable_body_enrichment == 'true'
+        id: body
+        shell: bash
+        run: |
+          set -u
+          run_dir="${{ steps.optional.outputs.run_dir }}"
+          if python3 -B scripts/enrich_malaysia_selected_items_with_body.py \
+            --json-input "${run_dir}/selected_items.json" \
+            --output "${run_dir}/selected_items_enriched.json" \
+            > "${run_dir}/body_enrichment_stdout.log" \
+            2> "${run_dir}/body_enrichment_stderr.log"; then
+            echo "success" > "${run_dir}/body_enrichment_status.txt"
+            echo "body_enrichment_succeeded=true" >> "${GITHUB_OUTPUT}"
+          else
+            echo "failed" > "${run_dir}/body_enrichment_status.txt"
+            echo "body_enrichment_succeeded=false" >> "${GITHUB_OUTPUT}"
+            echo "::warning::Optional body enrichment failed; RSS-only output will continue."
+          fi
+
+      - name: Run optional Groq rendering
+        if: steps.optional.outputs.enable_groq_rendering == 'true'
+        shell: bash
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          set -u
+          run_dir="${{ steps.optional.outputs.run_dir }}"
+          model_short="${{ steps.optional.outputs.groq_model_short }}"
+          model_name="${{ steps.optional.outputs.groq_model_name }}"
+          force_all="${{ steps.optional.outputs.force_all_groq }}"
+          debug_groq="${{ steps.optional.outputs.debug_groq }}"
+
+          if [ -z "${GROQ_API_KEY:-}" ]; then
+            echo "skipped_missing_groq_api_key" > "${run_dir}/groq_rendering_status.txt"
+            echo "::warning::GROQ_API_KEY is not set; optional Groq rendering skipped and RSS-only output will continue."
+            exit 0
+          fi
+
+          json_input="${run_dir}/selected_items.json"
+          if [ -s "${run_dir}/selected_items_enriched.json" ]; then
+            json_input="${run_dir}/selected_items_enriched.json"
+          fi
+          echo "${json_input}" > "${run_dir}/groq_json_input.txt"
+
+          args=(
+            python3 -B scripts/render_malaysia_news_with_groq.py
+            --json-input "${json_input}"
+            --output "${run_dir}/groq_${model_short}.md"
+            --model "${model_name}"
+            --improved-items-output "${run_dir}/groq_${model_short}_improved_items.json"
+          )
+          if [ "${force_all}" = "true" ]; then
+            args+=(--force-all)
+          fi
+          if [ "${debug_groq}" = "true" ]; then
+            args+=(--debug-groq)
+          fi
+
+          if "${args[@]}" > "${run_dir}/groq_${model_short}_stdout.log" 2> "${run_dir}/groq_${model_short}_stderr.log"; then
+            echo "success" > "${run_dir}/groq_rendering_status.txt"
+          else
+            echo "failed" > "${run_dir}/groq_rendering_status.txt"
+            echo "::warning::Optional Groq rendering failed; RSS-only output will continue."
+          fi
+
+      - name: Upload optional diagnostics artifact
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: malaysia-rss-summary-optional-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/malaysia-rss-summary-optional-*
+          if-no-files-found: warn
 
       - name: Commit generated summary
         shell: bash
