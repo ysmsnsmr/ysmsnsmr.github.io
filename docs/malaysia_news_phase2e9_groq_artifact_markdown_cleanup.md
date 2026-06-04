@@ -65,6 +65,16 @@ For Phase 2E.8 multi-day review, inspect:
 - `selected_items.json` and `selected_items_enriched.json` for the full selected item set;
 - stderr logs for skip, fallback, and guard diagnostics.
 
+## Post-Push Result
+
+Phase 2E.9 post-push run `26948966282` confirmed the cleanup in GitHub Actions artifacts:
+
+- accepted-only Groq Markdown was generated;
+- requested `1`, accepted `1`, fallback `0`;
+- no target dateline leakage was found;
+- Groq output remained artifact-only;
+- no Groq or body artifact files were committed to `news/malaysia/`.
+
 ## Verification
 
 Expected checks:
@@ -90,4 +100,3 @@ Expected protected diff check:
 ```bash
 git diff -- scripts/malaysia_rss_summary.py scripts/enrich_malaysia_selected_items_with_body.py scripts/build_malaysia_news_index.py config/malaysia_news_feeds_phase2f.yml news/malaysia
 ```
-

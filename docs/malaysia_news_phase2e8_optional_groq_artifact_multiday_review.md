@@ -56,6 +56,39 @@ Day 1 also confirmed:
 - Groq output stayed in downloaded artifacts / `${RUNNER_TEMP}`;
 - no Groq Markdown was committed to `news/malaysia/`.
 
+## Day 2 Evidence
+
+Day 2 evidence exists from body enrichment plus Groq run `26879809470`.
+
+| run | configuration | selected/enriched items | body evidence | Groq result |
+| --- | --- | ---: | --- | --- |
+| `26879809470` | body enrichment plus Groq, `llama` | 10 / 10 | body fetched `7`, body excerpt used `6` | requested `5`, accepted `4`, fallback `1` |
+
+Day 2 also confirmed:
+
+- no target dateline leakage was found in Groq Markdown;
+- no Groq or body artifact files were committed to `news/malaysia/`.
+
+## Day 3 Evidence
+
+Day 3 evidence exists from body enrichment plus Groq run `26947998995`.
+
+| run | configuration | selected/enriched items | body evidence | Groq result |
+| --- | --- | ---: | --- | --- |
+| `26947998995` | body enrichment plus Groq, `llama` | 8 / 8 | body fetched `7`, body excerpt used `6` | requested `1`, accepted `1`, fallback `0` |
+
+Day 3 exposed dateline leakage in non-accepted RSS fallback items inside Groq artifact Markdown. This led to the Phase 2E.9 accepted-only artifact Markdown cleanup.
+
+## Phase 2E.9 Post-Cleanup Evidence
+
+The Phase 2E.9 post-push run `26948966282` confirmed accepted-only Groq Markdown behavior.
+
+| run | configuration | Groq result | cleanup result |
+| --- | --- | --- | --- |
+| `26948966282` | body enrichment plus Groq, `llama`, accepted-only Markdown | requested `1`, accepted `1`, fallback `0` | no target dateline leakage found |
+
+This confirms that accepted-only Groq Markdown removes non-accepted RSS fallback items from the Groq Markdown artifact review surface.
+
 ## Daily Review Fields
 
 Record these fields for each observation day:
@@ -109,4 +142,3 @@ git diff -- .github/workflows scripts/malaysia_rss_summary.py scripts/render_mal
 ```
 
 Expected result for Phase 2E.8: no protected-path diff caused by this phase.
-
