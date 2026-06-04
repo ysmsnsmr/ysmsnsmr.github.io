@@ -831,6 +831,45 @@ def write_json(path: str, payload: dict[str, Any]) -> None:
     output_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def accepted_only_render_data(data: dict[str, Any], accepted_records: list[dict[str, Any]]) -> dict[str, Any]:
+    accepted_indexes = {
+        record.get("index")
+        for record in accepted_records
+        if isinstance(record, dict) and isinstance(record.get("index"), int)
+    }
+    render_data = copy.deepcopy(data)
+    items = render_data.get("items", [])
+    if not isinstance(items, list):
+        render_data["items"] = []
+    else:
+        render_data["items"] = [
+            item
+            for index, item in enumerate(items, start=1)
+            if isinstance(item, dict) and index in accepted_indexes
+        ]
+    counts = render_data.get("counts")
+    if isinstance(counts, dict):
+        counts["selected"] = len(render_data["items"])
+    return render_data
+
+
+def accepted_only_empty_markdown(model: str, stats: dict[str, int]) -> str:
+    return "\n".join(
+        [
+            "# Groq Accepted Items",
+            "",
+            "No Groq-accepted items were available for this artifact.",
+            "",
+            "RSS fallback and non-accepted items are intentionally not rendered in accepted-only Markdown.",
+            "",
+            f"- model: {model}",
+            f"- requested: {stats.get('requested', 0)}",
+            f"- accepted: {stats.get('accepted', 0)}",
+            f"- fallback: {stats.get('fallback', 0)}",
+        ]
+    )
+
+
 def render_with_groq(
     data: dict[str, Any],
     api_key: str,
@@ -909,6 +948,7 @@ def main() -> int:
     parser.add_argument("--force-all", action="store_true", help="Send all items to Groq for local comparison.")
     parser.add_argument("--debug-groq", action="store_true", help="Write short Groq validation diagnostics to stderr.")
     parser.add_argument("--improved-items-output", help="Write accepted Groq summary improvements to this JSON path.")
+    parser.add_argument("--accepted-only-markdown", action="store_true", help="Render only Groq-accepted items in Markdown output.")
     args = parser.parse_args()
 
     resolved_json_input = resolve_json_input(args.json_input)
@@ -920,7 +960,13 @@ def main() -> int:
     if args.improved_items_output:
         payload = build_improved_items_payload(accepted_records, model, stats, datetime.now().astimezone())
         write_json(args.improved_items_output, payload)
-    markdown = fallback_renderer.render(rendered_data)
+    if args.accepted_only_markdown:
+        if accepted_records:
+            markdown = fallback_renderer.render(accepted_only_render_data(rendered_data, accepted_records))
+        else:
+            markdown = accepted_only_empty_markdown(model, stats)
+    else:
+        markdown = fallback_renderer.render(rendered_data)
 
     if args.output:
         output_path = Path(args.output)

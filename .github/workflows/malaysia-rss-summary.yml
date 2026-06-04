@@ -218,6 +218,7 @@ jobs:
             --output "${run_dir}/groq_${model_short}.md"
             --model "${model_name}"
             --improved-items-output "${run_dir}/groq_${model_short}_improved_items.json"
+            --accepted-only-markdown
           )
           if [ "${force_all}" = "true" ]; then
             args+=(--force-all)
