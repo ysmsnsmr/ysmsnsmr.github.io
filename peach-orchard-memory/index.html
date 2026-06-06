@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>桃園神経衰弱</title>
+  <meta name="description" content="ペアを見つけるたびに中央の桃が育っていく、タップで遊べる桃の神経衰弱ゲームです。">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game" aria-label="桃園神経衰弱">
+    <section class="hud" aria-label="ゲーム情報">
+      <a class="home-link" href="../experiments.html" aria-label="実験一覧へ戻る">←</a>
+      <div class="metric">
+        <span>手数</span>
+        <strong id="moves">0</strong>
+      </div>
+      <div class="metric">
+        <span>ミス</span>
+        <strong id="misses">0</strong>
+      </div>
+      <div class="metric">
+        <span>熟度</span>
+        <strong id="ripeness">100</strong>
+      </div>
+      <div class="metric">
+        <span>最良</span>
+        <strong id="best-score">0</strong>
+      </div>
+    </section>
+
+    <section class="orchard" aria-label="桃の成長">
+      <div class="sky-rings" aria-hidden="true"></div>
+      <div class="growth-panel">
+        <div class="peach-scene" id="peach-scene" aria-live="polite">
+          <div class="branch" aria-hidden="true"></div>
+          <div class="peach" id="peach" aria-hidden="true">
+            <span class="peach__leaf"></span>
+            <span class="peach__body"></span>
+            <span class="peach__cleft"></span>
+            <span class="peach__shine"></span>
+          </div>
+          <div class="harvest-basket" aria-hidden="true"></div>
+        </div>
+        <div class="growth-copy">
+          <span id="phase-label">つぼみ</span>
+          <strong id="status">桃の札を2枚めくってください</strong>
+          <div class="ripeness-track" aria-label="熟度">
+            <div class="ripeness-fill" id="ripeness-fill"></div>
+          </div>
+        </div>
+      </div>
+      <div class="juice-layer" id="juice-layer" aria-hidden="true"></div>
+    </section>
+
+    <section class="board-wrap" aria-label="カード盤面">
+      <div class="board" id="board"></div>
+    </section>
+
+    <section class="controls" aria-label="ゲーム操作">
+      <button id="restart-button" type="button">もういちど</button>
+    </section>
+
+    <section class="result" id="result" aria-hidden="true">
+      <div class="result__panel" role="status" aria-live="polite">
+        <span id="result-rank">収穫</span>
+        <strong id="result-title">桃が実りました</strong>
+        <p id="result-detail">手数 0 / ミス 0 / 熟度 100 / 得点 0</p>
+        <button id="result-restart-button" type="button">もういちど</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
