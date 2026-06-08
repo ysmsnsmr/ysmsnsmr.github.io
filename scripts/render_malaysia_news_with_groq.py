@@ -870,6 +870,66 @@ def accepted_only_empty_markdown(model: str, stats: dict[str, int]) -> str:
     )
 
 
+RSS_ITEM_BLOCK_RE = re.compile(r"(?ms)^- 結論：.*?\n- 出典元URL：(?P<link>[^\n]+)\n?")
+
+
+def render_accepted_record_block(record: dict[str, Any]) -> str:
+    summary = record.get("improved_summary")
+    if not isinstance(summary, dict):
+        summary = {}
+    lines: list[str] = []
+    conclusion = clean_text(summary.get("conclusion"))
+    life_impact = clean_text(summary.get("life_impact"))
+    next_action = clean_text(summary.get("next_action"))
+    source = clean_text(record.get("source"))
+    published_date = clean_text(record.get("published_date"))
+    link = clean_text(record.get("link"))
+
+    lines.append(f"- 結論：{conclusion}")
+    for line in summary_lines(summary.get("what_happened")):
+        lines.append(f"- 何が起きた：{line}")
+    lines.append(f"- 生活への影響：{life_impact}")
+    if next_action:
+        lines.append(f"- 次アクション：{next_action}")
+    lines.append(f"- 出典：{source}（{published_date}）")
+    lines.append(f"- 出典元URL：{link}")
+    return "\n".join(lines) + "\n"
+
+
+def merge_accepted_with_rss_markdown(rss_markdown: str, accepted_records: list[dict[str, Any]]) -> str:
+    if not accepted_records:
+        return rss_markdown
+
+    block_by_link: dict[str, re.Match[str]] = {}
+    duplicate_links: set[str] = set()
+    for match in RSS_ITEM_BLOCK_RE.finditer(rss_markdown):
+        link = clean_text(match.group("link"))
+        if not link:
+            continue
+        if link in block_by_link:
+            duplicate_links.add(link)
+        block_by_link[link] = match
+    if duplicate_links:
+        safe_log("groq-merge: duplicate RSS Markdown URL block found; using exact RSS Markdown fallback.")
+        return rss_markdown
+
+    replacements: dict[str, str] = {}
+    for record in accepted_records:
+        if not isinstance(record, dict):
+            continue
+        link = clean_text(record.get("link"))
+        if not link or link not in block_by_link:
+            safe_log(f"groq-merge: accepted URL not found in RSS Markdown; using exact RSS Markdown fallback: {link}")
+            return rss_markdown
+        replacements[link] = render_accepted_record_block(record)
+
+    def replace_block(match: re.Match[str]) -> str:
+        link = clean_text(match.group("link"))
+        return replacements.get(link, match.group(0))
+
+    return RSS_ITEM_BLOCK_RE.sub(replace_block, rss_markdown)
+
+
 def render_with_groq(
     data: dict[str, Any],
     api_key: str,
@@ -948,8 +1008,17 @@ def main() -> int:
     parser.add_argument("--force-all", action="store_true", help="Send all items to Groq for local comparison.")
     parser.add_argument("--debug-groq", action="store_true", help="Write short Groq validation diagnostics to stderr.")
     parser.add_argument("--improved-items-output", help="Write accepted Groq summary improvements to this JSON path.")
-    parser.add_argument("--accepted-only-markdown", action="store_true", help="Render only Groq-accepted items in Markdown output.")
+    render_mode = parser.add_mutually_exclusive_group()
+    render_mode.add_argument("--accepted-only-markdown", action="store_true", help="Render only Groq-accepted items in Markdown output.")
+    render_mode.add_argument(
+        "--merge-accepted-with-rss-markdown",
+        action="store_true",
+        help="Merge Groq-accepted item blocks into an existing RSS-rendered Markdown file.",
+    )
+    parser.add_argument("--rss-markdown-input", help="Read original RSS-rendered Markdown for merge mode.")
     args = parser.parse_args()
+    if args.merge_accepted_with_rss_markdown and not args.rss_markdown_input:
+        parser.error("--merge-accepted-with-rss-markdown requires --rss-markdown-input")
 
     resolved_json_input = resolve_json_input(args.json_input)
     safe_log(f"groq: reading JSON {resolved_json_input}")
@@ -965,15 +1034,24 @@ def main() -> int:
             markdown = fallback_renderer.render(accepted_only_render_data(rendered_data, accepted_records))
         else:
             markdown = accepted_only_empty_markdown(model, stats)
+    elif args.merge_accepted_with_rss_markdown:
+        rss_markdown = Path(args.rss_markdown_input).read_text(encoding="utf-8")
+        markdown = merge_accepted_with_rss_markdown(rss_markdown, accepted_records)
     else:
         markdown = fallback_renderer.render(rendered_data)
 
     if args.output:
         output_path = Path(args.output)
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        output_path.write_text(markdown + "\n", encoding="utf-8")
+        if args.merge_accepted_with_rss_markdown:
+            output_path.write_text(markdown, encoding="utf-8")
+        else:
+            output_path.write_text(markdown + "\n", encoding="utf-8")
     else:
-        sys.stdout.write(markdown + "\n")
+        if args.merge_accepted_with_rss_markdown:
+            sys.stdout.write(markdown)
+        else:
+            sys.stdout.write(markdown + "\n")
     return 0
 
 
