@@ -199,9 +199,29 @@ jobs:
           model_name="${{ steps.optional.outputs.groq_model_name }}"
           force_all="${{ steps.optional.outputs.force_all_groq }}"
           debug_groq="${{ steps.optional.outputs.debug_groq }}"
+          rss_markdown_input="${{ steps.generate.outputs.output_path }}"
+          echo "${rss_markdown_input}" > "${run_dir}/rss_markdown_input.txt"
 
           if [ -z "${GROQ_API_KEY:-}" ]; then
             echo "skipped_missing_groq_api_key" > "${run_dir}/groq_rendering_status.txt"
+            if ! cp "${rss_markdown_input}" "${run_dir}/groq_merged_candidate.md"; then
+              echo "failed_rss_fallback_copy" > "${run_dir}/groq_rendering_status.txt"
+              echo "::warning::Optional Groq rendering skipped, and RSS fallback copy failed; RSS-only output will continue."
+              exit 0
+            fi
+            cat > "${run_dir}/groq_${model_short}_improved_items.json" <<EOF
+          {
+            "schema_version": "malaysia-groq-improved-items/v1",
+            "generated_at": "$(TZ=Asia/Kuala_Lumpur date --iso-8601=seconds)",
+            "model": "${model_name}",
+            "counts": {
+              "requested": 0,
+              "accepted": 0,
+              "fallback": 0
+            },
+            "items": []
+          }
+          EOF
             echo "::warning::GROQ_API_KEY is not set; optional Groq rendering skipped and RSS-only output will continue."
             exit 0
           fi
@@ -215,10 +235,11 @@ jobs:
           args=(
             python3 -B scripts/render_malaysia_news_with_groq.py
             --json-input "${json_input}"
-            --output "${run_dir}/groq_${model_short}.md"
+            --rss-markdown-input "${rss_markdown_input}"
+            --output "${run_dir}/groq_merged_candidate.md"
             --model "${model_name}"
             --improved-items-output "${run_dir}/groq_${model_short}_improved_items.json"
-            --accepted-only-markdown
+            --merge-accepted-with-rss-markdown
           )
           if [ "${force_all}" = "true" ]; then
             args+=(--force-all)
