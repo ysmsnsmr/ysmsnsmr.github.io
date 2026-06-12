@@ -10,6 +10,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from validate_malaysia_groq_merged_candidate import validate_candidate
+
 
 DEFAULT_OUTPUT_DIR = Path("/tmp/malaysia_phase2b13_groq_merged_rehearsal")
 DEFAULT_MODEL = "llama-3.3-70b-versatile"
@@ -77,6 +79,12 @@ def build_report(
     dateline_matches = sorted(set(TARGET_DATELINE_RE.findall(candidate_markdown)))
     numeric_fallback_lines = [line for line in stderr_text.splitlines() if "unsafe numeric unit conversion" in line]
     required_lines = markdown_has_required_lines(candidate_markdown)
+    validator_status = validate_candidate(
+        output_dir / "selected_items.json",
+        output_dir / "production_candidate_rehearsal.md",
+        output_dir / "groq_llama_improved_items.json",
+        output_dir / "rss.md",
+    )
 
     return {
         "schema_version": "malaysia-groq-merged-rehearsal/v1",
@@ -109,6 +117,11 @@ def build_report(
             "wrote_news_malaysia": False,
             "candidate_output": str(output_dir / "production_candidate_rehearsal.md"),
         },
+        "conditional_overwrite_validator": {
+            "passed": validator_status.get("passed"),
+            "failures": validator_status.get("failures", []),
+            "status": validator_status,
+        },
     }
 
 
@@ -117,6 +130,7 @@ def write_markdown_report(path: Path, report: dict[str, Any]) -> None:
     url_validation = report["url_validation"]
     markdown_validation = report["markdown_validation"]
     boundary = report["production_boundary"]
+    validator = report["conditional_overwrite_validator"]
     lines = [
         "# Phase 2B.13 Groq Merged Production Rehearsal Report",
         "",
@@ -148,6 +162,8 @@ def write_markdown_report(path: Path, report: dict[str, Any]) -> None:
         f"- has_failed_sources_line: {markdown_validation['has_failed_sources_line']}",
         f"- target_dateline_matches: {', '.join(markdown_validation['target_dateline_matches']) or 'none'}",
         f"- numeric_unit_fallback_lines: {len(markdown_validation['numeric_unit_fallback_lines'])}",
+        f"- conditional_overwrite_validator_passed: {validator['passed']}",
+        f"- conditional_overwrite_validator_failures: {len(validator['failures'])}",
         "",
         "## Boundary",
         "",
@@ -156,6 +172,10 @@ def write_markdown_report(path: Path, report: dict[str, Any]) -> None:
         "- production_adoption: not approved in Phase 2B.13",
         "",
     ]
+    if validator["failures"]:
+        lines.extend(["## Conditional Overwrite Validator Failures", ""])
+        lines.extend(f"- {failure}" for failure in validator["failures"])
+        lines.append("")
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
