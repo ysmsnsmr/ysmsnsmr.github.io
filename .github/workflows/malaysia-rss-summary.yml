@@ -16,6 +16,11 @@ on:
         required: false
         default: false
         type: boolean
+      enable_groq_production_overwrite:
+        description: "Allow validated Groq merged Markdown to overwrite the production RSS Markdown"
+        required: false
+        default: false
+        type: boolean
       groq_model:
         description: "Groq model for optional rendering"
         required: false
@@ -64,11 +69,13 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
           INPUT_ENABLE_BODY_ENRICHMENT: ${{ github.event.inputs.enable_body_enrichment }}
           INPUT_ENABLE_GROQ_RENDERING: ${{ github.event.inputs.enable_groq_rendering }}
+          INPUT_ENABLE_GROQ_PRODUCTION_OVERWRITE: ${{ github.event.inputs.enable_groq_production_overwrite }}
           INPUT_FORCE_ALL_GROQ: ${{ github.event.inputs.force_all_groq }}
           INPUT_DEBUG_GROQ: ${{ github.event.inputs.debug_groq }}
           INPUT_GROQ_MODEL: ${{ github.event.inputs.groq_model }}
           VAR_ENABLE_BODY_ENRICHMENT: ${{ vars.MALAYSIA_NEWS_ENABLE_BODY_ENRICHMENT }}
           VAR_ENABLE_GROQ_RENDERING: ${{ vars.MALAYSIA_NEWS_ENABLE_GROQ_RENDERING }}
+          VAR_ENABLE_GROQ_PRODUCTION_OVERWRITE: ${{ vars.MALAYSIA_NEWS_ENABLE_GROQ_PRODUCTION_OVERWRITE }}
           VAR_FORCE_ALL_GROQ: ${{ vars.MALAYSIA_NEWS_FORCE_ALL_GROQ }}
           VAR_DEBUG_GROQ: ${{ vars.MALAYSIA_NEWS_DEBUG_GROQ }}
           VAR_GROQ_MODEL: ${{ vars.MALAYSIA_NEWS_GROQ_MODEL }}
@@ -85,12 +92,14 @@ jobs:
           if [ "${EVENT_NAME}" = "workflow_dispatch" ]; then
             enable_body="$(bool_value "${INPUT_ENABLE_BODY_ENRICHMENT:-false}")"
             enable_groq="$(bool_value "${INPUT_ENABLE_GROQ_RENDERING:-false}")"
+            enable_overwrite="$(bool_value "${INPUT_ENABLE_GROQ_PRODUCTION_OVERWRITE:-false}")"
             force_all="$(bool_value "${INPUT_FORCE_ALL_GROQ:-false}")"
             debug_groq="$(bool_value "${INPUT_DEBUG_GROQ:-false}")"
             model_input="${INPUT_GROQ_MODEL:-llama}"
           else
             enable_body="$(bool_value "${VAR_ENABLE_BODY_ENRICHMENT:-false}")"
             enable_groq="$(bool_value "${VAR_ENABLE_GROQ_RENDERING:-false}")"
+            enable_overwrite="$(bool_value "${VAR_ENABLE_GROQ_PRODUCTION_OVERWRITE:-false}")"
             force_all="$(bool_value "${VAR_FORCE_ALL_GROQ:-false}")"
             debug_groq="$(bool_value "${VAR_DEBUG_GROQ:-false}")"
             model_input="${VAR_GROQ_MODEL:-llama}"
@@ -117,6 +126,7 @@ jobs:
             echo "- event: ${EVENT_NAME}"
             echo "- enable_body_enrichment: ${enable_body}"
             echo "- enable_groq_rendering: ${enable_groq}"
+            echo "- enable_groq_production_overwrite: ${enable_overwrite}"
             echo "- force_all_groq: ${force_all}"
             echo "- debug_groq: ${debug_groq}"
             echo "- groq_model: ${model_name}"
@@ -125,6 +135,7 @@ jobs:
           echo "run_dir=${run_dir}" >> "${GITHUB_OUTPUT}"
           echo "enable_body_enrichment=${enable_body}" >> "${GITHUB_OUTPUT}"
           echo "enable_groq_rendering=${enable_groq}" >> "${GITHUB_OUTPUT}"
+          echo "enable_groq_production_overwrite=${enable_overwrite}" >> "${GITHUB_OUTPUT}"
           echo "force_all_groq=${force_all}" >> "${GITHUB_OUTPUT}"
           echo "debug_groq=${debug_groq}" >> "${GITHUB_OUTPUT}"
           echo "groq_model_short=${model_short}" >> "${GITHUB_OUTPUT}"
@@ -143,13 +154,9 @@ jobs:
             --diagnostics \
             --output "${output_path}" \
             --json-output "${run_dir}/selected_items.json"
-          python3 -B scripts/build_malaysia_news_index.py
+          cp "${output_path}" "${run_dir}/rss_production_fallback.md"
           if grep -q "::inbox-item" "${output_path}"; then
             echo "::error::Generated Markdown must not contain ::inbox-item metadata."
-            exit 1
-          fi
-          if grep -q "::inbox-item" news/malaysia/index.html; then
-            echo "::error::Generated index.html must not contain ::inbox-item metadata."
             exit 1
           fi
           echo "output_path=${output_path}" >> "${GITHUB_OUTPUT}"
@@ -253,6 +260,103 @@ jobs:
           else
             echo "failed" > "${run_dir}/groq_rendering_status.txt"
             echo "::warning::Optional Groq rendering failed; RSS-only output will continue."
+          fi
+
+      - name: Guard optional Groq production overwrite
+        shell: bash
+        run: |
+          set -u
+          run_dir="${{ steps.optional.outputs.run_dir }}"
+          output_path="${{ steps.generate.outputs.output_path }}"
+          model_short="${{ steps.optional.outputs.groq_model_short }}"
+          enable_groq="${{ steps.optional.outputs.enable_groq_rendering }}"
+          enable_overwrite="${{ steps.optional.outputs.enable_groq_production_overwrite }}"
+          rss_fallback="${run_dir}/rss_production_fallback.md"
+          candidate="${run_dir}/groq_merged_candidate.md"
+          improved_items="${run_dir}/groq_${model_short}_improved_items.json"
+          rendering_status_file="${run_dir}/groq_rendering_status.txt"
+          overwrite_status="${run_dir}/groq_production_overwrite_status.txt"
+          validator_status="${run_dir}/groq_production_overwrite_validator_status.json"
+          validator_report="${run_dir}/groq_production_overwrite_validator_report.md"
+
+          restore_rss_fallback() {
+            if [ -f "${rss_fallback}" ]; then
+              cp "${rss_fallback}" "${output_path}"
+            fi
+          }
+
+          if [ "${enable_overwrite}" != "true" ]; then
+            echo "skipped_overwrite_disabled" > "${overwrite_status}"
+            restore_rss_fallback
+            exit 0
+          fi
+
+          if [ "${enable_groq}" != "true" ]; then
+            echo "skipped_groq_rendering_disabled" > "${overwrite_status}"
+            restore_rss_fallback
+            exit 0
+          fi
+
+          if [ ! -s "${rendering_status_file}" ]; then
+            echo "skipped_missing_groq_rendering_status" > "${overwrite_status}"
+            restore_rss_fallback
+            exit 0
+          fi
+
+          rendering_status="$(cat "${rendering_status_file}")"
+          if [ "${rendering_status}" != "success" ]; then
+            echo "skipped_groq_rendering_${rendering_status}" > "${overwrite_status}"
+            restore_rss_fallback
+            exit 0
+          fi
+
+          if [ ! -s "${candidate}" ]; then
+            echo "skipped_missing_groq_merged_candidate" > "${overwrite_status}"
+            restore_rss_fallback
+            exit 0
+          fi
+
+          if [ ! -s "${improved_items}" ]; then
+            echo "skipped_missing_improved_items_json" > "${overwrite_status}"
+            restore_rss_fallback
+            exit 0
+          fi
+
+          if python3 -B scripts/validate_malaysia_groq_merged_candidate.py \
+            --selected-json "${run_dir}/selected_items.json" \
+            --candidate-markdown "${candidate}" \
+            --improved-items-json "${improved_items}" \
+            --rss-fallback-markdown "${rss_fallback}" \
+            --status-output "${validator_status}" \
+            --report-output "${validator_report}" \
+            > "${run_dir}/groq_production_overwrite_validator_stdout.log" \
+            2> "${run_dir}/groq_production_overwrite_validator_stderr.log"; then
+            if cp "${candidate}" "${output_path}"; then
+              echo "applied" > "${overwrite_status}"
+            else
+              echo "failed_candidate_copy" > "${overwrite_status}"
+              restore_rss_fallback
+              echo "::warning::Groq production overwrite validation passed, but candidate copy failed; RSS Markdown remains production output."
+            fi
+          else
+            echo "skipped_validator_failed" > "${overwrite_status}"
+            restore_rss_fallback
+            echo "::warning::Groq production overwrite validator failed; RSS Markdown remains production output."
+          fi
+
+      - name: Build Malaysia news index
+        shell: bash
+        run: |
+          set -euo pipefail
+          output_path="${{ steps.generate.outputs.output_path }}"
+          python3 -B scripts/build_malaysia_news_index.py
+          if grep -q "::inbox-item" "${output_path}"; then
+            echo "::error::Generated Markdown must not contain ::inbox-item metadata."
+            exit 1
+          fi
+          if grep -q "::inbox-item" news/malaysia/index.html; then
+            echo "::error::Generated index.html must not contain ::inbox-item metadata."
+            exit 1
           fi
 
       - name: Upload optional diagnostics artifact
