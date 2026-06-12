@@ -44,6 +44,40 @@ The daily workflow still commits only RSS-rendered Markdown to `news/malaysia/`.
 
 Any later production adoption must explicitly decide whether Groq merged Markdown can replace `news/malaysia/${today}.md`.
 
+## Post-Cleanup Artifact Re-Observation
+
+Run `27414390078` confirmed the Phase 2B.12A cleanup behavior on GitHub Actions.
+
+Observed configuration:
+
+- event: `workflow_dispatch`;
+- body enrichment: `false`;
+- Groq rendering: `true`;
+- model: `llama-3.3-70b-versatile`;
+- `groq_rendering_status.txt`: `success`.
+
+Observed RSS and Groq counts:
+
+- processed items: `112`;
+- selected items: `9`;
+- failed sources: `0`;
+- Groq requested: `3`;
+- Groq accepted: `2`;
+- Groq fallback: `1`.
+
+Observed cleanup effects:
+
+- MySalam triggered numeric/unit fallback with `unsafe numeric unit conversion: rm1.42b`;
+- the previous Paul Tan EV registration/ranking item was no longer selected;
+- the selected Paul Tan item was a JPJ enforcement/driver-obligation item about unapproved `albino lights`;
+- `groq_merged_candidate.md` preserved all `9` selected URLs with no missing or extra URLs;
+- target dateline leakage checks for `KUALA LUMPUR,`, `PUTRAJAYA,`, `GEORGE TOWN,`, and `MELAKA,` found no matches in `groq_merged_candidate.md`.
+
+Remaining caveat:
+
+- the MySalam item fell back to RSS-rendered text, so the English RSS title remained visible in the merged candidate;
+- this is safer than accepting the incorrect numeric/unit conversion, but it remains a readability issue for any later production adoption design.
+
 ## Verification
 
 Expected checks:
