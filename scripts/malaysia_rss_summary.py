@@ -213,6 +213,37 @@ PAUL_TAN_NOISE_GROUPS = {
         "suv",
     ],
 }
+PAUL_TAN_JPJ_DATA_ONLY_WORDS = [
+    "brands",
+    "data",
+    "market share",
+    "registrations",
+    "sales",
+    "tally",
+    "top 20",
+    "units",
+]
+PAUL_TAN_DRIVER_ACTION_WORDS = [
+    "application",
+    "apply",
+    "conversion",
+    "convert",
+    "counter",
+    "deadline",
+    "enforcement",
+    "fine",
+    "inspection",
+    "licence",
+    "license",
+    "myjpj",
+    "procedure",
+    "puspakom",
+    "renew",
+    "renewal",
+    "road tax",
+    "saman",
+    "summons",
+]
 
 
 @dataclass
@@ -471,6 +502,8 @@ def paul_tan_gate(item: Item) -> tuple[str, dict[str, list[str]], dict[str, list
     text = item_text(item)
     positive_groups = grouped_phrase_matches(text, PAUL_TAN_POSITIVE_GROUPS)
     noise_groups = grouped_phrase_matches(text, PAUL_TAN_NOISE_GROUPS)
+    if is_paul_tan_jpj_data_only_item(text, positive_groups):
+        return "review", positive_groups, noise_groups
     if positive_groups and not noise_groups:
         return "accept", positive_groups, noise_groups
     if positive_groups and noise_groups:
@@ -490,6 +523,15 @@ def paul_tan_gate_decision(item: Item) -> str:
 def paul_tan_signal_groups(item: Item) -> set[str]:
     _, positive_groups, _ = paul_tan_gate(item)
     return set(positive_groups)
+
+
+def is_paul_tan_jpj_data_only_item(text: str, positive_groups: dict[str, list[str]]) -> bool:
+    """Avoid treating JPJ as driver impact when it only appears as a data source."""
+    if set(positive_groups) != {"driver_obligations"}:
+        return False
+    if not has_phrase(text, "jpj"):
+        return False
+    return has_any(text, PAUL_TAN_JPJ_DATA_ONLY_WORDS) and not has_any(text, PAUL_TAN_DRIVER_ACTION_WORDS)
 
 
 def paul_tan_display_description(item: Item) -> str:
@@ -2097,6 +2139,22 @@ def self_test() -> int:
     evaluate_item(paul_pricing_review)
     check("Paul Tan mixed pricing item requires review", paul_tan_gate_decision(paul_pricing_review) == "review")
     check("Paul Tan review decision is excluded", should_exclude_item(paul_pricing_review))
+
+    paul_jpj_procedure = paul_item(
+        "JPJ to accept foreign driving licence conversion applications nationwide from June 1",
+        "Malaysians can apply at JPJ counters with the required documents.",
+    )
+    evaluate_item(paul_jpj_procedure)
+    check("Paul Tan real JPJ procedure gate accepts", paul_tan_gate_decision(paul_jpj_procedure) == "accept")
+    check("Paul Tan real JPJ procedure is not excluded", not should_exclude_item(paul_jpj_procedure))
+
+    paul_ev_ranking = paul_item(
+        "Top 20 EV brands in May 2026 - Proton already beats its full-year 2025 tally; Perodua climbs to 10th",
+        "According to the latest data from the road transport department (JPJ), total EV registrations rose in May 2026.",
+    )
+    evaluate_item(paul_ev_ranking)
+    check("Paul Tan JPJ data-only EV ranking requires review", paul_tan_gate_decision(paul_ev_ranking) == "review")
+    check("Paul Tan JPJ data-only EV ranking is excluded", should_exclude_item(paul_ev_ranking))
 
     paul_selected = select_items([paul_lrt, paul_ron95, paul_recall], now)
     check("Paul Tan source cap keeps at most one item", sum(1 for test_item in paul_selected if test_item.source == "Paul Tan") <= 1)

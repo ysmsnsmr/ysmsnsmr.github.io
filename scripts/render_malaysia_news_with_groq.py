@@ -433,6 +433,35 @@ def has_any_text(text: str, phrases: list[str]) -> bool:
     return any(phrase.lower() in text for phrase in phrases)
 
 
+def rendered_has_japanese_unit_for_number(rendered_text: str, number: str, units: list[str]) -> bool:
+    """Return true when Groq reused an English magnitude number with a Japanese unit."""
+    if not number:
+        return False
+    normalized_number = re.escape(number.rstrip("."))
+    unit_pattern = "|".join(re.escape(unit) for unit in units)
+    return re.search(rf"(?<![0-9]){normalized_number}\s*(?:{unit_pattern})", rendered_text) is not None
+
+
+def reject_numeric_unit_reason(source_text: str, rendered_text: str) -> str:
+    """Conservatively reject obvious magnitude/unit conversions that are unsafe to publish."""
+    billion_patterns = [
+        r"\bRM\s*([0-9]+(?:\.[0-9]+)?)\s*(?:b|bn|billion)\b",
+        r"\b([0-9]+(?:\.[0-9]+)?)\s*billion\b",
+    ]
+    for pattern in billion_patterns:
+        for match in re.finditer(pattern, source_text, flags=re.IGNORECASE):
+            number = match.group(1)
+            if rendered_has_japanese_unit_for_number(rendered_text, number, ["億", "億リンギット", "万人"]):
+                return f"unsafe numeric unit conversion: {match.group(0)}"
+
+    for match in re.finditer(r"\b([0-9]+(?:\.[0-9]+)?)\s*million\b", source_text, flags=re.IGNORECASE):
+        number = match.group(1)
+        if rendered_has_japanese_unit_for_number(rendered_text, number, ["万人", "万"]):
+            return f"unsafe numeric unit conversion: {match.group(0)}"
+
+    return ""
+
+
 def has_search_phrase(text: str, phrase: str) -> bool:
     normalized_phrase = re.sub(r"\s+", " ", phrase.strip().lower())
     if not normalized_phrase:
@@ -595,6 +624,10 @@ def validate_summary_against_source(item: dict[str, Any], summary: dict[str, Any
     ]
     if any(marker in rendered_text for marker in english_lead_markers):
         raise ValueError("english lead leakage")
+
+    numeric_unit_reason = reject_numeric_unit_reason(source_text, rendered_text)
+    if numeric_unit_reason:
+        raise ValueError(numeric_unit_reason)
 
     guarded_claims = {
         "death": ["死亡", "亡くな", "死者"],
@@ -871,6 +904,17 @@ def accepted_only_empty_markdown(model: str, stats: dict[str, int]) -> str:
 
 
 RSS_ITEM_BLOCK_RE = re.compile(r"(?ms)^- 結論：.*?\n- 出典元URL：(?P<link>[^\n]+)\n?")
+RSS_FALLBACK_DATELINE_RE = re.compile(
+    r"(?m)(- 何が起きた：)"
+    r"(?:KUALA LUMPUR|PUTRAJAYA|MELAKA|GEORGE TOWN|IPOH|ALOR SETAR|JOHOR BARU|KOTA KINABALU|KUCHING),\s+"
+    r"(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+"
+    r"\d{1,2}\s+[—–-]\s*"
+)
+
+
+def strip_rss_fallback_datelines(block: str) -> str:
+    """Clean RSS-rendered fallback blocks only in merge-candidate Markdown."""
+    return RSS_FALLBACK_DATELINE_RE.sub(r"\1", block)
 
 
 def render_accepted_record_block(record: dict[str, Any]) -> str:
@@ -925,7 +969,9 @@ def merge_accepted_with_rss_markdown(rss_markdown: str, accepted_records: list[d
 
     def replace_block(match: re.Match[str]) -> str:
         link = clean_text(match.group("link"))
-        return replacements.get(link, match.group(0))
+        if link in replacements:
+            return replacements[link]
+        return strip_rss_fallback_datelines(match.group(0))
 
     return RSS_ITEM_BLOCK_RE.sub(replace_block, rss_markdown)
 

@@ -33,6 +33,18 @@ The current evidence best supports accepted-only Groq enhancement with RSS fallb
 
 `openai/gpt-oss-20b` remains a comparison candidate, but it does not block llama-focused planning.
 
+## Production Readiness Principle
+
+Production readiness should not mean "ship only when the output is perfect."
+
+For this project, the practical threshold is whether the failure mode is small enough to detect, explain, and correct after release.
+
+Groq merged candidate Markdown is generally easier to read than the RSS-rendered version, but it may still contain minor Japanese phrasing issues or English text that survives through RSS fallback blocks.
+
+Future production adoption can be considered with an explicit reader-facing caution and a post-publication correction path, rather than requiring perfect output before release.
+
+This principle does not approve production adoption in Phase 2B.9. It only defines the judgment axis for later adoption phases.
+
 ## Pilot Evidence
 
 | day | run | selected | requested | accepted | fallback | leakage |
