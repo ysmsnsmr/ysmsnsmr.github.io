@@ -95,6 +95,20 @@ Expected focus mapping:
 
 If body evidence has focus but Groq still returns generic `life_impact`, validation rejects the Groq summary and the item falls back to RSS-rendered output.
 
+## Protected Scheme Names
+
+Groq output now applies a narrow post-generation display cleanup for observed scheme-name drift.
+
+When the source text contains `eCOSS` or the Cooking Oil Price Stabilisation/ Stablisation/ Stabilization Scheme, the renderer preserves the scheme as:
+
+```text
+eCOSS（食用油価格安定化制度）
+```
+
+This protects accepted summaries from malformed translations such as `食用石油価格格安定化制度(eCOSS)`.
+
+The cleanup is intentionally scoped to eCOSS evidence and does not broaden Japanese normalization globally.
+
 ## Boundary
 
 This change does not alter RSS source selection, workflow flags, Pages index generation, or the guarded overwrite validator.
