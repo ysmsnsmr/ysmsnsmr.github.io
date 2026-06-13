@@ -142,3 +142,56 @@ Expected behavior:
 - validator success overwrites only `news/malaysia/${today}.md`;
 - index build reflects the final daily Markdown;
 - artifacts remain diagnostics only.
+
+## Workflow Test Result
+
+Run:
+
+```text
+27452117784
+```
+
+Configuration:
+
+```text
+event: workflow_dispatch
+enable_body_enrichment: false
+enable_groq_rendering: true
+enable_groq_production_overwrite: true
+force_all_groq: false
+debug_groq: true
+groq_model: llama-3.3-70b-versatile
+```
+
+Observed result:
+
+- `groq_rendering_status.txt`: `success`;
+- `groq_production_overwrite_status.txt`: `applied`;
+- validator: `passed: true`;
+- processed: `112`;
+- selected: `9`;
+- failed_sources: `0`;
+- Groq requested: `4`;
+- Groq accepted: `2`;
+- Groq fallback: `2`;
+- selected/rendered URLs: `9/9`;
+- missing selected URLs: `0`;
+- extra rendered URLs: `0`;
+- duplicate URLs: `0`;
+- required category headers and count lines: present;
+- forbidden/dateline matches in `groq_merged_candidate.md`: none;
+- RSS fallback still contained `KUALA LUMPUR,`, `PUTRAJAYA,`, and `— The`, confirming the merged candidate cleanup changed the published candidate surface.
+
+Validator report caveat:
+
+- `production_overwrite: not performed` in the validator report means the validator itself is read-only.
+- The workflow-level overwrite status is the source of truth for whether the guarded copy step ran, and it reported `applied`.
+
+Quality notes:
+
+- MySalam `RM1.42b` numeric risk fell back with `unsafe numeric unit conversion: rm1.42b`, confirming the Phase 2B.12A numeric guard worked.
+- The accepted hiking-permit item was readable but still had slightly awkward source-derived wording around `trans hiking` / `hiking compress`; this is a minor post-publication-edit risk, not a blocker for the guarded path.
+
+Conclusion:
+
+Run `27452117784` confirms the Phase 2B.16 guarded opt-in path can render Groq output, pass the validator, and apply the merged candidate while preserving URL completeness and artifact diagnostics.
