@@ -109,13 +109,23 @@ This protects accepted summaries from malformed translations such as `食用石�
 
 The cleanup is intentionally scoped to eCOSS evidence and does not broaden Japanese normalization globally.
 
+## Force-All Strict Gate
+
+`force_all_groq=true` is treated as broad Groq exploration, not broad production acceptance.
+
+When force-all mode is enabled, the renderer may request Groq summaries for a wider set of items, but an additional accepted gate runs after normal Groq validation and before the item is recorded as accepted.
+
+The force-all gate accepts items only when concrete daily-life impact is evident from both the source metadata and the Groq summary, or when cleaned `body_evidence_focus` already supports a concrete `life_impact`.
+
+Items that are only political background, market background, transport commentary without operational impact, or Paul Tan automotive noise fall back to RSS-rendered output.
+
 ## Boundary
 
 This change does not alter RSS source selection, workflow flags, Pages index generation, or the guarded overwrite validator.
 
 Body enrichment remains optional.
 
-`force_all_groq=false` remains the recommended daily setting.
+`force_all_groq=false` remains the recommended daily setting until strict-gate artifact observations prove that broad exploration improves quality without adding low-value accepted items.
 
 ## Verification
 

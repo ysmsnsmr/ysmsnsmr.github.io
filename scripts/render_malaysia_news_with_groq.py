@@ -243,6 +243,274 @@ BACKGROUND_IMPACT_WORDS = [
     "関連制度",
     "確認しておく価値",
 ]
+FORCE_ALL_SOURCE_LIFE_IMPACT_SIGNALS = [
+    "application",
+    "applications",
+    "deadline",
+    "eligibility",
+    "eligible",
+    "counter",
+    "procedure",
+    "permit",
+    "licence",
+    "license",
+    "renewal",
+    "subsidy",
+    "aid",
+    "ecoss",
+    "cost of living",
+    "price",
+    "payment",
+    "fee",
+    "fare",
+    "toll",
+    "road tax",
+    "jpj",
+    "summons",
+    "inspection",
+    "recall",
+    "safety defect",
+    "lrt",
+    "mrt",
+    "ktm",
+    "ktmb",
+    "komuter",
+    "rapid kl",
+    "bus",
+    "route",
+    "station",
+    "schedule",
+    "disruption",
+    "road closure",
+    "highway",
+    "rfid",
+    "smarttag",
+    "touch 'n go",
+    "tng",
+    "mykad",
+    "lhdn",
+    "tax",
+    "e-derma",
+    "hospital",
+    "clinic",
+    "school",
+    "bank",
+    "account",
+    "branch",
+    "e-wallet",
+    "ewallet",
+    "申請",
+    "期限",
+    "対象者",
+    "対象条件",
+    "窓口",
+    "手続",
+    "許可",
+    "免許",
+    "更新",
+    "補助",
+    "支援",
+    "生活費",
+    "価格",
+    "支払い",
+    "料金",
+    "通行料",
+    "道路税",
+    "車検",
+    "リコール",
+    "安全",
+    "運行",
+    "路線",
+    "駅",
+    "時刻",
+    "通勤",
+    "通学",
+    "決済",
+    "医療",
+    "学校",
+    "銀行",
+    "口座",
+]
+FORCE_ALL_SUMMARY_LIFE_IMPACT_SIGNALS = [
+    "申請",
+    "期限",
+    "対象者",
+    "対象条件",
+    "窓口",
+    "手続",
+    "許可",
+    "免許",
+    "更新",
+    "補助",
+    "支援",
+    "家計",
+    "生活費",
+    "価格",
+    "物価",
+    "支払い",
+    "料金",
+    "手数料",
+    "通行料",
+    "道路税",
+    "召喚状",
+    "車検",
+    "リコール",
+    "安全",
+    "運行",
+    "路線",
+    "駅",
+    "時刻",
+    "通勤",
+    "通学",
+    "移動",
+    "利用者",
+    "迂回",
+    "決済",
+    "アプリ",
+    "受診",
+    "制度",
+    "学校",
+    "銀行",
+    "口座",
+    "顧客対応",
+]
+FORCE_ALL_TRANSPORT_MARKERS = [
+    "ktm",
+    "ktmb",
+    "komuter",
+    "lrt",
+    "mrt",
+    "rapid kl",
+    "train",
+    "rail",
+    "bus",
+    "public transport",
+]
+FORCE_ALL_TRANSPORT_OPERATIONAL_SIGNALS = [
+    "route",
+    "station",
+    "fare",
+    "schedule",
+    "service",
+    "delay",
+    "delayed",
+    "disruption",
+    "closure",
+    "closed",
+    "operat",
+    "commute",
+    "passenger",
+    "運行",
+    "路線",
+    "駅",
+    "料金",
+    "時刻",
+    "遅延",
+    "混雑",
+    "通勤",
+    "通学",
+    "利用者",
+]
+FORCE_ALL_POLITICAL_CONTEXT_SIGNALS = [
+    "minister",
+    "mp ",
+    "mp says",
+    "says",
+    "invited",
+    "seat at the table",
+    "caretaker",
+    "barisan",
+    "umno",
+    "party",
+    "opposition",
+    "election",
+    "会談",
+    "発言",
+    "批判",
+    "政党",
+    "選挙",
+]
+FORCE_ALL_MONEY_BACKGROUND_SIGNALS = [
+    "ringgit",
+    "bursa",
+    "fbm klci",
+    "foreign exchange",
+    "forex",
+    "currency",
+    "stock market",
+    "equities",
+    "shares",
+    "market sentiment",
+    "us dollar",
+    "greenback",
+    "為替",
+    "相場",
+    "株式",
+    "市場",
+]
+FORCE_ALL_MONEY_CONCRETE_SIGNALS = [
+    "subsidy",
+    "aid",
+    "cost of living",
+    "payment",
+    "fee",
+    "bank",
+    "account",
+    "branch",
+    "e-wallet",
+    "ewallet",
+    "補助",
+    "支援",
+    "生活費",
+    "支払い",
+    "手数料",
+    "銀行",
+    "口座",
+    "窓口",
+]
+PAUL_TAN_FORCE_ALL_POSITIVE_SIGNALS = [
+    "jpj",
+    "licence",
+    "license",
+    "road tax",
+    "summons",
+    "inspection",
+    "enforcement",
+    "recall",
+    "safety",
+    "ron95",
+    "diesel",
+    "petrol",
+    "fuel subsidy",
+    "toll",
+    "rfid",
+    "smarttag",
+    "road closure",
+    "highway",
+    "lrt",
+    "mrt",
+    "rapid kl",
+    "ktmb",
+    "bus",
+    "public transport",
+]
+PAUL_TAN_FORCE_ALL_NOISE_SIGNALS = [
+    "registration",
+    "registrations",
+    "sales",
+    "market share",
+    "ranking",
+    "rankings",
+    "top",
+    "brand",
+    "model",
+    "variant",
+    "launch",
+    "preview",
+    "review",
+    "spyshot",
+    "showroom",
+]
 
 SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュースダッシュボードの日本語編集者です。
 入力はRSSのtitle、description、既存summary、必要に応じてbody_evidenceだけです。
@@ -644,6 +912,103 @@ def groq_exclusion_reason(item: dict[str, Any]) -> str:
         return "politics"
     if is_international_incident_item(item):
         return "international_incident"
+    return ""
+
+
+def force_all_source_text(item: dict[str, Any]) -> str:
+    parts = [
+        clean_text(item.get("title")),
+        clean_text(item.get("description")),
+        clean_text(item.get("source")),
+        clean_text(item.get("category")),
+        clean_text(item.get("body_evidence_excerpt")),
+    ]
+    tags = item.get("tags")
+    if isinstance(tags, list):
+        parts.extend(clean_text(tag) for tag in tags)
+    flags = item.get("flags")
+    if isinstance(flags, dict):
+        parts.extend(clean_text(key) for key, value in flags.items() if value)
+    return " ".join(part for part in parts if part).lower()
+
+
+def force_all_summary_text(summary: dict[str, Any]) -> str:
+    return summary_text(summary).lower()
+
+
+def has_force_all_body_evidence(item: dict[str, Any], summary: dict[str, Any]) -> bool:
+    focus_values = body_evidence_focus_values(item)
+    if not focus_values:
+        return False
+    return life_impact_matches_body_focus(item, clean_text(summary.get("life_impact")))
+
+
+def is_paul_tan_source(item: dict[str, Any]) -> bool:
+    return clean_text(item.get("source")).lower() == "paul tan"
+
+
+def paul_tan_force_all_gate_reason(source_text: str) -> str:
+    has_positive = contains_any(source_text, PAUL_TAN_FORCE_ALL_POSITIVE_SIGNALS)
+    has_noise = contains_any(source_text, PAUL_TAN_FORCE_ALL_NOISE_SIGNALS)
+    has_driver_obligation = contains_any(
+        source_text,
+        [
+            "licence",
+            "license",
+            "road tax",
+            "summons",
+            "inspection",
+            "enforcement",
+            "recall",
+            "safety",
+            "fuel subsidy",
+            "toll",
+            "road closure",
+            "public transport",
+        ],
+    )
+    if has_noise and not has_driver_obligation:
+        return "paul_tan_noise_without_driver_impact"
+    if not has_positive:
+        return "paul_tan_no_transport_driver_signal"
+    return ""
+
+
+def force_all_gate_reason(item: dict[str, Any], summary: dict[str, Any]) -> str:
+    """Return a rejection reason for force-all accepted summaries, or empty string when safe."""
+    if has_force_all_body_evidence(item, summary):
+        return ""
+
+    source_text = force_all_source_text(item)
+    rendered_text = force_all_summary_text(summary)
+
+    if is_paul_tan_source(item):
+        reason = paul_tan_force_all_gate_reason(source_text)
+        if reason:
+            return reason
+
+    has_transport_marker = contains_any(source_text, FORCE_ALL_TRANSPORT_MARKERS)
+    has_transport_operation = contains_any(source_text, FORCE_ALL_TRANSPORT_OPERATIONAL_SIGNALS)
+    has_political_context = contains_any(source_text, FORCE_ALL_POLITICAL_CONTEXT_SIGNALS)
+    if has_transport_marker and has_political_context and not has_transport_operation:
+        return "transport_political_background_without_operational_impact"
+
+    has_money_background = contains_any(source_text, FORCE_ALL_MONEY_BACKGROUND_SIGNALS)
+    has_money_concrete = contains_any(source_text, FORCE_ALL_MONEY_CONCRETE_SIGNALS)
+    if has_money_background and not has_money_concrete:
+        return "money_market_background_without_concrete_life_impact"
+
+    source_has_signal = contains_any(source_text, FORCE_ALL_SOURCE_LIFE_IMPACT_SIGNALS)
+    if not source_has_signal:
+        return "no_strong_source_life_impact_signal"
+
+    if looks_generic(clean_text(summary.get("life_impact"))):
+        return "generic_life_impact"
+
+    summary_has_signal = contains_any(rendered_text, FORCE_ALL_SUMMARY_LIFE_IMPACT_SIGNALS)
+    if not summary_has_signal:
+        return "no_strong_summary_life_impact_signal"
+
     return ""
 
 
@@ -1173,6 +1538,12 @@ def render_with_groq(
         try:
             original_summary = copy.deepcopy(item.get("selected_summary", {}))
             improved_summary = request_groq_summary(item, api_key, model, debug, index)
+            if force_all:
+                gate_reason = force_all_gate_reason(item, improved_summary)
+                if gate_reason:
+                    raise ValueError(f"force_all accepted gate: {gate_reason}")
+                if debug:
+                    safe_log(f"groq-debug: item={index + 1} force_all_gate passed")
             item["selected_summary"] = improved_summary
             accepted_records.append(
                 {
