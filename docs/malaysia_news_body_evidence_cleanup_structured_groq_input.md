@@ -74,6 +74,27 @@ When body policy is `use_body`, it sends:
 
 The system prompt now tells Groq to use only `body_evidence`, and not to use forbidden elements such as datelines, wire credits, ads, related links, or unsupported conditions.
 
+## Life Impact Focus
+
+`body_evidence_focus` is now expected to guide `life_impact`, not only describe why body evidence was allowed.
+
+When focus is present, Groq should avoid generic wording such as:
+
+```text
+生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります
+```
+
+Expected focus mapping:
+
+- `procedure_or_public_service`: application, deadline, eligibility, counter, or procedure impact;
+- `cost_or_subsidy`: household cost, price, subsidy, eligibility, or payment impact;
+- `transport_or_infra`: service, road, commute, travel, or user impact;
+- `consumer_or_payment`: payment, app, service access, fee, or method impact;
+- `health_or_education`: healthcare, education, school, student, or target-group impact;
+- `financial_service_access`: banking, financial-service access, counter, or customer-service impact.
+
+If body evidence has focus but Groq still returns generic `life_impact`, validation rejects the Groq summary and the item falls back to RSS-rendered output.
+
 ## Boundary
 
 This change does not alter RSS source selection, workflow flags, Pages index generation, or the guarded overwrite validator.
@@ -97,3 +118,5 @@ Fixture checks should confirm:
 - structured `body_evidence` is sent when policy is `use_body`;
 - political-context transport text can be kept as `rss_only`;
 - tax/application/public-service evidence can be kept as `use_body`.
+- generic `life_impact` is rejected when `body_evidence_focus` is present;
+- focus-specific `life_impact` is accepted when supported by body evidence.

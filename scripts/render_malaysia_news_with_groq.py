@@ -258,6 +258,14 @@ conclusionは30〜45字程度の自然な日本語にしてください。
 titleにある主要な具体要素を落とさないでください。
 what_happenedはRSS title/descriptionにある事実だけで、最大2文にしてください。
 life_impactでは「生活・仕事・家計に関わる背景ニュース」のような汎用文を避けてください。
+body_evidence.focusがある場合、life_impactはfocusに沿って具体化してください。
+focusがprocedure_or_public_serviceなら、申請・期限・対象者・窓口・手続き変更に関する影響として書いてください。
+focusがcost_or_subsidyなら、家計・価格・補助・対象条件・支払いに関する影響として書いてください。
+focusがtransport_or_infraなら、運行・道路・通勤・移動・利用者影響として書いてください。
+focusがconsumer_or_paymentなら、決済・アプリ・利用手段・手数料に関する影響として書いてください。
+focusがhealth_or_educationなら、受診・制度・学校・対象者に関する影響として書いてください。
+focusがfinancial_service_accessなら、銀行や金融サービス利用・窓口・顧客対応に関する影響として書いてください。
+body_evidence.focusが空、またはevidenceが弱い場合だけ、控えめな背景情報として書いてください。
 影響が分からない場合は「制度や進学条件に関わる背景情報として確認しておく価値があります。」程度にしてください。
 RSSにない事実、対象者、影響、次アクションを足さないでください。
 “lost students”, “losing students” は死亡を意味すると明確でない限り、「生徒の利用が減った」「利用者を失った」「生徒が乗らなくなった」のように訳してください。
@@ -310,6 +318,7 @@ def looks_english_or_bm(text: str) -> bool:
 def looks_generic(text: str) -> bool:
     generic_phrases = [
         "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります",
+        "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
         "背景ニュースとして",
         "把握しておく価値があります",
         "rssでは",
@@ -317,6 +326,94 @@ def looks_generic(text: str) -> bool:
     ]
     lower_text = text.lower()
     return any(phrase.lower() in lower_text for phrase in generic_phrases)
+
+
+BODY_FOCUS_LIFE_IMPACT_CUES = {
+    "procedure_or_public_service": [
+        "申請",
+        "期限",
+        "対象",
+        "窓口",
+        "手続き",
+        "制度",
+        "利用",
+        "確認",
+    ],
+    "cost_or_subsidy": [
+        "家計",
+        "価格",
+        "補助",
+        "対象",
+        "支払い",
+        "負担",
+        "生活費",
+        "費用",
+    ],
+    "transport_or_infra": [
+        "運行",
+        "道路",
+        "通勤",
+        "移動",
+        "利用者",
+        "交通",
+        "路線",
+        "駅",
+    ],
+    "consumer_or_payment": [
+        "決済",
+        "アプリ",
+        "利用",
+        "手数料",
+        "支払い",
+        "カード",
+        "サービス",
+    ],
+    "health_or_education": [
+        "受診",
+        "医療",
+        "制度",
+        "学校",
+        "対象",
+        "学生",
+        "教育",
+        "健康",
+    ],
+    "financial_service_access": [
+        "銀行",
+        "金融",
+        "窓口",
+        "顧客",
+        "口座",
+        "サービス",
+        "利用",
+    ],
+}
+
+
+def body_evidence_focus_values(item: dict[str, Any]) -> list[str]:
+    if item.get("body_excerpt_policy") != "use_body":
+        return []
+    focus = item.get("body_evidence_focus")
+    if not isinstance(focus, list):
+        return []
+    return [clean_text(value) for value in focus if clean_text(value)]
+
+
+def life_impact_matches_body_focus(item: dict[str, Any], life_impact: str) -> bool:
+    focus_values = body_evidence_focus_values(item)
+    if not focus_values:
+        return True
+    text = clean_text(life_impact)
+    if not text:
+        return False
+    if looks_generic(text):
+        return False
+    allowed_cues: list[str] = []
+    for focus in focus_values:
+        allowed_cues.extend(BODY_FOCUS_LIFE_IMPACT_CUES.get(focus, []))
+    if not allowed_cues:
+        return True
+    return any(cue in text for cue in allowed_cues)
 
 
 def item_needs_groq(item: dict[str, Any]) -> bool:
@@ -665,6 +762,9 @@ def validate_summary_against_source(item: dict[str, Any], summary: dict[str, Any
 
 
     life_impact_text = summary.get("life_impact", "")
+    if not life_impact_matches_body_focus(item, life_impact_text):
+        raise ValueError("generic life_impact for body_evidence focus")
+
     if "進学条件" in life_impact_text:
         admission_evidence = [
             "admission",
