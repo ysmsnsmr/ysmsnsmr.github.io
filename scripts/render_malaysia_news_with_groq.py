@@ -245,9 +245,10 @@ BACKGROUND_IMPACT_WORDS = [
 ]
 
 SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュースダッシュボードの日本語編集者です。
-入力はRSSのtitle、description、既存summary、必要に応じて短い本文excerptだけです。
-本文excerptがない場合はRSSの情報だけを使ってください。
-excerptにない事実や生活影響を推測で足さないでください。
+入力はRSSのtitle、description、既存summary、必要に応じてbody_evidenceだけです。
+body_evidenceがない場合はRSSの情報だけを使ってください。
+body_evidenceは本文から抽出・掃除された短い証拠です。body_evidenceにない事実や生活影響を推測で足さないでください。
+body_evidence.forbiddenに示された要素（dateline、wire credit、広告、関連記事、根拠のない条件など）は出力に使わないでください。
 入力にない事実を追加しないでください。
 カテゴリ、出典、URL、日付は変更しないでください。
 英語またはマレー語の文を、自然で短い日本語に整えてください。
@@ -343,9 +344,19 @@ def groq_payload_for_item(item: dict[str, Any]) -> dict[str, Any]:
         "tags": item.get("tags") if isinstance(item.get("tags"), list) else [],
         "flags": item.get("flags") if isinstance(item.get("flags"), dict) else {},
     }
-    if item.get("body_excerpt_policy") == "use_body" and clean_text(item.get("body_excerpt")):
-        payload["body_excerpt"] = item.get("body_excerpt")
-        payload["content_source"] = item.get("content_source")
+    if item.get("body_excerpt_policy") == "use_body":
+        evidence_excerpt = clean_text(item.get("body_evidence_excerpt"))
+        if evidence_excerpt:
+            focus = item.get("body_evidence_focus")
+            forbidden = item.get("body_evidence_forbidden")
+            payload["body_evidence"] = {
+                "excerpt": evidence_excerpt,
+                "focus": focus if isinstance(focus, list) else [],
+                "forbidden": forbidden if isinstance(forbidden, list) else [],
+                "policy": item.get("body_excerpt_policy"),
+                "reason": item.get("body_excerpt_reason"),
+                "content_source": item.get("content_source"),
+            }
     return payload
 
 
@@ -414,6 +425,7 @@ def item_source_text(item: dict[str, Any]) -> str:
         [
             clean_text(item.get("title")),
             clean_text(item.get("description")),
+            clean_text(item.get("body_evidence_excerpt")),
         ]
     ).lower()
 

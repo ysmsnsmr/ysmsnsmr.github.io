@@ -127,11 +127,22 @@ FINANCIAL_SERVICE_ACCESS_PHRASES = [
 PUBLIC_SERVICE_PHRASES = [
     "ministry",
     "mof",
+    "lhdn",
+    "tax",
+    "tax exemption",
+    "e-derma",
     "jpj",
     "myjpj",
     "mykad",
     "immigration",
     "application",
+    "applications",
+    "permit",
+    "permits",
+    "licence",
+    "license",
+    "renewal",
+    "deadline",
     "counter",
     "public service",
     "government",
@@ -229,6 +240,61 @@ HEALTH_OR_EDUCATION_PHRASES = [
     "university",
     "spm",
 ]
+POLITICAL_CONTEXT_PHRASES = [
+    "election",
+    "party",
+    "parties",
+    "dap",
+    "barisan nasional",
+    "bn",
+    "pakatan harapan",
+    "ph",
+    "chairman",
+    "secretary-general",
+    "menteri besar",
+    "caretaker",
+    "campaign",
+    "political",
+]
+TRANSPORT_OPERATIONAL_PHRASES = [
+    "service disruption",
+    "service launch",
+    "launch of",
+    "starts",
+    "begins",
+    "route",
+    "routes",
+    "schedule",
+    "timetable",
+    "fare",
+    "station",
+    "stations",
+    "closure",
+    "closed",
+    "open",
+    "opens",
+    "frequency",
+    "operation",
+    "operations",
+]
+BODY_EVIDENCE_FORBIDDEN = [
+    "dateline",
+    "wire_credit",
+    "advertisement",
+    "related_links",
+    "unsupported_conditions",
+]
+DATELINE_PREFIX_RE = re.compile(
+    r"^(?:KUALA LUMPUR|PUTRAJAYA|MELAKA|GEORGE TOWN|IPOH|ALOR SETAR|JOHOR BARU|KOTA KINABALU|KUCHING),\s+"
+    r"(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+"
+    r"\d{1,2}\s+[—–-]\s*",
+    flags=re.IGNORECASE,
+)
+WIRE_CREDIT_RE = re.compile(r"\s+[—–-]\s*(?:Bernama|Reuters|AFP|Malay Mail)\s*$", flags=re.IGNORECASE)
+BODY_NOISE_RE = re.compile(
+    r"\b(?:Advertisement|Related Articles|You May Also Like|Read more|Subscribe to our newsletter)\b",
+    flags=re.IGNORECASE,
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -279,6 +345,36 @@ def excerpt(text: str, max_chars: int) -> str:
     if max_chars <= 3:
         return cleaned[:max_chars]
     return cleaned[: max_chars - 3].rstrip() + "..."
+
+
+def split_sentences(text: str) -> list[str]:
+    cleaned = clean_text(text)
+    if not cleaned:
+        return []
+    parts = re.split(r"(?<=[.!?。！？])\s+", cleaned)
+    return [part.strip() for part in parts if part.strip()]
+
+
+def cleanup_body_evidence(text: str, max_chars: int) -> str:
+    cleaned = clean_text(text)
+    if not cleaned:
+        return ""
+    cleaned = DATELINE_PREFIX_RE.sub("", cleaned)
+    cleaned = WIRE_CREDIT_RE.sub("", cleaned)
+    cleaned = BODY_NOISE_RE.split(cleaned)[0]
+    cleaned = WIRE_CREDIT_RE.sub("", cleaned)
+    sentences: list[str] = []
+    for sentence in split_sentences(cleaned):
+        sentence = DATELINE_PREFIX_RE.sub("", sentence).strip()
+        sentence = WIRE_CREDIT_RE.sub("", sentence).strip()
+        if not sentence or BODY_NOISE_RE.search(sentence):
+            continue
+        sentences.append(sentence)
+        if len(clean_text(" ".join(sentences))) >= max_chars:
+            break
+    evidence = " ".join(sentences) if sentences else cleaned
+    evidence = WIRE_CREDIT_RE.sub("", evidence).strip()
+    return excerpt(evidence, max_chars)
 
 
 def selected_items_payload(data: Any) -> tuple[list[dict[str, Any]], bool]:
@@ -333,10 +429,15 @@ def has_any(text: str, phrases: list[str]) -> bool:
     return any(has_phrase(text, phrase) for phrase in phrases)
 
 
+def matched_phrases(text: str, phrases: list[str]) -> list[str]:
+    return [phrase for phrase in phrases if has_phrase(text, phrase)]
+
+
 def normalized_blob(item: dict[str, Any]) -> str:
     parts = [
         item_title(item),
         item_rss_summary(item),
+        item.get("body_evidence_excerpt"),
         item.get("body_excerpt"),
     ]
     return clean_text(" ".join(text_value(part) for part in parts)).lower()
@@ -366,6 +467,8 @@ def classify_body_excerpt_policy(item: dict[str, Any]) -> tuple[str, str]:
         return RSS_ONLY, "blocked_incident"
     if is_oil_geopolitics_market_noise(text):
         return RSS_ONLY, "blocked_oil_geopolitics"
+    if has_any(text, POLITICAL_CONTEXT_PHRASES) and not has_any(text, TRANSPORT_OPERATIONAL_PHRASES):
+        return RSS_ONLY, "blocked_political_context"
     if has_any(text, FINANCIAL_SERVICE_ACCESS_PHRASES):
         return USE_BODY, "allowed_financial_service_access"
     if has_any(text, AGRICULTURE_OR_PUBLIC_HEALTH_PHRASES):
@@ -393,8 +496,38 @@ def base_body_fields(error: str = "") -> dict[str, Any]:
         "body_fetched": False,
         "body_text_length": 0,
         "body_excerpt": "",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": BODY_EVIDENCE_FORBIDDEN,
         "body_error": error,
     }
+
+
+def body_evidence_focus(item: dict[str, Any]) -> list[str]:
+    text = normalized_blob(item)
+    focus_groups = [
+        ("procedure_or_public_service", PUBLIC_SERVICE_PHRASES),
+        ("cost_or_subsidy", COST_OR_SUBSIDY_PHRASES),
+        ("transport_or_infra", TRANSPORT_OR_INFRA_PHRASES + TRANSPORT_OPERATIONAL_PHRASES),
+        ("consumer_or_payment", CONSUMER_OR_CROSSBORDER_SERVICE_PHRASES),
+        ("vehicle_or_transport_service", VEHICLE_OR_TRANSPORT_SERVICE_PHRASES),
+        ("health_or_education", HEALTH_OR_EDUCATION_PHRASES),
+        ("financial_service_access", FINANCIAL_SERVICE_ACCESS_PHRASES),
+        ("agriculture_or_public_health", AGRICULTURE_OR_PUBLIC_HEALTH_PHRASES),
+    ]
+    return [name for name, phrases in focus_groups if matched_phrases(text, phrases)]
+
+
+def apply_body_evidence_fields(item: dict[str, Any], excerpt_chars: int) -> None:
+    if item.get("content_source") != ARTICLE_BODY:
+        item["body_evidence_excerpt"] = ""
+        item["body_evidence_focus"] = []
+        item["body_evidence_forbidden"] = BODY_EVIDENCE_FORBIDDEN
+        return
+    evidence = cleanup_body_evidence(clean_text(item.get("body_excerpt")), excerpt_chars)
+    item["body_evidence_excerpt"] = evidence
+    item["body_evidence_focus"] = body_evidence_focus(item)
+    item["body_evidence_forbidden"] = BODY_EVIDENCE_FORBIDDEN
 
 
 def fetch_article_body(
@@ -446,6 +579,7 @@ def enrich_item(
         else:
             output.update(base_body_fields("skipped_by_policy"))
 
+        apply_body_evidence_fields(output, excerpt_chars)
         policy, reason = classify_body_excerpt_policy(output)
     except Exception as exc:
         output.update(base_body_fields(f"classification_error: {type(exc).__name__}: {exc}"))
@@ -473,6 +607,12 @@ def validate_item(item: dict[str, Any]) -> None:
         raise ValueError("body_excerpt_used does not match body_excerpt_policy.")
     if selected_context_source != (SELECTED_ARTICLE_BODY if policy == USE_BODY else SELECTED_RSS_SUMMARY):
         raise ValueError("selected_context_source does not match body_excerpt_policy.")
+    if not isinstance(item.get("body_evidence_focus"), list):
+        raise ValueError("body_evidence_focus must be a list.")
+    if not isinstance(item.get("body_evidence_forbidden"), list):
+        raise ValueError("body_evidence_forbidden must be a list.")
+    if policy == USE_BODY and not clean_text(item.get("body_evidence_excerpt")):
+        raise ValueError("body_evidence_excerpt is required when body excerpt is used.")
 
 
 def enrich_payload(data: Any, Article: Any, Config: Any, timeout_sec: float, excerpt_chars: int) -> Any:
@@ -492,6 +632,7 @@ def enrich_payload(data: Any, Article: Any, Config: Any, timeout_sec: float, exc
         "content_source_values": sorted(CONTENT_SOURCE_VALUES),
         "body_excerpt_policy_values": sorted(POLICY_VALUES),
         "selected_context_source_values": sorted(SELECTED_CONTEXT_SOURCE_VALUES),
+        "body_evidence_forbidden": BODY_EVIDENCE_FORBIDDEN,
         "excerpt_chars": excerpt_chars,
         "counts": {
             "items": len(enriched_items),
