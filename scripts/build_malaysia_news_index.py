@@ -72,12 +72,18 @@ def format_date(date_text: str) -> str:
     return f"{parsed.year}年{parsed.month}月{parsed.day}日"
 
 
+def format_count(value: str) -> str:
+    if value == "不明" or value.endswith("件"):
+        return value
+    return f"{value}件"
+
+
 def render_counts(day: NewsDay) -> str:
     parts = []
     for category in CATEGORIES:
         label = category.strip("【】")
         parts.append(
-            f'<span class="pill"><span>{esc(label)}</span><strong>{day.category_counts.get(category, 0)}</strong></span>'
+            f'<span class="count-pill"><span>{esc(label)}</span><strong>{day.category_counts.get(category, 0)}</strong></span>'
         )
     return "\n".join(parts)
 
@@ -89,32 +95,73 @@ def render_conclusions(day: NewsDay, limit: int = 3) -> str:
     return f"<ol>{items}</ol>"
 
 
-def render_card(day: NewsDay, latest: bool = False) -> str:
+def render_latest_summary(day: NewsDay, generated: str) -> str:
     failed = ""
     if day.failed_sources and day.failed_sources != "なし":
         failed = f'<p class="failed">失敗ソース: {esc(day.failed_sources)}</p>'
 
-    classes = "day-card latest" if latest else "day-card"
     return f"""
-      <article class="{classes}">
-        <div class="card-head">
+      <article class="today-panel">
+        <div class="today-head">
           <div>
-            <p class="eyebrow">Malaysia RSS Summary</p>
+            <p class="eyebrow">Today</p>
             <h2>{esc(format_date(day.date))}</h2>
+            <p class="muted">生成日時: {esc(generated)}</p>
           </div>
-          <a class="open-link" href="{relative_link(day)}">Markdownを開く</a>
+          <a class="primary-link" href="{relative_link(day)}">今日のMarkdownを開く</a>
         </div>
-        <div class="counts">
+        <div class="today-metrics" aria-label="今日の集計">
+          <div>
+            <span>処理対象</span>
+            <strong>{esc(day.processed_count)}</strong>
+          </div>
+          <div>
+            <span>要約対象</span>
+            <strong>{esc(day.summarized_count)}</strong>
+          </div>
+          <div>
+            <span>失敗ソース</span>
+            <strong>{esc(day.failed_sources)}</strong>
+          </div>
+        </div>
+        <div class="counts" aria-label="カテゴリ別件数">
           {render_counts(day)}
         </div>
-        <div class="metrics">
-          <span>処理対象: {esc(day.processed_count)}</span>
-          <span>要約対象: {esc(day.summarized_count)}</span>
+        <div class="today-conclusions">
+          <h3>今日の要点</h3>
+          {render_conclusions(day)}
         </div>
-        {render_conclusions(day)}
         {failed}
       </article>
     """
+
+
+def render_recent_day(day: NewsDay) -> str:
+    failed_label = "失敗なし" if day.failed_sources == "なし" else f"失敗: {day.failed_sources}"
+    return f"""
+        <article class="recent-row">
+          <div class="recent-date">
+            <p class="eyebrow">Daily</p>
+            <h3>{esc(format_date(day.date))}</h3>
+          </div>
+          <div class="recent-body">
+            <div class="counts" aria-label="カテゴリ別件数">
+              {render_counts(day)}
+            </div>
+            {render_conclusions(day, limit=2)}
+          </div>
+          <div class="recent-actions">
+            <span>{esc(format_count(day.summarized_count))} / {esc(failed_label)}</span>
+            <a class="open-link" href="{relative_link(day)}">Markdown</a>
+          </div>
+        </article>
+    """
+
+
+def render_recent(days: list[NewsDay]) -> str:
+    if not days:
+        return '<p class="muted">比較できる直近日はまだありません。</p>'
+    return "\n".join(render_recent_day(day) for day in days)
 
 
 def render_archive(days: list[NewsDay]) -> str:
@@ -124,7 +171,8 @@ def render_archive(days: list[NewsDay]) -> str:
         f"""
         <li>
           <a href="{relative_link(day)}">{esc(format_date(day.date))}</a>
-          <span>{esc(day.summarized_count)} / 失敗ソース: {esc(day.failed_sources)}</span>
+          <span>{esc(format_count(day.summarized_count))}</span>
+          <span>{esc(day.failed_sources)}</span>
         </li>
         """
         for day in days
@@ -139,15 +187,17 @@ def render_html(days: list[NewsDay]) -> str:
         f"{generated_at.hour:02d}:{generated_at.minute:02d} MYT"
     )
     latest = days[0] if days else None
-    recent = days[:7]
+    recent = days[1:7]
     older = days[7:]
 
     if latest:
         latest_link = f'<a href="{relative_link(latest)}">{esc(format_date(latest.date))}のMarkdownを見る</a>'
-        recent_cards = "\n".join(render_card(day, latest=(idx == 0)) for idx, day in enumerate(recent))
+        latest_summary = render_latest_summary(latest, generated).strip()
+        recent_rows = render_recent(recent).strip()
     else:
         latest_link = '<span class="muted">まだ記事がありません。</span>'
-        recent_cards = '<p class="muted">まだ記事がありません。</p>'
+        latest_summary = '<p class="muted">まだ記事がありません。</p>'
+        recent_rows = '<p class="muted">まだ記事がありません。</p>'
 
     return f"""<!doctype html>
 <html lang="ja">
@@ -158,14 +208,16 @@ def render_html(days: list[NewsDay]) -> str:
   <style>
     :root {{
       color-scheme: light;
-      --bg: #f7f8f4;
+      --bg: #f5f7f4;
       --panel: #ffffff;
       --ink: #1b2420;
       --muted: #65716c;
       --line: #dce3dd;
       --accent: #006b5f;
+      --accent-strong: #004c45;
       --accent-soft: #e5f3ef;
       --warn: #8f4c00;
+      --shadow: 0 12px 28px rgba(27, 36, 32, 0.07);
     }}
     * {{ box-sizing: border-box; }}
     body {{
@@ -176,57 +228,153 @@ def render_html(days: list[NewsDay]) -> str:
       line-height: 1.65;
     }}
     main {{
-      width: min(1040px, calc(100% - 32px));
+      width: min(1080px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 40px 0 56px;
+      padding: 32px 0 56px;
     }}
     header {{
-      display: grid;
-      gap: 12px;
-      margin-bottom: 28px;
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-end;
+      margin-bottom: 22px;
     }}
     h1, h2, h3, p {{ margin-top: 0; }}
     h1 {{
-      margin-bottom: 4px;
-      font-size: clamp(2rem, 5vw, 4rem);
-      line-height: 1.05;
+      margin-bottom: 8px;
+      font-size: clamp(2rem, 4vw, 3.35rem);
+      line-height: 1.08;
       letter-spacing: 0;
     }}
-    h2 {{ margin-bottom: 0; font-size: 1.45rem; }}
-    h3 {{ margin: 34px 0 14px; font-size: 1.1rem; }}
-    a {{ color: var(--accent); text-decoration-thickness: 0.08em; text-underline-offset: 0.18em; }}
-    .subhead {{ max-width: 720px; color: var(--muted); }}
+    h2 {{
+      margin-bottom: 0;
+      font-size: clamp(1.65rem, 3vw, 2.4rem);
+      line-height: 1.16;
+    }}
+    h3 {{ margin: 0; font-size: 1rem; line-height: 1.35; }}
+    a {{
+      color: var(--accent);
+      text-decoration-thickness: 0.08em;
+      text-underline-offset: 0.18em;
+    }}
+    a:focus-visible {{
+      outline: 3px solid #f4c04d;
+      outline-offset: 3px;
+      border-radius: 6px;
+    }}
+    .subhead {{ max-width: 640px; margin-bottom: 0; color: var(--muted); }}
     .meta-bar {{
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px 18px;
-      align-items: center;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-end;
       color: var(--muted);
       font-size: 0.95rem;
+      text-align: right;
+      white-space: nowrap;
     }}
-    .cards {{
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
-    }}
-    .day-card {{
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel);
-      padding: 18px;
-      box-shadow: 0 1px 2px rgba(20, 32, 28, 0.04);
-    }}
-    .day-card.latest {{
-      grid-column: 1 / -1;
-      border-color: #9accc1;
-      background: linear-gradient(180deg, #ffffff 0%, #f0faf7 100%);
-    }}
-    .card-head {{
+    section + section {{ margin-top: 30px; }}
+    .section-head {{
       display: flex;
       justify-content: space-between;
       gap: 16px;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }}
+    .section-head h2 {{
+      font-size: 1.08rem;
+      line-height: 1.3;
+    }}
+    .section-head p {{
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }}
+    .today-panel {{
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }}
+    .today-head {{
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
       align-items: flex-start;
+      margin-bottom: 18px;
+    }}
+    .today-metrics {{
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
       margin-bottom: 14px;
+    }}
+    .today-metrics div {{
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfa;
+      padding: 11px 12px;
+    }}
+    .today-metrics span {{
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }}
+    .today-metrics strong {{
+      display: block;
+      margin-top: 2px;
+      color: var(--ink);
+      font-size: 1.12rem;
+      line-height: 1.2;
+    }}
+    .today-conclusions {{
+      display: grid;
+      grid-template-columns: 9rem minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }}
+    .today-conclusions h3 {{
+      color: var(--accent-strong);
+      font-size: 0.95rem;
+    }}
+    .recent-list {{
+      display: grid;
+      gap: 10px;
+    }}
+    .recent-row {{
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: stretch;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 14px;
+    }}
+    .recent-date {{
+      flex: 0 0 9.4rem;
+      padding-right: 12px;
+      border-right: 1px solid var(--line);
+    }}
+    .recent-date h3 {{ white-space: nowrap; }}
+    .recent-body {{
+      flex: 1 1 auto;
+      min-width: 0;
+    }}
+    .recent-actions {{
+      flex: 0 0 9rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      text-align: right;
     }}
     .eyebrow {{
       margin-bottom: 2px;
@@ -234,39 +382,50 @@ def render_html(days: list[NewsDay]) -> str:
       font-size: 0.78rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
     }}
+    .primary-link,
     .open-link {{
       flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
       border: 1px solid var(--line);
       border-radius: 999px;
-      padding: 6px 10px;
+      padding: 7px 13px;
       background: #fff;
       font-size: 0.9rem;
+      line-height: 1.2;
       text-decoration: none;
+    }}
+    .primary-link {{
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
     }}
     .counts {{
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin: 12px 0;
+      margin: 0;
     }}
-    .pill {{
+    .count-pill {{
       display: inline-flex;
       gap: 8px;
       align-items: center;
+      min-height: 28px;
       border-radius: 999px;
       background: var(--accent-soft);
-      padding: 5px 10px;
+      padding: 4px 10px;
       font-size: 0.88rem;
     }}
-    .metrics {{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px 14px;
-      margin-bottom: 12px;
-      color: var(--muted);
-      font-size: 0.9rem;
+    .count-pill strong {{
+      color: var(--accent-strong);
+    }}
+    .recent-body ol {{
+      margin-top: 10px;
     }}
     ol {{
       margin: 0;
@@ -287,41 +446,112 @@ def render_html(days: list[NewsDay]) -> str:
       background: var(--panel);
     }}
     .archive-list li {{
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 12px 14px;
+      display: grid;
+      grid-template-columns: minmax(11rem, 1fr) 5rem minmax(8rem, 1fr);
+      gap: 12px;
+      align-items: center;
+      padding: 10px 14px;
     }}
     .archive-list li + li {{ border-top: 1px solid var(--line); }}
     .archive-list span {{ color: var(--muted); }}
     .muted {{ color: var(--muted); }}
     @media (max-width: 640px) {{
-      main {{ width: min(100% - 20px, 1040px); padding-top: 24px; }}
-      .card-head, .archive-list li {{ flex-direction: column; }}
-      .open-link {{ align-self: flex-start; }}
+      main {{ width: min(100% - 20px, 1080px); padding-top: 24px; }}
+      header {{
+        display: grid;
+        gap: 14px;
+        align-items: start;
+      }}
+      .meta-bar {{
+        align-items: flex-start;
+        text-align: left;
+        white-space: normal;
+      }}
+      .today-panel {{ padding: 18px; }}
+      .today-head {{
+        display: grid;
+        gap: 14px;
+      }}
+      .primary-link {{
+        width: 100%;
+        min-height: 44px;
+      }}
+      .today-metrics {{
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+      }}
+      .today-metrics div {{ padding: 9px 8px; }}
+      .today-metrics strong {{ font-size: 1rem; }}
+      .today-conclusions {{
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }}
+      .section-head {{
+        display: grid;
+        gap: 2px;
+      }}
+      .recent-row {{
+        display: grid;
+        gap: 12px;
+      }}
+      .recent-date {{
+        flex-basis: auto;
+        padding-right: 0;
+        padding-bottom: 10px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }}
+      .recent-actions {{
+        flex-basis: auto;
+        flex-direction: row;
+        align-items: center;
+        text-align: left;
+      }}
+      .open-link {{ min-height: 40px; }}
+      .archive-list li {{
+        grid-template-columns: 1fr;
+        gap: 4px;
+        padding: 12px 14px;
+      }}
     }}
   </style>
 </head>
 <body>
   <main>
     <header>
-      <h1>Malaysia RSSニュース要約</h1>
-      <p class="subhead">Malay Mail と Astro Awani のRSSから生成した、マレーシア国内ニュースの日次アーカイブです。</p>
+      <div>
+        <h1>Malaysia RSSニュース要約</h1>
+        <p class="subhead">Malay Mail と Astro Awani のRSSから生成した、マレーシア国内ニュースの日次ダッシュボードです。</p>
+      </div>
       <div class="meta-bar">
-        <span>生成日時: {esc(generated)}</span>
         <span>最新: {latest_link}</span>
+        <span>更新: {esc(generated)}</span>
       </div>
     </header>
 
+    <section aria-labelledby="today-heading">
+      <div class="section-head">
+        <h2 id="today-heading">今日のサマリー</h2>
+        <p>まず確認したい件数と要点</p>
+      </div>
+      {latest_summary}
+    </section>
+
     <section aria-labelledby="recent-heading">
-      <h3 id="recent-heading">直近7日</h3>
-      <div class="cards">
-        {recent_cards}
+      <div class="section-head">
+        <h2 id="recent-heading">直近7日の流れ</h2>
+        <p>今日を除く直近6日を比較</p>
+      </div>
+      <div class="recent-list">
+        {recent_rows}
       </div>
     </section>
 
     <section aria-labelledby="archive-heading">
-      <h3 id="archive-heading">それ以前</h3>
+      <div class="section-head">
+        <h2 id="archive-heading">それ以前</h2>
+        <p>日別Markdownアーカイブ</p>
+      </div>
       {render_archive(older)}
     </section>
   </main>
