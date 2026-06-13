@@ -25,6 +25,7 @@ pnpm-debug.log*
 # Temporary files
 *.tmp
 *.temp
+*.bak_*
 *.swp
 *.swo
 tmp/
