@@ -976,11 +976,9 @@ def paul_tan_force_all_gate_reason(source_text: str) -> str:
 
 def force_all_gate_reason(item: dict[str, Any], summary: dict[str, Any]) -> str:
     """Return a rejection reason for force-all accepted summaries, or empty string when safe."""
-    if has_force_all_body_evidence(item, summary):
-        return ""
-
     source_text = force_all_source_text(item)
     rendered_text = force_all_summary_text(summary)
+    focus_values = body_evidence_focus_values(item)
 
     if is_paul_tan_source(item):
         reason = paul_tan_force_all_gate_reason(source_text)
@@ -990,8 +988,12 @@ def force_all_gate_reason(item: dict[str, Any], summary: dict[str, Any]) -> str:
     has_transport_marker = contains_any(source_text, FORCE_ALL_TRANSPORT_MARKERS)
     has_transport_operation = contains_any(source_text, FORCE_ALL_TRANSPORT_OPERATIONAL_SIGNALS)
     has_political_context = contains_any(source_text, FORCE_ALL_POLITICAL_CONTEXT_SIGNALS)
-    if has_transport_marker and has_political_context and not has_transport_operation:
+    has_transport_focus = "transport_or_infra" in focus_values
+    if (has_transport_marker or has_transport_focus) and has_political_context and not has_transport_operation:
         return "transport_political_background_without_operational_impact"
+
+    if has_force_all_body_evidence(item, summary):
+        return ""
 
     has_money_background = contains_any(source_text, FORCE_ALL_MONEY_BACKGROUND_SIGNALS)
     has_money_concrete = contains_any(source_text, FORCE_ALL_MONEY_CONCRETE_SIGNALS)
