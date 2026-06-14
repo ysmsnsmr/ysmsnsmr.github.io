@@ -435,6 +435,61 @@ FORCE_ALL_POLITICAL_CONTEXT_SIGNALS = [
     "政党",
     "選挙",
 ]
+FORCE_ALL_TRANSPORT_POLITICAL_INVITATION_SIGNALS = [
+    "anthony loke",
+    "loke",
+    "onn hafiz",
+    "invitation",
+    "invite",
+    "invited",
+    "formal invite",
+    "surat jemputan",
+    "jemputan",
+    "jumpa di kulai",
+    "see you in kulai",
+    "touched",
+    "sincere",
+    "seat at the table",
+    "caretaker",
+    "barisan",
+    "umno",
+    "dap",
+    "pakatan harapan",
+    "election",
+    "招待",
+    "発言",
+    "政治",
+]
+FORCE_ALL_SCAM_INCIDENT_SIGNALS = [
+    "scam",
+    "fraud",
+    "cheated",
+    "online ipo",
+    "police report",
+    "lost rm",
+    "returned after",
+    "only rm",
+    "詐欺",
+    "被害",
+]
+FORCE_ALL_INDIVIDUAL_VICTIM_SIGNALS = [
+    "retiree",
+    "victim",
+    "79-year-old",
+    "man",
+    "woman",
+    "aged",
+    "invests",
+    "invested",
+    "lost",
+    "kuching",
+    "sibu",
+    "police",
+    "report",
+    "男性",
+    "女性",
+    "個人",
+]
 FORCE_ALL_MONEY_BACKGROUND_SIGNALS = [
     "ringgit",
     "bursa",
@@ -994,8 +1049,16 @@ def force_all_gate_reason(item: dict[str, Any], summary: dict[str, Any]) -> str:
     has_transport_operation = contains_any(source_text, FORCE_ALL_TRANSPORT_OPERATIONAL_SIGNALS)
     has_political_context = contains_any(source_text, FORCE_ALL_POLITICAL_CONTEXT_SIGNALS)
     has_transport_focus = "transport_or_infra" in focus_values
+    has_transport_invitation_context = contains_any(source_text, FORCE_ALL_TRANSPORT_POLITICAL_INVITATION_SIGNALS)
+    if (has_transport_marker or has_transport_focus) and has_transport_invitation_context:
+        return "transport_political_invitation_context"
     if (has_transport_marker or has_transport_focus) and has_political_context and not has_transport_operation:
         return "transport_political_background_without_operational_impact"
+
+    has_scam_incident = contains_any(source_text, FORCE_ALL_SCAM_INCIDENT_SIGNALS)
+    has_individual_victim = contains_any(source_text, FORCE_ALL_INDIVIDUAL_VICTIM_SIGNALS)
+    if has_scam_incident and has_individual_victim:
+        return "individual_scam_incident"
 
     if has_force_all_body_evidence(item, summary):
         return ""
