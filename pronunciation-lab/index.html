@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pronunciation Reproduction Lab | Yas Learning Portfolio</title>
+  <meta name="description" content="Superwhisperの文字起こしを使い、英語の目標音を通じる形で再現できたか確認する発音再現トレーニングです。">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="home-link" href="../experiments.html" aria-label="AI/Codex実験一覧へ戻る">←</a>
+    <div>
+      <p class="eyebrow">Superwhisper paste workflow</p>
+      <h1>Pronunciation Reproduction Lab</h1>
+    </div>
+  </header>
+
+  <main class="app-shell" data-pronunciation-app>
+    <section class="hero-panel" aria-labelledby="app-title">
+      <div>
+        <p class="eyebrow">発音再現トレーニング</p>
+        <h2 id="app-title">目標音が通じる形で再現できたかを見る</h2>
+        <p>Superwhisperの文字起こしを貼り付けて、重点語の位置だけを確認します。評価は音声解析ではなく、文字起こしベースの推定です。</p>
+      </div>
+      <ol class="flow-list" aria-label="練習の流れ">
+        <li>目標音</li>
+        <li>IPA確認</li>
+        <li>再現練習</li>
+        <li>文字起こし比較</li>
+        <li>改善点1つ</li>
+      </ol>
+    </section>
+
+    <section class="tabs-panel" aria-label="教材カテゴリ">
+      <div class="tabs" data-category-tabs></div>
+    </section>
+
+    <div class="workspace">
+      <aside class="lesson-rail" aria-label="教材一覧">
+        <h2>教材セット</h2>
+        <p>/h/ /f/ /v/ から始めて、母音、二重母音、R/L、THへ進みます。</p>
+        <div class="lesson-list" data-lesson-list></div>
+      </aside>
+
+      <section class="practice-panel" aria-label="練習">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow" data-lesson-title></p>
+            <h2>目標音 <span data-focus-sound></span></h2>
+          </div>
+          <div class="sound-badge" data-contrast></div>
+        </div>
+
+        <div class="target-grid">
+          <article class="target-card primary-target">
+            <span>targetWord</span>
+            <strong data-target-word></strong>
+            <em data-target-word-ipa></em>
+          </article>
+          <article class="target-card sentence-target">
+            <span>targetSentence</span>
+            <strong data-target-sentence></strong>
+            <em data-target-sentence-ipa></em>
+          </article>
+        </div>
+
+        <div class="chunk-row" data-chunks></div>
+
+        <div class="cue-panel">
+          <h3>再現の手がかり</h3>
+          <ul data-cues></ul>
+        </div>
+
+        <div class="transcript-panel">
+          <label for="transcript">Superwhisperの文字起こし</label>
+          <textarea id="transcript" rows="4" data-transcript></textarea>
+          <div class="action-row">
+            <button type="button" class="primary-button" data-judge>判定する</button>
+            <div class="sample-row" data-samples></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="result-panel" aria-label="結果" data-result>
+        <div class="result-card">
+          <p class="eyebrow">Result</p>
+          <h2 data-result-title>目標音チェック</h2>
+          <p class="result-message" data-result-message></p>
+          <div class="score-box">
+            <span>再現度</span>
+            <strong data-result-score></strong>
+            <em data-result-note></em>
+          </div>
+          <div class="improvement-box">
+            <span>改善ポイント</span>
+            <p data-improvement></p>
+          </div>
+          <p class="token-line" data-token-line></p>
+        </div>
+        <div class="next-drill">
+          <span>次の練習</span>
+          <p data-next-drill></p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
