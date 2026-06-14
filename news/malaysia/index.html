@@ -19,24 +19,26 @@
       --shadow: 0 12px 28px rgba(27, 36, 32, 0.07);
     }
     * { box-sizing: border-box; }
+    html { overflow-x: hidden; }
     body {
       margin: 0;
+      overflow-x: hidden;
       background: var(--bg);
       color: var(--ink);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.65;
     }
     main {
-      width: min(1080px, calc(100% - 32px));
+      width: min(1120px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 32px 0 56px;
+      padding: 34px 0 56px;
     }
     header {
       display: flex;
       justify-content: space-between;
       gap: 24px;
-      align-items: flex-end;
-      margin-bottom: 22px;
+      align-items: flex-start;
+      margin-bottom: 18px;
     }
     h1, h2, h3, p { margin-top: 0; }
     h1 {
@@ -61,18 +63,15 @@
       outline-offset: 3px;
       border-radius: 6px;
     }
-    .subhead { max-width: 640px; margin-bottom: 0; color: var(--muted); }
-    .meta-bar {
+    .subhead { max-width: 620px; margin-bottom: 0; color: var(--muted); }
+    .header-actions {
       display: flex;
-      flex-direction: column;
-      gap: 6px;
-      align-items: flex-end;
-      color: var(--muted);
-      font-size: 0.95rem;
-      text-align: right;
-      white-space: nowrap;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+      align-items: center;
     }
-    section + section { margin-top: 30px; }
+    section + section { margin-top: 32px; }
     .section-head {
       display: flex;
       justify-content: space-between;
@@ -89,6 +88,37 @@
       color: var(--muted);
       font-size: 0.92rem;
     }
+    .status-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 28px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.68);
+    }
+    .status-chip {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      min-height: 32px;
+      max-width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      padding: 5px 11px;
+      font-size: 0.88rem;
+    }
+    .status-chip span {
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .status-chip strong {
+      min-width: 0;
+      color: var(--ink);
+      overflow-wrap: anywhere;
+    }
     .today-panel {
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -103,77 +133,116 @@
       align-items: flex-start;
       margin-bottom: 18px;
     }
-    .today-metrics {
+    .focus-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-bottom: 14px;
+      gap: 12px;
     }
-    .today-metrics div {
+    .focus-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #fbfcfa;
-      padding: 11px 12px;
+      padding: 16px;
     }
-    .today-metrics span {
+    .focus-card h3 {
+      font-size: 1.04rem;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+    .item-category {
+      align-self: flex-start;
+      margin-bottom: 0;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      padding: 4px 10px;
+      color: var(--accent-strong);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .item-detail {
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
+    }
+    .item-detail span {
       display: block;
+      margin-bottom: 3px;
       color: var(--muted);
       font-size: 0.78rem;
+      font-weight: 700;
     }
-    .today-metrics strong {
-      display: block;
-      margin-top: 2px;
-      color: var(--ink);
-      font-size: 1.12rem;
-      line-height: 1.2;
+    .item-detail p {
+      margin-bottom: 0;
+      font-size: 0.94rem;
+      overflow-wrap: anywhere;
     }
-    .today-conclusions {
-      display: grid;
-      grid-template-columns: 9rem minmax(0, 1fr);
-      gap: 18px;
-      align-items: start;
-      margin-top: 18px;
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
-    }
-    .today-conclusions h3 {
-      color: var(--accent-strong);
-      font-size: 0.95rem;
+    .source-link,
+    .source-note {
+      margin-top: auto;
+      overflow-wrap: anywhere;
+      font-size: 0.86rem;
     }
     .recent-list {
       display: grid;
-      gap: 10px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
     }
-    .recent-row {
+    .recent-card {
       display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: stretch;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 0;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--panel);
       padding: 14px;
     }
-    .recent-date {
-      flex: 0 0 9.4rem;
-      padding-right: 12px;
-      border-right: 1px solid var(--line);
-    }
-    .recent-date h3 { white-space: nowrap; }
-    .recent-body {
-      flex: 1 1 auto;
-      min-width: 0;
-    }
-    .recent-actions {
-      flex: 0 0 9rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 12px;
+    .recent-card h3 { font-size: 1rem; }
+    .recent-body ol { margin-top: 0; }
+    .recent-meta {
+      margin: auto 0 0;
       color: var(--muted);
       font-size: 0.86rem;
-      text-align: right;
+    }
+    .compact-counts { gap: 6px; }
+    .compact-counts .count-pill {
+      min-height: 24px;
+      padding: 3px 8px;
+      font-size: 0.78rem;
+    }
+    .fallback-list {
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+    }
+    .fallback-list h3 {
+      margin-bottom: 8px;
+      color: var(--accent-strong);
+      font-size: 0.95rem;
+    }
+    .archive-month {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+    .archive-month + .archive-month { margin-top: 10px; }
+    .archive-month summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      cursor: pointer;
+      padding: 12px 14px;
+      color: var(--accent-strong);
+      font-weight: 700;
+    }
+    .archive-month summary span + span {
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 500;
     }
     .eyebrow {
       margin-bottom: 2px;
@@ -184,6 +253,7 @@
       letter-spacing: 0.06em;
     }
     .primary-link,
+    .secondary-link,
     .open-link {
       flex: 0 0 auto;
       display: inline-flex;
@@ -197,11 +267,16 @@
       font-size: 0.9rem;
       line-height: 1.2;
       text-decoration: none;
+      white-space: nowrap;
     }
     .primary-link {
       border-color: var(--accent);
       background: var(--accent);
       color: #fff;
+      font-weight: 700;
+    }
+    .secondary-link {
+      color: var(--accent-strong);
       font-weight: 700;
     }
     .counts {
@@ -215,20 +290,20 @@
       gap: 8px;
       align-items: center;
       min-height: 28px;
+      max-width: 100%;
       border-radius: 999px;
       background: var(--accent-soft);
       padding: 4px 10px;
       font-size: 0.88rem;
     }
-    .count-pill strong {
-      color: var(--accent-strong);
-    }
-    .recent-body ol {
-      margin-top: 10px;
-    }
+    .count-pill span { overflow-wrap: anywhere; }
+    .count-pill strong { color: var(--accent-strong); }
     ol {
       margin: 0;
       padding-left: 1.3rem;
+    }
+    li {
+      overflow-wrap: anywhere;
     }
     li + li { margin-top: 6px; }
     .failed {
@@ -240,9 +315,7 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel);
+      border-top: 1px solid var(--line);
     }
     .archive-list li {
       display: grid;
@@ -254,16 +327,24 @@
     .archive-list li + li { border-top: 1px solid var(--line); }
     .archive-list span { color: var(--muted); }
     .muted { color: var(--muted); }
-    @media (max-width: 640px) {
-      main { width: min(100% - 20px, 1080px); padding-top: 24px; }
+    @media (max-width: 760px) {
+      main {
+        width: min(100% - 20px, 1120px);
+        padding-top: 24px;
+      }
       header {
         display: grid;
         gap: 14px;
         align-items: start;
       }
-      .meta-bar {
-        align-items: flex-start;
-        text-align: left;
+      .header-actions {
+        justify-content: stretch;
+        width: 100%;
+      }
+      .header-actions a { flex: 1 1 11rem; }
+      .status-strip { margin-bottom: 24px; }
+      .status-chip {
+        min-height: 34px;
         white-space: normal;
       }
       .today-panel { padding: 18px; }
@@ -275,36 +356,25 @@
         width: 100%;
         min-height: 44px;
       }
-      .today-metrics {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 6px;
-      }
-      .today-metrics div { padding: 9px 8px; }
-      .today-metrics strong { font-size: 1rem; }
-      .today-conclusions {
+      .focus-grid {
         grid-template-columns: 1fr;
-        gap: 10px;
+        gap: 12px;
       }
       .section-head {
         display: grid;
         gap: 2px;
       }
-      .recent-row {
-        display: grid;
-        gap: 12px;
+      .recent-list {
+        display: flex;
+        gap: 10px;
+        margin-inline: -10px;
+        overflow-x: auto;
+        padding: 0 10px 6px;
+        scroll-snap-type: x proximity;
       }
-      .recent-date {
-        flex-basis: auto;
-        padding-right: 0;
-        padding-bottom: 10px;
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
-      }
-      .recent-actions {
-        flex-basis: auto;
-        flex-direction: row;
-        align-items: center;
-        text-align: left;
+      .recent-card {
+        flex: 0 0 min(18rem, calc(100vw - 48px));
+        scroll-snap-align: start;
       }
       .open-link { min-height: 40px; }
       .archive-list li {
@@ -320,447 +390,476 @@
     <header>
       <div>
         <h1>Malaysia RSSニュース要約</h1>
-        <p class="subhead">Malay Mail と Astro Awani のRSSから生成した、マレーシア国内ニュースの日次ダッシュボードです。</p>
+        <p class="subhead">生活に関わるマレーシアニュースをRSSから日次で収集・要約しています。</p>
       </div>
-      <div class="meta-bar">
-        <span>最新: <a href="./2026-06-14.md">2026年6月14日のMarkdownを見る</a></span>
-        <span>更新: 2026年6月14日 13:38 MYT</span>
+      <div class="header-actions">
+        <a class="primary-link" href="./2026-06-14.md">今日の全文</a>
+        <a class="secondary-link" href="#archive-heading">過去分を見る</a>
       </div>
     </header>
+    <div class="status-strip" aria-label="更新状況と集計">
+      <span class="status-chip"><span>更新</span><strong>2026年6月14日 14:35 MYT</strong></span>
+<span class="status-chip"><span>処理対象</span><strong>109件</strong></span>
+<span class="status-chip"><span>要約対象</span><strong>10件</strong></span>
+<span class="status-chip"><span>失敗ソース</span><strong>なし</strong></span>
+      <span class="count-pill"><span>速報</span><strong>0</strong></span>
+<span class="count-pill"><span>生活インパクト</span><strong>5</strong></span>
+<span class="count-pill"><span>知っておくと得</span><strong>5</strong></span>
+    </div>
 
     <section aria-labelledby="today-heading">
       <div class="section-head">
-        <h2 id="today-heading">今日のサマリー</h2>
-        <p>まず確認したい件数と要点</p>
+        <h2 id="today-heading">今日見るべき3件</h2>
+        <p>速報、生活インパクト、知っておくと得の順に表示</p>
       </div>
       <article class="today-panel">
         <div class="today-head">
           <div>
-            <p class="eyebrow">Today</p>
+            <p class="eyebrow">Latest</p>
             <h2>2026年6月14日</h2>
-            <p class="muted">生成日時: 2026年6月14日 13:38 MYT</p>
+            <p class="muted">カテゴリ順に、既存Markdownの並びを保って表示しています。</p>
           </div>
-          <a class="primary-link" href="./2026-06-14.md">今日のMarkdownを開く</a>
+          <a class="primary-link" href="./2026-06-14.md">今日の全文</a>
         </div>
-        <div class="today-metrics" aria-label="今日の集計">
-          <div>
-            <span>処理対象</span>
-            <strong>109件</strong>
+        <div class="focus-grid">
+
+        <article class="focus-card">
+          <p class="item-category">生活インパクト</p>
+          <h3>JPJや車両関連手続きで、運転者の確認事項が出る可能性があります。</h3>
+
+          <div class="item-detail">
+            <span>生活への影響</span>
+            <p>対象者は期限、必要書類、罰則、オンライン手続きの有無を確認する必要があります。</p>
           </div>
-          <div>
-            <span>要約対象</span>
-            <strong>10件</strong>
+
+
+          <div class="item-detail">
+            <span>次アクション</span>
+            <p>JPJや関係機関の公式案内を確認。</p>
           </div>
-          <div>
-            <span>失敗ソース</span>
-            <strong>なし</strong>
+
+          <a class="source-link" href="https://paultan.org/2026/06/12/the-use-of-albino-lights-not-approved-by-jpj-authorities-looking-closely-into-their-use-loke/">出典: Paul Tan（2026年6月12日）</a>
+        </article>
+
+
+        <article class="focus-card">
+          <p class="item-category">生活インパクト</p>
+          <h3>79歳の男性がオンライン投資詐欺に遭い、900万リンギット以上を失った</h3>
+
+          <div class="item-detail">
+            <span>生活への影響</span>
+            <p>金融サービスへのアクセスや投資に関する注意喚起として重要な背景情報です</p>
           </div>
+
+
+          <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/06/14/only-rm1000-returned-after-kuching-retiree-invests-rm9m-in-alleged-online-ipo-scam/223725">出典: Malay Mail（2026年6月14日）</a>
+        </article>
+
+
+        <article class="focus-card">
+          <p class="item-category">生活インパクト</p>
+          <h3>公共交通や通勤手段の選び方に影響する可能性があります。</h3>
+
+          <div class="item-detail">
+            <span>生活への影響</span>
+            <p>交通手段の選択肢や移動サービスへの影響が予想されます。</p>
+          </div>
+
+
+          <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/06/14/loke-renews-ktm-komuter-invitation-to-onn-hafiz-see-you-in-kulai-on-tuesday/223709">出典: Malay Mail（2026年6月14日）</a>
+        </article>
+
         </div>
-        <div class="counts" aria-label="カテゴリ別件数">
-          <span class="count-pill"><span>速報</span><strong>0</strong></span>
-<span class="count-pill"><span>生活インパクト</span><strong>5</strong></span>
-<span class="count-pill"><span>知っておくと得</span><strong>5</strong></span>
-        </div>
-        <div class="today-conclusions">
-          <h3>今日の要点</h3>
-          <ol><li>JPJや車両関連手続きで、運転者の確認事項が出る可能性があります。</li>
-<li>79歳の男性がオンライン投資詐欺に遭い、900万リンギット以上を失った</li>
-<li>公共交通や通勤手段の選び方に影響する可能性があります。</li></ol>
-        </div>
-        
+
       </article>
     </section>
 
     <section aria-labelledby="recent-heading">
       <div class="section-head">
         <h2 id="recent-heading">直近7日の流れ</h2>
-        <p>今日を除く直近6日を比較</p>
+        <p>今日を除く直近日を比較</p>
       </div>
       <div class="recent-list">
-        <article class="recent-row">
-          <div class="recent-date">
-            <p class="eyebrow">Daily</p>
-            <h3>2026年6月13日</h3>
-          </div>
-          <div class="recent-body">
-            <div class="counts" aria-label="カテゴリ別件数">
-              <span class="count-pill"><span>速報</span><strong>1</strong></span>
+        <article class="recent-card">
+          <p class="eyebrow">Daily</p>
+          <h3>2026年6月13日</h3>
+          <div class="counts compact-counts" aria-label="カテゴリ別件数">
+            <span class="count-pill"><span>速報</span><strong>1</strong></span>
 <span class="count-pill"><span>生活インパクト</span><strong>2</strong></span>
 <span class="count-pill"><span>知っておくと得</span><strong>5</strong></span>
-            </div>
+          </div>
+          <div class="recent-body">
             <ol><li>KLを含む複数地域で雷雨・大雨・強風への注意が必要です。</li>
 <li>JPJや車両関連手続きで、運転者の確認事項が出る可能性があります。</li></ol>
           </div>
-          <div class="recent-actions">
-            <span>8件 / 失敗なし</span>
-            <a class="open-link" href="./2026-06-13.md">Markdown</a>
-          </div>
+          <p class="recent-meta">8件 / 失敗なし</p>
+          <a class="open-link" href="./2026-06-13.md">日別メモ</a>
         </article>
-    
 
-        <article class="recent-row">
-          <div class="recent-date">
-            <p class="eyebrow">Daily</p>
-            <h3>2026年6月12日</h3>
-          </div>
-          <div class="recent-body">
-            <div class="counts" aria-label="カテゴリ別件数">
-              <span class="count-pill"><span>速報</span><strong>0</strong></span>
+
+        <article class="recent-card">
+          <p class="eyebrow">Daily</p>
+          <h3>2026年6月12日</h3>
+          <div class="counts compact-counts" aria-label="カテゴリ別件数">
+            <span class="count-pill"><span>速報</span><strong>0</strong></span>
 <span class="count-pill"><span>生活インパクト</span><strong>1</strong></span>
 <span class="count-pill"><span>知っておくと得</span><strong>8</strong></span>
-            </div>
+          </div>
+          <div class="recent-body">
             <ol><li>JPJや車両関連手続きで、運転者の確認事項が出る可能性があります。</li>
 <li>Bursa Malaysiaは慎重な値動きが見込まれています。</li></ol>
           </div>
-          <div class="recent-actions">
-            <span>9件 / 失敗なし</span>
-            <a class="open-link" href="./2026-06-12.md">Markdown</a>
-          </div>
+          <p class="recent-meta">9件 / 失敗なし</p>
+          <a class="open-link" href="./2026-06-12.md">日別メモ</a>
         </article>
-    
 
-        <article class="recent-row">
-          <div class="recent-date">
-            <p class="eyebrow">Daily</p>
-            <h3>2026年6月11日</h3>
-          </div>
-          <div class="recent-body">
-            <div class="counts" aria-label="カテゴリ別件数">
-              <span class="count-pill"><span>速報</span><strong>1</strong></span>
+
+        <article class="recent-card">
+          <p class="eyebrow">Daily</p>
+          <h3>2026年6月11日</h3>
+          <div class="counts compact-counts" aria-label="カテゴリ別件数">
+            <span class="count-pill"><span>速報</span><strong>1</strong></span>
 <span class="count-pill"><span>生活インパクト</span><strong>1</strong></span>
 <span class="count-pill"><span>知っておくと得</span><strong>8</strong></span>
-            </div>
+          </div>
+          <div class="recent-body">
             <ol><li>冠水・倒木などで道路や生活動線に影響が出る可能性があります。</li>
 <li>公共交通や通勤手段の選び方に影響する可能性があります。</li></ol>
           </div>
-          <div class="recent-actions">
-            <span>10件 / 失敗なし</span>
-            <a class="open-link" href="./2026-06-11.md">Markdown</a>
-          </div>
+          <p class="recent-meta">10件 / 失敗なし</p>
+          <a class="open-link" href="./2026-06-11.md">日別メモ</a>
         </article>
-    
 
-        <article class="recent-row">
-          <div class="recent-date">
-            <p class="eyebrow">Daily</p>
-            <h3>2026年6月10日</h3>
-          </div>
-          <div class="recent-body">
-            <div class="counts" aria-label="カテゴリ別件数">
-              <span class="count-pill"><span>速報</span><strong>1</strong></span>
+
+        <article class="recent-card">
+          <p class="eyebrow">Daily</p>
+          <h3>2026年6月10日</h3>
+          <div class="counts compact-counts" aria-label="カテゴリ別件数">
+            <span class="count-pill"><span>速報</span><strong>1</strong></span>
 <span class="count-pill"><span>生活インパクト</span><strong>2</strong></span>
 <span class="count-pill"><span>知っておくと得</span><strong>8</strong></span>
-            </div>
+          </div>
+          <div class="recent-body">
             <ol><li>KLを含む複数地域で雷雨・大雨・強風への注意が必要です。</li>
 <li>公共交通の運行や通勤手段に影響する可能性があります。</li></ol>
           </div>
-          <div class="recent-actions">
-            <span>11件 / 失敗なし</span>
-            <a class="open-link" href="./2026-06-10.md">Markdown</a>
-          </div>
+          <p class="recent-meta">11件 / 失敗なし</p>
+          <a class="open-link" href="./2026-06-10.md">日別メモ</a>
         </article>
-    
 
-        <article class="recent-row">
-          <div class="recent-date">
-            <p class="eyebrow">Daily</p>
-            <h3>2026年6月9日</h3>
-          </div>
-          <div class="recent-body">
-            <div class="counts" aria-label="カテゴリ別件数">
-              <span class="count-pill"><span>速報</span><strong>0</strong></span>
+
+        <article class="recent-card">
+          <p class="eyebrow">Daily</p>
+          <h3>2026年6月9日</h3>
+          <div class="counts compact-counts" aria-label="カテゴリ別件数">
+            <span class="count-pill"><span>速報</span><strong>0</strong></span>
 <span class="count-pill"><span>生活インパクト</span><strong>3</strong></span>
 <span class="count-pill"><span>知っておくと得</span><strong>8</strong></span>
-            </div>
+          </div>
+          <div class="recent-body">
             <ol><li>公共交通の運行や通勤手段に影響する可能性があります。</li>
 <li>公共交通や通勤手段の選び方に影響する可能性があります。</li></ol>
           </div>
-          <div class="recent-actions">
-            <span>11件 / 失敗なし</span>
-            <a class="open-link" href="./2026-06-09.md">Markdown</a>
-          </div>
+          <p class="recent-meta">11件 / 失敗なし</p>
+          <a class="open-link" href="./2026-06-09.md">日別メモ</a>
         </article>
-    
 
-        <article class="recent-row">
-          <div class="recent-date">
-            <p class="eyebrow">Daily</p>
-            <h3>2026年6月8日</h3>
-          </div>
-          <div class="recent-body">
-            <div class="counts" aria-label="カテゴリ別件数">
-              <span class="count-pill"><span>速報</span><strong>1</strong></span>
+
+        <article class="recent-card">
+          <p class="eyebrow">Daily</p>
+          <h3>2026年6月8日</h3>
+          <div class="counts compact-counts" aria-label="カテゴリ別件数">
+            <span class="count-pill"><span>速報</span><strong>1</strong></span>
 <span class="count-pill"><span>生活インパクト</span><strong>0</strong></span>
 <span class="count-pill"><span>知っておくと得</span><strong>5</strong></span>
-            </div>
+          </div>
+          <div class="recent-body">
             <ol><li>KLを含む複数地域で雷雨・大雨・強風への注意が必要です。</li>
 <li>Ops Tiris: KPDN Pahang rampas diesel, petrol bernilai lebih RM745,000 sejak Januari</li></ol>
           </div>
-          <div class="recent-actions">
-            <span>6件 / 失敗なし</span>
-            <a class="open-link" href="./2026-06-08.md">Markdown</a>
-          </div>
+          <p class="recent-meta">6件 / 失敗なし</p>
+          <a class="open-link" href="./2026-06-08.md">日別メモ</a>
         </article>
       </div>
     </section>
 
     <section aria-labelledby="archive-heading">
       <div class="section-head">
-        <h2 id="archive-heading">それ以前</h2>
-        <p>日別Markdownアーカイブ</p>
+        <h2 id="archive-heading">月別アーカイブ</h2>
+        <p>過去分を見る</p>
       </div>
-      <ul class="archive-list">
-        <li>
-          <a href="./2026-06-07.md">2026年6月7日</a>
-          <span>10件</span>
-          <span>なし</span>
-        </li>
-        
 
-        <li>
-          <a href="./2026-06-06.md">2026年6月6日</a>
-          <span>9件</span>
-          <span>なし</span>
-        </li>
-        
+            <details class="archive-month" open>
+              <summary>
+                <span>2026年6月</span>
+                <span>7日分</span>
+              </summary>
+              <ul class="archive-list">
 
-        <li>
-          <a href="./2026-06-05.md">2026年6月5日</a>
-          <span>8件</span>
-          <span>なし</span>
-        </li>
-        
+            <li>
+              <a href="./2026-06-07.md">2026年6月7日</a>
+              <span>10件</span>
+              <span>なし</span>
+            </li>
 
-        <li>
-          <a href="./2026-06-04.md">2026年6月4日</a>
-          <span>8件</span>
-          <span>なし</span>
-        </li>
-        
 
-        <li>
-          <a href="./2026-06-03.md">2026年6月3日</a>
-          <span>10件</span>
-          <span>なし</span>
-        </li>
-        
+            <li>
+              <a href="./2026-06-06.md">2026年6月6日</a>
+              <span>9件</span>
+              <span>なし</span>
+            </li>
 
-        <li>
-          <a href="./2026-06-02.md">2026年6月2日</a>
-          <span>5件</span>
-          <span>なし</span>
-        </li>
-        
 
-        <li>
-          <a href="./2026-06-01.md">2026年6月1日</a>
-          <span>7件</span>
-          <span>なし</span>
-        </li>
-        
+            <li>
+              <a href="./2026-06-05.md">2026年6月5日</a>
+              <span>8件</span>
+              <span>なし</span>
+            </li>
 
-        <li>
-          <a href="./2026-05-31.md">2026年5月31日</a>
-          <span>8件</span>
-          <span>なし</span>
-        </li>
-        
 
-        <li>
-          <a href="./2026-05-30.md">2026年5月30日</a>
-          <span>12件</span>
-          <span>なし</span>
-        </li>
-        
+            <li>
+              <a href="./2026-06-04.md">2026年6月4日</a>
+              <span>8件</span>
+              <span>なし</span>
+            </li>
 
-        <li>
-          <a href="./2026-05-29.md">2026年5月29日</a>
-          <span>13件</span>
-          <span>なし</span>
-        </li>
-        
 
-        <li>
-          <a href="./2026-05-28.md">2026年5月28日</a>
-          <span>7件</span>
-          <span>なし</span>
-        </li>
-        
+            <li>
+              <a href="./2026-06-03.md">2026年6月3日</a>
+              <span>10件</span>
+              <span>なし</span>
+            </li>
 
-        <li>
-          <a href="./2026-05-27.md">2026年5月27日</a>
-          <span>14件</span>
-          <span>なし</span>
-        </li>
-        
 
-        <li>
-          <a href="./2026-05-26.md">2026年5月26日</a>
-          <span>10件</span>
-          <span>なし</span>
-        </li>
-        
+            <li>
+              <a href="./2026-06-02.md">2026年6月2日</a>
+              <span>5件</span>
+              <span>なし</span>
+            </li>
 
-        <li>
-          <a href="./2026-05-25.md">2026年5月25日</a>
-          <span>8件</span>
-          <span>なし</span>
-        </li>
-        
 
-        <li>
-          <a href="./2026-05-24.md">2026年5月24日</a>
-          <span>8件</span>
-          <span>なし</span>
-        </li>
-        
+            <li>
+              <a href="./2026-06-01.md">2026年6月1日</a>
+              <span>7件</span>
+              <span>なし</span>
+            </li>
 
-        <li>
-          <a href="./2026-05-23.md">2026年5月23日</a>
-          <span>13件</span>
-          <span>なし</span>
-        </li>
-        
+              </ul>
+            </details>
 
-        <li>
-          <a href="./2026-05-22.md">2026年5月22日</a>
-          <span>9件</span>
-          <span>なし</span>
-        </li>
-        
 
-        <li>
-          <a href="./2026-05-21.md">2026年5月21日</a>
-          <span>11件</span>
-          <span>なし</span>
-        </li>
-        
+            <details class="archive-month">
+              <summary>
+                <span>2026年5月</span>
+                <span>29日分</span>
+              </summary>
+              <ul class="archive-list">
 
-        <li>
-          <a href="./2026-05-20.md">2026年5月20日</a>
-          <span>13件</span>
-          <span>なし</span>
-        </li>
-        
+            <li>
+              <a href="./2026-05-31.md">2026年5月31日</a>
+              <span>8件</span>
+              <span>なし</span>
+            </li>
 
-        <li>
-          <a href="./2026-05-19.md">2026年5月19日</a>
-          <span>12件</span>
-          <span>なし</span>
-        </li>
-        
 
-        <li>
-          <a href="./2026-05-18.md">2026年5月18日</a>
-          <span>9件</span>
-          <span>なし</span>
-        </li>
-        
+            <li>
+              <a href="./2026-05-30.md">2026年5月30日</a>
+              <span>12件</span>
+              <span>なし</span>
+            </li>
 
-        <li>
-          <a href="./2026-05-17.md">2026年5月17日</a>
-          <span>8件</span>
-          <span>なし</span>
-        </li>
-        
 
-        <li>
-          <a href="./2026-05-16.md">2026年5月16日</a>
-          <span>10件</span>
-          <span>なし</span>
-        </li>
-        
+            <li>
+              <a href="./2026-05-29.md">2026年5月29日</a>
+              <span>13件</span>
+              <span>なし</span>
+            </li>
 
-        <li>
-          <a href="./2026-05-15.md">2026年5月15日</a>
-          <span>8件</span>
-          <span>なし</span>
-        </li>
-        
 
-        <li>
-          <a href="./2026-05-14.md">2026年5月14日</a>
-          <span>11件</span>
-          <span>なし</span>
-        </li>
-        
+            <li>
+              <a href="./2026-05-28.md">2026年5月28日</a>
+              <span>7件</span>
+              <span>なし</span>
+            </li>
 
-        <li>
-          <a href="./2026-05-13.md">2026年5月13日</a>
-          <span>10件</span>
-          <span>なし</span>
-        </li>
-        
 
-        <li>
-          <a href="./2026-05-12.md">2026年5月12日</a>
-          <span>13件</span>
-          <span>なし</span>
-        </li>
-        
+            <li>
+              <a href="./2026-05-27.md">2026年5月27日</a>
+              <span>14件</span>
+              <span>なし</span>
+            </li>
 
-        <li>
-          <a href="./2026-05-11.md">2026年5月11日</a>
-          <span>9件</span>
-          <span>なし</span>
-        </li>
-        
 
-        <li>
-          <a href="./2026-05-10.md">2026年5月10日</a>
-          <span>12件</span>
-          <span>なし</span>
-        </li>
-        
+            <li>
+              <a href="./2026-05-26.md">2026年5月26日</a>
+              <span>10件</span>
+              <span>なし</span>
+            </li>
 
-        <li>
-          <a href="./2026-05-09.md">2026年5月9日</a>
-          <span>13件</span>
-          <span>なし</span>
-        </li>
-        
 
-        <li>
-          <a href="./2026-05-08.md">2026年5月8日</a>
-          <span>13件</span>
-          <span>なし</span>
-        </li>
-        
+            <li>
+              <a href="./2026-05-25.md">2026年5月25日</a>
+              <span>8件</span>
+              <span>なし</span>
+            </li>
 
-        <li>
-          <a href="./2026-05-07.md">2026年5月7日</a>
-          <span>28件</span>
-          <span>なし</span>
-        </li>
-        
 
-        <li>
-          <a href="./2026-05-06.md">2026年5月6日</a>
-          <span>30件</span>
-          <span>なし</span>
-        </li>
-        
+            <li>
+              <a href="./2026-05-24.md">2026年5月24日</a>
+              <span>8件</span>
+              <span>なし</span>
+            </li>
 
-        <li>
-          <a href="./2026-05-05.md">2026年5月5日</a>
-          <span>29件</span>
-          <span>なし</span>
-        </li>
-        
 
-        <li>
-          <a href="./2026-05-04.md">2026年5月4日</a>
-          <span>31件</span>
-          <span>なし</span>
-        </li>
-        
+            <li>
+              <a href="./2026-05-23.md">2026年5月23日</a>
+              <span>13件</span>
+              <span>なし</span>
+            </li>
 
-        <li>
-          <a href="./2026-05-03.md">2026年5月3日</a>
-          <span>17件</span>
-          <span>なし</span>
-        </li>
-        </ul>
+
+            <li>
+              <a href="./2026-05-22.md">2026年5月22日</a>
+              <span>9件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-21.md">2026年5月21日</a>
+              <span>11件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-20.md">2026年5月20日</a>
+              <span>13件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-19.md">2026年5月19日</a>
+              <span>12件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-18.md">2026年5月18日</a>
+              <span>9件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-17.md">2026年5月17日</a>
+              <span>8件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-16.md">2026年5月16日</a>
+              <span>10件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-15.md">2026年5月15日</a>
+              <span>8件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-14.md">2026年5月14日</a>
+              <span>11件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-13.md">2026年5月13日</a>
+              <span>10件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-12.md">2026年5月12日</a>
+              <span>13件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-11.md">2026年5月11日</a>
+              <span>9件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-10.md">2026年5月10日</a>
+              <span>12件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-09.md">2026年5月9日</a>
+              <span>13件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-08.md">2026年5月8日</a>
+              <span>13件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-07.md">2026年5月7日</a>
+              <span>28件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-06.md">2026年5月6日</a>
+              <span>30件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-05.md">2026年5月5日</a>
+              <span>29件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-04.md">2026年5月4日</a>
+              <span>31件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-05-03.md">2026年5月3日</a>
+              <span>17件</span>
+              <span>なし</span>
+            </li>
+
+              </ul>
+            </details>
+
     </section>
   </main>
 </body>

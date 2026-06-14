@@ -14,10 +14,25 @@ CATEGORIES = ("【速報】", "【生活インパクト】", "【知っておく
 
 
 @dataclass
+class NewsItem:
+    category: str
+    conclusion: str = ""
+    life_impact: str = ""
+    next_action: str = ""
+    source: str = ""
+    source_url: str = ""
+
+    @property
+    def is_display_ready(self) -> bool:
+        return bool(self.category and self.conclusion)
+
+
+@dataclass
 class NewsDay:
     date: str
     path: Path
     conclusions: list[str]
+    items: list[NewsItem]
     category_counts: dict[str, int]
     processed_count: str
     summarized_count: str
@@ -33,22 +48,53 @@ def parse_markdown(path: Path) -> NewsDay:
     text = path.read_text(encoding="utf-8")
     category_counts = {category: 0 for category in CATEGORIES}
     conclusions: list[str] = []
+    items: list[NewsItem] = []
     current_category = ""
+    current_item: NewsItem | None = None
+
+    def flush_item() -> None:
+        nonlocal current_item
+        if current_item and current_item.is_display_ready:
+            items.append(current_item)
+        current_item = None
+
+    optional_labels = {
+        "- 生活への影響：": "life_impact",
+        "- 次アクション：": "next_action",
+        "- 出典：": "source",
+        "- 出典元URL：": "source_url",
+    }
 
     for raw_line in text.splitlines():
         line = raw_line.strip()
         if line in CATEGORIES:
+            flush_item()
             current_category = line
             continue
+
         if line.startswith("- 結論："):
+            flush_item()
+            conclusion = line[len("- 結論：") :].strip()
             if current_category in category_counts:
                 category_counts[current_category] += 1
-            conclusions.append((line[len("- 結論："):] if line.startswith("- 結論：") else line).strip())
+            conclusions.append(conclusion)
+            if current_category in CATEGORIES:
+                current_item = NewsItem(category=current_category, conclusion=conclusion)
+            continue
+
+        if current_item:
+            for prefix, field_name in optional_labels.items():
+                if line.startswith(prefix):
+                    setattr(current_item, field_name, line[len(prefix) :].strip())
+                    break
+
+    flush_item()
 
     return NewsDay(
         date=path.stem,
         path=path,
         conclusions=conclusions,
+        items=items,
         category_counts=category_counts,
         processed_count=extract_label(text, "処理対象件数"),
         summarized_count=extract_label(text, "要約対象件数"),
@@ -72,18 +118,43 @@ def format_date(date_text: str) -> str:
     return f"{parsed.year}年{parsed.month}月{parsed.day}日"
 
 
+def format_month(date_text: str) -> str:
+    try:
+        parsed = datetime.strptime(date_text, "%Y-%m-%d")
+    except ValueError:
+        return "日付不明"
+    return f"{parsed.year}年{parsed.month}月"
+
+
 def format_count(value: str) -> str:
     if value == "不明" or value.endswith("件"):
         return value
     return f"{value}件"
 
 
+def category_label(category: str) -> str:
+    return category.strip("【】")
+
+
+def failed_label(day: NewsDay) -> str:
+    return "失敗なし" if day.failed_sources == "なし" else f"失敗: {day.failed_sources}"
+
+
+def ordered_items(day: NewsDay) -> list[NewsItem]:
+    return [
+        item
+        for category in CATEGORIES
+        for item in day.items
+        if item.category == category and item.is_display_ready
+    ]
+
+
 def render_counts(day: NewsDay) -> str:
     parts = []
     for category in CATEGORIES:
-        label = category.strip("【】")
         parts.append(
-            f'<span class="count-pill"><span>{esc(label)}</span><strong>{day.category_counts.get(category, 0)}</strong></span>'
+            f'<span class="count-pill"><span>{esc(category_label(category))}</span>'
+            f"<strong>{day.category_counts.get(category, 0)}</strong></span>"
         )
     return "\n".join(parts)
 
@@ -95,7 +166,75 @@ def render_conclusions(day: NewsDay, limit: int = 3) -> str:
     return f"<ol>{items}</ol>"
 
 
-def render_latest_summary(day: NewsDay, generated: str) -> str:
+def render_status_chips(day: NewsDay, generated: str) -> str:
+    chips = [
+        ("更新", generated),
+        ("処理対象", format_count(day.processed_count)),
+        ("要約対象", format_count(day.summarized_count)),
+        ("失敗ソース", day.failed_sources),
+    ]
+    status = "\n".join(
+        f'<span class="status-chip"><span>{esc(label)}</span><strong>{esc(value)}</strong></span>'
+        for label, value in chips
+    )
+    return f"""
+    <div class="status-strip" aria-label="更新状況と集計">
+      {status}
+      {render_counts(day)}
+    </div>
+    """
+
+
+def render_item_card(item: NewsItem) -> str:
+    impact = ""
+    if item.life_impact:
+        impact = f"""
+          <div class="item-detail">
+            <span>生活への影響</span>
+            <p>{esc(item.life_impact)}</p>
+          </div>
+        """
+
+    action = ""
+    if item.next_action:
+        action = f"""
+          <div class="item-detail">
+            <span>次アクション</span>
+            <p>{esc(item.next_action)}</p>
+          </div>
+        """
+
+    source = ""
+    if item.source_url:
+        source_label = item.source or "出典"
+        source = f'<a class="source-link" href="{esc(item.source_url)}">出典: {esc(source_label)}</a>'
+    elif item.source:
+        source = f'<span class="source-note">出典: {esc(item.source)}</span>'
+
+    return f"""
+        <article class="focus-card">
+          <p class="item-category">{esc(category_label(item.category))}</p>
+          <h3>{esc(item.conclusion)}</h3>
+          {impact}
+          {action}
+          {source}
+        </article>
+    """
+
+
+def render_latest_items(day: NewsDay) -> str:
+    selected = ordered_items(day)[:3]
+    if not selected:
+        return f"""
+        <div class="fallback-list">
+          <h3>今日の要点</h3>
+          {render_conclusions(day)}
+        </div>
+        """
+    return "\n".join(render_item_card(item) for item in selected)
+
+
+def render_latest_summary(day: NewsDay) -> str:
     failed = ""
     if day.failed_sources and day.failed_sources != "なし":
         failed = f'<p class="failed">失敗ソース: {esc(day.failed_sources)}</p>'
@@ -104,32 +243,14 @@ def render_latest_summary(day: NewsDay, generated: str) -> str:
       <article class="today-panel">
         <div class="today-head">
           <div>
-            <p class="eyebrow">Today</p>
+            <p class="eyebrow">Latest</p>
             <h2>{esc(format_date(day.date))}</h2>
-            <p class="muted">生成日時: {esc(generated)}</p>
+            <p class="muted">カテゴリ順に、既存Markdownの並びを保って表示しています。</p>
           </div>
-          <a class="primary-link" href="{relative_link(day)}">今日のMarkdownを開く</a>
+          <a class="primary-link" href="{relative_link(day)}">今日の全文</a>
         </div>
-        <div class="today-metrics" aria-label="今日の集計">
-          <div>
-            <span>処理対象</span>
-            <strong>{esc(day.processed_count)}</strong>
-          </div>
-          <div>
-            <span>要約対象</span>
-            <strong>{esc(day.summarized_count)}</strong>
-          </div>
-          <div>
-            <span>失敗ソース</span>
-            <strong>{esc(day.failed_sources)}</strong>
-          </div>
-        </div>
-        <div class="counts" aria-label="カテゴリ別件数">
-          {render_counts(day)}
-        </div>
-        <div class="today-conclusions">
-          <h3>今日の要点</h3>
-          {render_conclusions(day)}
+        <div class="focus-grid">
+          {render_latest_items(day)}
         </div>
         {failed}
       </article>
@@ -137,23 +258,24 @@ def render_latest_summary(day: NewsDay, generated: str) -> str:
 
 
 def render_recent_day(day: NewsDay) -> str:
-    failed_label = "失敗なし" if day.failed_sources == "なし" else f"失敗: {day.failed_sources}"
+    points = [item.conclusion for item in ordered_items(day)[:2]] or day.conclusions[:2]
+    if points:
+        point_list = "<ol>" + "\n".join(f"<li>{esc(point)}</li>" for point in points) + "</ol>"
+    else:
+        point_list = '<p class="muted">見出しを抽出できませんでした。</p>'
+
     return f"""
-        <article class="recent-row">
-          <div class="recent-date">
-            <p class="eyebrow">Daily</p>
-            <h3>{esc(format_date(day.date))}</h3>
+        <article class="recent-card">
+          <p class="eyebrow">Daily</p>
+          <h3>{esc(format_date(day.date))}</h3>
+          <div class="counts compact-counts" aria-label="カテゴリ別件数">
+            {render_counts(day)}
           </div>
           <div class="recent-body">
-            <div class="counts" aria-label="カテゴリ別件数">
-              {render_counts(day)}
-            </div>
-            {render_conclusions(day, limit=2)}
+            {point_list}
           </div>
-          <div class="recent-actions">
-            <span>{esc(format_count(day.summarized_count))} / {esc(failed_label)}</span>
-            <a class="open-link" href="{relative_link(day)}">Markdown</a>
-          </div>
+          <p class="recent-meta">{esc(format_count(day.summarized_count))} / {esc(failed_label(day))}</p>
+          <a class="open-link" href="{relative_link(day)}">日別メモ</a>
         </article>
     """
 
@@ -167,17 +289,38 @@ def render_recent(days: list[NewsDay]) -> str:
 def render_archive(days: list[NewsDay]) -> str:
     if not days:
         return '<p class="muted">過去の記事はまだありません。</p>'
-    rows = "\n".join(
-        f"""
-        <li>
-          <a href="{relative_link(day)}">{esc(format_date(day.date))}</a>
-          <span>{esc(format_count(day.summarized_count))}</span>
-          <span>{esc(day.failed_sources)}</span>
-        </li>
-        """
-        for day in days
-    )
-    return f'<ul class="archive-list">{rows}</ul>'
+
+    grouped: dict[str, list[NewsDay]] = {}
+    for day in days:
+        grouped.setdefault(format_month(day.date), []).append(day)
+
+    groups = []
+    for index, (month, month_days) in enumerate(grouped.items()):
+        rows = "\n".join(
+            f"""
+            <li>
+              <a href="{relative_link(day)}">{esc(format_date(day.date))}</a>
+              <span>{esc(format_count(day.summarized_count))}</span>
+              <span>{esc(day.failed_sources)}</span>
+            </li>
+            """
+            for day in month_days
+        )
+        open_attr = " open" if index == 0 else ""
+        groups.append(
+            f"""
+            <details class="archive-month"{open_attr}>
+              <summary>
+                <span>{esc(month)}</span>
+                <span>{len(month_days)}日分</span>
+              </summary>
+              <ul class="archive-list">
+                {rows}
+              </ul>
+            </details>
+            """
+        )
+    return "\n".join(groups)
 
 
 def render_html(days: list[NewsDay]) -> str:
@@ -191,13 +334,15 @@ def render_html(days: list[NewsDay]) -> str:
     older = days[7:]
 
     if latest:
-        latest_link = f'<a href="{relative_link(latest)}">{esc(format_date(latest.date))}のMarkdownを見る</a>'
-        latest_summary = render_latest_summary(latest, generated).strip()
+        latest_summary = render_latest_summary(latest).strip()
+        status_chips = render_status_chips(latest, generated).strip()
         recent_rows = render_recent(recent).strip()
+        primary_href = relative_link(latest)
     else:
-        latest_link = '<span class="muted">まだ記事がありません。</span>'
         latest_summary = '<p class="muted">まだ記事がありません。</p>'
+        status_chips = '<p class="muted">まだ記事がありません。</p>'
         recent_rows = '<p class="muted">まだ記事がありません。</p>'
+        primary_href = "#"
 
     return f"""<!doctype html>
 <html lang="ja">
@@ -220,24 +365,26 @@ def render_html(days: list[NewsDay]) -> str:
       --shadow: 0 12px 28px rgba(27, 36, 32, 0.07);
     }}
     * {{ box-sizing: border-box; }}
+    html {{ overflow-x: hidden; }}
     body {{
       margin: 0;
+      overflow-x: hidden;
       background: var(--bg);
       color: var(--ink);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.65;
     }}
     main {{
-      width: min(1080px, calc(100% - 32px));
+      width: min(1120px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 32px 0 56px;
+      padding: 34px 0 56px;
     }}
     header {{
       display: flex;
       justify-content: space-between;
       gap: 24px;
-      align-items: flex-end;
-      margin-bottom: 22px;
+      align-items: flex-start;
+      margin-bottom: 18px;
     }}
     h1, h2, h3, p {{ margin-top: 0; }}
     h1 {{
@@ -262,18 +409,15 @@ def render_html(days: list[NewsDay]) -> str:
       outline-offset: 3px;
       border-radius: 6px;
     }}
-    .subhead {{ max-width: 640px; margin-bottom: 0; color: var(--muted); }}
-    .meta-bar {{
+    .subhead {{ max-width: 620px; margin-bottom: 0; color: var(--muted); }}
+    .header-actions {{
       display: flex;
-      flex-direction: column;
-      gap: 6px;
-      align-items: flex-end;
-      color: var(--muted);
-      font-size: 0.95rem;
-      text-align: right;
-      white-space: nowrap;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+      align-items: center;
     }}
-    section + section {{ margin-top: 30px; }}
+    section + section {{ margin-top: 32px; }}
     .section-head {{
       display: flex;
       justify-content: space-between;
@@ -290,6 +434,37 @@ def render_html(days: list[NewsDay]) -> str:
       color: var(--muted);
       font-size: 0.92rem;
     }}
+    .status-strip {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 28px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.68);
+    }}
+    .status-chip {{
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      min-height: 32px;
+      max-width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      padding: 5px 11px;
+      font-size: 0.88rem;
+    }}
+    .status-chip span {{
+      color: var(--muted);
+      white-space: nowrap;
+    }}
+    .status-chip strong {{
+      min-width: 0;
+      color: var(--ink);
+      overflow-wrap: anywhere;
+    }}
     .today-panel {{
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -304,77 +479,116 @@ def render_html(days: list[NewsDay]) -> str:
       align-items: flex-start;
       margin-bottom: 18px;
     }}
-    .today-metrics {{
+    .focus-grid {{
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-bottom: 14px;
+      gap: 12px;
     }}
-    .today-metrics div {{
+    .focus-card {{
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #fbfcfa;
-      padding: 11px 12px;
+      padding: 16px;
     }}
-    .today-metrics span {{
+    .focus-card h3 {{
+      font-size: 1.04rem;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }}
+    .item-category {{
+      align-self: flex-start;
+      margin-bottom: 0;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      padding: 4px 10px;
+      color: var(--accent-strong);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }}
+    .item-detail {{
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
+    }}
+    .item-detail span {{
       display: block;
+      margin-bottom: 3px;
       color: var(--muted);
       font-size: 0.78rem;
+      font-weight: 700;
     }}
-    .today-metrics strong {{
-      display: block;
-      margin-top: 2px;
-      color: var(--ink);
-      font-size: 1.12rem;
-      line-height: 1.2;
+    .item-detail p {{
+      margin-bottom: 0;
+      font-size: 0.94rem;
+      overflow-wrap: anywhere;
     }}
-    .today-conclusions {{
-      display: grid;
-      grid-template-columns: 9rem minmax(0, 1fr);
-      gap: 18px;
-      align-items: start;
-      margin-top: 18px;
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
-    }}
-    .today-conclusions h3 {{
-      color: var(--accent-strong);
-      font-size: 0.95rem;
+    .source-link,
+    .source-note {{
+      margin-top: auto;
+      overflow-wrap: anywhere;
+      font-size: 0.86rem;
     }}
     .recent-list {{
       display: grid;
-      gap: 10px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
     }}
-    .recent-row {{
+    .recent-card {{
       display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: stretch;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 0;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--panel);
       padding: 14px;
     }}
-    .recent-date {{
-      flex: 0 0 9.4rem;
-      padding-right: 12px;
-      border-right: 1px solid var(--line);
-    }}
-    .recent-date h3 {{ white-space: nowrap; }}
-    .recent-body {{
-      flex: 1 1 auto;
-      min-width: 0;
-    }}
-    .recent-actions {{
-      flex: 0 0 9rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 12px;
+    .recent-card h3 {{ font-size: 1rem; }}
+    .recent-body ol {{ margin-top: 0; }}
+    .recent-meta {{
+      margin: auto 0 0;
       color: var(--muted);
       font-size: 0.86rem;
-      text-align: right;
+    }}
+    .compact-counts {{ gap: 6px; }}
+    .compact-counts .count-pill {{
+      min-height: 24px;
+      padding: 3px 8px;
+      font-size: 0.78rem;
+    }}
+    .fallback-list {{
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+    }}
+    .fallback-list h3 {{
+      margin-bottom: 8px;
+      color: var(--accent-strong);
+      font-size: 0.95rem;
+    }}
+    .archive-month {{
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      overflow: hidden;
+    }}
+    .archive-month + .archive-month {{ margin-top: 10px; }}
+    .archive-month summary {{
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      cursor: pointer;
+      padding: 12px 14px;
+      color: var(--accent-strong);
+      font-weight: 700;
+    }}
+    .archive-month summary span + span {{
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 500;
     }}
     .eyebrow {{
       margin-bottom: 2px;
@@ -385,6 +599,7 @@ def render_html(days: list[NewsDay]) -> str:
       letter-spacing: 0.06em;
     }}
     .primary-link,
+    .secondary-link,
     .open-link {{
       flex: 0 0 auto;
       display: inline-flex;
@@ -398,11 +613,16 @@ def render_html(days: list[NewsDay]) -> str:
       font-size: 0.9rem;
       line-height: 1.2;
       text-decoration: none;
+      white-space: nowrap;
     }}
     .primary-link {{
       border-color: var(--accent);
       background: var(--accent);
       color: #fff;
+      font-weight: 700;
+    }}
+    .secondary-link {{
+      color: var(--accent-strong);
       font-weight: 700;
     }}
     .counts {{
@@ -416,20 +636,20 @@ def render_html(days: list[NewsDay]) -> str:
       gap: 8px;
       align-items: center;
       min-height: 28px;
+      max-width: 100%;
       border-radius: 999px;
       background: var(--accent-soft);
       padding: 4px 10px;
       font-size: 0.88rem;
     }}
-    .count-pill strong {{
-      color: var(--accent-strong);
-    }}
-    .recent-body ol {{
-      margin-top: 10px;
-    }}
+    .count-pill span {{ overflow-wrap: anywhere; }}
+    .count-pill strong {{ color: var(--accent-strong); }}
     ol {{
       margin: 0;
       padding-left: 1.3rem;
+    }}
+    li {{
+      overflow-wrap: anywhere;
     }}
     li + li {{ margin-top: 6px; }}
     .failed {{
@@ -441,9 +661,7 @@ def render_html(days: list[NewsDay]) -> str:
       list-style: none;
       margin: 0;
       padding: 0;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel);
+      border-top: 1px solid var(--line);
     }}
     .archive-list li {{
       display: grid;
@@ -455,16 +673,24 @@ def render_html(days: list[NewsDay]) -> str:
     .archive-list li + li {{ border-top: 1px solid var(--line); }}
     .archive-list span {{ color: var(--muted); }}
     .muted {{ color: var(--muted); }}
-    @media (max-width: 640px) {{
-      main {{ width: min(100% - 20px, 1080px); padding-top: 24px; }}
+    @media (max-width: 760px) {{
+      main {{
+        width: min(100% - 20px, 1120px);
+        padding-top: 24px;
+      }}
       header {{
         display: grid;
         gap: 14px;
         align-items: start;
       }}
-      .meta-bar {{
-        align-items: flex-start;
-        text-align: left;
+      .header-actions {{
+        justify-content: stretch;
+        width: 100%;
+      }}
+      .header-actions a {{ flex: 1 1 11rem; }}
+      .status-strip {{ margin-bottom: 24px; }}
+      .status-chip {{
+        min-height: 34px;
         white-space: normal;
       }}
       .today-panel {{ padding: 18px; }}
@@ -476,36 +702,25 @@ def render_html(days: list[NewsDay]) -> str:
         width: 100%;
         min-height: 44px;
       }}
-      .today-metrics {{
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 6px;
-      }}
-      .today-metrics div {{ padding: 9px 8px; }}
-      .today-metrics strong {{ font-size: 1rem; }}
-      .today-conclusions {{
+      .focus-grid {{
         grid-template-columns: 1fr;
-        gap: 10px;
+        gap: 12px;
       }}
       .section-head {{
         display: grid;
         gap: 2px;
       }}
-      .recent-row {{
-        display: grid;
-        gap: 12px;
+      .recent-list {{
+        display: flex;
+        gap: 10px;
+        margin-inline: -10px;
+        overflow-x: auto;
+        padding: 0 10px 6px;
+        scroll-snap-type: x proximity;
       }}
-      .recent-date {{
-        flex-basis: auto;
-        padding-right: 0;
-        padding-bottom: 10px;
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
-      }}
-      .recent-actions {{
-        flex-basis: auto;
-        flex-direction: row;
-        align-items: center;
-        text-align: left;
+      .recent-card {{
+        flex: 0 0 min(18rem, calc(100vw - 48px));
+        scroll-snap-align: start;
       }}
       .open-link {{ min-height: 40px; }}
       .archive-list li {{
@@ -521,18 +736,19 @@ def render_html(days: list[NewsDay]) -> str:
     <header>
       <div>
         <h1>Malaysia RSSニュース要約</h1>
-        <p class="subhead">Malay Mail と Astro Awani のRSSから生成した、マレーシア国内ニュースの日次ダッシュボードです。</p>
+        <p class="subhead">生活に関わるマレーシアニュースをRSSから日次で収集・要約しています。</p>
       </div>
-      <div class="meta-bar">
-        <span>最新: {latest_link}</span>
-        <span>更新: {esc(generated)}</span>
+      <div class="header-actions">
+        <a class="primary-link" href="{primary_href}">今日の全文</a>
+        <a class="secondary-link" href="#archive-heading">過去分を見る</a>
       </div>
     </header>
+    {status_chips}
 
     <section aria-labelledby="today-heading">
       <div class="section-head">
-        <h2 id="today-heading">今日のサマリー</h2>
-        <p>まず確認したい件数と要点</p>
+        <h2 id="today-heading">今日見るべき3件</h2>
+        <p>速報、生活インパクト、知っておくと得の順に表示</p>
       </div>
       {latest_summary}
     </section>
@@ -540,7 +756,7 @@ def render_html(days: list[NewsDay]) -> str:
     <section aria-labelledby="recent-heading">
       <div class="section-head">
         <h2 id="recent-heading">直近7日の流れ</h2>
-        <p>今日を除く直近6日を比較</p>
+        <p>今日を除く直近日を比較</p>
       </div>
       <div class="recent-list">
         {recent_rows}
@@ -549,8 +765,8 @@ def render_html(days: list[NewsDay]) -> str:
 
     <section aria-labelledby="archive-heading">
       <div class="section-head">
-        <h2 id="archive-heading">それ以前</h2>
-        <p>日別Markdownアーカイブ</p>
+        <h2 id="archive-heading">月別アーカイブ</h2>
+        <p>過去分を見る</p>
       </div>
       {render_archive(older)}
     </section>
@@ -567,7 +783,8 @@ def main() -> int:
         for path in sorted(NEWS_DIR.glob("*.md"), reverse=True)
         if re.fullmatch(r"\d{4}-\d{2}-\d{2}", path.stem)
     ]
-    OUTPUT_PATH.write_text(render_html(days), encoding="utf-8")
+    rendered = "\n".join(line.rstrip() for line in render_html(days).splitlines()) + "\n"
+    OUTPUT_PATH.write_text(rendered, encoding="utf-8")
     print(f"Wrote index: {OUTPUT_PATH}")
     print(f"Indexed days: {len(days)}")
     return 0
