@@ -244,6 +244,18 @@ PAUL_TAN_DRIVER_ACTION_WORDS = [
     "saman",
     "summons",
 ]
+PAUL_TAN_ILLEGAL_TRANSPORT_WORDS = [
+    "illegal transport",
+    "illegal transportation",
+    "illegal passenger",
+    "illegal goods transport",
+    "illegal freight",
+    "illegal taxi",
+    "e-hailing illegal",
+    "unlicensed transport",
+    "unlicensed transportation",
+    "without permit",
+]
 
 
 @dataclass
@@ -532,6 +544,13 @@ def is_paul_tan_jpj_data_only_item(text: str, positive_groups: dict[str, list[st
     if not has_phrase(text, "jpj"):
         return False
     return has_any(text, PAUL_TAN_JPJ_DATA_ONLY_WORDS) and not has_any(text, PAUL_TAN_DRIVER_ACTION_WORDS)
+
+
+def is_paul_tan_illegal_transport_enforcement(item: Item) -> bool:
+    if not is_paul_tan_item(item):
+        return False
+    text = item_text(item)
+    return has_phrase(text, "jpj") and has_any(text, PAUL_TAN_ILLEGAL_TRANSPORT_WORDS)
 
 
 def paul_tan_display_description(item: Item) -> str:
@@ -1590,6 +1609,13 @@ def japanese_summary(item: Item) -> tuple[str, str, str, str]:
                 "出発前に運行会社の公式情報を確認。",
             )
         if "driver_obligations" in signal_groups:
+            if is_paul_tan_illegal_transport_enforcement(item):
+                return (
+                    "JPJの摘発により、違法な運送サービスの利用に注意が必要です。",
+                    "Paul TanのRSSで、JPJが無許可または違法な旅客・貨物運送サービスを摘発した件が報じられています。\n正規でない運送サービスは、安全性や法的リスクの確認が必要です。",
+                    "利用者は、配車・輸送サービスが正規の事業者によるものか、許可、保険、安全面に問題がないか確認する必要があります。",
+                    "運送サービスを利用する前に、正規事業者か確認。",
+                )
             return (
                 "JPJや車両関連手続きで、運転者の確認事項が出る可能性があります。",
                 "Paul TanのRSSで、運転者の手続きや義務に関する情報が報じられています。\nJPJ、licence、road tax、inspection、summonsなど、運転者の義務や手続きに関わる内容として扱います。",
@@ -2147,6 +2173,16 @@ def self_test() -> int:
     evaluate_item(paul_jpj_procedure)
     check("Paul Tan real JPJ procedure gate accepts", paul_tan_gate_decision(paul_jpj_procedure) == "accept")
     check("Paul Tan real JPJ procedure is not excluded", not should_exclude_item(paul_jpj_procedure))
+
+    paul_illegal_transport = paul_item(
+        "JPJ Terengganu uncovers illegal transport services by foreigners, using vehicles rented from locals",
+        "JPJ enforcement officers found illegal passenger and goods transport services operating without permit.",
+    )
+    evaluate_item(paul_illegal_transport)
+    illegal_transport_summary = japanese_summary(paul_illegal_transport)
+    check("Paul Tan illegal transport gate accepts", paul_tan_gate_decision(paul_illegal_transport) == "accept")
+    check("Paul Tan illegal transport uses enforcement display", "違法な運送サービス" in illegal_transport_summary[0])
+    check("Paul Tan illegal transport does not use generic JPJ procedure display", "JPJや車両関連手続き" not in illegal_transport_summary[0])
 
     paul_ev_ranking = paul_item(
         "Top 20 EV brands in May 2026 - Proton already beats its full-year 2025 tally; Perodua climbs to 10th",
