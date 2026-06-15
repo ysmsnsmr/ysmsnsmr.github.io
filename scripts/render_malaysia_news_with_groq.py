@@ -708,12 +708,19 @@ BODY_FOCUS_LIFE_IMPACT_CUES = {
     "health_or_education": [
         "受診",
         "医療",
-        "制度",
+        "医療費",
+        "治療費",
+        "補助",
+        "対象者",
         "学校",
         "対象",
         "学生",
         "教育",
         "健康",
+        "費用",
+        "負担",
+        "病院",
+        "クリニック",
     ],
     "financial_service_access": [
         "銀行",
@@ -744,6 +751,8 @@ def life_impact_matches_body_focus(item: dict[str, Any], life_impact: str) -> bo
     if not text:
         return False
     if looks_generic(text):
+        return False
+    if "health_or_education" in focus_values and has_any_text(text, ["背景情報", "確認しておく価値"]):
         return False
     allowed_cues: list[str] = []
     for focus in focus_values:
@@ -1368,6 +1377,9 @@ def normalize_malaysia_terms_in_text(text: str, item: dict[str, Any]) -> str:
         or "cooking oil price stabilisation scheme" in source_lower
         or "cooking oil price stabilization scheme" in source_lower
     )
+    has_kita_selangor_voucher_evidence = "kita selangor" in source_lower and (
+        "voucher" in source_lower or "vouchers" in source_lower or "baucar" in source_lower
+    )
 
     replacements = {
         "国内取引・生活費省": "国内貿易・生活費省",
@@ -1404,6 +1416,19 @@ def normalize_malaysia_terms_in_text(text: str, item: dict[str, Any]) -> str:
                 "食用油価格安定制度": ecoss_label,
                 "eCOSS制度": ecoss_label,
                 "eCOSS 制度": ecoss_label,
+            }
+        )
+
+    if has_kita_selangor_voucher_evidence:
+        replacements.update(
+            {
+                "Kita Selangor voucer": "Kita Selangor voucher",
+                "Kita Selangor Voucer": "Kita Selangor voucher",
+                "Kita Selangor バウチャー": "Kita Selangor voucher",
+                "Kita Selangor バウチャ": "Kita Selangor voucher",
+                "キタ・セランゴール・バウチャー": "Kita Selangor voucher",
+                "キタセランゴール・バウチャー": "Kita Selangor voucher",
+                "キタセランゴールバウチャー": "Kita Selangor voucher",
             }
         )
 
@@ -1678,16 +1703,28 @@ def strip_generic_fallback_lines(block: str, item: dict[str, Any] | None) -> str
     replacement_life = clean_text(summary.get("life_impact")) or SAFE_FALLBACK_LIFE_IMPACT_LINE
     lines = block.splitlines()
     cleaned_lines: list[str] = []
+    seen_what_happened: set[str] = set()
     inserted_what = False
     for line in lines:
+        what_match = re.match(r"^- 何が起きた：(.+)$", line)
         if line == f"- 何が起きた：{GENERIC_WHAT_HAPPENED_LINE}":
             if not inserted_what:
-                cleaned_lines.extend(f"- 何が起きた：{value}" for value in replacement_what[:2])
+                for value in replacement_what[:2]:
+                    normalized_value = clean_text(value)
+                    if normalized_value and normalized_value not in seen_what_happened:
+                        cleaned_lines.append(f"- 何が起きた：{normalized_value}")
+                        seen_what_happened.add(normalized_value)
                 inserted_what = True
             continue
         if line == f"- 生活への影響：{GENERIC_LIFE_IMPACT_LINE}":
             cleaned_lines.append(f"- 生活への影響：{replacement_life}")
             continue
+        if what_match:
+            normalized_value = clean_text(what_match.group(1))
+            if normalized_value in seen_what_happened:
+                continue
+            if normalized_value:
+                seen_what_happened.add(normalized_value)
         cleaned_lines.append(line)
     suffix = "\n" if block.endswith("\n") else ""
     return "\n".join(cleaned_lines) + suffix

@@ -95,6 +95,8 @@ Expected focus mapping:
 
 If body evidence has focus but Groq still returns generic `life_impact`, validation rejects the Groq summary and the item falls back to RSS-rendered output.
 
+For `health_or_education` focus, accepted Groq output must describe a concrete effect such as medical fees, treatment cost, subsidy eligibility, patient/target conditions, school, or education impact. A vague line that only says the item is background information for the medical system is rejected and falls back to RSS.
+
 ## Protected Scheme Names
 
 Groq output now applies a narrow post-generation display cleanup for observed scheme-name drift.
@@ -108,6 +110,8 @@ eCOSS（食用油価格安定化制度）
 This protects accepted summaries from malformed translations such as `食用石油価格格安定化制度(eCOSS)`.
 
 The cleanup is intentionally scoped to eCOSS evidence and does not broaden Japanese normalization globally.
+
+When the source text contains `Kita Selangor` and voucher evidence, the renderer also protects the scheme label as `Kita Selangor voucher`. This is a narrow typo guard for observed Groq output such as `Kita Selangor voucer`, not a broad translation rule for all voucher terms.
 
 ## Force-All Strict Gate
 
