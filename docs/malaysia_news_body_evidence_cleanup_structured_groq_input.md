@@ -23,7 +23,7 @@ body_evidence_forbidden
 
 The evidence excerpt strips common body noise before Groq input:
 
-- English dateline prefixes such as `KUALA LUMPUR, June 13 —`;
+- English dateline prefixes such as `KUALA LUMPUR, June 13 —` and `SHAH ALAM, June 15 —`;
 - wire credits such as `— Bernama`;
 - advertisement and related-link boilerplate;
 - excess whitespace.
@@ -117,7 +117,18 @@ When force-all mode is enabled, the renderer may request Groq summaries for a wi
 
 The force-all gate accepts items only when concrete daily-life impact is evident from both the source metadata and the Groq summary, or when cleaned `body_evidence_focus` already supports a concrete `life_impact`.
 
-Items that are only political background, market background, transport commentary without operational impact, or Paul Tan automotive noise fall back to RSS-rendered output.
+Items that are only political background, market background, transport commentary without operational impact, KTM/Komuter political invitation context, individual scam/victim incidents, or Paul Tan automotive noise fall back to RSS-rendered output.
+
+Force-all mode also uses a request cap and a pre-request skip layer before calling Groq. The default cap is `6` requests per run and can be overridden with `MALAYSIA_NEWS_GROQ_FORCE_ALL_REQUEST_CAP`. Known low-value force-all candidates, such as KTM/Komuter political invitation context, individual scam incidents, market background, and Paul Tan noise, are skipped before the API request so HTTP 429 risk is reduced.
+
+Merged candidate Markdown cleans non-accepted RSS fallback blocks after dateline cleanup. The generic fallback lines:
+
+```text
+何が起きた：RSS内のタイトルと説明をもとに整理しました。
+生活への影響：生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。
+```
+
+are replaced with topic-aware RSS fallback text where possible, or a safer non-generic fallback when no topic can be inferred. The exact RSS fallback artifact remains unchanged.
 
 ## Boundary
 

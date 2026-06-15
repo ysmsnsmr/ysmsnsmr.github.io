@@ -5,6 +5,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.request
 from datetime import datetime
@@ -20,6 +21,12 @@ GROQ_CHAT_COMPLETIONS_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_USER_AGENT = "ysmsnsmr-malaysia-news/0.1 (+https://ysmsnsmr.github.io/news/malaysia/)"
 MAX_RESPONSE_CHARS = 4000
 TIMEOUT_SECONDS = 30
+DEFAULT_FORCE_ALL_REQUEST_CAP = 6
+MAX_429_RETRY_AFTER_SECONDS = 5
+GENERIC_WHAT_HAPPENED_LINE = "RSS内のタイトルと説明をもとに整理しました。"
+GENERIC_LIFE_IMPACT_LINE = "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。"
+SAFE_FALLBACK_WHAT_HAPPENED_LINE = "RSSの見出しと説明に基づく概要です。"
+SAFE_FALLBACK_LIFE_IMPACT_LINE = "内容に応じて、対象者や利用条件を確認してください。"
 FINANCIAL_MARKET_PHRASES = [
     "ringgit",
     "bursa",
@@ -647,8 +654,8 @@ def looks_english_or_bm(text: str) -> bool:
 
 def looks_generic(text: str) -> bool:
     generic_phrases = [
-        "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります",
-        "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+        GENERIC_LIFE_IMPACT_LINE.rstrip("。"),
+        GENERIC_LIFE_IMPACT_LINE,
         "背景ニュースとして",
         "把握しておく価値があります",
         "rssでは",
@@ -1082,6 +1089,89 @@ def force_all_gate_reason(item: dict[str, Any], summary: dict[str, Any]) -> str:
     return ""
 
 
+def force_all_pre_request_skip_reason(item: dict[str, Any]) -> str:
+    """Skip force-all requests that are known to be low-value before calling Groq."""
+    source_text = force_all_source_text(item)
+    focus_values = body_evidence_focus_values(item)
+
+    if is_paul_tan_source(item):
+        reason = paul_tan_force_all_gate_reason(source_text)
+        if reason:
+            return reason
+
+    has_transport_marker = contains_any(source_text, FORCE_ALL_TRANSPORT_MARKERS)
+    has_transport_focus = "transport_or_infra" in focus_values
+    if (has_transport_marker or has_transport_focus) and contains_any(
+        source_text, FORCE_ALL_TRANSPORT_POLITICAL_INVITATION_SIGNALS
+    ):
+        return "transport_political_invitation_context"
+
+    if contains_any(source_text, FORCE_ALL_SCAM_INCIDENT_SIGNALS) and contains_any(
+        source_text, FORCE_ALL_INDIVIDUAL_VICTIM_SIGNALS
+    ):
+        return "individual_scam_incident"
+
+    if contains_any(source_text, FORCE_ALL_MONEY_BACKGROUND_SIGNALS) and not contains_any(
+        source_text, FORCE_ALL_MONEY_CONCRETE_SIGNALS
+    ):
+        return "money_market_background_without_concrete_life_impact"
+
+    return ""
+
+
+def force_all_request_priority(item: dict[str, Any]) -> int:
+    """Rank force-all request candidates so likely concrete items stay within the cap."""
+    source_text = force_all_source_text(item)
+    score = 0
+    focus_values = body_evidence_focus_values(item)
+    if focus_values:
+        score += 100
+        if any(
+            focus in focus_values
+            for focus in (
+                "procedure_or_public_service",
+                "cost_or_subsidy",
+                "consumer_or_payment",
+                "health_or_education",
+                "financial_service_access",
+            )
+        ):
+            score += 30
+        if "transport_or_infra" in focus_values and contains_any(
+            source_text, FORCE_ALL_TRANSPORT_OPERATIONAL_SIGNALS
+        ):
+            score += 25
+    if contains_any(source_text, FORCE_ALL_MONEY_CONCRETE_SIGNALS):
+        score += 45
+    if contains_any(source_text, ["subsidy", "aid", "bantuan", "voucher", "補助", "支援"]):
+        score += 35
+    if contains_any(source_text, ["application", "deadline", "permit", "dbkl", "lhdn", "申請", "期限", "手続"]):
+        score += 30
+    if contains_any(source_text, ["health", "medical", "hospital", "clinic", "rawatan", "医療", "受診"]):
+        score += 30
+    if contains_any(source_text, FORCE_ALL_TRANSPORT_OPERATIONAL_SIGNALS):
+        score += 20
+    if item_needs_groq(item):
+        score += 10
+    return score
+
+
+def force_all_request_cap() -> int:
+    raw_value = os.getenv("MALAYSIA_NEWS_GROQ_FORCE_ALL_REQUEST_CAP", "").strip()
+    if not raw_value:
+        return DEFAULT_FORCE_ALL_REQUEST_CAP
+    try:
+        value = int(raw_value)
+    except ValueError:
+        return DEFAULT_FORCE_ALL_REQUEST_CAP
+    return max(0, value)
+
+
+def ordered_force_all_entries(items: list[Any]) -> list[tuple[int, dict[str, Any]]]:
+    entries = [(index, item) for index, item in enumerate(items) if isinstance(item, dict)]
+    return sorted(entries, key=lambda entry: (-force_all_request_priority(entry[1]), entry[0]))
+
+
 def reject_life_impact_reason(topic: str, item: dict[str, Any], life_impact: str) -> str:
     normalized_topic = normalize_topic(topic)
     impact_text = clean_text(life_impact).lower()
@@ -1351,6 +1441,38 @@ def normalize_malaysia_terms(summary: dict[str, Any], item: dict[str, Any]) -> d
         ]
     return normalized
 
+
+def retry_after_seconds(error: urllib.error.HTTPError) -> int | None:
+    retry_after = error.headers.get("Retry-After") if error.headers else None
+    if not retry_after:
+        return None
+    retry_after = retry_after.strip()
+    if not retry_after.isdigit():
+        return None
+    seconds = int(retry_after)
+    if 0 <= seconds <= MAX_429_RETRY_AFTER_SECONDS:
+        return seconds
+    return None
+
+
+def request_groq_summary_with_retry(
+    item: dict[str, Any],
+    api_key: str,
+    model: str,
+    debug: bool = False,
+    index: int = 0,
+) -> dict[str, Any]:
+    try:
+        return request_groq_summary(item, api_key, model, debug, index)
+    except urllib.error.HTTPError as error:
+        retry_after = retry_after_seconds(error)
+        if error.code != 429 or retry_after is None:
+            raise
+        safe_log(f"groq: item {index + 1} retrying after HTTP 429 Retry-After={retry_after}s.")
+        time.sleep(retry_after)
+        return request_groq_summary(item, api_key, model, debug, index)
+
+
 def request_groq_summary(item: dict[str, Any], api_key: str, model: str, debug: bool = False, index: int = 0) -> dict[str, Any]:
     body = {
         "model": model,
@@ -1499,7 +1621,7 @@ def accepted_only_empty_markdown(model: str, stats: dict[str, int]) -> str:
 RSS_ITEM_BLOCK_RE = re.compile(r"(?ms)^- 結論：.*?\n- 出典元URL：(?P<link>[^\n]+)\n?")
 RSS_FALLBACK_DATELINE_RE = re.compile(
     r"(?m)(- 何が起きた：)"
-    r"(?:KUALA LUMPUR|PUTRAJAYA|MELAKA|GEORGE TOWN|IPOH|ALOR SETAR|JOHOR BARU|KOTA KINABALU|KUCHING),\s+"
+    r"(?:KUALA LUMPUR|PUTRAJAYA|SHAH ALAM|MELAKA|GEORGE TOWN|IPOH|ALOR SETAR|JOHOR BARU|KOTA KINABALU|KUCHING),\s+"
     r"(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+"
     r"\d{1,2}\s+[—–-]\s*"
 )
@@ -1508,6 +1630,72 @@ RSS_FALLBACK_DATELINE_RE = re.compile(
 def strip_rss_fallback_datelines(block: str) -> str:
     """Clean RSS-rendered fallback blocks only in merge-candidate Markdown."""
     return RSS_FALLBACK_DATELINE_RE.sub(r"\1", block)
+
+
+def item_by_link(data: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    items = data.get("items")
+    if not isinstance(items, list):
+        return {}
+    result: dict[str, dict[str, Any]] = {}
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        link = clean_text(item.get("link"))
+        if link:
+            result[link] = item
+    return result
+
+
+def safe_fallback_summary_for_item(item: dict[str, Any] | None) -> dict[str, Any]:
+    if not item:
+        return {
+            "what_happened": [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
+            "life_impact": SAFE_FALLBACK_LIFE_IMPACT_LINE,
+        }
+    topic = fallback_renderer.detect_topic(item)
+    if not topic:
+        return {
+            "what_happened": [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
+            "life_impact": SAFE_FALLBACK_LIFE_IMPACT_LINE,
+        }
+    summary = fallback_renderer.build_display_summary(item)
+    what_happened = [
+        line
+        for line in summary_lines(summary.get("what_happened"))
+        if line != GENERIC_WHAT_HAPPENED_LINE and not looks_generic(line)
+    ]
+    life_impact = clean_text(summary.get("life_impact"))
+    if not what_happened:
+        what_happened = [SAFE_FALLBACK_WHAT_HAPPENED_LINE]
+    if not life_impact or life_impact == GENERIC_LIFE_IMPACT_LINE or looks_generic(life_impact):
+        life_impact = SAFE_FALLBACK_LIFE_IMPACT_LINE
+    return {"what_happened": what_happened[:2], "life_impact": life_impact}
+
+
+def strip_generic_fallback_lines(block: str, item: dict[str, Any] | None) -> str:
+    summary = safe_fallback_summary_for_item(item)
+    replacement_what = summary_lines(summary.get("what_happened")) or [SAFE_FALLBACK_WHAT_HAPPENED_LINE]
+    replacement_life = clean_text(summary.get("life_impact")) or SAFE_FALLBACK_LIFE_IMPACT_LINE
+    lines = block.splitlines()
+    cleaned_lines: list[str] = []
+    inserted_what = False
+    for line in lines:
+        if line == f"- 何が起きた：{GENERIC_WHAT_HAPPENED_LINE}":
+            if not inserted_what:
+                cleaned_lines.extend(f"- 何が起きた：{value}" for value in replacement_what[:2])
+                inserted_what = True
+            continue
+        if line == f"- 生活への影響：{GENERIC_LIFE_IMPACT_LINE}":
+            cleaned_lines.append(f"- 生活への影響：{replacement_life}")
+            continue
+        cleaned_lines.append(line)
+    suffix = "\n" if block.endswith("\n") else ""
+    return "\n".join(cleaned_lines) + suffix
+
+
+def clean_rss_fallback_block(block: str, item: dict[str, Any] | None) -> str:
+    block = strip_rss_fallback_datelines(block)
+    return strip_generic_fallback_lines(block, item)
 
 
 def render_accepted_record_block(record: dict[str, Any]) -> str:
@@ -1533,7 +1721,11 @@ def render_accepted_record_block(record: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def merge_accepted_with_rss_markdown(rss_markdown: str, accepted_records: list[dict[str, Any]]) -> str:
+def merge_accepted_with_rss_markdown(
+    rss_markdown: str,
+    accepted_records: list[dict[str, Any]],
+    data: dict[str, Any] | None = None,
+) -> str:
     if not accepted_records:
         return rss_markdown
 
@@ -1551,6 +1743,7 @@ def merge_accepted_with_rss_markdown(rss_markdown: str, accepted_records: list[d
         return rss_markdown
 
     replacements: dict[str, str] = {}
+    items_by_link = item_by_link(data or {})
     for record in accepted_records:
         if not isinstance(record, dict):
             continue
@@ -1564,7 +1757,7 @@ def merge_accepted_with_rss_markdown(rss_markdown: str, accepted_records: list[d
         link = clean_text(match.group("link"))
         if link in replacements:
             return replacements[link]
-        return strip_rss_fallback_datelines(match.group(0))
+        return clean_rss_fallback_block(match.group(0), items_by_link.get(link))
 
     return RSS_ITEM_BLOCK_RE.sub(replace_block, rss_markdown)
 
@@ -1589,7 +1782,13 @@ def render_with_groq(
     requested = 0
     accepted = 0
     failed = 0
-    for index, item in enumerate(items):
+    entries = ordered_force_all_entries(items) if force_all else [
+        (index, item) for index, item in enumerate(items) if isinstance(item, dict)
+    ]
+    request_cap = force_all_request_cap() if force_all else 0
+    if force_all and debug:
+        safe_log(f"groq-debug: force_all request cap={request_cap}")
+    for index, item in entries:
         if not isinstance(item, dict):
             continue
         reason = groq_exclusion_reason(item)
@@ -1597,6 +1796,16 @@ def render_with_groq(
             if debug:
                 safe_log(f"groq-debug: item={index + 1} skipped {reason}")
             continue
+        if force_all:
+            reason = force_all_pre_request_skip_reason(item)
+            if reason:
+                if debug:
+                    safe_log(f"groq-debug: item={index + 1} skipped force_all_pre_request {reason}")
+                continue
+            if requested >= request_cap:
+                if debug:
+                    safe_log(f"groq-debug: item={index + 1} skipped force_all_request_cap")
+                continue
         if not force_all and not item_needs_groq(item):
             continue
         if is_enforcement_or_misuse_item(item):
@@ -1607,7 +1816,7 @@ def render_with_groq(
         requested += 1
         try:
             original_summary = copy.deepcopy(item.get("selected_summary", {}))
-            improved_summary = request_groq_summary(item, api_key, model, debug, index)
+            improved_summary = request_groq_summary_with_retry(item, api_key, model, debug, index)
             if force_all:
                 gate_reason = force_all_gate_reason(item, improved_summary)
                 if gate_reason:
@@ -1642,6 +1851,7 @@ def render_with_groq(
             safe_log(f"groq: item {index + 1} fallback ({error.__class__.__name__}).")
     safe_log(f"groq: requested={requested} accepted={accepted} fallback={failed}")
     stats = {"requested": requested, "accepted": accepted, "fallback": failed}
+    accepted_records.sort(key=lambda record: record.get("index", 0))
     return rendered_data, accepted_records, stats
 
 
@@ -1681,7 +1891,7 @@ def main() -> int:
             markdown = accepted_only_empty_markdown(model, stats)
     elif args.merge_accepted_with_rss_markdown:
         rss_markdown = Path(args.rss_markdown_input).read_text(encoding="utf-8")
-        markdown = merge_accepted_with_rss_markdown(rss_markdown, accepted_records)
+        markdown = merge_accepted_with_rss_markdown(rss_markdown, accepted_records, data)
     else:
         markdown = fallback_renderer.render(rendered_data)
 

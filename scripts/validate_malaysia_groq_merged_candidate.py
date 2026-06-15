@@ -19,6 +19,7 @@ REQUIRED_LINES = {
 FORBIDDEN_PATTERNS = [
     "KUALA LUMPUR,",
     "PUTRAJAYA,",
+    "SHAH ALAM,",
     "GEORGE TOWN,",
     "MELAKA,",
     "— The",
@@ -27,6 +28,8 @@ FORBIDDEN_PATTERNS = [
     "appeared first",
     "Lowyat",
     "lowyat",
+    "RSS内のタイトルと説明をもとに整理しました。",
+    "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
 ]
 URL_RE = re.compile(r"出典元URL：(\S+)")
 

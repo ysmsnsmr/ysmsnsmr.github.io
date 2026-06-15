@@ -43,6 +43,8 @@ debug_groq=true
 
 After the force-all strict accepted gate was added, `force_all_groq=true` is no longer treated as broad production acceptance. It is broad Groq exploration followed by a stricter accepted gate. Items that are only political background, market background, public-transport commentary without operational impact, or Paul Tan automotive noise should now fall back to RSS-rendered output.
 
+The force-all path now also uses a request cap and a pre-request skip before Groq calls. The default cap is `6` requests per run, with `MALAYSIA_NEWS_GROQ_FORCE_ALL_REQUEST_CAP` available for later tuning if HTTP 429 still appears. Known fallback candidates such as KTM/Komuter political invitation context, individual scam/victim incidents, market background, and Paul Tan noise are skipped before request. Non-accepted RSS fallback blocks in merged candidate output also replace the old generic fallback lines with topic-aware or safe non-generic Japanese text, while the exact RSS fallback artifact remains unchanged.
+
 Artifact run `27467402862` confirmed the intended shape after this gate refinement: `requested=4`, `accepted=1`, `fallback=3`; the accepted item was the concrete eCOSS subsidy item, while the KTM political/background item fell back with `transport_political_background_without_operational_impact`.
 
 `enable_body_enrichment=false` is the conservative initial setting. Body enrichment has high fetch success and is becoming safer through body evidence cleanup and structured Groq input, but it still adds dependency, network, and evidence-policy complexity. It should remain optional until the cleaned evidence path has more artifact observations.

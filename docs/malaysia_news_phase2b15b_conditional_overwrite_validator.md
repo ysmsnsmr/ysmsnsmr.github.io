@@ -51,6 +51,7 @@ The validator requires:
 - target dateline and forbidden strings are absent:
   - `KUALA LUMPUR,`
   - `PUTRAJAYA,`
+  - `SHAH ALAM,`
   - `GEORGE TOWN,`
   - `MELAKA,`
   - `— The`
@@ -59,6 +60,8 @@ The validator requires:
   - `appeared first`
   - `Lowyat`
   - `lowyat`
+  - `RSS内のタイトルと説明をもとに整理しました。`
+  - `生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。`
 
 If Groq accepted items exist but the candidate Markdown is byte-for-byte identical to RSS fallback Markdown, validation fails conservatively.
 
