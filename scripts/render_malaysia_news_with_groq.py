@@ -1646,15 +1646,29 @@ def accepted_only_empty_markdown(model: str, stats: dict[str, int]) -> str:
 RSS_ITEM_BLOCK_RE = re.compile(r"(?ms)^- 結論：.*?\n- 出典元URL：(?P<link>[^\n]+)\n?")
 RSS_FALLBACK_DATELINE_RE = re.compile(
     r"(?m)(- 何が起きた：)"
-    r"(?:KUALA LUMPUR|PUTRAJAYA|SHAH ALAM|MELAKA|GEORGE TOWN|IPOH|ALOR SETAR|JOHOR BARU|KOTA KINABALU|KUCHING),\s+"
+    r"(?:[A-Z][A-Z .'-]+),\s+"
     r"(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+"
     r"\d{1,2}\s+[—–-]\s*"
 )
+RSS_FALLBACK_TEXT_DATELINE_RE = re.compile(
+    r"^(?:[A-Z][A-Z .'-]+),\s+"
+    r"(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+"
+    r"\d{1,2}\s+[—–-]\s*"
+)
+RSS_FALLBACK_ENGLISH_ARTICLE_LEAD_RE = re.compile(r"^[—–-]\s+(?:The|A|An)\s+", re.IGNORECASE)
 
 
 def strip_rss_fallback_datelines(block: str) -> str:
     """Clean RSS-rendered fallback blocks only in merge-candidate Markdown."""
     return RSS_FALLBACK_DATELINE_RE.sub(r"\1", block)
+
+
+def clean_rss_fallback_text_value(text: str) -> str:
+    """Clean fallback replacement text before inserting it into merge candidates."""
+    value = clean_text(text)
+    value = RSS_FALLBACK_TEXT_DATELINE_RE.sub("", value)
+    value = RSS_FALLBACK_ENGLISH_ARTICLE_LEAD_RE.sub("", value)
+    return clean_text(value)
 
 
 def item_by_link(data: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -1685,11 +1699,12 @@ def safe_fallback_summary_for_item(item: dict[str, Any] | None) -> dict[str, Any
         }
     summary = fallback_renderer.build_display_summary(item)
     what_happened = [
-        line
+        clean_rss_fallback_text_value(line)
         for line in summary_lines(summary.get("what_happened"))
         if line != GENERIC_WHAT_HAPPENED_LINE and not looks_generic(line)
     ]
-    life_impact = clean_text(summary.get("life_impact"))
+    what_happened = [line for line in what_happened if line]
+    life_impact = clean_rss_fallback_text_value(summary.get("life_impact"))
     if not what_happened:
         what_happened = [SAFE_FALLBACK_WHAT_HAPPENED_LINE]
     if not life_impact or life_impact == GENERIC_LIFE_IMPACT_LINE or looks_generic(life_impact):
@@ -1710,21 +1725,22 @@ def strip_generic_fallback_lines(block: str, item: dict[str, Any] | None) -> str
         if line == f"- 何が起きた：{GENERIC_WHAT_HAPPENED_LINE}":
             if not inserted_what:
                 for value in replacement_what[:2]:
-                    normalized_value = clean_text(value)
+                    normalized_value = clean_rss_fallback_text_value(value)
                     if normalized_value and normalized_value not in seen_what_happened:
                         cleaned_lines.append(f"- 何が起きた：{normalized_value}")
                         seen_what_happened.add(normalized_value)
                 inserted_what = True
             continue
         if line == f"- 生活への影響：{GENERIC_LIFE_IMPACT_LINE}":
-            cleaned_lines.append(f"- 生活への影響：{replacement_life}")
+            cleaned_lines.append(f"- 生活への影響：{clean_rss_fallback_text_value(replacement_life)}")
             continue
         if what_match:
-            normalized_value = clean_text(what_match.group(1))
+            normalized_value = clean_rss_fallback_text_value(what_match.group(1))
             if normalized_value in seen_what_happened:
                 continue
             if normalized_value:
                 seen_what_happened.add(normalized_value)
+            line = f"- 何が起きた：{normalized_value}" if normalized_value else line
         cleaned_lines.append(line)
     suffix = "\n" if block.endswith("\n") else ""
     return "\n".join(cleaned_lines) + suffix
