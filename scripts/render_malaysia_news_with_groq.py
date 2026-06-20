@@ -13,6 +13,28 @@ from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from malaysia_groq_body_focus import life_impact_matches_body_focus
+from malaysia_groq_common import (
+    clean_text,
+    collect_item_text,
+    contains_any,
+    has_any_text,
+    item_needs_groq,
+    item_source_text,
+    normalize_topic,
+    summary_lines,
+    summary_text,
+)
+from malaysia_groq_force_all_policy import (
+    force_all_gate_reason,
+    force_all_pre_request_skip_reason,
+    force_all_request_cap,
+    force_all_request_priority,
+    groq_exclusion_reason,
+    ordered_force_all_entries,
+)
+from malaysia_groq_markdown_merge import merge_accepted_with_rss_markdown
+from malaysia_groq_term_normalization import normalize_malaysia_terms
 import render_malaysia_news_from_json as fallback_renderer
 
 
@@ -21,102 +43,7 @@ GROQ_CHAT_COMPLETIONS_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_USER_AGENT = "ysmsnsmr-malaysia-news/0.1 (+https://ysmsnsmr.github.io/news/malaysia/)"
 MAX_RESPONSE_CHARS = 4000
 TIMEOUT_SECONDS = 30
-DEFAULT_FORCE_ALL_REQUEST_CAP = 6
 MAX_429_RETRY_AFTER_SECONDS = 5
-GENERIC_WHAT_HAPPENED_LINE = "RSS内のタイトルと説明をもとに整理しました。"
-GENERIC_LIFE_IMPACT_LINE = "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。"
-SAFE_FALLBACK_WHAT_HAPPENED_LINE = "RSSの見出しと説明に基づく概要です。"
-SAFE_FALLBACK_LIFE_IMPACT_LINE = "内容に応じて、対象者や利用条件を確認してください。"
-FINANCIAL_MARKET_PHRASES = [
-    "ringgit",
-    "bursa",
-    "fbm klci",
-    "foreign exchange",
-    "forex",
-    "currency",
-    "stock market",
-    "equities",
-    "shares",
-    "market sentiment",
-    "us dollar",
-    "greenback",
-]
-INCIDENT_PHRASES = [
-    "accident",
-    "crash",
-    "collision",
-    "murder",
-    "rape",
-    "molest",
-    "molester",
-    "harassment",
-    "drug bust",
-    "drug syndicate",
-    "syndicate",
-    "court",
-    "charged",
-    "pleaded",
-    "jail",
-    "caning",
-    "probe",
-    "macc",
-    "sprm",
-    "police arrested",
-    "arrested",
-]
-POLITICS_PHRASES = [
-    "umno",
-    "pas",
-    "dap",
-    "pkr",
-    "bersatu",
-    "election",
-    "by-election",
-    "parliament",
-    "mp says",
-    "minister says",
-    "opposition",
-    "criticism",
-    "party",
-    "cabinet",
-]
-INTERNATIONAL_INCIDENT_PHRASES = [
-    "gaza",
-    "israel",
-    "iran",
-    "strait of hormuz",
-    "selat hormuz",
-    "vessel",
-    "shipping lane",
-    "war",
-    "missile",
-    "attack",
-    "cruise ship",
-    "hantavirus",
-]
-TOPIC_ALIASES = {
-    "storm_weather": "storm_weather",
-    "weather": "storm_weather",
-    "storm": "storm_weather",
-    "heavy_rain": "storm_weather",
-    "rain": "storm_weather",
-    "heat_weather": "heat_weather",
-    "heat": "heat_weather",
-    "hot_weather": "heat_weather",
-    "flood": "flood",
-    "flood_impact": "flood",
-    "road_closure": "road_closure",
-    "road": "road_closure",
-    "road_issue": "road_closure",
-    "public_transport": "public_transport",
-    "transport": "public_transport",
-    "cost_of_living": "cost_of_living",
-    "prices": "cost_of_living",
-    "health": "health",
-    "public_health": "health",
-    "currency": "currency",
-    "market": "market",
-}
 WEATHER_IMPACT_WORDS = [
     "weather",
     "rain",
@@ -250,334 +177,6 @@ BACKGROUND_IMPACT_WORDS = [
     "関連制度",
     "確認しておく価値",
 ]
-FORCE_ALL_SOURCE_LIFE_IMPACT_SIGNALS = [
-    "application",
-    "applications",
-    "deadline",
-    "eligibility",
-    "eligible",
-    "counter",
-    "procedure",
-    "permit",
-    "licence",
-    "license",
-    "renewal",
-    "subsidy",
-    "aid",
-    "ecoss",
-    "cost of living",
-    "price",
-    "payment",
-    "fee",
-    "fare",
-    "toll",
-    "road tax",
-    "jpj",
-    "summons",
-    "inspection",
-    "recall",
-    "safety defect",
-    "lrt",
-    "mrt",
-    "ktm",
-    "ktmb",
-    "komuter",
-    "rapid kl",
-    "bus",
-    "route",
-    "station",
-    "schedule",
-    "disruption",
-    "road closure",
-    "highway",
-    "rfid",
-    "smarttag",
-    "touch 'n go",
-    "tng",
-    "mykad",
-    "lhdn",
-    "tax",
-    "e-derma",
-    "hospital",
-    "clinic",
-    "school",
-    "bank",
-    "account",
-    "branch",
-    "e-wallet",
-    "ewallet",
-    "申請",
-    "期限",
-    "対象者",
-    "対象条件",
-    "窓口",
-    "手続",
-    "許可",
-    "免許",
-    "更新",
-    "補助",
-    "支援",
-    "生活費",
-    "価格",
-    "支払い",
-    "料金",
-    "通行料",
-    "道路税",
-    "車検",
-    "リコール",
-    "安全",
-    "運行",
-    "路線",
-    "駅",
-    "時刻",
-    "通勤",
-    "通学",
-    "決済",
-    "医療",
-    "学校",
-    "銀行",
-    "口座",
-]
-FORCE_ALL_SUMMARY_LIFE_IMPACT_SIGNALS = [
-    "申請",
-    "期限",
-    "対象者",
-    "対象条件",
-    "窓口",
-    "手続",
-    "許可",
-    "免許",
-    "更新",
-    "補助",
-    "支援",
-    "家計",
-    "生活費",
-    "価格",
-    "物価",
-    "支払い",
-    "料金",
-    "手数料",
-    "通行料",
-    "道路税",
-    "召喚状",
-    "車検",
-    "リコール",
-    "安全",
-    "運行",
-    "路線",
-    "駅",
-    "時刻",
-    "通勤",
-    "通学",
-    "移動",
-    "利用者",
-    "迂回",
-    "決済",
-    "アプリ",
-    "受診",
-    "制度",
-    "学校",
-    "銀行",
-    "口座",
-    "顧客対応",
-]
-FORCE_ALL_TRANSPORT_MARKERS = [
-    "ktm",
-    "ktmb",
-    "komuter",
-    "lrt",
-    "mrt",
-    "rapid kl",
-    "train",
-    "rail",
-    "bus",
-    "public transport",
-]
-FORCE_ALL_TRANSPORT_OPERATIONAL_SIGNALS = [
-    "route",
-    "station",
-    "fare",
-    "schedule",
-    "service disruption",
-    "service delay",
-    "service delays",
-    "service closure",
-    "service closures",
-    "service frequency",
-    "delay",
-    "delayed",
-    "disruption",
-    "closure",
-    "closed",
-    "operat",
-    "commute",
-    "passenger",
-    "運行",
-    "路線",
-    "駅",
-    "料金",
-    "時刻",
-    "遅延",
-    "混雑",
-    "通勤",
-    "通学",
-    "利用者",
-]
-FORCE_ALL_POLITICAL_CONTEXT_SIGNALS = [
-    "minister",
-    "mp ",
-    "mp says",
-    "says",
-    "invited",
-    "seat at the table",
-    "caretaker",
-    "barisan",
-    "umno",
-    "party",
-    "opposition",
-    "election",
-    "会談",
-    "発言",
-    "批判",
-    "政党",
-    "選挙",
-]
-FORCE_ALL_TRANSPORT_POLITICAL_INVITATION_SIGNALS = [
-    "anthony loke",
-    "loke",
-    "onn hafiz",
-    "invitation",
-    "invite",
-    "invited",
-    "formal invite",
-    "surat jemputan",
-    "jemputan",
-    "jumpa di kulai",
-    "see you in kulai",
-    "touched",
-    "sincere",
-    "seat at the table",
-    "caretaker",
-    "barisan",
-    "umno",
-    "dap",
-    "pakatan harapan",
-    "election",
-    "招待",
-    "発言",
-    "政治",
-]
-FORCE_ALL_SCAM_INCIDENT_SIGNALS = [
-    "scam",
-    "fraud",
-    "cheated",
-    "online ipo",
-    "police report",
-    "lost rm",
-    "returned after",
-    "only rm",
-    "詐欺",
-    "被害",
-]
-FORCE_ALL_INDIVIDUAL_VICTIM_SIGNALS = [
-    "retiree",
-    "victim",
-    "79-year-old",
-    "man",
-    "woman",
-    "aged",
-    "invests",
-    "invested",
-    "lost",
-    "kuching",
-    "sibu",
-    "police",
-    "report",
-    "男性",
-    "女性",
-    "個人",
-]
-FORCE_ALL_MONEY_BACKGROUND_SIGNALS = [
-    "ringgit",
-    "bursa",
-    "fbm klci",
-    "foreign exchange",
-    "forex",
-    "currency",
-    "stock market",
-    "equities",
-    "shares",
-    "market sentiment",
-    "us dollar",
-    "greenback",
-    "為替",
-    "相場",
-    "株式",
-    "市場",
-]
-FORCE_ALL_MONEY_CONCRETE_SIGNALS = [
-    "subsidy",
-    "aid",
-    "cost of living",
-    "payment",
-    "fee",
-    "bank",
-    "account",
-    "branch",
-    "e-wallet",
-    "ewallet",
-    "補助",
-    "支援",
-    "生活費",
-    "支払い",
-    "手数料",
-    "銀行",
-    "口座",
-    "窓口",
-]
-PAUL_TAN_FORCE_ALL_POSITIVE_SIGNALS = [
-    "jpj",
-    "licence",
-    "license",
-    "road tax",
-    "summons",
-    "inspection",
-    "enforcement",
-    "recall",
-    "safety",
-    "ron95",
-    "diesel",
-    "petrol",
-    "fuel subsidy",
-    "toll",
-    "rfid",
-    "smarttag",
-    "road closure",
-    "highway",
-    "lrt",
-    "mrt",
-    "rapid kl",
-    "ktmb",
-    "bus",
-    "public transport",
-]
-PAUL_TAN_FORCE_ALL_NOISE_SIGNALS = [
-    "registration",
-    "registrations",
-    "sales",
-    "market share",
-    "ranking",
-    "rankings",
-    "top",
-    "brand",
-    "model",
-    "variant",
-    "launch",
-    "preview",
-    "review",
-    "spyshot",
-    "showroom",
-]
 
 SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュースダッシュボードの日本語編集者です。
 入力はRSSのtitle、description、既存summary、必要に応じてbody_evidenceだけです。
@@ -616,22 +215,6 @@ life_impactはRSSに具体的な生活影響がない場合、無理に個人の
 出力はJSONのみです。"""
 
 
-def text_value(value: Any) -> str:
-    return value if isinstance(value, str) else ""
-
-
-def clean_text(value: Any) -> str:
-    return re.sub(r"\s+", " ", text_value(value)).strip()
-
-
-def summary_lines(value: Any) -> list[str]:
-    if isinstance(value, list):
-        return [clean_text(item) for item in value if clean_text(item)][:2]
-    if isinstance(value, str):
-        return [clean_text(line) for line in value.splitlines() if clean_text(line)][:2]
-    return []
-
-
 def normalize_summary(value: Any) -> dict[str, Any]:
     summary = value if isinstance(value, dict) else {}
     return {
@@ -640,140 +223,6 @@ def normalize_summary(value: Any) -> dict[str, Any]:
         "life_impact": clean_text(summary.get("life_impact")),
         "next_action": clean_text(summary.get("next_action")),
     }
-
-
-def looks_english_or_bm(text: str) -> bool:
-    if not text:
-        return True
-    ascii_letters = len(re.findall(r"[A-Za-z]", text))
-    japanese_chars = len(re.findall(r"[\u3040-\u30ff\u3400-\u9fff]", text))
-    if japanese_chars == 0 and ascii_letters >= 12:
-        return True
-    return ascii_letters >= 24 and ascii_letters > japanese_chars * 2
-
-
-def looks_generic(text: str) -> bool:
-    generic_phrases = [
-        GENERIC_LIFE_IMPACT_LINE.rstrip("。"),
-        GENERIC_LIFE_IMPACT_LINE,
-        "背景ニュースとして",
-        "把握しておく価値があります",
-        "rssでは",
-        "rssの情報では",
-    ]
-    lower_text = text.lower()
-    return any(phrase.lower() in lower_text for phrase in generic_phrases)
-
-
-BODY_FOCUS_LIFE_IMPACT_CUES = {
-    "procedure_or_public_service": [
-        "申請",
-        "期限",
-        "対象",
-        "窓口",
-        "手続き",
-        "制度",
-        "利用",
-        "確認",
-    ],
-    "cost_or_subsidy": [
-        "家計",
-        "価格",
-        "補助",
-        "対象",
-        "支払い",
-        "負担",
-        "生活費",
-        "費用",
-    ],
-    "transport_or_infra": [
-        "運行",
-        "道路",
-        "通勤",
-        "移動",
-        "利用者",
-        "交通",
-        "路線",
-        "駅",
-    ],
-    "consumer_or_payment": [
-        "決済",
-        "アプリ",
-        "利用",
-        "手数料",
-        "支払い",
-        "カード",
-        "サービス",
-    ],
-    "health_or_education": [
-        "受診",
-        "医療",
-        "医療費",
-        "治療費",
-        "補助",
-        "対象者",
-        "学校",
-        "対象",
-        "学生",
-        "教育",
-        "健康",
-        "費用",
-        "負担",
-        "病院",
-        "クリニック",
-    ],
-    "financial_service_access": [
-        "銀行",
-        "金融",
-        "窓口",
-        "顧客",
-        "口座",
-        "サービス",
-        "利用",
-    ],
-}
-
-
-def body_evidence_focus_values(item: dict[str, Any]) -> list[str]:
-    if item.get("body_excerpt_policy") != "use_body":
-        return []
-    focus = item.get("body_evidence_focus")
-    if not isinstance(focus, list):
-        return []
-    return [clean_text(value) for value in focus if clean_text(value)]
-
-
-def life_impact_matches_body_focus(item: dict[str, Any], life_impact: str) -> bool:
-    focus_values = body_evidence_focus_values(item)
-    if not focus_values:
-        return True
-    text = clean_text(life_impact)
-    if not text:
-        return False
-    if looks_generic(text):
-        return False
-    if "health_or_education" in focus_values and has_any_text(text, ["背景情報", "確認しておく価値"]):
-        return False
-    allowed_cues: list[str] = []
-    for focus in focus_values:
-        allowed_cues.extend(BODY_FOCUS_LIFE_IMPACT_CUES.get(focus, []))
-    if not allowed_cues:
-        return True
-    return any(cue in text for cue in allowed_cues)
-
-
-def item_needs_groq(item: dict[str, Any]) -> bool:
-    rendered_summary = fallback_renderer.build_display_summary(item)
-    fields = [
-        clean_text(rendered_summary.get("conclusion")),
-        clean_text(rendered_summary.get("life_impact")),
-        clean_text(rendered_summary.get("next_action")),
-        " ".join(summary_lines(rendered_summary.get("what_happened"))),
-    ]
-    meaningful_fields = [field for field in fields if field]
-    if not meaningful_fields:
-        return True
-    return any(looks_english_or_bm(field) or looks_generic(field) for field in meaningful_fields)
 
 
 def groq_payload_for_item(item: dict[str, Any]) -> dict[str, Any]:
@@ -863,31 +312,6 @@ def parse_groq_content(content: str) -> Any:
     return json.loads(cleaned_content)
 
 
-def item_source_text(item: dict[str, Any]) -> str:
-    return " ".join(
-        [
-            clean_text(item.get("title")),
-            clean_text(item.get("description")),
-            clean_text(item.get("body_evidence_excerpt")),
-        ]
-    ).lower()
-
-
-def summary_text(summary: dict[str, Any]) -> str:
-    return " ".join(
-        [
-            clean_text(summary.get("conclusion")),
-            " ".join(summary_lines(summary.get("what_happened"))),
-            clean_text(summary.get("life_impact")),
-            clean_text(summary.get("next_action")),
-        ]
-    )
-
-
-def has_any_text(text: str, phrases: list[str]) -> bool:
-    return any(phrase.lower() in text for phrase in phrases)
-
-
 def rendered_has_japanese_unit_for_number(rendered_text: str, number: str, units: list[str]) -> bool:
     """Return true when Groq reused an English magnitude number with a Japanese unit."""
     if not number:
@@ -915,270 +339,6 @@ def reject_numeric_unit_reason(source_text: str, rendered_text: str) -> str:
             return f"unsafe numeric unit conversion: {match.group(0)}"
 
     return ""
-
-
-def has_search_phrase(text: str, phrase: str) -> bool:
-    normalized_phrase = re.sub(r"\s+", " ", phrase.strip().lower())
-    if not normalized_phrase:
-        return False
-    if re.search(r"[a-z0-9]", normalized_phrase):
-        pattern = rf"(?<![a-z0-9]){re.escape(normalized_phrase)}(?![a-z0-9])"
-        return re.search(pattern, text) is not None
-    return normalized_phrase in text
-
-
-def has_any_search_phrase(text: str, phrases: list[str]) -> bool:
-    return any(has_search_phrase(text, phrase) for phrase in phrases)
-
-
-def contains_any(text: str, words: list[str]) -> bool:
-    return has_any_search_phrase(text.lower(), words)
-
-
-def normalize_topic(topic: str) -> str:
-    return TOPIC_ALIASES.get(clean_text(topic).lower(), "")
-
-
-def item_search_text(item: dict[str, Any]) -> str:
-    parts = [
-        clean_text(item.get("title")),
-        clean_text(item.get("description")),
-    ]
-    summary = item.get("selected_summary")
-    if isinstance(summary, dict):
-        parts.extend(
-            [
-                clean_text(summary.get("conclusion")),
-                " ".join(summary_lines(summary.get("what_happened"))),
-                clean_text(summary.get("life_impact")),
-                clean_text(summary.get("next_action")),
-            ]
-        )
-    tags = item.get("tags")
-    if isinstance(tags, list):
-        parts.extend(clean_text(tag) for tag in tags)
-    flags = item.get("flags")
-    if isinstance(flags, dict):
-        parts.extend(clean_text(key) for key, value in flags.items() if value)
-    return " ".join(part for part in parts if part).lower()
-
-
-def is_financial_market_item(item: dict[str, Any]) -> bool:
-    return has_any_search_phrase(item_search_text(item), FINANCIAL_MARKET_PHRASES)
-
-
-def is_incident_item(item: dict[str, Any]) -> bool:
-    return has_any_search_phrase(item_search_text(item), INCIDENT_PHRASES)
-
-
-def is_politics_item(item: dict[str, Any]) -> bool:
-    return has_any_search_phrase(item_search_text(item), POLITICS_PHRASES)
-
-
-def is_international_incident_item(item: dict[str, Any]) -> bool:
-    return has_any_search_phrase(item_search_text(item), INTERNATIONAL_INCIDENT_PHRASES)
-
-
-def groq_exclusion_reason(item: dict[str, Any]) -> str:
-    if is_financial_market_item(item):
-        return "financial_market"
-    if is_incident_item(item):
-        return "incident"
-    if is_politics_item(item):
-        return "politics"
-    if is_international_incident_item(item):
-        return "international_incident"
-    return ""
-
-
-def force_all_source_text(item: dict[str, Any]) -> str:
-    parts = [
-        clean_text(item.get("title")),
-        clean_text(item.get("description")),
-        clean_text(item.get("source")),
-        clean_text(item.get("category")),
-        clean_text(item.get("body_evidence_excerpt")),
-    ]
-    tags = item.get("tags")
-    if isinstance(tags, list):
-        parts.extend(clean_text(tag) for tag in tags)
-    flags = item.get("flags")
-    if isinstance(flags, dict):
-        parts.extend(clean_text(key) for key, value in flags.items() if value)
-    return " ".join(part for part in parts if part).lower()
-
-
-def force_all_summary_text(summary: dict[str, Any]) -> str:
-    return summary_text(summary).lower()
-
-
-def has_force_all_body_evidence(item: dict[str, Any], summary: dict[str, Any]) -> bool:
-    focus_values = body_evidence_focus_values(item)
-    if not focus_values:
-        return False
-    return life_impact_matches_body_focus(item, clean_text(summary.get("life_impact")))
-
-
-def is_paul_tan_source(item: dict[str, Any]) -> bool:
-    return clean_text(item.get("source")).lower() == "paul tan"
-
-
-def paul_tan_force_all_gate_reason(source_text: str) -> str:
-    has_positive = contains_any(source_text, PAUL_TAN_FORCE_ALL_POSITIVE_SIGNALS)
-    has_noise = contains_any(source_text, PAUL_TAN_FORCE_ALL_NOISE_SIGNALS)
-    has_driver_obligation = contains_any(
-        source_text,
-        [
-            "licence",
-            "license",
-            "road tax",
-            "summons",
-            "inspection",
-            "enforcement",
-            "recall",
-            "safety",
-            "fuel subsidy",
-            "toll",
-            "road closure",
-            "public transport",
-        ],
-    )
-    if has_noise and not has_driver_obligation:
-        return "paul_tan_noise_without_driver_impact"
-    if not has_positive:
-        return "paul_tan_no_transport_driver_signal"
-    return ""
-
-
-def force_all_gate_reason(item: dict[str, Any], summary: dict[str, Any]) -> str:
-    """Return a rejection reason for force-all accepted summaries, or empty string when safe."""
-    source_text = force_all_source_text(item)
-    rendered_text = force_all_summary_text(summary)
-    focus_values = body_evidence_focus_values(item)
-
-    if is_paul_tan_source(item):
-        reason = paul_tan_force_all_gate_reason(source_text)
-        if reason:
-            return reason
-
-    has_transport_marker = contains_any(source_text, FORCE_ALL_TRANSPORT_MARKERS)
-    has_transport_operation = contains_any(source_text, FORCE_ALL_TRANSPORT_OPERATIONAL_SIGNALS)
-    has_political_context = contains_any(source_text, FORCE_ALL_POLITICAL_CONTEXT_SIGNALS)
-    has_transport_focus = "transport_or_infra" in focus_values
-    has_transport_invitation_context = contains_any(source_text, FORCE_ALL_TRANSPORT_POLITICAL_INVITATION_SIGNALS)
-    if (has_transport_marker or has_transport_focus) and has_transport_invitation_context:
-        return "transport_political_invitation_context"
-    if (has_transport_marker or has_transport_focus) and has_political_context and not has_transport_operation:
-        return "transport_political_background_without_operational_impact"
-
-    has_scam_incident = contains_any(source_text, FORCE_ALL_SCAM_INCIDENT_SIGNALS)
-    has_individual_victim = contains_any(source_text, FORCE_ALL_INDIVIDUAL_VICTIM_SIGNALS)
-    if has_scam_incident and has_individual_victim:
-        return "individual_scam_incident"
-
-    if has_force_all_body_evidence(item, summary):
-        return ""
-
-    has_money_background = contains_any(source_text, FORCE_ALL_MONEY_BACKGROUND_SIGNALS)
-    has_money_concrete = contains_any(source_text, FORCE_ALL_MONEY_CONCRETE_SIGNALS)
-    if has_money_background and not has_money_concrete:
-        return "money_market_background_without_concrete_life_impact"
-
-    source_has_signal = contains_any(source_text, FORCE_ALL_SOURCE_LIFE_IMPACT_SIGNALS)
-    if not source_has_signal:
-        return "no_strong_source_life_impact_signal"
-
-    if looks_generic(clean_text(summary.get("life_impact"))):
-        return "generic_life_impact"
-
-    summary_has_signal = contains_any(rendered_text, FORCE_ALL_SUMMARY_LIFE_IMPACT_SIGNALS)
-    if not summary_has_signal:
-        return "no_strong_summary_life_impact_signal"
-
-    return ""
-
-
-def force_all_pre_request_skip_reason(item: dict[str, Any]) -> str:
-    """Skip force-all requests that are known to be low-value before calling Groq."""
-    source_text = force_all_source_text(item)
-    focus_values = body_evidence_focus_values(item)
-
-    if is_paul_tan_source(item):
-        reason = paul_tan_force_all_gate_reason(source_text)
-        if reason:
-            return reason
-
-    has_transport_marker = contains_any(source_text, FORCE_ALL_TRANSPORT_MARKERS)
-    has_transport_focus = "transport_or_infra" in focus_values
-    if (has_transport_marker or has_transport_focus) and contains_any(
-        source_text, FORCE_ALL_TRANSPORT_POLITICAL_INVITATION_SIGNALS
-    ):
-        return "transport_political_invitation_context"
-
-    if contains_any(source_text, FORCE_ALL_SCAM_INCIDENT_SIGNALS) and contains_any(
-        source_text, FORCE_ALL_INDIVIDUAL_VICTIM_SIGNALS
-    ):
-        return "individual_scam_incident"
-
-    if contains_any(source_text, FORCE_ALL_MONEY_BACKGROUND_SIGNALS) and not contains_any(
-        source_text, FORCE_ALL_MONEY_CONCRETE_SIGNALS
-    ):
-        return "money_market_background_without_concrete_life_impact"
-
-    return ""
-
-
-def force_all_request_priority(item: dict[str, Any]) -> int:
-    """Rank force-all request candidates so likely concrete items stay within the cap."""
-    source_text = force_all_source_text(item)
-    score = 0
-    focus_values = body_evidence_focus_values(item)
-    if focus_values:
-        score += 100
-        if any(
-            focus in focus_values
-            for focus in (
-                "procedure_or_public_service",
-                "cost_or_subsidy",
-                "consumer_or_payment",
-                "health_or_education",
-                "financial_service_access",
-            )
-        ):
-            score += 30
-        if "transport_or_infra" in focus_values and contains_any(
-            source_text, FORCE_ALL_TRANSPORT_OPERATIONAL_SIGNALS
-        ):
-            score += 25
-    if contains_any(source_text, FORCE_ALL_MONEY_CONCRETE_SIGNALS):
-        score += 45
-    if contains_any(source_text, ["subsidy", "aid", "bantuan", "voucher", "補助", "支援"]):
-        score += 35
-    if contains_any(source_text, ["application", "deadline", "permit", "dbkl", "lhdn", "申請", "期限", "手続"]):
-        score += 30
-    if contains_any(source_text, ["health", "medical", "hospital", "clinic", "rawatan", "医療", "受診"]):
-        score += 30
-    if contains_any(source_text, FORCE_ALL_TRANSPORT_OPERATIONAL_SIGNALS):
-        score += 20
-    if item_needs_groq(item):
-        score += 10
-    return score
-
-
-def force_all_request_cap() -> int:
-    raw_value = os.getenv("MALAYSIA_NEWS_GROQ_FORCE_ALL_REQUEST_CAP", "").strip()
-    if not raw_value:
-        return DEFAULT_FORCE_ALL_REQUEST_CAP
-    try:
-        value = int(raw_value)
-    except ValueError:
-        return DEFAULT_FORCE_ALL_REQUEST_CAP
-    return max(0, value)
-
-
-def ordered_force_all_entries(items: list[Any]) -> list[tuple[int, dict[str, Any]]]:
-    entries = [(index, item) for index, item in enumerate(items) if isinstance(item, dict)]
-    return sorted(entries, key=lambda entry: (-force_all_request_priority(entry[1]), entry[0]))
 
 
 def reject_life_impact_reason(topic: str, item: dict[str, Any], life_impact: str) -> str:
@@ -1323,25 +483,6 @@ def validate_summary_against_source(item: dict[str, Any], summary: dict[str, Any
     if reason:
         raise ValueError(f"life_impact topic mismatch: {reason}")
 
-
-
-def collect_item_text(item: dict[str, Any]) -> str:
-    """Return a compact lower-cased text blob for conservative local guards."""
-    parts: list[str] = []
-    for key in ("title", "description", "source", "category"):
-        value = item.get(key)
-        if isinstance(value, str):
-            parts.append(value)
-    selected_summary = item.get("selected_summary")
-    if isinstance(selected_summary, dict):
-        for value in selected_summary.values():
-            if isinstance(value, str):
-                parts.append(value)
-            elif isinstance(value, list):
-                parts.extend(str(part) for part in value if part)
-    return " ".join(parts).lower()
-
-
 def is_enforcement_or_misuse_item(item: dict[str, Any]) -> bool:
     """Skip Groq for narrow enforcement/misuse articles where display gains are low."""
     text = collect_item_text(item)
@@ -1363,108 +504,6 @@ def is_enforcement_or_misuse_item(item: dict[str, Any]) -> bool:
         "spot checks",
     ]
     return any(keyword in text for keyword in keywords)
-
-
-def normalize_malaysia_terms_in_text(text: str, item: dict[str, Any]) -> str:
-    """Normalize recurring Malaysia-government terms after Groq generation."""
-    if not text:
-        return text
-
-    source_text = collect_item_text(item)
-    source_lower = source_text.lower()
-    has_ecoss_evidence = (
-        "ecoss" in source_lower
-        or "cooking oil price stabilisation scheme" in source_lower
-        or "cooking oil price stabilization scheme" in source_lower
-    )
-    has_kita_selangor_voucher_evidence = "kita selangor" in source_lower and (
-        "voucher" in source_lower or "vouchers" in source_lower or "baucar" in source_lower
-    )
-
-    replacements = {
-        "国内取引・生活費省": "国内貿易・生活費省",
-        "国内取引省": "国内貿易省",
-        "車両カード": "フリートカード",
-        "油価": "石油価格",
-    }
-
-    if "kpdn" in source_text or "domestic trade" in source_text:
-        replacements.update(
-            {
-                "商務省": "国内貿易・生活費省",
-                "ケダ州商務省": "ケダ州国内貿易・生活費省",
-            }
-        )
-
-    if has_ecoss_evidence:
-        ecoss_label = "eCOSS（食用油価格安定化制度）"
-        replacements.update(
-            {
-                "食用石油価格格安定化制度(eCOSS)": ecoss_label,
-                "食用石油価格格安定化制度（eCOSS）": ecoss_label,
-                "食用油価格格安定化制度(eCOSS)": ecoss_label,
-                "食用油価格格安定化制度（eCOSS）": ecoss_label,
-                "食用石油価格安定化制度(eCOSS)": ecoss_label,
-                "食用石油価格安定化制度（eCOSS）": ecoss_label,
-                "食用油価格安定化制度(eCOSS)": ecoss_label,
-                "食用油価格安定化制度（eCOSS）": ecoss_label,
-                "食用石油価格格安定化制度": ecoss_label,
-                "食用油価格格安定化制度": ecoss_label,
-                "食用石油価格安定化制度": ecoss_label,
-                "食用油価格安定化制度": ecoss_label,
-                "食用石油価格安定制度": ecoss_label,
-                "食用油価格安定制度": ecoss_label,
-                "eCOSS制度": ecoss_label,
-                "eCOSS 制度": ecoss_label,
-            }
-        )
-
-    if has_kita_selangor_voucher_evidence:
-        replacements.update(
-            {
-                "Kita Selangor voucer": "Kita Selangor voucher",
-                "Kita Selangor Voucer": "Kita Selangor voucher",
-                "Kita Selangor バウチャー": "Kita Selangor voucher",
-                "Kita Selangor バウチャ": "Kita Selangor voucher",
-                "キタ・セランゴール・バウチャー": "Kita Selangor voucher",
-                "キタセランゴール・バウチャー": "Kita Selangor voucher",
-                "キタセランゴールバウチャー": "Kita Selangor voucher",
-            }
-        )
-
-    for old, new in replacements.items():
-        text = text.replace(old, new)
-    if has_ecoss_evidence:
-        ecoss_label = "eCOSS（食用油価格安定化制度）"
-        text = re.sub(
-            r"食用(?:石)?(?:石油|油)価格(?:格)?(?:格安|安定)定?化?制度[（(]eCOSS[）)]",
-            ecoss_label,
-            text,
-        )
-        text = re.sub(
-            r"食用(?:石)?(?:石油|油)価格(?:格)?(?:格安|安定)定?化?制度",
-            ecoss_label,
-            text,
-        )
-        nested_ecoss_label = f"eCOSS（{ecoss_label}）"
-        while nested_ecoss_label in text:
-            text = text.replace(nested_ecoss_label, ecoss_label)
-    return text
-
-
-def normalize_malaysia_terms(summary: dict[str, Any], item: dict[str, Any]) -> dict[str, Any]:
-    """Normalize terms in a Groq summary while preserving the summary schema."""
-    normalized = dict(summary)
-    for key in ("conclusion", "life_impact", "next_action"):
-        if isinstance(normalized.get(key), str):
-            normalized[key] = normalize_malaysia_terms_in_text(normalized[key], item)
-    if isinstance(normalized.get("what_happened"), list):
-        normalized["what_happened"] = [
-            normalize_malaysia_terms_in_text(str(line), item)
-            for line in normalized["what_happened"]
-            if line
-        ]
-    return normalized
 
 
 def retry_after_seconds(error: urllib.error.HTTPError) -> int | None:
@@ -1579,13 +618,56 @@ def safe_log(message: str) -> None:
     print(message, file=sys.stderr)
 
 
+def diagnostic_focus_values(item: dict[str, Any]) -> list[str]:
+    focus = item.get("body_evidence_focus")
+    if not isinstance(focus, list):
+        return []
+    return [clean_text(value) for value in focus if clean_text(value)]
+
+
+def build_decision_record(
+    index: int,
+    item: dict[str, Any],
+    force_all: bool,
+    needs_groq: bool | None = None,
+) -> dict[str, Any]:
+    if needs_groq is None:
+        needs_groq = item_needs_groq(item)
+    return {
+        "index": index + 1,
+        "link": clean_text(item.get("link")),
+        "source": clean_text(item.get("source")),
+        "category": clean_text(item.get("category")),
+        "title": clean_text(item.get("title")),
+        "body_excerpt_policy": clean_text(item.get("body_excerpt_policy")),
+        "body_evidence_focus": diagnostic_focus_values(item),
+        "item_needs_groq": needs_groq,
+        "force_all_priority": force_all_request_priority(item) if force_all else None,
+        "decision": "pending",
+        "reason": "",
+        "requested": False,
+        "accepted": False,
+    }
+
+
+def decision_record_counts(decision_records: list[dict[str, Any]]) -> dict[str, int]:
+    return {
+        "records": len(decision_records),
+        "requested": sum(1 for record in decision_records if record.get("requested") is True),
+        "accepted": sum(1 for record in decision_records if record.get("accepted") is True),
+        "fallback": sum(1 for record in decision_records if record.get("decision") == "fallback"),
+        "skipped": sum(1 for record in decision_records if record.get("decision") == "skipped"),
+    }
+
+
 def build_improved_items_payload(
     accepted_records: list[dict[str, Any]],
     model: str,
     stats: dict[str, int],
     now: datetime,
+    decision_records: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
-    return {
+    payload: dict[str, Any] = {
         "schema_version": "malaysia-groq-improved-items/v1",
         "generated_at": now.astimezone().isoformat(timespec="seconds"),
         "model": model,
@@ -1596,6 +678,12 @@ def build_improved_items_payload(
         },
         "items": accepted_records,
     }
+    if decision_records is not None:
+        payload["diagnostics"] = {
+            "decision_counts": decision_record_counts(decision_records),
+            "decision_records": decision_records,
+        }
+    return payload
 
 
 def write_json(path: str, payload: dict[str, Any]) -> None:
@@ -1643,194 +731,30 @@ def accepted_only_empty_markdown(model: str, stats: dict[str, int]) -> str:
     )
 
 
-RSS_ITEM_BLOCK_RE = re.compile(r"(?ms)^- 結論：.*?\n- 出典元URL：(?P<link>[^\n]+)\n?")
-RSS_FALLBACK_DATELINE_RE = re.compile(
-    r"(?m)(- 何が起きた：)"
-    r"(?:[A-Z][A-Z .'-]+),\s+"
-    r"(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+"
-    r"\d{1,2}\s+[—–-]\s*"
-)
-RSS_FALLBACK_TEXT_DATELINE_RE = re.compile(
-    r"^(?:[A-Z][A-Z .'-]+),\s+"
-    r"(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+"
-    r"\d{1,2}\s+[—–-]\s*"
-)
-RSS_FALLBACK_ENGLISH_ARTICLE_LEAD_RE = re.compile(r"^[—–-]\s+(?:The|A|An)\s+", re.IGNORECASE)
-
-
-def strip_rss_fallback_datelines(block: str) -> str:
-    """Clean RSS-rendered fallback blocks only in merge-candidate Markdown."""
-    return RSS_FALLBACK_DATELINE_RE.sub(r"\1", block)
-
-
-def clean_rss_fallback_text_value(text: str) -> str:
-    """Clean fallback replacement text before inserting it into merge candidates."""
-    value = clean_text(text)
-    value = RSS_FALLBACK_TEXT_DATELINE_RE.sub("", value)
-    value = RSS_FALLBACK_ENGLISH_ARTICLE_LEAD_RE.sub("", value)
-    return clean_text(value)
-
-
-def item_by_link(data: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    items = data.get("items")
-    if not isinstance(items, list):
-        return {}
-    result: dict[str, dict[str, Any]] = {}
-    for item in items:
-        if not isinstance(item, dict):
-            continue
-        link = clean_text(item.get("link"))
-        if link:
-            result[link] = item
-    return result
-
-
-def safe_fallback_summary_for_item(item: dict[str, Any] | None) -> dict[str, Any]:
-    if not item:
-        return {
-            "what_happened": [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
-            "life_impact": SAFE_FALLBACK_LIFE_IMPACT_LINE,
-        }
-    topic = fallback_renderer.detect_topic(item)
-    if not topic:
-        return {
-            "what_happened": [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
-            "life_impact": SAFE_FALLBACK_LIFE_IMPACT_LINE,
-        }
-    summary = fallback_renderer.build_display_summary(item)
-    what_happened = [
-        clean_rss_fallback_text_value(line)
-        for line in summary_lines(summary.get("what_happened"))
-        if line != GENERIC_WHAT_HAPPENED_LINE and not looks_generic(line)
-    ]
-    what_happened = [line for line in what_happened if line]
-    life_impact = clean_rss_fallback_text_value(summary.get("life_impact"))
-    if not what_happened:
-        what_happened = [SAFE_FALLBACK_WHAT_HAPPENED_LINE]
-    if not life_impact or life_impact == GENERIC_LIFE_IMPACT_LINE or looks_generic(life_impact):
-        life_impact = SAFE_FALLBACK_LIFE_IMPACT_LINE
-    return {"what_happened": what_happened[:2], "life_impact": life_impact}
-
-
-def strip_generic_fallback_lines(block: str, item: dict[str, Any] | None) -> str:
-    summary = safe_fallback_summary_for_item(item)
-    replacement_what = summary_lines(summary.get("what_happened")) or [SAFE_FALLBACK_WHAT_HAPPENED_LINE]
-    replacement_life = clean_text(summary.get("life_impact")) or SAFE_FALLBACK_LIFE_IMPACT_LINE
-    lines = block.splitlines()
-    cleaned_lines: list[str] = []
-    seen_what_happened: set[str] = set()
-    inserted_what = False
-    for line in lines:
-        what_match = re.match(r"^- 何が起きた：(.+)$", line)
-        if line == f"- 何が起きた：{GENERIC_WHAT_HAPPENED_LINE}":
-            if not inserted_what:
-                for value in replacement_what[:2]:
-                    normalized_value = clean_rss_fallback_text_value(value)
-                    if normalized_value and normalized_value not in seen_what_happened:
-                        cleaned_lines.append(f"- 何が起きた：{normalized_value}")
-                        seen_what_happened.add(normalized_value)
-                inserted_what = True
-            continue
-        if line == f"- 生活への影響：{GENERIC_LIFE_IMPACT_LINE}":
-            cleaned_lines.append(f"- 生活への影響：{clean_rss_fallback_text_value(replacement_life)}")
-            continue
-        if what_match:
-            normalized_value = clean_rss_fallback_text_value(what_match.group(1))
-            if normalized_value in seen_what_happened:
-                continue
-            if normalized_value:
-                seen_what_happened.add(normalized_value)
-            line = f"- 何が起きた：{normalized_value}" if normalized_value else line
-        cleaned_lines.append(line)
-    suffix = "\n" if block.endswith("\n") else ""
-    return "\n".join(cleaned_lines) + suffix
-
-
-def clean_rss_fallback_block(block: str, item: dict[str, Any] | None) -> str:
-    block = strip_rss_fallback_datelines(block)
-    return strip_generic_fallback_lines(block, item)
-
-
-def render_accepted_record_block(record: dict[str, Any]) -> str:
-    summary = record.get("improved_summary")
-    if not isinstance(summary, dict):
-        summary = {}
-    lines: list[str] = []
-    conclusion = clean_text(summary.get("conclusion"))
-    life_impact = clean_text(summary.get("life_impact"))
-    next_action = clean_text(summary.get("next_action"))
-    source = clean_text(record.get("source"))
-    published_date = clean_text(record.get("published_date"))
-    link = clean_text(record.get("link"))
-
-    lines.append(f"- 結論：{conclusion}")
-    for line in summary_lines(summary.get("what_happened")):
-        lines.append(f"- 何が起きた：{line}")
-    lines.append(f"- 生活への影響：{life_impact}")
-    if next_action:
-        lines.append(f"- 次アクション：{next_action}")
-    lines.append(f"- 出典：{source}（{published_date}）")
-    lines.append(f"- 出典元URL：{link}")
-    return "\n".join(lines) + "\n"
-
-
-def merge_accepted_with_rss_markdown(
-    rss_markdown: str,
-    accepted_records: list[dict[str, Any]],
-    data: dict[str, Any] | None = None,
-) -> str:
-    if not accepted_records:
-        return rss_markdown
-
-    block_by_link: dict[str, re.Match[str]] = {}
-    duplicate_links: set[str] = set()
-    for match in RSS_ITEM_BLOCK_RE.finditer(rss_markdown):
-        link = clean_text(match.group("link"))
-        if not link:
-            continue
-        if link in block_by_link:
-            duplicate_links.add(link)
-        block_by_link[link] = match
-    if duplicate_links:
-        safe_log("groq-merge: duplicate RSS Markdown URL block found; using exact RSS Markdown fallback.")
-        return rss_markdown
-
-    replacements: dict[str, str] = {}
-    items_by_link = item_by_link(data or {})
-    for record in accepted_records:
-        if not isinstance(record, dict):
-            continue
-        link = clean_text(record.get("link"))
-        if not link or link not in block_by_link:
-            safe_log(f"groq-merge: accepted URL not found in RSS Markdown; using exact RSS Markdown fallback: {link}")
-            return rss_markdown
-        replacements[link] = render_accepted_record_block(record)
-
-    def replace_block(match: re.Match[str]) -> str:
-        link = clean_text(match.group("link"))
-        if link in replacements:
-            return replacements[link]
-        return clean_rss_fallback_block(match.group(0), items_by_link.get(link))
-
-    return RSS_ITEM_BLOCK_RE.sub(replace_block, rss_markdown)
-
-
 def render_with_groq(
     data: dict[str, Any],
     api_key: str,
     model: str,
     force_all: bool,
     debug: bool,
-) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str, int]]:
+) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str, int], list[dict[str, Any]]]:
     rendered_data = copy.deepcopy(data)
     accepted_records: list[dict[str, Any]] = []
+    decision_records: list[dict[str, Any]] = []
     stats = {"requested": 0, "accepted": 0, "fallback": 0}
     items = rendered_data.get("items", [])
     if not isinstance(items, list):
-        return rendered_data, accepted_records, stats
+        return rendered_data, accepted_records, stats, decision_records
     if not api_key:
         safe_log("groq: GROQ_API_KEY is not set; using fallback renderer for all items.")
-        return rendered_data, accepted_records, stats
+        for index, item in enumerate(items):
+            if not isinstance(item, dict):
+                continue
+            record = build_decision_record(index, item, force_all)
+            record["decision"] = "skipped"
+            record["reason"] = "missing_groq_api_key"
+            decision_records.append(record)
+        return rendered_data, accepted_records, stats, decision_records
 
     requested = 0
     accepted = 0
@@ -1844,29 +768,44 @@ def render_with_groq(
     for index, item in entries:
         if not isinstance(item, dict):
             continue
+        needs_groq = item_needs_groq(item)
+        decision_record = build_decision_record(index, item, force_all, needs_groq)
+        decision_records.append(decision_record)
         reason = groq_exclusion_reason(item)
         if reason:
+            decision_record["decision"] = "skipped"
+            decision_record["reason"] = f"groq_exclusion:{reason}"
             if debug:
                 safe_log(f"groq-debug: item={index + 1} skipped {reason}")
             continue
         if force_all:
             reason = force_all_pre_request_skip_reason(item)
             if reason:
+                decision_record["decision"] = "skipped"
+                decision_record["reason"] = f"pre_request_skip:{reason}"
                 if debug:
                     safe_log(f"groq-debug: item={index + 1} skipped force_all_pre_request {reason}")
                 continue
             if requested >= request_cap:
+                decision_record["decision"] = "skipped"
+                decision_record["reason"] = "request_cap"
                 if debug:
                     safe_log(f"groq-debug: item={index + 1} skipped force_all_request_cap")
                 continue
-        if not force_all and not item_needs_groq(item):
+        if not force_all and not needs_groq:
+            decision_record["decision"] = "skipped"
+            decision_record["reason"] = "not_needed"
             continue
         if is_enforcement_or_misuse_item(item):
+            decision_record["decision"] = "skipped"
+            decision_record["reason"] = "enforcement_misuse"
             if debug:
                 safe_log(f"groq-debug: item={index + 1} skipped enforcement_misuse")
             continue
 
         requested += 1
+        decision_record["decision"] = "requested"
+        decision_record["requested"] = True
         try:
             original_summary = copy.deepcopy(item.get("selected_summary", {}))
             improved_summary = request_groq_summary_with_retry(item, api_key, model, debug, index)
@@ -1889,23 +828,32 @@ def render_with_groq(
                     "improved_summary": improved_summary,
                 }
             )
+            decision_record["decision"] = "accepted"
+            decision_record["accepted"] = True
             accepted += 1
         except urllib.error.HTTPError as error:
             failed += 1
+            decision_record["decision"] = "fallback"
+            decision_record["reason"] = f"HTTP {error.code}"
             safe_log(f"groq: item {index + 1} fallback (HTTP {error.code}).")
         except ValueError as error:
             failed += 1
             reason = str(error) or "validation failed"
+            decision_record["decision"] = "fallback"
+            decision_record["reason"] = f"ValueError: {reason}"
             safe_log(f"groq: item {index + 1} fallback (ValueError: {reason}).")
             if debug:
                 debug_groq_payload(index, item, reason=reason)
         except (urllib.error.URLError, TimeoutError, KeyError, IndexError, TypeError) as error:
             failed += 1
+            decision_record["decision"] = "fallback"
+            decision_record["reason"] = error.__class__.__name__
             safe_log(f"groq: item {index + 1} fallback ({error.__class__.__name__}).")
     safe_log(f"groq: requested={requested} accepted={accepted} fallback={failed}")
     stats = {"requested": requested, "accepted": accepted, "fallback": failed}
     accepted_records.sort(key=lambda record: record.get("index", 0))
-    return rendered_data, accepted_records, stats
+    decision_records.sort(key=lambda record: record.get("index", 0))
+    return rendered_data, accepted_records, stats, decision_records
 
 
 def main() -> int:
@@ -1933,9 +881,21 @@ def main() -> int:
     data = fallback_renderer.load_json(str(resolved_json_input))
     model = args.model or os.environ.get("GROQ_MODEL") or DEFAULT_MODEL
     api_key = os.environ.get("GROQ_API_KEY", "")
-    rendered_data, accepted_records, stats = render_with_groq(data, api_key, model, args.force_all, args.debug_groq)
+    rendered_data, accepted_records, stats, decision_records = render_with_groq(
+        data,
+        api_key,
+        model,
+        args.force_all,
+        args.debug_groq,
+    )
     if args.improved_items_output:
-        payload = build_improved_items_payload(accepted_records, model, stats, datetime.now().astimezone())
+        payload = build_improved_items_payload(
+            accepted_records,
+            model,
+            stats,
+            datetime.now().astimezone(),
+            decision_records,
+        )
         write_json(args.improved_items_output, payload)
     if args.accepted_only_markdown:
         if accepted_records:
