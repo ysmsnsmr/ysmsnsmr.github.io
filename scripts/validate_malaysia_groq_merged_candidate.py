@@ -107,6 +107,36 @@ def parse_improved_counts(improved_json: dict[str, Any]) -> tuple[dict[str, int 
     return parsed, failures
 
 
+def parse_decision_diagnostics(improved_json: dict[str, Any]) -> dict[str, int | None]:
+    parsed: dict[str, int | None] = {
+        "decision_records": None,
+        "decision_requested": None,
+        "decision_accepted": None,
+        "decision_fallback": None,
+        "decision_skipped": None,
+    }
+    diagnostics = improved_json.get("diagnostics")
+    if not isinstance(diagnostics, dict):
+        return parsed
+    records = diagnostics.get("decision_records")
+    if not isinstance(records, list):
+        return parsed
+    parsed["decision_records"] = len(records)
+    parsed["decision_requested"] = sum(
+        1 for record in records if isinstance(record, dict) and record.get("requested") is True
+    )
+    parsed["decision_accepted"] = sum(
+        1 for record in records if isinstance(record, dict) and record.get("accepted") is True
+    )
+    parsed["decision_fallback"] = sum(
+        1 for record in records if isinstance(record, dict) and record.get("decision") == "fallback"
+    )
+    parsed["decision_skipped"] = sum(
+        1 for record in records if isinstance(record, dict) and record.get("decision") == "skipped"
+    )
+    return parsed
+
+
 def validate_candidate(
     selected_json_path: Path,
     candidate_markdown_path: Path,
@@ -137,6 +167,7 @@ def validate_candidate(
     rendered_duplicate_urls = count_duplicates(rendered)
 
     counts, count_failures = parse_improved_counts(improved_json)
+    decision_diagnostics = parse_decision_diagnostics(improved_json)
     failures.extend(count_failures)
     accepted_count = counts.get("accepted")
     if accepted_count is not None and accepted_count <= 0:
@@ -200,6 +231,7 @@ def validate_candidate(
             "groq_requested": counts.get("requested"),
             "groq_accepted": counts.get("accepted"),
             "groq_fallback": counts.get("fallback"),
+            **decision_diagnostics,
         },
         "url_validation": {
             "missing_selected_urls": missing_urls,
@@ -235,6 +267,11 @@ def write_markdown_report(path: Path, status: dict[str, Any]) -> None:
         f"- groq_requested: {counts['groq_requested']}",
         f"- groq_accepted: {counts['groq_accepted']}",
         f"- groq_fallback: {counts['groq_fallback']}",
+        f"- decision_records: {counts.get('decision_records')}",
+        f"- decision_requested: {counts.get('decision_requested')}",
+        f"- decision_accepted: {counts.get('decision_accepted')}",
+        f"- decision_fallback: {counts.get('decision_fallback')}",
+        f"- decision_skipped: {counts.get('decision_skipped')}",
         "",
         "## Validation",
         "",
