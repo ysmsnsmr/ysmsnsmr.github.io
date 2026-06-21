@@ -491,6 +491,29 @@ def has_any(text: str, phrases: list[str]) -> bool:
     return any(has_phrase(text, phrase) for phrase in phrases)
 
 
+def has_palm_oil_road_spill_context(text: str) -> bool:
+    if not has_any(text, ["palm oil", "minyak sawit", "bandar sultan suleiman"]):
+        return False
+    return has_any(
+        text,
+        [
+            "spill",
+            "spilled",
+            "tumpah",
+            "tanker",
+            "lorry",
+            "truck",
+            "accident",
+            "crash",
+            "overturned",
+            "road",
+            "jalan",
+            "klang",
+            "bandar sultan suleiman",
+        ],
+    )
+
+
 def matching_phrases(text: str, phrases: list[str]) -> list[str]:
     return [phrase for phrase in phrases if has_phrase(text, phrase)]
 
@@ -681,7 +704,7 @@ def build_flags(item: Item) -> dict[str, bool]:
             "bus service",
         ],
     )
-    flags[FLAG_ROAD_ISSUE] = has_any(
+    flags[FLAG_ROAD_ISSUE] = has_palm_oil_road_spill_context(text) or has_any(
         text,
         [
             "road users advised",
@@ -694,8 +717,6 @@ def build_flags(item: Item) -> dict[str, bool]:
             "jalan ditutup",
             "kesesakan",
             "nkve",
-            "palm oil",
-            "minyak sawit",
             "bandar sultan suleiman",
             "padang merbok",
             "bukit bintang",
@@ -839,9 +860,10 @@ def key_for(item: Item) -> str:
     for name, flag in flag_groups:
         if flags[flag]:
             return name
+    if has_palm_oil_road_spill_context(text):
+        return "palm-oil-road"
     phrase_groups = [
         ("mara", ["mara", "akta mara"]),
-        ("palm-oil-road", ["palm oil", "minyak sawit", "bandar sultan suleiman"]),
         ("badal-haji-scam", ["badal haji"]),
         ("bukit-kiara", ["bukit kiara", "ttdi"]),
         ("doctor-shortage", ["doctor shortage", "shortages of doctors", "medical specialists"]),
@@ -1140,7 +1162,7 @@ def uses_generic_fallback(item: Item) -> bool:
         return False
     if flags[FLAG_PUBLIC_TRANSPORT] or flags[FLAG_ROAD_ISSUE] or flags[FLAG_FLOOD_IMPACT]:
         return False
-    if flags[FLAG_ROAD_ISSUE] and has_any(text, ["palm oil", "minyak sawit"]):
+    if flags[FLAG_ROAD_ISSUE] and has_palm_oil_road_spill_context(text):
         return False
     if flags[FLAG_MCMC_3R]:
         return False
@@ -1671,7 +1693,7 @@ def japanese_summary(item: Item) -> tuple[str, str, str, str]:
             "車両・免許関連のオンライン手続きでログイン導線が変わる可能性があります。",
             "",
         )
-    if flags[FLAG_ROAD_ISSUE] and has_any(text, ["palm oil", "minyak sawit"]):
+    if flags[FLAG_ROAD_ISSUE] and has_palm_oil_road_spill_context(text):
         return (
             "Klang周辺で道路上への油流出に注意が必要です。",
             "パーム油タンクローリー関連の事故で、道路に油が流れました。\n周辺の生活道路・物流動線に影響する可能性があります。",
@@ -2088,6 +2110,24 @@ def self_test() -> int:
     evaluate_item(bukit_bintang_closure)
     check("Bukit Bintang closure triggers road issue", bukit_bintang_closure.flags[FLAG_ROAD_ISSUE])
     check("Bukit Bintang closure is life impact", category_for(bukit_bintang_closure) == "【生活インパクト】")
+
+    palm_oil_exports = item(
+        "Indonesia's new palm oil export rules draw scrutiny from Malaysia, traders",
+        "Indonesia's plan to tighten oversight of strategic commodity exports is being watched by industry players.",
+    )
+    evaluate_item(palm_oil_exports)
+    check("Palm oil export rules do not trigger road issue", not palm_oil_exports.flags[FLAG_ROAD_ISSUE])
+    check("Palm oil export rules do not use road key", key_for(palm_oil_exports) != "palm-oil-road")
+    check("Palm oil export rules do not use oil spill summary", "油流出" not in japanese_summary(palm_oil_exports)[0])
+
+    palm_oil_spill = item(
+        "Palm oil tanker accident causes spill on Klang road",
+        "Road users were advised to avoid the area after a lorry overturned near Bandar Sultan Suleiman.",
+    )
+    evaluate_item(palm_oil_spill)
+    check("Palm oil road spill triggers road issue", palm_oil_spill.flags[FLAG_ROAD_ISSUE])
+    check("Palm oil road spill uses road key", key_for(palm_oil_spill) == "palm-oil-road")
+    check("Palm oil road spill uses oil spill summary", "油流出" in japanese_summary(palm_oil_spill)[0])
 
     mbpj_hotline = item("MBPJ activates 24-hour flood hotline after flash floods and toppled trees")
     evaluate_item(mbpj_hotline)
