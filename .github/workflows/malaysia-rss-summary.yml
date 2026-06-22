@@ -209,30 +209,6 @@ jobs:
           rss_markdown_input="${{ steps.generate.outputs.output_path }}"
           echo "${rss_markdown_input}" > "${run_dir}/rss_markdown_input.txt"
 
-          if [ -z "${GROQ_API_KEY:-}" ]; then
-            echo "skipped_missing_groq_api_key" > "${run_dir}/groq_rendering_status.txt"
-            if ! cp "${rss_markdown_input}" "${run_dir}/groq_merged_candidate.md"; then
-              echo "failed_rss_fallback_copy" > "${run_dir}/groq_rendering_status.txt"
-              echo "::warning::Optional Groq rendering skipped, and RSS fallback copy failed; RSS-only output will continue."
-              exit 0
-            fi
-            cat > "${run_dir}/groq_${model_short}_improved_items.json" <<EOF
-          {
-            "schema_version": "malaysia-groq-improved-items/v1",
-            "generated_at": "$(TZ=Asia/Kuala_Lumpur date --iso-8601=seconds)",
-            "model": "${model_name}",
-            "counts": {
-              "requested": 0,
-              "accepted": 0,
-              "fallback": 0
-            },
-            "items": []
-          }
-          EOF
-            echo "::warning::GROQ_API_KEY is not set; optional Groq rendering skipped and RSS-only output will continue."
-            exit 0
-          fi
-
           json_input="${run_dir}/selected_items.json"
           if [ -s "${run_dir}/selected_items_enriched.json" ]; then
             json_input="${run_dir}/selected_items_enriched.json"
@@ -246,6 +222,7 @@ jobs:
             --output "${run_dir}/groq_merged_candidate.md"
             --model "${model_name}"
             --improved-items-output "${run_dir}/groq_${model_short}_improved_items.json"
+            --json-render-output "${run_dir}/groq_json_render_candidate.md"
             --merge-accepted-with-rss-markdown
           )
           if [ "${force_all}" = "true" ]; then
@@ -253,6 +230,20 @@ jobs:
           fi
           if [ "${debug_groq}" = "true" ]; then
             args+=(--debug-groq)
+          fi
+
+          if [ -z "${GROQ_API_KEY:-}" ]; then
+            if "${args[@]}" > "${run_dir}/groq_${model_short}_stdout.log" 2> "${run_dir}/groq_${model_short}_stderr.log"; then
+              echo "skipped_missing_groq_api_key" > "${run_dir}/groq_rendering_status.txt"
+            else
+              echo "failed_missing_key_fallback_render" > "${run_dir}/groq_rendering_status.txt"
+              cp "${rss_markdown_input}" "${run_dir}/groq_merged_candidate.md" || true
+              cp "${rss_markdown_input}" "${run_dir}/groq_json_render_candidate.md" || true
+              echo "::warning::Optional Groq rendering skipped, and fallback artifact render failed; RSS-only output will continue."
+              exit 0
+            fi
+            echo "::warning::GROQ_API_KEY is not set; optional Groq rendering skipped and RSS-only output will continue."
+            exit 0
           fi
 
           if "${args[@]}" > "${run_dir}/groq_${model_short}_stdout.log" 2> "${run_dir}/groq_${model_short}_stderr.log"; then
@@ -342,6 +333,64 @@ jobs:
             echo "skipped_validator_failed" > "${overwrite_status}"
             restore_rss_fallback
             echo "::warning::Groq production overwrite validator failed; RSS Markdown remains production output."
+          fi
+
+      - name: Validate optional Groq JSON render candidate
+        if: always()
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -u
+          run_dir="${{ steps.optional.outputs.run_dir }}"
+          model_short="${{ steps.optional.outputs.groq_model_short }}"
+          json_candidate="${run_dir}/groq_json_render_candidate.md"
+          merge_candidate="${run_dir}/groq_merged_candidate.md"
+          rss_fallback="${run_dir}/rss_production_fallback.md"
+          improved_items="${run_dir}/groq_${model_short}_improved_items.json"
+          validator_status="${run_dir}/groq_json_render_validator_status.json"
+          validator_report="${run_dir}/groq_json_render_validator_report.md"
+          diff_output="${run_dir}/groq_json_render_diff.txt"
+
+          if [ -s "${merge_candidate}" ] && [ -s "${json_candidate}" ]; then
+            if diff -u "${merge_candidate}" "${json_candidate}" > "${diff_output}"; then
+              if [ ! -s "${diff_output}" ]; then
+                echo "no differences" > "${diff_output}"
+              fi
+            else
+              :
+            fi
+          else
+            {
+              echo "merge_candidate=${merge_candidate}"
+              echo "json_candidate=${json_candidate}"
+              echo "one_or_both_candidates_missing"
+            } > "${diff_output}"
+          fi
+
+          if [ ! -s "${json_candidate}" ] || [ ! -s "${improved_items}" ] || [ ! -s "${rss_fallback}" ]; then
+            printf '%s\n' '{"passed": false, "failures": ["missing_json_render_observation_inputs"]}' > "${validator_status}"
+            {
+              echo "# Groq JSON render candidate validator"
+              echo ""
+              echo "- status: skipped"
+              echo "- reason: missing_json_render_observation_inputs"
+            } > "${validator_report}"
+            echo "::notice::Optional JSON render candidate validation skipped; observation inputs are missing."
+            exit 0
+          fi
+
+          if python3 -B scripts/validate_malaysia_groq_merged_candidate.py \
+            --selected-json "${run_dir}/selected_items.json" \
+            --candidate-markdown "${json_candidate}" \
+            --improved-items-json "${improved_items}" \
+            --rss-fallback-markdown "${rss_fallback}" \
+            --status-output "${validator_status}" \
+            --report-output "${validator_report}" \
+            > "${run_dir}/groq_json_render_validator_stdout.log" \
+            2> "${run_dir}/groq_json_render_validator_stderr.log"; then
+            :
+          else
+            echo "::notice::Optional JSON render candidate validator failed; observation artifact only."
           fi
 
       - name: Build Malaysia news index

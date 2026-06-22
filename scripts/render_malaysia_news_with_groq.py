@@ -864,6 +864,7 @@ def main() -> int:
     parser.add_argument("--force-all", action="store_true", help="Send all items to Groq for local comparison.")
     parser.add_argument("--debug-groq", action="store_true", help="Write short Groq validation diagnostics to stderr.")
     parser.add_argument("--improved-items-output", help="Write accepted Groq summary improvements to this JSON path.")
+    parser.add_argument("--json-render-output", help="Write Markdown rendered directly from Groq-updated JSON to this path.")
     render_mode = parser.add_mutually_exclusive_group()
     render_mode.add_argument("--accepted-only-markdown", action="store_true", help="Render only Groq-accepted items in Markdown output.")
     render_mode.add_argument(
@@ -897,6 +898,13 @@ def main() -> int:
             decision_records,
         )
         write_json(args.improved_items_output, payload)
+    if args.json_render_output:
+        json_render_output_path = Path(args.json_render_output)
+        json_render_output_path.parent.mkdir(parents=True, exist_ok=True)
+        json_render_output_path.write_text(
+            fallback_renderer.render(rendered_data) + "\n",
+            encoding="utf-8",
+        )
     if args.accepted_only_markdown:
         if accepted_records:
             markdown = fallback_renderer.render(accepted_only_render_data(rendered_data, accepted_records))
