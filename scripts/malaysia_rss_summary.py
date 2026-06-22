@@ -514,6 +514,148 @@ def has_palm_oil_road_spill_context(text: str) -> bool:
     )
 
 
+def has_weather_warning_context(text: str) -> bool:
+    return has_any(
+        text,
+        [
+            "thunderstorm",
+            "heavy rain",
+            "strong winds",
+            "severe weather",
+            "weather warning",
+            "storm warning",
+            "rain warning",
+            "ribut petir",
+            "hujan lebat",
+            "angin kencang",
+            "amaran cuaca",
+            "amaran ribut",
+            "amaran hujan",
+        ],
+    )
+
+
+def has_ai_workers_context(text: str) -> bool:
+    if not (has_phrase(text, "ai") or has_phrase(text, "artificial intelligence")):
+        return False
+    return has_any(
+        text,
+        [
+            "automation",
+            "automated",
+            "workers",
+            "worker",
+            "jobs",
+            "job",
+            "employment",
+            "workforce",
+            "labour",
+            "labor",
+            "reskilling",
+            "reskill",
+            "upskilling",
+            "upskill",
+            "skills",
+            "talentcorp",
+        ],
+    )
+
+
+def has_sabah_electricity_billing_context(text: str) -> bool:
+    if not has_any(text, ["sabah electricity", "sabah"]):
+        return False
+    return has_any(
+        text,
+        [
+            "electricity bill",
+            "electricity bills",
+            "bil elektrik",
+            "tariff",
+            "tariffs",
+            "tarif",
+            "charges",
+            "rates",
+            "aircon",
+            "air-conditioning",
+            "usage",
+            "consumption",
+        ],
+    )
+
+
+def has_road_issue_context(text: str) -> bool:
+    if has_palm_oil_road_spill_context(text):
+        return True
+    if has_any(
+        text,
+        [
+            "road users advised",
+            "road closure",
+            "road closed",
+            "traffic disruption",
+            "traffic congestion",
+            "jalan ditutup",
+            "kesesakan",
+        ],
+    ):
+        return True
+    has_location = has_any(
+        text,
+        ["nkve", "bandar sultan suleiman", "padang merbok", "bukit bintang", "pavilion kl"],
+    )
+    if not has_location:
+        return False
+    return has_any(
+        text,
+        [
+            "closed",
+            "closure",
+            "ditutup",
+            "road closure",
+            "road closed",
+            "traffic restriction",
+            "traffic restrictions",
+            "traffic disruption",
+            "traffic congestion",
+            "road users",
+            "plan journeys",
+            "from midnight",
+            "tengah malam",
+            "5 pagi",
+        ],
+    )
+
+
+def has_mara_policy_context(text: str) -> bool:
+    if not has_any(text, ["mara", "akta mara"]):
+        return False
+    return has_any(
+        text,
+        [
+            "akta mara",
+            "mara act",
+            "amendment",
+            "amendments",
+            "bill",
+            "draft",
+            "governance",
+            "education",
+            "scholarship",
+            "loan",
+            "entrepreneur",
+            "entrepreneurs",
+            "sme",
+            "business support",
+            "support scheme",
+            "bumiputera",
+            "制度",
+            "教育",
+            "支援",
+            "改正",
+        ],
+    )
+
+
 def matching_phrases(text: str, phrases: list[str]) -> list[str]:
     return [phrase for phrase in phrases if has_phrase(text, phrase)]
 
@@ -663,23 +805,7 @@ def matches_mcmc_3r_template(text: str) -> bool:
 def build_flags(item: Item) -> dict[str, bool]:
     text = item_text(item)
     flags = dict.fromkeys(ALL_FLAGS, False)
-    flags[FLAG_WEATHER] = has_any(
-        text,
-        [
-            "metmalaysia",
-            "thunderstorm",
-            "heavy rain",
-            "strong winds",
-            "ribut petir",
-            "hujan lebat",
-            "amaran cuaca",
-            "amaran ribut",
-            "amaran hujan",
-            "weather warning",
-            "storm warning",
-            "rain warning",
-        ],
-    )
+    flags[FLAG_WEATHER] = has_weather_warning_context(text)
     flags[FLAG_HEAT] = has_any(
         text,
         ["cuaca panas", "strok haba", "heat stroke", "heat related", "hot weather"],
@@ -704,35 +830,14 @@ def build_flags(item: Item) -> dict[str, bool]:
             "bus service",
         ],
     )
-    flags[FLAG_ROAD_ISSUE] = has_palm_oil_road_spill_context(text) or has_any(
-        text,
-        [
-            "road users advised",
-            "plan journeys",
-            "road closure",
-            "road closed",
-            "closed from midnight",
-            "traffic disruption",
-            "traffic congestion",
-            "jalan ditutup",
-            "kesesakan",
-            "nkve",
-            "bandar sultan suleiman",
-            "padang merbok",
-            "bukit bintang",
-            "pavilion kl",
-        ],
-    )
+    flags[FLAG_ROAD_ISSUE] = has_road_issue_context(text)
     flags[FLAG_FLOOD_IMPACT] = has_any(text, ["flash floods", "toppled trees", "flood hotline", "mbpj"])
     utility_bill = has_any(text, ["electricity bill", "electricity bills", "utility bill", "utility bills", "water bill", "water bills", "bil elektrik"])
     utility_tariff = has_any(text, ["electricity tariff", "water tariff", "tariff unchanged", "tarif elektrik"]) or (
         has_any(text, ["tariff", "tariffs", "tarif"]) and has_any(text, ["electricity", "water", "sabah electricity", "bill", "bills", "bil"])
     )
-    flags[FLAG_UTILITY_BILL] = utility_bill or utility_tariff or has_phrase(text, "sabah electricity")
-    flags[FLAG_SABAH_ELECTRICITY] = has_phrase(text, "sabah electricity") or (
-        has_phrase(text, "sabah")
-        and has_any(text, ["electricity bill", "electricity bills", "bil elektrik", "tariff unchanged", "aircon", "electricity tariff"])
-    )
+    flags[FLAG_UTILITY_BILL] = utility_bill or utility_tariff
+    flags[FLAG_SABAH_ELECTRICITY] = has_sabah_electricity_billing_context(text)
     flags[FLAG_JPJ] = has_any(text, ["myjpj", "jpj", "jpj app", "mydigital id", "mydigital"])
     flags[FLAG_MYDIGITAL_INTEGRATION] = matches_template(text, MYDIGITAL_TEMPLATE)
     flags[FLAG_MCMC] = has_phrase(text, "mcmc")
@@ -748,10 +853,7 @@ def build_flags(item: Item) -> dict[str, bool]:
     flags[FLAG_MARKET] = has_phrase(text, "bursa malaysia") or (
         has_phrase(text, "fbm klci") and has_any(text, ["trade", "trading", "range bound", "market", "index"])
     )
-    flags[FLAG_AI_ECONOMY] = (has_phrase(text, "ai") or has_phrase(text, "artificial intelligence")) and has_any(
-        text,
-        ["gdp", "economy", "economic", "rm", "billion", "contribute", "contribution", "automation", "talentcorp", "workers", "jobs"],
-    )
+    flags[FLAG_AI_ECONOMY] = has_ai_workers_context(text)
     flags[FLAG_COST_OF_LIVING] = has_any(
         text,
         [
@@ -862,8 +964,9 @@ def key_for(item: Item) -> str:
             return name
     if has_palm_oil_road_spill_context(text):
         return "palm-oil-road"
+    if has_mara_policy_context(text):
+        return "mara"
     phrase_groups = [
-        ("mara", ["mara", "akta mara"]),
         ("badal-haji-scam", ["badal haji"]),
         ("bukit-kiara", ["bukit kiara", "ttdi"]),
         ("doctor-shortage", ["doctor shortage", "shortages of doctors", "medical specialists"]),
@@ -1172,7 +1275,7 @@ def uses_generic_fallback(item: Item) -> bool:
         return False
     if flags[FLAG_SOCIAL_SECURITY]:
         return False
-    if has_any(text, ["mara", "akta mara"]):
+    if has_mara_policy_context(text):
         return False
     if flags[FLAG_URBAN_DEVELOPMENT] and has_any(text, ["bukit kiara", "ttdi"]):
         return False
@@ -1328,7 +1431,8 @@ def should_exclude_item(item: Item) -> bool:
         return True
 
     policy_exception = (
-        has_any(text, ["mara", "akta mara", "m40 women", "childcare", "tax relief", "budi madani", "spm", "moral studies", "education"])
+        has_mara_policy_context(text)
+        or has_any(text, ["m40 women", "childcare", "tax relief", "budi madani", "spm", "moral studies", "education"])
         or flags[FLAG_SOCIAL_SECURITY]
         or flags[FLAG_HEALTH_SYSTEM]
         or flags[FLAG_URBAN_DEVELOPMENT]
@@ -1735,7 +1839,7 @@ def japanese_summary(item: Item) -> tuple[str, str, str, str]:
             "個人事業主、配達員、フリーランスの保障や拠出に影響する可能性があります。",
             "",
         )
-    if has_any(text, ["mara", "akta mara"]):
+    if has_mara_policy_context(text):
         return (
             "MARA法改正はガバナンス強化と支援制度の再整理が焦点です。",
             "MARA法改正の草案提出や制度見直しが報じられています。\n教育、起業支援、中小企業支援に関わる政策です。",
@@ -1917,8 +2021,24 @@ def self_test() -> int:
     evaluate_item(ai_item)
     check("AI/GDP is not weather", not ai_item.flags[FLAG_WEATHER])
     check("AI/GDP is not breaking", category_for(ai_item) != "【速報】")
-    check("AI/GDP uses AI economy flag", ai_item.flags[FLAG_AI_ECONOMY])
+    check("AI/GDP without worker context does not use AI workers flag", not ai_item.flags[FLAG_AI_ECONOMY])
     check("AI/GDP does not use weather summary", "雷雨" not in japanese_summary(ai_item)[0])
+
+    ai_workers_item = item(
+        "AI and automation expected to reshape jobs as workers need reskilling",
+        "TalentCorp says workers will need new skills as automation changes employment.",
+    )
+    evaluate_item(ai_workers_item)
+    check("AI worker context triggers AI economy flag", ai_workers_item.flags[FLAG_AI_ECONOMY])
+    check("AI worker context uses reskilling summary", "再学習" in japanese_summary(ai_workers_item)[0])
+
+    ai_safeguard_item = item(
+        "In Dewan Rakyat today: Parliament kicks off with Hormuz crisis queries, Haj reforms and AI safeguard",
+        "Lawmakers are expected to discuss safeguards for artificial intelligence and other policy questions.",
+    )
+    evaluate_item(ai_safeguard_item)
+    check("AI safeguard without worker context does not use AI workers flag", not ai_safeguard_item.flags[FLAG_AI_ECONOMY])
+    check("AI safeguard does not use reskilling summary", "再学習" not in japanese_summary(ai_safeguard_item)[0])
 
     for word in ["contribute", "contribution", "contributed", "distribute", "distribution", "attribute", "attributed"]:
         test_item = item(f"{word} expected in Malaysia economy")
@@ -1937,6 +2057,11 @@ def self_test() -> int:
     check("BM weather triggers weather", weather_item.flags[FLAG_WEATHER])
     check("BM weather can be breaking", category_for(weather_item) == "【速報】")
 
+    metmalaysia_quake = item("Tremors possible as weak 3.3-magnitude quake hits off Batu Pahat, says MetMalaysia")
+    evaluate_item(metmalaysia_quake)
+    check("MetMalaysia quake without warning context does not trigger weather", not metmalaysia_quake.flags[FLAG_WEATHER])
+    check("MetMalaysia quake does not use thunderstorm summary", "雷雨" not in japanese_summary(metmalaysia_quake)[0])
+
     heat_item = item("Cuaca panas: 56 kes, dua kematian akibat strok haba")
     evaluate_item(heat_item)
     check("BM heat triggers heat", heat_item.flags[FLAG_HEAT])
@@ -1945,6 +2070,11 @@ def self_test() -> int:
     evaluate_item(sabah_item)
     check("Sabah electricity triggers Sabah flag", sabah_item.flags[FLAG_SABAH_ELECTRICITY])
     check("Sabah electricity summary fires", "Sabahの電気代" in japanese_summary(sabah_item)[0])
+
+    sabah_supply = item("Sabah Electricity restores supply after equipment maintenance")
+    evaluate_item(sabah_supply)
+    check("Sabah Electricity without billing context does not trigger Sabah billing flag", not sabah_supply.flags[FLAG_SABAH_ELECTRICITY])
+    check("Sabah Electricity without billing context does not use bill summary", "Sabahの電気代" not in japanese_summary(sabah_supply)[0])
 
     ringgit_item = item("Ringgit expected to trade in RM3.96-RM3.98 range next week ahead of US data")
     evaluate_item(ringgit_item)
@@ -2000,6 +2130,16 @@ def self_test() -> int:
     mykad_item = item("MyKad renewal applications open nationwide from June 1")
     evaluate_item(mykad_item)
     check("MyKad has background value", mykad_item.background_value)
+
+    mara_policy = item("MARA Act amendment to improve governance and education support")
+    evaluate_item(mara_policy)
+    check("MARA policy context uses MARA key", key_for(mara_policy) == "mara")
+    check("MARA policy context uses MARA summary", "MARA法改正" in japanese_summary(mara_policy)[0])
+
+    mara_plain = item("MARA chairman attends community dinner in Kuala Lumpur")
+    evaluate_item(mara_plain)
+    check("MARA plain mention does not use MARA key", key_for(mara_plain) != "mara")
+    check("MARA plain mention does not use MARA summary", "MARA法改正" not in japanese_summary(mara_plain)[0])
 
     kkm_item = item("KKM announces medical officer shift system improvements")
     evaluate_item(kkm_item)
@@ -2155,7 +2295,12 @@ def self_test() -> int:
 
     bukit_bintang_plain = item("Bukit Bintang welcomes weekend shoppers")
     evaluate_item(bukit_bintang_plain)
+    check("Bukit Bintang plain item does not trigger road issue", not bukit_bintang_plain.flags[FLAG_ROAD_ISSUE])
     check("Bukit Bintang plain item does not use closure key", key_for(bukit_bintang_plain) != "jalan-bukit-bintang-closure")
+
+    padang_merbok_plain = item("Padang Merbok hosts weekend community event")
+    evaluate_item(padang_merbok_plain)
+    check("Padang Merbok plain item does not trigger road issue", not padang_merbok_plain.flags[FLAG_ROAD_ISSUE])
 
     ktmb_extra = item("KTMB rolls out 186 extra trains for Hari Raya Aidiladha and school holidays")
     evaluate_item(ktmb_extra)
