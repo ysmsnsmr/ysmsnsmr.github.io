@@ -33,7 +33,10 @@ from malaysia_groq_force_all_policy import (
     groq_exclusion_reason,
     ordered_force_all_entries,
 )
-from malaysia_groq_markdown_merge import merge_accepted_with_rss_markdown
+from malaysia_groq_markdown_merge import (
+    merge_accepted_with_rss_markdown,
+    normalize_fallback_summaries_for_json_render,
+)
 from malaysia_groq_term_normalization import normalize_malaysia_terms
 import render_malaysia_news_from_json as fallback_renderer
 
@@ -901,8 +904,9 @@ def main() -> int:
     if args.json_render_output:
         json_render_output_path = Path(args.json_render_output)
         json_render_output_path.parent.mkdir(parents=True, exist_ok=True)
+        json_render_data = normalize_fallback_summaries_for_json_render(rendered_data, accepted_records)
         json_render_output_path.write_text(
-            fallback_renderer.render(rendered_data) + "\n",
+            fallback_renderer.render(json_render_data) + "\n",
             encoding="utf-8",
         )
     if args.accepted_only_markdown:

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import copy
 import re
 import sys
 from typing import Any
@@ -125,6 +126,39 @@ def strip_generic_fallback_lines(block: str, item: dict[str, Any] | None) -> str
 def clean_rss_fallback_block(block: str, item: dict[str, Any] | None) -> str:
     block = strip_rss_fallback_datelines(block)
     return strip_generic_fallback_lines(block, item)
+
+
+def normalize_fallback_summaries_for_json_render(
+    data: dict[str, Any],
+    accepted_records: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Apply the merge fallback cleanup to non-accepted items before JSON rendering."""
+    normalized_data = copy.deepcopy(data)
+    accepted_links = {
+        clean_text(record.get("link"))
+        for record in accepted_records
+        if isinstance(record, dict) and clean_text(record.get("link"))
+    }
+    items = normalized_data.get("items")
+    if not isinstance(items, list):
+        return normalized_data
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        link = clean_text(item.get("link"))
+        if link and link in accepted_links:
+            continue
+        summary = item.get("selected_summary")
+        if not isinstance(summary, dict):
+            summary = {}
+        safe_summary = safe_fallback_summary_for_item(item)
+        item["selected_summary"] = {
+            "conclusion": clean_text(summary.get("conclusion")),
+            "what_happened": summary_lines(safe_summary.get("what_happened")),
+            "life_impact": clean_text(safe_summary.get("life_impact")),
+            "next_action": clean_text(summary.get("next_action")),
+        }
+    return normalized_data
 
 
 def render_accepted_record_block(record: dict[str, Any]) -> str:
