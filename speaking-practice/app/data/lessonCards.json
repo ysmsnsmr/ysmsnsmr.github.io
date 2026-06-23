@@ -1,0 +1,10 @@
+[
+  {
+    "id": "food-001",
+    "scenario": "Ordering lunch",
+    "mode": "repeat",
+    "sentence": "I would like chicken rice, please.",
+    "japaneseHint": "チキンライスをください。",
+    "level": "A1-A2"
+  }
+]

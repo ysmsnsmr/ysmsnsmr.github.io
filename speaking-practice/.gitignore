@@ -1,0 +1,10 @@
+.next
+node_modules
+out
+dist
+.env
+.env*.local
+npm-debug.log*
+
+# TypeScript build cache
+tsconfig.tsbuildinfo
