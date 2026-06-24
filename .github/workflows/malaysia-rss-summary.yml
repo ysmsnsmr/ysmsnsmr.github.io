@@ -21,6 +21,14 @@ on:
         required: false
         default: false
         type: boolean
+      groq_production_candidate:
+        description: "Candidate used for validated Groq production overwrite"
+        required: false
+        default: "merge"
+        type: choice
+        options:
+          - merge
+          - json-render
       groq_model:
         description: "Groq model for optional rendering"
         required: false
@@ -70,12 +78,14 @@ jobs:
           INPUT_ENABLE_BODY_ENRICHMENT: ${{ github.event.inputs.enable_body_enrichment }}
           INPUT_ENABLE_GROQ_RENDERING: ${{ github.event.inputs.enable_groq_rendering }}
           INPUT_ENABLE_GROQ_PRODUCTION_OVERWRITE: ${{ github.event.inputs.enable_groq_production_overwrite }}
+          INPUT_GROQ_PRODUCTION_CANDIDATE: ${{ github.event.inputs.groq_production_candidate }}
           INPUT_FORCE_ALL_GROQ: ${{ github.event.inputs.force_all_groq }}
           INPUT_DEBUG_GROQ: ${{ github.event.inputs.debug_groq }}
           INPUT_GROQ_MODEL: ${{ github.event.inputs.groq_model }}
           VAR_ENABLE_BODY_ENRICHMENT: ${{ vars.MALAYSIA_NEWS_ENABLE_BODY_ENRICHMENT }}
           VAR_ENABLE_GROQ_RENDERING: ${{ vars.MALAYSIA_NEWS_ENABLE_GROQ_RENDERING }}
           VAR_ENABLE_GROQ_PRODUCTION_OVERWRITE: ${{ vars.MALAYSIA_NEWS_ENABLE_GROQ_PRODUCTION_OVERWRITE }}
+          VAR_GROQ_PRODUCTION_CANDIDATE: ${{ vars.MALAYSIA_NEWS_GROQ_PRODUCTION_CANDIDATE }}
           VAR_FORCE_ALL_GROQ: ${{ vars.MALAYSIA_NEWS_FORCE_ALL_GROQ }}
           VAR_DEBUG_GROQ: ${{ vars.MALAYSIA_NEWS_DEBUG_GROQ }}
           VAR_GROQ_MODEL: ${{ vars.MALAYSIA_NEWS_GROQ_MODEL }}
@@ -93,6 +103,7 @@ jobs:
             enable_body="$(bool_value "${INPUT_ENABLE_BODY_ENRICHMENT:-false}")"
             enable_groq="$(bool_value "${INPUT_ENABLE_GROQ_RENDERING:-false}")"
             enable_overwrite="$(bool_value "${INPUT_ENABLE_GROQ_PRODUCTION_OVERWRITE:-false}")"
+            production_candidate_input="${INPUT_GROQ_PRODUCTION_CANDIDATE:-merge}"
             force_all="$(bool_value "${INPUT_FORCE_ALL_GROQ:-false}")"
             debug_groq="$(bool_value "${INPUT_DEBUG_GROQ:-false}")"
             model_input="${INPUT_GROQ_MODEL:-llama}"
@@ -100,10 +111,20 @@ jobs:
             enable_body="$(bool_value "${VAR_ENABLE_BODY_ENRICHMENT:-false}")"
             enable_groq="$(bool_value "${VAR_ENABLE_GROQ_RENDERING:-false}")"
             enable_overwrite="$(bool_value "${VAR_ENABLE_GROQ_PRODUCTION_OVERWRITE:-false}")"
+            production_candidate_input="${VAR_GROQ_PRODUCTION_CANDIDATE:-merge}"
             force_all="$(bool_value "${VAR_FORCE_ALL_GROQ:-false}")"
             debug_groq="$(bool_value "${VAR_DEBUG_GROQ:-false}")"
             model_input="${VAR_GROQ_MODEL:-llama}"
           fi
+
+          case "${production_candidate_input,,}" in
+            json-render|json_render|json)
+              production_candidate="json-render"
+              ;;
+            *)
+              production_candidate="merge"
+              ;;
+          esac
 
           case "${model_input}" in
             gpt-oss|gptoss|openai/gpt-oss-20b)
@@ -127,6 +148,7 @@ jobs:
             echo "- enable_body_enrichment: ${enable_body}"
             echo "- enable_groq_rendering: ${enable_groq}"
             echo "- enable_groq_production_overwrite: ${enable_overwrite}"
+            echo "- groq_production_candidate: ${production_candidate}"
             echo "- force_all_groq: ${force_all}"
             echo "- debug_groq: ${debug_groq}"
             echo "- groq_model: ${model_name}"
@@ -136,6 +158,7 @@ jobs:
           echo "enable_body_enrichment=${enable_body}" >> "${GITHUB_OUTPUT}"
           echo "enable_groq_rendering=${enable_groq}" >> "${GITHUB_OUTPUT}"
           echo "enable_groq_production_overwrite=${enable_overwrite}" >> "${GITHUB_OUTPUT}"
+          echo "groq_production_candidate=${production_candidate}" >> "${GITHUB_OUTPUT}"
           echo "force_all_groq=${force_all}" >> "${GITHUB_OUTPUT}"
           echo "debug_groq=${debug_groq}" >> "${GITHUB_OUTPUT}"
           echo "groq_model_short=${model_short}" >> "${GITHUB_OUTPUT}"
@@ -262,13 +285,26 @@ jobs:
           model_short="${{ steps.optional.outputs.groq_model_short }}"
           enable_groq="${{ steps.optional.outputs.enable_groq_rendering }}"
           enable_overwrite="${{ steps.optional.outputs.enable_groq_production_overwrite }}"
+          production_candidate="${{ steps.optional.outputs.groq_production_candidate }}"
           rss_fallback="${run_dir}/rss_production_fallback.md"
-          candidate="${run_dir}/groq_merged_candidate.md"
+          merge_candidate="${run_dir}/groq_merged_candidate.md"
+          json_candidate="${run_dir}/groq_json_render_candidate.md"
+          candidate="${merge_candidate}"
+          candidate_label="merge"
+          candidate_status="merge"
           improved_items="${run_dir}/groq_${model_short}_improved_items.json"
           rendering_status_file="${run_dir}/groq_rendering_status.txt"
           overwrite_status="${run_dir}/groq_production_overwrite_status.txt"
+          overwrite_candidate_status="${run_dir}/groq_production_overwrite_candidate.txt"
           validator_status="${run_dir}/groq_production_overwrite_validator_status.json"
           validator_report="${run_dir}/groq_production_overwrite_validator_report.md"
+
+          if [ "${production_candidate}" = "json-render" ]; then
+            candidate="${json_candidate}"
+            candidate_label="json-render"
+            candidate_status="json_render"
+          fi
+          echo "${candidate_label}" > "${overwrite_candidate_status}"
 
           restore_rss_fallback() {
             if [ -f "${rss_fallback}" ]; then
@@ -302,7 +338,7 @@ jobs:
           fi
 
           if [ ! -s "${candidate}" ]; then
-            echo "skipped_missing_groq_merged_candidate" > "${overwrite_status}"
+            echo "skipped_missing_groq_${candidate_status}_candidate" > "${overwrite_status}"
             restore_rss_fallback
             exit 0
           fi
@@ -323,14 +359,18 @@ jobs:
             > "${run_dir}/groq_production_overwrite_validator_stdout.log" \
             2> "${run_dir}/groq_production_overwrite_validator_stderr.log"; then
             if cp "${candidate}" "${output_path}"; then
-              echo "applied" > "${overwrite_status}"
+              if [ "${candidate_label}" = "merge" ]; then
+                echo "applied" > "${overwrite_status}"
+              else
+                echo "applied_${candidate_status}" > "${overwrite_status}"
+              fi
             else
               echo "failed_candidate_copy" > "${overwrite_status}"
               restore_rss_fallback
               echo "::warning::Groq production overwrite validation passed, but candidate copy failed; RSS Markdown remains production output."
             fi
           else
-            echo "skipped_validator_failed" > "${overwrite_status}"
+            echo "skipped_validator_failed_${candidate_status}" > "${overwrite_status}"
             restore_rss_fallback
             echo "::warning::Groq production overwrite validator failed; RSS Markdown remains production output."
           fi
