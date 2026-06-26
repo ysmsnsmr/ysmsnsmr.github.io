@@ -11,6 +11,7 @@ from malaysia_groq_common import (
     SAFE_FALLBACK_LIFE_IMPACT_LINE,
     SAFE_FALLBACK_WHAT_HAPPENED_LINE,
     clean_text,
+    contains_any,
     looks_generic,
     summary_lines,
 )
@@ -29,6 +30,7 @@ RSS_FALLBACK_TEXT_DATELINE_RE = re.compile(
     r"\d{1,2}\s+[—–-]\s*"
 )
 RSS_FALLBACK_ENGLISH_ARTICLE_LEAD_RE = re.compile(r"^[—–-]\s+(?:The|A|An)\s+", re.IGNORECASE)
+SAFE_FALLBACK_CONCLUSION_LINE = "内容の詳細確認が必要なニュースです。"
 
 
 def safe_log(message: str) -> None:
@@ -87,6 +89,109 @@ def safe_fallback_summary_for_item(item: dict[str, Any] | None) -> dict[str, Any
     if not life_impact or life_impact == GENERIC_LIFE_IMPACT_LINE or looks_generic(life_impact):
         life_impact = SAFE_FALLBACK_LIFE_IMPACT_LINE
     return {"what_happened": what_happened[:2], "life_impact": life_impact}
+
+
+def json_fallback_text(item: dict[str, Any]) -> str:
+    parts = [
+        clean_text(item.get("title")),
+        clean_text(item.get("description")),
+        clean_text(item.get("body_evidence_excerpt")),
+    ]
+    return " ".join(part for part in parts if part).lower()
+
+
+def json_fallback_flags(item: dict[str, Any]) -> dict[str, Any]:
+    flags = item.get("flags")
+    return flags if isinstance(flags, dict) else {}
+
+
+def high_confidence_json_fallback_topic(item: dict[str, Any]) -> str:
+    text = json_fallback_text(item)
+    flags = json_fallback_flags(item)
+    if contains_any(text, ["flash flood", "flash floods", "flood hotline", "banjir"]):
+        return "flood"
+    if flags.get("is_weather") and contains_any(
+        text,
+        ["thunderstorm", "heavy rain", "ribut petir", "hujan lebat", "weather warning", "rain warning"],
+    ):
+        return "storm_weather"
+    if flags.get("is_heat") or contains_any(text, ["hot weather", "heatstroke", "heat stroke", "strok haba"]):
+        return "heat_weather"
+    if contains_any(text, ["spill", "tumpah"]) and contains_any(text, ["accident", "tanker", "lorry", "truck"]):
+        return "oil_spill"
+    if flags.get("is_road_issue") and contains_any(
+        text,
+        ["closure", "closed", "tutup", "ditutup", "traffic congestion", "road closure"],
+    ):
+        return "road_closure"
+    if flags.get("is_public_transport") and contains_any(
+        text,
+        ["rapid kl", "mrt", "lrt", "ktmb", "bus stop", "route", "schedule", "extra trains", "train services"],
+    ):
+        return "public_transport"
+    if (
+        flags.get("is_health_system")
+        or contains_any(text, ["health ministry", "moh", "hospital", "clinic", "medical", "healthcare", "public health"])
+    ):
+        return "health"
+    if (
+        flags.get("is_currency")
+        or contains_any(text, ["ringgit", "foreign exchange", "us dollar", "against the dollar", "currency"])
+    ):
+        return "currency"
+    if (
+        flags.get("is_market")
+        or contains_any(text, ["bursa", "fbm klci", "stock market", "market index"])
+    ):
+        return "market"
+    if contains_any(
+        text,
+        [
+            "sara",
+            "rahmah",
+            "budi",
+            "cash aid",
+            "fuel aid",
+            "fuel subsidy",
+            "diesel subsidy",
+            "petrol subsidy",
+            "subsidy recipients",
+            "cost of living",
+            "kos sara hidup",
+            "barang keperluan",
+            "jualan murah",
+            "harga",
+            "price",
+            "prices",
+        ],
+    ):
+        return "cost_of_living"
+    return ""
+
+
+def safe_json_render_fallback_summary_for_item(item: dict[str, Any] | None) -> dict[str, Any]:
+    if not item:
+        return {
+            "conclusion": SAFE_FALLBACK_CONCLUSION_LINE,
+            "what_happened": [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
+            "life_impact": SAFE_FALLBACK_LIFE_IMPACT_LINE,
+            "next_action": "",
+        }
+    topic = high_confidence_json_fallback_topic(item)
+    if not topic:
+        return {
+            "conclusion": SAFE_FALLBACK_CONCLUSION_LINE,
+            "what_happened": [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
+            "life_impact": SAFE_FALLBACK_LIFE_IMPACT_LINE,
+            "next_action": "",
+        }
+    topic_text = fallback_renderer.TOPIC_TEXT.get(topic, {})
+    return {
+        "conclusion": clean_text(topic_text.get("conclusion")) or SAFE_FALLBACK_CONCLUSION_LINE,
+        "what_happened": summary_lines(topic_text.get("what_happened")) or [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
+        "life_impact": clean_text(topic_text.get("life_impact")) or SAFE_FALLBACK_LIFE_IMPACT_LINE,
+        "next_action": clean_text(topic_text.get("next_action")),
+    }
 
 
 def strip_generic_fallback_lines(block: str, item: dict[str, Any] | None) -> str:
@@ -151,12 +256,12 @@ def normalize_fallback_summaries_for_json_render(
         summary = item.get("selected_summary")
         if not isinstance(summary, dict):
             summary = {}
-        safe_summary = safe_fallback_summary_for_item(item)
+        safe_summary = safe_json_render_fallback_summary_for_item(item)
         item["selected_summary"] = {
-            "conclusion": clean_text(summary.get("conclusion")),
+            "conclusion": clean_text(safe_summary.get("conclusion")),
             "what_happened": summary_lines(safe_summary.get("what_happened")),
             "life_impact": clean_text(safe_summary.get("life_impact")),
-            "next_action": clean_text(summary.get("next_action")),
+            "next_action": clean_text(safe_summary.get("next_action")),
         }
     return normalized_data
 
