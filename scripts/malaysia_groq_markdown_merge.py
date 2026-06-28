@@ -131,7 +131,7 @@ def high_confidence_json_fallback_topic(item: dict[str, Any]) -> str:
         return "public_transport"
     if (
         flags.get("is_health_system")
-        or contains_any(text, ["health ministry", "moh", "hospital", "clinic", "medical", "healthcare", "public health"])
+        or contains_any(text, ["health ministry", "moh", "hospital", "clinic", "healthcare", "public health"])
     ):
         return "health"
     if (
