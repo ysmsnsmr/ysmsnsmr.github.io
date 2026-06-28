@@ -226,3 +226,11 @@ rules:
 - pattern: "WFE"
   category: "Groceries"
   treatment: "expense"
+
+- pattern: "ECONSAVE"
+  category: "Groceries"
+  treatment: "expense"
+
+- pattern: "7-ELEVEN"
+  category: "Groceries"
+  treatment: "expense"
