@@ -1165,12 +1165,25 @@ class MonthlySummaryTests(unittest.TestCase):
         self.assertIn("# Bank Statement Monthly Summary", report)
         self.assertIn("Source CSV count: 1", report)
         self.assertIn("Source CSVs: statement.csv", report)
+        self.assertIn("## Dashboard", report)
+        self.assertIn("| Month | Living Balance | Income | Expense | Transfer Out | Unknown Out | Review Rows |", report)
+        self.assertIn("| 2026-04 | 3749.50 | 5000.00 | 1250.50 | 300.00 | 25.00 | 2 |", report)
         self.assertIn("| 2026-04 | 8 | 2 | 4624.50 | 3749.50 | 5000.00 | 1250.50 | 1000.00 | 300.00 | 200.00 | 25.00 |", report)
         self.assertIn("## 2026-04", report)
+        self.assertIn("### Spending by Category", report)
+        self.assertIn("### Cashflow by Treatment", report)
+        self.assertIn("### Review / Unknown Warnings", report)
+        self.assertIn("| Unknown treatment rows | 2 |", report)
+        self.assertIn("| Other category rows | 2 |", report)
+        self.assertIn("| Missing amount rows | 1 |", report)
+        self.assertIn("| Balance nonempty rows | 8 |", report)
         self.assertIn("| Dining | 3 | 0.00 | 1250.50 |", report)
         self.assertIn("| transfer | 2 | 1000.00 | 300.00 |", report)
         self.assertIn("- Review rows included in totals: 2", report)
         self.assertIn("- Unknown treatment rows included in account cashflow only: 2", report)
+        self.assertIn("- `Other` category rows: 2", report)
+        self.assertIn("- Missing amount rows: 1", report)
+        self.assertIn("- Balance nonempty rows: 9", report)
         self.assertIn("- Invalid or missing date rows excluded from month totals: 1", report)
         self.assertNotIn("SECRET RAW TEXT", report)
         self.assertNotIn("raw_text", report)
@@ -1213,15 +1226,22 @@ class MonthlySummaryTests(unittest.TestCase):
 
         self.assertLess(report.index("CARD BIG SHOP"), report.index("BANK FOOD"))
 
-    def test_top_expenses_sort_by_money_out_and_exclude_transfers(self) -> None:
-        report = render_monthly_summary(_monthly_rows(), "outputs/statement.csv")
+    def test_top_expenses_only_include_expense_money_out_rows(self) -> None:
+        rows = [
+            _monthly_row("2026-04-01", "DINING EXPENSE", "", "20.00", "Dining", "expense", "auto"),
+            _monthly_row("2026-04-02", "TRANSFER OUT", "", "500.00", "Transfer", "transfer", "auto"),
+            _monthly_row("2026-04-03", "UNKNOWN OUT", "", "400.00", "Other", "unknown", "review"),
+            _monthly_row("2026-04-04", "INCOME ROW", "900.00", "", "Income", "income", "auto"),
+            _monthly_row("2026-04-05", "EXPENSE WITH INCOME", "10.00", "", "Dining", "expense", "auto"),
+        ]
+        report = render_monthly_summary(rows, "outputs/statement.csv")
 
-        rent_position = report.index("RENT")
-        groceries_position = report.index("GROCERIES")
-        transfer_position = report.find("BROKERAGE OUT")
-
-        self.assertLess(rent_position, groceries_position)
-        self.assertEqual(transfer_position, -1)
+        top_expenses = report.split("### Top Expenses", 1)[1].split("### Review / Unknown Warnings", 1)[0]
+        self.assertIn("DINING EXPENSE", top_expenses)
+        self.assertNotIn("TRANSFER OUT", top_expenses)
+        self.assertNotIn("UNKNOWN OUT", top_expenses)
+        self.assertNotIn("INCOME ROW", top_expenses)
+        self.assertNotIn("EXPENSE WITH INCOME", top_expenses)
 
     def test_top_expense_descriptions_are_cleaned_for_display_only(self) -> None:
         rows = [

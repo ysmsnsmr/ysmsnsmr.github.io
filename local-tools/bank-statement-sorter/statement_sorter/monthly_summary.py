@@ -116,14 +116,22 @@ def render_monthly_summary(rows: list[dict[str, str]], csv_paths: str | Path | l
         f"Source CSV count: {len(source_names)}",
         f"Source CSVs: {', '.join(source_names)}",
         "",
-        "## Monthly Overview",
+        "## Dashboard",
         "",
-        (
-            "| Month | Rows | Review Rows | Account Cashflow | Living Balance | Income | Expense | "
-            "Transfer In | Transfer Out | Unknown In | Unknown Out |"
-        ),
-        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
+    lines.extend(_dashboard_lines(summaries))
+    lines.extend(
+        [
+            "",
+            "## Monthly Overview",
+            "",
+            (
+                "| Month | Rows | Review Rows | Account Cashflow | Living Balance | Income | Expense | "
+                "Transfer In | Transfer Out | Unknown In | Unknown Out |"
+            ),
+            "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+        ]
+    )
 
     if summaries:
         for summary in summaries:
@@ -206,7 +214,7 @@ def _month_detail_lines(summary: MonthSummary) -> list[str]:
         "",
         f"## {summary.month}",
         "",
-        "### Category Summary",
+        "### Spending by Category",
         "",
         "| Category | Count | Money In | Money Out |",
         "| --- | ---: | ---: | ---: |",
@@ -220,7 +228,7 @@ def _month_detail_lines(summary: MonthSummary) -> list[str]:
     lines.extend(
         [
             "",
-            "### Treatment Summary",
+            "### Cashflow by Treatment",
             "",
             "| Treatment | Count | Money In | Money Out |",
             "| --- | ---: | ---: | ---: |",
@@ -267,30 +275,82 @@ def _month_detail_lines(summary: MonthSummary) -> list[str]:
             )
     else:
         lines.append("|  | No expense rows |  |  |")
+    lines.extend(_month_warning_lines(summary))
     return lines
+
+
+def _dashboard_lines(summaries: list[MonthSummary]) -> list[str]:
+    lines = [
+        "| Month | Living Balance | Income | Expense | Transfer Out | Unknown Out | Review Rows |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    if not summaries:
+        return [*lines, "|  | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0 |"]
+    for summary in summaries:
+        lines.append(
+            "| "
+            + " | ".join(
+                [
+                    _escape_markdown_cell(summary.month),
+                    _format_decimal(summary.living_balance),
+                    _format_decimal(summary.income_total),
+                    _format_decimal(summary.expense_total),
+                    _format_decimal(summary.transfer_out_total),
+                    _format_decimal(summary.unknown_out_total),
+                    str(_review_count(summary.rows)),
+                ]
+            )
+            + " |"
+        )
+    return lines
+
+
+def _month_warning_lines(summary: MonthSummary) -> list[str]:
+    metrics = _warning_metrics(summary.rows)
+    return [
+        "",
+        "### Review / Unknown Warnings",
+        "",
+        "| Check | Count |",
+        "| --- | ---: |",
+        f"| Review rows | {metrics['review']} |",
+        f"| Unknown treatment rows | {metrics['unknown']} |",
+        f"| Other category rows | {metrics['other']} |",
+        f"| Missing amount rows | {metrics['missing_amount']} |",
+        f"| Balance nonempty rows | {metrics['balance_nonempty']} |",
+    ]
 
 
 def _warning_lines(summaries: list[MonthSummary], invalid_date_rows: list[dict[str, str]]) -> list[str]:
     rows = [row for summary in summaries for row in summary.rows]
-    review_rows = [row for row in rows if row.get("status", "").strip().lower() == "review"]
-    unknown_treatment_rows = [row for row in rows if _normalize_label(row.get("treatment", "")) == "unknown"]
-    unknown_category_rows = [row for row in rows if _normalize_label(row.get("category", "")) == "other"]
-    missing_amount_rows = [
-        row for row in rows if not row.get("money_in", "").strip() and not row.get("money_out", "").strip()
-    ]
+    metrics = _warning_metrics(rows)
 
     warnings = []
-    if review_rows:
-        warnings.append(f"- Review rows included in totals: {len(review_rows)}")
-    if unknown_treatment_rows:
-        warnings.append(f"- Unknown treatment rows included in account cashflow only: {len(unknown_treatment_rows)}")
-    if unknown_category_rows:
-        warnings.append(f"- `Other` category rows: {len(unknown_category_rows)}")
-    if missing_amount_rows:
-        warnings.append(f"- Missing amount rows: {len(missing_amount_rows)}")
+    if metrics["review"]:
+        warnings.append(f"- Review rows included in totals: {metrics['review']}")
+    if metrics["unknown"]:
+        warnings.append(f"- Unknown treatment rows included in account cashflow only: {metrics['unknown']}")
+    if metrics["other"]:
+        warnings.append(f"- `Other` category rows: {metrics['other']}")
+    if metrics["missing_amount"]:
+        warnings.append(f"- Missing amount rows: {metrics['missing_amount']}")
+    if metrics["balance_nonempty"]:
+        warnings.append(f"- Balance nonempty rows: {metrics['balance_nonempty']}")
     if invalid_date_rows:
         warnings.append(f"- Invalid or missing date rows excluded from month totals: {len(invalid_date_rows)}")
     return warnings
+
+
+def _warning_metrics(rows: list[dict[str, str]]) -> dict[str, int]:
+    return {
+        "review": sum(1 for row in rows if row.get("status", "").strip().lower() == "review"),
+        "unknown": sum(1 for row in rows if _normalize_label(row.get("treatment", "")) == "unknown"),
+        "other": sum(1 for row in rows if _normalize_label(row.get("category", "")) == "other"),
+        "missing_amount": sum(
+            1 for row in rows if not row.get("money_in", "").strip() and not row.get("money_out", "").strip()
+        ),
+        "balance_nonempty": sum(1 for row in rows if row.get("balance", "").strip()),
+    }
 
 
 def _group_by(rows: list[dict[str, str]], column: str) -> dict[str, list[dict[str, str]]]:
