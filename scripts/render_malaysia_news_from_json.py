@@ -308,7 +308,7 @@ def build_display_summary(item: dict[str, Any]) -> dict[str, Any]:
             display["what_happened"] = topic_text["what_happened"]
         if should_replace_with_topic_text(display["life_impact"]):
             display["life_impact"] = topic_text["life_impact"]
-        if not display["next_action"]:
+        if not display["next_action"] and not item.get("_suppress_topic_next_action"):
             display["next_action"] = topic_text["next_action"]
     display["what_happened"] = display["what_happened"][:2]
     return display

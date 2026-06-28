@@ -252,6 +252,7 @@ def normalize_fallback_summaries_for_json_render(
             continue
         link = clean_text(item.get("link"))
         if link and link in accepted_links:
+            item["_suppress_topic_next_action"] = True
             continue
         summary = item.get("selected_summary")
         if not isinstance(summary, dict):
