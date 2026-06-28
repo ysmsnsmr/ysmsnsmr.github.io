@@ -749,6 +749,30 @@ class SuggestRulesTests(unittest.TestCase):
 
         self.assertEqual([candidate.pattern for candidate in candidates], ["ATM CASH", "CAFE ALPHA"])
 
+    def test_skips_missing_amount_rows_when_suggesting_candidates(self) -> None:
+        rows = [
+            _csv_row("QR PAYMENT CAFE ALPHA", "12.00", "Other", "unknown", "review"),
+            _csv_row("QR PAYMENT NO AMOUNT CAFE", "", "Other", "unknown", "review"),
+            _csv_row("SALARY ACME", "", "Other", "unknown", "review", money_in="500.00"),
+        ]
+
+        candidates = suggest_rule_candidates(rows, existing_rules=[])
+
+        self.assertEqual([candidate.pattern for candidate in candidates], ["CAFE ALPHA", "SALARY ACME"])
+
+    def test_candidate_quality_flags_explain_source_conditions(self) -> None:
+        rows = [
+            _csv_row("MEPS-ATM CASH", "100.00", "Cash", "cash", "review"),
+            _csv_row("VISA POS CAFE ALPHA", "12.00", "Other", "expense", "auto"),
+            _csv_row("QR PAYMENT CAFE ALPHA", "8.50", "Dining", "unknown", "auto"),
+        ]
+
+        candidates = suggest_rule_candidates(rows, existing_rules=[])
+        flags_by_pattern = {candidate.pattern: candidate.quality_flags for candidate in candidates}
+
+        self.assertEqual(flags_by_pattern["ATM CASH"], {"status=review"})
+        self.assertEqual(flags_by_pattern["CAFE ALPHA"], {"category=Other", "treatment=unknown"})
+
     def test_aggregates_candidate_counts_and_amounts(self) -> None:
         rows = [
             _csv_row("QR PAYMENT CAFE ALPHA", "12.00", "Other", "unknown", "review"),
@@ -830,6 +854,7 @@ class SuggestRulesTests(unittest.TestCase):
 
         self.assertEqual(candidates[0].pattern, "RESTORAN MAZEELA BISTRO")
         self.assertIn('marker="QR PAYMENT"', output)
+        self.assertIn('quality="category=Other, status=review, treatment=unknown"', output)
 
     def test_normalizes_visa_pos_to_merchant_pattern(self) -> None:
         rows = [

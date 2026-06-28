@@ -85,6 +85,7 @@ class RuleCandidate:
     money_out: Decimal = Decimal("0.00")
     sample: str = ""
     markers: set[str] = field(default_factory=set)
+    quality_flags: set[str] = field(default_factory=set)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -141,6 +142,7 @@ def suggest_rule_candidates(
         candidate.count += 1
         candidate.money_in += _parse_amount(row.get("money_in", ""))
         candidate.money_out += _parse_amount(row.get("money_out", ""))
+        candidate.quality_flags.update(_candidate_quality_flags(row))
         if marker:
             candidate.markers.add(marker)
         if not candidate.sample:
@@ -159,11 +161,14 @@ def write_candidate_yaml(candidates: list[RuleCandidate], path: str | Path) -> N
         sample = _yaml_comment_value(candidate.sample)
         markers = ", ".join(sorted(candidate.markers))
         marker_comment = f" marker=\"{_yaml_comment_value(markers)}\"" if markers else ""
+        quality = ", ".join(sorted(candidate.quality_flags))
+        quality_comment = f" quality=\"{_yaml_comment_value(quality)}\"" if quality else ""
         lines.extend(
             [
                 (
                     f"  # count={candidate.count} money_out={_format_decimal(candidate.money_out)} "
-                    f"money_in={_format_decimal(candidate.money_in)}{marker_comment} sample=\"{sample}\""
+                    f"money_in={_format_decimal(candidate.money_in)}{marker_comment}"
+                    f"{quality_comment} sample=\"{sample}\""
                 ),
                 f"  - pattern: \"{_yaml_scalar(candidate.pattern)}\"",
                 "    category: \"Other\"",
@@ -175,11 +180,28 @@ def write_candidate_yaml(candidates: list[RuleCandidate], path: str | Path) -> N
 
 
 def _needs_rule_candidate(row: dict[str, str]) -> bool:
+    if _missing_amount(row):
+        return False
     return (
         row.get("category", "").strip().lower() == "other"
         or row.get("treatment", "").strip().lower() == "unknown"
         or row.get("status", "").strip().lower() == "review"
     )
+
+
+def _missing_amount(row: dict[str, str]) -> bool:
+    return not row.get("money_in", "").strip() and not row.get("money_out", "").strip()
+
+
+def _candidate_quality_flags(row: dict[str, str]) -> set[str]:
+    flags: set[str] = set()
+    if row.get("status", "").strip().lower() == "review":
+        flags.add("status=review")
+    if row.get("category", "").strip().lower() == "other":
+        flags.add("category=Other")
+    if row.get("treatment", "").strip().lower() == "unknown":
+        flags.add("treatment=unknown")
+    return flags
 
 
 def _extract_candidate(row: dict[str, str]) -> tuple[str, str]:
