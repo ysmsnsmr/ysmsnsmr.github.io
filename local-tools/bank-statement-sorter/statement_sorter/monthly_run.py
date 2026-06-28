@@ -192,9 +192,13 @@ def _print_quality_summary(
     missing_amount_count = sum(
         1 for transaction in transactions if not transaction.money_in and not transaction.money_out
     )
+    unknown_count = sum(1 for transaction in transactions if transaction.treatment == "unknown")
+    other_count = sum(1 for transaction in transactions if transaction.category == "Other")
+    balance_nonempty_count = sum(1 for transaction in transactions if transaction.balance)
     print(
         f"{label}: rows={rows} auto={auto_count} review={review_count} "
-        f"missing_amount={missing_amount_count} csv={csv_path} ocr={ocr_path} "
+        f"missing_amount={missing_amount_count} unknown={unknown_count} other={other_count} "
+        f"balance_nonempty={balance_nonempty_count} csv={csv_path} ocr={ocr_path} "
         f"rule_candidates={rule_candidates_path} review_report={review_path}"
     )
 

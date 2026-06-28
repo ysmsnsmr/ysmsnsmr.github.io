@@ -682,6 +682,22 @@ class CreditCardParserTests(unittest.TestCase):
         self.assertEqual(transactions[0].date, "2025-12-30")
         self.assertEqual(transactions[0].money_out, "45.00")
 
+    def test_uses_trailing_card_amount_when_description_contains_foreign_amount(self) -> None:
+        ocr_text = """
+Statement Date 21 JUN 2026
+Post Date Transaction Date Transaction Details Amount
+22 JUN 21 JUN HOTEL MERCHANT SINGAPORE SG 8,439,750.00 IDR 1,928.71
+"""
+
+        transactions = parse_credit_card_transactions(ocr_text)
+
+        self.assertEqual(len(transactions), 1)
+        self.assertEqual(transactions[0].date, "2026-06-21")
+        self.assertEqual(transactions[0].description, "HOTEL MERCHANT SINGAPORE SG 8,439,750.00 IDR")
+        self.assertEqual(transactions[0].money_out, "1,928.71")
+        self.assertEqual(transactions[0].money_in, "")
+        self.assertEqual(transactions[0].balance, "")
+
 
 class CategorizerTests(unittest.TestCase):
     def test_rules_match_case_insensitively_and_set_review_for_uncertain_amounts(self) -> None:
@@ -719,6 +735,23 @@ class CategorizerTests(unittest.TestCase):
 
             with self.assertRaises(RuleError):
                 load_rules(path)
+
+    def test_rules_file_categorizes_wfe_credit_card_rows_as_groceries(self) -> None:
+        transactions = parse_credit_card_transactions(
+            """
+Statement Date 21 JUN 2026
+Post Date Transaction Date Transaction Details Amount
+22 JUN 21 JUN WFE - WAD PETALING JAYA MY 63.55
+"""
+        )
+        rules = load_rules(Path(__file__).resolve().parents[1] / "rules.yml")
+
+        categorized = categorize_transactions(transactions, rules)
+
+        self.assertEqual(len(categorized), 1)
+        self.assertEqual(categorized[0].category, "Groceries")
+        self.assertEqual(categorized[0].treatment, "expense")
+        self.assertEqual(categorized[0].status, "auto")
 
 
 class ExportTests(unittest.TestCase):
@@ -1464,6 +1497,9 @@ class MonthlyRunTests(unittest.TestCase):
             self.assertIn("auto=", output)
             self.assertIn("review=", output)
             self.assertIn("missing_amount=", output)
+            self.assertIn("unknown=", output)
+            self.assertIn("other=", output)
+            self.assertIn("balance_nonempty=", output)
             self.assertIn(str(paths.bank_csv), output)
             self.assertIn(str(paths.card_csv), output)
             self.assertIn(str(paths.combined_summary), output)

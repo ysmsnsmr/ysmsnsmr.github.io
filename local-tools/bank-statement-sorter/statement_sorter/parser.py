@@ -71,7 +71,8 @@ ACCOUNT_SUMMARY_MARKERS = (
     "TOTAL DEPOSITS AND INVESTMENTS",
 )
 TRANSACTION_MARKER_RE = re.compile(
-    r"QR PAYMENT|VISA POS|FPX-|JOMPAY|MEPS-|SALARY|TAX_REFUND|CRE CARD PAYMENT|GLOBAL MONEY TRANSFER",
+    r"QR PAYMENT|VISA POS|MYDEBIT POS|FPX-|JOMPAY|MEPS-?|LP\b|IN-HOUSE TRANSFER|TNG\b|"
+    r"SALARY|TAX_REFUND|CRE CARD PAYMENT|GLOBAL MONEY TRANSFER|transfer HIB-",
     re.IGNORECASE,
 )
 
@@ -129,7 +130,9 @@ def _split_sub_transaction_chunks(lines: list[str]) -> list[list[str]]:
     cleaned_lines = [
         line
         for line in lines
-        if not _is_non_transaction_start_line(line) and not _looks_like_table_header(line)
+        if not _is_non_transaction_start_line(line)
+        and not _looks_like_table_header(line)
+        and not _is_atm_008888_artifact_line(line)
     ]
     if not cleaned_lines:
         return []
@@ -165,6 +168,8 @@ def _parse_block(
 
     raw_text = "\n".join(lines)
     if _is_account_summary_block(raw_text):
+        return None
+    if _is_atm_008888_artifact_block(raw_text):
         return None
 
     amount_matches = list(AMOUNT_RE.finditer(raw_text))
@@ -470,6 +475,18 @@ def _is_account_summary_block(raw_text: str) -> bool:
 
 def _has_transaction_marker(line: str) -> bool:
     return bool(TRANSACTION_MARKER_RE.search(line))
+
+
+def _is_atm_008888_artifact_line(line: str) -> bool:
+    without_date = _remove_leading_date(line)
+    normalized = re.sub(r"[^A-Z0-9]+", " ", without_date.upper()).strip()
+    return normalized in {"ATM 008888", "J ATM 008888"}
+
+
+def _is_atm_008888_artifact_block(raw_text: str) -> bool:
+    lines = [_clean_line(line) for line in raw_text.splitlines()]
+    meaningful_lines = [line for line in lines if line and not _is_atm_008888_artifact_line(line)]
+    return not meaningful_lines and "ATM 008888" in raw_text.upper()
 
 
 def _clean_line(line: str) -> str:
