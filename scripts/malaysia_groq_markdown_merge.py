@@ -176,6 +176,7 @@ def safe_json_render_fallback_summary_for_item(item: dict[str, Any] | None) -> d
             "what_happened": [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
             "life_impact": SAFE_FALLBACK_LIFE_IMPACT_LINE,
             "next_action": "",
+            "suppress_topic_next_action": True,
         }
     topic = high_confidence_json_fallback_topic(item)
     if not topic:
@@ -184,6 +185,7 @@ def safe_json_render_fallback_summary_for_item(item: dict[str, Any] | None) -> d
             "what_happened": [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
             "life_impact": SAFE_FALLBACK_LIFE_IMPACT_LINE,
             "next_action": "",
+            "suppress_topic_next_action": True,
         }
     topic_text = fallback_renderer.TOPIC_TEXT.get(topic, {})
     return {
@@ -191,6 +193,7 @@ def safe_json_render_fallback_summary_for_item(item: dict[str, Any] | None) -> d
         "what_happened": summary_lines(topic_text.get("what_happened")) or [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
         "life_impact": clean_text(topic_text.get("life_impact")) or SAFE_FALLBACK_LIFE_IMPACT_LINE,
         "next_action": clean_text(topic_text.get("next_action")),
+        "suppress_topic_next_action": False,
     }
 
 
@@ -258,6 +261,8 @@ def normalize_fallback_summaries_for_json_render(
         if not isinstance(summary, dict):
             summary = {}
         safe_summary = safe_json_render_fallback_summary_for_item(item)
+        if safe_summary.get("suppress_topic_next_action"):
+            item["_suppress_topic_next_action"] = True
         item["selected_summary"] = {
             "conclusion": clean_text(safe_summary.get("conclusion")),
             "what_happened": summary_lines(safe_summary.get("what_happened")),
