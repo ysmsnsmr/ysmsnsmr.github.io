@@ -81,6 +81,8 @@ ALL_FLAGS = [
 ]
 
 LAST_FINALIZE_STATS: dict[str, object] = {}
+RECENT_WINDOW_HOURS = 48
+FRESHNESS_OBSERVATION_WINDOW_HOURS = 24
 CATEGORY_PRIORITY = {"【速報】": 0, "【生活インパクト】": 1, "【知っておくと得】": 2}
 FINANCIAL_LIMITS = {"ringgit": 2, "bursa": 1, "bnm_policy": 2}
 SOURCE_LIMITS = {"Paul Tan": 1}
@@ -1639,8 +1641,48 @@ def validate_final_items(selected: list[Item]) -> list[str]:
     return errors
 
 
+def items_within_hours(items: list[Item], now: datetime, hours: int) -> list[Item]:
+    cutoff = now - timedelta(hours=hours)
+    return [item for item in items if cutoff <= item.pub_date <= now]
+
+
+def item_age_hours(item: Item, now: datetime) -> float:
+    return max(0.0, (now - item.pub_date).total_seconds() / 3600)
+
+
+def selected_over_window_items(selected: list[Item], now: datetime, hours: int) -> list[Item]:
+    cutoff = now - timedelta(hours=hours)
+    return [item for item in selected if item.pub_date < cutoff]
+
+
+def freshness_observation(items: list[Item], selected: list[Item], now: datetime) -> dict[str, object]:
+    selected_over_24h = selected_over_window_items(selected, now, FRESHNESS_OBSERVATION_WINDOW_HOURS)
+    selected_ages = [item_age_hours(item, now) for item in selected]
+    return {
+        "schema_version": "malaysia-rss-freshness-observation/v1",
+        "recent_window_hours": RECENT_WINDOW_HOURS,
+        "comparison_window_hours": FRESHNESS_OBSERVATION_WINDOW_HOURS,
+        "processed_within_24h": len(items_within_hours(items, now, FRESHNESS_OBSERVATION_WINDOW_HOURS)),
+        "processed_within_48h": len(items_within_hours(items, now, RECENT_WINDOW_HOURS)),
+        "selected_within_24h": len(selected) - len(selected_over_24h),
+        "selected_over_24h": len(selected_over_24h),
+        "oldest_selected_age_hours": round(max(selected_ages), 1) if selected_ages else None,
+        "selected_over_24h_items": [
+            {
+                "title": item.title,
+                "source": item.source,
+                "category": item.category,
+                "published_at": item.pub_date.isoformat(),
+                "age_hours": round(item_age_hours(item, now), 1),
+                "link": item.link,
+            }
+            for item in selected_over_24h
+        ],
+    }
+
+
 def select_items(items: list[Item], now: datetime) -> list[Item]:
-    cutoff = now - timedelta(hours=48)
+    cutoff = now - timedelta(hours=RECENT_WINDOW_HOURS)
     recent = [item for item in items if cutoff <= item.pub_date <= now]
     by_key: dict[str, Item] = {}
     sources_by_key: dict[str, set[str]] = {}
@@ -1688,8 +1730,7 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
 
 
 def selection_summary(items: list[Item], selected: list[Item], now: datetime) -> str:
-    cutoff = now - timedelta(hours=48)
-    recent = [item for item in items if cutoff <= item.pub_date <= now]
+    recent = items_within_hours(items, now, RECENT_WINDOW_HOURS)
     unique_keys = {key_for(item) for item in recent}
     category_counts = Counter(item.category for item in selected)
     tag_counts: Counter[str] = Counter()
@@ -1698,21 +1739,40 @@ def selection_summary(items: list[Item], selected: list[Item], now: datetime) ->
     top_tags = ", ".join(f"{tag}:{count}" for tag, count in tag_counts.most_common(8)) or "なし"
     validation_errors = LAST_FINALIZE_STATS.get("validation_errors", [])
     validation_text = ", ".join(validation_errors) if validation_errors else "なし"
-    return "\n".join(
-        [
-            "selection_summary:",
-            f"- recent_items: {len(recent)}",
-            f"- unique_topics: {len(unique_keys)}",
-            f"- selected_items: {len(selected)}",
-            f"- categories: 速報={category_counts['【速報】']}, 生活インパクト={category_counts['【生活インパクト】']}, 知っておくと得={category_counts['【知っておくと得】']}",
-            f"- top_tags: {top_tags}",
-            f"- final_removed_noise_gate: {LAST_FINALIZE_STATS.get('removed_noise_gate', 0)}",
-            f"- final_removed_duplicate_url: {LAST_FINALIZE_STATS.get('removed_duplicate_url', 0)}",
-            f"- final_removed_duplicate_key: {LAST_FINALIZE_STATS.get('removed_duplicate_key', 0)}",
-            f"- final_removed_financial_cap: {LAST_FINALIZE_STATS.get('removed_financial_cap', 0)}",
-            f"- final_validation_errors: {validation_text}",
-        ]
-    )
+    freshness = freshness_observation(items, selected, now)
+    lines = [
+        "selection_summary:",
+        f"- recent_items: {len(recent)}",
+        f"- unique_topics: {len(unique_keys)}",
+        f"- selected_items: {len(selected)}",
+        f"- categories: 速報={category_counts['【速報】']}, 生活インパクト={category_counts['【生活インパクト】']}, 知っておくと得={category_counts['【知っておくと得】']}",
+        f"- top_tags: {top_tags}",
+        f"- recent_window_hours: {freshness['recent_window_hours']}",
+        f"- comparison_window_hours: {freshness['comparison_window_hours']}",
+        f"- processed_within_24h: {freshness['processed_within_24h']}",
+        f"- processed_within_48h: {freshness['processed_within_48h']}",
+        f"- selected_within_24h: {freshness['selected_within_24h']}",
+        f"- selected_over_24h: {freshness['selected_over_24h']}",
+        f"- oldest_selected_age_hours: {freshness['oldest_selected_age_hours']}",
+        f"- final_removed_noise_gate: {LAST_FINALIZE_STATS.get('removed_noise_gate', 0)}",
+        f"- final_removed_duplicate_url: {LAST_FINALIZE_STATS.get('removed_duplicate_url', 0)}",
+        f"- final_removed_duplicate_key: {LAST_FINALIZE_STATS.get('removed_duplicate_key', 0)}",
+        f"- final_removed_financial_cap: {LAST_FINALIZE_STATS.get('removed_financial_cap', 0)}",
+        f"- final_validation_errors: {validation_text}",
+    ]
+    selected_over_items = freshness.get("selected_over_24h_items")
+    if isinstance(selected_over_items, list) and selected_over_items:
+        lines.append("- selected_over_24h_items:")
+        for item in selected_over_items:
+            if not isinstance(item, dict):
+                continue
+            lines.append(
+                f"  - {item.get('age_hours')}h {item.get('source')} {item.get('category')} "
+                f"{item.get('published_at')}: {item.get('title')}"
+            )
+    else:
+        lines.append("- selected_over_24h_items: none")
+    return "\n".join(lines)
 
 
 def japanese_summary(item: Item) -> tuple[str, str, str, str]:
@@ -1933,8 +1993,9 @@ def build_selected_items_json(
     processed_count: int,
     failed_sources: list[str],
     now: datetime,
+    freshness: dict[str, object] | None = None,
 ) -> dict[str, object]:
-    return {
+    payload: dict[str, object] = {
         "schema_version": "2b0_selected_items_v1",
         "generated_at": now.isoformat(),
         "date": now.date().isoformat(),
@@ -1951,6 +2012,9 @@ def build_selected_items_json(
         "failed_sources": failed_sources,
         "items": [item_json(item) for item in selected],
     }
+    if freshness is not None:
+        payload["freshness_observation"] = freshness
+    return payload
 
 
 def write_json_output(path: str, data: dict[str, object]) -> None:
@@ -2523,10 +2587,12 @@ def self_test() -> int:
     check("Template weather is not excluded by generic fallback rule", not should_exclude_item(weather_guard))
 
     weather_guard.category = category_for(weather_guard)
-    json_payload = build_selected_items_json([weather_guard], 1, [], now)
+    freshness = freshness_observation([weather_guard], [weather_guard], now)
+    json_payload = build_selected_items_json([weather_guard], 1, [], now, freshness)
     json_item = json_payload["items"][0]
     selected_summary = json_item["selected_summary"]
     check("JSON payload uses selected items only", json_payload["counts"]["selected"] == 1 and len(json_payload["items"]) == 1)
+    check("JSON payload carries freshness observation", json_payload.get("freshness_observation") == freshness)
     check("JSON item has canonical key", bool(json_item["canonical_key"]))
     check("JSON item keeps internal metadata", "score" in json_item and "flags" in json_item)
     check("JSON selected summary has next_action key", "next_action" in selected_summary)
@@ -2572,8 +2638,9 @@ def main() -> int:
             failed_sources.append(f"{feed}: parse failed: {type(exc).__name__}: {exc}")
 
     now = datetime.now(MYT)
-    processed_count = sum(1 for item in all_items if now - timedelta(hours=48) <= item.pub_date <= now)
+    processed_count = len(items_within_hours(all_items, now, RECENT_WINDOW_HOURS))
     selected = select_items(all_items, now)
+    freshness = freshness_observation(all_items, selected, now)
     if args.diagnostics:
         print("\n".join(diagnostic_lines()))
         print("")
@@ -2593,7 +2660,7 @@ def main() -> int:
     if args.json_output:
         write_json_output(
             args.json_output,
-            build_selected_items_json(selected, processed_count, failed_sources, now),
+            build_selected_items_json(selected, processed_count, failed_sources, now, freshness),
         )
         print(f"Wrote JSON: {args.json_output}")
     return 0
