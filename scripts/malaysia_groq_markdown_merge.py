@@ -31,6 +31,7 @@ RSS_FALLBACK_TEXT_DATELINE_RE = re.compile(
 )
 RSS_FALLBACK_ENGLISH_ARTICLE_LEAD_RE = re.compile(r"^[—–-]\s+(?:The|A|An)\s+", re.IGNORECASE)
 SAFE_FALLBACK_CONCLUSION_LINE = "内容の詳細確認が必要なニュースです。"
+JSON_RENDER_HEALTH_FALLBACK_NEXT_ACTION = "関係する場合は、MOHなどの公式発表で対象者・時期・利用条件を確認してください。"
 
 
 def safe_log(message: str) -> None:
@@ -188,11 +189,14 @@ def safe_json_render_fallback_summary_for_item(item: dict[str, Any] | None) -> d
             "suppress_topic_next_action": True,
         }
     topic_text = fallback_renderer.TOPIC_TEXT.get(topic, {})
+    next_action = clean_text(topic_text.get("next_action"))
+    if topic == "health":
+        next_action = JSON_RENDER_HEALTH_FALLBACK_NEXT_ACTION
     return {
         "conclusion": clean_text(topic_text.get("conclusion")) or SAFE_FALLBACK_CONCLUSION_LINE,
         "what_happened": summary_lines(topic_text.get("what_happened")) or [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
         "life_impact": clean_text(topic_text.get("life_impact")) or SAFE_FALLBACK_LIFE_IMPACT_LINE,
-        "next_action": clean_text(topic_text.get("next_action")),
+        "next_action": next_action,
         "suppress_topic_next_action": False,
     }
 
