@@ -32,6 +32,52 @@ RSS_FALLBACK_TEXT_DATELINE_RE = re.compile(
 RSS_FALLBACK_ENGLISH_ARTICLE_LEAD_RE = re.compile(r"^[—–-]\s+(?:The|A|An)\s+", re.IGNORECASE)
 SAFE_FALLBACK_CONCLUSION_LINE = "内容の詳細確認が必要なニュースです。"
 JSON_RENDER_HEALTH_FALLBACK_NEXT_ACTION = "関係する場合は、MOHなどの公式発表で対象者・時期・利用条件を確認してください。"
+PUBLIC_TRANSPORT_ENTITY_CUES = [
+    "rapid kl",
+    "mrt",
+    "lrt",
+    "ktmb",
+    "public transport",
+    "train",
+    "rail",
+    "bus",
+]
+PUBLIC_TRANSPORT_SERVICE_CONTEXT_CUES = [
+    "operation",
+    "operations",
+    "operating",
+    "pengoperasian",
+    "perkhidmatan",
+    "service",
+    "services",
+    "route",
+    "routes",
+    "schedule",
+    "schedules",
+    "frequency",
+    "frequencies",
+    "extra trains",
+    "train services",
+    "feeder bus",
+    "feeder buses",
+    "ridership",
+    "trips",
+    "passenger",
+    "passengers",
+    "commuter",
+    "commuters",
+    "penumpang",
+    "pengguna",
+    "delay",
+    "delays",
+    "disruption",
+    "disruptions",
+    "congestion",
+    "crowding",
+    "kesesakan",
+    "kelancaran pergerakan",
+    "pergerakan",
+]
 
 
 def safe_log(message: str) -> None:
@@ -106,6 +152,13 @@ def json_fallback_flags(item: dict[str, Any]) -> dict[str, Any]:
     return flags if isinstance(flags, dict) else {}
 
 
+def has_public_transport_service_context(text: str) -> bool:
+    return contains_any(text, PUBLIC_TRANSPORT_ENTITY_CUES) and contains_any(
+        text,
+        PUBLIC_TRANSPORT_SERVICE_CONTEXT_CUES,
+    )
+
+
 def high_confidence_json_fallback_topic(item: dict[str, Any]) -> str:
     text = json_fallback_text(item)
     flags = json_fallback_flags(item)
@@ -125,10 +178,7 @@ def high_confidence_json_fallback_topic(item: dict[str, Any]) -> str:
         ["closure", "closed", "tutup", "ditutup", "traffic congestion", "road closure"],
     ):
         return "road_closure"
-    if flags.get("is_public_transport") and contains_any(
-        text,
-        ["rapid kl", "mrt", "lrt", "ktmb", "bus stop", "route", "schedule", "extra trains", "train services"],
-    ):
+    if flags.get("is_public_transport") and has_public_transport_service_context(text):
         return "public_transport"
     if (
         flags.get("is_health_system")

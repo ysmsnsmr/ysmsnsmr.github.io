@@ -83,6 +83,52 @@ TOPIC_TEXT = {
         "next_action": "",
     },
 }
+PUBLIC_TRANSPORT_ENTITY_PHRASES = [
+    "rapid kl",
+    "mrt",
+    "lrt",
+    "ktmb",
+    "public transport",
+    "train",
+    "rail",
+    "bus",
+]
+PUBLIC_TRANSPORT_SERVICE_CONTEXT_PHRASES = [
+    "operation",
+    "operations",
+    "operating",
+    "pengoperasian",
+    "perkhidmatan",
+    "service",
+    "services",
+    "route",
+    "routes",
+    "schedule",
+    "schedules",
+    "frequency",
+    "frequencies",
+    "extra trains",
+    "train services",
+    "feeder bus",
+    "feeder buses",
+    "ridership",
+    "trips",
+    "passenger",
+    "passengers",
+    "commuter",
+    "commuters",
+    "penumpang",
+    "pengguna",
+    "delay",
+    "delays",
+    "disruption",
+    "disruptions",
+    "congestion",
+    "crowding",
+    "kesesakan",
+    "kelancaran pergerakan",
+    "pergerakan",
+]
 
 
 def load_json(path: str) -> dict[str, Any]:
@@ -243,10 +289,12 @@ def is_public_transport_crime_context(text: str) -> bool:
 def is_public_transport_service_topic(text: str, tokens: set[str]) -> bool:
     if is_public_transport_crime_context(text):
         return False
-    return (
+    public_transport_context = (
         has_topic_token(tokens, {"public_transport", "is_public_transport"})
-        or has_any_phrase(text, ["rapid kl", "mrt", "lrt", "ktmb", "bus stop", "route", "schedule", "extra trains", "train services"])
+        or has_any_phrase(text, PUBLIC_TRANSPORT_ENTITY_PHRASES)
     )
+    service_context = has_any_phrase(text, PUBLIC_TRANSPORT_SERVICE_CONTEXT_PHRASES)
+    return public_transport_context and service_context
 
 
 def detect_topic(item: dict[str, Any]) -> str:
