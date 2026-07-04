@@ -626,6 +626,7 @@
     const GAME_SECONDS = 30;
     const BEST_KEY = "kinoko-scroll-cosmos-best";
     const MAX_DANGERS = 7;
+    const ANGRY_LINES = ["モミすぎ！", "ちょっと！", "あつい！", "やめてー！"];
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const state = {
@@ -651,7 +652,8 @@
       soundEnabled: true,
       audioContext: null,
       lastScrollSoundAt: 0,
-      lastAngryAt: Number.NEGATIVE_INFINITY
+      lastAngryAt: Number.NEGATIVE_INFINITY,
+      angryLineIndex: 0
     };
 
     const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
@@ -731,7 +733,7 @@
     function speakAngry(text, force = false) {
       if (!state.soundEnabled || !("speechSynthesis" in window)) return;
       const now = performance.now();
-      if (!force && now - state.lastAngryAt < 2600) return;
+      if (!force && now - state.lastAngryAt < 900) return;
       state.lastAngryAt = now;
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = "ja-JP";
@@ -740,6 +742,12 @@
       utterance.volume = 0.95;
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(utterance);
+    }
+
+    function speakOverheatWarning(force = false) {
+      const line = ANGRY_LINES[state.angryLineIndex % ANGRY_LINES.length];
+      state.angryLineIndex += 1;
+      speakAngry(line, force);
     }
 
     function setMushroomShape(squishX, squishY, tilt) {
@@ -793,7 +801,7 @@
       if (!state.playing) return;
       state.score = Math.max(0, state.score - points);
       state.combo = 0;
-      state.overheat = clamp(state.overheat + 5, 0, 100);
+      state.overheat = clamp(state.overheat + 3, 0, 100);
       setMessage("ドクロ接触。胞子軌道が乱れた", true);
       floatText(`-${points}`, x, y, true);
       playDangerSound();
@@ -804,8 +812,8 @@
       if (!state.playing) return;
       const previous = state.overheat;
       state.overheat = clamp(state.overheat + amount, 0, 100);
-      if (previous < 72 && state.overheat >= 72) {
-        speakAngry("モミすぎ！");
+      if (state.overheat >= 72) {
+        speakOverheatWarning(previous < 72);
       }
       if (state.overheat >= 100) {
         finishGame("揉みすぎ崩壊。きのこ宇宙が閉じました");
@@ -834,7 +842,7 @@
       const points = 3 + Math.min(8, Math.floor(state.combo / 7)) + rhythmBonus;
       addScore(points, point.x, point.y, rhythmBonus ? "いい間合いのモミモミ" : "ぷにっと加点");
 
-      const heatGain = interval < 95 ? 7.5 : interval < 150 ? 3.8 : 1.2;
+      const heatGain = interval < 95 ? 4.2 : interval < 150 ? 2 : 0.55;
       addHeat(heatGain);
       playTapSound();
       mushroom.classList.add("is-tapped");
@@ -885,7 +893,7 @@
       const points = paced ? 7 : Math.max(2, Math.round(clamp(absDelta / 26, 1, 8)));
       addScore(points, cometPoint.x, cometPoint.y, paced ? "胞子スクロール成功" : "胞子が流れた");
 
-      const heatGain = absDelta > 95 ? absDelta * 0.055 : previousInputGap < 30 ? 3.2 : 0.7;
+      const heatGain = absDelta > 95 ? absDelta * 0.032 : previousInputGap < 30 ? 1.7 : 0.35;
       addHeat(heatGain);
       playScrollSound();
       setMushroomShape(
@@ -1044,6 +1052,7 @@
       state.scrollEnergy = 0;
       state.lastScrollSoundAt = 0;
       state.lastAngryAt = Number.NEGATIVE_INFINITY;
+      state.angryLineIndex = 0;
       state.activePointer = null;
       state.pointerStartedOnMushroom = false;
       state.pointerMoved = false;
