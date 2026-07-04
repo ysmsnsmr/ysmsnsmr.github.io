@@ -78,6 +78,31 @@ PUBLIC_TRANSPORT_SERVICE_CONTEXT_CUES = [
     "kelancaran pergerakan",
     "pergerakan",
 ]
+COST_OF_LIVING_FALLBACK_CUES = [
+    "budi diesel",
+    "budi madani",
+    "cash aid",
+    "fuel aid",
+    "fuel subsidy",
+    "diesel subsidy",
+    "petrol subsidy",
+    "subsidised diesel",
+    "subsidized diesel",
+    "subsidy recipients",
+    "cost of living aid",
+    "barang keperluan",
+    "jualan murah",
+    "rahmah",
+    "sumbangan asas rahmah",
+    "program sara",
+    "atm fee",
+    "fee waiver",
+    "interbank atm",
+    "withdrawal fee",
+    "harga",
+    "price",
+    "prices",
+]
 
 
 def safe_log(message: str) -> None:
@@ -159,6 +184,10 @@ def has_public_transport_service_context(text: str) -> bool:
     )
 
 
+def has_cost_of_living_fallback_context(text: str) -> bool:
+    return contains_any(text, COST_OF_LIVING_FALLBACK_CUES)
+
+
 def high_confidence_json_fallback_topic(item: dict[str, Any]) -> str:
     text = json_fallback_text(item)
     flags = json_fallback_flags(item)
@@ -195,27 +224,7 @@ def high_confidence_json_fallback_topic(item: dict[str, Any]) -> str:
         or contains_any(text, ["bursa", "fbm klci", "stock market", "market index"])
     ):
         return "market"
-    if contains_any(
-        text,
-        [
-            "sara",
-            "rahmah",
-            "budi",
-            "cash aid",
-            "fuel aid",
-            "fuel subsidy",
-            "diesel subsidy",
-            "petrol subsidy",
-            "subsidy recipients",
-            "cost of living",
-            "kos sara hidup",
-            "barang keperluan",
-            "jualan murah",
-            "harga",
-            "price",
-            "prices",
-        ],
-    ):
+    if has_cost_of_living_fallback_context(text):
         return "cost_of_living"
     return ""
 

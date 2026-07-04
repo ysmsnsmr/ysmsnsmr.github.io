@@ -81,8 +81,9 @@ ALL_FLAGS = [
 ]
 
 LAST_FINALIZE_STATS: dict[str, object] = {}
-RECENT_WINDOW_HOURS = 48
+RECENT_WINDOW_HOURS = 24
 FRESHNESS_OBSERVATION_WINDOW_HOURS = 24
+FRESHNESS_REFERENCE_WINDOW_HOURS = 48
 CATEGORY_PRIORITY = {"【速報】": 0, "【生活インパクト】": 1, "【知っておくと得】": 2}
 FINANCIAL_LIMITS = {"ringgit": 2, "bursa": 1, "bnm_policy": 2}
 SOURCE_LIMITS = {"Paul Tan": 1}
@@ -1663,7 +1664,7 @@ def freshness_observation(items: list[Item], selected: list[Item], now: datetime
         "recent_window_hours": RECENT_WINDOW_HOURS,
         "comparison_window_hours": FRESHNESS_OBSERVATION_WINDOW_HOURS,
         "processed_within_24h": len(items_within_hours(items, now, FRESHNESS_OBSERVATION_WINDOW_HOURS)),
-        "processed_within_48h": len(items_within_hours(items, now, RECENT_WINDOW_HOURS)),
+        "processed_within_48h": len(items_within_hours(items, now, FRESHNESS_REFERENCE_WINDOW_HOURS)),
         "selected_within_24h": len(selected) - len(selected_over_24h),
         "selected_over_24h": len(selected_over_24h),
         "oldest_selected_age_hours": round(max(selected_ages), 1) if selected_ages else None,

@@ -344,6 +344,20 @@ def reject_numeric_unit_reason(source_text: str, rendered_text: str) -> str:
     return ""
 
 
+def reject_currency_token_reason(source_text: str, rendered_text: str) -> str:
+    """Reject obvious RM1/date/currency fusions before accepting Groq output."""
+    if not re.search(r"\bRM\s*1\b", source_text, flags=re.IGNORECASE):
+        return ""
+    if re.search(
+        r"1月\s*7(?:日)?\s*(?:マレーシア)?\s*(?:Ringgit|リンギット)|"
+        r"1月\s*(?:マレーシア)?\s*(?:Ringgit|リンギット)",
+        rendered_text,
+        flags=re.IGNORECASE,
+    ):
+        return "unsafe RM1 date/currency conversion"
+    return ""
+
+
 def reject_life_impact_reason(topic: str, item: dict[str, Any], life_impact: str) -> str:
     normalized_topic = normalize_topic(topic)
     impact_text = clean_text(life_impact).lower()
@@ -436,6 +450,10 @@ def validate_summary_against_source(item: dict[str, Any], summary: dict[str, Any
     numeric_unit_reason = reject_numeric_unit_reason(source_text, rendered_text)
     if numeric_unit_reason:
         raise ValueError(numeric_unit_reason)
+
+    currency_token_reason = reject_currency_token_reason(source_text, rendered_text)
+    if currency_token_reason:
+        raise ValueError(currency_token_reason)
 
     guarded_claims = {
         "death": ["死亡", "亡くな", "死者"],
