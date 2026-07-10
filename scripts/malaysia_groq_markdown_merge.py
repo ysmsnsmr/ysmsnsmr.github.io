@@ -30,8 +30,8 @@ RSS_FALLBACK_TEXT_DATELINE_RE = re.compile(
     r"\d{1,2}\s+[—–-]\s*"
 )
 RSS_FALLBACK_ENGLISH_ARTICLE_LEAD_RE = re.compile(r"^[—–-]\s+(?:The|A|An)\s+", re.IGNORECASE)
-SAFE_FALLBACK_CONCLUSION_LINE = "内容の詳細確認が必要なニュースです。"
-JSON_RENDER_HEALTH_FALLBACK_NEXT_ACTION = "関係する場合は、MOHなどの公式発表で対象者・時期・利用条件を確認してください。"
+SAFE_FALLBACK_CONCLUSION_LINE = "詳細を出典本文で確認しておきたいニュースです。"
+JSON_RENDER_HEALTH_FALLBACK_NEXT_ACTION = "関係する場合は、関係当局や公式発表で対象者・時期・利用条件を確認してください。"
 PUBLIC_TRANSPORT_ENTITY_CUES = [
     "rapid kl",
     "mrt",
