@@ -137,6 +137,35 @@ def parse_decision_diagnostics(improved_json: dict[str, Any]) -> dict[str, int |
     return parsed
 
 
+def optional_int(value: Any) -> int | None:
+    if isinstance(value, bool) or not isinstance(value, int):
+        return None
+    return value
+
+
+def parse_observation_diagnostics(improved_json: dict[str, Any]) -> dict[str, int | None]:
+    parsed: dict[str, int | None] = {
+        "accepted_count": None,
+        "topic_fallback_count": None,
+        "generic_fallback_count": None,
+        "request_cap_skipped_generic_fallback_count": None,
+    }
+    diagnostics = improved_json.get("diagnostics")
+    if not isinstance(diagnostics, dict):
+        return parsed
+    fallback_counts = diagnostics.get("json_render_fallback_counts")
+    if isinstance(fallback_counts, dict):
+        parsed["accepted_count"] = optional_int(fallback_counts.get("accepted_count"))
+        parsed["topic_fallback_count"] = optional_int(fallback_counts.get("topic_fallback_count"))
+        parsed["generic_fallback_count"] = optional_int(fallback_counts.get("generic_fallback_count"))
+    priority_observation = diagnostics.get("request_priority_observation")
+    if isinstance(priority_observation, dict):
+        parsed["request_cap_skipped_generic_fallback_count"] = optional_int(
+            priority_observation.get("request_cap_skipped_generic_fallback_count")
+        )
+    return parsed
+
+
 def validate_candidate(
     selected_json_path: Path,
     candidate_markdown_path: Path,
@@ -168,6 +197,7 @@ def validate_candidate(
 
     counts, count_failures = parse_improved_counts(improved_json)
     decision_diagnostics = parse_decision_diagnostics(improved_json)
+    observation_diagnostics = parse_observation_diagnostics(improved_json)
     failures.extend(count_failures)
     accepted_count = counts.get("accepted")
     if accepted_count is not None and accepted_count <= 0:
@@ -232,6 +262,7 @@ def validate_candidate(
             "groq_accepted": counts.get("accepted"),
             "groq_fallback": counts.get("fallback"),
             **decision_diagnostics,
+            **observation_diagnostics,
         },
         "url_validation": {
             "missing_selected_urls": missing_urls,
@@ -272,6 +303,10 @@ def write_markdown_report(path: Path, status: dict[str, Any]) -> None:
         f"- decision_accepted: {counts.get('decision_accepted')}",
         f"- decision_fallback: {counts.get('decision_fallback')}",
         f"- decision_skipped: {counts.get('decision_skipped')}",
+        f"- accepted_count: {counts.get('accepted_count')}",
+        f"- topic_fallback_count: {counts.get('topic_fallback_count')}",
+        f"- generic_fallback_count: {counts.get('generic_fallback_count')}",
+        f"- request_cap_skipped_generic_fallback_count: {counts.get('request_cap_skipped_generic_fallback_count')}",
         "",
         "## Validation",
         "",

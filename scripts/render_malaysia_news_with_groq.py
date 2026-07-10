@@ -8,6 +8,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
+from collections import Counter
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -34,6 +35,7 @@ from malaysia_groq_force_all_policy import (
     ordered_force_all_entries,
 )
 from malaysia_groq_markdown_merge import (
+    high_confidence_json_fallback_topic,
     merge_accepted_with_rss_markdown,
     normalize_fallback_summaries_for_json_render,
 )
@@ -681,12 +683,160 @@ def decision_record_counts(decision_records: list[dict[str, Any]]) -> dict[str, 
     }
 
 
+def sorted_counter_dict(counter: Counter[str]) -> dict[str, int]:
+    return {key: counter[key] for key in sorted(counter)}
+
+
+def safe_ratio(value: int, total: int) -> float:
+    if total <= 0:
+        return 0.0
+    return round(value / total, 4)
+
+
+def record_body_policy(record: dict[str, Any]) -> str:
+    return clean_text(record.get("body_excerpt_policy")) or "missing"
+
+
+def record_focus_values(record: dict[str, Any]) -> list[str]:
+    focus = record.get("body_evidence_focus")
+    if not isinstance(focus, list):
+        return ["none"]
+    values = [clean_text(value) for value in focus if clean_text(value)]
+    return values or ["none"]
+
+
+def annotate_json_render_fallback_observation(
+    items: list[Any],
+    decision_records: list[dict[str, Any]],
+) -> None:
+    for record in decision_records:
+        item: dict[str, Any] | None = None
+        raw_index = record.get("index")
+        if isinstance(raw_index, int):
+            item_index = raw_index - 1
+            if 0 <= item_index < len(items) and isinstance(items[item_index], dict):
+                item = items[item_index]
+        if record.get("accepted") is True:
+            record["json_render_fallback_kind"] = "accepted"
+            record["json_render_fallback_topic"] = ""
+            continue
+        topic = high_confidence_json_fallback_topic(item) if item else ""
+        record["json_render_fallback_kind"] = "topic" if topic else "generic"
+        record["json_render_fallback_topic"] = topic
+
+
+def json_render_fallback_observation_counts(decision_records: list[dict[str, Any]]) -> dict[str, Any]:
+    selected_count = len(decision_records)
+    accepted_count = sum(1 for record in decision_records if record.get("json_render_fallback_kind") == "accepted")
+    topic_fallback_count = sum(1 for record in decision_records if record.get("json_render_fallback_kind") == "topic")
+    generic_fallback_count = sum(
+        1 for record in decision_records if record.get("json_render_fallback_kind") == "generic"
+    )
+    topic_counts = Counter(
+        clean_text(record.get("json_render_fallback_topic"))
+        for record in decision_records
+        if record.get("json_render_fallback_kind") == "topic"
+        and clean_text(record.get("json_render_fallback_topic"))
+    )
+    generic_by_reason = Counter(
+        clean_text(record.get("reason")) or "none"
+        for record in decision_records
+        if record.get("json_render_fallback_kind") == "generic"
+    )
+    return {
+        "selected_count": selected_count,
+        "accepted_count": accepted_count,
+        "topic_fallback_count": topic_fallback_count,
+        "generic_fallback_count": generic_fallback_count,
+        "accepted_ratio": safe_ratio(accepted_count, selected_count),
+        "topic_fallback_ratio": safe_ratio(topic_fallback_count, selected_count),
+        "generic_fallback_ratio": safe_ratio(generic_fallback_count, selected_count),
+        "topic_counts": sorted_counter_dict(topic_counts),
+        "generic_by_decision_reason": sorted_counter_dict(generic_by_reason),
+    }
+
+
+def int_record_value(record: dict[str, Any], key: str) -> int | None:
+    value = record.get(key)
+    if isinstance(value, bool) or not isinstance(value, int):
+        return None
+    return value
+
+
+def request_priority_observation(
+    decision_records: list[dict[str, Any]],
+    force_all: bool,
+) -> dict[str, Any]:
+    requested_priorities = [
+        priority
+        for record in decision_records
+        if record.get("requested") is True
+        for priority in [int_record_value(record, "force_all_priority")]
+        if priority is not None
+    ]
+    request_cap_records = [
+        record for record in decision_records if clean_text(record.get("reason")) == "request_cap"
+    ]
+    request_cap_priorities = [
+        priority
+        for record in request_cap_records
+        for priority in [int_record_value(record, "force_all_priority")]
+        if priority is not None
+    ]
+    return {
+        "force_all_request_cap": force_all_request_cap() if force_all else None,
+        "request_cap_skipped_count": len(request_cap_records),
+        "request_cap_skipped_generic_fallback_count": sum(
+            1 for record in request_cap_records if record.get("json_render_fallback_kind") == "generic"
+        ),
+        "request_cap_skipped_topic_fallback_count": sum(
+            1 for record in request_cap_records if record.get("json_render_fallback_kind") == "topic"
+        ),
+        "lowest_requested_priority": min(requested_priorities) if requested_priorities else None,
+        "highest_request_cap_skipped_priority": max(request_cap_priorities) if request_cap_priorities else None,
+    }
+
+
+def body_evidence_observation(decision_records: list[dict[str, Any]]) -> dict[str, Any]:
+    body_policy_counts: Counter[str] = Counter()
+    focus_counts: Counter[str] = Counter()
+    generic_by_policy: Counter[str] = Counter()
+    topic_by_policy: Counter[str] = Counter()
+    accepted_by_focus: Counter[str] = Counter()
+    generic_by_focus: Counter[str] = Counter()
+    for record in decision_records:
+        policy = record_body_policy(record)
+        focus_values = record_focus_values(record)
+        kind = record.get("json_render_fallback_kind")
+        body_policy_counts[policy] += 1
+        for focus in focus_values:
+            focus_counts[focus] += 1
+        if kind == "generic":
+            generic_by_policy[policy] += 1
+            for focus in focus_values:
+                generic_by_focus[focus] += 1
+        elif kind == "topic":
+            topic_by_policy[policy] += 1
+        elif kind == "accepted":
+            for focus in focus_values:
+                accepted_by_focus[focus] += 1
+    return {
+        "body_excerpt_policy_counts": sorted_counter_dict(body_policy_counts),
+        "body_evidence_focus_counts": sorted_counter_dict(focus_counts),
+        "generic_fallback_by_body_policy": sorted_counter_dict(generic_by_policy),
+        "topic_fallback_by_body_policy": sorted_counter_dict(topic_by_policy),
+        "accepted_by_body_focus": sorted_counter_dict(accepted_by_focus),
+        "generic_fallback_by_body_focus": sorted_counter_dict(generic_by_focus),
+    }
+
+
 def build_improved_items_payload(
     accepted_records: list[dict[str, Any]],
     model: str,
     stats: dict[str, int],
     now: datetime,
     decision_records: list[dict[str, Any]] | None = None,
+    force_all: bool = False,
 ) -> dict[str, Any]:
     payload: dict[str, Any] = {
         "schema_version": "malaysia-groq-improved-items/v1",
@@ -702,6 +852,9 @@ def build_improved_items_payload(
     if decision_records is not None:
         payload["diagnostics"] = {
             "decision_counts": decision_record_counts(decision_records),
+            "json_render_fallback_counts": json_render_fallback_observation_counts(decision_records),
+            "request_priority_observation": request_priority_observation(decision_records, force_all),
+            "body_evidence_observation": body_evidence_observation(decision_records),
             "decision_records": decision_records,
         }
     return payload
@@ -775,6 +928,7 @@ def render_with_groq(
             record["decision"] = "skipped"
             record["reason"] = "missing_groq_api_key"
             decision_records.append(record)
+        annotate_json_render_fallback_observation(items, decision_records)
         return rendered_data, accepted_records, stats, decision_records
 
     requested = 0
@@ -872,6 +1026,7 @@ def render_with_groq(
             safe_log(f"groq: item {index + 1} fallback ({error.__class__.__name__}).")
     safe_log(f"groq: requested={requested} accepted={accepted} fallback={failed}")
     stats = {"requested": requested, "accepted": accepted, "fallback": failed}
+    annotate_json_render_fallback_observation(items, decision_records)
     accepted_records.sort(key=lambda record: record.get("index", 0))
     decision_records.sort(key=lambda record: record.get("index", 0))
     return rendered_data, accepted_records, stats, decision_records
@@ -917,6 +1072,7 @@ def main() -> int:
             stats,
             datetime.now().astimezone(),
             decision_records,
+            args.force_all,
         )
         write_json(args.improved_items_output, payload)
     if args.json_render_output:
