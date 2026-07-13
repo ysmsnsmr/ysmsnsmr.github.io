@@ -1,0 +1,53 @@
+{
+  "completedCardIds": ["restaurant-order"],
+  "practiceDate": "2026-07-10",
+  "sentenceCount": 4,
+  "streakDots": [false, false, false, true, true, true, true],
+  "privacyNoticeAccepted": true,
+  "interviewSessions": [
+    {
+      "id": "legacy-recording",
+      "date": "2026-07-10",
+      "topic": "Workflow improvement",
+      "targetRole": "Operations",
+      "focusSound": "/h/",
+      "answer30": "I improved a workflow.",
+      "answer30Ipa": "/aɪ ɪmˈpruːvd ə ˈwɝːkfloʊ/",
+      "questions": ["What changed?"],
+      "repairPhrases": ["Let me put it another way."],
+      "pronunciationTip": "Use a light breath for /h/.",
+      "review": {
+        "positive": "The main result was clear.",
+        "fixPoints": ["Answer the question directly first."],
+        "structureSuggestion": "Use result, action, impact.",
+        "focusSoundNote": "Keep /h/ light.",
+        "nextFocus": "/h/"
+      },
+      "completedMode": "recording",
+      "transcript": "This must not be persisted.",
+      "rawTranscript": "This must not be persisted either.",
+      "audio": "data:audio/webm;base64,not-real-audio",
+      "workLog": "A private original work log"
+    },
+    {
+      "id": "legacy-quiet",
+      "date": "2026-07-09",
+      "topic": "Priority management",
+      "targetRole": "Operations",
+      "focusSound": "/r/",
+      "answer30": "I prioritize work by urgency and impact.",
+      "answer30Ipa": "/aɪ praɪˈɔːrətaɪz wɝːk/",
+      "questions": ["How do you handle urgent work?"],
+      "repairPhrases": ["Could you ask that in a simpler way?"],
+      "pronunciationTip": "Keep the tongue away from the teeth for /r/.",
+      "review": {
+        "positive": "You completed the quiet review.",
+        "fixPoints": ["Lead with one direct sentence."],
+        "structureSuggestion": "State the rule, then one example.",
+        "pronunciationNote": "Keep /r/ separate from /l/.",
+        "nextFocus": "/r/"
+      },
+      "completedMode": "quiet"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "completedCardIds": [],
+  "practiceDate": "2026-07-11",
+  "sentenceCount": 2,
+  "streakDots": [false, false, false, false, false, true, true],
+  "privacyNoticeAccepted": true,
+  "interviewSessions": [
+    {
+      "id": "valid-among-corrupt",
+      "date": "2026-07-11",
+      "topic": "Customer communication",
+      "targetRole": "Support",
+      "focusSound": "/v/",
+      "answer30": "I confirm the question before I answer.",
+      "answer30Ipa": "/aɪ kənˈfɝːm ðə ˈkwestʃən/",
+      "questions": [],
+      "repairPhrases": [],
+      "pronunciationTip": "Add voice for /v/.",
+      "review": {
+        "positive": "The sequence was easy to follow.",
+        "fixPoints": [],
+        "structureSuggestion": "Answer directly, then explain.",
+        "focusSoundNote": "Feel vibration for /v/.",
+        "nextFocus": "/v/"
+      },
+      "completedMode": "recording"
+    },
+    {
+      "date": "2026-07-11",
+      "topic": "Missing identifier"
+    },
+    "not-a-session"
+  ]
+}

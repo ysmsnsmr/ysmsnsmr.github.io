@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 2,
+  "completedCardIds": [],
+  "practiceDate": "2026-07-12",
+  "sentenceCount": 1,
+  "streakDots": [false, false, false, false, false, false, true],
+  "privacyNoticeAccepted": true,
+  "practiceSessions": [
+    {
+      "id": "voice-trial-5",
+      "date": "2026-07-12",
+      "topic": "Learning a new task",
+      "practiceSource": "chatgpt_voice",
+      "reflectionKind": "self_report",
+      "whatWentWell": "I used a fixed clarification phrase.",
+      "stuckOn": "I initially misunderstood the question.",
+      "nextPracticeFocus": "Clarify, then answer directly in one sentence.",
+      "transcript": "A full transcript must not survive normalization.",
+      "rawAudio": "not-real-audio"
+    }
+  ]
+}

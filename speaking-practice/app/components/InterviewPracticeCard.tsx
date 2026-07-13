@@ -22,6 +22,7 @@ import type {
   FeedbackResult,
   FocusSound,
   InterviewMaterials,
+  InterviewPracticeSession,
   InterviewPracticeReview,
   MicState,
   ProgressRecord,
@@ -79,7 +80,9 @@ export default function InterviewPracticeCard({
         ? "processing"
         : "idle";
   const canGenerate = workLog.trim().length > 0 && flowState !== "generating";
-  const latestSession = progress.interviewSessions[0];
+  const latestSession = progress.practiceSessions.find(
+    (session): session is InterviewPracticeSession => "review" in session
+  );
 
   function stopStream() {
     streamRef.current?.getTracks().forEach((track) => track.stop());
@@ -551,8 +554,8 @@ export default function InterviewPracticeCard({
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-slate-600">
                 Next focus: {latestSession.review.nextFocus}. You have saved{" "}
-                {progress.interviewSessions.length} interview practice{" "}
-                {progress.interviewSessions.length === 1 ? "session" : "sessions"}.
+                {progress.practiceSessions.length} interview practice{" "}
+                {progress.practiceSessions.length === 1 ? "session" : "sessions"}.
               </p>
               <button
                 type="button"

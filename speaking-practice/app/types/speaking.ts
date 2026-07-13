@@ -85,10 +85,25 @@ export type InterviewPracticeReview = {
   nextFocus: FocusSound;
 };
 
-export type InterviewPracticeSession = {
+export type PracticeSource =
+  | "in_app_recording"
+  | "quiet_mode"
+  | "chatgpt_voice";
+
+export type ReflectionKind = "self_report" | "transcript_based";
+
+export type PracticeSessionBase = {
   id: string;
   date: string;
   topic: string;
+  whatWentWell: string | null;
+  stuckOn: string | null;
+  nextPracticeFocus: string | null;
+};
+
+export type InterviewPracticeSession = PracticeSessionBase & {
+  practiceSource: "in_app_recording" | "quiet_mode";
+  reflectionKind: ReflectionKind;
   targetRole: string;
   focusSound: FocusSound;
   answer30: string;
@@ -100,11 +115,21 @@ export type InterviewPracticeSession = {
   completedMode: "recording" | "quiet";
 };
 
+export type ExternalVoicePracticeSession = PracticeSessionBase & {
+  practiceSource: "chatgpt_voice";
+  reflectionKind: "self_report";
+};
+
+export type PracticeSession =
+  | InterviewPracticeSession
+  | ExternalVoicePracticeSession;
+
 export type ProgressRecord = {
+  schemaVersion: 2;
   completedCardIds: string[];
   practiceDate: string | null;
   sentenceCount: number;
   streakDots: boolean[];
   privacyNoticeAccepted: boolean;
-  interviewSessions: InterviewPracticeSession[];
+  practiceSessions: PracticeSession[];
 };
