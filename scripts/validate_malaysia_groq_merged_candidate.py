@@ -149,6 +149,9 @@ def parse_observation_diagnostics(improved_json: dict[str, Any]) -> dict[str, in
         "topic_fallback_count": None,
         "generic_fallback_count": None,
         "request_cap_skipped_generic_fallback_count": None,
+        "entry_candidate_available_count": None,
+        "entry_candidate_full_rejected_count": None,
+        "entry_candidate_unavailable_count": None,
     }
     diagnostics = improved_json.get("diagnostics")
     if not isinstance(diagnostics, dict):
@@ -162,6 +165,17 @@ def parse_observation_diagnostics(improved_json: dict[str, Any]) -> dict[str, in
     if isinstance(priority_observation, dict):
         parsed["request_cap_skipped_generic_fallback_count"] = optional_int(
             priority_observation.get("request_cap_skipped_generic_fallback_count")
+        )
+    entry_observation = diagnostics.get("entry_candidate_observation")
+    if isinstance(entry_observation, dict):
+        parsed["entry_candidate_available_count"] = optional_int(
+            entry_observation.get("entry_candidate_available_count")
+        )
+        parsed["entry_candidate_full_rejected_count"] = optional_int(
+            entry_observation.get("entry_candidate_full_rejected_count")
+        )
+        parsed["entry_candidate_unavailable_count"] = optional_int(
+            entry_observation.get("entry_candidate_unavailable_count")
         )
     return parsed
 
@@ -307,6 +321,9 @@ def write_markdown_report(path: Path, status: dict[str, Any]) -> None:
         f"- topic_fallback_count: {counts.get('topic_fallback_count')}",
         f"- generic_fallback_count: {counts.get('generic_fallback_count')}",
         f"- request_cap_skipped_generic_fallback_count: {counts.get('request_cap_skipped_generic_fallback_count')}",
+        f"- entry_candidate_available_count: {counts.get('entry_candidate_available_count')}",
+        f"- entry_candidate_full_rejected_count: {counts.get('entry_candidate_full_rejected_count')}",
+        f"- entry_candidate_unavailable_count: {counts.get('entry_candidate_unavailable_count')}",
         "",
         "## Validation",
         "",

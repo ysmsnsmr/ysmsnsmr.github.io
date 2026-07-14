@@ -220,6 +220,21 @@ life_impactはRSSに具体的な生活影響がない場合、無理に個人の
 出力はJSONのみです。"""
 
 
+class GroqSummaryRejected(ValueError):
+    """Keep an untrusted conclusion available for diagnostics after full-summary rejection."""
+
+    def __init__(self, reason: str, entry_candidate: str = "") -> None:
+        super().__init__(reason)
+        self.entry_candidate = clean_text(entry_candidate)
+
+
+def extract_entry_candidate(value: Any) -> str:
+    summary = value if isinstance(value, dict) else {}
+    if isinstance(summary.get("selected_summary"), dict):
+        summary = summary["selected_summary"]
+    return clean_text(summary.get("conclusion"))
+
+
 def normalize_summary(value: Any) -> dict[str, Any]:
     summary = value if isinstance(value, dict) else {}
     return {
@@ -603,9 +618,14 @@ def request_groq_summary(item: dict[str, Any], api_key: str, model: str, debug: 
     parsed_content = parse_groq_content(content)
     if debug:
         debug_groq_payload(index, item, parsed_content)
-    summary = validate_groq_summary(parsed_content)
-    summary = normalize_malaysia_terms(summary, item)
-    validate_summary_against_source(item, summary)
+    entry_candidate = extract_entry_candidate(parsed_content)
+    try:
+        summary = validate_groq_summary(parsed_content)
+        summary = normalize_malaysia_terms(summary, item)
+        entry_candidate = clean_text(summary.get("conclusion")) or entry_candidate
+        validate_summary_against_source(item, summary)
+    except ValueError as error:
+        raise GroqSummaryRejected(str(error) or "validation failed", entry_candidate) from error
     return summary
 
 
@@ -670,6 +690,9 @@ def build_decision_record(
         "reason": "",
         "requested": False,
         "accepted": False,
+        "entry_candidate": "",
+        "entry_candidate_status": "not_requested",
+        "full_rejection_reason": "",
     }
 
 
@@ -753,6 +776,29 @@ def json_render_fallback_observation_counts(decision_records: list[dict[str, Any
         "generic_fallback_ratio": safe_ratio(generic_fallback_count, selected_count),
         "topic_counts": sorted_counter_dict(topic_counts),
         "generic_by_decision_reason": sorted_counter_dict(generic_by_reason),
+    }
+
+
+def entry_candidate_observation(decision_records: list[dict[str, Any]]) -> dict[str, Any]:
+    requested_records = [record for record in decision_records if record.get("requested") is True]
+    rejected_records = [record for record in requested_records if record.get("decision") == "fallback"]
+    available_records = [record for record in requested_records if clean_text(record.get("entry_candidate"))]
+    rejected_available_records = [
+        record for record in rejected_records if clean_text(record.get("entry_candidate"))
+    ]
+    rejected_by_reason = Counter(
+        clean_text(record.get("full_rejection_reason")) or "unknown"
+        for record in rejected_available_records
+    )
+    return {
+        "requested_count": len(requested_records),
+        "full_accepted_count": sum(1 for record in requested_records if record.get("accepted") is True),
+        "full_rejected_count": len(rejected_records),
+        "entry_candidate_available_count": len(available_records),
+        "entry_candidate_full_rejected_count": len(rejected_available_records),
+        "entry_candidate_unavailable_count": len(requested_records) - len(available_records),
+        "entry_candidate_available_ratio": safe_ratio(len(available_records), len(requested_records)),
+        "entry_candidate_by_full_rejection_reason": sorted_counter_dict(rejected_by_reason),
     }
 
 
@@ -853,6 +899,7 @@ def build_improved_items_payload(
         payload["diagnostics"] = {
             "decision_counts": decision_record_counts(decision_records),
             "json_render_fallback_counts": json_render_fallback_observation_counts(decision_records),
+            "entry_candidate_observation": entry_candidate_observation(decision_records),
             "request_priority_observation": request_priority_observation(decision_records, force_all),
             "body_evidence_observation": body_evidence_observation(decision_records),
             "decision_records": decision_records,
@@ -981,9 +1028,11 @@ def render_with_groq(
         requested += 1
         decision_record["decision"] = "requested"
         decision_record["requested"] = True
+        decision_record["entry_candidate_status"] = "pending"
         try:
             original_summary = copy.deepcopy(item.get("selected_summary", {}))
             improved_summary = request_groq_summary_with_retry(item, api_key, model, debug, index)
+            decision_record["entry_candidate"] = clean_text(improved_summary.get("conclusion"))
             if force_all:
                 gate_reason = force_all_gate_reason(item, improved_summary)
                 if gate_reason:
@@ -1005,17 +1054,27 @@ def render_with_groq(
             )
             decision_record["decision"] = "accepted"
             decision_record["accepted"] = True
+            decision_record["entry_candidate_status"] = "full_accepted"
             accepted += 1
         except urllib.error.HTTPError as error:
             failed += 1
             decision_record["decision"] = "fallback"
             decision_record["reason"] = f"HTTP {error.code}"
+            decision_record["entry_candidate_status"] = "unavailable"
+            decision_record["full_rejection_reason"] = f"HTTP {error.code}"
             safe_log(f"groq: item {index + 1} fallback (HTTP {error.code}).")
         except ValueError as error:
             failed += 1
             reason = str(error) or "validation failed"
+            error_entry_candidate = clean_text(getattr(error, "entry_candidate", ""))
+            if error_entry_candidate:
+                decision_record["entry_candidate"] = error_entry_candidate
             decision_record["decision"] = "fallback"
             decision_record["reason"] = f"ValueError: {reason}"
+            decision_record["entry_candidate_status"] = (
+                "full_rejected" if clean_text(decision_record.get("entry_candidate")) else "unavailable"
+            )
+            decision_record["full_rejection_reason"] = reason
             safe_log(f"groq: item {index + 1} fallback (ValueError: {reason}).")
             if debug:
                 debug_groq_payload(index, item, reason=reason)
@@ -1023,6 +1082,8 @@ def render_with_groq(
             failed += 1
             decision_record["decision"] = "fallback"
             decision_record["reason"] = error.__class__.__name__
+            decision_record["entry_candidate_status"] = "unavailable"
+            decision_record["full_rejection_reason"] = error.__class__.__name__
             safe_log(f"groq: item {index + 1} fallback ({error.__class__.__name__}).")
     safe_log(f"groq: requested={requested} accepted={accepted} fallback={failed}")
     stats = {"requested": requested, "accepted": accepted, "fallback": failed}
