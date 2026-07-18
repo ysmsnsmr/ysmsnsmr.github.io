@@ -335,6 +335,46 @@ def normalize_fallback_summaries_for_json_render(
     return normalized_data
 
 
+def normalize_entry_candidate_summaries_for_observation(
+    data: dict[str, Any],
+    accepted_records: list[dict[str, Any]],
+    decision_records: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Render full summaries, then entry conclusions, then existing JSON fallbacks."""
+    normalized_data = normalize_fallback_summaries_for_json_render(data, accepted_records)
+    items = normalized_data.get("items")
+    if not isinstance(items, list):
+        return normalized_data
+
+    for record in decision_records:
+        if not isinstance(record, dict):
+            continue
+        if record.get("entry_candidate_status") != "full_rejected":
+            continue
+        entry_candidate = clean_text(record.get("entry_candidate"))
+        raw_index = record.get("index")
+        if not entry_candidate or not isinstance(raw_index, int):
+            continue
+        item_index = raw_index - 1
+        if not (0 <= item_index < len(items)):
+            continue
+        item = items[item_index]
+        if not isinstance(item, dict):
+            continue
+        record_link = clean_text(record.get("link"))
+        item_link = clean_text(item.get("link"))
+        if record_link and item_link != record_link:
+            continue
+        item["selected_summary"] = {
+            "conclusion": entry_candidate,
+            "what_happened": [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
+            "life_impact": SAFE_FALLBACK_LIFE_IMPACT_LINE,
+            "next_action": "",
+        }
+        item["_suppress_topic_next_action"] = True
+    return normalized_data
+
+
 def render_accepted_record_block(record: dict[str, Any]) -> str:
     summary = record.get("improved_summary")
     if not isinstance(summary, dict):

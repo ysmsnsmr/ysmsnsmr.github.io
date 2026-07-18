@@ -37,6 +37,7 @@ from malaysia_groq_force_all_policy import (
 from malaysia_groq_markdown_merge import (
     high_confidence_json_fallback_topic,
     merge_accepted_with_rss_markdown,
+    normalize_entry_candidate_summaries_for_observation,
     normalize_fallback_summaries_for_json_render,
 )
 from malaysia_groq_term_normalization import normalize_malaysia_terms
@@ -748,6 +749,27 @@ def annotate_json_render_fallback_observation(
         record["json_render_fallback_topic"] = topic
 
 
+def annotate_entry_render_observation(decision_records: list[dict[str, Any]]) -> None:
+    for record in decision_records:
+        if record.get("accepted") is True:
+            record["entry_render_tier"] = "full_summary"
+        elif (
+            record.get("entry_candidate_status") == "full_rejected"
+            and clean_text(record.get("entry_candidate"))
+        ):
+            record["entry_render_tier"] = "entry_candidate"
+        else:
+            record["entry_render_tier"] = "existing_fallback"
+
+
+def annotate_render_observations(
+    items: list[Any],
+    decision_records: list[dict[str, Any]],
+) -> None:
+    annotate_json_render_fallback_observation(items, decision_records)
+    annotate_entry_render_observation(decision_records)
+
+
 def json_render_fallback_observation_counts(decision_records: list[dict[str, Any]]) -> dict[str, Any]:
     selected_count = len(decision_records)
     accepted_count = sum(1 for record in decision_records if record.get("json_render_fallback_kind") == "accepted")
@@ -776,6 +798,39 @@ def json_render_fallback_observation_counts(decision_records: list[dict[str, Any
         "generic_fallback_ratio": safe_ratio(generic_fallback_count, selected_count),
         "topic_counts": sorted_counter_dict(topic_counts),
         "generic_by_decision_reason": sorted_counter_dict(generic_by_reason),
+    }
+
+
+def entry_render_observation_counts(decision_records: list[dict[str, Any]]) -> dict[str, Any]:
+    selected_count = len(decision_records)
+    full_summary_count = sum(
+        1 for record in decision_records
+        if record.get("entry_render_tier") == "full_summary"
+    )
+    entry_candidate_count = sum(
+        1 for record in decision_records
+        if record.get("entry_render_tier") == "entry_candidate"
+    )
+    existing_fallback_count = sum(
+        1 for record in decision_records
+        if record.get("entry_render_tier") == "existing_fallback"
+    )
+    entry_by_rejection_reason = Counter(
+        clean_text(record.get("full_rejection_reason")) or "unknown"
+        for record in decision_records
+        if record.get("entry_render_tier") == "entry_candidate"
+    )
+    return {
+        "selected_count": selected_count,
+        "full_summary_count": full_summary_count,
+        "entry_candidate_count": entry_candidate_count,
+        "existing_fallback_count": existing_fallback_count,
+        "full_summary_ratio": safe_ratio(full_summary_count, selected_count),
+        "entry_candidate_ratio": safe_ratio(entry_candidate_count, selected_count),
+        "existing_fallback_ratio": safe_ratio(existing_fallback_count, selected_count),
+        "entry_candidate_by_full_rejection_reason": sorted_counter_dict(
+            entry_by_rejection_reason
+        ),
     }
 
 
@@ -900,6 +955,7 @@ def build_improved_items_payload(
             "decision_counts": decision_record_counts(decision_records),
             "json_render_fallback_counts": json_render_fallback_observation_counts(decision_records),
             "entry_candidate_observation": entry_candidate_observation(decision_records),
+            "entry_render_observation": entry_render_observation_counts(decision_records),
             "request_priority_observation": request_priority_observation(decision_records, force_all),
             "body_evidence_observation": body_evidence_observation(decision_records),
             "decision_records": decision_records,
@@ -975,7 +1031,7 @@ def render_with_groq(
             record["decision"] = "skipped"
             record["reason"] = "missing_groq_api_key"
             decision_records.append(record)
-        annotate_json_render_fallback_observation(items, decision_records)
+        annotate_render_observations(items, decision_records)
         return rendered_data, accepted_records, stats, decision_records
 
     requested = 0
@@ -1087,7 +1143,7 @@ def render_with_groq(
             safe_log(f"groq: item {index + 1} fallback ({error.__class__.__name__}).")
     safe_log(f"groq: requested={requested} accepted={accepted} fallback={failed}")
     stats = {"requested": requested, "accepted": accepted, "fallback": failed}
-    annotate_json_render_fallback_observation(items, decision_records)
+    annotate_render_observations(items, decision_records)
     accepted_records.sort(key=lambda record: record.get("index", 0))
     decision_records.sort(key=lambda record: record.get("index", 0))
     return rendered_data, accepted_records, stats, decision_records
@@ -1102,6 +1158,10 @@ def main() -> int:
     parser.add_argument("--debug-groq", action="store_true", help="Write short Groq validation diagnostics to stderr.")
     parser.add_argument("--improved-items-output", help="Write accepted Groq summary improvements to this JSON path.")
     parser.add_argument("--json-render-output", help="Write Markdown rendered directly from Groq-updated JSON to this path.")
+    parser.add_argument(
+        "--entry-render-output",
+        help="Write observation Markdown using full summary, entry candidate, then existing fallback.",
+    )
     render_mode = parser.add_mutually_exclusive_group()
     render_mode.add_argument("--accepted-only-markdown", action="store_true", help="Render only Groq-accepted items in Markdown output.")
     render_mode.add_argument(
@@ -1142,6 +1202,18 @@ def main() -> int:
         json_render_data = normalize_fallback_summaries_for_json_render(rendered_data, accepted_records)
         json_render_output_path.write_text(
             fallback_renderer.render(json_render_data) + "\n",
+            encoding="utf-8",
+        )
+    if args.entry_render_output:
+        entry_render_output_path = Path(args.entry_render_output)
+        entry_render_output_path.parent.mkdir(parents=True, exist_ok=True)
+        entry_render_data = normalize_entry_candidate_summaries_for_observation(
+            rendered_data,
+            accepted_records,
+            decision_records,
+        )
+        entry_render_output_path.write_text(
+            fallback_renderer.render(entry_render_data) + "\n",
             encoding="utf-8",
         )
     if args.accepted_only_markdown:

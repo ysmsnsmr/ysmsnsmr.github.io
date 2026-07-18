@@ -152,6 +152,9 @@ def parse_observation_diagnostics(improved_json: dict[str, Any]) -> dict[str, in
         "entry_candidate_available_count": None,
         "entry_candidate_full_rejected_count": None,
         "entry_candidate_unavailable_count": None,
+        "entry_render_full_summary_count": None,
+        "entry_render_entry_candidate_count": None,
+        "entry_render_existing_fallback_count": None,
     }
     diagnostics = improved_json.get("diagnostics")
     if not isinstance(diagnostics, dict):
@@ -176,6 +179,17 @@ def parse_observation_diagnostics(improved_json: dict[str, Any]) -> dict[str, in
         )
         parsed["entry_candidate_unavailable_count"] = optional_int(
             entry_observation.get("entry_candidate_unavailable_count")
+        )
+    entry_render_observation = diagnostics.get("entry_render_observation")
+    if isinstance(entry_render_observation, dict):
+        parsed["entry_render_full_summary_count"] = optional_int(
+            entry_render_observation.get("full_summary_count")
+        )
+        parsed["entry_render_entry_candidate_count"] = optional_int(
+            entry_render_observation.get("entry_candidate_count")
+        )
+        parsed["entry_render_existing_fallback_count"] = optional_int(
+            entry_render_observation.get("existing_fallback_count")
         )
     return parsed
 
@@ -324,6 +338,9 @@ def write_markdown_report(path: Path, status: dict[str, Any]) -> None:
         f"- entry_candidate_available_count: {counts.get('entry_candidate_available_count')}",
         f"- entry_candidate_full_rejected_count: {counts.get('entry_candidate_full_rejected_count')}",
         f"- entry_candidate_unavailable_count: {counts.get('entry_candidate_unavailable_count')}",
+        f"- entry_render_full_summary_count: {counts.get('entry_render_full_summary_count')}",
+        f"- entry_render_entry_candidate_count: {counts.get('entry_render_entry_candidate_count')}",
+        f"- entry_render_existing_fallback_count: {counts.get('entry_render_existing_fallback_count')}",
         "",
         "## Validation",
         "",
