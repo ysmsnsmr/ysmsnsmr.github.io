@@ -1,0 +1,283 @@
+:root {
+  color-scheme: light;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic",
+    sans-serif;
+  color: #242421;
+  background: #f3f2ed;
+}
+
+html {
+  min-height: 100%;
+  background: #f3f2ed;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 0;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  min-height: 44px;
+  padding: 0.65rem 1rem;
+  border: 1px solid #8c8a82;
+  border-radius: 0.5rem;
+  color: #242421;
+  background: #fff;
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid #8cab9b;
+  outline-offset: 2px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.app-shell {
+  width: min(calc(100% - 2rem), 40rem);
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding:
+    max(1.5rem, env(safe-area-inset-top))
+    0
+    max(2rem, env(safe-area-inset-bottom));
+}
+
+.app-header {
+  margin-bottom: 2rem;
+}
+
+.header-row,
+.management-header {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.header-row > div,
+.management-header > div {
+  min-width: 0;
+}
+
+.app-kicker,
+.state-label {
+  margin: 0 0 0.4rem;
+  color: #65645e;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0.75rem;
+  font-size: clamp(2rem, 7vw, 3rem);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
+.completion-count {
+  margin-bottom: 0;
+  color: #55544f;
+}
+
+.completion-count strong {
+  color: #242421;
+}
+
+.task-form {
+  margin-bottom: 1rem;
+}
+
+.task-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.input-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input-row input {
+  min-width: 0;
+  min-height: 44px;
+  flex: 1;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid #8c8a82;
+  border-radius: 0.5rem;
+  color: #242421;
+  background: #fff;
+}
+
+#add-button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+#manage-button {
+  border-color: #d2d0c8;
+  color: #55544f;
+  background: transparent;
+  font-size: 0.92rem;
+  white-space: nowrap;
+}
+
+.error-message {
+  margin: 0 0 1rem;
+  padding: 0.75rem;
+  border-left: 4px solid #a33f33;
+  color: #742e26;
+  background: #f8e9e6;
+}
+
+.task-area {
+  margin-top: 1.5rem;
+}
+
+.state-panel {
+  padding: 1.5rem;
+  border: 1px solid #d2d0c8;
+  border-radius: 0.75rem;
+  background: #fff;
+}
+
+.task-text {
+  margin-bottom: 1.5rem;
+  font-size: clamp(1.35rem, 4vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.action-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.action-row button {
+  flex: 1;
+}
+
+.primary-action {
+  border-color: #365e4d;
+  color: #fff;
+  background: #365e4d;
+}
+
+.message-panel p {
+  margin-bottom: 0;
+  color: #65645e;
+  line-height: 1.7;
+}
+
+.management-header {
+  margin-bottom: 2rem;
+}
+
+.management-header h1 {
+  margin-bottom: 0;
+}
+
+.management-empty {
+  margin: 0;
+  color: #65645e;
+}
+
+.management-list {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.management-item {
+  padding: 1rem;
+  border: 1px solid #d2d0c8;
+  border-radius: 0.75rem;
+  background: #fff;
+}
+
+.management-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.management-form input {
+  max-width: 100%;
+  width: 100%;
+  min-height: 44px;
+  margin-bottom: 0.75rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid #8c8a82;
+  border-radius: 0.5rem;
+  color: #242421;
+  background: #fff;
+}
+
+.management-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.management-actions button {
+  flex: 1;
+}
+
+.delete-action {
+  border-color: #a33f33;
+  color: #742e26;
+}
+
+@media (max-width: 420px) {
+  .app-shell {
+    width: min(calc(100% - 1.25rem), 40rem);
+    padding:
+      max(1.25rem, env(safe-area-inset-top))
+      0
+      max(2rem, env(safe-area-inset-bottom));
+  }
+
+  .state-panel {
+    padding: 1.25rem;
+  }
+
+  .header-row,
+  .management-header {
+    gap: 0.75rem;
+  }
+}
