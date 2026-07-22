@@ -9,6 +9,7 @@ import time
 import urllib.error
 import urllib.request
 from collections import Counter
+from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -218,22 +219,151 @@ conclusionは自然な日本語にしつつ、titleにない因果関係を強�
 what_happenedは重複した内容を2行にしないでください。2行目が1行目と同じ意味なら1行だけにしてください。
 life_impactはRSSに具体的な生活影響がない場合、無理に個人の収入・生活への影響を作らないでください。
 個別事例では、読者の生活への直接影響を断定せず、制度・当局対応・地域事情の背景情報として控えめに述べてください。
+entryは、読者が次に出典リンクを開くか判断するための、短く自然な日本語の入口文です。
+entry.text_jaでは、記事の主体、発言者・帰属、出来事の状態、確定度を落とさないでください。
+発言記事では「〜氏が述べた」「当局が発表した」など、発言者または帰属を自然に残してください。
+計画・提案・検討・予報・警報・調査・疑惑・否定は、完了・確定した事実として書き換えないでください。
+entry.subject、entry.state、entry.certaintyは必須です。直接の出来事で発言者が不要な場合だけentry.attributionはnullにしてください。
+各source_textは、入力されたtitle、description、または許可されたbody_evidenceからそのまま抜き出した短い原文です。入力にないsource_textを作らないでください。
+各text_jaはentry.text_jaの中に自然な形で現れる日本語表現にしてください。
+entry.state.kindはreported_event、attributed_statement、official_action、plan_or_proposal、warning_or_forecast、investigation_or_allegation、denial_or_correction、otherのいずれかにしてください。
+entry.certainty.kindはreported、confirmed、planned、proposed、expected、warning、under_investigation、alleged、deniedのいずれかにしてください。
+出力は次のJSON objectだけにしてください: {"selected_summary":{"conclusion":"...","what_happened":["..."],"life_impact":"...","next_action":"..."},"entry":{"text_ja":"...","subject":{"source_text":"...","text_ja":"..."},"attribution":null,"state":{"kind":"...","source_text":"...","text_ja":"..."},"certainty":{"kind":"...","source_text":"...","text_ja":"..."}}}
 出力はJSONのみです。"""
+
+
+ENTRY_STATE_KINDS = {
+    "reported_event",
+    "attributed_statement",
+    "official_action",
+    "plan_or_proposal",
+    "warning_or_forecast",
+    "investigation_or_allegation",
+    "denial_or_correction",
+    "other",
+}
+ENTRY_CERTAINTY_KINDS = {
+    "reported",
+    "confirmed",
+    "planned",
+    "proposed",
+    "expected",
+    "warning",
+    "under_investigation",
+    "alleged",
+    "denied",
+}
+
+
+@dataclass
+class GroqSummaryResult:
+    summary: dict[str, Any]
+    entry: dict[str, Any] | None
+    entry_contract_status: str
+    entry_contract_reasons: list[str]
 
 
 class GroqSummaryRejected(ValueError):
     """Keep an untrusted conclusion available for diagnostics after full-summary rejection."""
 
-    def __init__(self, reason: str, entry_candidate: str = "") -> None:
+    def __init__(
+        self,
+        reason: str,
+        entry: dict[str, Any] | None = None,
+        entry_contract_status: str = "unavailable",
+        entry_contract_reasons: list[str] | None = None,
+    ) -> None:
         super().__init__(reason)
-        self.entry_candidate = clean_text(entry_candidate)
+        self.entry = copy.deepcopy(entry) if isinstance(entry, dict) else None
+        self.entry_candidate = entry_text(self.entry)
+        self.entry_contract_status = entry_contract_status
+        self.entry_contract_reasons = list(entry_contract_reasons or [])
 
 
-def extract_entry_candidate(value: Any) -> str:
-    summary = value if isinstance(value, dict) else {}
-    if isinstance(summary.get("selected_summary"), dict):
-        summary = summary["selected_summary"]
-    return clean_text(summary.get("conclusion"))
+def entry_text(value: Any) -> str:
+    return clean_text(value.get("text_ja")) if isinstance(value, dict) else ""
+
+
+def entry_anchor_source_text(item: dict[str, Any]) -> str:
+    parts = [clean_text(item.get("title")), clean_text(item.get("description"))]
+    if clean_text(item.get("body_excerpt_policy")) == "use_body":
+        parts.append(clean_text(item.get("body_evidence_excerpt")))
+    return " ".join(part for part in parts if part).casefold()
+
+
+def normalize_entry_part(value: Any, include_kind: bool = False) -> dict[str, str] | None:
+    if not isinstance(value, dict):
+        return None
+    part = {
+        "source_text": clean_text(value.get("source_text")),
+        "text_ja": clean_text(value.get("text_ja")),
+    }
+    if include_kind:
+        part["kind"] = clean_text(value.get("kind")).lower()
+    return part
+
+
+def entry_contract_for_item(value: Any, item: dict[str, Any]) -> tuple[dict[str, Any] | None, str, list[str]]:
+    if not isinstance(value, dict):
+        return None, "unavailable", ["missing_entry_object"]
+
+    text_ja = clean_text(value.get("text_ja"))
+    entry = {
+        "text_ja": text_ja,
+        "subject": normalize_entry_part(value.get("subject")),
+        "attribution": normalize_entry_part(value.get("attribution")),
+        "state": normalize_entry_part(value.get("state"), include_kind=True),
+        "certainty": normalize_entry_part(value.get("certainty"), include_kind=True),
+    }
+    reasons: list[str] = []
+    invalid_anchor = False
+    anchor_source = entry_anchor_source_text(item)
+
+    if not text_ja:
+        reasons.append("missing_entry_text")
+
+    def validate_part(name: str, part: dict[str, str] | None, required: bool) -> None:
+        nonlocal invalid_anchor
+        if part is None:
+            if required:
+                reasons.append(f"missing_{name}")
+            return
+        source_text = part["source_text"]
+        displayed_text = part["text_ja"]
+        if not source_text:
+            reasons.append(f"missing_{name}_source_text")
+        elif source_text.casefold() not in anchor_source:
+            reasons.append(f"invalid_{name}_source_anchor")
+            invalid_anchor = True
+        if not displayed_text:
+            reasons.append(f"missing_{name}_text_ja")
+        elif displayed_text not in text_ja:
+            reasons.append(f"invalid_{name}_display_marker")
+            invalid_anchor = True
+
+    validate_part("subject", entry["subject"], required=True)
+    validate_part("attribution", entry["attribution"], required=False)
+    validate_part("state", entry["state"], required=True)
+    validate_part("certainty", entry["certainty"], required=True)
+
+    state = entry["state"]
+    if state is not None:
+        if state["kind"] not in ENTRY_STATE_KINDS:
+            reasons.append("invalid_state_kind")
+        if state["kind"] == "attributed_statement" and entry["attribution"] is None:
+            reasons.append("missing_attribution_for_attributed_statement")
+
+    certainty = entry["certainty"]
+    if certainty is not None and certainty["kind"] not in ENTRY_CERTAINTY_KINDS:
+        reasons.append("invalid_certainty_kind")
+
+    if invalid_anchor:
+        status = "invalid_anchor"
+    elif reasons:
+        status = "incomplete"
+    else:
+        status = "complete"
+    return entry, status, reasons
 
 
 def normalize_summary(value: Any) -> dict[str, Any]:
@@ -564,7 +694,7 @@ def request_groq_summary_with_retry(
     model: str,
     debug: bool = False,
     index: int = 0,
-) -> dict[str, Any]:
+) -> GroqSummaryResult:
     try:
         return request_groq_summary(item, api_key, model, debug, index)
     except urllib.error.HTTPError as error:
@@ -576,7 +706,13 @@ def request_groq_summary_with_retry(
         return request_groq_summary(item, api_key, model, debug, index)
 
 
-def request_groq_summary(item: dict[str, Any], api_key: str, model: str, debug: bool = False, index: int = 0) -> dict[str, Any]:
+def request_groq_summary(
+    item: dict[str, Any],
+    api_key: str,
+    model: str,
+    debug: bool = False,
+    index: int = 0,
+) -> GroqSummaryResult:
     body = {
         "model": model,
         "messages": [
@@ -619,15 +755,22 @@ def request_groq_summary(item: dict[str, Any], api_key: str, model: str, debug: 
     parsed_content = parse_groq_content(content)
     if debug:
         debug_groq_payload(index, item, parsed_content)
-    entry_candidate = extract_entry_candidate(parsed_content)
+    entry, entry_contract_status, entry_contract_reasons = entry_contract_for_item(
+        parsed_content.get("entry") if isinstance(parsed_content, dict) else None,
+        item,
+    )
     try:
         summary = validate_groq_summary(parsed_content)
         summary = normalize_malaysia_terms(summary, item)
-        entry_candidate = clean_text(summary.get("conclusion")) or entry_candidate
         validate_summary_against_source(item, summary)
     except ValueError as error:
-        raise GroqSummaryRejected(str(error) or "validation failed", entry_candidate) from error
-    return summary
+        raise GroqSummaryRejected(
+            str(error) or "validation failed",
+            entry,
+            entry_contract_status,
+            entry_contract_reasons,
+        ) from error
+    return GroqSummaryResult(summary, entry, entry_contract_status, entry_contract_reasons)
 
 
 def validate_groq_summary(value: Any) -> dict[str, Any]:
@@ -691,8 +834,11 @@ def build_decision_record(
         "reason": "",
         "requested": False,
         "accepted": False,
+        "entry": None,
         "entry_candidate": "",
         "entry_candidate_status": "not_requested",
+        "entry_contract_status": "not_requested",
+        "entry_contract_reasons": [],
         "full_rejection_reason": "",
     }
 
@@ -751,11 +897,15 @@ def annotate_json_render_fallback_observation(
 
 def annotate_entry_render_observation(decision_records: list[dict[str, Any]]) -> None:
     for record in decision_records:
+        entry = record.get("entry")
+        entry_candidate = entry_text(entry)
+        if not entry_candidate and "entry" not in record:
+            entry_candidate = clean_text(record.get("entry_candidate"))
         if record.get("accepted") is True:
             record["entry_render_tier"] = "full_summary"
         elif (
             record.get("entry_candidate_status") == "full_rejected"
-            and clean_text(record.get("entry_candidate"))
+            and entry_candidate
         ):
             record["entry_render_tier"] = "entry_candidate"
         else:
@@ -837,22 +987,39 @@ def entry_render_observation_counts(decision_records: list[dict[str, Any]]) -> d
 def entry_candidate_observation(decision_records: list[dict[str, Any]]) -> dict[str, Any]:
     requested_records = [record for record in decision_records if record.get("requested") is True]
     rejected_records = [record for record in requested_records if record.get("decision") == "fallback"]
-    available_records = [record for record in requested_records if clean_text(record.get("entry_candidate"))]
+    entry_object_records = [record for record in requested_records if isinstance(record.get("entry"), dict)]
+    available_records = [record for record in requested_records if entry_text(record.get("entry"))]
     rejected_available_records = [
-        record for record in rejected_records if clean_text(record.get("entry_candidate"))
+        record for record in rejected_records if entry_text(record.get("entry"))
     ]
     rejected_by_reason = Counter(
         clean_text(record.get("full_rejection_reason")) or "unknown"
         for record in rejected_available_records
     )
+    contract_status_counts = Counter(
+        clean_text(record.get("entry_contract_status")) or "unavailable"
+        for record in requested_records
+    )
+    contract_reason_counts: Counter[str] = Counter()
+    for record in requested_records:
+        reasons = record.get("entry_contract_reasons")
+        if isinstance(reasons, list):
+            contract_reason_counts.update(clean_text(reason) for reason in reasons if clean_text(reason))
     return {
         "requested_count": len(requested_records),
         "full_accepted_count": sum(1 for record in requested_records if record.get("accepted") is True),
         "full_rejected_count": len(rejected_records),
+        "entry_object_present_count": len(entry_object_records),
         "entry_candidate_available_count": len(available_records),
         "entry_candidate_full_rejected_count": len(rejected_available_records),
         "entry_candidate_unavailable_count": len(requested_records) - len(available_records),
         "entry_candidate_available_ratio": safe_ratio(len(available_records), len(requested_records)),
+        "entry_contract_complete_count": contract_status_counts["complete"],
+        "entry_contract_incomplete_count": contract_status_counts["incomplete"],
+        "entry_contract_invalid_anchor_count": contract_status_counts["invalid_anchor"],
+        "entry_contract_unavailable_count": contract_status_counts["unavailable"],
+        "entry_contract_status_counts": sorted_counter_dict(contract_status_counts),
+        "entry_contract_reason_counts": sorted_counter_dict(contract_reason_counts),
         "entry_candidate_by_full_rejection_reason": sorted_counter_dict(rejected_by_reason),
     }
 
@@ -1087,8 +1254,12 @@ def render_with_groq(
         decision_record["entry_candidate_status"] = "pending"
         try:
             original_summary = copy.deepcopy(item.get("selected_summary", {}))
-            improved_summary = request_groq_summary_with_retry(item, api_key, model, debug, index)
-            decision_record["entry_candidate"] = clean_text(improved_summary.get("conclusion"))
+            groq_result = request_groq_summary_with_retry(item, api_key, model, debug, index)
+            improved_summary = groq_result.summary
+            decision_record["entry"] = groq_result.entry
+            decision_record["entry_candidate"] = entry_text(groq_result.entry)
+            decision_record["entry_contract_status"] = groq_result.entry_contract_status
+            decision_record["entry_contract_reasons"] = groq_result.entry_contract_reasons
             if force_all:
                 gate_reason = force_all_gate_reason(item, improved_summary)
                 if gate_reason:
@@ -1117,18 +1288,28 @@ def render_with_groq(
             decision_record["decision"] = "fallback"
             decision_record["reason"] = f"HTTP {error.code}"
             decision_record["entry_candidate_status"] = "unavailable"
+            decision_record["entry_contract_status"] = "unavailable"
             decision_record["full_rejection_reason"] = f"HTTP {error.code}"
             safe_log(f"groq: item {index + 1} fallback (HTTP {error.code}).")
         except ValueError as error:
             failed += 1
             reason = str(error) or "validation failed"
-            error_entry_candidate = clean_text(getattr(error, "entry_candidate", ""))
-            if error_entry_candidate:
-                decision_record["entry_candidate"] = error_entry_candidate
+            error_entry = getattr(error, "entry", None)
+            if isinstance(error_entry, dict):
+                decision_record["entry"] = error_entry
+                decision_record["entry_candidate"] = entry_text(error_entry)
+            error_contract_status = clean_text(getattr(error, "entry_contract_status", ""))
+            if error_contract_status:
+                decision_record["entry_contract_status"] = error_contract_status
+            error_entry_reasons = getattr(error, "entry_contract_reasons", None)
+            if isinstance(error_entry_reasons, list):
+                decision_record["entry_contract_reasons"] = [
+                    clean_text(value) for value in error_entry_reasons if clean_text(value)
+                ]
             decision_record["decision"] = "fallback"
             decision_record["reason"] = f"ValueError: {reason}"
             decision_record["entry_candidate_status"] = (
-                "full_rejected" if clean_text(decision_record.get("entry_candidate")) else "unavailable"
+                "full_rejected" if entry_text(decision_record.get("entry")) else "unavailable"
             )
             decision_record["full_rejection_reason"] = reason
             safe_log(f"groq: item {index + 1} fallback (ValueError: {reason}).")
@@ -1139,6 +1320,7 @@ def render_with_groq(
             decision_record["decision"] = "fallback"
             decision_record["reason"] = error.__class__.__name__
             decision_record["entry_candidate_status"] = "unavailable"
+            decision_record["entry_contract_status"] = "unavailable"
             decision_record["full_rejection_reason"] = error.__class__.__name__
             safe_log(f"groq: item {index + 1} fallback ({error.__class__.__name__}).")
     safe_log(f"groq: requested={requested} accepted={accepted} fallback={failed}")

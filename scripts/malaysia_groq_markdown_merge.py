@@ -351,7 +351,11 @@ def normalize_entry_candidate_summaries_for_observation(
             continue
         if record.get("entry_candidate_status") != "full_rejected":
             continue
-        entry_candidate = clean_text(record.get("entry_candidate"))
+        entry = record.get("entry")
+        entry_candidate = clean_text(entry.get("text_ja")) if isinstance(entry, dict) else ""
+        if not entry_candidate and "entry" not in record:
+            # Read pre-entry-object diagnostics without treating a current conclusion as an entry.
+            entry_candidate = clean_text(record.get("entry_candidate"))
         raw_index = record.get("index")
         if not entry_candidate or not isinstance(raw_index, int):
             continue
