@@ -25,7 +25,6 @@ def normalize_malaysia_terms_in_text(text: str, item: dict[str, Any]) -> str:
         "国内取引・生活費省": "国内貿易・生活費省",
         "国内取引省": "国内貿易省",
         "車両カード": "フリートカード",
-        "油価": "石油価格",
     }
 
     if "kpdn" in source_text or "domestic trade" in source_text:

@@ -984,6 +984,15 @@ def entry_render_observation_counts(decision_records: list[dict[str, Any]]) -> d
     }
 
 
+def entry_contract_reason_category(reason: Any) -> str:
+    normalized = clean_text(reason)
+    if normalized.startswith("invalid_") and normalized.endswith("_source_anchor"):
+        return "source_anchor"
+    if normalized.startswith("invalid_") and normalized.endswith("_display_marker"):
+        return "display_marker"
+    return "structure"
+
+
 def entry_candidate_observation(decision_records: list[dict[str, Any]]) -> dict[str, Any]:
     requested_records = [record for record in decision_records if record.get("requested") is True]
     rejected_records = [record for record in requested_records if record.get("decision") == "fallback"]
@@ -1001,10 +1010,20 @@ def entry_candidate_observation(decision_records: list[dict[str, Any]]) -> dict[
         for record in requested_records
     )
     contract_reason_counts: Counter[str] = Counter()
+    source_anchor_failure_count = 0
+    display_marker_mismatch_count = 0
+    structure_incomplete_count = 0
     for record in requested_records:
         reasons = record.get("entry_contract_reasons")
-        if isinstance(reasons, list):
-            contract_reason_counts.update(clean_text(reason) for reason in reasons if clean_text(reason))
+        normalized_reasons = [
+            clean_text(reason) for reason in reasons if clean_text(reason)
+        ] if isinstance(reasons, list) else []
+        contract_reason_counts.update(normalized_reasons)
+        categories = {entry_contract_reason_category(reason) for reason in normalized_reasons}
+        # Count affected records, not individual reason strings.
+        source_anchor_failure_count += int("source_anchor" in categories)
+        display_marker_mismatch_count += int("display_marker" in categories)
+        structure_incomplete_count += int("structure" in categories)
     return {
         "requested_count": len(requested_records),
         "full_accepted_count": sum(1 for record in requested_records if record.get("accepted") is True),
@@ -1020,6 +1039,10 @@ def entry_candidate_observation(decision_records: list[dict[str, Any]]) -> dict[
         "entry_contract_unavailable_count": contract_status_counts["unavailable"],
         "entry_contract_status_counts": sorted_counter_dict(contract_status_counts),
         "entry_contract_reason_counts": sorted_counter_dict(contract_reason_counts),
+        "entry_source_anchor_failure_count": source_anchor_failure_count,
+        "entry_display_marker_mismatch_count": display_marker_mismatch_count,
+        "entry_structure_incomplete_count": structure_incomplete_count,
+        "entry_contract_observation_only": True,
         "entry_candidate_by_full_rejection_reason": sorted_counter_dict(rejected_by_reason),
     }
 

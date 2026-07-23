@@ -158,6 +158,10 @@ def parse_observation_diagnostics(improved_json: dict[str, Any]) -> dict[str, An
         "entry_contract_invalid_anchor_count": None,
         "entry_contract_unavailable_count": None,
         "entry_contract_reason_counts": None,
+        "entry_source_anchor_failure_count": None,
+        "entry_display_marker_mismatch_count": None,
+        "entry_structure_incomplete_count": None,
+        "entry_contract_observation_only": None,
         "entry_render_full_summary_count": None,
         "entry_render_entry_candidate_count": None,
         "entry_render_existing_fallback_count": None,
@@ -204,6 +208,18 @@ def parse_observation_diagnostics(improved_json: dict[str, Any]) -> dict[str, An
         reason_counts = entry_observation.get("entry_contract_reason_counts")
         if isinstance(reason_counts, dict):
             parsed["entry_contract_reason_counts"] = reason_counts
+        parsed["entry_source_anchor_failure_count"] = optional_int(
+            entry_observation.get("entry_source_anchor_failure_count")
+        )
+        parsed["entry_display_marker_mismatch_count"] = optional_int(
+            entry_observation.get("entry_display_marker_mismatch_count")
+        )
+        parsed["entry_structure_incomplete_count"] = optional_int(
+            entry_observation.get("entry_structure_incomplete_count")
+        )
+        observation_only = entry_observation.get("entry_contract_observation_only")
+        if isinstance(observation_only, bool):
+            parsed["entry_contract_observation_only"] = observation_only
     entry_render_observation = diagnostics.get("entry_render_observation")
     if isinstance(entry_render_observation, dict):
         parsed["entry_render_full_summary_count"] = optional_int(
@@ -368,6 +384,10 @@ def write_markdown_report(path: Path, status: dict[str, Any]) -> None:
         f"- entry_contract_invalid_anchor_count: {counts.get('entry_contract_invalid_anchor_count')}",
         f"- entry_contract_unavailable_count: {counts.get('entry_contract_unavailable_count')}",
         f"- entry_contract_reason_counts: {counts.get('entry_contract_reason_counts')}",
+        f"- entry_source_anchor_failure_count: {counts.get('entry_source_anchor_failure_count')}",
+        f"- entry_display_marker_mismatch_count: {counts.get('entry_display_marker_mismatch_count')}",
+        f"- entry_structure_incomplete_count: {counts.get('entry_structure_incomplete_count')}",
+        f"- entry_contract_observation_only: {counts.get('entry_contract_observation_only')}",
         f"- entry_render_full_summary_count: {counts.get('entry_render_full_summary_count')}",
         f"- entry_render_entry_candidate_count: {counts.get('entry_render_entry_candidate_count')}",
         f"- entry_render_existing_fallback_count: {counts.get('entry_render_existing_fallback_count')}",
