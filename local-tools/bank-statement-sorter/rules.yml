@@ -234,3 +234,27 @@ rules:
 - pattern: "7-ELEVEN"
   category: "Groceries"
   treatment: "expense"
+
+- pattern: "CENTRO COFFEE"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "AH CHENG LAKSA"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "BURGER KING"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "JOLLIBEE"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "KK SUPER MART"
+  category: "Groceries"
+  treatment: "expense"
+
+- pattern: "POPULAR BOOK"
+  category: "Shopping"
+  treatment: "expense"
