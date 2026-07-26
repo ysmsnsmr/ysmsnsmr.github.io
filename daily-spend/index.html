@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    >
+    <title>ざっくり出費</title>
+    <meta name="theme-color" content="#a84f32">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="ざっくり出費">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta
+      name="description"
+      content="支払い直後に、金額と必要だったかを約10秒で記録する端末内保存の支出ログ"
+    >
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./storage.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">DAILY SPEND NOTE</p>
+          <h1>ざっくり出費</h1>
+        </div>
+        <p id="today-label" class="today-label"></p>
+      </header>
+
+      <section class="summary-grid" aria-label="支出の概要">
+        <article class="summary-card">
+          <p>今日の支出</p>
+          <strong id="today-total">RM&nbsp;0.00</strong>
+        </article>
+        <article class="summary-card summary-card--reflection">
+          <p>今月の迷い支出</p>
+          <strong id="month-regret-total">RM&nbsp;0.00</strong>
+          <small>迷った＋なくてもよかった</small>
+        </article>
+      </section>
+
+      <p
+        id="feedback"
+        class="feedback"
+        role="status"
+        aria-live="polite"
+        hidden
+      ></p>
+
+      <section class="entry-panel" aria-labelledby="entry-title">
+        <div class="entry-heading">
+          <div>
+            <p class="section-kicker">QUICK ENTRY</p>
+            <h2 id="entry-title">支払いを記録</h2>
+          </div>
+          <span class="currency-badge">MYR</span>
+        </div>
+
+        <form id="expense-form" class="expense-form" novalidate>
+          <label class="field-label" for="amount">金額</label>
+          <div class="amount-field">
+            <span aria-hidden="true">RM</span>
+            <input
+              id="amount"
+              name="amount"
+              type="text"
+              inputmode="decimal"
+              autocomplete="off"
+              enterkeyhint="next"
+              placeholder="0.00"
+              aria-describedby="amount-hint"
+            >
+          </div>
+          <p id="amount-hint" class="visually-hidden">
+            リンギット単位で、小数点以下2桁まで入力できます
+          </p>
+
+          <fieldset>
+            <legend>分類</legend>
+            <div class="choice-grid choice-grid--category">
+              <label class="choice">
+                <input type="radio" name="category" value="dining">
+                <span>Dining</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="category" value="groceries">
+                <span>Groceries</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="category" value="shopping">
+                <span>Shopping</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="category" value="health">
+                <span>Health</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="category" value="medical">
+                <span>Medical</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="category" value="other">
+                <span>Other</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>必要度</legend>
+            <div class="choice-grid choice-grid--necessity">
+              <label class="choice choice--necessity">
+                <input type="radio" name="necessity" value="needed">
+                <span>必要だった</span>
+              </label>
+              <label class="choice choice--necessity">
+                <input type="radio" name="necessity" value="hesitated">
+                <span>少し迷った</span>
+              </label>
+              <label class="choice choice--necessity">
+                <input type="radio" name="necessity" value="unnecessary">
+                <span>なくてもよかった</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <label class="field-label" for="note">
+            メモ
+            <span>任意</span>
+          </label>
+          <input
+            id="note"
+            class="note-field"
+            name="note"
+            type="text"
+            autocomplete="off"
+            enterkeyhint="done"
+            placeholder="例：仕事帰りに購入"
+          >
+
+          <div class="form-actions">
+            <button id="save-button" class="save-button" type="submit">
+              保存する
+            </button>
+            <button
+              id="cancel-button"
+              class="cancel-button"
+              type="button"
+              hidden
+            >
+              編集をやめる
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section class="today-section" aria-labelledby="today-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">TODAY</p>
+            <h2 id="today-title">今日の記録</h2>
+          </div>
+          <strong id="today-count" class="record-count">0件</strong>
+        </div>
+
+        <p id="empty-message" class="empty-message">
+          まだ記録はありません。支払い直後に、ここへ残してみましょう。
+        </p>
+        <ol id="expense-list" class="expense-list"></ol>
+      </section>
+
+      <footer class="app-footer">
+        <p>この端末にだけ保存されます。</p>
+      </footer>
+    </main>
+  </body>
+</html>

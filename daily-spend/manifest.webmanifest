@@ -1,0 +1,23 @@
+{
+  "name": "ざっくり出費",
+  "short_name": "ざっくり出費",
+  "description": "支払い直後に必要度と一緒に残す、端末内保存の支出ログ",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f0e7",
+  "theme_color": "#a84f32",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
