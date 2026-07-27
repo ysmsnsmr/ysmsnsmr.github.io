@@ -149,6 +149,11 @@ def parse_observation_diagnostics(improved_json: dict[str, Any]) -> dict[str, An
         "topic_fallback_count": None,
         "generic_fallback_count": None,
         "request_cap_skipped_generic_fallback_count": None,
+        "summary_provenance_line_counts": None,
+        "summary_provenance_accepted_item_with_inherited_line_count": None,
+        "summary_provenance_accepted_item_with_replaced_line_count": None,
+        "summary_provenance_accepted_item_all_inherited_line_count": None,
+        "summary_provenance_observation_only": None,
         "entry_candidate_available_count": None,
         "entry_candidate_full_rejected_count": None,
         "entry_candidate_unavailable_count": None,
@@ -179,6 +184,23 @@ def parse_observation_diagnostics(improved_json: dict[str, Any]) -> dict[str, An
         parsed["request_cap_skipped_generic_fallback_count"] = optional_int(
             priority_observation.get("request_cap_skipped_generic_fallback_count")
         )
+    summary_provenance = diagnostics.get("json_render_summary_provenance")
+    if isinstance(summary_provenance, dict):
+        line_counts = summary_provenance.get("line_counts")
+        if isinstance(line_counts, dict):
+            parsed["summary_provenance_line_counts"] = line_counts
+        parsed["summary_provenance_accepted_item_with_inherited_line_count"] = optional_int(
+            summary_provenance.get("accepted_item_with_inherited_line_count")
+        )
+        parsed["summary_provenance_accepted_item_with_replaced_line_count"] = optional_int(
+            summary_provenance.get("accepted_item_with_replaced_line_count")
+        )
+        parsed["summary_provenance_accepted_item_all_inherited_line_count"] = optional_int(
+            summary_provenance.get("accepted_item_all_inherited_line_count")
+        )
+        observation_only = summary_provenance.get("observation_only")
+        if isinstance(observation_only, bool):
+            parsed["summary_provenance_observation_only"] = observation_only
     entry_observation = diagnostics.get("entry_candidate_observation")
     if isinstance(entry_observation, dict):
         parsed["entry_candidate_available_count"] = optional_int(
@@ -375,6 +397,11 @@ def write_markdown_report(path: Path, status: dict[str, Any]) -> None:
         f"- topic_fallback_count: {counts.get('topic_fallback_count')}",
         f"- generic_fallback_count: {counts.get('generic_fallback_count')}",
         f"- request_cap_skipped_generic_fallback_count: {counts.get('request_cap_skipped_generic_fallback_count')}",
+        f"- summary_provenance_line_counts: {counts.get('summary_provenance_line_counts')}",
+        f"- summary_provenance_accepted_item_with_inherited_line_count: {counts.get('summary_provenance_accepted_item_with_inherited_line_count')}",
+        f"- summary_provenance_accepted_item_with_replaced_line_count: {counts.get('summary_provenance_accepted_item_with_replaced_line_count')}",
+        f"- summary_provenance_accepted_item_all_inherited_line_count: {counts.get('summary_provenance_accepted_item_all_inherited_line_count')}",
+        f"- summary_provenance_observation_only: {counts.get('summary_provenance_observation_only')}",
         f"- entry_candidate_available_count: {counts.get('entry_candidate_available_count')}",
         f"- entry_candidate_full_rejected_count: {counts.get('entry_candidate_full_rejected_count')}",
         f"- entry_candidate_unavailable_count: {counts.get('entry_candidate_unavailable_count')}",

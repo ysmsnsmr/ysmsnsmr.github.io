@@ -951,6 +951,142 @@ def json_render_fallback_observation_counts(decision_records: list[dict[str, Any
     }
 
 
+SUMMARY_PROVENANCE_ORIGINS = ("rss_derived", "groq_replaced", "groq_inherited")
+SUMMARY_PROVENANCE_FIELDS = ("conclusion", "what_happened", "life_impact", "next_action")
+SUMMARY_PROVENANCE_ORIGIN_DEFINITIONS = {
+    "rss_derived": "No accepted full Groq summary; final text is on the JSON-render RSS fallback path.",
+    "groq_replaced": "Accepted final line differs from the normalized original selected_summary line.",
+    "groq_inherited": "Accepted final line exactly matches a normalized original selected_summary line.",
+}
+
+
+def summary_field_lines(summary: Any, field: str) -> list[str]:
+    if not isinstance(summary, dict):
+        return []
+    if field == "what_happened":
+        return summary_lines(summary.get(field))
+    value = clean_text(summary.get(field))
+    return [value] if value else []
+
+
+def summary_line_provenance(
+    original_summary: Any,
+    final_summary: Any,
+    accepted: bool,
+) -> list[dict[str, Any]]:
+    """Classify final lines by path and exact text equality, not semantic support."""
+    remaining_original_lines = {
+        field: Counter(summary_field_lines(original_summary, field))
+        for field in SUMMARY_PROVENANCE_FIELDS
+    }
+    records: list[dict[str, Any]] = []
+    for field in SUMMARY_PROVENANCE_FIELDS:
+        for line_index, text in enumerate(summary_field_lines(final_summary, field)):
+            origin = "rss_derived"
+            if accepted:
+                if remaining_original_lines[field][text] > 0:
+                    remaining_original_lines[field][text] -= 1
+                    origin = "groq_inherited"
+                else:
+                    origin = "groq_replaced"
+            records.append(
+                {
+                    "field": field,
+                    "line_index": line_index,
+                    "text": text,
+                    "origin": origin,
+                }
+            )
+    return records
+
+
+def annotate_json_render_summary_provenance(
+    original_data: dict[str, Any],
+    json_render_data: dict[str, Any],
+    decision_records: list[dict[str, Any]],
+) -> None:
+    original_items = original_data.get("items")
+    final_items = json_render_data.get("items")
+    if not isinstance(original_items, list) or not isinstance(final_items, list):
+        return
+    for record in decision_records:
+        if not isinstance(record, dict):
+            continue
+        raw_index = record.get("index")
+        if not isinstance(raw_index, int):
+            continue
+        item_index = raw_index - 1
+        if not (0 <= item_index < len(original_items) and item_index < len(final_items)):
+            continue
+        original_item = original_items[item_index]
+        final_item = final_items[item_index]
+        if not isinstance(original_item, dict) or not isinstance(final_item, dict):
+            continue
+        record["json_render_summary_line_provenance"] = summary_line_provenance(
+            original_item.get("selected_summary"),
+            final_item.get("selected_summary"),
+            record.get("accepted") is True,
+        )
+
+
+def summary_provenance_observation(decision_records: list[dict[str, Any]]) -> dict[str, Any]:
+    line_counts: Counter[str] = Counter()
+    line_counts_by_field = {
+        field: Counter() for field in SUMMARY_PROVENANCE_FIELDS
+    }
+    accepted_item_count = 0
+    accepted_with_inherited_line_count = 0
+    accepted_with_replaced_line_count = 0
+    accepted_all_inherited_line_count = 0
+    rss_derived_item_count = 0
+    for record in decision_records:
+        if not isinstance(record, dict):
+            continue
+        lines = record.get("json_render_summary_line_provenance")
+        if not isinstance(lines, list):
+            continue
+        origins = {
+            clean_text(line.get("origin"))
+            for line in lines
+            if isinstance(line, dict) and clean_text(line.get("origin")) in SUMMARY_PROVENANCE_ORIGINS
+        }
+        for line in lines:
+            if not isinstance(line, dict):
+                continue
+            origin = clean_text(line.get("origin"))
+            field = clean_text(line.get("field"))
+            if origin not in SUMMARY_PROVENANCE_ORIGINS or field not in line_counts_by_field:
+                continue
+            line_counts[origin] += 1
+            line_counts_by_field[field][origin] += 1
+        if record.get("accepted") is True:
+            accepted_item_count += 1
+            accepted_with_inherited_line_count += int("groq_inherited" in origins)
+            accepted_with_replaced_line_count += int("groq_replaced" in origins)
+            accepted_all_inherited_line_count += int(origins == {"groq_inherited"})
+        elif origins == {"rss_derived"}:
+            rss_derived_item_count += 1
+    return {
+        "observation_only": True,
+        "origin_definitions": SUMMARY_PROVENANCE_ORIGIN_DEFINITIONS,
+        "line_counts": {
+            origin: line_counts[origin] for origin in SUMMARY_PROVENANCE_ORIGINS
+        },
+        "line_counts_by_field": {
+            field: {
+                origin: line_counts_by_field[field][origin]
+                for origin in SUMMARY_PROVENANCE_ORIGINS
+            }
+            for field in SUMMARY_PROVENANCE_FIELDS
+        },
+        "accepted_item_count": accepted_item_count,
+        "accepted_item_with_inherited_line_count": accepted_with_inherited_line_count,
+        "accepted_item_with_replaced_line_count": accepted_with_replaced_line_count,
+        "accepted_item_all_inherited_line_count": accepted_all_inherited_line_count,
+        "rss_derived_item_count": rss_derived_item_count,
+    }
+
+
 def entry_render_observation_counts(decision_records: list[dict[str, Any]]) -> dict[str, Any]:
     selected_count = len(decision_records)
     full_summary_count = sum(
@@ -1144,6 +1280,7 @@ def build_improved_items_payload(
         payload["diagnostics"] = {
             "decision_counts": decision_record_counts(decision_records),
             "json_render_fallback_counts": json_render_fallback_observation_counts(decision_records),
+            "json_render_summary_provenance": summary_provenance_observation(decision_records),
             "entry_candidate_observation": entry_candidate_observation(decision_records),
             "entry_render_observation": entry_render_observation_counts(decision_records),
             "request_priority_observation": request_priority_observation(decision_records, force_all),
@@ -1391,6 +1528,8 @@ def main() -> int:
         args.force_all,
         args.debug_groq,
     )
+    json_render_data = normalize_fallback_summaries_for_json_render(rendered_data, accepted_records)
+    annotate_json_render_summary_provenance(data, json_render_data, decision_records)
     if args.improved_items_output:
         payload = build_improved_items_payload(
             accepted_records,
@@ -1404,7 +1543,6 @@ def main() -> int:
     if args.json_render_output:
         json_render_output_path = Path(args.json_render_output)
         json_render_output_path.parent.mkdir(parents=True, exist_ok=True)
-        json_render_data = normalize_fallback_summaries_for_json_render(rendered_data, accepted_records)
         json_render_output_path.write_text(
             fallback_renderer.render(json_render_data) + "\n",
             encoding="utf-8",
