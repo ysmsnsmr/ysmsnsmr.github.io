@@ -163,11 +163,14 @@ def safe_fallback_summary_for_item(item: dict[str, Any] | None) -> dict[str, Any
     return {"what_happened": what_happened[:2], "life_impact": life_impact}
 
 
-def json_fallback_text(item: dict[str, Any]) -> str:
+def json_fallback_topic_text(item: dict[str, Any]) -> str:
+    """Build topic-classification evidence without unrelated body-detail context."""
+    tags = item.get("tags")
+    tag_values = tags if isinstance(tags, list) else []
     parts = [
         clean_text(item.get("title")),
         clean_text(item.get("description")),
-        clean_text(item.get("body_evidence_excerpt")),
+        *(clean_text(tag) for tag in tag_values),
     ]
     return " ".join(part for part in parts if part).lower()
 
@@ -189,7 +192,7 @@ def has_cost_of_living_fallback_context(text: str) -> bool:
 
 
 def high_confidence_json_fallback_topic(item: dict[str, Any]) -> str:
-    text = json_fallback_text(item)
+    text = json_fallback_topic_text(item)
     flags = json_fallback_flags(item)
     if contains_any(text, ["flash flood", "flash floods", "flood hotline", "banjir"]):
         return "flood"
