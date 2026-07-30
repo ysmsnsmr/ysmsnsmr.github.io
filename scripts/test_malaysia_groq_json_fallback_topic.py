@@ -10,13 +10,24 @@ from malaysia_groq_markdown_merge import high_confidence_json_fallback_topic
 
 
 class JsonFallbackTopicTest(unittest.TestCase):
-    def test_uses_headline_metadata_not_unrelated_body_detail(self) -> None:
+    def test_ignores_selection_tags_and_unrelated_body_detail(self) -> None:
         item = {
             "title": "Strong demand for Malaysia's US$1.5b sukuk signals investor confidence",
             "description": "Malaysia's global sukuk issuance drew strong demand.",
             "tags": ["currency"],
             "flags": {},
             "body_evidence_excerpt": "The conference agenda also included private healthcare costs.",
+        }
+
+        self.assertEqual(high_confidence_json_fallback_topic(item), "")
+
+    def test_keeps_currency_topic_when_headline_metadata_supports_it(self) -> None:
+        item = {
+            "title": "Ringgit opens higher against the US dollar",
+            "description": "The ringgit rose as markets awaited the Fed decision.",
+            "tags": [],
+            "flags": {},
+            "body_evidence_excerpt": "",
         }
 
         self.assertEqual(high_confidence_json_fallback_topic(item), "currency")

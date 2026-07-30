@@ -164,13 +164,10 @@ def safe_fallback_summary_for_item(item: dict[str, Any] | None) -> dict[str, Any
 
 
 def json_fallback_topic_text(item: dict[str, Any]) -> str:
-    """Build topic-classification evidence without unrelated body-detail context."""
-    tags = item.get("tags")
-    tag_values = tags if isinstance(tags, list) else []
+    """Build topic-classification evidence from the article headline metadata."""
     parts = [
         clean_text(item.get("title")),
         clean_text(item.get("description")),
-        *(clean_text(tag) for tag in tag_values),
     ]
     return " ".join(part for part in parts if part).lower()
 
