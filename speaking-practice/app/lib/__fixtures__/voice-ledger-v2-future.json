@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 2,
+  "entries": [
+    {
+      "id": "future-entry",
+      "futureOnlyField": "must not be downgraded"
+    }
+  ]
+}

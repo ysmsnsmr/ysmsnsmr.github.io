@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "tsx --test app/lib/progress.test.ts",
+    "test": "tsx --test app/lib/progress.test.ts app/lib/voice-ledger.test.ts app/lib/voice-ledger-storage.test.ts app/lib/voice-session-log.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

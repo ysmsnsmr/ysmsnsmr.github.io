@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 3,
+  "completedCardIds": ["future-card"],
+  "practiceDate": "2026-07-19",
+  "sentenceCount": 99,
+  "streakDots": [true, true, true, true, true, true, true],
+  "privacyNoticeAccepted": true,
+  "practiceSessions": [
+    {
+      "id": "future-session",
+      "date": "2026-07-19",
+      "topic": "Future data that must not be downgraded",
+      "practiceSource": "future_source",
+      "reflectionKind": "future_kind",
+      "futureOnlyField": "must remain untouched"
+    }
+  ]
+}

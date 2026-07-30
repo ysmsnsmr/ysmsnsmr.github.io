@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "id": "valid-entry",
+      "practicedAt": "2026-07-19T04:00:00.000Z",
+      "createdAt": "2026-07-19T04:05:00.000Z",
+      "updatedAt": "2026-07-19T04:05:00.000Z",
+      "title": "Daily conversation",
+      "context": "daily",
+      "sessionMinutes": 8,
+      "summary": "I practiced explaining a weekend plan.",
+      "usefulExpressions": ["I am planning to..."],
+      "stickingPoints": [],
+      "corrections": [],
+      "nextMission": "Explain the plan without reading notes.",
+      "selfNote": null,
+      "sourceKind": "manual"
+    },
+    {
+      "practicedAt": "2026-07-19T04:00:00.000Z",
+      "createdAt": "2026-07-19T04:05:00.000Z",
+      "updatedAt": "2026-07-19T04:05:00.000Z",
+      "title": "Missing identifier",
+      "context": "other",
+      "sessionMinutes": null,
+      "summary": "This entry is invalid.",
+      "usefulExpressions": [],
+      "stickingPoints": [],
+      "corrections": [],
+      "nextMission": "Try again.",
+      "selfNote": null,
+      "sourceKind": "manual"
+    },
+    {
+      "id": "too-many-expressions",
+      "practicedAt": "2026-07-19T04:00:00.000Z",
+      "createdAt": "2026-07-19T04:05:00.000Z",
+      "updatedAt": "2026-07-19T04:05:00.000Z",
+      "title": "Too many expressions",
+      "context": "other",
+      "sessionMinutes": null,
+      "summary": "This entry is invalid.",
+      "usefulExpressions": ["one", "two", "three", "four", "five", "six"],
+      "stickingPoints": [],
+      "corrections": [],
+      "nextMission": "Try again.",
+      "selfNote": null,
+      "sourceKind": "manual"
+    },
+    {
+      "id": "non-string-correction",
+      "practicedAt": "2026-07-19T04:00:00.000Z",
+      "createdAt": "2026-07-19T04:05:00.000Z",
+      "updatedAt": "2026-07-19T04:05:00.000Z",
+      "title": "Invalid correction",
+      "context": "other",
+      "sessionMinutes": null,
+      "summary": "This entry is invalid.",
+      "usefulExpressions": [],
+      "stickingPoints": [],
+      "corrections": [42],
+      "nextMission": "Try again.",
+      "selfNote": null,
+      "sourceKind": "manual"
+    },
+    "not-an-entry"
+  ]
+}

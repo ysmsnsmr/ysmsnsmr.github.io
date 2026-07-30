@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "id": " voice-session-1 ",
+      "practicedAt": "2026-07-18T10:00:00.000Z",
+      "createdAt": "2026-07-18T10:05:00.000Z",
+      "updatedAt": "2026-07-18T10:05:00.000Z",
+      "title": " Clarifying a work question ",
+      "context": "work",
+      "sessionMinutes": 12,
+      "summary": " I practiced clarifying the question before answering. ",
+      "usefulExpressions": [
+        " Could you clarify what you mean? ",
+        " Let me confirm the main point. "
+      ],
+      "stickingPoints": [
+        " Explaining the result concisely. "
+      ],
+      "corrections": [
+        " Lead with the result. "
+      ],
+      "nextMission": " Answer one follow-up question in two sentences. ",
+      "selfNote": " ",
+      "sourceKind": "voice_transcript",
+      "sourceText": "This raw source must not survive normalization.",
+      "transcript": "This transcript must not survive normalization.",
+      "rawAudio": "This audio marker must not survive normalization."
+    },
+    {
+      "id": "voice-session-2",
+      "practicedAt": "2026-07-19T03:00:00.000Z",
+      "createdAt": "2026-07-19T03:10:00.000Z",
+      "updatedAt": "2026-07-19T03:12:00.000Z",
+      "title": "Checking into a hotel",
+      "context": "travel",
+      "sessionMinutes": null,
+      "summary": "I practiced asking about check-in time.",
+      "usefulExpressions": [],
+      "stickingPoints": [],
+      "corrections": [],
+      "nextMission": "Ask about one room problem and request a solution.",
+      "selfNote": "Keep the opening sentence short.",
+      "sourceKind": "chatgpt_summary"
+    }
+  ]
+}
