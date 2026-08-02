@@ -27,6 +27,7 @@ from malaysia_groq_common import (
     summary_lines,
     summary_text,
 )
+from malaysia_groq_entry_review import request_entry_review
 from malaysia_groq_force_all_policy import (
     force_all_gate_reason,
     force_all_pre_request_skip_reason,
@@ -371,6 +372,68 @@ def entry_contract_for_item(value: Any, item: dict[str, Any]) -> tuple[dict[str,
     else:
         status = "complete"
     return entry, status, reasons
+
+
+def inspect_entry_candidate(
+    item: dict[str, Any],
+    entry: dict[str, Any] | None,
+    api_key: str,
+    model: str,
+    index: int,
+) -> dict[str, Any]:
+    """Run one independent entry review without changing the full-summary decision."""
+    result: dict[str, Any] = {
+        "entry_review_status": "unavailable",
+        "entry_review_verdict": "",
+        "entry_review_issues": [],
+        "entry_review_reasons": [],
+        "entry_reviewed_entry": None,
+        "entry_review_candidate": "",
+    }
+    if not isinstance(entry, dict) or not entry_text(entry):
+        result["entry_review_reasons"] = ["missing_entry_for_review"]
+        return result
+    try:
+        review = request_entry_review(item, entry, api_key, model)
+    except urllib.error.HTTPError as error:
+        result["entry_review_reasons"] = [f"HTTP {error.code}"]
+        safe_log(f"groq: item {index + 1} entry review unavailable (HTTP {error.code}).")
+        return result
+    except (urllib.error.URLError, TimeoutError, KeyError, IndexError, TypeError, ValueError) as error:
+        reason = error.__class__.__name__
+        result["entry_review_reasons"] = [reason]
+        safe_log(f"groq: item {index + 1} entry review unavailable ({reason}).")
+        return result
+
+    verdict = clean_text(review.get("verdict")).lower()
+    issues = review.get("issues")
+    result["entry_review_verdict"] = verdict
+    result["entry_review_issues"] = issues if isinstance(issues, list) else []
+    if verdict == "reject":
+        result["entry_review_status"] = "rejected"
+        result["entry_review_reasons"] = ["review_rejected"]
+        return result
+
+    reviewed_entry, status, reasons = entry_contract_for_item(
+        review.get("reviewed_entry"),
+        item,
+    )
+    result["entry_review_status"] = status
+    result["entry_review_reasons"] = reasons
+    result["entry_reviewed_entry"] = reviewed_entry
+    result["entry_review_candidate"] = entry_text(reviewed_entry)
+    return result
+
+
+def attach_entry_review_observation(
+    decision_record: dict[str, Any],
+    item: dict[str, Any],
+    entry: dict[str, Any] | None,
+    api_key: str,
+    model: str,
+    index: int,
+) -> None:
+    decision_record.update(inspect_entry_candidate(item, entry, api_key, model, index))
 
 
 def normalize_summary(value: Any) -> dict[str, Any]:
@@ -846,6 +909,12 @@ def build_decision_record(
         "entry_candidate_status": "not_requested",
         "entry_contract_status": "not_requested",
         "entry_contract_reasons": [],
+        "entry_review_status": "not_requested",
+        "entry_review_verdict": "",
+        "entry_review_issues": [],
+        "entry_review_reasons": [],
+        "entry_reviewed_entry": None,
+        "entry_review_candidate": "",
         "full_rejection_reason": "",
     }
 
@@ -1057,7 +1126,11 @@ def entry_render_observation_counts(decision_records: list[dict[str, Any]]) -> d
     )
     entry_candidate_count = sum(
         1 for record in decision_records
-        if record.get("entry_render_tier") == "entry_candidate"
+        if record.get("entry_render_tier") in {"entry_candidate", "reviewed_entry"}
+    )
+    reviewed_entry_count = sum(
+        1 for record in decision_records
+        if record.get("entry_render_tier") == "reviewed_entry"
     )
     existing_fallback_count = sum(
         1 for record in decision_records
@@ -1066,12 +1139,19 @@ def entry_render_observation_counts(decision_records: list[dict[str, Any]]) -> d
     entry_by_rejection_reason = Counter(
         clean_text(record.get("full_rejection_reason")) or "unknown"
         for record in decision_records
-        if record.get("entry_render_tier") == "entry_candidate"
+        if record.get("entry_render_tier") in {"entry_candidate", "reviewed_entry"}
+    )
+    reviewed_by_verdict = Counter(
+        clean_text(record.get("entry_review_verdict")) or "unknown"
+        for record in decision_records
+        if record.get("entry_render_tier") == "reviewed_entry"
     )
     return {
         "selected_count": selected_count,
         "full_summary_count": full_summary_count,
         "entry_candidate_count": entry_candidate_count,
+        "reviewed_entry_count": reviewed_entry_count,
+        "reviewed_entry_ratio": safe_ratio(reviewed_entry_count, selected_count),
         "existing_fallback_count": existing_fallback_count,
         "full_summary_ratio": safe_ratio(full_summary_count, selected_count),
         "entry_candidate_ratio": safe_ratio(entry_candidate_count, selected_count),
@@ -1079,6 +1159,7 @@ def entry_render_observation_counts(decision_records: list[dict[str, Any]]) -> d
         "entry_candidate_by_full_rejection_reason": sorted_counter_dict(
             entry_by_rejection_reason
         ),
+        "reviewed_entry_by_verdict": sorted_counter_dict(reviewed_by_verdict),
     }
 
 
@@ -1142,6 +1223,58 @@ def entry_candidate_observation(decision_records: list[dict[str, Any]]) -> dict[
         "entry_structure_incomplete_count": structure_incomplete_count,
         "entry_contract_observation_only": True,
         "entry_candidate_by_full_rejection_reason": sorted_counter_dict(rejected_by_reason),
+    }
+
+
+def entry_review_observation(decision_records: list[dict[str, Any]]) -> dict[str, Any]:
+    requested_records = [record for record in decision_records if record.get("requested") is True]
+    attempted_records = [
+        record for record in requested_records
+        if isinstance(record.get("entry"), dict) and entry_text(record.get("entry"))
+    ]
+    review_status_counts = Counter(
+        clean_text(record.get("entry_review_status")) or "not_requested"
+        for record in attempted_records
+    )
+    verdict_counts = Counter(
+        clean_text(record.get("entry_review_verdict")) or "none"
+        for record in attempted_records
+    )
+    issue_counts: Counter[str] = Counter()
+    reason_counts: Counter[str] = Counter()
+    for record in attempted_records:
+        issues = record.get("entry_review_issues")
+        if isinstance(issues, list):
+            issue_counts.update(clean_text(issue) for issue in issues if clean_text(issue))
+        reasons = record.get("entry_review_reasons")
+        if isinstance(reasons, list):
+            reason_counts.update(clean_text(reason) for reason in reasons if clean_text(reason))
+    reviewed_entry_records = [
+        record for record in attempted_records
+        if record.get("entry_review_status") == "complete"
+        and clean_text(record.get("entry_review_verdict")) in {"pass", "revise"}
+        and entry_text(record.get("entry_reviewed_entry"))
+    ]
+    return {
+        "observation_only": True,
+        "requested_count": len(requested_records),
+        "entry_review_max_allowed_count": len(requested_records),
+        "entry_review_attempted_count": len(attempted_records),
+        "entry_review_within_requested_limit": len(attempted_records) <= len(requested_records),
+        "entry_review_unavailable_count": sum(
+            1 for record in attempted_records
+            if record.get("entry_review_status") == "unavailable"
+        ),
+        "entry_review_complete_count": review_status_counts["complete"],
+        "entry_review_incomplete_count": review_status_counts["incomplete"],
+        "entry_review_invalid_anchor_count": review_status_counts["invalid_anchor"],
+        "entry_review_rejected_count": review_status_counts["rejected"],
+        "reviewed_entry_available_count": len(reviewed_entry_records),
+        "reviewed_entry_available_ratio": safe_ratio(len(reviewed_entry_records), len(requested_records)),
+        "entry_review_status_counts": sorted_counter_dict(review_status_counts),
+        "entry_review_verdict_counts": sorted_counter_dict(verdict_counts),
+        "entry_review_issue_counts": sorted_counter_dict(issue_counts),
+        "entry_review_reason_counts": sorted_counter_dict(reason_counts),
     }
 
 
@@ -1244,6 +1377,7 @@ def build_improved_items_payload(
             "json_render_fallback_counts": json_render_fallback_observation_counts(decision_records),
             "json_render_summary_provenance": summary_provenance_observation(decision_records),
             "entry_candidate_observation": entry_candidate_observation(decision_records),
+            "entry_review_observation": entry_review_observation(decision_records),
             "entry_render_observation": entry_render_observation_counts(decision_records),
             "request_priority_observation": request_priority_observation(decision_records, force_all),
             "body_evidence_observation": body_evidence_observation(decision_records),
@@ -1381,6 +1515,14 @@ def render_with_groq(
             decision_record["entry_candidate"] = entry_text(groq_result.entry)
             decision_record["entry_contract_status"] = groq_result.entry_contract_status
             decision_record["entry_contract_reasons"] = groq_result.entry_contract_reasons
+            attach_entry_review_observation(
+                decision_record,
+                item,
+                groq_result.entry,
+                api_key,
+                model,
+                index,
+            )
             if force_all:
                 gate_reason = force_all_gate_reason(item, improved_summary)
                 if gate_reason:
@@ -1427,6 +1569,15 @@ def render_with_groq(
                 decision_record["entry_contract_reasons"] = [
                     clean_text(value) for value in error_entry_reasons if clean_text(value)
                 ]
+            if isinstance(error_entry, dict):
+                attach_entry_review_observation(
+                    decision_record,
+                    item,
+                    error_entry,
+                    api_key,
+                    model,
+                    index,
+                )
             decision_record["decision"] = "fallback"
             decision_record["reason"] = f"ValueError: {reason}"
             decision_record["entry_candidate_status"] = (
@@ -1462,7 +1613,11 @@ def main() -> int:
     parser.add_argument("--json-render-output", help="Write Markdown rendered directly from Groq-updated JSON to this path.")
     parser.add_argument(
         "--entry-render-output",
-        help="Write observation Markdown using full summary, entry candidate, then existing fallback.",
+        help="Write baseline observation Markdown using accepted full summary, raw entry candidate, then existing fallback.",
+    )
+    parser.add_argument(
+        "--reviewed-entry-render-output",
+        help="Write observation Markdown using accepted full summary, reviewed entry, then existing fallback.",
     )
     render_mode = parser.add_mutually_exclusive_group()
     render_mode.add_argument("--accepted-only-markdown", action="store_true", help="Render only Groq-accepted items in Markdown output.")
@@ -1526,10 +1681,22 @@ def main() -> int:
             rendered_data,
             accepted_records,
             decision_records,
-            render_decisions,
         )
         entry_render_output_path.write_text(
             fallback_renderer.render_prepared(entry_render_data) + "\n",
+            encoding="utf-8",
+        )
+    if args.reviewed_entry_render_output:
+        reviewed_entry_render_output_path = Path(args.reviewed_entry_render_output)
+        reviewed_entry_render_output_path.parent.mkdir(parents=True, exist_ok=True)
+        reviewed_entry_render_data = normalize_entry_candidate_summaries_for_observation(
+            rendered_data,
+            accepted_records,
+            decision_records,
+            render_decisions,
+        )
+        reviewed_entry_render_output_path.write_text(
+            fallback_renderer.render_prepared(reviewed_entry_render_data) + "\n",
             encoding="utf-8",
         )
     if args.accepted_only_markdown:

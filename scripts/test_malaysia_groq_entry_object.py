@@ -210,6 +210,32 @@ class EntryObjectObservationTest(unittest.TestCase):
         self.assertEqual(counts["entry_contract_unavailable_count"], 1)
         self.assertEqual(counts["entry_contract_reason_counts"], {"missing_entry_object": 1, "missing_subject": 1})
 
+    def test_observation_splits_contract_reason_categories_by_record(self) -> None:
+        records = [
+            {
+                "requested": True,
+                "entry_contract_reasons": ["invalid_state_source_anchor"],
+            },
+            {
+                "requested": True,
+                "entry_contract_reasons": [
+                    "invalid_state_display_marker",
+                    "invalid_certainty_display_marker",
+                ],
+            },
+            {
+                "requested": True,
+                "entry_contract_reasons": ["missing_subject"],
+            },
+        ]
+
+        counts = entry_candidate_observation(records)
+
+        self.assertEqual(counts["entry_source_anchor_failure_count"], 1)
+        self.assertEqual(counts["entry_display_marker_mismatch_count"], 1)
+        self.assertEqual(counts["entry_structure_incomplete_count"], 1)
+        self.assertTrue(counts["entry_contract_observation_only"])
+
     def test_full_summary_rejection_keeps_entry_object(self) -> None:
         entry, status, reasons = entry_contract_for_item(attributed_entry(), fixture_item())
         rejection = GroqSummaryRejected("unsupported life impact", entry, status, reasons)

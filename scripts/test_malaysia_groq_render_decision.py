@@ -7,7 +7,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from malaysia_groq_render_decision import (
-    ENTRY_TIER_ENTRY_CANDIDATE,
+    ENTRY_TIER_REVIEWED_ENTRY,
     JSON_TIER_ACCEPTED,
     JSON_TIER_GENERIC_FALLBACK,
     JSON_TIER_TOPIC_FALLBACK,
@@ -56,6 +56,9 @@ class RenderDecisionTest(unittest.TestCase):
                 "accepted": False,
                 "entry_candidate_status": "full_rejected",
                 "entry": {"text_ja": "入口文です。"},
+                "entry_review_status": "complete",
+                "entry_review_verdict": "revise",
+                "entry_review_candidate": "検品済み入口文です。",
             },
         ]
         topic_calls: list[str] = []
@@ -89,7 +92,7 @@ class RenderDecisionTest(unittest.TestCase):
         self.assertEqual([decision.entry_tier for decision in decisions], [
             JSON_TIER_ACCEPTED,
             JSON_TIER_TOPIC_FALLBACK,
-            ENTRY_TIER_ENTRY_CANDIDATE,
+            ENTRY_TIER_REVIEWED_ENTRY,
         ])
         self.assertEqual(topic_calls, [items[1]["link"], items[2]["link"]])
         self.assertEqual(fallback_topics, ["currency", "generic"])
@@ -98,13 +101,13 @@ class RenderDecisionTest(unittest.TestCase):
         entry_data = apply_entry_render_decisions({"items": items}, decisions)
         self.assertEqual(json_data["items"][1]["selected_summary"]["conclusion"], "currencyの結論です。")
         self.assertEqual(json_data["items"][2]["selected_summary"]["conclusion"], "genericの結論です。")
-        self.assertEqual(entry_data["items"][2]["selected_summary"]["conclusion"], "入口文です。")
+        self.assertEqual(entry_data["items"][2]["selected_summary"]["conclusion"], "検品済み入口文です。")
 
         annotate_decision_records(records, decisions)
         self.assertEqual(records[0]["json_render_fallback_kind"], "accepted")
         self.assertEqual(records[1]["json_render_fallback_topic"], "currency")
         self.assertEqual(records[2]["json_render_fallback_kind"], "generic")
-        self.assertEqual(records[2]["entry_render_tier"], "entry_candidate")
+        self.assertEqual(records[2]["entry_render_tier"], "reviewed_entry")
 
     def test_ignores_record_with_a_different_link(self) -> None:
         items = [item("https://example.test/item")]
@@ -125,6 +128,34 @@ class RenderDecisionTest(unittest.TestCase):
         self.assertEqual(decisions[0].json_tier, JSON_TIER_GENERIC_FALLBACK)
         annotate_decision_records(records, decisions)
         self.assertNotIn("json_render_fallback_kind", records[0])
+
+    def test_unreviewed_entry_returns_to_existing_fallback(self) -> None:
+        items = [item("https://example.test/unreviewed")]
+        records = [{
+            "index": 1,
+            "link": items[0]["link"],
+            "accepted": False,
+            "entry_candidate_status": "full_rejected",
+            "entry": {"text_ja": "未検品の入口文です。"},
+        }]
+
+        decisions = build_render_decisions(
+            items,
+            records,
+            lambda _item, _topic: {
+                "conclusion": "安全なfallbackです。",
+                "what_happened": ["詳細を確認してください。"],
+                "life_impact": "出典確認が必要です。",
+                "next_action": "",
+            },
+            lambda _item: "",
+        )
+
+        self.assertEqual(decisions[0].entry_tier, JSON_TIER_GENERIC_FALLBACK)
+        self.assertEqual(
+            apply_entry_render_decisions({"items": items}, decisions)["items"][0]["selected_summary"]["conclusion"],
+            "安全なfallbackです。",
+        )
 
 
 if __name__ == "__main__":

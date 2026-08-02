@@ -15,6 +15,7 @@ JSON_TIER_ACCEPTED = "accepted_full"
 JSON_TIER_TOPIC_FALLBACK = "topic_fallback"
 JSON_TIER_GENERIC_FALLBACK = "generic_fallback"
 ENTRY_TIER_ENTRY_CANDIDATE = "entry_candidate"
+ENTRY_TIER_REVIEWED_ENTRY = "reviewed_entry"
 
 
 @dataclass(frozen=True)
@@ -47,6 +48,14 @@ def entry_text(record: dict[str, Any]) -> str:
     if "entry" not in record:
         return clean_text(record.get("entry_candidate"))
     return ""
+
+
+def reviewed_entry_text(record: dict[str, Any]) -> str:
+    if clean_text(record.get("entry_review_status")) != "complete":
+        return ""
+    if clean_text(record.get("entry_review_verdict")) not in {"pass", "revise"}:
+        return ""
+    return clean_text(record.get("entry_review_candidate"))
 
 
 def record_for_item(
@@ -98,13 +107,13 @@ def build_render_decisions(
         topic = fallback_topic_for_item(item)
         fallback_summary = summary_payload(fallback_summary_for_item(item, topic))
         json_tier = JSON_TIER_TOPIC_FALLBACK if topic else JSON_TIER_GENERIC_FALLBACK
-        entry_candidate = entry_text(record) if record is not None else ""
         entry_tier = json_tier
         entry_summary = copy.deepcopy(fallback_summary)
-        if record is not None and record.get("entry_candidate_status") == "full_rejected" and entry_candidate:
-            entry_tier = ENTRY_TIER_ENTRY_CANDIDATE
+        reviewed_candidate = reviewed_entry_text(record) if record is not None else ""
+        if reviewed_candidate:
+            entry_tier = ENTRY_TIER_REVIEWED_ENTRY
             entry_summary = {
-                "conclusion": entry_candidate,
+                "conclusion": reviewed_candidate,
                 "what_happened": [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
                 "life_impact": SAFE_FALLBACK_LIFE_IMPACT_LINE,
                 "next_action": "",
@@ -178,6 +187,7 @@ def annotate_decision_records(
         record["entry_render_tier"] = {
             JSON_TIER_ACCEPTED: "full_summary",
             ENTRY_TIER_ENTRY_CANDIDATE: "entry_candidate",
+            ENTRY_TIER_REVIEWED_ENTRY: "reviewed_entry",
             JSON_TIER_TOPIC_FALLBACK: "existing_fallback",
             JSON_TIER_GENERIC_FALLBACK: "existing_fallback",
         }[decision.entry_tier]

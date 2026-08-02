@@ -167,8 +167,23 @@ def parse_observation_diagnostics(improved_json: dict[str, Any]) -> dict[str, An
         "entry_display_marker_mismatch_count": None,
         "entry_structure_incomplete_count": None,
         "entry_contract_observation_only": None,
+        "entry_review_attempted_count": None,
+        "entry_review_max_allowed_count": None,
+        "entry_review_within_requested_limit": None,
+        "entry_review_unavailable_count": None,
+        "entry_review_complete_count": None,
+        "entry_review_incomplete_count": None,
+        "entry_review_invalid_anchor_count": None,
+        "entry_review_rejected_count": None,
+        "reviewed_entry_available_count": None,
+        "reviewed_entry_available_ratio": None,
+        "entry_review_verdict_counts": None,
+        "entry_review_issue_counts": None,
+        "entry_review_reason_counts": None,
+        "entry_review_observation_only": None,
         "entry_render_full_summary_count": None,
         "entry_render_entry_candidate_count": None,
+        "entry_render_reviewed_entry_count": None,
         "entry_render_existing_fallback_count": None,
     }
     diagnostics = improved_json.get("diagnostics")
@@ -242,6 +257,36 @@ def parse_observation_diagnostics(improved_json: dict[str, Any]) -> dict[str, An
         observation_only = entry_observation.get("entry_contract_observation_only")
         if isinstance(observation_only, bool):
             parsed["entry_contract_observation_only"] = observation_only
+    entry_review_observation = diagnostics.get("entry_review_observation")
+    if isinstance(entry_review_observation, dict):
+        for key in (
+            "entry_review_max_allowed_count",
+            "entry_review_attempted_count",
+            "entry_review_unavailable_count",
+            "entry_review_complete_count",
+            "entry_review_incomplete_count",
+            "entry_review_invalid_anchor_count",
+            "entry_review_rejected_count",
+            "reviewed_entry_available_count",
+        ):
+            parsed[key] = optional_int(entry_review_observation.get(key))
+        within_limit = entry_review_observation.get("entry_review_within_requested_limit")
+        if isinstance(within_limit, bool):
+            parsed["entry_review_within_requested_limit"] = within_limit
+        parsed["reviewed_entry_available_ratio"] = entry_review_observation.get(
+            "reviewed_entry_available_ratio"
+        )
+        for key in (
+            "entry_review_verdict_counts",
+            "entry_review_issue_counts",
+            "entry_review_reason_counts",
+        ):
+            value = entry_review_observation.get(key)
+            if isinstance(value, dict):
+                parsed[key] = value
+        observation_only = entry_review_observation.get("observation_only")
+        if isinstance(observation_only, bool):
+            parsed["entry_review_observation_only"] = observation_only
     entry_render_observation = diagnostics.get("entry_render_observation")
     if isinstance(entry_render_observation, dict):
         parsed["entry_render_full_summary_count"] = optional_int(
@@ -249,6 +294,9 @@ def parse_observation_diagnostics(improved_json: dict[str, Any]) -> dict[str, An
         )
         parsed["entry_render_entry_candidate_count"] = optional_int(
             entry_render_observation.get("entry_candidate_count")
+        )
+        parsed["entry_render_reviewed_entry_count"] = optional_int(
+            entry_render_observation.get("reviewed_entry_count")
         )
         parsed["entry_render_existing_fallback_count"] = optional_int(
             entry_render_observation.get("existing_fallback_count")
@@ -415,8 +463,23 @@ def write_markdown_report(path: Path, status: dict[str, Any]) -> None:
         f"- entry_display_marker_mismatch_count: {counts.get('entry_display_marker_mismatch_count')}",
         f"- entry_structure_incomplete_count: {counts.get('entry_structure_incomplete_count')}",
         f"- entry_contract_observation_only: {counts.get('entry_contract_observation_only')}",
+        f"- entry_review_attempted_count: {counts.get('entry_review_attempted_count')}",
+        f"- entry_review_max_allowed_count: {counts.get('entry_review_max_allowed_count')}",
+        f"- entry_review_within_requested_limit: {counts.get('entry_review_within_requested_limit')}",
+        f"- entry_review_unavailable_count: {counts.get('entry_review_unavailable_count')}",
+        f"- entry_review_complete_count: {counts.get('entry_review_complete_count')}",
+        f"- entry_review_incomplete_count: {counts.get('entry_review_incomplete_count')}",
+        f"- entry_review_invalid_anchor_count: {counts.get('entry_review_invalid_anchor_count')}",
+        f"- entry_review_rejected_count: {counts.get('entry_review_rejected_count')}",
+        f"- reviewed_entry_available_count: {counts.get('reviewed_entry_available_count')}",
+        f"- reviewed_entry_available_ratio: {counts.get('reviewed_entry_available_ratio')}",
+        f"- entry_review_verdict_counts: {counts.get('entry_review_verdict_counts')}",
+        f"- entry_review_issue_counts: {counts.get('entry_review_issue_counts')}",
+        f"- entry_review_reason_counts: {counts.get('entry_review_reason_counts')}",
+        f"- entry_review_observation_only: {counts.get('entry_review_observation_only')}",
         f"- entry_render_full_summary_count: {counts.get('entry_render_full_summary_count')}",
         f"- entry_render_entry_candidate_count: {counts.get('entry_render_entry_candidate_count')}",
+        f"- entry_render_reviewed_entry_count: {counts.get('entry_render_reviewed_entry_count')}",
         f"- entry_render_existing_fallback_count: {counts.get('entry_render_existing_fallback_count')}",
         "",
         "## Validation",

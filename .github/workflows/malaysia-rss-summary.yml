@@ -247,6 +247,7 @@ jobs:
             --improved-items-output "${run_dir}/groq_${model_short}_improved_items.json"
             --json-render-output "${run_dir}/groq_json_render_candidate.md"
             --entry-render-output "${run_dir}/groq_entry_render_candidate.md"
+            --reviewed-entry-render-output "${run_dir}/groq_reviewed_entry_render_candidate.md"
             --merge-accepted-with-rss-markdown
           )
           if [ "${force_all}" = "true" ]; then
@@ -264,6 +265,7 @@ jobs:
               cp "${rss_markdown_input}" "${run_dir}/groq_merged_candidate.md" || true
               cp "${rss_markdown_input}" "${run_dir}/groq_json_render_candidate.md" || true
               cp "${rss_markdown_input}" "${run_dir}/groq_entry_render_candidate.md" || true
+              cp "${rss_markdown_input}" "${run_dir}/groq_reviewed_entry_render_candidate.md" || true
               echo "::warning::Optional Groq rendering skipped, and fallback artifact render failed; RSS-only output will continue."
               exit 0
             fi
