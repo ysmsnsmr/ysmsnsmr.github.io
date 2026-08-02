@@ -13,7 +13,8 @@ import {
   acceptPrivacyNotice,
   completeCard,
   defaultProgress,
-  loadProgress
+  loadProgressWithDiagnostics,
+  ProgressWriteBlockedError
 } from "@/lib/progress";
 import type {
   FeedbackResult,
@@ -37,6 +38,7 @@ export default function SpeakingCard({
   const [state, setState] = useState<SpeakingState>("idle");
   const [feedback, setFeedback] = useState<FeedbackResult | null>(null);
   const [progress, setProgress] = useState<ProgressRecord>(defaultProgress);
+  const [canSaveProgress, setCanSaveProgress] = useState(true);
   const [showPrivacyNotice, setShowPrivacyNotice] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [hasCompleted, setHasCompleted] = useState(false);
@@ -49,9 +51,20 @@ export default function SpeakingCard({
   const armingTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const storedProgress = loadProgress();
-    setProgress(storedProgress);
-    setShowPrivacyNotice(!storedProgress.privacyNoticeAccepted);
+    const loadedProgress = loadProgressWithDiagnostics();
+    setProgress(loadedProgress.progress);
+    setCanSaveProgress(loadedProgress.canWrite);
+    setShowPrivacyNotice(
+      loadedProgress.canWrite && !loadedProgress.progress.privacyNoticeAccepted
+    );
+
+    if (!loadedProgress.canWrite) {
+      setStatusMessage(
+        loadedProgress.errorCode === "unsupported_future_version"
+          ? "保存済みの練習履歴は新しいバージョンです。内容は変更していません。保存は停止しています。"
+          : "保存済みの練習履歴を安全に読めないため、内容は変更していません。保存は停止しています。"
+      );
+    }
 
     return () => {
       if (armingTimerRef.current) {
@@ -79,8 +92,13 @@ export default function SpeakingCard({
   }
 
   function handleAcceptPrivacyNotice() {
-    const nextProgress = acceptPrivacyNotice();
-    setProgress(nextProgress);
+    try {
+      const nextProgress = acceptPrivacyNotice();
+      setProgress(nextProgress);
+    } catch (error) {
+      setCanSaveProgress(false);
+      setStatusMessage(getProgressWriteMessage(error));
+    }
     setShowPrivacyNotice(false);
   }
 
@@ -185,10 +203,16 @@ export default function SpeakingCard({
     }
 
     if (isRepeatAttempt) {
-      const nextProgress = completeCard(lesson.id);
-      setProgress(nextProgress);
-      setHasCompleted(true);
-      setState("success");
+      try {
+        const nextProgress = completeCard(lesson.id);
+        setProgress(nextProgress);
+        setHasCompleted(true);
+        setState("success");
+      } catch (error) {
+        setCanSaveProgress(false);
+        setState("repeat");
+        setStatusMessage(getProgressWriteMessage(error));
+      }
       return;
     }
 
@@ -341,7 +365,11 @@ export default function SpeakingCard({
             <MicButton
               state={micState}
               onPress={handleMicPress}
-              disabled={showPrivacyNotice || hasCompleted}
+              disabled={
+                showPrivacyNotice ||
+                hasCompleted ||
+                (state === "repeat" && !canSaveProgress)
+              }
               idleLabel={state === "repeat" ? "Say it again" : undefined}
             />
           </div>
@@ -382,4 +410,10 @@ export default function SpeakingCard({
       )}
     </main>
   );
+}
+
+function getProgressWriteMessage(error: unknown) {
+  return error instanceof ProgressWriteBlockedError
+    ? "保存済みの練習履歴を保護するため、今回の練習は保存していません。"
+    : "この端末に練習履歴を保存できませんでした。既存の記録は変更していません。";
 }

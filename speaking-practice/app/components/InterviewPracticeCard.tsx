@@ -7,7 +7,8 @@ import {
   acceptPrivacyNotice,
   completeInterviewSession,
   defaultProgress,
-  loadProgress
+  loadProgressWithDiagnostics,
+  ProgressWriteBlockedError
 } from "@/lib/progress";
 import {
   buildLocalInterviewReview,
@@ -55,6 +56,7 @@ export default function InterviewPracticeCard({
   const [reviewMode, setReviewMode] = useState<"recording" | "quiet">("recording");
   const [transcriptPreview, setTranscriptPreview] = useState("");
   const [progress, setProgress] = useState<ProgressRecord>(defaultProgress);
+  const [canSaveProgress, setCanSaveProgress] = useState(true);
   const [showPrivacyNotice, setShowPrivacyNotice] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
@@ -64,9 +66,20 @@ export default function InterviewPracticeCard({
   const recordingStartedAtRef = useRef(0);
 
   useEffect(() => {
-    const storedProgress = loadProgress();
-    setProgress(storedProgress);
-    setShowPrivacyNotice(!storedProgress.privacyNoticeAccepted);
+    const loadedProgress = loadProgressWithDiagnostics();
+    setProgress(loadedProgress.progress);
+    setCanSaveProgress(loadedProgress.canWrite);
+    setShowPrivacyNotice(
+      loadedProgress.canWrite && !loadedProgress.progress.privacyNoticeAccepted
+    );
+
+    if (!loadedProgress.canWrite) {
+      setStatusMessage(
+        loadedProgress.errorCode === "unsupported_future_version"
+          ? "保存済みの練習履歴は新しいバージョンです。内容は変更していません。保存は停止しています。"
+          : "保存済みの練習履歴を安全に読めないため、内容は変更していません。保存は停止しています。"
+      );
+    }
 
     return () => {
       stopStream();
@@ -90,8 +103,13 @@ export default function InterviewPracticeCard({
   }
 
   function handleAcceptPrivacyNotice() {
-    const nextProgress = acceptPrivacyNotice();
-    setProgress(nextProgress);
+    try {
+      const nextProgress = acceptPrivacyNotice();
+      setProgress(nextProgress);
+    } catch (error) {
+      setCanSaveProgress(false);
+      setStatusMessage(getProgressWriteMessage(error));
+    }
     setShowPrivacyNotice(false);
   }
 
@@ -291,22 +309,27 @@ export default function InterviewPracticeCard({
       return;
     }
 
-    const nextProgress = completeInterviewSession({
-      id: materials.id,
-      date: new Date().toISOString().slice(0, 10),
-      topic: materials.topic,
-      targetRole,
-      focusSound: materials.focusSound,
-      answer30: materials.answer30,
-      answer30Ipa: materials.answer30Ipa,
-      questions: materials.questions,
-      repairPhrases: materials.repairPhrases,
-      pronunciationTip: materials.pronunciationTip,
-      review,
-      completedMode
-    });
-    setProgress(nextProgress);
-    setFlowState("complete");
+    try {
+      const nextProgress = completeInterviewSession({
+        id: materials.id,
+        date: new Date().toISOString().slice(0, 10),
+        topic: materials.topic,
+        targetRole,
+        focusSound: materials.focusSound,
+        answer30: materials.answer30,
+        answer30Ipa: materials.answer30Ipa,
+        questions: materials.questions,
+        repairPhrases: materials.repairPhrases,
+        pronunciationTip: materials.pronunciationTip,
+        review,
+        completedMode
+      });
+      setProgress(nextProgress);
+      setFlowState("complete");
+    } catch (error) {
+      setCanSaveProgress(false);
+      setStatusMessage(getProgressWriteMessage(error));
+    }
   }
 
   function handleStartNew() {
@@ -529,6 +552,7 @@ export default function InterviewPracticeCard({
                 <button
                   type="button"
                   onClick={() => handleCompleteSession(reviewMode)}
+                  disabled={!canSaveProgress}
                   className="rounded-full bg-calm px-5 py-3 text-sm font-bold text-white shadow-sm transition active:scale-[0.99]"
                 >
                   Save session
@@ -630,4 +654,10 @@ function getSttFailureMessage(code?: SttErrorCode) {
     default:
       return "Whisper文字起こしに失敗しました。音声は保存していません。もう一度録音してください。";
   }
+}
+
+function getProgressWriteMessage(error: unknown) {
+  return error instanceof ProgressWriteBlockedError
+    ? "保存済みの練習履歴を保護するため、今回の記録は保存していません。"
+    : "この端末に練習履歴を保存できませんでした。既存の記録は変更していません。";
 }

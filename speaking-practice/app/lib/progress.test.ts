@@ -1,7 +1,15 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { migrateProgress } from "./progress";
+import {
+  decodeProgress,
+  loadProgressWithDiagnostics,
+  migrateProgress,
+  PROGRESS_STORAGE_KEY,
+  ProgressWriteBlockedError,
+  saveProgress,
+  type ProgressStorage
+} from "./progress";
 
 function loadFixture(name: string): unknown {
   return JSON.parse(
@@ -23,6 +31,20 @@ function collectKeys(value: unknown, keys = new Set<string>()): Set<string> {
   }
 
   return keys;
+}
+
+function createMemoryStorage(initial: Record<string, string> = {}) {
+  const values = new Map(Object.entries(initial));
+  const storage: ProgressStorage = {
+    getItem(key) {
+      return values.get(key) ?? null;
+    },
+    setItem(key, value) {
+      values.set(key, value);
+    }
+  };
+
+  return { storage, values };
 }
 
 test("migrates legacy recording and quiet sessions to schema version 2", () => {
@@ -52,10 +74,13 @@ test("removes non-canonical private fields during migration", () => {
 });
 
 test("keeps valid sessions when corrupt history entries are present", () => {
-  const progress = migrateProgress(loadFixture("progress-v1-corrupt.json"));
+  const decoded = decodeProgress(loadFixture("progress-v1-corrupt.json"));
+  const progress = decoded.progress;
 
   assert.equal(progress.practiceSessions.length, 1);
   assert.equal(progress.practiceSessions[0].id, "valid-among-corrupt");
+  assert.equal(decoded.canWrite, false);
+  assert.deepEqual(decoded.diagnostics.codes, ["dropped_invalid_session"]);
 });
 
 test("normalizes an external Voice self-report without transcript data", () => {
@@ -94,4 +119,39 @@ test("returns a fresh schema version 2 default for unusable input", () => {
   assert.equal(first.schemaVersion, 2);
   assert.deepEqual(first.practiceSessions, []);
   assert.notEqual(first.practiceSessions, second.practiceSessions);
+});
+
+test("reads legacy progress without rewriting it to schema version 2", () => {
+  const rawProgress = JSON.stringify(loadFixture("progress-v1-valid.json"));
+  const { storage, values } = createMemoryStorage({
+    [PROGRESS_STORAGE_KEY]: rawProgress
+  });
+
+  const loaded = loadProgressWithDiagnostics(storage);
+
+  assert.equal(loaded.status, "ok");
+  assert.equal(loaded.canWrite, true);
+  assert.equal(loaded.diagnostics?.sourceVersion, null);
+  assert.equal(values.get(PROGRESS_STORAGE_KEY), rawProgress);
+});
+
+test("rejects future progress without overwriting its stored data", () => {
+  const rawProgress = JSON.stringify(loadFixture("progress-v3-future.json"));
+  const { storage, values } = createMemoryStorage({
+    [PROGRESS_STORAGE_KEY]: rawProgress
+  });
+
+  const loaded = loadProgressWithDiagnostics(storage);
+
+  assert.equal(loaded.status, "unsupported_version");
+  assert.equal(loaded.canWrite, false);
+  assert.equal(loaded.errorCode, "unsupported_future_version");
+  assert.deepEqual(loaded.diagnostics?.codes, ["unsupported_future_version"]);
+  assert.equal(values.get(PROGRESS_STORAGE_KEY), rawProgress);
+
+  assert.throws(
+    () => saveProgress(migrateProgress(loadFixture("progress-v1-valid.json")), storage),
+    ProgressWriteBlockedError
+  );
+  assert.equal(values.get(PROGRESS_STORAGE_KEY), rawProgress);
 });
