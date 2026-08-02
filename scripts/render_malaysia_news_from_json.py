@@ -4,7 +4,7 @@ import json
 import re
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 
 CATEGORIES = ["【速報】", "【生活インパクト】", "【知っておくと得】"]
@@ -362,8 +362,7 @@ def build_display_summary(item: dict[str, Any]) -> dict[str, Any]:
     return display
 
 
-def render_item(item: dict[str, Any]) -> list[str]:
-    summary = build_display_summary(item)
+def render_item_summary(item: dict[str, Any], summary: dict[str, Any]) -> list[str]:
     lines: list[str] = []
     conclusion = text_value(summary.get("conclusion")).strip()
     life_impact = text_value(summary.get("life_impact")).strip()
@@ -382,6 +381,16 @@ def render_item(item: dict[str, Any]) -> list[str]:
     lines.append(f"- 出典元URL：{link}")
     lines.append("")
     return lines
+
+
+def render_item(item: dict[str, Any]) -> list[str]:
+    """Render RSS-derived items, including their existing topic defaults."""
+    return render_item_summary(item, build_display_summary(item))
+
+
+def render_prepared_item(item: dict[str, Any]) -> list[str]:
+    """Render a summary already finalized by an upstream normalization policy."""
+    return render_item_summary(item, normalize_selected_summary(item))
 
 
 def selected_items_from_data(data: dict[str, Any]) -> list[dict[str, Any]]:
@@ -424,7 +433,10 @@ def print_diagnostics(data: dict[str, Any]) -> None:
             print(f"  - {source} {published_date}: {title}", file=sys.stderr)
 
 
-def render(data: dict[str, Any]) -> str:
+def render_with_item_renderer(
+    data: dict[str, Any],
+    item_renderer: Callable[[dict[str, Any]], list[str]],
+) -> str:
     items = selected_items_from_data(data)
     counts = data.get("counts", {})
     if not isinstance(counts, dict):
@@ -439,7 +451,7 @@ def render(data: dict[str, Any]) -> str:
         lines.append("")
         for item in items:
             if item.get("category") == category:
-                lines.extend(render_item(item))
+                lines.extend(item_renderer(item))
 
     processed = counts.get("processed", 0)
     selected = counts.get("selected", len(items))
@@ -448,6 +460,16 @@ def render(data: dict[str, Any]) -> str:
     failed_text = ", ".join(text_value(source) for source in failed_sources if text_value(source)) or "なし"
     lines.append(f"失敗したソース一覧：{failed_text}")
     return "\n".join(lines).strip()
+
+
+def render(data: dict[str, Any]) -> str:
+    """Render RSS-derived selected items with topic defaults when needed."""
+    return render_with_item_renderer(data, render_item)
+
+
+def render_prepared(data: dict[str, Any]) -> str:
+    """Render upstream-finalized summaries without topic detection or supplementation."""
+    return render_with_item_renderer(data, render_prepared_item)
 
 
 def main() -> int:

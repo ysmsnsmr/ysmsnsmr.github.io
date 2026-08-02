@@ -6,7 +6,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from malaysia_groq_markdown_merge import high_confidence_json_fallback_topic
+from malaysia_groq_fallback_policy import high_confidence_json_fallback_topic
 
 
 class JsonFallbackTopicTest(unittest.TestCase):

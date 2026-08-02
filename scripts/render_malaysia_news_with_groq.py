@@ -35,11 +35,18 @@ from malaysia_groq_force_all_policy import (
     groq_exclusion_reason,
     ordered_force_all_entries,
 )
-from malaysia_groq_markdown_merge import (
+from malaysia_groq_fallback_policy import (
     high_confidence_json_fallback_topic,
+    safe_json_render_fallback_summary_for_item,
+)
+from malaysia_groq_markdown_merge import (
     merge_accepted_with_rss_markdown,
     normalize_entry_candidate_summaries_for_observation,
     normalize_fallback_summaries_for_json_render,
+)
+from malaysia_groq_render_decision import (
+    annotate_decision_records,
+    build_render_decisions,
 )
 from malaysia_groq_term_normalization import normalize_malaysia_terms
 import render_malaysia_news_from_json as fallback_renderer
@@ -875,51 +882,6 @@ def record_focus_values(record: dict[str, Any]) -> list[str]:
     return values or ["none"]
 
 
-def annotate_json_render_fallback_observation(
-    items: list[Any],
-    decision_records: list[dict[str, Any]],
-) -> None:
-    for record in decision_records:
-        item: dict[str, Any] | None = None
-        raw_index = record.get("index")
-        if isinstance(raw_index, int):
-            item_index = raw_index - 1
-            if 0 <= item_index < len(items) and isinstance(items[item_index], dict):
-                item = items[item_index]
-        if record.get("accepted") is True:
-            record["json_render_fallback_kind"] = "accepted"
-            record["json_render_fallback_topic"] = ""
-            continue
-        topic = high_confidence_json_fallback_topic(item) if item else ""
-        record["json_render_fallback_kind"] = "topic" if topic else "generic"
-        record["json_render_fallback_topic"] = topic
-
-
-def annotate_entry_render_observation(decision_records: list[dict[str, Any]]) -> None:
-    for record in decision_records:
-        entry = record.get("entry")
-        entry_candidate = entry_text(entry)
-        if not entry_candidate and "entry" not in record:
-            entry_candidate = clean_text(record.get("entry_candidate"))
-        if record.get("accepted") is True:
-            record["entry_render_tier"] = "full_summary"
-        elif (
-            record.get("entry_candidate_status") == "full_rejected"
-            and entry_candidate
-        ):
-            record["entry_render_tier"] = "entry_candidate"
-        else:
-            record["entry_render_tier"] = "existing_fallback"
-
-
-def annotate_render_observations(
-    items: list[Any],
-    decision_records: list[dict[str, Any]],
-) -> None:
-    annotate_json_render_fallback_observation(items, decision_records)
-    annotate_entry_render_observation(decision_records)
-
-
 def json_render_fallback_observation_counts(decision_records: list[dict[str, Any]]) -> dict[str, Any]:
     selected_count = len(decision_records)
     accepted_count = sum(1 for record in decision_records if record.get("json_render_fallback_kind") == "accepted")
@@ -1358,7 +1320,6 @@ def render_with_groq(
             record["decision"] = "skipped"
             record["reason"] = "missing_groq_api_key"
             decision_records.append(record)
-        annotate_render_observations(items, decision_records)
         return rendered_data, accepted_records, stats, decision_records
 
     requested = 0
@@ -1485,7 +1446,6 @@ def render_with_groq(
             safe_log(f"groq: item {index + 1} fallback ({error.__class__.__name__}).")
     safe_log(f"groq: requested={requested} accepted={accepted} fallback={failed}")
     stats = {"requested": requested, "accepted": accepted, "fallback": failed}
-    annotate_render_observations(items, decision_records)
     accepted_records.sort(key=lambda record: record.get("index", 0))
     decision_records.sort(key=lambda record: record.get("index", 0))
     return rendered_data, accepted_records, stats, decision_records
@@ -1528,7 +1488,19 @@ def main() -> int:
         args.force_all,
         args.debug_groq,
     )
-    json_render_data = normalize_fallback_summaries_for_json_render(rendered_data, accepted_records)
+    items = rendered_data.get("items")
+    render_decisions = build_render_decisions(
+        items if isinstance(items, list) else [],
+        decision_records,
+        safe_json_render_fallback_summary_for_item,
+        high_confidence_json_fallback_topic,
+    )
+    annotate_decision_records(decision_records, render_decisions)
+    json_render_data = normalize_fallback_summaries_for_json_render(
+        rendered_data,
+        accepted_records,
+        render_decisions,
+    )
     annotate_json_render_summary_provenance(data, json_render_data, decision_records)
     if args.improved_items_output:
         payload = build_improved_items_payload(
@@ -1544,7 +1516,7 @@ def main() -> int:
         json_render_output_path = Path(args.json_render_output)
         json_render_output_path.parent.mkdir(parents=True, exist_ok=True)
         json_render_output_path.write_text(
-            fallback_renderer.render(json_render_data) + "\n",
+            fallback_renderer.render_prepared(json_render_data) + "\n",
             encoding="utf-8",
         )
     if args.entry_render_output:
@@ -1554,9 +1526,10 @@ def main() -> int:
             rendered_data,
             accepted_records,
             decision_records,
+            render_decisions,
         )
         entry_render_output_path.write_text(
-            fallback_renderer.render(entry_render_data) + "\n",
+            fallback_renderer.render_prepared(entry_render_data) + "\n",
             encoding="utf-8",
         )
     if args.accepted_only_markdown:
