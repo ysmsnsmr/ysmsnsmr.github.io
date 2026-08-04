@@ -32,6 +32,14 @@
         <p id="today-label" class="today-label"></p>
       </header>
 
+      <aside id="origin-notice" class="origin-notice" hidden>
+        <strong>保存先が新しくなりました</strong>
+        <p>
+          この画面のデータを書き出してから、独立版へ移してください。
+        </p>
+        <a id="official-app-link" href="#">独立版を開く</a>
+      </aside>
+
       <section class="summary-grid" aria-label="支出の概要">
         <article class="summary-card">
           <p>今日の支出</p>
@@ -84,27 +92,51 @@
             <legend>分類</legend>
             <div class="choice-grid choice-grid--category">
               <label class="choice">
-                <input type="radio" name="category" value="dining">
+                <input
+                  type="radio"
+                  name="categoryId"
+                  value="daily-spend:dining"
+                >
                 <span>Dining</span>
               </label>
               <label class="choice">
-                <input type="radio" name="category" value="groceries">
+                <input
+                  type="radio"
+                  name="categoryId"
+                  value="daily-spend:groceries"
+                >
                 <span>Groceries</span>
               </label>
               <label class="choice">
-                <input type="radio" name="category" value="shopping">
+                <input
+                  type="radio"
+                  name="categoryId"
+                  value="daily-spend:shopping"
+                >
                 <span>Shopping</span>
               </label>
               <label class="choice">
-                <input type="radio" name="category" value="health">
+                <input
+                  type="radio"
+                  name="categoryId"
+                  value="daily-spend:health"
+                >
                 <span>Health</span>
               </label>
               <label class="choice">
-                <input type="radio" name="category" value="medical">
+                <input
+                  type="radio"
+                  name="categoryId"
+                  value="daily-spend:medical"
+                >
                 <span>Medical</span>
               </label>
               <label class="choice">
-                <input type="radio" name="category" value="other">
+                <input
+                  type="radio"
+                  name="categoryId"
+                  value="daily-spend:other"
+                >
                 <span>Other</span>
               </label>
             </div>
@@ -173,8 +205,66 @@
         <ol id="expense-list" class="expense-list"></ol>
       </section>
 
+      <section class="history-section" aria-labelledby="history-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">RECENT</p>
+            <h2 id="history-title">過去30日</h2>
+          </div>
+          <strong id="history-count" class="record-count">0件</strong>
+        </div>
+        <p id="history-empty" class="empty-message">
+          過去30日の記録はありません。
+        </p>
+        <div id="history-list" class="history-list"></div>
+      </section>
+
+      <details class="data-tools">
+        <summary>データの移行・復旧</summary>
+        <div class="data-tools__body">
+          <p>
+            JSONを書き出して保管できます。読み込み時は既存記録と安全に統合します。
+          </p>
+          <div class="data-actions">
+            <button id="export-button" type="button">JSON書き出し</button>
+            <label class="file-button" for="import-file">
+              JSON読み込み
+            </label>
+            <input
+              id="import-file"
+              class="visually-hidden"
+              type="file"
+              accept="application/json,.json"
+            >
+            <button id="raw-export-button" type="button">
+              rawデータ保存
+            </button>
+            <button id="diagnose-button" type="button">
+              保存データを診断
+            </button>
+          </div>
+          <p class="data-note">
+            別のURLや端末へ移すときは、元の画面で書き出し、新しい画面で読み込んでください。
+          </p>
+        </div>
+      </details>
+
+      <section
+        id="recovery-panel"
+        class="recovery-panel"
+        aria-labelledby="recovery-title"
+        hidden
+      >
+        <div class="section-heading">
+          <h2 id="recovery-title">保存データの診断</h2>
+          <button id="close-diagnosis-button" type="button">閉じる</button>
+        </div>
+        <p id="diagnosis-summary"></p>
+        <ul id="diagnosis-list"></ul>
+      </section>
+
       <footer class="app-footer">
-        <p>この端末にだけ保存されます。</p>
+        <p>このURLの、この端末にだけ保存されます。</p>
       </footer>
     </main>
   </body>

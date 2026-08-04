@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "expenses": [
+    {
+      "id": "v1-fixture-dining",
+      "amountSen": 1250,
+      "category": "dining",
+      "necessity": "hesitated",
+      "note": "昼食",
+      "recordedAt": "2026-07-26T04:15:00.000Z",
+      "recordedLocalDate": "2026-07-26",
+      "updatedAt": "2026-07-26T04:15:00.000Z"
+    },
+    {
+      "id": "v1-fixture-groceries",
+      "amountSen": 4380,
+      "category": "groceries",
+      "necessity": "needed",
+      "note": "一週間分",
+      "recordedAt": "2026-07-27T11:30:00.000Z",
+      "recordedLocalDate": "2026-07-27",
+      "updatedAt": "2026-07-27T11:30:00.000Z"
+    }
+  ]
+}

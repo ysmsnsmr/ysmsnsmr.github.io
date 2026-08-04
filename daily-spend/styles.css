@@ -127,6 +127,38 @@ h2 {
   margin-bottom: 0.65rem;
 }
 
+.origin-notice {
+  margin-bottom: 0.7rem;
+  padding: 0.75rem;
+  border: 1px solid #d3a770;
+  border-radius: 0.85rem;
+  color: #664010;
+  background: #fff4d8;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.origin-notice strong {
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.origin-notice p {
+  margin-bottom: 0.55rem;
+}
+
+.origin-notice a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.65rem;
+  color: #fff;
+  background: #8a5b13;
+  font-weight: 800;
+  text-decoration: none;
+}
+
 .summary-card {
   min-width: 0;
   padding: 0.7rem 0.75rem;
@@ -166,6 +198,10 @@ h2 {
 }
 
 .feedback {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
   margin: 0 0 0.65rem;
   padding: 0.65rem 0.75rem;
   border: 1px solid #a9d3bd;
@@ -175,6 +211,18 @@ h2 {
   font-size: 0.8rem;
   font-weight: 700;
   line-height: 1.4;
+}
+
+.feedback-action {
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid currentColor;
+  border-radius: 0.6rem;
+  color: inherit;
+  background: rgb(255 255 255 / 65%);
+  font-size: 0.75rem;
+  font-weight: 850;
 }
 
 .feedback[data-tone="error"] {
@@ -396,7 +444,8 @@ fieldset {
   background: transparent;
 }
 
-.today-section {
+.today-section,
+.history-section {
   margin-top: 1rem;
   padding: 0 0.15rem;
 }
@@ -437,6 +486,10 @@ fieldset {
   border: 1px solid #ddd3c6;
   border-radius: 0.85rem;
   background: rgb(255 253 249 / 88%);
+}
+
+.expense-item--readonly {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .expense-main {
@@ -523,6 +576,114 @@ fieldset {
   border-color: #e0b3aa;
   color: #963d30;
   background: #fff7f5;
+}
+
+.history-list {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.history-day h3 {
+  margin: 0 0 0.45rem;
+  color: #6f665e;
+  font-size: 0.75rem;
+}
+
+.expense-list--history {
+  gap: 0.45rem;
+}
+
+.expense-list--history .expense-item {
+  padding: 0.65rem 0.75rem;
+}
+
+.data-tools {
+  margin-top: 1rem;
+  border: 1px solid #d6ccc0;
+  border-radius: 0.9rem;
+  background: rgb(255 253 249 / 82%);
+}
+
+.data-tools summary {
+  min-height: 48px;
+  padding: 0.85rem;
+  color: #5e554e;
+  font-size: 0.8rem;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.data-tools__body {
+  padding: 0 0.85rem 0.85rem;
+}
+
+.data-tools__body > p {
+  margin-bottom: 0.75rem;
+  color: #776e66;
+  font-size: 0.74rem;
+  line-height: 1.55;
+}
+
+.data-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.data-actions button,
+.file-button,
+.recovery-panel button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border: 1px solid #c8bdb1;
+  border-radius: 0.65rem;
+  color: #5e554e;
+  background: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.file-button {
+  cursor: pointer;
+}
+
+.data-note {
+  margin: 0.7rem 0 0 !important;
+  color: #8a4b37 !important;
+}
+
+.recovery-panel {
+  margin-top: 1rem;
+  padding: 0.85rem;
+  border: 1px solid #e0b3aa;
+  border-radius: 0.9rem;
+  color: #733b32;
+  background: #fff7f5;
+}
+
+.recovery-panel .section-heading {
+  margin-bottom: 0.65rem;
+}
+
+.recovery-panel p {
+  margin-bottom: 0.55rem;
+  font-size: 0.74rem;
+  line-height: 1.5;
+}
+
+.recovery-panel ul {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding-left: 1.15rem;
+  font-size: 0.7rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 .app-footer {
