@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lazyweb Reference Log"
+  short_description: "決定的検証・manifest・原子的確定でReference Logを安全生成"
+  default_prompt: "Use $lazyweb-reference-log to draft and deterministically validate one eligible Lazyweb Reference Log input."

@@ -1,0 +1,4 @@
+{
+  "expected_status": "missing_article",
+  "omit": ["article.md"]
+}

@@ -1,0 +1,7 @@
+{
+  "expected_status": "safety_review_failed",
+  "replace": {
+    "実在ブランド、ロゴ、UI、競技会場を再現しない。": "実在ブランドのロゴを再現する。"
+  },
+  "expected_failed_check": "no_copy_proposal"
+}

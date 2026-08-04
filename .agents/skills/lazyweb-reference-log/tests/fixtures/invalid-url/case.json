@@ -1,0 +1,7 @@
+{
+  "expected_status": "safety_review_failed",
+  "replace": {
+    "https://example.test/reference": "https://untrusted.example.invalid/not-in-input"
+  },
+  "expected_failed_check": "input_url_provenance"
+}

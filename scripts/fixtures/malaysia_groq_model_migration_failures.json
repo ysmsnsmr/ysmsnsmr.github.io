@@ -1,0 +1,5 @@
+{
+  "schema_version": "malaysia-groq-model-migration-golden/v1",
+  "description": "Production Groq fallback articles retained for model migration regression checks.",
+  "items": []
+}
