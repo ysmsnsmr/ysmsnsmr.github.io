@@ -1,4 +1,4 @@
-const CACHE_NAME = "one-next-task-v2";
+const CACHE_NAME = "one-next-task-v3";
 const APP_SCOPE_URL = new URL("./", self.location.href);
 const APP_SHELL_URL = new URL("./index.html", self.location.href).href;
 const PRECACHE_URLS = [

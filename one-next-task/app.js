@@ -20,7 +20,14 @@
     completeButton: document.querySelector("#complete-button"),
     deferButton: document.querySelector("#defer-button"),
     managementList: document.querySelector("#management-list"),
-    managementEmpty: document.querySelector("#management-empty")
+    managementEmpty: document.querySelector("#management-empty"),
+    completedList: document.querySelector("#completed-list"),
+    completedEmpty: document.querySelector("#completed-empty"),
+    deletedList: document.querySelector("#deleted-list"),
+    deletedEmpty: document.querySelector("#deleted-empty"),
+    exportButton: document.querySelector("#export-button"),
+    importInput: document.querySelector("#import-input"),
+    dataStatus: document.querySelector("#data-status")
   };
 
   let state;
@@ -32,7 +39,7 @@
   let managementInputCount = 0;
 
   if (!storageApi) {
-    state = { schemaVersion: 1, tasks: [] };
+    state = { schemaVersion: 2, queueRuleVersion: 1, tasks: [] };
     showLoadError("unavailable");
     render();
     return;
@@ -59,6 +66,16 @@
     "click",
     handleManagementClick
   );
+  elements.completedList.addEventListener(
+    "click",
+    handleManagementClick
+  );
+  elements.deletedList.addEventListener(
+    "click",
+    handleManagementClick
+  );
+  elements.exportButton.addEventListener("click", handleExport);
+  elements.importInput.addEventListener("change", handleImport);
 
   render();
 
@@ -171,22 +188,48 @@
   }
 
   function handleManagementClick(event) {
-    const deleteButton = event.target.closest("button[data-action='delete']");
-    if (!deleteButton || !canWrite) {
+    const actionButton = event.target.closest("button[data-action]");
+    if (!actionButton || !canWrite) {
       return;
     }
 
-    const form = deleteButton.closest("form[data-task-id]");
-    const taskId = form?.dataset.taskId;
+    const form = actionButton.closest("form[data-task-id]");
+    const taskId = actionButton.dataset.taskId || form?.dataset.taskId;
+    const action = actionButton.dataset.action;
+
+    if (!taskId) {
+      return;
+    }
+
+    if (action === "delete") {
+      handleDelete(taskId);
+      return;
+    }
+
+    if (action === "restore-completed") {
+      handleRestoreCompleted(taskId);
+      return;
+    }
+
+    if (action === "restore-deleted") {
+      handleRestoreDeleted(taskId);
+    }
+  }
+
+  function handleDelete(taskId) {
     const task = getActiveTasks().find(
       (candidate) => candidate.id === taskId
     );
 
-    if (!taskId || !task) {
+    if (!task) {
       return;
     }
 
-    if (!window.confirm(`「${task.text}」を削除しますか？`)) {
+    if (
+      !window.confirm(
+        `「${task.text}」を削除しますか？7日以内なら元に戻せます。`
+      )
+    ) {
       return;
     }
 
@@ -199,9 +242,99 @@
         cycleEnded = Boolean(nextTask && seenTaskIds.has(nextTask.id));
       }
       clearError();
+      showDataStatus("削除しました。最近削除から元に戻せます。");
       render();
     } catch (error) {
       handleWriteError(error);
+    }
+  }
+
+  function handleRestoreCompleted(taskId) {
+    try {
+      state = storageApi.restoreCompletedTask(taskId);
+      beginCycle();
+      clearError();
+      showDataStatus("未完了のキュー末尾へ戻しました。");
+      render();
+    } catch (error) {
+      handleWriteError(error);
+    }
+  }
+
+  function handleRestoreDeleted(taskId) {
+    const task = state.tasks.find((candidate) => candidate.id === taskId);
+    if (!task || task.deletedAt === null) {
+      return;
+    }
+
+    try {
+      state = storageApi.restoreDeletedTask(taskId);
+      if (task.status === "active") {
+        seenTaskIds.delete(taskId);
+        cycleEnded = false;
+      }
+      clearError();
+      showDataStatus("削除を元に戻しました。");
+      render();
+    } catch (error) {
+      handleWriteError(error);
+    }
+  }
+
+  function handleExport() {
+    clearDataStatus();
+
+    try {
+      const serialized = storageApi.exportState();
+      const blob = new Blob([serialized], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `one-next-task-${formatDateForFilename(new Date())}.json`;
+      document.body.append(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 0);
+      clearError();
+      showDataStatus("JSONを書き出しました。");
+    } catch {
+      showError("データを書き出せませんでした。");
+    }
+  }
+
+  async function handleImport() {
+    const file = elements.importInput.files?.[0];
+    if (!file || !canWrite) {
+      elements.importInput.value = "";
+      return;
+    }
+
+    clearDataStatus();
+    if (
+      !window.confirm(
+        "現在のデータを、選んだJSONの内容に置き換えますか？"
+      )
+    ) {
+      elements.importInput.value = "";
+      return;
+    }
+
+    try {
+      const serialized = await file.text();
+      state = storageApi.importState(serialized);
+      beginCycle();
+      clearError();
+      showDataStatus("JSONを読み込みました。");
+      render();
+    } catch (error) {
+      if (error instanceof storageApi.InvalidImportError) {
+        showError("このJSONは読み込めません。現在のデータは変更していません。");
+        render();
+      } else {
+        handleWriteError(error);
+      }
+    } finally {
+      elements.importInput.value = "";
     }
   }
 
@@ -220,7 +353,9 @@
 
   function getActiveTasks() {
     return state.tasks
-      .filter((task) => task.status === "active")
+      .filter(
+        (task) => task.status === "active" && task.deletedAt === null
+      )
       .sort(
         (left, right) =>
           left.queueOrder - right.queueOrder ||
@@ -243,6 +378,8 @@
     elements.manageButton.disabled = !canWrite;
     elements.completeButton.disabled = !canWrite;
     elements.deferButton.disabled = !canWrite;
+    elements.exportButton.disabled = !canWrite;
+    elements.importInput.disabled = !canWrite;
 
     if (activeScreen === "management") {
       renderManagement();
@@ -278,12 +415,30 @@
 
   function renderManagement() {
     clearChildren(elements.managementList);
+    clearChildren(elements.completedList);
+    clearChildren(elements.deletedList);
 
     const activeTasks = getActiveTasks();
+    const completedTasks = storageApi.getRecentCompletedTasks(state);
+    const deletedTasks = storageApi.getRecentDeletedTasks(state);
     elements.managementEmpty.hidden = activeTasks.length !== 0;
+    elements.completedEmpty.hidden = completedTasks.length !== 0;
+    elements.deletedEmpty.hidden = deletedTasks.length !== 0;
 
     for (const task of activeTasks) {
       elements.managementList.append(createManagementItem(task));
+    }
+
+    for (const task of completedTasks) {
+      elements.completedList.append(
+        createHistoryItem(task, "restore-completed")
+      );
+    }
+
+    for (const task of deletedTasks) {
+      elements.deletedList.append(
+        createHistoryItem(task, "restore-deleted")
+      );
     }
   }
 
@@ -327,6 +482,46 @@
     form.append(label, actions);
     item.append(form);
     return item;
+  }
+
+  function createHistoryItem(task, action) {
+    const item = document.createElement("li");
+    const text = document.createElement("p");
+    const meta = document.createElement("p");
+    const button = document.createElement("button");
+    const isCompletion = action === "restore-completed";
+    const timestamp = isCompletion ? task.completedAt : task.deletedAt;
+
+    item.className = "history-item";
+    text.className = "history-text";
+    text.textContent = task.text;
+    meta.className = "history-meta";
+    meta.textContent = `${formatHistoryDate(timestamp)} ${
+      isCompletion ? "完了" : "削除"
+    }`;
+
+    button.type = "button";
+    button.dataset.action = action;
+    button.dataset.taskId = task.id;
+    button.textContent = "元に戻す";
+    button.setAttribute("aria-label", `「${task.text}」を元に戻す`);
+
+    item.append(text, meta, button);
+    return item;
+  }
+
+  function formatHistoryDate(timestamp) {
+    return new Intl.DateTimeFormat("ja-JP", {
+      month: "numeric",
+      day: "numeric"
+    }).format(new Date(timestamp));
+  }
+
+  function formatDateForFilename(date) {
+    const year = String(date.getFullYear()).padStart(4, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
   }
 
   function clearChildren(element) {
@@ -391,6 +586,16 @@
   function clearError() {
     elements.errorMessage.textContent = "";
     elements.errorMessage.hidden = true;
+  }
+
+  function showDataStatus(message) {
+    elements.dataStatus.textContent = message;
+    elements.dataStatus.hidden = false;
+  }
+
+  function clearDataStatus() {
+    elements.dataStatus.textContent = "";
+    elements.dataStatus.hidden = true;
   }
 })();
 

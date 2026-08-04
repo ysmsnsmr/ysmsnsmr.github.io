@@ -2,10 +2,13 @@
   "use strict";
 
   const STORAGE_KEY = "one-next-task-state";
-  const SCHEMA_VERSION = 1;
+  const SCHEMA_VERSION = 2;
+  const QUEUE_RULE_VERSION = 1;
+  const RECENT_TASK_RETENTION_DAYS = 7;
   const ACTIVE_STATUS = "active";
   const COMPLETED_STATUS = "completed";
   const LOCAL_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+  const DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000;
 
   class StorageWriteBlockedError extends Error {
     constructor(code) {
@@ -23,9 +26,18 @@
     }
   }
 
+  class InvalidImportError extends Error {
+    constructor(code) {
+      super(`One Next Task import rejected: ${code}`);
+      this.name = "InvalidImportError";
+      this.code = code;
+    }
+  }
+
   function createEmptyState() {
     return {
       schemaVersion: SCHEMA_VERSION,
+      queueRuleVersion: QUEUE_RULE_VERSION,
       tasks: []
     };
   }
@@ -61,25 +73,18 @@
       return createLoadResult("invalid", false, "invalid_json");
     }
 
-    if (
-      isRecord(parsed) &&
-      Number.isInteger(parsed.schemaVersion) &&
-      parsed.schemaVersion > SCHEMA_VERSION
-    ) {
+    const inspected = inspectParsedState(parsed);
+    if (inspected.status !== "ok") {
       return createLoadResult(
-        "unsupported_version",
+        inspected.status,
         false,
-        "unsupported_future_version"
+        inspected.errorCode
       );
-    }
-
-    if (!isValidState(parsed)) {
-      return createLoadResult("invalid", false, "invalid_state");
     }
 
     return {
       status: "ok",
-      state: cloneState(parsed),
+      state: inspected.state,
       canWrite: true,
       errorCode: null
     };
@@ -106,6 +111,7 @@
 
     const nextState = {
       schemaVersion: SCHEMA_VERSION,
+      queueRuleVersion: QUEUE_RULE_VERSION,
       tasks: [
         ...state.tasks,
         {
@@ -116,7 +122,8 @@
           updatedAt: nowIso,
           completedAt: null,
           queueOrder: nextQueueOrder(state.tasks),
-          completedLocalDate: null
+          completedLocalDate: null,
+          deletedAt: null
         }
       ]
     };
@@ -131,6 +138,8 @@
   ) {
     const state = loadWritableState(storage);
     const task = findTask(state, taskId);
+
+    assertTaskIsNotDeleted(task);
 
     if (task.status === COMPLETED_STATUS) {
       return state;
@@ -157,7 +166,7 @@
     const state = loadWritableState(storage);
     const task = findTask(state, taskId);
 
-    if (task.status !== ACTIVE_STATUS) {
+    if (task.status !== ACTIVE_STATUS || task.deletedAt !== null) {
       throw new TypeError("Only active tasks can be deferred");
     }
 
@@ -179,6 +188,7 @@
   ) {
     const state = loadWritableState(storage);
     const task = findTask(state, taskId);
+    assertTaskIsNotDeleted(task);
     const nextState = replaceTask(state, taskId, {
       ...task,
       text: normalizeTaskText(text),
@@ -188,14 +198,70 @@
     return persistState(nextState, storage);
   }
 
-  function deleteTask(taskId, storage = getBrowserStorage()) {
+  function deleteTask(
+    taskId,
+    storage = getBrowserStorage(),
+    options = {}
+  ) {
     const state = loadWritableState(storage);
-    findTask(state, taskId);
+    const task = findTask(state, taskId);
 
-    const nextState = {
-      schemaVersion: SCHEMA_VERSION,
-      tasks: state.tasks.filter((task) => task.id !== taskId)
-    };
+    if (task.deletedAt !== null) {
+      return state;
+    }
+
+    const nowIso = resolveDate(options.now).toISOString();
+    const nextState = replaceTask(state, taskId, {
+      ...task,
+      updatedAt: nowIso,
+      deletedAt: nowIso
+    });
+
+    return persistState(nextState, storage);
+  }
+
+  function restoreDeletedTask(
+    taskId,
+    storage = getBrowserStorage(),
+    options = {}
+  ) {
+    const state = loadWritableState(storage);
+    const task = findTask(state, taskId);
+
+    if (task.deletedAt === null) {
+      return state;
+    }
+
+    const nextState = replaceTask(state, taskId, {
+      ...task,
+      updatedAt: resolveDate(options.now).toISOString(),
+      deletedAt: null
+    });
+
+    return persistState(nextState, storage);
+  }
+
+  function restoreCompletedTask(
+    taskId,
+    storage = getBrowserStorage(),
+    options = {}
+  ) {
+    const state = loadWritableState(storage);
+    const task = findTask(state, taskId);
+
+    if (task.status !== COMPLETED_STATUS || task.deletedAt !== null) {
+      throw new TypeError("Only completed tasks can be restored");
+    }
+
+    const nowIso = resolveDate(options.now).toISOString();
+    const nextState = replaceTask(state, taskId, {
+      ...task,
+      status: ACTIVE_STATUS,
+      updatedAt: nowIso,
+      completedAt: null,
+      completedLocalDate: null,
+      queueOrder: nextQueueOrder(state.tasks)
+    });
 
     return persistState(nextState, storage);
   }
@@ -205,6 +271,7 @@
 
     const activeTasks = state.tasks
       .filter((task) => task.status === ACTIVE_STATUS)
+      .filter((task) => task.deletedAt === null)
       .sort(
         (left, right) =>
           left.queueOrder - right.queueOrder ||
@@ -221,8 +288,72 @@
     return state.tasks.filter(
       (task) =>
         task.status === COMPLETED_STATUS &&
+        task.deletedAt === null &&
         task.completedLocalDate === localDate
     ).length;
+  }
+
+  function getRecentCompletedTasks(state, options = {}) {
+    assertValidState(state);
+    const cutoff = recentCutoff(options);
+
+    return state.tasks
+      .filter(
+        (task) =>
+          task.status === COMPLETED_STATUS &&
+          task.deletedAt === null &&
+          Date.parse(task.completedAt) >= cutoff
+      )
+      .sort((left, right) =>
+        right.completedAt.localeCompare(left.completedAt)
+      )
+      .map((task) => ({ ...task }));
+  }
+
+  function getRecentDeletedTasks(state, options = {}) {
+    assertValidState(state);
+    const cutoff = recentCutoff(options);
+
+    return state.tasks
+      .filter(
+        (task) =>
+          task.deletedAt !== null &&
+          Date.parse(task.deletedAt) >= cutoff
+      )
+      .sort((left, right) =>
+        right.deletedAt.localeCompare(left.deletedAt)
+      )
+      .map((task) => ({ ...task }));
+  }
+
+  function exportState(storage = getBrowserStorage()) {
+    const result = loadState(storage);
+    if (!result.canWrite) {
+      throw new StorageWriteBlockedError("unsafe_stored_state");
+    }
+
+    return `${JSON.stringify(result.state, null, 2)}\n`;
+  }
+
+  function importState(serialized, storage = getBrowserStorage()) {
+    if (typeof serialized !== "string") {
+      throw new InvalidImportError("invalid_json");
+    }
+
+    let parsed;
+    try {
+      parsed = JSON.parse(serialized);
+    } catch {
+      throw new InvalidImportError("invalid_json");
+    }
+
+    const inspected = inspectParsedState(parsed);
+    if (inspected.status !== "ok") {
+      throw new InvalidImportError(inspected.errorCode);
+    }
+
+    loadWritableState(storage);
+    return persistState(inspected.state, storage);
   }
 
   function loadWritableState(storage) {
@@ -251,6 +382,7 @@
   function replaceTask(state, taskId, replacement) {
     return {
       schemaVersion: SCHEMA_VERSION,
+      queueRuleVersion: QUEUE_RULE_VERSION,
       tasks: state.tasks.map((task) =>
         task.id === taskId ? replacement : task
       )
@@ -281,6 +413,26 @@
     }
 
     return highestOrder + 1;
+  }
+
+  function recentCutoff(options) {
+    const now = resolveDate(options.now);
+    const days =
+      options.days === undefined
+        ? RECENT_TASK_RETENTION_DAYS
+        : options.days;
+
+    if (!Number.isInteger(days) || days < 1) {
+      throw new TypeError("Retention days must be a positive integer");
+    }
+
+    return now.getTime() - days * DAY_IN_MILLISECONDS;
+  }
+
+  function assertTaskIsNotDeleted(task) {
+    if (task.deletedAt !== null) {
+      throw new TypeError("Deleted tasks cannot be changed");
+    }
   }
 
   function normalizeTaskText(text) {
@@ -322,6 +474,7 @@
     if (
       !isRecord(value) ||
       value.schemaVersion !== SCHEMA_VERSION ||
+      value.queueRuleVersion !== QUEUE_RULE_VERSION ||
       !Array.isArray(value.tasks)
     ) {
       return false;
@@ -352,7 +505,8 @@
       !isTimestamp(task.createdAt) ||
       !isTimestamp(task.updatedAt) ||
       !Number.isSafeInteger(task.queueOrder) ||
-      task.queueOrder < 1
+      task.queueOrder < 1 ||
+      !(task.deletedAt === null || isTimestamp(task.deletedAt))
     ) {
       return false;
     }
@@ -372,6 +526,113 @@
     }
 
     return false;
+  }
+
+  function isValidV1State(value) {
+    if (
+      !isRecord(value) ||
+      value.schemaVersion !== 1 ||
+      !Array.isArray(value.tasks)
+    ) {
+      return false;
+    }
+
+    const ids = new Set();
+    const queueOrders = new Set();
+
+    for (const task of value.tasks) {
+      if (!isValidV1Task(task)) {
+        return false;
+      }
+      if (ids.has(task.id) || queueOrders.has(task.queueOrder)) {
+        return false;
+      }
+      ids.add(task.id);
+      queueOrders.add(task.queueOrder);
+    }
+
+    return true;
+  }
+
+  function isValidV1Task(task) {
+    if (
+      !isRecord(task) ||
+      !isNonEmptyString(task.id) ||
+      !isNonEmptyString(task.text) ||
+      !isTimestamp(task.createdAt) ||
+      !isTimestamp(task.updatedAt) ||
+      !Number.isSafeInteger(task.queueOrder) ||
+      task.queueOrder < 1
+    ) {
+      return false;
+    }
+
+    if (task.status === ACTIVE_STATUS) {
+      return task.completedAt === null && task.completedLocalDate === null;
+    }
+
+    if (task.status === COMPLETED_STATUS) {
+      return (
+        isTimestamp(task.completedAt) &&
+        isLocalDate(task.completedLocalDate)
+      );
+    }
+
+    return false;
+  }
+
+  function inspectParsedState(parsed) {
+    if (
+      isRecord(parsed) &&
+      Number.isInteger(parsed.schemaVersion) &&
+      parsed.schemaVersion > SCHEMA_VERSION
+    ) {
+      return {
+        status: "unsupported_version",
+        errorCode: "unsupported_future_version"
+      };
+    }
+
+    if (isValidV1State(parsed)) {
+      return {
+        status: "ok",
+        errorCode: null,
+        state: migrateV1State(parsed)
+      };
+    }
+
+    if (
+      isRecord(parsed) &&
+      parsed.schemaVersion === SCHEMA_VERSION &&
+      Number.isInteger(parsed.queueRuleVersion) &&
+      parsed.queueRuleVersion > QUEUE_RULE_VERSION
+    ) {
+      return {
+        status: "unsupported_version",
+        errorCode: "unsupported_future_queue_rule"
+      };
+    }
+
+    if (!isValidState(parsed)) {
+      return { status: "invalid", errorCode: "invalid_state" };
+    }
+
+    return {
+      status: "ok",
+      errorCode: null,
+      state: cloneState(parsed)
+    };
+  }
+
+  function migrateV1State(state) {
+    return {
+      schemaVersion: SCHEMA_VERSION,
+      queueRuleVersion: QUEUE_RULE_VERSION,
+      tasks: state.tasks.map((task) => ({
+        ...task,
+        deletedAt: null
+      }))
+    };
   }
 
   function isTimestamp(value) {
@@ -420,6 +681,7 @@
   function cloneState(state) {
     return {
       schemaVersion: SCHEMA_VERSION,
+      queueRuleVersion: QUEUE_RULE_VERSION,
       tasks: state.tasks.map((task) => ({ ...task }))
     };
   }
@@ -463,8 +725,11 @@
   const storageApi = Object.freeze({
     STORAGE_KEY,
     SCHEMA_VERSION,
+    QUEUE_RULE_VERSION,
+    RECENT_TASK_RETENTION_DAYS,
     StorageWriteBlockedError,
     TaskNotFoundError,
+    InvalidImportError,
     createEmptyState,
     loadState,
     addTask,
@@ -472,8 +737,14 @@
     deferTask,
     editTask,
     deleteTask,
+    restoreDeletedTask,
+    restoreCompletedTask,
     getNextTask,
-    getTodayCompletionCount
+    getTodayCompletionCount,
+    getRecentCompletedTasks,
+    getRecentDeletedTasks,
+    exportState,
+    importState
   });
 
   if (typeof module !== "undefined" && module.exports) {

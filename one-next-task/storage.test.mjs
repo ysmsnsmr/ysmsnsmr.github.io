@@ -4,6 +4,9 @@ import storageApi from "./storage.js";
 
 const {
   STORAGE_KEY,
+  SCHEMA_VERSION,
+  QUEUE_RULE_VERSION,
+  InvalidImportError,
   StorageWriteBlockedError,
   addTask,
   completeTask,
@@ -11,9 +14,15 @@ const {
   deferTask,
   deleteTask,
   editTask,
+  exportState,
   getNextTask,
+  getRecentCompletedTasks,
+  getRecentDeletedTasks,
   getTodayCompletionCount,
-  loadState
+  importState,
+  loadState,
+  restoreCompletedTask,
+  restoreDeletedTask
 } = storageApi;
 
 function createMemoryStorage(
@@ -135,7 +144,7 @@ test("defers the oldest task behind the other active tasks", () => {
   );
 });
 
-test("editing and deleting preserve unrelated tasks and queue order", () => {
+test("editing and soft deletion preserve unrelated tasks and queue order", () => {
   const { storage } = createMemoryStorage();
   const now = localDate(2026, 6, 19);
 
@@ -145,7 +154,8 @@ test("editing and deleting preserve unrelated tasks and queue order", () => {
   const edited = editTask("second", "updated second", storage, {
     now: localDate(2026, 6, 19, 13)
   });
-  const afterDelete = deleteTask("second", storage);
+  const deletedAt = localDate(2026, 6, 19, 14);
+  const afterDelete = deleteTask("second", storage, { now: deletedAt });
 
   assert.deepEqual(edited.tasks[0], before.tasks[0]);
   assert.equal(edited.tasks[1].text, "updated second");
@@ -153,7 +163,18 @@ test("editing and deleting preserve unrelated tasks and queue order", () => {
     edited.tasks[1].queueOrder,
     before.tasks[1].queueOrder
   );
-  assert.deepEqual(afterDelete.tasks, [before.tasks[0]]);
+  assert.deepEqual(afterDelete.tasks[0], before.tasks[0]);
+  assert.equal(afterDelete.tasks[1].id, "second");
+  assert.equal(afterDelete.tasks[1].deletedAt, deletedAt.toISOString());
+  assert.equal(afterDelete.tasks[1].queueOrder, before.tasks[1].queueOrder);
+  assert.equal(getNextTask(afterDelete).id, "first");
+
+  const restored = restoreDeletedTask("second", storage, {
+    now: localDate(2026, 6, 19, 15)
+  });
+
+  assert.equal(restored.tasks[1].deletedAt, null);
+  assert.equal(restored.tasks[1].queueOrder, before.tasks[1].queueOrder);
 });
 
 test("blocks writes and preserves invalid JSON", () => {
@@ -181,7 +202,7 @@ test("blocks writes and preserves invalid JSON", () => {
 
 test("blocks writes and preserves future-version data", () => {
   const original = JSON.stringify({
-    schemaVersion: 2,
+    schemaVersion: SCHEMA_VERSION + 1,
     tasks: [],
     futureField: true
   });
@@ -198,6 +219,56 @@ test("blocks writes and preserves future-version data", () => {
         id: "blocked",
         now: localDate(2026, 6, 19)
       }),
+    StorageWriteBlockedError
+  );
+  assert.equal(state.setCalls, 0);
+  assert.equal(state.value, original);
+});
+
+test("migrates schema version 1 in memory without writing", () => {
+  const timestamp = localDate(2026, 6, 19).toISOString();
+  const original = JSON.stringify({
+    schemaVersion: 1,
+    tasks: [
+      {
+        id: "legacy",
+        text: "legacy task",
+        status: "active",
+        createdAt: timestamp,
+        updatedAt: timestamp,
+        completedAt: null,
+        queueOrder: 1,
+        completedLocalDate: null
+      }
+    ]
+  });
+  const { state, storage } = createMemoryStorage(original);
+
+  const loaded = loadState(storage);
+
+  assert.equal(loaded.status, "ok");
+  assert.equal(loaded.state.schemaVersion, SCHEMA_VERSION);
+  assert.equal(loaded.state.queueRuleVersion, QUEUE_RULE_VERSION);
+  assert.equal(loaded.state.tasks[0].deletedAt, null);
+  assert.equal(state.setCalls, 0);
+  assert.equal(state.value, original);
+});
+
+test("blocks writes for a future queue rule version", () => {
+  const original = JSON.stringify({
+    schemaVersion: SCHEMA_VERSION,
+    queueRuleVersion: QUEUE_RULE_VERSION + 1,
+    tasks: []
+  });
+  const { state, storage } = createMemoryStorage(original);
+
+  const loaded = loadState(storage);
+
+  assert.equal(loaded.status, "unsupported_version");
+  assert.equal(loaded.errorCode, "unsupported_future_queue_rule");
+  assert.equal(loaded.canWrite, false);
+  assert.throws(
+    () => addTask("blocked", storage, { id: "blocked" }),
     StorageWriteBlockedError
   );
   assert.equal(state.setCalls, 0);
@@ -264,4 +335,129 @@ test("does not alter stored data when a write fails", () => {
   );
   assert.equal(state.value, null);
   assert.equal(state.setCalls, 1);
+});
+
+test("lists recent completed tasks and restores one at the queue tail", () => {
+  const { storage } = createMemoryStorage();
+  const now = localDate(2026, 6, 20, 12);
+
+  addTask("still active", storage, {
+    id: "active",
+    now: localDate(2026, 6, 10)
+  });
+  addTask("recently done", storage, {
+    id: "recent",
+    now: localDate(2026, 6, 11)
+  });
+  addTask("old done", storage, {
+    id: "old",
+    now: localDate(2026, 6, 1)
+  });
+  completeTask("recent", storage, {
+    now: localDate(2026, 6, 19, 12)
+  });
+  completeTask("old", storage, {
+    now: localDate(2026, 6, 12, 11)
+  });
+
+  const beforeRestore = loadState(storage).state;
+  assert.deepEqual(
+    getRecentCompletedTasks(beforeRestore, { now }).map((task) => task.id),
+    ["recent"]
+  );
+
+  const restored = restoreCompletedTask("recent", storage, { now });
+  const restoredTask = restored.tasks.find((task) => task.id === "recent");
+
+  assert.equal(restoredTask.status, "active");
+  assert.equal(restoredTask.completedAt, null);
+  assert.equal(restoredTask.completedLocalDate, null);
+  assert.ok(
+    restoredTask.queueOrder >
+      Math.max(...beforeRestore.tasks.map((task) => task.queueOrder))
+  );
+  assert.equal(getNextTask(restored).id, "active");
+});
+
+test("lists only recently deleted tasks and restores them", () => {
+  const { storage } = createMemoryStorage();
+  const now = localDate(2026, 6, 20, 12);
+
+  addTask("recently deleted", storage, {
+    id: "recent-delete",
+    now: localDate(2026, 6, 10)
+  });
+  addTask("old deleted", storage, {
+    id: "old-delete",
+    now: localDate(2026, 6, 1)
+  });
+  deleteTask("recent-delete", storage, {
+    now: localDate(2026, 6, 19, 12)
+  });
+  deleteTask("old-delete", storage, {
+    now: localDate(2026, 6, 12, 11)
+  });
+
+  const deleted = loadState(storage).state;
+  assert.deepEqual(
+    getRecentDeletedTasks(deleted, { now }).map((task) => task.id),
+    ["recent-delete"]
+  );
+
+  const restored = restoreDeletedTask("recent-delete", storage, { now });
+  assert.equal(
+    restored.tasks.find((task) => task.id === "recent-delete").deletedAt,
+    null
+  );
+});
+
+test("exports and imports a validated versioned snapshot", () => {
+  const source = createMemoryStorage();
+  addTask("backup me", source.storage, {
+    id: "backup",
+    now: localDate(2026, 6, 19)
+  });
+
+  const exported = exportState(source.storage);
+  const parsed = JSON.parse(exported);
+  const destination = createMemoryStorage();
+  const imported = importState(exported, destination.storage);
+
+  assert.equal(parsed.schemaVersion, SCHEMA_VERSION);
+  assert.equal(parsed.queueRuleVersion, QUEUE_RULE_VERSION);
+  assert.deepEqual(imported, loadState(source.storage).state);
+  assert.deepEqual(loadState(destination.storage).state, imported);
+  assert.equal(destination.state.setCalls, 1);
+});
+
+test("rejects invalid imports without changing existing data", () => {
+  const { state, storage } = createMemoryStorage();
+  addTask("keep me", storage, {
+    id: "existing",
+    now: localDate(2026, 6, 19)
+  });
+  const original = state.value;
+  const setCalls = state.setCalls;
+
+  assert.throws(
+    () => importState("{broken", storage),
+    (error) =>
+      error instanceof InvalidImportError &&
+      error.code === "invalid_json"
+  );
+  assert.throws(
+    () =>
+      importState(
+        JSON.stringify({
+          schemaVersion: SCHEMA_VERSION + 1,
+          tasks: []
+        }),
+        storage
+      ),
+    (error) =>
+      error instanceof InvalidImportError &&
+      error.code === "unsupported_future_version"
+  );
+  assert.equal(state.value, original);
+  assert.equal(state.setCalls, setCalls);
 });

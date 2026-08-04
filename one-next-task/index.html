@@ -108,10 +108,63 @@
           </div>
         </header>
 
-        <p id="management-empty" class="management-empty" hidden>
-          未完了の用事はありません。
-        </p>
-        <ul id="management-list" class="management-list"></ul>
+        <section
+          class="management-section"
+          aria-labelledby="active-tasks-title"
+        >
+          <h2 id="active-tasks-title">未完了</h2>
+          <p id="management-empty" class="management-empty" hidden>
+            未完了の用事はありません。
+          </p>
+          <ul id="management-list" class="management-list"></ul>
+        </section>
+
+        <section
+          class="management-section"
+          aria-labelledby="completed-tasks-title"
+        >
+          <h2 id="completed-tasks-title">最近完了</h2>
+          <p class="section-note">7日以内の用事を未完了へ戻せます。</p>
+          <p id="completed-empty" class="management-empty" hidden>
+            最近完了した用事はありません。
+          </p>
+          <ul id="completed-list" class="history-list"></ul>
+        </section>
+
+        <section
+          class="management-section"
+          aria-labelledby="deleted-tasks-title"
+        >
+          <h2 id="deleted-tasks-title">最近削除</h2>
+          <p class="section-note">7日以内の削除を元に戻せます。</p>
+          <p id="deleted-empty" class="management-empty" hidden>
+            最近削除した用事はありません。
+          </p>
+          <ul id="deleted-list" class="history-list"></ul>
+        </section>
+
+        <section
+          class="management-section data-section"
+          aria-labelledby="data-title"
+        >
+          <h2 id="data-title">データ</h2>
+          <p class="section-note">
+            JSONファイルに保存したり、このアプリのバックアップを読み込めます。
+          </p>
+          <div class="data-actions">
+            <button id="export-button" type="button">JSONを書き出す</button>
+            <input
+              id="import-input"
+              class="visually-hidden"
+              type="file"
+              accept="application/json,.json"
+            >
+            <label class="import-action" for="import-input">
+              JSONを読み込む
+            </label>
+          </div>
+          <p id="data-status" class="data-status" role="status" hidden></p>
+        </section>
       </section>
     </main>
   </body>
