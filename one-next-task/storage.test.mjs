@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import storageApi from "./storage.js";
+import "./storage.js";
+
+const storageApi = globalThis.OneNextTaskStorage;
 
 const {
   STORAGE_KEY,
