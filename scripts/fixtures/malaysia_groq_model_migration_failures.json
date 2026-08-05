@@ -1,5 +1,348 @@
 {
   "schema_version": "malaysia-groq-model-migration-golden/v1",
   "description": "Production Groq fallback articles retained for model migration regression checks.",
-  "items": []
+  "items": [
+    {
+      "link": "https://www.malaymail.com/news/malaysia/2026/08/05/moh-upgrading-health-facilities-in-sabah-sarawak-interior-based-on-local-needs-says-deputy-minister/230314",
+      "first_observed_on": "2026-08-05",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "ValueError: force_all accepted gate: transport_political_background_without_operational_impact"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Malay Mail",
+        "published_date": "2026年8月5日",
+        "title": "MOH upgrading health facilities in Sabah, Sarawak interior based on local needs, says deputy minister",
+        "description": "KUALA LUMPUR, Aug 5 — The Health Ministry (MOH) is adopting a tailored approach to upgrading health facilities in...",
+        "link": "https://www.malaymail.com/news/malaysia/2026/08/05/moh-upgrading-health-facilities-in-sabah-sarawak-interior-based-on-local-needs-says-deputy-minister/230314",
+        "selected_summary": {
+          "conclusion": "MOH upgrading health facilities in Sabah, Sarawak interior based on local needs, says deputy minister",
+          "what_happened": [
+            "KUALA LUMPUR, Aug 5 — The Health Ministry (MOH) is adopting a tailored approach to upgrading health facilities in...",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "klang_valley",
+          "health"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": true,
+          "is_urban_development": false,
+          "is_klang_valley": true,
+          "is_official": true,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "use_body",
+        "body_evidence_excerpt": "The Health Ministry (MOH) is adopting a tailored approach to upgrading health facilities in the interior of Sabah and Sarawak by taking into account the geographical challenges and specific needs of each area, said Deputy Health Minister Datuk Hanifah Hajar Taib. She said the approach is important as each health clinic in rural areas faces different constraints, including logistical access, increasing patient numbers and flood preparedness. Through the Borneo Health Tour, she said the ministry found that each health clinic visited had its own specific needs, whether in terms of additional equipment, more personnel, expanded space or relocation from less suitable sites. “Every health clinic I have visited faces different constraints. Some require additional equipment, others need more personnel, while some require expanded space or even relocation due to unsuitable locations,” she said. She said this during an exclusive interview with Bernama Radio on the topic ‘Jelajah Kesihatan Borneo & Masa Depan Kesihatan Negara’ (Borneo Health Tour and the Future of National Healthcare) today. Hanifah said climate change, which has led to unexpected flooding, has also p...",
+        "body_evidence_focus": [
+          "procedure_or_public_service",
+          "transport_or_infra",
+          "health_or_education"
+        ],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://paultan.org/2026/08/05/renew-your-car-insurance-with-paultan-org-this-august-10-off-plus-an-extra-10-off-with-spaylater/",
+      "first_observed_on": "2026-08-05",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "HTTP 429"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Paul Tan",
+        "published_date": "2026年8月5日",
+        "title": "Renew your car insurance with paultan.org this August – 10% off plus an extra 10% off with SPayLater!",
+        "description": "Got a car insurance and road tax renewal coming up? August is the best month yet to get it done through the paultan.org Insurance renewal service, because there’s a double discount running for the whole […]",
+        "link": "https://paultan.org/2026/08/05/renew-your-car-insurance-with-paultan-org-this-august-10-off-plus-an-extra-10-off-with-spaylater/",
+        "selected_summary": {
+          "conclusion": "JPJや車両関連手続きで、運転者の確認事項が出る可能性があります。",
+          "what_happened": [
+            "Paul TanのRSSで、運転者の手続きや義務に関する情報が報じられています。",
+            "JPJ、licence、road tax、inspection、summonsなど、運転者の義務や手続きに関わる内容として扱います。"
+          ],
+          "life_impact": "対象者は期限、必要書類、罰則、オンライン手続きの有無を確認する必要があります。",
+          "next_action": "JPJや関係機関の公式案内を確認。"
+        },
+        "tags": [
+          "jpj"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": false,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_fallback",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.malaymail.com/news/malaysia/2026/08/05/fahmi-says-tighter-airport-security-measures-being-considered-after-pilots-arrest-over-alleged-drug-trafficking/230321",
+      "first_observed_on": "2026-08-05",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "HTTP 429"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Malay Mail",
+        "published_date": "2026年8月5日",
+        "title": "Fahmi says tighter airport security measures being considered after pilot’s arrest over alleged drug trafficking",
+        "description": "KUALA LUMPUR, Aug 5 — The government is considering several security measures to be implemented at airports follow...",
+        "link": "https://www.malaymail.com/news/malaysia/2026/08/05/fahmi-says-tighter-airport-security-measures-being-considered-after-pilots-arrest-over-alleged-drug-trafficking/230321",
+        "selected_summary": {
+          "conclusion": "Fahmi says tighter airport security measures being considered after pilot’s arrest over alleged drug trafficking",
+          "what_happened": [
+            "KUALA LUMPUR, Aug 5 — The government is considering several security measures to be implemented at airports follow...",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "klang_valley"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": true,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_only",
+        "body_evidence_excerpt": "The government is considering several security measures to be implemented at airports following the recent arrest of a Malaysian pilot in Indonesia over alleged drug trafficking, said Communications Minister Datuk Seri Fahmi Fadzil. He said more stringent aviation security measures, in addition to tighter screening protocols, were among the measures being considered. “This would involve deploying regular police personnel together with Malaysia Airports Holdings Berhad (MAHB) Aviation Security (AVSEC) auxiliary police unit. “MAHB also needs to look into its background and health screening protocols for pilots and co-pilots. “In addition, both the police and Border Control and Protection Agency (AKPS) are asked to look into possible loopholes that led to the alleged incident,” he said at the weekly post-Cabinet media conference, which was broadcast live today. Fahmi, who is also the unity government spokesman, said the Cabinet had only received a verbal report from the Transport Ministry and Home Ministry regarding the Malaysia Airlines pilot who was allegedly arrested with drugs at an Indonesian airport. He said the government needed more time to study the f...",
+        "body_evidence_focus": [
+          "procedure_or_public_service",
+          "transport_or_infra",
+          "vehicle_or_transport_service",
+          "health_or_education"
+        ],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.malaymail.com/news/malaysia/2026/08/05/selangor-finetunes-new-model-for-wifi-smart-selangor-reimplementation-says-state-exco/230294",
+      "first_observed_on": "2026-08-05",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "HTTP 429"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Malay Mail",
+        "published_date": "2026年8月5日",
+        "title": "Selangor fine‑tunes new model for WiFi Smart Selangor reimplementation, says state exco",
+        "description": "SHAH ALAM, Aug 5 — The Selangor government, through Smartsel Sdn Bhd, is fine-tuning a new model for the reimpleme...",
+        "link": "https://www.malaymail.com/news/malaysia/2026/08/05/selangor-finetunes-new-model-for-wifi-smart-selangor-reimplementation-says-state-exco/230294",
+        "selected_summary": {
+          "conclusion": "Selangor fine‑tunes new model for WiFi Smart Selangor reimplementation, says state exco",
+          "what_happened": [
+            "SHAH ALAM, Aug 5 — The Selangor government, through Smartsel Sdn Bhd, is fine-tuning a new model for the reimpleme...",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "klang_valley"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": true,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_only",
+        "body_evidence_excerpt": "SHAH ALAM, Aug 5 — The Selangor government, through Smartsel Sdn Bhd, is fine-tuning a new model for the reimplementation of the WiFi Smart Selangor (WSS) initiative, taking into account various factors, including changing user needs. State Islamic Affairs and Innovation Committee chairman Mohd Fahmi Ngah said the new free WiFi model would also take into consideration usage levels at each location, infrastructure capacity, as well as a more sustainable funding and operational mechanism. “As part of these improvement efforts, a new free public WiFi model is being developed in collaboration with local telecommunications service providers for implementation at mosques under the management of the Selangor Islamic Religious Department (JAIS). “This new initiative is not only free of charge but also comes with security features stipulated by the Malaysian Communications and Multimedia Commission (MCMC) to ensure that only knowledgeable, authentic, factual and shariah-compliant information can be accessed within mosque premises,” he said at the Selangor State Legislative Assembly sitting today. He was responding to a question from Nurul Syazwani Noh (PN-Permatang), who sought an update...",
+        "body_evidence_focus": [
+          "procedure_or_public_service",
+          "transport_or_infra"
+        ],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.malaymail.com/news/malaysia/2026/08/05/spm-2025-holders-can-now-apply-for-public-service-depts-dermasiswa-b40-scholarships-until-aug-16/230284",
+      "first_observed_on": "2026-08-05",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "ValueError: generic life_impact for body_evidence focus"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Malay Mail",
+        "published_date": "2026年8月5日",
+        "title": "SPM 2025 holders can now apply for Public Service Dept’s Dermasiswa B40 scholarships until Aug 16",
+        "description": "PUTRAJAYA, Aug 5 — The Public Service Department (PSD) has opened applications for the 2026 Dermasiswa B40 (DB40)...",
+        "link": "https://www.malaymail.com/news/malaysia/2026/08/05/spm-2025-holders-can-now-apply-for-public-service-depts-dermasiswa-b40-scholarships-until-aug-16/230284",
+        "selected_summary": {
+          "conclusion": "SPM 2025 holders can now apply for Public Service Dept’s Dermasiswa B40 scholarships until Aug 16",
+          "what_happened": [
+            "PUTRAJAYA, Aug 5 — The Public Service Department (PSD) has opened applications for the 2026 Dermasiswa B40 (DB40)...",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "klang_valley"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": true,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "use_body",
+        "body_evidence_excerpt": "The Public Service Department (PSD) has opened applications for the 2026 Dermasiswa B40 (DB40) programme for 2025 Sijil Pelajaran Malaysia (SPM) holders from eligible B40 families to pursue diploma studies at institutions of higher learning in the country. PSD said applications for the programme are open from 2pm on August 3, 2026 (Monday), until 5pm on August 16, 2026 (Sunday), via the PSD Sponsorship Portal at https://penajaan.jpa.gov.my. The DB40 programme is a government initiative aimed at expanding access to higher education for students from low-income families through scholarship sponsorship. “Through the programme, students have the opportunity to pursue diploma studies at selected public universities, polytechnics, MARA TVET institutions and Public Skills Training Institutes (ILKA) in strategic fields that support the country’s human capital development,” PSD said in a statement. It added that eligible fields of study include Engineering and Technology; Technical and Vocational Education and Training (TVET); Social Sciences and Arts; Science; and Architecture. To be eligible, applicants must be Malaysian citizens and must have sat for the 2025 SPM ex...",
+        "body_evidence_focus": [
+          "procedure_or_public_service",
+          "transport_or_infra",
+          "health_or_education"
+        ],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    }
+  ]
 }
