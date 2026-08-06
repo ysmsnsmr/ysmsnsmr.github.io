@@ -3,12 +3,13 @@
 
 import json
 import re
-import urllib.request
 from typing import Any
 
+from malaysia_groq_model_profiles import profile_for_model_id
+from malaysia_groq_output_contract import ENTRY_REVIEW_SCHEMA, entry_review_schema_error
+from malaysia_groq_transport import attach_diagnostic, request_chat_completion
 
-GROQ_CHAT_COMPLETIONS_URL = "https://api.groq.com/openai/v1/chat/completions"
-GROQ_USER_AGENT = "ysmsnsmr-malaysia-news/0.1 (+https://ysmsnsmr.github.io/news/malaysia/)"
+
 MAX_REVIEW_RESPONSE_CHARS = 4000
 ENTRY_REVIEW_TIMEOUT_SECONDS = 30
 ENTRY_REVIEW_MAX_TOKENS = 500
@@ -91,43 +92,28 @@ def request_entry_review(
     api_key: str,
     model: str,
 ) -> dict[str, Any]:
-    body: dict[str, Any] = {
-        "model": model,
-        "messages": [
+    completion = request_chat_completion(
+        profile=profile_for_model_id(model),
+        messages=[
             {"role": "system", "content": ENTRY_REVIEW_SYSTEM_PROMPT},
             {
                 "role": "user",
                 "content": json.dumps(entry_review_payload(item, entry), ensure_ascii=False),
             },
         ],
-        "temperature": 0.0,
-        "max_tokens": ENTRY_REVIEW_MAX_TOKENS,
-        "stream": False,
-    }
-    if model.startswith("openai/gpt-oss-"):
-        body["include_reasoning"] = False
-        body["reasoning_effort"] = "low"
-    else:
-        body["response_format"] = {"type": "json_object"}
-
-    request = urllib.request.Request(
-        GROQ_CHAT_COMPLETIONS_URL,
-        data=json.dumps(body, ensure_ascii=False).encode("utf-8"),
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-            "User-Agent": GROQ_USER_AGENT,
-        },
-        method="POST",
+        temperature=0.0,
+        max_tokens=ENTRY_REVIEW_MAX_TOKENS,
+        timeout_seconds=ENTRY_REVIEW_TIMEOUT_SECONDS,
+        max_response_chars=MAX_REVIEW_RESPONSE_CHARS,
+        json_schema_name="malaysia_news_entry_review",
+        json_schema=ENTRY_REVIEW_SCHEMA,
+        schema_error=entry_review_schema_error,
+        api_key=api_key,
     )
-    with urllib.request.urlopen(request, timeout=ENTRY_REVIEW_TIMEOUT_SECONDS) as response:
-        response_body = response.read(MAX_REVIEW_RESPONSE_CHARS + 1).decode("utf-8", errors="replace")
-    if len(response_body) > MAX_REVIEW_RESPONSE_CHARS:
-        raise ValueError("entry review response too long")
-    payload = json.loads(response_body)
-    content = payload["choices"][0]["message"]["content"]
-    if not isinstance(content, str) or not content.strip():
-        raise ValueError("entry review response content is empty")
-    if len(content) > MAX_REVIEW_RESPONSE_CHARS:
-        raise ValueError("entry review message content too long")
-    return parse_entry_review_content(content)
+    try:
+        result = parse_entry_review_content(completion.content)
+    except ValueError as error:
+        attach_diagnostic(error, completion.diagnostic)
+        raise
+    result["_groq_diagnostic"] = completion.diagnostic
+    return result

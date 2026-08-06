@@ -12,6 +12,8 @@ from typing import Any
 
 DEFAULT_CONFIG_PATH = Path(__file__).with_name("malaysia_groq_model_profiles.json")
 SAFE_ARTIFACT_KEY = re.compile(r"[a-z0-9][a-z0-9-]*\Z")
+RESPONSE_MODES = {"json_object", "json_schema_strict"}
+REASONING_MODES = {"default", "low_hidden", "hidden"}
 
 
 @dataclass(frozen=True)
@@ -23,6 +25,8 @@ class ModelProfile:
     aliases: tuple[str, ...] = ()
     shutdown_date: str = ""
     preview: bool = False
+    response_mode: str = "json_object"
+    reasoning_mode: str = "default"
 
 
 @dataclass(frozen=True)
@@ -39,7 +43,7 @@ def load_model_profile_registry(path: Path = DEFAULT_CONFIG_PATH) -> ModelProfil
     value = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
         raise ValueError("model profile config root must be an object")
-    if value.get("schema_version") != "malaysia-groq-model-profiles/v1":
+    if value.get("schema_version") != "malaysia-groq-model-profiles/v2":
         raise ValueError("unsupported model profile schema")
 
     raw_profiles = value.get("profiles")
@@ -56,8 +60,14 @@ def load_model_profile_registry(path: Path = DEFAULT_CONFIG_PATH) -> ModelProfil
         name = clean_text(raw_profile.get("name"))
         artifact_key = clean_text(raw_profile.get("artifact_key"))
         model_id = clean_text(raw_profile.get("model_id"))
+        response_mode = clean_text(raw_profile.get("response_mode"))
+        reasoning_mode = clean_text(raw_profile.get("reasoning_mode"))
         if not name or not model_id or not SAFE_ARTIFACT_KEY.fullmatch(artifact_key):
             raise ValueError("model profile requires a name, model_id, and safe artifact_key")
+        if response_mode not in RESPONSE_MODES:
+            raise ValueError(f"unsupported model profile response_mode: {response_mode}")
+        if reasoning_mode not in REASONING_MODES:
+            raise ValueError(f"unsupported model profile reasoning_mode: {reasoning_mode}")
         if name in known_names or artifact_key in known_artifact_keys:
             raise ValueError("duplicate model profile name or artifact_key")
 
@@ -78,6 +88,8 @@ def load_model_profile_registry(path: Path = DEFAULT_CONFIG_PATH) -> ModelProfil
                 aliases=aliases,
                 shutdown_date=clean_text(raw_profile.get("shutdown_date")),
                 preview=bool(raw_profile.get("preview")),
+                response_mode=response_mode,
+                reasoning_mode=reasoning_mode,
             )
         )
         known_names.add(name)
@@ -114,6 +126,21 @@ def production_model_profile(value: str, registry: ModelProfileRegistry) -> Mode
 
 def artifact_only_model_profiles(registry: ModelProfileRegistry) -> tuple[ModelProfile, ...]:
     return tuple(profile for profile in registry.profiles if profile.artifact_only)
+
+
+def profile_for_model_id(value: str) -> ModelProfile:
+    """Resolve configured models while preserving a safe JSON-object fallback for unknown IDs."""
+    try:
+        return resolve_model_profile(value, load_model_profile_registry())
+    except ValueError:
+        return ModelProfile(
+            name=value or "legacy-model",
+            artifact_key="legacy-model",
+            model_id=value,
+            artifact_only=False,
+            response_mode="json_object",
+            reasoning_mode="default",
+        )
 
 
 def main() -> int:

@@ -50,6 +50,9 @@ from malaysia_groq_render_decision import (
     build_render_decisions,
 )
 from malaysia_groq_term_normalization import normalize_malaysia_terms
+from malaysia_groq_model_profiles import ModelProfile, profile_for_model_id
+from malaysia_groq_output_contract import SUMMARY_ENTRY_SCHEMA, summary_entry_schema_error
+from malaysia_groq_transport import error_diagnostic, request_chat_completion
 import render_malaysia_news_from_json as fallback_renderer
 
 
@@ -269,6 +272,7 @@ class GroqSummaryResult:
     entry: dict[str, Any] | None
     entry_contract_status: str
     entry_contract_reasons: list[str]
+    transport_diagnostic: dict[str, Any]
 
 
 class GroqSummaryRejected(ValueError):
@@ -280,12 +284,14 @@ class GroqSummaryRejected(ValueError):
         entry: dict[str, Any] | None = None,
         entry_contract_status: str = "unavailable",
         entry_contract_reasons: list[str] | None = None,
+        transport_diagnostic: dict[str, Any] | None = None,
     ) -> None:
         super().__init__(reason)
         self.entry = copy.deepcopy(entry) if isinstance(entry, dict) else None
         self.entry_candidate = entry_text(self.entry)
         self.entry_contract_status = entry_contract_status
         self.entry_contract_reasons = list(entry_contract_reasons or [])
+        self.transport_diagnostic = copy.deepcopy(transport_diagnostic) if isinstance(transport_diagnostic, dict) else None
 
 
 def entry_text(value: Any) -> str:
@@ -389,6 +395,7 @@ def inspect_entry_candidate(
         "entry_review_reasons": [],
         "entry_reviewed_entry": None,
         "entry_review_candidate": "",
+        "entry_review_call": None,
     }
     if not isinstance(entry, dict) or not entry_text(entry):
         result["entry_review_reasons"] = ["missing_entry_for_review"]
@@ -396,16 +403,19 @@ def inspect_entry_candidate(
     try:
         review = request_entry_review(item, entry, api_key, model)
     except urllib.error.HTTPError as error:
+        result["entry_review_call"] = error_diagnostic(error)
         result["entry_review_reasons"] = [f"HTTP {error.code}"]
         safe_log(f"groq: item {index + 1} entry review unavailable (HTTP {error.code}).")
         return result
     except (urllib.error.URLError, TimeoutError, KeyError, IndexError, TypeError, ValueError) as error:
+        result["entry_review_call"] = error_diagnostic(error)
         reason = error.__class__.__name__
         result["entry_review_reasons"] = [reason]
         safe_log(f"groq: item {index + 1} entry review unavailable ({reason}).")
         return result
 
     verdict = clean_text(review.get("verdict")).lower()
+    result["entry_review_call"] = review.get("_groq_diagnostic") if isinstance(review.get("_groq_diagnostic"), dict) else None
     issues = review.get("issues")
     result["entry_review_verdict"] = verdict
     result["entry_review_issues"] = issues if isinstance(issues, list) else []
@@ -745,7 +755,7 @@ def is_enforcement_or_misuse_item(item: dict[str, Any]) -> bool:
     return any(keyword in text for keyword in keywords)
 
 
-def retry_after_seconds(error: urllib.error.HTTPError) -> int | None:
+def retry_after_seconds(error: urllib.error.HTTPError, max_seconds: int = MAX_429_RETRY_AFTER_SECONDS) -> int | None:
     retry_after = error.headers.get("Retry-After") if error.headers else None
     if not retry_after:
         return None
@@ -753,7 +763,7 @@ def retry_after_seconds(error: urllib.error.HTTPError) -> int | None:
     if not retry_after.isdigit():
         return None
     seconds = int(retry_after)
-    if 0 <= seconds <= MAX_429_RETRY_AFTER_SECONDS:
+    if 0 <= seconds <= max_seconds:
         return seconds
     return None
 
@@ -764,16 +774,30 @@ def request_groq_summary_with_retry(
     model: str,
     debug: bool = False,
     index: int = 0,
+    model_profile: ModelProfile | None = None,
+    max_retry_after_seconds: int = MAX_429_RETRY_AFTER_SECONDS,
 ) -> GroqSummaryResult:
+    profile = model_profile or profile_for_model_id(model)
     try:
-        return request_groq_summary(item, api_key, model, debug, index)
+        return request_groq_summary(item, api_key, model, debug, index, profile)
     except urllib.error.HTTPError as error:
-        retry_after = retry_after_seconds(error)
+        first_diagnostic = error_diagnostic(error)
+        retry_after = retry_after_seconds(error, max_retry_after_seconds)
         if error.code != 429 or retry_after is None:
             raise
         safe_log(f"groq: item {index + 1} retrying after HTTP 429 Retry-After={retry_after}s.")
         time.sleep(retry_after)
-        return request_groq_summary(item, api_key, model, debug, index)
+        try:
+            result = request_groq_summary(item, api_key, model, debug, index, profile)
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError) as retry_error:
+            retry_diagnostic = error_diagnostic(retry_error)
+            if retry_diagnostic is not None:
+                retry_diagnostic["attempt_count"] = 2
+                retry_diagnostic["attempts"] = [first_diagnostic, retry_diagnostic.copy()]
+            raise
+        result.transport_diagnostic["attempt_count"] = 2
+        result.transport_diagnostic["attempts"] = [first_diagnostic, result.transport_diagnostic.copy()]
+        return result
 
 
 def request_groq_summary(
@@ -782,47 +806,27 @@ def request_groq_summary(
     model: str,
     debug: bool = False,
     index: int = 0,
+    model_profile: ModelProfile | None = None,
 ) -> GroqSummaryResult:
-    body = {
-        "model": model,
-        "messages": [
+    completion = request_chat_completion(
+        profile=model_profile or profile_for_model_id(model),
+        messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {
                 "role": "user",
                 "content": json.dumps(groq_payload_for_item(item), ensure_ascii=False),
             },
         ],
-        "temperature": 0.2,
-        "max_tokens": 500,
-        "stream": False,
-    }
-    if model.startswith("openai/gpt-oss-"):
-        body["include_reasoning"] = False
-        body["reasoning_effort"] = "low"
-    else:
-        body["response_format"] = {"type": "json_object"}
-
-    request = urllib.request.Request(
-        GROQ_CHAT_COMPLETIONS_URL,
-        data=json.dumps(body, ensure_ascii=False).encode("utf-8"),
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-            "User-Agent": GROQ_USER_AGENT,
-        },
-        method="POST",
+        temperature=0.2,
+        max_tokens=500,
+        timeout_seconds=TIMEOUT_SECONDS,
+        max_response_chars=MAX_RESPONSE_CHARS,
+        json_schema_name="malaysia_news_summary_entry",
+        json_schema=SUMMARY_ENTRY_SCHEMA,
+        schema_error=summary_entry_schema_error,
+        api_key=api_key,
     )
-    with urllib.request.urlopen(request, timeout=TIMEOUT_SECONDS) as response:
-        response_body = response.read(MAX_RESPONSE_CHARS + 1).decode("utf-8", errors="replace")
-    if len(response_body) > MAX_RESPONSE_CHARS:
-        raise ValueError("Groq response too long")
-    payload = json.loads(response_body)
-    content = payload["choices"][0]["message"]["content"]
-    if not isinstance(content, str) or not content.strip():
-        raise ValueError("Groq response content is empty")
-    if len(content) > MAX_RESPONSE_CHARS:
-        raise ValueError("Groq message content too long")
-    parsed_content = parse_groq_content(content)
+    parsed_content = completion.parsed
     if debug:
         debug_groq_payload(index, item, parsed_content)
     entry, entry_contract_status, entry_contract_reasons = entry_contract_for_item(
@@ -839,8 +843,9 @@ def request_groq_summary(
             entry,
             entry_contract_status,
             entry_contract_reasons,
+            completion.diagnostic,
         ) from error
-    return GroqSummaryResult(summary, entry, entry_contract_status, entry_contract_reasons)
+    return GroqSummaryResult(summary, entry, entry_contract_status, entry_contract_reasons, completion.diagnostic)
 
 
 def validate_groq_summary(value: Any) -> dict[str, Any]:
@@ -915,6 +920,9 @@ def build_decision_record(
         "entry_review_reasons": [],
         "entry_reviewed_entry": None,
         "entry_review_candidate": "",
+        "entry_review_call": None,
+        "entry_review_policy": "enabled",
+        "groq_call": None,
         "full_rejection_reason": "",
     }
 
@@ -1228,6 +1236,12 @@ def entry_candidate_observation(decision_records: list[dict[str, Any]]) -> dict[
 
 def entry_review_observation(decision_records: list[dict[str, Any]]) -> dict[str, Any]:
     requested_records = [record for record in decision_records if record.get("requested") is True]
+    policies = {
+        clean_text(record.get("entry_review_policy"))
+        for record in requested_records
+        if clean_text(record.get("entry_review_policy"))
+    }
+    policy = "disabled_for_model_comparison" if policies == {"disabled_for_model_comparison"} else "enabled"
     attempted_records = [
         record for record in requested_records
         if isinstance(record.get("entry"), dict) and entry_text(record.get("entry"))
@@ -1257,6 +1271,8 @@ def entry_review_observation(decision_records: list[dict[str, Any]]) -> dict[str
     ]
     return {
         "observation_only": True,
+        "entry_review_policy": policy,
+        "not_run": policy == "disabled_for_model_comparison",
         "requested_count": len(requested_records),
         "entry_review_max_allowed_count": len(requested_records),
         "entry_review_attempted_count": len(attempted_records),
@@ -1431,12 +1447,44 @@ def accepted_only_empty_markdown(model: str, stats: dict[str, int]) -> str:
     )
 
 
+def rate_reset_wait_seconds(diagnostic: Any) -> float | None:
+    if not isinstance(diagnostic, dict):
+        return None
+    rate_limit = diagnostic.get("rate_limit")
+    raw = rate_limit.get("reset_tokens") if isinstance(rate_limit, dict) else None
+    text = clean_text(raw)
+    if not text:
+        return None
+    match = re.fullmatch(r"(?:(\d+)m)?(\d+(?:\.\d+)?)s", text)
+    if not match:
+        return None
+    minutes = int(match.group(1) or "0")
+    return minutes * 60 + float(match.group(2))
+
+
+def load_request_link_allowlist(path: str | None) -> set[str] | None:
+    if not path:
+        return None
+    value = json.loads(Path(path).read_text(encoding="utf-8"))
+    raw_links = value.get("links") if isinstance(value, dict) else value
+    if not isinstance(raw_links, list):
+        raise ValueError("request link allowlist must contain a links array")
+    links = {clean_text(link) for link in raw_links if clean_text(link)}
+    if not links:
+        raise ValueError("request link allowlist must not be empty")
+    return links
+
+
 def render_with_groq(
     data: dict[str, Any],
     api_key: str,
     model: str,
     force_all: bool,
     debug: bool,
+    request_link_allowlist: set[str] | None = None,
+    enable_entry_review: bool = True,
+    rate_reset_wait_max_seconds: int = 0,
+    max_retry_after_seconds: int = MAX_429_RETRY_AFTER_SECONDS,
 ) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str, int], list[dict[str, Any]]]:
     rendered_data = copy.deepcopy(data)
     accepted_records: list[dict[str, Any]] = []
@@ -1463,6 +1511,7 @@ def render_with_groq(
         (index, item) for index, item in enumerate(items) if isinstance(item, dict)
     ]
     request_cap = force_all_request_cap() if force_all else 0
+    rate_budget_deferred = False
     if force_all and debug:
         safe_log(f"groq-debug: force_all request cap={request_cap}")
     for index, item in entries:
@@ -1470,7 +1519,17 @@ def render_with_groq(
             continue
         needs_groq = item_needs_groq(item)
         decision_record = build_decision_record(index, item, force_all, needs_groq)
+        if not enable_entry_review:
+            decision_record["entry_review_policy"] = "disabled_for_model_comparison"
         decision_records.append(decision_record)
+        if request_link_allowlist is not None and clean_text(item.get("link")) not in request_link_allowlist:
+            decision_record["decision"] = "skipped"
+            decision_record["reason"] = "comparison_cohort_excluded"
+            continue
+        if rate_budget_deferred:
+            decision_record["decision"] = "skipped"
+            decision_record["reason"] = "rate_budget_deferred"
+            continue
         reason = groq_exclusion_reason(item)
         if reason:
             decision_record["decision"] = "skipped"
@@ -1509,20 +1568,29 @@ def render_with_groq(
         decision_record["entry_candidate_status"] = "pending"
         try:
             original_summary = copy.deepcopy(item.get("selected_summary", {}))
-            groq_result = request_groq_summary_with_retry(item, api_key, model, debug, index)
+            groq_result = request_groq_summary_with_retry(
+                item,
+                api_key,
+                model,
+                debug,
+                index,
+                max_retry_after_seconds=max_retry_after_seconds,
+            )
             improved_summary = groq_result.summary
+            decision_record["groq_call"] = groq_result.transport_diagnostic
             decision_record["entry"] = groq_result.entry
             decision_record["entry_candidate"] = entry_text(groq_result.entry)
             decision_record["entry_contract_status"] = groq_result.entry_contract_status
             decision_record["entry_contract_reasons"] = groq_result.entry_contract_reasons
-            attach_entry_review_observation(
-                decision_record,
-                item,
-                groq_result.entry,
-                api_key,
-                model,
-                index,
-            )
+            if enable_entry_review:
+                attach_entry_review_observation(
+                    decision_record,
+                    item,
+                    groq_result.entry,
+                    api_key,
+                    model,
+                    index,
+                )
             if force_all:
                 gate_reason = force_all_gate_reason(item, improved_summary)
                 if gate_reason:
@@ -1548,6 +1616,7 @@ def render_with_groq(
             accepted += 1
         except urllib.error.HTTPError as error:
             failed += 1
+            decision_record["groq_call"] = error_diagnostic(error)
             decision_record["decision"] = "fallback"
             decision_record["reason"] = f"HTTP {error.code}"
             decision_record["entry_candidate_status"] = "unavailable"
@@ -1556,6 +1625,8 @@ def render_with_groq(
             safe_log(f"groq: item {index + 1} fallback (HTTP {error.code}).")
         except ValueError as error:
             failed += 1
+            diagnostic = getattr(error, "transport_diagnostic", None)
+            decision_record["groq_call"] = diagnostic if isinstance(diagnostic, dict) else error_diagnostic(error)
             reason = str(error) or "validation failed"
             error_entry = getattr(error, "entry", None)
             if isinstance(error_entry, dict):
@@ -1570,14 +1641,15 @@ def render_with_groq(
                     clean_text(value) for value in error_entry_reasons if clean_text(value)
                 ]
             if isinstance(error_entry, dict):
-                attach_entry_review_observation(
-                    decision_record,
-                    item,
-                    error_entry,
-                    api_key,
-                    model,
-                    index,
-                )
+                if enable_entry_review:
+                    attach_entry_review_observation(
+                        decision_record,
+                        item,
+                        error_entry,
+                        api_key,
+                        model,
+                        index,
+                    )
             decision_record["decision"] = "fallback"
             decision_record["reason"] = f"ValueError: {reason}"
             decision_record["entry_candidate_status"] = (
@@ -1589,12 +1661,20 @@ def render_with_groq(
                 debug_groq_payload(index, item, reason=reason)
         except (urllib.error.URLError, TimeoutError, KeyError, IndexError, TypeError) as error:
             failed += 1
+            decision_record["groq_call"] = error_diagnostic(error)
             decision_record["decision"] = "fallback"
             decision_record["reason"] = error.__class__.__name__
             decision_record["entry_candidate_status"] = "unavailable"
             decision_record["entry_contract_status"] = "unavailable"
             decision_record["full_rejection_reason"] = error.__class__.__name__
             safe_log(f"groq: item {index + 1} fallback ({error.__class__.__name__}).")
+        wait_seconds = rate_reset_wait_seconds(decision_record.get("groq_call"))
+        if rate_reset_wait_max_seconds > 0 and wait_seconds is not None:
+            if wait_seconds > rate_reset_wait_max_seconds:
+                rate_budget_deferred = True
+                safe_log(f"groq: rate budget deferred after item {index + 1} ({wait_seconds:.2f}s).")
+            elif wait_seconds > 0:
+                time.sleep(wait_seconds)
     safe_log(f"groq: requested={requested} accepted={accepted} fallback={failed}")
     stats = {"requested": requested, "accepted": accepted, "fallback": failed}
     accepted_records.sort(key=lambda record: record.get("index", 0))
@@ -1609,6 +1689,20 @@ def main() -> int:
     parser.add_argument("--model", help="Groq model name. Defaults to GROQ_MODEL or llama-3.3-70b-versatile.")
     parser.add_argument("--force-all", action="store_true", help="Send all items to Groq for local comparison.")
     parser.add_argument("--debug-groq", action="store_true", help="Write short Groq validation diagnostics to stderr.")
+    parser.add_argument("--request-link-allowlist", help="JSON file containing comparison-only request links.")
+    parser.add_argument("--disable-entry-review", action="store_true", help="Do not make observation-only entry review requests.")
+    parser.add_argument(
+        "--rate-reset-wait-max-seconds",
+        type=int,
+        default=0,
+        help="Comparison-only maximum wait for the Groq token reset header.",
+    )
+    parser.add_argument(
+        "--max-429-retry-after-seconds",
+        type=int,
+        default=MAX_429_RETRY_AFTER_SECONDS,
+        help="Maximum Retry-After value eligible for one Groq retry.",
+    )
     parser.add_argument("--improved-items-output", help="Write accepted Groq summary improvements to this JSON path.")
     parser.add_argument("--json-render-output", help="Write Markdown rendered directly from Groq-updated JSON to this path.")
     parser.add_argument(
@@ -1636,12 +1730,17 @@ def main() -> int:
     data = fallback_renderer.load_json(str(resolved_json_input))
     model = args.model or os.environ.get("GROQ_MODEL") or DEFAULT_MODEL
     api_key = os.environ.get("GROQ_API_KEY", "")
+    request_link_allowlist = load_request_link_allowlist(args.request_link_allowlist)
     rendered_data, accepted_records, stats, decision_records = render_with_groq(
         data,
         api_key,
         model,
         args.force_all,
         args.debug_groq,
+        request_link_allowlist=request_link_allowlist,
+        enable_entry_review=not args.disable_entry_review,
+        rate_reset_wait_max_seconds=max(args.rate_reset_wait_max_seconds, 0),
+        max_retry_after_seconds=max(args.max_429_retry_after_seconds, 0),
     )
     items = rendered_data.get("items")
     render_decisions = build_render_decisions(

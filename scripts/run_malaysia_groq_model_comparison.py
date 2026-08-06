@@ -7,6 +7,8 @@ import json
 import os
 import subprocess
 import sys
+import time
+import urllib.error
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -19,13 +21,18 @@ from malaysia_groq_model_profiles import (
     load_model_profile_registry,
     resolve_model_profile,
 )
+from malaysia_groq_output_contract import SUMMARY_ENTRY_SCHEMA, summary_entry_schema_error
+from malaysia_groq_transport import error_diagnostic, request_chat_completion
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 RENDERER = SCRIPT_DIR / "render_malaysia_news_with_groq.py"
 VALIDATOR = SCRIPT_DIR / "validate_malaysia_groq_merged_candidate.py"
-COMPARISON_SCHEMA = "malaysia-groq-model-comparison/v1"
+COMPARISON_SCHEMA = "malaysia-groq-model-comparison/v2"
 GOLDEN_SCHEMA = "malaysia-groq-model-migration-golden/v1"
+PROBE_FIXTURE = SCRIPT_DIR / "fixtures" / "malaysia_groq_model_compatibility_probe.json"
+QUALITY_COHORT_SIZE = 2
+MAX_RATE_RESET_WAIT_SECONDS = 60
 QUALITY_REVIEW_CRITERIA = (
     "subject_preserved",
     "attribution_preserved",
@@ -65,10 +72,73 @@ def dict_value(value: Any) -> dict[str, Any]:
     return value if isinstance(value, dict) else {}
 
 
+def counter_dict(values: list[str]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for value in values:
+        counts[value] = counts.get(value, 0) + 1
+    return {key: counts[key] for key in sorted(counts)}
+
+
+def decision_records(improved: dict[str, Any] | None) -> list[dict[str, Any]]:
+    diagnostics = dict_value((improved or {}).get("diagnostics"))
+    return [record for record in list_value(diagnostics.get("decision_records")) if isinstance(record, dict)]
+
+
+def quality_cohort_links(improved: dict[str, Any] | None, limit: int = QUALITY_COHORT_SIZE) -> list[str]:
+    requested = [
+        record
+        for record in decision_records(improved)
+        if record.get("requested") is True and isinstance(record.get("link"), str) and record["link"]
+    ]
+    requested.sort(
+        key=lambda record: (
+            -int_value(record.get("force_all_priority")),
+            int_value(record.get("index")) or sys.maxsize,
+        )
+    )
+    return [record["link"] for record in requested[:limit]]
+
+
+def transport_observation(improved: dict[str, Any] | None) -> dict[str, dict[str, int]]:
+    records = [record for record in decision_records(improved) if record.get("requested") is True]
+    calls = [dict_value(record.get("groq_call")) for record in records]
+    return {
+        "transport_status_counts": counter_dict(
+            [str(call.get("transport_status") or "not_recorded") for call in calls]
+        ),
+        "json_contract_status_counts": counter_dict(
+            [str(call.get("json_contract_status") or "not_evaluated") for call in calls]
+        ),
+        "semantic_gate_status_counts": counter_dict(
+            [
+                "accepted"
+                if record.get("accepted") is True
+                else "rejected"
+                if str(record.get("reason") or "").startswith("ValueError: force_all accepted gate:")
+                else "not_accepted"
+                for record in records
+            ]
+        ),
+    }
+
+
+def cohort_metrics(improved: dict[str, Any] | None, links: list[str]) -> dict[str, int]:
+    wanted = set(links)
+    records = [record for record in decision_records(improved) if record.get("link") in wanted]
+    requested = [record for record in records if record.get("requested") is True]
+    return {
+        "cohort_size": len(links),
+        "requested_count": len(requested),
+        "accepted_count": sum(1 for record in requested if record.get("accepted") is True),
+        "fallback_count": sum(1 for record in requested if record.get("decision") == "fallback"),
+    }
+
+
 def comparison_metrics(
     selected_count: int,
     improved: dict[str, Any] | None,
     validator: dict[str, Any] | None,
+    cohort_links: list[str] | None = None,
 ) -> dict[str, Any]:
     improved = improved or {}
     validator = validator or {}
@@ -92,6 +162,7 @@ def comparison_metrics(
     missing_count = len(list_value(url_validation.get("missing_selected_urls")))
     forbidden_matches = [str(value) for value in list_value(markdown_validation.get("forbidden_matches"))]
     entry_complete = int_value(entry_contract.get("entry_contract_complete_count"))
+    review_disabled = entry_review.get("entry_review_policy") == "disabled_for_model_comparison"
     reviewed_available = int_value(entry_review.get("reviewed_entry_available_count"))
     rss_lines = int_value(provenance_line_counts.get("rss_derived"))
     replaced_lines = int_value(provenance_line_counts.get("groq_replaced"))
@@ -129,8 +200,11 @@ def comparison_metrics(
         ),
         "reviewed_entry_available_count": reviewed_available,
         "reviewed_entry_available_rate_of_requested": (
-            safe_ratio(reviewed_available, requested) if has_improved else None
+            None if review_disabled else safe_ratio(reviewed_available, requested) if has_improved else None
         ),
+        "entry_review_policy": entry_review.get("entry_review_policy") or "enabled",
+        "quality_cohort": cohort_metrics(improved, cohort_links or []),
+        **transport_observation(improved),
         "groq_replaced_summary_line_count": replaced_lines,
         "groq_inherited_summary_line_count": inherited_lines,
         "groq_replaced_summary_line_rate": safe_ratio(replaced_lines, total_lines) if has_improved else None,
@@ -168,9 +242,16 @@ def profile_result(
     improved_path: Path,
     candidate_path: Path,
     validator_path: Path,
+    cohort_links: list[str],
+    probe_path: Path | None = None,
 ) -> dict[str, Any]:
     improved = load_optional_json(improved_path)
     validator = load_optional_json(validator_path)
+    probe = load_optional_json(probe_path) if probe_path else None
+    metrics = comparison_metrics(selected_count, improved, validator, cohort_links)
+    if role == "artifact-only" and not improved:
+        metrics["entry_review_policy"] = "disabled_for_model_comparison"
+        metrics["reviewed_entry_available_rate_of_requested"] = None
     return {
         "profile": profile.name,
         "model_id": profile.model_id,
@@ -182,8 +263,16 @@ def profile_result(
             "improved_items": str(improved_path),
             "candidate_markdown": str(candidate_path),
             "validator_status": str(validator_path),
+            "compatibility_probe": str(probe_path) if probe_path else "",
         },
-        "metrics": comparison_metrics(selected_count, improved, validator),
+        "probe_status": probe.get("probe_status") if isinstance(probe, dict) else "not_applicable",
+        "probe": probe or {},
+        "quality_cohort_links": cohort_links,
+        "entry_review_policy": metrics.get("entry_review_policy"),
+        "transport_status_counts": metrics.get("transport_status_counts"),
+        "json_contract_status_counts": metrics.get("json_contract_status_counts"),
+        "semantic_gate_status_counts": metrics.get("semantic_gate_status_counts"),
+        "metrics": metrics,
         "accepted_summaries": accepted_summaries_by_link(improved),
         "decisions": decisions_by_link(improved),
     }
@@ -225,13 +314,14 @@ def write_comparison_report(path: Path, report: dict[str, Any], selected: dict[s
         "- observation_only: true",
         f"- generated_at: {report.get('generated_at')}",
         f"- selected_count: {report.get('selected_count')}",
+        f"- quality_cohort_links: {', '.join(str(link) for link in list_value(report.get('quality_cohort_links')))}",
         "- production_changed: false",
         "- prompt_changed: false",
         "- validator_changed: false",
         "",
         "## Fixed metrics",
         "",
-        "| Profile | Role | Run | URL retention | Validator | Accepted/requested | Request fallback | Selected fallback | Forbidden | Entry contract complete | Reviewed entry available |",
+        "| Profile | Role | Run | URL retention | Validator | Accepted/requested | Request fallback | Selected fallback | Forbidden | Entry contract complete | Entry review |",
         "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for result in profiles:
@@ -253,7 +343,38 @@ def write_comparison_report(path: Path, report: dict[str, Any], selected: dict[s
                 selected_fallback=percentage_text(metrics.get("selected_fallback_rate")),
                 forbidden=int_value(metrics.get("forbidden_expression_count")),
                 entry_rate=percentage_text(metrics.get("entry_contract_complete_rate_of_requested")),
-                reviewed_rate=percentage_text(metrics.get("reviewed_entry_available_rate_of_requested")),
+                reviewed_rate=(
+                    "not_run"
+                    if metrics.get("entry_review_policy") == "disabled_for_model_comparison"
+                    else percentage_text(metrics.get("reviewed_entry_available_rate_of_requested"))
+                ),
+            )
+        )
+
+    lines.extend(
+        [
+            "",
+            "## Transport and JSON contract",
+            "",
+            "| Profile | Probe | Cohort accepted/requested | Transport | JSON contract | Semantic gate | Markdown validator |",
+            "|---|---|---:|---|---|---|---:|",
+        ]
+    )
+    for result in profiles:
+        if not isinstance(result, dict):
+            continue
+        metrics = dict_value(result.get("metrics"))
+        cohort = dict_value(metrics.get("quality_cohort"))
+        lines.append(
+            "| {profile} | {probe} | {accepted}/{requested} | {transport} | {contract} | {gate} | {validator} |".format(
+                profile=markdown_text(result.get("profile")),
+                probe=markdown_text(result.get("probe_status")),
+                accepted=int_value(cohort.get("accepted_count")),
+                requested=int_value(cohort.get("requested_count")),
+                transport=markdown_text(result.get("transport_status_counts")),
+                contract=markdown_text(result.get("json_contract_status_counts")),
+                gate=markdown_text(result.get("semantic_gate_status_counts")),
+                validator=validator_text(metrics.get("validator_passed")),
             )
         )
 
@@ -438,10 +559,79 @@ def run_command(command: list[str], stdout_path: Path, stderr_path: Path) -> int
     return completed.returncode
 
 
+def reset_seconds(diagnostic: dict[str, Any]) -> float | None:
+    rate_limit = dict_value(diagnostic.get("rate_limit"))
+    value = str(rate_limit.get("reset_tokens") or "")
+    if not value.endswith("s"):
+        return None
+    try:
+        if "m" in value:
+            minutes, seconds = value[:-1].split("m", 1)
+            return int(minutes) * 60 + float(seconds)
+        return float(value[:-1])
+    except ValueError:
+        return None
+
+
+def wait_for_rate_reset(diagnostic: dict[str, Any]) -> str:
+    seconds = reset_seconds(diagnostic)
+    if seconds is None or seconds <= 0:
+        return "not_needed"
+    if seconds > MAX_RATE_RESET_WAIT_SECONDS:
+        return "rate_budget_deferred"
+    time.sleep(seconds)
+    return "waited"
+
+
+def run_compatibility_probe(profile: ModelProfile, api_key: str, path: Path) -> dict[str, Any]:
+    fixture = load_json(PROBE_FIXTURE)
+    item = dict_value(fixture.get("item"))
+    if not item:
+        raise ValueError("compatibility probe fixture is missing item")
+    try:
+        completion = request_chat_completion(
+            profile=profile,
+            messages=[
+                {
+                    "role": "system",
+                    "content": "Return one concise Japanese news summary and entry using only the supplied source. Return JSON only.",
+                },
+                {"role": "user", "content": json.dumps(item, ensure_ascii=False)},
+            ],
+            temperature=0.0,
+            max_tokens=500,
+            timeout_seconds=30,
+            max_response_chars=4000,
+            json_schema_name="malaysia_news_summary_entry",
+            json_schema=SUMMARY_ENTRY_SCHEMA,
+            schema_error=summary_entry_schema_error,
+            api_key=api_key,
+        )
+        contract_valid = completion.diagnostic.get("json_contract_status") == "valid"
+        result = {
+            "probe_status": "passed" if contract_valid else "contract_failed",
+            "diagnostic": completion.diagnostic,
+            "parsed_root_keys": sorted(completion.parsed) if isinstance(completion.parsed, dict) else [],
+            "rate_wait": wait_for_rate_reset(completion.diagnostic) if contract_valid else "not_needed",
+        }
+    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError) as error:
+        diagnostic = error_diagnostic(error) or {}
+        result = {
+            "probe_status": "transport_failed"
+            if str(diagnostic.get("transport_status") or "") not in {"success", ""}
+            else "contract_failed",
+            "diagnostic": diagnostic,
+            "rate_wait": "not_needed",
+        }
+    path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return result
+
+
 def run_artifact_profile(
     profile: ModelProfile,
     args: argparse.Namespace,
     selected_count: int,
+    cohort_links: list[str],
 ) -> dict[str, Any]:
     profile_dir = args.output_dir / profile.artifact_key
     profile_dir.mkdir(parents=True, exist_ok=True)
@@ -450,6 +640,7 @@ def run_artifact_profile(
     validator_path = profile_dir / "groq_json_render_validator_status.json"
     validator_report = profile_dir / "groq_json_render_validator_report.md"
     run_status_path = profile_dir / "run_status.txt"
+    probe_path = profile_dir / "compatibility_probe.json"
 
     if not os.environ.get("GROQ_API_KEY"):
         run_status_path.write_text("skipped_missing_groq_api_key\n", encoding="utf-8")
@@ -461,6 +652,52 @@ def run_artifact_profile(
             improved_path,
             candidate_path,
             validator_path,
+            cohort_links,
+            probe_path,
+        )
+
+    probe = run_compatibility_probe(profile, os.environ["GROQ_API_KEY"], probe_path)
+    if probe.get("probe_status") != "passed":
+        run_status = "probe_failed"
+        run_status_path.write_text(run_status + "\n", encoding="utf-8")
+        return profile_result(
+            profile,
+            "artifact-only",
+            run_status,
+            selected_count,
+            improved_path,
+            candidate_path,
+            validator_path,
+            cohort_links,
+            probe_path,
+        )
+    if probe.get("rate_wait") == "rate_budget_deferred":
+        run_status = "rate_budget_deferred"
+        run_status_path.write_text(run_status + "\n", encoding="utf-8")
+        return profile_result(
+            profile,
+            "artifact-only",
+            run_status,
+            selected_count,
+            improved_path,
+            candidate_path,
+            validator_path,
+            cohort_links,
+            probe_path,
+        )
+    if not cohort_links:
+        run_status = "skipped_no_quality_cohort"
+        run_status_path.write_text(run_status + "\n", encoding="utf-8")
+        return profile_result(
+            profile,
+            "artifact-only",
+            run_status,
+            selected_count,
+            improved_path,
+            candidate_path,
+            validator_path,
+            cohort_links,
+            probe_path,
         )
 
     command = [
@@ -481,8 +718,13 @@ def run_artifact_profile(
         str(candidate_path),
         "--entry-render-output",
         str(profile_dir / "groq_entry_render_candidate.md"),
-        "--reviewed-entry-render-output",
-        str(profile_dir / "groq_reviewed_entry_render_candidate.md"),
+        "--request-link-allowlist",
+        str(args.cohort_output),
+        "--disable-entry-review",
+        "--rate-reset-wait-max-seconds",
+        str(MAX_RATE_RESET_WAIT_SECONDS),
+        "--max-429-retry-after-seconds",
+        str(MAX_RATE_RESET_WAIT_SECONDS),
         "--merge-accepted-with-rss-markdown",
     ]
     if args.force_all:
@@ -501,6 +743,8 @@ def run_artifact_profile(
             improved_path,
             candidate_path,
             validator_path,
+            cohort_links,
+            probe_path,
         )
 
     validator_command = [
@@ -525,7 +769,14 @@ def run_artifact_profile(
         profile_dir / "validator_stdout.log",
         profile_dir / "validator_stderr.log",
     )
-    run_status = "success" if validator_code == 0 else f"validator_failed_{validator_code}"
+    improved = load_optional_json(improved_path)
+    records = decision_records(improved)
+    if any(record.get("reason") == "rate_budget_deferred" for record in records):
+        run_status = "rate_budget_deferred"
+    elif len([record for record in records if record.get("requested") is True]) < len(cohort_links):
+        run_status = "quality_partial"
+    else:
+        run_status = "quality_completed"
     run_status_path.write_text(run_status + "\n", encoding="utf-8")
     return profile_result(
         profile,
@@ -535,6 +786,8 @@ def run_artifact_profile(
         improved_path,
         candidate_path,
         validator_path,
+        cohort_links,
+        probe_path,
     )
 
 
@@ -565,6 +818,21 @@ def main() -> int:
     selected = load_json(args.selected_json)
     selected_count = len(list_value(selected.get("items")))
     baseline_improved = load_optional_json(args.baseline_improved_items)
+    cohort_links = quality_cohort_links(baseline_improved)
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    args.cohort_output = args.output_dir / "comparison_cohort.json"
+    args.cohort_output.write_text(
+        json.dumps(
+            {
+                "schema_version": "malaysia-groq-model-comparison-cohort/v1",
+                "links": cohort_links,
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
 
     profiles = [
         profile_result(
@@ -575,10 +843,11 @@ def main() -> int:
             args.baseline_improved_items,
             args.baseline_candidate,
             args.baseline_validator_status,
+            cohort_links,
         )
     ]
     for profile in artifact_only_model_profiles(registry):
-        profiles.append(run_artifact_profile(profile, args, selected_count))
+        profiles.append(run_artifact_profile(profile, args, selected_count, cohort_links))
 
     generated_at = datetime.now(tz=ZoneInfo("UTC")).replace(microsecond=0).isoformat()
     report = {
@@ -586,6 +855,7 @@ def main() -> int:
         "generated_at": generated_at,
         "observation_only": True,
         "selected_count": selected_count,
+        "quality_cohort_links": cohort_links,
         "fixed_quality_review_criteria": list(QUALITY_REVIEW_CRITERIA),
         "profiles": profiles,
         "production_boundary": {
@@ -613,6 +883,7 @@ def main() -> int:
             {
                 "observation_only": True,
                 "artifact_profile_statuses": statuses,
+                "quality_cohort_links": cohort_links,
                 "golden_fixture_items_added": added,
             },
             ensure_ascii=False,

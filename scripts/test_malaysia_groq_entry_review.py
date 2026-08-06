@@ -126,6 +126,40 @@ class EntryReviewTest(unittest.TestCase):
         self.assertIn("body_evidence", payload)
         self.assertEqual(payload["entry"], ENTRY)
 
+    def test_comparison_allowlist_skips_entry_review_and_excluded_items(self) -> None:
+        first = {
+            "title": "Government plan",
+            "description": "The government announced a plan.",
+            "link": "https://example.test/one",
+            "selected_summary": {},
+        }
+        second = {
+            "title": "Other plan",
+            "description": "Another plan was announced.",
+            "link": "https://example.test/two",
+            "selected_summary": {},
+        }
+        rejection = GroqSummaryRejected("invalid summary", ENTRY, "incomplete", ["missing_attribution"])
+        with patch("render_malaysia_news_with_groq.item_needs_groq", return_value=True), patch(
+            "render_malaysia_news_with_groq.groq_exclusion_reason", return_value=""
+        ), patch(
+            "render_malaysia_news_with_groq.request_groq_summary_with_retry", side_effect=rejection
+        ), patch("render_malaysia_news_with_groq.request_entry_review") as review:
+            _, _, stats, records = render_with_groq(
+                {"items": [first, second]},
+                "key",
+                "model",
+                False,
+                False,
+                request_link_allowlist={first["link"]},
+                enable_entry_review=False,
+            )
+
+        self.assertEqual(stats, {"requested": 1, "accepted": 0, "fallback": 1})
+        self.assertEqual(records[0]["entry_review_policy"], "disabled_for_model_comparison")
+        self.assertEqual(records[1]["reason"], "comparison_cohort_excluded")
+        review.assert_not_called()
+
     def test_parse_pass_and_revise(self) -> None:
         parsed = parse_entry_review_content(
             '{"verdict":"pass","issues":[],"reviewed_entry":' + json.dumps(ENTRY) + "}"
