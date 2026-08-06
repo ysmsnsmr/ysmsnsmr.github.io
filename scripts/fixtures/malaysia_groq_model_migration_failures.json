@@ -280,6 +280,7 @@
       "first_observed_on": "2026-08-05",
       "production_profile": "llama33-70b",
       "failure_reasons": [
+        "HTTP 429",
         "ValueError: generic life_impact for body_evidence focus"
       ],
       "item": {
@@ -333,6 +334,74 @@
         "body_evidence_focus": [
           "procedure_or_public_service",
           "transport_or_infra",
+          "health_or_education"
+        ],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.malaymail.com/news/malaysia/2026/08/05/state-and-district-education-offices-to-nominate-schools-for-moe-reform-initiative-each-to-get-rm100000-says-deputy-minister/230347",
+      "first_observed_on": "2026-08-06",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "ValueError: generic life_impact for body_evidence focus"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Malay Mail",
+        "published_date": "2026年8月5日",
+        "title": "State and district education offices to nominate schools for MOE reform initiative, each to get RM100,000, says deputy minister",
+        "description": "KUALA SELANGOR, Aug 5 — District Education Offices (PPDs) and State Education Departments (JPNs) are responsible f...",
+        "link": "https://www.malaymail.com/news/malaysia/2026/08/05/state-and-district-education-offices-to-nominate-schools-for-moe-reform-initiative-each-to-get-rm100000-says-deputy-minister/230347",
+        "selected_summary": {
+          "conclusion": "State and district education offices to nominate schools for MOE reform initiative, each to get RM100,000, says deputy minister",
+          "what_happened": [
+            "KUALA SELANGOR, Aug 5 — District Education Offices (PPDs) and State Education Departments (JPNs) are responsible f...",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "klang_valley"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": true,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "use_body",
+        "body_evidence_excerpt": "KUALA SELANGOR, Aug 5 — District Education Offices (PPDs) and State Education Departments (JPNs) are responsible for identifying and nominating schools to participate in the Ministry of Education’s (MOE) school reform programme, Deputy Education Minister Wong Kah Woh said. He said 10 high-performing schools in each district, comprising five primary and five secondary schools, will be selected based on their academic achievement, co-curricular performance, and student character development. “The PPD will submit the list of these 10 high-performing schools to the JPN, which will then forward the nominations to the MOE for the next stage of the selection process. “The selection has already been completed, and the programme has now entered the implementation phase following final approval,” he told reporters after the groundbreaking ceremony for SJKC Eco Grandeur, officiated by Education Minister Fadhlina Sidek in Puncak Alam today. Wong said the initiative is aimed at enhancing academic excellence and student character, with each selected school receiving a special allocation of RM100,000. He said the programme reflects the government’s continued commitment to strengthening the nat...",
+        "body_evidence_focus": [
+          "procedure_or_public_service",
           "health_or_education"
         ],
         "body_evidence_forbidden": [
