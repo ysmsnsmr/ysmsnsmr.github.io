@@ -412,6 +412,76 @@
           "unsupported_conditions"
         ]
       }
+    },
+    {
+      "link": "https://www.malaymail.com/news/malaysia/2026/08/06/mrt-corp-awards-rm303b-penang-mutiara-lrt-systems-contract-to-mrcb-theta-edge-jv/230371",
+      "first_observed_on": "2026-08-06",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "ValueError: unsafe numeric unit conversion: rm3.028 billion"
+      ],
+      "item": {
+        "category": "【生活インパクト】",
+        "source": "Malay Mail",
+        "published_date": "2026年8月6日",
+        "title": "MRT Corp awards RM3.03b Penang Mutiara LRT systems contract to MRCB-Theta Edge JV",
+        "description": "GEORGE TOWN, Aug 6 — MRT Corp has awarded a RM3.028 billion system turnkey contract for the Penang Mutiara L...",
+        "link": "https://www.malaymail.com/news/malaysia/2026/08/06/mrt-corp-awards-rm303b-penang-mutiara-lrt-systems-contract-to-mrcb-theta-edge-jv/230371",
+        "selected_summary": {
+          "conclusion": "公共交通や通勤手段の選び方に影響する可能性があります。",
+          "what_happened": [
+            "公共交通や移動サービスに関する案内が報じられています。",
+            "通勤・通学・都心移動の選択肢を確認しておくと安心です。"
+          ],
+          "life_impact": "混雑回避や移動費、所要時間の見直しに関わります。",
+          "next_action": ""
+        },
+        "tags": [
+          "public_transport"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": true,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": false,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "use_body",
+        "body_evidence_excerpt": "MRT Corp has awarded a RM3.028 billion system turnkey contract for the Penang Mutiara LRT Line, marking the project’s next major phase in the construction of Penang’s first Light Rail Transit (LRT) system. The contract was awarded to the Malaysian Resources Corporation Berhad (MRCB) and Theta Edge Berhad joint venture (MRCB–Theta Edge JV). “The appointment will enable detailed design of the railway systems to proceed in parallel with the ongoing civil construction programme, ensuring both components remain aligned towards overall project delivery,” said MRT Corp in a statement today. The system turnkey contract (STC) comprises seven major railway systems packages, namely electric trains and depot equipment, signalling and train control systems together with automatic platform gates, trackwork and conductor rail and maintenance vehicles. It also includes power supply and distribution systems, railway supervisory control and data acquisition (SCADA) and computerised maintenance management systems, telecommunications and information technology systems, as well as the automatic fare collection system. MRT Corp said the Penang Mutiara LRT Line has continued to ma...",
+        "body_evidence_focus": [
+          "cost_or_subsidy",
+          "transport_or_infra",
+          "consumer_or_payment",
+          "vehicle_or_transport_service"
+        ],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
     }
   ]
 }
