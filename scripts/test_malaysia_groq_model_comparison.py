@@ -9,7 +9,13 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from malaysia_groq_model_profiles import load_model_profile_registry, production_model_profile
-from run_malaysia_groq_model_comparison import comparison_metrics, quality_cohort_links, update_golden_fixture
+from run_malaysia_groq_model_comparison import (
+    comparison_metrics,
+    probe_contract_observation,
+    probe_status_from_diagnostic,
+    quality_cohort_links,
+    update_golden_fixture,
+)
 
 
 class ModelComparisonTest(unittest.TestCase):
@@ -146,6 +152,37 @@ class ModelComparisonTest(unittest.TestCase):
         self.assertEqual(metrics["transport_status_counts"], {"rate_limited": 1, "success": 1})
         self.assertEqual(metrics["json_contract_status_counts"], {"not_evaluated": 1, "valid": 1})
         self.assertEqual(metrics["quality_cohort"]["accepted_count"], 1)
+
+    def test_probe_classifies_server_json_validation_as_contract_failure(self) -> None:
+        diagnostic = {
+            "transport_status": "http_error",
+            "http_status": 400,
+            "json_contract_status": "not_evaluated",
+            "error": {"code": "json_validate_failed"},
+        }
+
+        self.assertEqual(probe_status_from_diagnostic(diagnostic), "contract_failed")
+        self.assertEqual(
+            probe_contract_observation({"diagnostic": diagnostic}),
+            {
+                "transport_status": "http_error",
+                "json_contract_status": "not_evaluated",
+                "contract_observation": "server_json_validate_failed",
+                "error_code": "json_validate_failed",
+            },
+        )
+
+    def test_probe_keeps_network_errors_as_transport_failure(self) -> None:
+        self.assertEqual(
+            probe_status_from_diagnostic(
+                {
+                    "transport_status": "network_error",
+                    "http_status": None,
+                    "error": {"code": ""},
+                }
+            ),
+            "transport_failed",
+        )
 
 
 if __name__ == "__main__":

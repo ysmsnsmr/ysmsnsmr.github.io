@@ -248,6 +248,7 @@ def profile_result(
     improved = load_optional_json(improved_path)
     validator = load_optional_json(validator_path)
     probe = load_optional_json(probe_path) if probe_path else None
+    probe_observation = probe_contract_observation(probe)
     metrics = comparison_metrics(selected_count, improved, validator, cohort_links)
     if role == "artifact-only" and not improved:
         metrics["entry_review_policy"] = "disabled_for_model_comparison"
@@ -266,6 +267,10 @@ def profile_result(
             "compatibility_probe": str(probe_path) if probe_path else "",
         },
         "probe_status": probe.get("probe_status") if isinstance(probe, dict) else "not_applicable",
+        "probe_transport_status": probe_observation["transport_status"],
+        "probe_json_contract_status": probe_observation["json_contract_status"],
+        "probe_contract_observation": probe_observation["contract_observation"],
+        "probe_error_code": probe_observation["error_code"],
         "probe": probe or {},
         "quality_cohort_links": cohort_links,
         "entry_review_policy": metrics.get("entry_review_policy"),
@@ -356,8 +361,8 @@ def write_comparison_report(path: Path, report: dict[str, Any], selected: dict[s
             "",
             "## Transport and JSON contract",
             "",
-            "| Profile | Probe | Cohort accepted/requested | Transport | JSON contract | Semantic gate | Markdown validator |",
-            "|---|---|---:|---|---|---|---:|",
+            "| Profile | Probe | Probe transport | Probe JSON contract | Probe detail | Cohort accepted/requested | Transport | JSON contract | Semantic gate | Markdown validator |",
+            "|---|---|---|---|---|---:|---|---|---|---:|",
         ]
     )
     for result in profiles:
@@ -366,9 +371,12 @@ def write_comparison_report(path: Path, report: dict[str, Any], selected: dict[s
         metrics = dict_value(result.get("metrics"))
         cohort = dict_value(metrics.get("quality_cohort"))
         lines.append(
-            "| {profile} | {probe} | {accepted}/{requested} | {transport} | {contract} | {gate} | {validator} |".format(
+            "| {profile} | {probe} | {probe_transport} | {probe_contract} | {probe_detail} | {accepted}/{requested} | {transport} | {contract} | {gate} | {validator} |".format(
                 profile=markdown_text(result.get("profile")),
                 probe=markdown_text(result.get("probe_status")),
+                probe_transport=markdown_text(result.get("probe_transport_status")),
+                probe_contract=markdown_text(result.get("probe_contract_observation")),
+                probe_detail=markdown_text(result.get("probe_error_code")),
                 accepted=int_value(cohort.get("accepted_count")),
                 requested=int_value(cohort.get("requested_count")),
                 transport=markdown_text(result.get("transport_status_counts")),
@@ -583,6 +591,43 @@ def wait_for_rate_reset(diagnostic: dict[str, Any]) -> str:
     return "waited"
 
 
+def probe_status_from_diagnostic(diagnostic: dict[str, Any]) -> str:
+    """Separate a server-side JSON contract rejection from transport failure."""
+    error = dict_value(diagnostic.get("error"))
+    if (
+        int_value(diagnostic.get("http_status")) == 400
+        and error.get("code") == "json_validate_failed"
+    ):
+        return "contract_failed"
+    if str(diagnostic.get("transport_status") or "") not in {"success", ""}:
+        return "transport_failed"
+    return "contract_failed"
+
+
+def probe_contract_observation(probe: dict[str, Any] | None) -> dict[str, str]:
+    if not isinstance(probe, dict):
+        return {
+            "transport_status": "not_applicable",
+            "json_contract_status": "not_applicable",
+            "contract_observation": "not_applicable",
+            "error_code": "",
+        }
+    diagnostic = dict_value(dict_value(probe).get("diagnostic"))
+    error = dict_value(diagnostic.get("error"))
+    raw_contract_status = str(diagnostic.get("json_contract_status") or "not_evaluated")
+    error_code = str(error.get("code") or "")
+    return {
+        "transport_status": str(diagnostic.get("transport_status") or "not_recorded"),
+        "json_contract_status": raw_contract_status,
+        "contract_observation": (
+            "server_json_validate_failed"
+            if error_code == "json_validate_failed"
+            else raw_contract_status
+        ),
+        "error_code": error_code,
+    }
+
+
 def run_compatibility_probe(profile: ModelProfile, api_key: str, path: Path) -> dict[str, Any]:
     fixture = load_json(PROBE_FIXTURE)
     item = dict_value(fixture.get("item"))
@@ -617,9 +662,7 @@ def run_compatibility_probe(profile: ModelProfile, api_key: str, path: Path) -> 
     except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError) as error:
         diagnostic = error_diagnostic(error) or {}
         result = {
-            "probe_status": "transport_failed"
-            if str(diagnostic.get("transport_status") or "") not in {"success", ""}
-            else "contract_failed",
+            "probe_status": probe_status_from_diagnostic(diagnostic),
             "diagnostic": diagnostic,
             "rate_wait": "not_needed",
         }
