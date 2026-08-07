@@ -41,6 +41,8 @@ CSV columns are always:
 date, description, money_in, money_out, balance, category, treatment, status, raw_text
 ```
 
+Each CSV generation also writes an adjacent `*.manifest.json` with SHA-256 hashes for the input PDF, `rules.yml`, and CSV, plus the tool version and detected statement type. Keep these manifests under Git-ignored `outputs/` with the corresponding local files.
+
 `status` is `auto` only when a rule matched and the parser did not mark the block as uncertain. Otherwise it is `review`.
 
 ## Normal operation
@@ -69,9 +71,26 @@ Extract a credit card statement with a `.card.` filename prefix:
 
 The CLI auto-detects supported HSBC credit card OCR and uses the credit card parser. Credit card rows use the same CSV schema: normal charges go to `money_out`, `CR` rows go to `money_in`, and `balance` is empty.
 
+## Parser boundary
+
+`statement_sorter.parser_adapter.parse_statement()` is the common parser entry point. It detects `bank_debit` or `credit_card` and delegates to the existing format-specific parser, each of which returns `list[Transaction]`. No shared parser base class is needed; bank/card parsing logic remains separate.
+
 ## Rules
 
-Rules are evaluated from top to bottom. `pattern` is matched case-insensitively against both `description` and `raw_text`.
+Rules are evaluated from top to bottom. `pattern` is matched case-insensitively against both `description` and `raw_text`. Exact text is checked first; if it does not match, punctuation and repeated whitespace are normalized and the pattern is checked on token boundaries.
+
+Rules are audited when loaded. Patterns that become duplicates after normalization are rejected, as are broader earlier rules that would shadow a later rule with a different category or treatment. Keep specific rules before broader fallback rules.
+
+Rules may also include optional provenance metadata. It is retained when `rules.yml` is loaded but does not affect matching: `reason` (string), `first_confirmed_month` (`YYYY-MM`), and `confirmation_count` (non-negative integer). Existing rules with only `pattern`, `category`, and `treatment` remain valid.
+
+```yaml
+  - pattern: "EXAMPLE MERCHANT"
+    category: "Dining"
+    treatment: "expense"
+    reason: "Confirmed from monthly review"
+    first_confirmed_month: "2026-07"
+    confirmation_count: 2
+```
 
 ```yaml
 rules:
@@ -233,10 +252,20 @@ Only add confirmed reusable merchant or payee patterns to `rules.yml`, such as s
 
 Treat parser changes conservatively. A one-off OCR failure should usually remain a review item. Open a parser follow-up only when the same failure pattern repeats across two or three months.
 
+## Encrypted backup operations
+
+Backup of original PDFs, confirmed `rules.yml`, and verified conversion outputs is an operational procedure, separate from this repository. The destination and encryption method have not been decided, so this tool does not automate backup, cloud sync, encryption, key storage, or deletion.
+
+Until that decision is made:
+
+- Keep original PDFs and local generated outputs outside Git and do not place them in an unencrypted shared location.
+- Do not treat `outputs/` or Git history as a backup.
+- When a destination and encryption method are approved, document access ownership, key recovery, retention, and restore verification before adding any automation.
+
 ## Notes
 
 The bank/debit parser extracts transaction blocks from one transaction start date up to the next transaction start date. `raw_text` contains the complete OCR block used for each row.
 
 `outputs/` is Git-ignored. Do not commit PDFs, OCR text, CSVs, candidate YAML files, or generated Markdown reports.
 
-Monthly summaries accept one or more statement CSVs. Multiple inputs are combined without deduplication, so pass each statement CSV only once.
+Monthly summaries accept one or more statement CSVs. Duplicate inputs are rejected before aggregation: adjacent manifests are checked by `input_sha256` and CSV content is checked by `csv_sha256`. CSVs without a manifest are checked by their own SHA-256. No transaction-level fuzzy duplicate estimation is performed.
