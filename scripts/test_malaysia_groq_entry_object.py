@@ -238,7 +238,14 @@ class EntryObjectObservationTest(unittest.TestCase):
 
     def test_full_summary_rejection_keeps_entry_object(self) -> None:
         entry, status, reasons = entry_contract_for_item(attributed_entry(), fixture_item())
-        rejection = GroqSummaryRejected("unsupported life impact", entry, status, reasons)
+        transport_diagnostic = {
+            "transport_status": "success",
+            "http_status": 200,
+            "json_contract_status": "valid",
+        }
+        rejection = GroqSummaryRejected(
+            "unsupported life impact", entry, status, reasons, transport_diagnostic
+        )
         with (
             mock.patch.object(groq_renderer, "item_needs_groq", return_value=True),
             mock.patch.object(groq_renderer, "request_groq_summary_with_retry", side_effect=rejection),
@@ -253,6 +260,36 @@ class EntryObjectObservationTest(unittest.TestCase):
         self.assertEqual(records[0]["entry_candidate"], entry["text_ja"])
         self.assertEqual(records[0]["entry_contract_status"], "complete")
         self.assertEqual(records[0]["entry_candidate_status"], "full_rejected")
+        self.assertEqual(records[0]["groq_call"], transport_diagnostic)
+
+    def test_semantic_gate_rejection_keeps_successful_groq_diagnostic(self) -> None:
+        item = copy.deepcopy(fixture_item())
+        summary = {
+            "conclusion": "AI導入が重要だと報じられました。",
+            "what_happened": ["大学でAI導入が検討されています。"],
+            "life_impact": "教育環境に関わる可能性があります。",
+            "next_action": "",
+        }
+        transport_diagnostic = {
+            "transport_status": "success",
+            "http_status": 200,
+            "json_contract_status": "valid",
+        }
+        result = groq_renderer.GroqSummaryResult(
+            summary, attributed_entry(), "complete", [], transport_diagnostic
+        )
+        with (
+            mock.patch.object(groq_renderer, "item_needs_groq", return_value=True),
+            mock.patch.object(groq_renderer, "force_all_gate_reason", return_value="no_strong_signal"),
+            mock.patch.object(groq_renderer, "request_groq_summary_with_retry", return_value=result),
+        ):
+            _, _, stats, records = render_with_groq(
+                {"items": [item]}, "test-key", "test-model", True, False
+            )
+
+        self.assertEqual(stats, {"requested": 1, "accepted": 0, "fallback": 1})
+        self.assertEqual(records[0]["reason"], "ValueError: force_all accepted gate: no_strong_signal")
+        self.assertEqual(records[0]["groq_call"], transport_diagnostic)
 
     def test_missing_api_key_keeps_entry_diagnostics_safe(self) -> None:
         _, _, _, records = render_with_groq(

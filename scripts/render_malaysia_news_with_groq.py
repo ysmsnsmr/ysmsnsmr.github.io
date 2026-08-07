@@ -1626,7 +1626,11 @@ def render_with_groq(
         except ValueError as error:
             failed += 1
             diagnostic = getattr(error, "transport_diagnostic", None)
-            decision_record["groq_call"] = diagnostic if isinstance(diagnostic, dict) else error_diagnostic(error)
+            if not isinstance(diagnostic, dict):
+                diagnostic = decision_record.get("groq_call")
+            if not isinstance(diagnostic, dict):
+                diagnostic = error_diagnostic(error)
+            decision_record["groq_call"] = diagnostic
             reason = str(error) or "validation failed"
             error_entry = getattr(error, "entry", None)
             if isinstance(error_entry, dict):
