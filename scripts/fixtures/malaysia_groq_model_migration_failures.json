@@ -482,6 +482,71 @@
           "unsupported_conditions"
         ]
       }
+    },
+    {
+      "link": "https://www.astroawani.com/berita-malaysia/teknologi-5g-advanced-buka-potensi-besar-pacu-transformasi-pelbagai-sektor-fahmi",
+      "first_observed_on": "2026-08-07",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "ValueError: force_all accepted gate: no_strong_source_life_impact_signal"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Astro Awani",
+        "published_date": "2026年8月6日",
+        "title": "Teknologi \"5G Advanced\" buka potensi besar pacu transformasi pelbagai sektor - Fahmi",
+        "description": "Penggunaan teknologi 5G Advanced atau Ultra 5G membuka potensi besar dalam memacu transformasi pelbagai sektor utama di negara ini, termasuk pertanian, peruncitan dan kesihatan, kata Menteri Komunikasi Datuk Seri Fahmi Fadzil.",
+        "link": "https://www.astroawani.com/berita-malaysia/teknologi-5g-advanced-buka-potensi-besar-pacu-transformasi-pelbagai-sektor-fahmi",
+        "selected_summary": {
+          "conclusion": "Teknologi \"5G Advanced\" buka potensi besar pacu transformasi pelbagai sektor - Fahmi",
+          "what_happened": [
+            "Penggunaan teknologi 5G Advanced atau Ultra 5G membuka potensi besar dalam memacu transformasi pelbagai sektor utama di negara ini, termasuk pertanian, peruncitan dan kesihatan, kata Menteri Komunikasi Datuk Seri Fahmi Fadzil.",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "health"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": true,
+          "is_urban_development": false,
+          "is_klang_valley": false,
+          "is_official": true,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_fallback",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
     }
   ]
 }
