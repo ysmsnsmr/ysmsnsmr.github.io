@@ -13,6 +13,14 @@ import type {
   VoicePracticeEntry,
   VoicePracticeLedger
 } from "@/types/voice-ledger";
+import {
+  decodeProgress,
+  type ProgressDecodeDiagnostics
+} from "./progress";
+import {
+  decodeVoicePracticeLedger,
+  type VoiceLedgerDecodeDiagnostics
+} from "./voice-ledger";
 
 export const PRACTICE_LEDGER_SCHEMA_VERSION = 2 as const;
 
@@ -29,6 +37,67 @@ export type PracticeLedgerV2ConversionResult = {
   ledger: PracticeLedgerV2;
   diagnostics: PracticeLedgerV2ConversionDiagnostics;
 };
+
+export type LegacyPracticeLedgerV2ConversionDiagnostics = {
+  voiceLedger: {
+    status: ReturnType<typeof decodeVoicePracticeLedger>["status"];
+    canWrite: boolean;
+    details: VoiceLedgerDecodeDiagnostics;
+  };
+  progress: {
+    status: ReturnType<typeof decodeProgress>["status"];
+    canWrite: boolean;
+    details: ProgressDecodeDiagnostics;
+  };
+};
+
+export type LegacyPracticeLedgerV2ConversionResult = {
+  status: "ok" | "blocked";
+  ledger: PracticeLedgerV2 | null;
+  diagnostics: LegacyPracticeLedgerV2ConversionDiagnostics;
+};
+
+/**
+ * Adapts the two legacy stores without writing to either source. A rejected or
+ * partially corrupt source blocks the v2 output, so callers cannot replace a
+ * source ledger with a silently incomplete migration.
+ */
+export function convertLegacyPracticeDataToLedgerV2(input: {
+  voiceLedger: unknown;
+  progress: unknown;
+}): LegacyPracticeLedgerV2ConversionResult {
+  const voiceLedger = decodeVoicePracticeLedger(input.voiceLedger);
+  const progress = decodeProgress(input.progress);
+  const diagnostics = {
+    voiceLedger: {
+      status: voiceLedger.status,
+      canWrite: voiceLedger.canWrite,
+      details: voiceLedger.diagnostics
+    },
+    progress: {
+      status: progress.status,
+      canWrite: progress.canWrite,
+      details: progress.diagnostics
+    }
+  };
+
+  if (!voiceLedger.canWrite || !progress.canWrite) {
+    return {
+      status: "blocked",
+      ledger: null,
+      diagnostics
+    };
+  }
+
+  return {
+    status: "ok",
+    ledger: convertToPracticeLedgerV2({
+      voiceLedger: voiceLedger.ledger,
+      progress: progress.progress
+    }).ledger,
+    diagnostics
+  };
+}
 
 export function convertToPracticeLedgerV2(input: {
   voiceLedger: VoicePracticeLedger;
@@ -64,21 +133,20 @@ export function convertVoicePracticeEntry(
 ): VoicePracticeLedgerEntry {
   return {
     id: entry.id,
-    practicedAt: entry.practicedAt,
+    occurredAt: entry.practicedAt,
     createdAt: entry.createdAt,
     updatedAt: entry.updatedAt,
     practiceKind: "voice",
-    practiceSource: "chatgpt_voice",
+    source: "external_voice",
     reviewBasis: "self_report",
     context: entry.context,
     title: entry.title,
     summary: entry.summary,
-    nextAction: entry.nextMission,
+    nextMission: entry.nextMission,
     plannedFocusSound: null,
     observedFocusSoundCandidate: null,
     nextFocusSound: null,
     details: {
-      sourceKind: entry.sourceKind,
       sessionMinutes: entry.sessionMinutes,
       usefulExpressions: [...entry.usefulExpressions],
       stickingPoints: [...entry.stickingPoints],
@@ -101,16 +169,19 @@ export function convertInterviewPracticeSession(
 ): InterviewPracticeLedgerEntry {
   return {
     id: session.id,
-    practicedAt: session.date,
+    occurredAt: session.date,
     createdAt: null,
     updatedAt: null,
     practiceKind: "interview",
-    practiceSource: session.practiceSource,
+    source:
+      session.practiceSource === "in_app_recording"
+        ? "in_app_recording"
+        : "quiet_mode",
     reviewBasis: session.reflectionKind,
     context: "work",
     title: session.topic,
     summary: session.review.positive,
-    nextAction: session.review.structureSuggestion,
+    nextMission: session.review.structureSuggestion,
     plannedFocusSound: session.focusSound,
     observedFocusSoundCandidate: null,
     nextFocusSound: session.review.nextFocus,
@@ -121,7 +192,8 @@ export function convertInterviewPracticeSession(
       questions: [...session.questions],
       repairPhrases: [...session.repairPhrases],
       pronunciationTip: session.pronunciationTip,
-      completedMode: session.completedMode,
+      completionMode:
+        session.completedMode === "recording" ? "recorded" : "quiet",
       review: {
         ...session.review,
         fixPoints: [...session.review.fixPoints]
@@ -135,22 +207,21 @@ function convertExternalVoicePracticeSession(
 ): VoicePracticeLedgerEntry {
   return {
     id: session.id,
-    practicedAt: session.date,
+    occurredAt: session.date,
     createdAt: null,
     updatedAt: null,
     practiceKind: "voice",
-    practiceSource: "chatgpt_voice",
+    source: "external_voice",
     reviewBasis: "self_report",
     context: null,
     title: session.topic,
     summary:
       session.whatWentWell ?? session.stuckOn ?? session.topic,
-    nextAction: session.nextPracticeFocus,
+    nextMission: session.nextPracticeFocus,
     plannedFocusSound: null,
     observedFocusSoundCandidate: null,
     nextFocusSound: null,
     details: {
-      sourceKind: "manual",
       sessionMinutes: null,
       usefulExpressions: [],
       stickingPoints: session.stuckOn ? [session.stuckOn] : [],
@@ -162,7 +233,7 @@ function convertExternalVoicePracticeSession(
 
 function compareEntries(left: PracticeLedgerEntry, right: PracticeLedgerEntry) {
   return (
-    Date.parse(right.practicedAt) - Date.parse(left.practicedAt) ||
+    Date.parse(right.occurredAt) - Date.parse(left.occurredAt) ||
     left.id.localeCompare(right.id)
   );
 }

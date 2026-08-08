@@ -2,7 +2,10 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { migrateProgress } from "./progress";
-import { convertToPracticeLedgerV2 } from "./practice-ledger-v2";
+import {
+  convertLegacyPracticeDataToLedgerV2,
+  convertToPracticeLedgerV2
+} from "./practice-ledger-v2";
 import { decodeVoicePracticeLedger } from "./voice-ledger";
 import type {
   InterviewPracticeSession,
@@ -30,6 +33,27 @@ function collectKeys(value: unknown, keys = new Set<string>()): Set<string> {
   }
 
   return keys;
+}
+
+function collectStringValues(
+  value: unknown,
+  values = new Set<string>()
+): Set<string> {
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectStringValues(item, values));
+    return values;
+  }
+
+  if (typeof value === "string") {
+    values.add(value);
+    return values;
+  }
+
+  if (value && typeof value === "object") {
+    Object.values(value).forEach((child) => collectStringValues(child, values));
+  }
+
+  return values;
 }
 
 test("converts canonical Voice Ledger and Interview history into Ledger v2", () => {
@@ -66,12 +90,61 @@ test("converts canonical Voice Ledger and Interview history into Ledger v2", () 
     (entry) => entry.id === "legacy-recording"
   );
   assert.ok(interviewEntry && interviewEntry.practiceKind === "interview");
-  assert.equal(interviewEntry.practiceSource, "in_app_recording");
+  assert.equal(interviewEntry.source, "in_app_recording");
   assert.equal(interviewEntry.reviewBasis, "transcript_based");
   assert.equal(interviewEntry.plannedFocusSound, "/h/");
   assert.equal(interviewEntry.observedFocusSoundCandidate, null);
   assert.equal(interviewEntry.nextFocusSound, "/h/");
-  assert.equal(interviewEntry.nextAction, "Use result, action, impact.");
+  assert.equal(interviewEntry.nextMission, "Use result, action, impact.");
+  assert.equal(interviewEntry.details.completionMode, "recorded");
+});
+
+test("converts Voice Ledger v1 and Progress fixtures into the expected v2 ledger", () => {
+  const result = convertLegacyPracticeDataToLedgerV2({
+    voiceLedger: loadFixture("voice-ledger-v1-valid.json"),
+    progress: loadFixture("progress-v1-valid.json")
+  });
+
+  assert.equal(result.status, "ok");
+  assert.ok(result.ledger);
+  assert.deepEqual(
+    result.ledger,
+    loadFixture("practice-ledger-v2-from-v1-and-progress.json")
+  );
+  assert.deepEqual(result.diagnostics, {
+    voiceLedger: {
+      status: "ok",
+      canWrite: true,
+      details: {
+        sourceVersion: 1,
+        acceptedEntryCount: 2,
+        droppedEntryCount: 0,
+        codes: []
+      }
+    },
+    progress: {
+      status: "ok",
+      canWrite: true,
+      details: {
+        sourceVersion: null,
+        acceptedSessionCount: 2,
+        droppedSessionCount: 0,
+        codes: []
+      }
+    }
+  });
+});
+
+test("blocks Ledger v2 output when either legacy source cannot be safely read", () => {
+  const result = convertLegacyPracticeDataToLedgerV2({
+    voiceLedger: loadFixture("voice-ledger-v2-future.json"),
+    progress: loadFixture("progress-v3-future.json")
+  });
+
+  assert.equal(result.status, "blocked");
+  assert.equal(result.ledger, null);
+  assert.equal(result.diagnostics.voiceLedger.status, "unsupported_version");
+  assert.equal(result.diagnostics.progress.status, "unsupported_version");
 });
 
 test("converts an external Voice self-report without inventing focus-sound data", () => {
@@ -82,12 +155,12 @@ test("converts an external Voice self-report without inventing focus-sound data"
   const entry = result.ledger.entries[0];
 
   assert.ok(entry && entry.practiceKind === "voice");
-  assert.equal(entry.practiceSource, "chatgpt_voice");
+  assert.equal(entry.source, "external_voice");
   assert.equal(entry.reviewBasis, "self_report");
   assert.equal(entry.context, null);
   assert.equal(entry.summary, "I used a fixed clarification phrase.");
   assert.equal(
-    entry.nextAction,
+    entry.nextMission,
     "Clarify, then answer directly in one sentence."
   );
   assert.equal(entry.plannedFocusSound, null);
@@ -114,6 +187,25 @@ test("does not retain raw audio, transcripts, or source text in the converted le
   assert.ok(!keys.has("rawTranscript"));
   assert.ok(!keys.has("sourceText"));
   assert.ok(!keys.has("workLog"));
+});
+
+test("keeps service and input-adapter identifiers out of the canonical ledger", () => {
+  const voiceDecoded = decodeVoicePracticeLedger(
+    loadFixture("voice-ledger-v1-valid.json")
+  );
+  const result = convertToPracticeLedgerV2({
+    voiceLedger: voiceDecoded.ledger,
+    progress: migrateProgress(loadFixture("progress-v2-external.json"))
+  });
+  const keys = collectKeys(result.ledger);
+  const values = collectStringValues(result.ledger);
+
+  assert.ok(!keys.has("practiceSource"));
+  assert.ok(!keys.has("sourceKind"));
+  assert.ok(!values.has("chatgpt_voice"));
+  assert.ok(!values.has("voice_transcript"));
+  assert.ok(!values.has("chatgpt_summary"));
+  assert.ok(!values.has("manual"));
 });
 
 test("returns cloned arrays so conversion never mutates its inputs", () => {

@@ -1,13 +1,10 @@
 import type { FocusSound, InterviewPracticeReview } from "@/types/speaking";
-import type {
-  VoicePracticeContext,
-  VoicePracticeSourceKind
-} from "@/types/voice-ledger";
+import type { VoicePracticeContext } from "@/types/voice-ledger";
 
 export type PracticeKind = "voice" | "interview" | "sentence";
 
-export type LedgerPracticeSource =
-  | "chatgpt_voice"
+export type CanonicalPracticeSource =
+  | "external_voice"
   | "in_app_recording"
   | "quiet_mode"
   | "sentence_practice";
@@ -19,16 +16,16 @@ export type PracticeReviewBasis =
 
 export type PracticeLedgerEntryBase = {
   id: string;
-  practicedAt: string;
+  occurredAt: string;
   createdAt: string | null;
   updatedAt: string | null;
   practiceKind: PracticeKind;
-  practiceSource: LedgerPracticeSource;
+  source: CanonicalPracticeSource;
   reviewBasis: PracticeReviewBasis;
   context: VoicePracticeContext | null;
   title: string;
   summary: string;
-  nextAction: string | null;
+  nextMission: string | null;
   plannedFocusSound: FocusSound | null;
   observedFocusSoundCandidate: FocusSound | null;
   nextFocusSound: FocusSound | null;
@@ -36,10 +33,9 @@ export type PracticeLedgerEntryBase = {
 
 export type VoicePracticeLedgerEntry = PracticeLedgerEntryBase & {
   practiceKind: "voice";
-  practiceSource: "chatgpt_voice";
+  source: "external_voice";
   reviewBasis: "self_report";
   details: {
-    sourceKind: VoicePracticeSourceKind;
     sessionMinutes: number | null;
     usefulExpressions: string[];
     stickingPoints: string[];
@@ -50,7 +46,7 @@ export type VoicePracticeLedgerEntry = PracticeLedgerEntryBase & {
 
 export type InterviewPracticeLedgerEntry = PracticeLedgerEntryBase & {
   practiceKind: "interview";
-  practiceSource: "in_app_recording" | "quiet_mode";
+  source: "in_app_recording" | "quiet_mode";
   reviewBasis: "self_report" | "transcript_based";
   details: {
     targetRole: string;
@@ -59,14 +55,14 @@ export type InterviewPracticeLedgerEntry = PracticeLedgerEntryBase & {
     questions: string[];
     repairPhrases: string[];
     pronunciationTip: string;
-    completedMode: "recording" | "quiet";
+    completionMode: "recorded" | "quiet";
     review: InterviewPracticeReview;
   };
 };
 
 export type SentencePracticeLedgerEntry = PracticeLedgerEntryBase & {
   practiceKind: "sentence";
-  practiceSource: "sentence_practice";
+  source: "sentence_practice";
   reviewBasis: "none";
   details: {
     lessonId: string;
