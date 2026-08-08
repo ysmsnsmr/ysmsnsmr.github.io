@@ -686,6 +686,7 @@
       "first_observed_on": "2026-08-08",
       "production_profile": "llama33-70b",
       "failure_reasons": [
+        "HTTP 429",
         "ValueError: force_all accepted gate: no_strong_source_life_impact_signal"
       ],
       "item": {
@@ -807,6 +808,71 @@
           "consumer_or_payment",
           "health_or_education"
         ],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.astroawani.com/berita-malaysia/perak-teliti-bantuan-kepada-lebih-1200-pesawah-terjejas-cuaca-panas-bekalan-air",
+      "first_observed_on": "2026-08-09",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "ValueError: force_all accepted gate: no_strong_source_life_impact_signal"
+      ],
+      "item": {
+        "category": "【速報】",
+        "source": "Astro Awani",
+        "published_date": "2026年8月8日",
+        "title": "Perak teliti bantuan kepada lebih 1,200 pesawah terjejas cuaca panas, bekalan air",
+        "description": "Pesawah di Bota dikenal pasti sebagai kumpulan terjejas akibat cuaca panas dan masalah bekalan air yang turut berpunca daripada kerosakan pam air Jabatan Pengairan dan Saliran (JPS).",
+        "link": "https://www.astroawani.com/berita-malaysia/perak-teliti-bantuan-kepada-lebih-1200-pesawah-terjejas-cuaca-panas-bekalan-air",
+        "selected_summary": {
+          "conclusion": "全国で熱中症関連の健康リスクが高まっています。",
+          "what_happened": [
+            "保健省が熱中症・熱疲労などの発生状況を公表しました。",
+            "屋外活動や運動時の発症が主なリスクとして挙げられています。"
+          ],
+          "life_impact": "学校行事、屋外勤務、子どもや高齢者の外出管理に影響します。",
+          "next_action": "水分補給、屋外活動の短縮、車内放置防止を徹底。"
+        },
+        "tags": [
+          "health"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": true,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": false,
+          "is_official": true,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_fallback",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
         "body_evidence_forbidden": [
           "dateline",
           "wire_credit",
