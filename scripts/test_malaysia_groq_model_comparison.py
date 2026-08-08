@@ -8,8 +8,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from malaysia_groq_model_profiles import load_model_profile_registry, production_model_profile
+from malaysia_groq_model_profiles import load_model_profile_registry, production_model_profile, resolve_model_profile
 from run_malaysia_groq_model_comparison import (
+    PROBE_PROMPT,
+    compatibility_probe_messages,
+    comparison_request_configuration,
     comparison_metrics,
     probe_contract_observation,
     probe_status_from_diagnostic,
@@ -19,6 +22,37 @@ from run_malaysia_groq_model_comparison import (
 
 
 class ModelComparisonTest(unittest.TestCase):
+    def test_candidate_request_configuration_keeps_experiments_profile_scoped(self) -> None:
+        registry = load_model_profile_registry()
+
+        self.assertEqual(
+            comparison_request_configuration(resolve_model_profile("gptoss120b", registry)),
+            {
+                "prompt_layout": "user_only",
+                "max_tokens": 800,
+                "response_mode": "json_schema_strict",
+                "reasoning_mode": "low_hidden",
+            },
+        )
+        self.assertEqual(
+            comparison_request_configuration(resolve_model_profile("qwen36", registry))["prompt_layout"],
+            "user_only_explicit_contract",
+        )
+
+    def test_probe_moves_only_configured_candidates_to_user_messages(self) -> None:
+        registry = load_model_profile_registry()
+        item = {"title": "Fixture"}
+
+        gpt20_messages = compatibility_probe_messages(resolve_model_profile("gptoss", registry), item)
+        gpt120_messages = compatibility_probe_messages(resolve_model_profile("gptoss120b", registry), item)
+        qwen_messages = compatibility_probe_messages(resolve_model_profile("qwen36", registry), item)
+
+        self.assertEqual(gpt20_messages[0], {"role": "system", "content": PROBE_PROMPT})
+        self.assertEqual(gpt20_messages[1], {"role": "user", "content": json.dumps(item, ensure_ascii=False)})
+        self.assertEqual([message["role"] for message in gpt120_messages], ["user"])
+        self.assertEqual([message["role"] for message in qwen_messages], ["user"])
+        self.assertIn('"selected_summary"', qwen_messages[0]["content"])
+
     def test_fixed_metrics_keep_requested_and_selected_fallback_rates_separate(self) -> None:
         improved = {
             "counts": {"requested": 4, "accepted": 1, "fallback": 3},

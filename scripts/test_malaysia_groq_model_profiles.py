@@ -33,6 +33,9 @@ class ModelProfileTest(unittest.TestCase):
         self.assertEqual(resolve_model_profile("gpt-oss", registry).name, "gpt-oss-20b")
         self.assertEqual(production.response_mode, "json_object")
         self.assertEqual(resolve_model_profile("gpt-oss", registry).reasoning_mode, "low_hidden")
+        self.assertEqual(resolve_model_profile("gptoss120b", registry).comparison_prompt_layout, "user_only")
+        self.assertEqual(resolve_model_profile("gptoss120b", registry).comparison_max_tokens, 800)
+        self.assertEqual(resolve_model_profile("qwen36", registry).comparison_prompt_layout, "user_only_explicit_contract")
 
     def test_artifact_only_profile_is_rejected_for_production(self) -> None:
         registry = load_model_profile_registry()
@@ -98,6 +101,28 @@ class ModelProfileTest(unittest.TestCase):
             path = Path(directory) / "profiles.json"
             path.write_text(json.dumps(config), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "response_mode"):
+                load_model_profile_registry(path)
+
+    def test_unknown_comparison_prompt_layout_is_rejected(self) -> None:
+        config = {
+            "schema_version": "malaysia-groq-model-profiles/v2",
+            "default_production_profile": "one",
+            "profiles": [
+                {
+                    "name": "one",
+                    "artifact_key": "one",
+                    "model_id": "model/one",
+                    "artifact_only": False,
+                    "response_mode": "json_object",
+                    "reasoning_mode": "default",
+                    "comparison_prompt_layout": "unknown",
+                }
+            ],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "profiles.json"
+            path.write_text(json.dumps(config), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "comparison_prompt_layout"):
                 load_model_profile_registry(path)
 
 

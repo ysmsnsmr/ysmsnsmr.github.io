@@ -14,6 +14,9 @@ DEFAULT_CONFIG_PATH = Path(__file__).with_name("malaysia_groq_model_profiles.jso
 SAFE_ARTIFACT_KEY = re.compile(r"[a-z0-9][a-z0-9-]*\Z")
 RESPONSE_MODES = {"json_object", "json_schema_strict"}
 REASONING_MODES = {"default", "low_hidden", "hidden"}
+COMPARISON_PROMPT_LAYOUTS = {"production", "user_only", "user_only_explicit_contract"}
+DEFAULT_COMPARISON_MAX_TOKENS = 500
+MAX_COMPARISON_MAX_TOKENS = 1200
 
 
 @dataclass(frozen=True)
@@ -27,6 +30,8 @@ class ModelProfile:
     preview: bool = False
     response_mode: str = "json_object"
     reasoning_mode: str = "default"
+    comparison_prompt_layout: str = "production"
+    comparison_max_tokens: int = DEFAULT_COMPARISON_MAX_TOKENS
 
 
 @dataclass(frozen=True)
@@ -62,12 +67,28 @@ def load_model_profile_registry(path: Path = DEFAULT_CONFIG_PATH) -> ModelProfil
         model_id = clean_text(raw_profile.get("model_id"))
         response_mode = clean_text(raw_profile.get("response_mode"))
         reasoning_mode = clean_text(raw_profile.get("reasoning_mode"))
+        comparison_prompt_layout = clean_text(raw_profile.get("comparison_prompt_layout")) or "production"
+        comparison_max_tokens = raw_profile.get("comparison_max_tokens", DEFAULT_COMPARISON_MAX_TOKENS)
         if not name or not model_id or not SAFE_ARTIFACT_KEY.fullmatch(artifact_key):
             raise ValueError("model profile requires a name, model_id, and safe artifact_key")
         if response_mode not in RESPONSE_MODES:
             raise ValueError(f"unsupported model profile response_mode: {response_mode}")
         if reasoning_mode not in REASONING_MODES:
             raise ValueError(f"unsupported model profile reasoning_mode: {reasoning_mode}")
+        if comparison_prompt_layout not in COMPARISON_PROMPT_LAYOUTS:
+            raise ValueError(
+                "unsupported model profile comparison_prompt_layout: "
+                f"{comparison_prompt_layout}"
+            )
+        if (
+            not isinstance(comparison_max_tokens, int)
+            or isinstance(comparison_max_tokens, bool)
+            or not 1 <= comparison_max_tokens <= MAX_COMPARISON_MAX_TOKENS
+        ):
+            raise ValueError(
+                "model profile comparison_max_tokens must be an integer between "
+                f"1 and {MAX_COMPARISON_MAX_TOKENS}"
+            )
         if name in known_names or artifact_key in known_artifact_keys:
             raise ValueError("duplicate model profile name or artifact_key")
 
@@ -90,6 +111,8 @@ def load_model_profile_registry(path: Path = DEFAULT_CONFIG_PATH) -> ModelProfil
                 preview=bool(raw_profile.get("preview")),
                 response_mode=response_mode,
                 reasoning_mode=reasoning_mode,
+                comparison_prompt_layout=comparison_prompt_layout,
+                comparison_max_tokens=comparison_max_tokens,
             )
         )
         known_names.add(name)
