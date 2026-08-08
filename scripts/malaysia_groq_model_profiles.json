@@ -13,7 +13,9 @@
       "artifact_only": false,
       "shutdown_date": "2026-08-16",
       "response_mode": "json_object",
-      "reasoning_mode": "default"
+      "reasoning_mode": "default",
+      "comparison_prompt_layout": "production",
+      "comparison_max_tokens": 500
     },
     {
       "name": "gpt-oss-20b",
@@ -26,7 +28,9 @@
       "model_id": "openai/gpt-oss-20b",
       "artifact_only": true,
       "response_mode": "json_schema_strict",
-      "reasoning_mode": "low_hidden"
+      "reasoning_mode": "low_hidden",
+      "comparison_prompt_layout": "production",
+      "comparison_max_tokens": 500
     },
     {
       "name": "gpt-oss-120b",
@@ -38,7 +42,9 @@
       "model_id": "openai/gpt-oss-120b",
       "artifact_only": true,
       "response_mode": "json_schema_strict",
-      "reasoning_mode": "low_hidden"
+      "reasoning_mode": "low_hidden",
+      "comparison_prompt_layout": "user_only",
+      "comparison_max_tokens": 800
     },
     {
       "name": "qwen3.6-27b",
@@ -51,7 +57,9 @@
       "artifact_only": true,
       "preview": true,
       "response_mode": "json_object",
-      "reasoning_mode": "hidden"
+      "reasoning_mode": "hidden",
+      "comparison_prompt_layout": "user_only_explicit_contract",
+      "comparison_max_tokens": 500
     }
   ]
 }

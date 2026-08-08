@@ -23,6 +23,7 @@ from malaysia_groq_model_profiles import (
 )
 from malaysia_groq_output_contract import SUMMARY_ENTRY_SCHEMA, summary_entry_schema_error
 from malaysia_groq_transport import error_diagnostic, request_chat_completion
+from render_malaysia_news_with_groq import USER_MESSAGE_JSON_CONTRACT
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -40,6 +41,7 @@ QUALITY_REVIEW_CRITERIA = (
     "source_supported",
     "natural_japanese_entry",
 )
+PROBE_PROMPT = "Return one concise Japanese news summary and entry using only the supplied source. Return JSON only."
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -70,6 +72,31 @@ def list_value(value: Any) -> list[Any]:
 
 def dict_value(value: Any) -> dict[str, Any]:
     return value if isinstance(value, dict) else {}
+
+
+def comparison_request_configuration(profile: ModelProfile) -> dict[str, Any]:
+    """Expose artifact-only request variations beside their comparison results."""
+    return {
+        "prompt_layout": profile.comparison_prompt_layout,
+        "max_tokens": profile.comparison_max_tokens,
+        "response_mode": profile.response_mode,
+        "reasoning_mode": profile.reasoning_mode,
+    }
+
+
+def compatibility_probe_messages(profile: ModelProfile, item: dict[str, Any]) -> list[dict[str, str]]:
+    """Keep the fixed probe stable while varying only a profile's requested transport shape."""
+    article_json = json.dumps(item, ensure_ascii=False)
+    if profile.comparison_prompt_layout == "production":
+        return [
+            {"role": "system", "content": PROBE_PROMPT},
+            {"role": "user", "content": article_json},
+        ]
+
+    content = f"{PROBE_PROMPT}\n\nInput article JSON:\n{article_json}"
+    if profile.comparison_prompt_layout == "user_only_explicit_contract":
+        content = f"{PROBE_PROMPT}\n\n{USER_MESSAGE_JSON_CONTRACT}\n\nInput article JSON:\n{article_json}"
+    return [{"role": "user", "content": content}]
 
 
 def counter_dict(values: list[str]) -> dict[str, int]:
@@ -259,6 +286,7 @@ def profile_result(
         "role": role,
         "artifact_only": role == "artifact-only",
         "preview": profile.preview,
+        "comparison_request_configuration": comparison_request_configuration(profile),
         "run_status": run_status,
         "paths": {
             "improved_items": str(improved_path),
@@ -321,7 +349,7 @@ def write_comparison_report(path: Path, report: dict[str, Any], selected: dict[s
         f"- selected_count: {report.get('selected_count')}",
         f"- quality_cohort_links: {', '.join(str(link) for link in list_value(report.get('quality_cohort_links')))}",
         "- production_changed: false",
-        "- prompt_changed: false",
+        "- production_prompt_changed: false",
         "- validator_changed: false",
         "",
         "## Fixed metrics",
@@ -353,6 +381,29 @@ def write_comparison_report(path: Path, report: dict[str, Any], selected: dict[s
                     if metrics.get("entry_review_policy") == "disabled_for_model_comparison"
                     else percentage_text(metrics.get("reviewed_entry_available_rate_of_requested"))
                 ),
+            )
+        )
+
+    lines.extend(
+        [
+            "",
+            "## Candidate request configuration",
+            "",
+            "| Profile | Prompt layout | Max tokens | Response mode | Reasoning mode |",
+            "|---|---|---:|---|---|",
+        ]
+    )
+    for result in profiles:
+        if not isinstance(result, dict):
+            continue
+        configuration = dict_value(result.get("comparison_request_configuration"))
+        lines.append(
+            "| {profile} | {prompt_layout} | {max_tokens} | {response_mode} | {reasoning_mode} |".format(
+                profile=markdown_text(result.get("profile")),
+                prompt_layout=markdown_text(configuration.get("prompt_layout")),
+                max_tokens=int_value(configuration.get("max_tokens")),
+                response_mode=markdown_text(configuration.get("response_mode")),
+                reasoning_mode=markdown_text(configuration.get("reasoning_mode")),
             )
         )
 
@@ -636,15 +687,9 @@ def run_compatibility_probe(profile: ModelProfile, api_key: str, path: Path) -> 
     try:
         completion = request_chat_completion(
             profile=profile,
-            messages=[
-                {
-                    "role": "system",
-                    "content": "Return one concise Japanese news summary and entry using only the supplied source. Return JSON only.",
-                },
-                {"role": "user", "content": json.dumps(item, ensure_ascii=False)},
-            ],
+            messages=compatibility_probe_messages(profile, item),
             temperature=0.0,
-            max_tokens=500,
+            max_tokens=profile.comparison_max_tokens,
             timeout_seconds=30,
             max_response_chars=4000,
             json_schema_name="malaysia_news_summary_entry",
@@ -655,6 +700,7 @@ def run_compatibility_probe(profile: ModelProfile, api_key: str, path: Path) -> 
         contract_valid = completion.diagnostic.get("json_contract_status") == "valid"
         result = {
             "probe_status": "passed" if contract_valid else "contract_failed",
+            "request_configuration": comparison_request_configuration(profile),
             "diagnostic": completion.diagnostic,
             "parsed_root_keys": sorted(completion.parsed) if isinstance(completion.parsed, dict) else [],
             "rate_wait": wait_for_rate_reset(completion.diagnostic) if contract_valid else "not_needed",
@@ -663,6 +709,7 @@ def run_compatibility_probe(profile: ModelProfile, api_key: str, path: Path) -> 
         diagnostic = error_diagnostic(error) or {}
         result = {
             "probe_status": probe_status_from_diagnostic(diagnostic),
+            "request_configuration": comparison_request_configuration(profile),
             "diagnostic": diagnostic,
             "rate_wait": "not_needed",
         }
@@ -755,6 +802,10 @@ def run_artifact_profile(
         str(profile_dir / "groq_merged_candidate.md"),
         "--model",
         profile.model_id,
+        "--summary-prompt-layout",
+        profile.comparison_prompt_layout,
+        "--summary-max-tokens",
+        str(profile.comparison_max_tokens),
         "--improved-items-output",
         str(improved_path),
         "--json-render-output",

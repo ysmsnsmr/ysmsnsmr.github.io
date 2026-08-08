@@ -50,7 +50,12 @@ from malaysia_groq_render_decision import (
     build_render_decisions,
 )
 from malaysia_groq_term_normalization import normalize_malaysia_terms
-from malaysia_groq_model_profiles import ModelProfile, profile_for_model_id
+from malaysia_groq_model_profiles import (
+    COMPARISON_PROMPT_LAYOUTS,
+    DEFAULT_COMPARISON_MAX_TOKENS,
+    ModelProfile,
+    profile_for_model_id,
+)
 from malaysia_groq_output_contract import SUMMARY_ENTRY_SCHEMA, summary_entry_schema_error
 from malaysia_groq_transport import error_diagnostic, request_chat_completion
 import render_malaysia_news_from_json as fallback_renderer
@@ -241,6 +246,23 @@ entry.state.kindはreported_event、attributed_statement、official_action、pla
 entry.certainty.kindはreported、confirmed、planned、proposed、expected、warning、under_investigation、alleged、deniedのいずれかにしてください。
 出力は次のJSON objectだけにしてください: {"selected_summary":{"conclusion":"...","what_happened":["..."],"life_impact":"...","next_action":"..."},"entry":{"text_ja":"...","subject":{"source_text":"...","text_ja":"..."},"attribution":null,"state":{"kind":"...","source_text":"...","text_ja":"..."},"certainty":{"kind":"...","source_text":"...","text_ja":"..."}}}
 出力はJSONのみです。"""
+
+USER_MESSAGE_JSON_CONTRACT = """返答は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
+{
+  "selected_summary": {
+    "conclusion": "string",
+    "what_happened": ["string"],
+    "life_impact": "string",
+    "next_action": "string"
+  },
+  "entry": {
+    "text_ja": "string",
+    "subject": {"source_text": "string", "text_ja": "string"},
+    "attribution": {"source_text": "string", "text_ja": "string"} または null,
+    "state": {"kind": "reported_event|attributed_statement|official_action|plan_or_proposal|warning_or_forecast|investigation_or_allegation|denial_or_correction|other", "source_text": "string", "text_ja": "string"},
+    "certainty": {"kind": "reported|confirmed|planned|proposed|expected|warning|under_investigation|alleged|denied", "source_text": "string", "text_ja": "string"}
+  }
+}"""
 
 
 ENTRY_STATE_KINDS = {
@@ -481,6 +503,23 @@ def groq_payload_for_item(item: dict[str, Any]) -> dict[str, Any]:
                 "content_source": item.get("content_source"),
             }
     return payload
+
+
+def summary_request_messages(item: dict[str, Any], prompt_layout: str = "production") -> list[dict[str, str]]:
+    """Keep comparison-only prompt experiments explicit without changing production defaults."""
+    if prompt_layout not in COMPARISON_PROMPT_LAYOUTS:
+        raise ValueError(f"unsupported summary prompt layout: {prompt_layout}")
+    article_json = json.dumps(groq_payload_for_item(item), ensure_ascii=False)
+    if prompt_layout == "production":
+        return [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": article_json},
+        ]
+
+    content = f"{SYSTEM_PROMPT}\n\n入力記事JSON:\n{article_json}"
+    if prompt_layout == "user_only_explicit_contract":
+        content = f"{SYSTEM_PROMPT}\n\n{USER_MESSAGE_JSON_CONTRACT}\n\n入力記事JSON:\n{article_json}"
+    return [{"role": "user", "content": content}]
 
 
 def is_enriched_json(data: Any) -> bool:
@@ -776,10 +815,21 @@ def request_groq_summary_with_retry(
     index: int = 0,
     model_profile: ModelProfile | None = None,
     max_retry_after_seconds: int = MAX_429_RETRY_AFTER_SECONDS,
+    summary_prompt_layout: str = "production",
+    summary_max_tokens: int = DEFAULT_COMPARISON_MAX_TOKENS,
 ) -> GroqSummaryResult:
     profile = model_profile or profile_for_model_id(model)
     try:
-        return request_groq_summary(item, api_key, model, debug, index, profile)
+        return request_groq_summary(
+            item,
+            api_key,
+            model,
+            debug,
+            index,
+            profile,
+            summary_prompt_layout,
+            summary_max_tokens,
+        )
     except urllib.error.HTTPError as error:
         first_diagnostic = error_diagnostic(error)
         retry_after = retry_after_seconds(error, max_retry_after_seconds)
@@ -788,7 +838,16 @@ def request_groq_summary_with_retry(
         safe_log(f"groq: item {index + 1} retrying after HTTP 429 Retry-After={retry_after}s.")
         time.sleep(retry_after)
         try:
-            result = request_groq_summary(item, api_key, model, debug, index, profile)
+            result = request_groq_summary(
+                item,
+                api_key,
+                model,
+                debug,
+                index,
+                profile,
+                summary_prompt_layout,
+                summary_max_tokens,
+            )
         except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError) as retry_error:
             retry_diagnostic = error_diagnostic(retry_error)
             if retry_diagnostic is not None:
@@ -807,18 +866,16 @@ def request_groq_summary(
     debug: bool = False,
     index: int = 0,
     model_profile: ModelProfile | None = None,
+    summary_prompt_layout: str = "production",
+    summary_max_tokens: int = DEFAULT_COMPARISON_MAX_TOKENS,
 ) -> GroqSummaryResult:
+    if not isinstance(summary_max_tokens, int) or isinstance(summary_max_tokens, bool) or summary_max_tokens < 1:
+        raise ValueError("summary max_tokens must be a positive integer")
     completion = request_chat_completion(
         profile=model_profile or profile_for_model_id(model),
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {
-                "role": "user",
-                "content": json.dumps(groq_payload_for_item(item), ensure_ascii=False),
-            },
-        ],
+        messages=summary_request_messages(item, summary_prompt_layout),
         temperature=0.2,
-        max_tokens=500,
+        max_tokens=summary_max_tokens,
         timeout_seconds=TIMEOUT_SECONDS,
         max_response_chars=MAX_RESPONSE_CHARS,
         json_schema_name="malaysia_news_summary_entry",
@@ -1485,6 +1542,8 @@ def render_with_groq(
     enable_entry_review: bool = True,
     rate_reset_wait_max_seconds: int = 0,
     max_retry_after_seconds: int = MAX_429_RETRY_AFTER_SECONDS,
+    summary_prompt_layout: str = "production",
+    summary_max_tokens: int = DEFAULT_COMPARISON_MAX_TOKENS,
 ) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str, int], list[dict[str, Any]]]:
     rendered_data = copy.deepcopy(data)
     accepted_records: list[dict[str, Any]] = []
@@ -1575,6 +1634,8 @@ def render_with_groq(
                 debug,
                 index,
                 max_retry_after_seconds=max_retry_after_seconds,
+                summary_prompt_layout=summary_prompt_layout,
+                summary_max_tokens=summary_max_tokens,
             )
             improved_summary = groq_result.summary
             decision_record["groq_call"] = groq_result.transport_diagnostic
@@ -1693,6 +1754,18 @@ def main() -> int:
     parser.add_argument("--model", help="Groq model name. Defaults to GROQ_MODEL or llama-3.3-70b-versatile.")
     parser.add_argument("--force-all", action="store_true", help="Send all items to Groq for local comparison.")
     parser.add_argument("--debug-groq", action="store_true", help="Write short Groq validation diagnostics to stderr.")
+    parser.add_argument(
+        "--summary-prompt-layout",
+        choices=sorted(COMPARISON_PROMPT_LAYOUTS),
+        default="production",
+        help="Artifact-comparison summary prompt layout. The production workflow uses the default.",
+    )
+    parser.add_argument(
+        "--summary-max-tokens",
+        type=int,
+        default=DEFAULT_COMPARISON_MAX_TOKENS,
+        help="Artifact-comparison summary completion budget. The production workflow uses the default.",
+    )
     parser.add_argument("--request-link-allowlist", help="JSON file containing comparison-only request links.")
     parser.add_argument("--disable-entry-review", action="store_true", help="Do not make observation-only entry review requests.")
     parser.add_argument(
@@ -1728,6 +1801,8 @@ def main() -> int:
     args = parser.parse_args()
     if args.merge_accepted_with_rss_markdown and not args.rss_markdown_input:
         parser.error("--merge-accepted-with-rss-markdown requires --rss-markdown-input")
+    if args.summary_max_tokens < 1:
+        parser.error("--summary-max-tokens must be positive")
 
     resolved_json_input = resolve_json_input(args.json_input)
     safe_log(f"groq: reading JSON {resolved_json_input}")
@@ -1745,6 +1820,8 @@ def main() -> int:
         enable_entry_review=not args.disable_entry_review,
         rate_reset_wait_max_seconds=max(args.rate_reset_wait_max_seconds, 0),
         max_retry_after_seconds=max(args.max_429_retry_after_seconds, 0),
+        summary_prompt_layout=args.summary_prompt_layout,
+        summary_max_tokens=args.summary_max_tokens,
     )
     items = rendered_data.get("items")
     render_decisions = build_render_decisions(
