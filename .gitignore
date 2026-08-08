@@ -51,4 +51,5 @@ local-tools/bank-statement-sorter/*.pdf
 local-tools/bank-statement-sorter/**/*.ocr.txt
 local-tools/bank-statement-sorter/**/*.statement.csv
 local-tools/bank-statement-sorter/**/*.statement.json
+local-tools/bank-statement-sorter/**/*.manifest.json
 local-tools/bank-statement-sorter/**/*.pdf

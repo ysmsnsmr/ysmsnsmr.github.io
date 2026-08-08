@@ -6,6 +6,7 @@ import sys
 
 from .categorize import RuleError, categorize_transactions, load_rules
 from .export import write_csv
+from .manifest import manifest_path_for_csv, write_manifest
 from .ocr import OcrError, ocr_pdf
 from .parser_adapter import parse_statement
 
@@ -41,10 +42,19 @@ def main(argv: list[str] | None = None) -> int:
         statement_type, transactions = parse_statement(ocr_text)
         categorized = categorize_transactions(transactions, rules)
         write_csv(categorized, args.out)
+        manifest_path = manifest_path_for_csv(args.out)
+        write_manifest(
+            manifest_path,
+            input_path=args.pdf,
+            rules_path=args.rules,
+            csv_path=args.out,
+            statement_type=statement_type,
+        )
     except (OcrError, RuleError, OSError, ValueError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
 
     review_count = sum(1 for transaction in categorized if transaction.status == "review")
     print(f"Wrote {len(categorized)} transactions to {args.out}. Review needed: {review_count}.")
+    print(f"Wrote reproducibility manifest to {manifest_path}.")
     return 0

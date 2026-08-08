@@ -6,9 +6,12 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
+import json
 from pathlib import Path
 import re
 import sys
+
+from .manifest import manifest_path_for_csv, sha256_file
 
 
 REQUIRED_COLUMNS = {
@@ -90,6 +93,7 @@ def read_statement_csv(path: str | Path) -> list[dict[str, str]]:
 
 
 def read_statement_csvs(paths: list[str | Path]) -> list[dict[str, str]]:
+    _ensure_unique_csv_inputs(paths)
     rows: list[dict[str, str]] = []
     for path in paths:
         rows.extend(read_statement_csv(path))
@@ -103,8 +107,55 @@ def write_monthly_summary(
 ) -> None:
     output_path = Path(out_path)
     _validate_outputs_path(output_path)
+    _ensure_unique_csv_inputs(_as_path_list(csv_paths))
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(render_monthly_summary(rows, csv_paths), encoding="utf-8")
+
+
+def _as_path_list(csv_paths: str | Path | list[str | Path]) -> list[str | Path]:
+    if isinstance(csv_paths, (str, Path)):
+        return [csv_paths]
+    return csv_paths
+
+
+def _ensure_unique_csv_inputs(paths: list[str | Path]) -> None:
+    seen: dict[tuple[str, str], Path] = {}
+    for raw_path in paths:
+        csv_path = Path(raw_path)
+        csv_hash = sha256_file(csv_path)
+        fingerprints = [("csv hash", csv_hash)]
+        manifest_path = manifest_path_for_csv(csv_path)
+        if manifest_path.exists():
+            fingerprints.extend(_manifest_fingerprints(manifest_path, csv_hash))
+
+        for kind, fingerprint in fingerprints:
+            previous_path = seen.get((kind, fingerprint))
+            if previous_path is not None:
+                raise ValueError(
+                    f"duplicate CSV input: {csv_path} matches {previous_path} by {kind}."
+                )
+            seen[(kind, fingerprint)] = csv_path
+
+
+def _manifest_fingerprints(manifest_path: Path, csv_hash: str) -> list[tuple[str, str]]:
+    try:
+        data = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"invalid manifest for CSV {manifest_path}: {exc}") from exc
+    if not isinstance(data, dict):
+        raise ValueError(f"invalid manifest for CSV {manifest_path}: expected a JSON object.")
+
+    recorded_csv_hash = data.get("csv_sha256")
+    if recorded_csv_hash is not None:
+        if not isinstance(recorded_csv_hash, str) or recorded_csv_hash != csv_hash:
+            raise ValueError(f"manifest CSV hash does not match CSV: {manifest_path}")
+
+    input_hash = data.get("input_sha256")
+    if input_hash is None:
+        return []
+    if not isinstance(input_hash, str) or not input_hash:
+        raise ValueError(f"invalid input_sha256 in manifest: {manifest_path}")
+    return [("input hash", input_hash)]
 
 
 def render_monthly_summary(rows: list[dict[str, str]], csv_paths: str | Path | list[str | Path]) -> str:

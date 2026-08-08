@@ -8,6 +8,7 @@ import sys
 
 from .categorize import RuleError, categorize_transactions, load_rules
 from .export import write_csv
+from .manifest import manifest_path_for_csv, write_manifest
 from .models import Transaction
 from .monthly_summary import write_monthly_summary
 from .ocr import OcrError, ocr_pdf
@@ -23,10 +24,12 @@ MONTH_RE = re.compile(r"^\d{4}-\d{2}$")
 @dataclass(frozen=True)
 class MonthlyRunPaths:
     bank_csv: Path
+    bank_manifest: Path
     bank_ocr: Path
     bank_rule_candidates: Path
     bank_review: Path
     card_csv: Path
+    card_manifest: Path
     card_ocr: Path
     card_rule_candidates: Path
     card_review: Path
@@ -35,10 +38,12 @@ class MonthlyRunPaths:
     def all_outputs(self) -> list[Path]:
         return [
             self.bank_csv,
+            self.bank_manifest,
             self.bank_ocr,
             self.bank_rule_candidates,
             self.bank_review,
             self.card_csv,
+            self.card_manifest,
             self.card_ocr,
             self.card_rule_candidates,
             self.card_review,
@@ -75,16 +80,20 @@ def main(argv: list[str] | None = None) -> int:
         bank_transactions = _extract_statement(
             pdf_path=Path(args.bank_pdf),
             csv_path=paths.bank_csv,
+            manifest_path=paths.bank_manifest,
             ocr_path=paths.bank_ocr,
             rules=rules,
+            rules_path=Path(args.rules),
             language=args.lang,
             dpi=args.dpi,
         )
         card_transactions = _extract_statement(
             pdf_path=Path(args.card_pdf),
             csv_path=paths.card_csv,
+            manifest_path=paths.card_manifest,
             ocr_path=paths.card_ocr,
             rules=rules,
+            rules_path=Path(args.rules),
             language=args.lang,
             dpi=args.dpi,
         )
@@ -101,8 +110,24 @@ def main(argv: list[str] | None = None) -> int:
         print(f"error: {exc}", file=sys.stderr)
         return 1
 
-    _print_quality_summary("bank", bank_transactions, paths.bank_csv, paths.bank_ocr, paths.bank_rule_candidates, paths.bank_review)
-    _print_quality_summary("card", card_transactions, paths.card_csv, paths.card_ocr, paths.card_rule_candidates, paths.card_review)
+    _print_quality_summary(
+        "bank",
+        bank_transactions,
+        paths.bank_csv,
+        paths.bank_manifest,
+        paths.bank_ocr,
+        paths.bank_rule_candidates,
+        paths.bank_review,
+    )
+    _print_quality_summary(
+        "card",
+        card_transactions,
+        paths.card_csv,
+        paths.card_manifest,
+        paths.card_ocr,
+        paths.card_rule_candidates,
+        paths.card_review,
+    )
     print(f"combined_summary={paths.combined_summary}")
     return 0
 
@@ -119,10 +144,12 @@ def build_output_paths(
     summary_month = _summary_month(month, bank_date)
     return MonthlyRunPaths(
         bank_csv=output_dir / f"{bank_date}.statement.csv",
+        bank_manifest=manifest_path_for_csv(output_dir / f"{bank_date}.statement.csv"),
         bank_ocr=output_dir / f"{bank_date}.ocr.txt",
         bank_rule_candidates=output_dir / f"{bank_date}.rule-candidates.yml",
         bank_review=output_dir / f"{bank_date}.review.md",
         card_csv=output_dir / f"{card_date}.card.statement.csv",
+        card_manifest=manifest_path_for_csv(output_dir / f"{card_date}.card.statement.csv"),
         card_ocr=output_dir / f"{card_date}.card.ocr.txt",
         card_rule_candidates=output_dir / f"{card_date}.card.rule-candidates.yml",
         card_review=output_dir / f"{card_date}.card.review.md",
@@ -158,8 +185,10 @@ def _extract_statement(
     *,
     pdf_path: Path,
     csv_path: Path,
+    manifest_path: Path,
     ocr_path: Path,
     rules: list[dict[str, str]],
+    rules_path: Path,
     language: str,
     dpi: int,
 ) -> list[Transaction]:
@@ -170,6 +199,13 @@ def _extract_statement(
     statement_type, transactions = parse_statement(ocr_text)
     categorized = categorize_transactions(transactions, rules)
     write_csv(categorized, csv_path)
+    write_manifest(
+        manifest_path,
+        input_path=pdf_path,
+        rules_path=rules_path,
+        csv_path=csv_path,
+        statement_type=statement_type,
+    )
     return categorized
 
 
@@ -177,6 +213,7 @@ def _print_quality_summary(
     label: str,
     transactions: list[Transaction],
     csv_path: Path,
+    manifest_path: Path,
     ocr_path: Path,
     rule_candidates_path: Path,
     review_path: Path,
@@ -193,7 +230,7 @@ def _print_quality_summary(
     print(
         f"{label}: rows={rows} auto={auto_count} review={review_count} "
         f"missing_amount={missing_amount_count} unknown={unknown_count} other={other_count} "
-        f"balance_nonempty={balance_nonempty_count} csv={csv_path} ocr={ocr_path} "
+        f"balance_nonempty={balance_nonempty_count} csv={csv_path} manifest={manifest_path} ocr={ocr_path} "
         f"rule_candidates={rule_candidates_path} review_report={review_path}"
     )
 
