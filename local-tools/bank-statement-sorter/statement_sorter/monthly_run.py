@@ -7,14 +7,12 @@ import re
 import sys
 
 from .categorize import RuleError, categorize_transactions, load_rules
-from .credit_card_parser import parse_transactions as parse_credit_card_transactions
 from .export import write_csv
 from .models import Transaction
 from .monthly_summary import write_monthly_summary
 from .ocr import OcrError, ocr_pdf
-from .parser import parse_transactions as parse_bank_transactions
+from .parser_adapter import parse_statement
 from .review_report import write_review_report
-from .statement_type import is_credit_card_statement
 from .suggest_rules import suggest_rule_candidates, write_candidate_yaml
 
 
@@ -169,10 +167,7 @@ def _extract_statement(
     ocr_path.parent.mkdir(parents=True, exist_ok=True)
     ocr_path.write_text(ocr_text, encoding="utf-8")
 
-    if is_credit_card_statement(ocr_text):
-        transactions = parse_credit_card_transactions(ocr_text)
-    else:
-        transactions = parse_bank_transactions(ocr_text)
+    statement_type, transactions = parse_statement(ocr_text)
     categorized = categorize_transactions(transactions, rules)
     write_csv(categorized, csv_path)
     return categorized

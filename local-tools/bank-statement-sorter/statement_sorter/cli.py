@@ -5,11 +5,9 @@ from pathlib import Path
 import sys
 
 from .categorize import RuleError, categorize_transactions, load_rules
-from .credit_card_parser import parse_transactions as parse_credit_card_transactions
 from .export import write_csv
 from .ocr import OcrError, ocr_pdf
-from .parser import parse_transactions as parse_bank_transactions
-from .statement_type import is_credit_card_statement
+from .parser_adapter import parse_statement
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -40,10 +38,7 @@ def main(argv: list[str] | None = None) -> int:
             ocr_path.parent.mkdir(parents=True, exist_ok=True)
             ocr_path.write_text(ocr_text, encoding="utf-8")
 
-        if is_credit_card_statement(ocr_text):
-            transactions = parse_credit_card_transactions(ocr_text)
-        else:
-            transactions = parse_bank_transactions(ocr_text)
+        statement_type, transactions = parse_statement(ocr_text)
         categorized = categorize_transactions(transactions, rules)
         write_csv(categorized, args.out)
     except (OcrError, RuleError, OSError, ValueError) as exc:
