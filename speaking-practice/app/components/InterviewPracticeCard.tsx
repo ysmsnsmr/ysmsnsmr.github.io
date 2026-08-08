@@ -19,6 +19,7 @@ import {
   maxInterviewAudioBytes,
   minimumInterviewRecordingMs
 } from "@/lib/interview";
+import { syncLegacySourcesToPracticeLedgerV2 } from "@/lib/practice-ledger-sync";
 import type {
   FeedbackResult,
   FocusSound,
@@ -326,6 +327,13 @@ export default function InterviewPracticeCard({
       });
       setProgress(nextProgress);
       setFlowState("complete");
+      try {
+        syncLegacySourcesToPracticeLedgerV2();
+      } catch {
+        setStatusMessage(
+          "Interview練習は保存しましたが、Ledger v2へ同期できませんでした。既存データは変更していません。"
+        );
+      }
     } catch (error) {
       setCanSaveProgress(false);
       setStatusMessage(getProgressWriteMessage(error));

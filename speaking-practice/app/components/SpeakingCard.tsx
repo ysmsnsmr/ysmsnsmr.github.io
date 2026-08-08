@@ -16,6 +16,8 @@ import {
   loadProgressWithDiagnostics,
   ProgressWriteBlockedError
 } from "@/lib/progress";
+import { createSentencePracticeLedgerEntry } from "@/lib/practice-ledger-entry";
+import { syncLegacySourcesAndAppendPracticeLedgerEntry } from "@/lib/practice-ledger-sync";
 import type {
   FeedbackResult,
   LessonCard,
@@ -206,6 +208,17 @@ export default function SpeakingCard({
       try {
         const nextProgress = completeCard(lesson.id);
         setProgress(nextProgress);
+        try {
+          syncLegacySourcesAndAppendPracticeLedgerEntry(
+            createSentencePracticeLedgerEntry(lesson),
+            nextProgress.completedCardIds
+          );
+          setStatusMessage(null);
+        } catch {
+          setStatusMessage(
+            "Sentence練習は保存しましたが、Ledger v2へ同期できませんでした。既存データは変更していません。"
+          );
+        }
         setHasCompleted(true);
         setState("success");
       } catch (error) {
