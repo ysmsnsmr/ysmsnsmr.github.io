@@ -547,6 +547,274 @@
           "unsupported_conditions"
         ]
       }
+    },
+    {
+      "link": "https://paultan.org/2026/08/07/cabbies-can-licence-other-car-models-besides-the-proton-s70-for-teksi-madani-taxi-renewal-programme-apad/",
+      "first_observed_on": "2026-08-08",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "HTTP 429"
+      ],
+      "item": {
+        "category": "【生活インパクト】",
+        "source": "Paul Tan",
+        "published_date": "2026年8月7日",
+        "title": "Cabbies can licence other car models besides the Proton S70 for Teksi Madani taxi renewal programme – APAD",
+        "description": "The land public transport agency (APAD) said that taxi drivers are allowed to license or replace their vehicles with car models other than the Proton S70 under the Teksi Madani national taxi renewal programme, reports […]",
+        "link": "https://paultan.org/2026/08/07/cabbies-can-licence-other-car-models-besides-the-proton-s70-for-teksi-madani-taxi-renewal-programme-apad/",
+        "selected_summary": {
+          "conclusion": "公共交通の運行や通勤手段に影響する可能性があります。",
+          "what_happened": [
+            "Paul TanのRSSで、公共交通や運行状況に関する情報が報じられています。",
+            "LRT、MRT、Rapid KL、KTMBなどの公共交通に関わる移動情報として扱います。"
+          ],
+          "life_impact": "通勤・通学・都心移動では、遅延、代替ルート、運行再開時期を確認しておく必要があります。",
+          "next_action": "出発前に運行会社の公式情報を確認。"
+        },
+        "tags": [
+          "public_transport",
+          "jpj"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": true,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": false,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_fallback",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.malaymail.com/news/malaysia/2026/08/08/tabung-haji-to-study-ngo-proposals-says-75pc-of-rci-recommendations-implemented/230566",
+      "first_observed_on": "2026-08-08",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "ValueError: generic life_impact for body_evidence focus"
+      ],
+      "item": {
+        "category": "【生活インパクト】",
+        "source": "Malay Mail",
+        "published_date": "2026年8月8日",
+        "title": "Tabung Haji to study NGO proposals, says 75pc of RCI recommendations implemented",
+        "description": "KUALA LUMPUR, Aug 8 — Lembaga Tabung Haji (TH) will study all views and proposals contained in a memora...",
+        "link": "https://www.malaymail.com/news/malaysia/2026/08/08/tabung-haji-to-study-ngo-proposals-says-75pc-of-rci-recommendations-implemented/230566",
+        "selected_summary": {
+          "conclusion": "Tabung Haji to study NGO proposals, says 75pc of RCI recommendations implemented",
+          "what_happened": [
+            "KUALA LUMPUR, Aug 8 — Lembaga Tabung Haji (TH) will study all views and proposals contained in a memora...",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "klang_valley"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": true,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "use_body",
+        "body_evidence_excerpt": "Lembaga Tabung Haji (TH) will study all views and proposals contained in a memorandum submitted by non-governmental organisations (NGOs) to help the organisation carry out continuous improvements for the benefit of its 9.8 million depositors. In a statement yesterday, TH said the memorandum submitted by the Royal Commission of Inquiry (RCI) on TH Himpunan Aman Solidariti reflected the public’s genuine concern in supporting the national haj institution to safeguard the interests of the Muslim community. “TH also supports the government’s firm action in taking the necessary measures based on the findings of the RCI. “TH has implemented more than 75 per cent of the RCI’s recommendations and continues to actively carry out the remaining recommendations as part of its overall improvement efforts, enabling TH’s position today to be far stronger than it was in 2018 following eight years of continuous recovery efforts,” the statement said. Earlier, the Himpunan Gerakan Islam Malaysia (HIKAM) and the Coalition of Islamic NGOs submitted a memorandum containing 10 demands related to the TH RCI report. Among them were calls for immediate, firm and transparent legal act...",
+        "body_evidence_focus": [
+          "procedure_or_public_service"
+        ],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.astroawani.com/berita-malaysia/kos-sara-hidup-antara-cabaran-utama-golongan-muda-berkeluarga-rohani",
+      "first_observed_on": "2026-08-08",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "ValueError: force_all accepted gate: no_strong_source_life_impact_signal"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Astro Awani",
+        "published_date": "2026年8月8日",
+        "title": "Kos sara hidup antara cabaran utama golongan muda berkeluarga - Rohani",
+        "description": "Tinjauan Hari Penduduk Sedunia 2025 oleh LPPKN menunjukkan faktor ekonomi menyebabkan sebahagian daripada mereka tidak dapat mencapai saiz keluarga yang diinginkan.",
+        "link": "https://www.astroawani.com/berita-malaysia/kos-sara-hidup-antara-cabaran-utama-golongan-muda-berkeluarga-rohani",
+        "selected_summary": {
+          "conclusion": "Kos sara hidup antara cabaran utama golongan muda berkeluarga - Rohani",
+          "what_happened": [
+            "Tinjauan Hari Penduduk Sedunia 2025 oleh LPPKN menunjukkan faktor ekonomi menyebabkan sebahagian daripada mereka tidak dapat mencapai saiz keluarga yang diinginkan.",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "prices",
+          "social_support",
+          "cost_of_living"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": true,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": false,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_fallback",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.malaymail.com/news/malaysia/2026/08/08/education-minister-challenges-vocational-students-to-use-drones-to-improve-school-security/230579",
+      "first_observed_on": "2026-08-08",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "ValueError: generic life_impact for body_evidence focus"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Malay Mail",
+        "published_date": "2026年8月8日",
+        "title": "Education minister challenges vocational students to use drones to improve school security",
+        "description": "KUALA LUMPUR, Aug 8 — Students of Setapak Vocational College have been challenged to develop innovative...",
+        "link": "https://www.malaymail.com/news/malaysia/2026/08/08/education-minister-challenges-vocational-students-to-use-drones-to-improve-school-security/230579",
+        "selected_summary": {
+          "conclusion": "Education minister challenges vocational students to use drones to improve school security",
+          "what_happened": [
+            "KUALA LUMPUR, Aug 8 — Students of Setapak Vocational College have been challenged to develop innovative...",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "klang_valley"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": true,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "use_body",
+        "body_evidence_excerpt": "Students of Setapak Vocational College have been challenged to develop innovative ways of using drone technology to enhance security on their school campus. Education Minister Fadhlina Sidek said the students had been given one month to study and identify the best ways to apply the technology before presenting their proposals to her. “Within a month, I want the students to present to me how drone technology can be used to help improve school security,” she said in a Facebook post yesterday. Fadhlina issued the challenge during a collaboration programme between the Seoul Metropolitan Office of Education and Setapak Vocational College, which was also attended by South Korean Ambassador to Malaysia Yeo Seung-bae. She said the programme provided a valuable platform for students to explore robotics and drone technology through the sharing of expertise and experience from South Korea. Recalling her experience watching the students’ demonstrations, Fadhlina said she was proud of their determination in operating the technological equipment despite encountering setbacks. “Today, I watched our students fly drones, operate robots and engage with technology. Some succe...",
+        "body_evidence_focus": [
+          "consumer_or_payment",
+          "health_or_education"
+        ],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
     }
   ]
 }
