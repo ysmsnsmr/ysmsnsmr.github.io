@@ -231,10 +231,6 @@ rules:
   category: "Groceries"
   treatment: "expense"
 
-- pattern: "7-ELEVEN"
-  category: "Groceries"
-  treatment: "expense"
-
 - pattern: "CENTRO COFFEE"
   category: "Dining"
   treatment: "expense"
@@ -256,5 +252,65 @@ rules:
   treatment: "expense"
 
 - pattern: "POPULAR BOOK"
+  category: "Shopping"
+  treatment: "expense"
+
+- pattern: "WEE - WAD"
+  category: "Groceries"
+  treatment: "expense"
+
+- pattern: "MARRIOTT"
+  category: "Travel"
+  treatment: "expense"
+
+- pattern: "PRISMALINK"
+  category: "Travel"
+  treatment: "expense"
+
+- pattern: "YASUMASA NISHIMURA"
+  category: "Transfer"
+  treatment: "transfer"
+
+- pattern: "NISHIMURA YASUMASA"
+  category: "Transfer"
+  treatment: "transfer"
+
+- pattern: "NG MENG LEE"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "MA XIUHUA"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "GPAY NETWORK (M) SDN BHD"
+  category: "Transfer"
+  treatment: "transfer"
+
+- pattern: "JOMPAY-5454"
+  category: "Bills"
+  treatment: "expense"
+
+- pattern: "CHEONG SHIONG YIH"
+  category: "Rent"
+  treatment: "expense"
+
+- pattern: "BUNGKUSLAA KL SENTRAL"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "LEONG KEE"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "THIYAGARAJAN RAJA"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "DARLIS"
+  category: "Dining"
+  treatment: "expense"
+
+- pattern: "OCE STORE SDN BHD"
   category: "Shopping"
   treatment: "expense"

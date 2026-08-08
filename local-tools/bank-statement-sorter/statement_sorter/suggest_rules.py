@@ -8,7 +8,7 @@ from pathlib import Path
 import re
 import sys
 
-from .categorize import RuleError, load_rules
+from .categorize import RuleError, load_rules, matches_rule
 
 
 AMOUNT_RE = re.compile(r"(?<!\w)(?:RM\s*)?[+-]?\(?\d[\d,]*\.\d{2}\)?(?!\w)")
@@ -328,7 +328,7 @@ def _is_artifact_token(token: str) -> bool:
 
 def _is_covered_by_existing_rule(pattern: str, existing_patterns: list[str]) -> bool:
     for existing_pattern in existing_patterns:
-        if re.search(re.escape(existing_pattern), pattern, flags=re.IGNORECASE):
+        if matches_rule(existing_pattern, pattern):
             return True
     return False
 
