@@ -2,6 +2,23 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState, type FormEvent } from "react";
+import {
+  createMigrationBackup,
+  createMigrationBackupJson,
+  createPracticeLedgerExportJson,
+  downloadJsonFile,
+  loadSafeLegacySources,
+  MigrationBackupWriteBlockedError,
+  saveMigrationBackup
+} from "@/lib/ledger-export";
+import {
+  importPracticeLedgerV2NonDestructively,
+  loadStoredPracticeLedgerV2,
+  previewPracticeLedgerImportJson,
+  PracticeLedgerImportWriteBlockedError,
+  type PracticeLedgerImportPreview
+} from "@/lib/practice-ledger-import";
+import type { PracticeLedgerEntry } from "@/types/practice-ledger";
 import { normalizeVoicePracticeEntry } from "@/lib/voice-ledger";
 import {
   appendVoicePracticeEntry,
@@ -16,7 +33,6 @@ import {
 } from "@/lib/voice-session-log";
 import type {
   VoicePracticeContext,
-  VoicePracticeEntry,
   VoicePracticeSourceKind
 } from "@/types/voice-ledger";
 
@@ -50,16 +66,30 @@ export default function VoiceLedgerApp() {
   const [rawLog, setRawLog] = useState("");
   const [parseResult, setParseResult] =
     useState<VoiceSessionLogParseResult | null>(null);
-  const [entries, setEntries] = useState<VoicePracticeEntry[]>([]);
+  const [entries, setEntries] = useState<PracticeLedgerEntry[]>([]);
   const [ready, setReady] = useState(false);
   const [canWrite, setCanWrite] = useState(false);
   const [statusMessage, setStatusMessage] =
     useState<StatusMessage | null>(null);
+  const [importPreview, setImportPreview] =
+    useState<PracticeLedgerImportPreview | null>(null);
 
   useEffect(() => {
     const loaded = loadVoicePracticeLedger();
-    setEntries(loaded.ledger.entries);
     setCanWrite(loaded.canWrite);
+
+    const storedV2 = loadStoredPracticeLedgerV2();
+    if (storedV2.status === "ok") {
+      setEntries(storedV2.ledger.entries);
+    } else if (storedV2.status === "empty") {
+      const legacyProjection = loadSafeLegacySources();
+      setEntries(legacyProjection.conversion.ledger?.entries ?? []);
+    } else {
+      setStatusMessage({
+        kind: "error",
+        text: "v2台帳を安全に読み込めないため、表示を停止しています。"
+      });
+    }
     setReady(true);
 
     if (loaded.errorCode === "unsupported_future_version") {
@@ -79,8 +109,8 @@ export default function VoiceLedgerApp() {
     () =>
       [...entries].sort(
         (left, right) =>
-          Date.parse(right.practicedAt) - Date.parse(left.practicedAt) ||
-          Date.parse(right.createdAt) - Date.parse(left.createdAt)
+          Date.parse(right.occurredAt) - Date.parse(left.occurredAt) ||
+          Date.parse(right.createdAt ?? "") - Date.parse(left.createdAt ?? "")
       ),
     [entries]
   );
@@ -187,6 +217,120 @@ export default function VoiceLedgerApp() {
     });
   }
 
+  function handleExport() {
+    const loaded = loadSafeLegacySources();
+    if (loaded.status !== "ok" || !loaded.conversion.ledger || !loaded.source) {
+      setStatusMessage({
+        kind: "error",
+        text: "保存済みデータを安全に読み込めないため、JSONを書き出せません。"
+      });
+      return;
+    }
+
+    const json = createPracticeLedgerExportJson({
+      ledger: loaded.conversion.ledger,
+      pendingSentenceHistory: loaded.source.progress.completedCardIds
+    });
+    downloadJsonFile(json, `speaking-practice-ledger-${getFileDate()}.json`);
+    setStatusMessage({
+      kind: "success",
+      text: "Ledger v2のJSONを書き出しました。"
+    });
+  }
+
+  function handleMigrationBackup() {
+    const loaded = loadSafeLegacySources();
+    if (loaded.status !== "ok" || !loaded.source) {
+      setStatusMessage({
+        kind: "error",
+        text: "保存済みデータを安全に読み込めないため、バックアップを作成できません。"
+      });
+      return;
+    }
+
+    const backup = createMigrationBackup(loaded.source);
+    try {
+      saveMigrationBackup(backup);
+      downloadJsonFile(
+        createMigrationBackupJson({
+          ...loaded.source,
+          createdAt: backup.createdAt
+        }),
+        `speaking-practice-migration-backup-${getFileDate()}.json`
+      );
+      setStatusMessage({
+        kind: "success",
+        text: "移行前バックアップを保存し、JSONもダウンロードしました。"
+      });
+    } catch (error) {
+      setStatusMessage({
+        kind: "error",
+        text:
+          error instanceof MigrationBackupWriteBlockedError &&
+          error.code === "backup_already_exists"
+            ? "移行前バックアップはすでに作成済みです。既存のバックアップは上書きしません。"
+            : "移行前バックアップを保存できませんでした。既存データは変更していません。"
+      });
+    }
+  }
+
+  async function handleImportFile(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
+    const file = event.currentTarget.files?.[0];
+    event.currentTarget.value = "";
+    if (!file) {
+      return;
+    }
+
+    const json = await file.text();
+    const stored = loadStoredPracticeLedgerV2();
+    const preview = previewPracticeLedgerImportJson(
+      json,
+      stored.status === "ok" ? stored.ledger : null
+    );
+    setImportPreview(preview);
+    setStatusMessage(
+      preview.status === "valid"
+        ? {
+            kind: "info",
+            text: "JSONを検証しました。内容を確認してから追加してください。"
+          }
+        : {
+            kind: "error",
+            text: "JSONを読み込めませんでした。内容を確認してください。"
+          }
+    );
+  }
+
+  function handleImportApply() {
+    if (!importPreview || importPreview.status !== "valid" || !importPreview.ledger) {
+      return;
+    }
+
+    try {
+      const result = importPracticeLedgerV2NonDestructively(
+        importPreview.ledger,
+        undefined,
+        importPreview.pendingSentenceHistory
+      );
+      setImportPreview(null);
+      setStatusMessage({
+        kind: "success",
+        text: `v2台帳へ${result.addedEntryCount}件を追加しました。既存のVoice履歴は変更していません。`
+      });
+    } catch (error) {
+      setStatusMessage({
+        kind: "error",
+        text:
+          error instanceof PracticeLedgerImportWriteBlockedError &&
+          error.code === "unsafe_stored_ledger"
+            ? "既存のv2台帳を安全に読めないため、追加を停止しました。"
+            : "v2台帳へ追加できませんでした。既存データは変更していません。"
+      });
+    }
+  }
+
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setStatusMessage(null);
@@ -231,8 +375,45 @@ export default function VoiceLedgerApp() {
     }
 
     try {
-      const saved = appendVoicePracticeEntry(candidate);
-      setEntries(saved.entries);
+      appendVoicePracticeEntry(candidate);
+      let canonicalSyncSucceeded = true;
+      const canonical = loadSafeLegacySources();
+      if (canonical.status === "ok" && canonical.conversion.ledger && canonical.source) {
+        const storedV2 = loadStoredPracticeLedgerV2();
+        if (storedV2.status === "ok" || storedV2.status === "empty") {
+          try {
+            const imported = importPracticeLedgerV2NonDestructively(
+              canonical.conversion.ledger,
+              undefined,
+              canonical.source.progress.completedCardIds
+            );
+            setEntries(imported.ledger.entries);
+          } catch {
+            canonicalSyncSucceeded = false;
+            setCanWrite(false);
+            setEntries([]);
+            setStatusMessage({
+              kind: "error",
+              text: "v2台帳を安全に更新できないため、保存後の表示を停止しました。"
+            });
+          }
+        } else {
+          canonicalSyncSucceeded = false;
+          setCanWrite(false);
+          setEntries([]);
+          setStatusMessage({
+            kind: "error",
+            text: "v2台帳を安全に読み込めないため、表示を停止しました。"
+          });
+        }
+      } else {
+        canonicalSyncSucceeded = false;
+        setEntries([]);
+        setStatusMessage({
+          kind: "error",
+          text: "旧データを安全に読み込めないため、v2台帳を更新できませんでした。"
+        });
+      }
       setForm(
         createInitialForm({
           practicedAt: form.practicedAt,
@@ -240,10 +421,12 @@ export default function VoiceLedgerApp() {
         })
       );
       clearPasteState();
-      setStatusMessage({
-        kind: "success",
-        text: "練習記録を保存しました。"
-      });
+      if (canonicalSyncSucceeded) {
+        setStatusMessage({
+          kind: "success",
+          text: "練習記録を保存しました。"
+        });
+      }
     } catch (error) {
       setCanWrite(
         error instanceof VoiceLedgerWriteBlockedError ? false : canWrite
@@ -276,7 +459,40 @@ export default function VoiceLedgerApp() {
           >
             現在の練習へ
           </Link>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={handleExport}
+              className="min-h-10 rounded-lg bg-white px-3 py-2 text-xs font-bold text-slate-600 ring-1 ring-slate-200 transition hover:bg-slate-50"
+            >
+              JSONを書き出す
+            </button>
+            <button
+              type="button"
+              onClick={handleMigrationBackup}
+              className="min-h-10 rounded-lg bg-white px-3 py-2 text-xs font-bold text-slate-600 ring-1 ring-slate-200 transition hover:bg-slate-50"
+            >
+              移行前バックアップ
+            </button>
+            <label className="min-h-10 cursor-pointer rounded-lg bg-white px-3 py-2 text-xs font-bold text-slate-600 ring-1 ring-slate-200 transition hover:bg-slate-50">
+              JSONを読み込む
+              <input
+                type="file"
+                accept="application/json,.json"
+                onChange={(event) => void handleImportFile(event)}
+                className="sr-only"
+              />
+            </label>
+          </div>
         </header>
+
+        {importPreview && (
+          <ImportPreviewPanel
+            preview={importPreview}
+            onApply={handleImportApply}
+            onCancel={() => setImportPreview(null)}
+          />
+        )}
 
         <div className="mt-5 grid items-start gap-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
           <section className="rounded-lg bg-white p-5 shadow-soft ring-1 ring-slate-100 sm:p-6">
@@ -463,15 +679,18 @@ export default function VoiceLedgerApp() {
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <p className="text-xs font-bold uppercase tracking-[0.08em] text-calm">
-                      {formatContext(entry.context)}
+                      {formatContext(entry.context ?? "other")}
                     </p>
                     <time className="text-xs font-semibold text-slate-500">
-                      {formatDate(entry.practicedAt)}
+                      {formatDate(entry.occurredAt)}
                     </time>
                   </div>
                   <h3 className="mt-2 text-base font-bold leading-snug text-slate-950">
                     {entry.title}
                   </h3>
+                  <p className="mt-1 text-xs font-semibold text-slate-500">
+                    {formatLedgerSource(entry.source)} ・ {formatReviewBasis(entry.reviewBasis)}
+                  </p>
                   <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-slate-600">
                     {entry.summary}
                   </p>
@@ -540,6 +759,111 @@ function ParseFeedback({
       ))}
     </div>
   );
+}
+
+function ImportPreviewPanel({
+  preview,
+  onApply,
+  onCancel
+}: {
+  preview: PracticeLedgerImportPreview;
+  onApply: () => void;
+  onCancel: () => void;
+}) {
+  return (
+    <section className="mt-5 rounded-lg bg-white p-5 shadow-soft ring-1 ring-slate-100 sm:p-6">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.08em] text-calm">
+            Import preview
+          </p>
+          <h2 className="mt-1 text-xl font-bold text-slate-950">
+            JSONの検証結果
+          </h2>
+        </div>
+        <span
+          className={[
+            "rounded-full px-3 py-1 text-xs font-bold",
+            preview.status === "valid"
+              ? "bg-calm-soft text-calm"
+              : "bg-coral/10 text-[#A13C2A]"
+          ].join(" ")}
+        >
+          {preview.status === "valid" ? "読み込み可能" : "読み込み不可"}
+        </span>
+      </div>
+
+      {preview.status === "valid" ? (
+        <>
+          <dl className="mt-4 grid gap-3 sm:grid-cols-3">
+            <ImportStat label="対象" value={formatImportSource(preview.source)} />
+            <ImportStat label="追加予定" value={`${preview.newEntryCount}件`} />
+            <ImportStat label="重複" value={`${preview.duplicateEntryCount}件`} />
+          </dl>
+          <p className="mt-4 rounded-lg bg-slate-50 px-4 py-3 text-sm leading-relaxed text-slate-600">
+            適用するとv2専用台帳へ追加します。既存のVoice LedgerとProgressは変更しません。
+          </p>
+          {preview.warnings.map((warning) => (
+            <p
+              key={warning}
+              className="mt-3 rounded-lg bg-[#FFF9E8] px-4 py-3 text-sm leading-relaxed text-slate-700"
+            >
+              {warning}
+            </p>
+          ))}
+          <div className="mt-4 flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={onApply}
+              className="min-h-11 rounded-lg bg-calm px-5 py-2 text-sm font-bold text-white transition hover:bg-[#0B625C]"
+            >
+              この内容をv2台帳へ追加
+            </button>
+            <button
+              type="button"
+              onClick={onCancel}
+              className="min-h-11 rounded-lg px-4 py-2 text-sm font-bold text-slate-600 ring-1 ring-slate-200 transition hover:bg-slate-50"
+            >
+              キャンセル
+            </button>
+          </div>
+        </>
+      ) : (
+        <div className="mt-4 grid gap-3">
+          {preview.errors.map((error) => (
+            <p
+              key={error}
+              className="rounded-lg bg-coral/10 px-4 py-3 text-sm font-semibold leading-relaxed text-[#A13C2A]"
+            >
+              {error}
+            </p>
+          ))}
+          <button
+            type="button"
+            onClick={onCancel}
+            className="min-h-11 w-fit rounded-lg px-4 py-2 text-sm font-bold text-slate-600 ring-1 ring-slate-200 transition hover:bg-slate-50"
+          >
+            閉じる
+          </button>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function ImportStat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-lg bg-slate-50 px-4 py-3">
+      <dt className="text-xs font-bold text-slate-500">{label}</dt>
+      <dd className="mt-1 text-lg font-bold text-slate-950">{value}</dd>
+    </div>
+  );
+}
+
+function formatImportSource(
+  source: PracticeLedgerImportPreview["source"]
+) {
+  return source === "migration_backup" ? "移行前バックアップ" : "Ledger v2 JSON";
 }
 
 type EntryEditorProps = {
@@ -849,6 +1173,10 @@ function createEntryId() {
   return `voice-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 }
 
+function getFileDate() {
+  return new Date().toISOString().replace(/[:.]/g, "-");
+}
+
 function formatDate(value: string) {
   const date = new Date(
     value.length === 10 ? `${value}T00:00:00` : value
@@ -862,4 +1190,28 @@ function formatDate(value: string) {
 
 function formatContext(context: VoicePracticeContext) {
   return contextOptions.find((option) => option.value === context)?.label ?? "その他";
+}
+
+function formatLedgerSource(source: PracticeLedgerEntry["source"]) {
+  switch (source) {
+    case "external_voice":
+      return "外部Voice";
+    case "in_app_recording":
+      return "アプリ録音";
+    case "quiet_mode":
+      return "quiet mode";
+    case "sentence_practice":
+      return "Sentence練習";
+  }
+}
+
+function formatReviewBasis(basis: PracticeLedgerEntry["reviewBasis"]) {
+  switch (basis) {
+    case "self_report":
+      return "自己申告";
+    case "transcript_based":
+      return "文字起こしベース";
+    case "none":
+      return "記録のみ";
+  }
 }
