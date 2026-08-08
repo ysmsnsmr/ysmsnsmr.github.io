@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import contextlib
 import csv
+import hashlib
 import io
+import json
 from pathlib import Path
 import sys
 import tempfile
@@ -11,10 +13,13 @@ from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from statement_sorter import __version__
 from statement_sorter.categorize import RuleError, categorize_transactions, load_rules
+from statement_sorter.cli import main as cli_main
 from statement_sorter.credit_card_parser import parse_transactions as parse_credit_card_transactions
 from statement_sorter.export import write_csv
-from statement_sorter.models import CSV_COLUMNS
+from statement_sorter.manifest import manifest_path_for_csv, write_manifest
+from statement_sorter.models import CSV_COLUMNS, Transaction
 from statement_sorter.monthly_summary import (
     build_monthly_summaries,
     _clean_description_for_display,
@@ -773,6 +778,78 @@ class CategorizerTests(unittest.TestCase):
             with self.assertRaises(RuleError):
                 load_rules(path)
 
+    def test_load_rules_preserves_optional_provenance_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = Path(tmp_dir) / "rules.yml"
+            path.write_text(
+                "rules:\n"
+                "  - pattern: \"CAFE\"\n"
+                "    category: \"Dining\"\n"
+                "    treatment: \"expense\"\n"
+                "    reason: \"Confirmed from monthly review\"\n"
+                "    first_confirmed_month: \"2026-07\"\n"
+                "    confirmation_count: 2\n",
+                encoding="utf-8",
+            )
+
+            rules = load_rules(path)
+
+        self.assertEqual(
+            rules[0],
+            {
+                "pattern": "CAFE",
+                "category": "Dining",
+                "treatment": "expense",
+                "reason": "Confirmed from monthly review",
+                "first_confirmed_month": "2026-07",
+                "confirmation_count": 2,
+            },
+        )
+        categorized = categorize_transactions(
+            [Transaction(date="2026-07-01", description="CAFE", money_out="5.00")],
+            rules,
+        )
+        self.assertEqual(categorized[0].category, "Dining")
+        self.assertEqual(categorized[0].treatment, "expense")
+        self.assertEqual(categorized[0].status, "auto")
+
+    def test_legacy_rules_without_provenance_metadata_remain_unchanged(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = Path(tmp_dir) / "rules.yml"
+            path.write_text(
+                "rules:\n"
+                "  - pattern: \"CAFE\"\n"
+                "    category: \"Dining\"\n"
+                "    treatment: \"expense\"\n",
+                encoding="utf-8",
+            )
+
+            self.assertEqual(
+                load_rules(path),
+                [{"pattern": "CAFE", "category": "Dining", "treatment": "expense"}],
+            )
+
+    def test_rejects_invalid_rule_provenance_metadata(self) -> None:
+        cases = [
+            ("first_confirmed_month", "2026-7"),
+            ("confirmation_count", "-1"),
+            ("confirmation_count", "two"),
+        ]
+        for key, value in cases:
+            with self.subTest(key=key, value=value), tempfile.TemporaryDirectory() as tmp_dir:
+                path = Path(tmp_dir) / "rules.yml"
+                path.write_text(
+                    "rules:\n"
+                    "  - pattern: \"CAFE\"\n"
+                    "    category: \"Dining\"\n"
+                    "    treatment: \"expense\"\n"
+                    f"    {key}: \"{value}\"\n",
+                    encoding="utf-8",
+                )
+
+                with self.assertRaises(RuleError):
+                    load_rules(path)
+
     def test_rules_file_categorizes_wfe_credit_card_rows_as_groceries(self) -> None:
         transactions = parse_credit_card_transactions(
             """
@@ -789,6 +866,95 @@ Post Date Transaction Date Transaction Details Amount
         self.assertEqual(categorized[0].category, "Groceries")
         self.assertEqual(categorized[0].treatment, "expense")
         self.assertEqual(categorized[0].status, "auto")
+
+    def test_rules_match_punctuation_variants_without_changing_transaction_text(self) -> None:
+        transaction = Transaction(
+            date="2026-06-28",
+            description="QR PAYMENT ZHONG GU YUAN SDN. B",
+            money_out="8.00",
+        )
+        rules = [{"pattern": "ZHONG GU YUAN SDN B", "category": "Dining", "treatment": "expense"}]
+
+        categorized = categorize_transactions([transaction], rules)
+
+        self.assertEqual(categorized[0].category, "Dining")
+        self.assertEqual(categorized[0].treatment, "expense")
+        self.assertEqual(categorized[0].status, "auto")
+        self.assertEqual(categorized[0].description, "QR PAYMENT ZHONG GU YUAN SDN. B")
+
+    def test_normalized_rule_matching_uses_token_boundaries(self) -> None:
+        rules = [{"pattern": "LP -", "category": "Medical", "treatment": "expense"}]
+        transactions = [
+            Transaction(
+                date="2026-06-01",
+                description="QR PAYMENT ALPHA CAFE",
+                money_out="12.00",
+            ),
+            Transaction(
+                date="2026-06-02",
+                description="LP 20260602HBMBMYKL0100RM12345678",
+                money_out="50.00",
+            ),
+        ]
+
+        categorized = categorize_transactions(transactions, rules)
+
+        self.assertEqual(categorized[0].category, "Other")
+        self.assertEqual(categorized[0].treatment, "unknown")
+        self.assertEqual(categorized[1].category, "Medical")
+        self.assertEqual(categorized[1].treatment, "expense")
+
+    def test_rejects_rules_that_duplicate_after_normalization(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = Path(tmp_dir) / "rules.yml"
+            path.write_text(
+                "rules:\n"
+                "  - pattern: \"7 ELEVEN\"\n"
+                "    category: \"Groceries\"\n"
+                "    treatment: \"expense\"\n"
+                "  - pattern: \"7-ELEVEN\"\n"
+                "    category: \"Groceries\"\n"
+                "    treatment: \"expense\"\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(RuleError, "duplicates Rule 1"):
+                load_rules(path)
+
+    def test_rejects_conflicting_rule_shadowing(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = Path(tmp_dir) / "rules.yml"
+            path.write_text(
+                "rules:\n"
+                "  - pattern: \"CARD PAYMENT\"\n"
+                "    category: \"Bills\"\n"
+                "    treatment: \"expense\"\n"
+                "  - pattern: \"CREDIT CARD PAYMENT\"\n"
+                "    category: \"Transfer\"\n"
+                "    treatment: \"transfer\"\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(RuleError, "is shadowed by Rule 1"):
+                load_rules(path)
+
+    def test_allows_specific_rule_before_broader_rule(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = Path(tmp_dir) / "rules.yml"
+            path.write_text(
+                "rules:\n"
+                "  - pattern: \"CREDIT CARD PAYMENT\"\n"
+                "    category: \"Transfer\"\n"
+                "    treatment: \"transfer\"\n"
+                "  - pattern: \"CARD PAYMENT\"\n"
+                "    category: \"Bills\"\n"
+                "    treatment: \"expense\"\n",
+                encoding="utf-8",
+            )
+
+            rules = load_rules(path)
+
+        self.assertEqual(len(rules), 2)
 
 
 class ExportTests(unittest.TestCase):
@@ -879,6 +1045,28 @@ class SuggestRulesTests(unittest.TestCase):
         self.assertEqual(loaded[0]["pattern"], "CAFE BETA")
         self.assertEqual(loaded[0]["category"], "Other")
         self.assertEqual(loaded[0]["treatment"], "unknown")
+
+    def test_existing_rule_coverage_uses_shared_punctuation_normalization(self) -> None:
+        rows = [
+            _csv_row(
+                "QR PAYMENT ZHONG GU YUAN SDN. B",
+                "8.00",
+                "Other",
+                "unknown",
+                "review",
+            )
+        ]
+        existing_rules = [
+            {
+                "pattern": "ZHONG GU YUAN SDN B",
+                "category": "Dining",
+                "treatment": "expense",
+            }
+        ]
+
+        candidates = suggest_rule_candidates(rows, existing_rules)
+
+        self.assertEqual(candidates, [])
 
     def test_normalizes_qr_payment_references_to_reusable_merchant_patterns(self) -> None:
         rows = [
@@ -1378,6 +1566,49 @@ class MonthlySummaryTests(unittest.TestCase):
 
             self.assertEqual([row["description"] for row in rows], ["FIRST", "SECOND"])
 
+    def test_rejects_multiple_csvs_with_the_same_csv_hash(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            first_path = base / "first.csv"
+            second_path = base / "second.csv"
+            row = _monthly_row("DUPLICATE", "", "1.00", "", "Income", "income", "auto")
+            for path in (first_path, second_path):
+                with path.open("w", encoding="utf-8", newline="") as handle:
+                    writer = csv.DictWriter(handle, fieldnames=CSV_COLUMNS)
+                    writer.writeheader()
+                    writer.writerow(row)
+
+            with self.assertRaisesRegex(ValueError, "duplicate CSV input.*csv hash"):
+                read_monthly_csvs([first_path, second_path])
+
+    def test_rejects_different_csvs_with_the_same_manifest_input_hash(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            first_path = base / "first.csv"
+            second_path = base / "second.csv"
+            input_path = base / "source.pdf"
+            rules_path = base / "rules.yml"
+            input_path.write_bytes(b"same sanitized source")
+            rules_path.write_text("rules:\n", encoding="utf-8")
+            for path, row in [
+                (first_path, _monthly_row("FIRST", "1.00", "", "", "Income", "income", "auto")),
+                (second_path, _monthly_row("SECOND", "2.00", "", "", "Income", "income", "auto")),
+            ]:
+                with path.open("w", encoding="utf-8", newline="") as handle:
+                    writer = csv.DictWriter(handle, fieldnames=CSV_COLUMNS)
+                    writer.writeheader()
+                    writer.writerow(row)
+                write_manifest(
+                    manifest_path_for_csv(path),
+                    input_path=input_path,
+                    rules_path=rules_path,
+                    csv_path=path,
+                    statement_type="bank_debit",
+                )
+
+            with self.assertRaisesRegex(ValueError, "duplicate CSV input.*input hash"):
+                read_monthly_csvs([first_path, second_path])
+
     def test_monthly_summary_cli_accepts_multiple_csv_inputs(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
@@ -1411,10 +1642,12 @@ class MonthlyRunTests(unittest.TestCase):
         )
 
         self.assertEqual(paths.bank_csv, Path("outputs/2026-05-06.statement.csv"))
+        self.assertEqual(paths.bank_manifest, Path("outputs/2026-05-06.statement.manifest.json"))
         self.assertEqual(paths.bank_ocr, Path("outputs/2026-05-06.ocr.txt"))
         self.assertEqual(paths.bank_rule_candidates, Path("outputs/2026-05-06.rule-candidates.yml"))
         self.assertEqual(paths.bank_review, Path("outputs/2026-05-06.review.md"))
         self.assertEqual(paths.card_csv, Path("outputs/2026-05-21.card.statement.csv"))
+        self.assertEqual(paths.card_manifest, Path("outputs/2026-05-21.card.statement.manifest.json"))
         self.assertEqual(paths.card_ocr, Path("outputs/2026-05-21.card.ocr.txt"))
         self.assertEqual(paths.card_rule_candidates, Path("outputs/2026-05-21.card.rule-candidates.yml"))
         self.assertEqual(paths.card_review, Path("outputs/2026-05-21.card.review.md"))
@@ -1510,6 +1743,8 @@ class MonthlyRunTests(unittest.TestCase):
             out_dir = base / "outputs"
             rules_path = _write_monthly_run_rules(base)
             rules_before = rules_path.read_text(encoding="utf-8")
+            bank_pdf.write_bytes(b"bank fixture PDF")
+            card_pdf.write_bytes(b"card fixture PDF")
 
             def fake_ocr(pdf_path: Path, language: str, dpi: int) -> str:
                 self.assertEqual(language, "eng")
@@ -1548,6 +1783,13 @@ class MonthlyRunTests(unittest.TestCase):
             self.assertIn("# Bank Statement Monthly Summary", paths.combined_summary.read_text(encoding="utf-8"))
             self.assertEqual(rules_path.read_text(encoding="utf-8"), rules_before)
 
+            bank_manifest = json.loads(paths.bank_manifest.read_text(encoding="utf-8"))
+            card_manifest = json.loads(paths.card_manifest.read_text(encoding="utf-8"))
+            self.assertEqual(bank_manifest["statement_type"], "bank_debit")
+            self.assertEqual(card_manifest["statement_type"], "credit_card")
+            self.assertEqual(bank_manifest["csv_sha256"], _sha256(paths.bank_csv))
+            self.assertEqual(card_manifest["csv_sha256"], _sha256(paths.card_csv))
+
             output = stdout.getvalue()
             self.assertIn("bank: rows=2 auto=1 review=1 missing_amount=1", output)
             self.assertIn("card: rows=", output)
@@ -1558,7 +1800,9 @@ class MonthlyRunTests(unittest.TestCase):
             self.assertIn("other=", output)
             self.assertIn("balance_nonempty=", output)
             self.assertIn(str(paths.bank_csv), output)
+            self.assertIn(str(paths.bank_manifest), output)
             self.assertIn(str(paths.card_csv), output)
+            self.assertIn(str(paths.card_manifest), output)
             self.assertIn(str(paths.combined_summary), output)
 
     def test_monthly_run_accepts_explicit_month_for_combined_summary(self) -> None:
@@ -1568,6 +1812,8 @@ class MonthlyRunTests(unittest.TestCase):
             card_pdf = base / "2026-05-21_Statement.pdf"
             out_dir = base / "outputs"
             rules_path = _write_monthly_run_rules(base)
+            bank_pdf.write_bytes(b"bank fixture PDF")
+            card_pdf.write_bytes(b"card fixture PDF")
 
             def fake_ocr(pdf_path: Path, language: str, dpi: int) -> str:
                 if Path(pdf_path).name.startswith("2026-04-30"):
@@ -1594,6 +1840,72 @@ class MonthlyRunTests(unittest.TestCase):
             self.assertEqual(exit_code, 0)
             self.assertTrue((out_dir / "2026-05.combined.summary.md").exists())
             self.assertFalse((out_dir / "2026-04.combined.summary.md").exists())
+
+
+class ManifestTests(unittest.TestCase):
+    def test_write_manifest_records_hashes_without_modifying_inputs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            input_path = base / "statement.pdf"
+            rules_path = base / "rules.yml"
+            csv_path = base / "outputs" / "statement.csv"
+            manifest_path = manifest_path_for_csv(csv_path)
+            input_path.write_bytes(b"private fixture PDF")
+            rules_text = "rules:\n"
+            rules_path.write_text(rules_text, encoding="utf-8")
+            csv_path.parent.mkdir()
+            csv_path.write_text("date,description\n2026-05-01,TEST\n", encoding="utf-8")
+            original_input = input_path.read_bytes()
+            original_rules = rules_path.read_text(encoding="utf-8")
+
+            write_manifest(
+                manifest_path,
+                input_path=input_path,
+                rules_path=rules_path,
+                csv_path=csv_path,
+                statement_type="bank_debit",
+            )
+
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            self.assertEqual(
+                set(manifest),
+                {
+                    "manifest_version",
+                    "input_sha256",
+                    "rules_sha256",
+                    "tool_version",
+                    "statement_type",
+                    "csv_sha256",
+                },
+            )
+            self.assertEqual(manifest["manifest_version"], 1)
+            self.assertEqual(manifest["input_sha256"], hashlib.sha256(original_input).hexdigest())
+            self.assertEqual(manifest["rules_sha256"], hashlib.sha256(original_rules.encode()).hexdigest())
+            self.assertEqual(manifest["csv_sha256"], _sha256(csv_path))
+            self.assertEqual(manifest["statement_type"], "bank_debit")
+            self.assertEqual(manifest["tool_version"], __version__)
+            self.assertEqual(input_path.read_bytes(), original_input)
+            self.assertEqual(rules_path.read_text(encoding="utf-8"), original_rules)
+
+    def test_cli_writes_manifest_after_csv(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            pdf_path = base / "statement.pdf"
+            csv_path = base / "outputs" / "statement.csv"
+            rules_path = base / "rules.yml"
+            pdf_path.write_bytes(b"private fixture PDF")
+            rules_path.write_text("rules:\n", encoding="utf-8")
+
+            with mock.patch("statement_sorter.cli.ocr_pdf", return_value=FIXTURE_TEXT):
+                with contextlib.redirect_stdout(io.StringIO()):
+                    exit_code = cli_main([str(pdf_path), "--out", str(csv_path), "--rules", str(rules_path)])
+
+            manifest = json.loads(manifest_path_for_csv(csv_path).read_text(encoding="utf-8"))
+            self.assertEqual(exit_code, 0)
+            self.assertEqual(manifest["statement_type"], "bank_debit")
+            self.assertEqual(manifest["input_sha256"], _sha256(pdf_path))
+            self.assertEqual(manifest["rules_sha256"], _sha256(rules_path))
+            self.assertEqual(manifest["csv_sha256"], _sha256(csv_path))
 
 
 def _csv_row(
