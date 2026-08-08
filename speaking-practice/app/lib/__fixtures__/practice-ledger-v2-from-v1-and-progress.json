@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 2,
+  "entries": [
+    {
+      "id": "voice-session-2",
+      "occurredAt": "2026-07-19T03:00:00.000Z",
+      "createdAt": "2026-07-19T03:10:00.000Z",
+      "updatedAt": "2026-07-19T03:12:00.000Z",
+      "practiceKind": "voice",
+      "source": "external_voice",
+      "reviewBasis": "self_report",
+      "context": "travel",
+      "title": "Checking into a hotel",
+      "summary": "I practiced asking about check-in time.",
+      "nextMission": "Ask about one room problem and request a solution.",
+      "plannedFocusSound": null,
+      "observedFocusSoundCandidate": null,
+      "nextFocusSound": null,
+      "details": {
+        "sessionMinutes": null,
+        "usefulExpressions": [],
+        "stickingPoints": [],
+        "corrections": [],
+        "selfNote": "Keep the opening sentence short."
+      }
+    },
+    {
+      "id": "voice-session-1",
+      "occurredAt": "2026-07-18T10:00:00.000Z",
+      "createdAt": "2026-07-18T10:05:00.000Z",
+      "updatedAt": "2026-07-18T10:05:00.000Z",
+      "practiceKind": "voice",
+      "source": "external_voice",
+      "reviewBasis": "self_report",
+      "context": "work",
+      "title": "Clarifying a work question",
+      "summary": "I practiced clarifying the question before answering.",
+      "nextMission": "Answer one follow-up question in two sentences.",
+      "plannedFocusSound": null,
+      "observedFocusSoundCandidate": null,
+      "nextFocusSound": null,
+      "details": {
+        "sessionMinutes": 12,
+        "usefulExpressions": [
+          "Could you clarify what you mean?",
+          "Let me confirm the main point."
+        ],
+        "stickingPoints": ["Explaining the result concisely."],
+        "corrections": ["Lead with the result."],
+        "selfNote": null
+      }
+    },
+    {
+      "id": "legacy-recording",
+      "occurredAt": "2026-07-10",
+      "createdAt": null,
+      "updatedAt": null,
+      "practiceKind": "interview",
+      "source": "in_app_recording",
+      "reviewBasis": "transcript_based",
+      "context": "work",
+      "title": "Workflow improvement",
+      "summary": "The main result was clear.",
+      "nextMission": "Use result, action, impact.",
+      "plannedFocusSound": "/h/",
+      "observedFocusSoundCandidate": null,
+      "nextFocusSound": "/h/",
+      "details": {
+        "targetRole": "Operations",
+        "answer30": "I improved a workflow.",
+        "answer30Ipa": "/aɪ ɪmˈpruːvd ə ˈwɝːkfloʊ/",
+        "questions": ["What changed?"],
+        "repairPhrases": ["Let me put it another way."],
+        "pronunciationTip": "Use a light breath for /h/.",
+        "completionMode": "recorded",
+        "review": {
+          "positive": "The main result was clear.",
+          "fixPoints": ["Answer the question directly first."],
+          "structureSuggestion": "Use result, action, impact.",
+          "focusSoundNote": "Keep /h/ light.",
+          "nextFocus": "/h/"
+        }
+      }
+    },
+    {
+      "id": "legacy-quiet",
+      "occurredAt": "2026-07-09",
+      "createdAt": null,
+      "updatedAt": null,
+      "practiceKind": "interview",
+      "source": "quiet_mode",
+      "reviewBasis": "self_report",
+      "context": "work",
+      "title": "Priority management",
+      "summary": "You completed the quiet review.",
+      "nextMission": "State the rule, then one example.",
+      "plannedFocusSound": "/r/",
+      "observedFocusSoundCandidate": null,
+      "nextFocusSound": "/r/",
+      "details": {
+        "targetRole": "Operations",
+        "answer30": "I prioritize work by urgency and impact.",
+        "answer30Ipa": "/aɪ praɪˈɔːrətaɪz wɝːk/",
+        "questions": ["How do you handle urgent work?"],
+        "repairPhrases": ["Could you ask that in a simpler way?"],
+        "pronunciationTip": "Keep the tongue away from the teeth for /r/.",
+        "completionMode": "quiet",
+        "review": {
+          "positive": "You completed the quiet review.",
+          "fixPoints": ["Lead with one direct sentence."],
+          "structureSuggestion": "State the rule, then one example.",
+          "focusSoundNote": "Keep /r/ separate from /l/.",
+          "nextFocus": "/r/",
+          "pronunciationNote": "Keep /r/ separate from /l/."
+        }
+      }
+    }
+  ]
+}
