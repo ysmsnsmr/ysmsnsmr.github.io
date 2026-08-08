@@ -29,6 +29,7 @@ from statement_sorter.monthly_run import (
     main as monthly_run_main,
 )
 from statement_sorter.parser import parse_transactions, split_transaction_blocks
+from statement_sorter.parser_adapter import parse_statement
 from statement_sorter.review_report import (
     main as review_report_main,
     read_statement_csv as read_report_csv,
@@ -626,6 +627,20 @@ class StatementTypeTests(unittest.TestCase):
         self.assertFalse(is_credit_card_statement(FIXTURE_TEXT))
 
 
+class ParserAdapterTests(unittest.TestCase):
+    def test_common_entry_delegates_bank_ocr(self) -> None:
+        statement_type, transactions = parse_statement(FIXTURE_TEXT)
+
+        self.assertEqual(statement_type, "bank_debit")
+        self.assertEqual(transactions, parse_transactions(FIXTURE_TEXT))
+
+    def test_common_entry_delegates_credit_card_ocr(self) -> None:
+        statement_type, transactions = parse_statement(CREDIT_CARD_OCR)
+
+        self.assertEqual(statement_type, "credit_card")
+        self.assertEqual(transactions, parse_credit_card_transactions(CREDIT_CARD_OCR))
+
+
 class CreditCardParserTests(unittest.TestCase):
     def test_parses_credit_card_charges_as_money_out(self) -> None:
         transactions = parse_credit_card_transactions(CREDIT_CARD_OCR)
@@ -697,6 +712,28 @@ Post Date Transaction Date Transaction Details Amount
         self.assertEqual(transactions[0].money_out, "1,928.71")
         self.assertEqual(transactions[0].money_in, "")
         self.assertEqual(transactions[0].balance, "")
+
+
+class SanitizedFixtureTests(unittest.TestCase):
+    def test_hsbc_bank_fixture_matches_expected_csv(self) -> None:
+        fixture_dir = Path(__file__).parent / "fixtures" / "hsbc-bank"
+        ocr_text = (fixture_dir / "ocr.txt").read_text(encoding="utf-8")
+        expected = _read_fixture_csv(fixture_dir / "expected.csv")
+
+        actual = [transaction.to_csv_row() for transaction in parse_transactions(ocr_text)]
+
+        self.assertEqual(actual, expected)
+        self.assertFalse(is_credit_card_statement(ocr_text))
+
+    def test_hsbc_card_fixture_matches_expected_csv(self) -> None:
+        fixture_dir = Path(__file__).parent / "fixtures" / "hsbc-card"
+        ocr_text = (fixture_dir / "ocr.txt").read_text(encoding="utf-8")
+        expected = _read_fixture_csv(fixture_dir / "expected.csv")
+
+        actual = [transaction.to_csv_row() for transaction in parse_credit_card_transactions(ocr_text)]
+
+        self.assertEqual(actual, expected)
+        self.assertTrue(is_credit_card_statement(ocr_text))
 
 
 class CategorizerTests(unittest.TestCase):
@@ -1661,6 +1698,15 @@ def _decimal(value: str):
     from decimal import Decimal
 
     return Decimal(value)
+
+
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _read_fixture_csv(path: Path) -> list[dict[str, str]]:
+    with path.open(newline="", encoding="utf-8") as handle:
+        return list(csv.DictReader(handle))
 
 
 if __name__ == "__main__":

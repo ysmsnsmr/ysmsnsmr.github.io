@@ -1,0 +1,11 @@
+Account Statement
+Card Number 0000 0000 0000 0000 Statement Date 21 MAY 2026 Page 1
+HSBC Amanah Cash Back Summary Minimum Payment & Overlimit Summary (RM)
+Your Previous Statement Balance 300.00
+Post Date Transaction Date Transaction Details Amount
+06 MAY 06 MAY PAYMENT - THANK YOU 300.00CR
+12 APR 11 APR SANITIZED CAFE MY 24.50
+13 APR 12 APR LONG SANITIZED MERCHANT 10.00
+CONTINUED LOCATION MY
+15 APR 15 APR CASH BACK EVERYDAY 2.00CR
+Your charge(s) for this month RM 34.50
