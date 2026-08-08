@@ -58,28 +58,40 @@ def entry_schema() -> dict[str, Any]:
     }
 
 
+def selected_summary_schema() -> dict[str, Any]:
+    return {
+        "type": "object",
+        "properties": {
+            "conclusion": {"type": "string"},
+            "what_happened": {
+                "type": "array",
+                "items": {"type": "string"},
+                "minItems": 1,
+                "maxItems": 2,
+            },
+            "life_impact": {"type": "string"},
+            "next_action": {"type": "string"},
+        },
+        "required": ["conclusion", "what_happened", "life_impact", "next_action"],
+        "additionalProperties": False,
+    }
+
+
 SUMMARY_ENTRY_SCHEMA = {
     "type": "object",
     "properties": {
-        "selected_summary": {
-            "type": "object",
-            "properties": {
-                "conclusion": {"type": "string"},
-                "what_happened": {
-                    "type": "array",
-                    "items": {"type": "string"},
-                    "minItems": 1,
-                    "maxItems": 2,
-                },
-                "life_impact": {"type": "string"},
-                "next_action": {"type": "string"},
-            },
-            "required": ["conclusion", "what_happened", "life_impact", "next_action"],
-            "additionalProperties": False,
-        },
+        "selected_summary": selected_summary_schema(),
         "entry": entry_schema(),
     },
     "required": ["selected_summary", "entry"],
+    "additionalProperties": False,
+}
+
+
+SUMMARY_ONLY_SCHEMA = {
+    "type": "object",
+    "properties": {"selected_summary": selected_summary_schema()},
+    "required": ["selected_summary"],
     "additionalProperties": False,
 }
 
@@ -145,6 +157,25 @@ def summary_entry_schema_error(value: Any) -> str:
     ):
         return "summary_value"
     return "" if entry_is_schema_valid(value["entry"]) else "entry_shape"
+
+
+def summary_only_schema_error(value: Any) -> str:
+    if not _exact_keys(value, {"selected_summary"}):
+        return "root_shape"
+    summary = value["selected_summary"]
+    if not _exact_keys(summary, {"conclusion", "what_happened", "life_impact", "next_action"}):
+        return "summary_shape"
+    happened = summary["what_happened"]
+    if (
+        not _is_string(summary["conclusion"])
+        or not _is_string(summary["life_impact"])
+        or not _is_string(summary["next_action"])
+        or not isinstance(happened, list)
+        or not 1 <= len(happened) <= 2
+        or any(not _is_string(line) for line in happened)
+    ):
+        return "summary_value"
+    return ""
 
 
 def entry_review_schema_error(value: Any) -> str:

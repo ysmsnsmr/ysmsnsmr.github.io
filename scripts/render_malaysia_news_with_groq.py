@@ -51,12 +51,18 @@ from malaysia_groq_render_decision import (
 )
 from malaysia_groq_term_normalization import normalize_malaysia_terms
 from malaysia_groq_model_profiles import (
+    COMPARISON_CONTRACTS,
     COMPARISON_PROMPT_LAYOUTS,
     DEFAULT_COMPARISON_MAX_TOKENS,
     ModelProfile,
     profile_for_model_id,
 )
-from malaysia_groq_output_contract import SUMMARY_ENTRY_SCHEMA, summary_entry_schema_error
+from malaysia_groq_output_contract import (
+    SUMMARY_ENTRY_SCHEMA,
+    SUMMARY_ONLY_SCHEMA,
+    summary_entry_schema_error,
+    summary_only_schema_error,
+)
 from malaysia_groq_transport import error_diagnostic, request_chat_completion
 import render_malaysia_news_from_json as fallback_renderer
 
@@ -263,6 +269,9 @@ USER_MESSAGE_JSON_CONTRACT = """返答は次の形のJSON objectだけにして�
     "certainty": {"kind": "reported|confirmed|planned|proposed|expected|warning|under_investigation|alleged|denied", "source_text": "string", "text_ja": "string"}
   }
 }"""
+
+SUMMARY_ONLY_CONTRACT_INSTRUCTION = """この比較ではentry objectを生成しません。返答はselected_summaryだけを含む次のJSON objectにしてください。追加のkey、entry、説明文、Markdownは出力しません。
+{"selected_summary":{"conclusion":"string","what_happened":["string"],"life_impact":"string","next_action":"string"}}"""
 
 
 ENTRY_STATE_KINDS = {
@@ -505,20 +514,33 @@ def groq_payload_for_item(item: dict[str, Any]) -> dict[str, Any]:
     return payload
 
 
-def summary_request_messages(item: dict[str, Any], prompt_layout: str = "production") -> list[dict[str, str]]:
+def summary_request_messages(
+    item: dict[str, Any],
+    prompt_layout: str = "production",
+    summary_contract: str = "summary_entry",
+) -> list[dict[str, str]]:
     """Keep comparison-only prompt experiments explicit without changing production defaults."""
     if prompt_layout not in COMPARISON_PROMPT_LAYOUTS:
         raise ValueError(f"unsupported summary prompt layout: {prompt_layout}")
+    if summary_contract not in COMPARISON_CONTRACTS:
+        raise ValueError(f"unsupported summary contract: {summary_contract}")
     article_json = json.dumps(groq_payload_for_item(item), ensure_ascii=False)
+    contract_instruction = SUMMARY_ONLY_CONTRACT_INSTRUCTION if summary_contract == "summary_only" else ""
     if prompt_layout == "production":
+        system_content = SYSTEM_PROMPT
+        if contract_instruction:
+            system_content = f"{SYSTEM_PROMPT}\n\n{contract_instruction}"
         return [
-            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "system", "content": system_content},
             {"role": "user", "content": article_json},
         ]
 
-    content = f"{SYSTEM_PROMPT}\n\n入力記事JSON:\n{article_json}"
+    content = f"{SYSTEM_PROMPT}\n\n{contract_instruction}\n\n入力記事JSON:\n{article_json}"
     if prompt_layout == "user_only_explicit_contract":
-        content = f"{SYSTEM_PROMPT}\n\n{USER_MESSAGE_JSON_CONTRACT}\n\n入力記事JSON:\n{article_json}"
+        content = (
+            f"{SYSTEM_PROMPT}\n\n{contract_instruction}\n\n"
+            f"{USER_MESSAGE_JSON_CONTRACT}\n\n入力記事JSON:\n{article_json}"
+        )
     return [{"role": "user", "content": content}]
 
 
@@ -817,6 +839,7 @@ def request_groq_summary_with_retry(
     max_retry_after_seconds: int = MAX_429_RETRY_AFTER_SECONDS,
     summary_prompt_layout: str = "production",
     summary_max_tokens: int = DEFAULT_COMPARISON_MAX_TOKENS,
+    summary_contract: str = "summary_entry",
 ) -> GroqSummaryResult:
     profile = model_profile or profile_for_model_id(model)
     try:
@@ -829,6 +852,7 @@ def request_groq_summary_with_retry(
             profile,
             summary_prompt_layout,
             summary_max_tokens,
+            summary_contract,
         )
     except urllib.error.HTTPError as error:
         first_diagnostic = error_diagnostic(error)
@@ -847,6 +871,7 @@ def request_groq_summary_with_retry(
                 profile,
                 summary_prompt_layout,
                 summary_max_tokens,
+                summary_contract,
             )
         except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError) as retry_error:
             retry_diagnostic = error_diagnostic(retry_error)
@@ -868,28 +893,40 @@ def request_groq_summary(
     model_profile: ModelProfile | None = None,
     summary_prompt_layout: str = "production",
     summary_max_tokens: int = DEFAULT_COMPARISON_MAX_TOKENS,
+    summary_contract: str = "summary_entry",
 ) -> GroqSummaryResult:
     if not isinstance(summary_max_tokens, int) or isinstance(summary_max_tokens, bool) or summary_max_tokens < 1:
         raise ValueError("summary max_tokens must be a positive integer")
+    if summary_contract not in COMPARISON_CONTRACTS:
+        raise ValueError(f"unsupported summary contract: {summary_contract}")
+    schema = SUMMARY_ONLY_SCHEMA if summary_contract == "summary_only" else SUMMARY_ENTRY_SCHEMA
+    schema_error = summary_only_schema_error if summary_contract == "summary_only" else summary_entry_schema_error
     completion = request_chat_completion(
         profile=model_profile or profile_for_model_id(model),
-        messages=summary_request_messages(item, summary_prompt_layout),
+        messages=summary_request_messages(item, summary_prompt_layout, summary_contract),
         temperature=0.2,
         max_tokens=summary_max_tokens,
         timeout_seconds=TIMEOUT_SECONDS,
         max_response_chars=MAX_RESPONSE_CHARS,
-        json_schema_name="malaysia_news_summary_entry",
-        json_schema=SUMMARY_ENTRY_SCHEMA,
-        schema_error=summary_entry_schema_error,
+        json_schema_name=(
+            "malaysia_news_summary_only"
+            if summary_contract == "summary_only"
+            else "malaysia_news_summary_entry"
+        ),
+        json_schema=schema,
+        schema_error=schema_error,
         api_key=api_key,
     )
     parsed_content = completion.parsed
     if debug:
         debug_groq_payload(index, item, parsed_content)
-    entry, entry_contract_status, entry_contract_reasons = entry_contract_for_item(
-        parsed_content.get("entry") if isinstance(parsed_content, dict) else None,
-        item,
-    )
+    if summary_contract == "summary_only":
+        entry, entry_contract_status, entry_contract_reasons = None, "not_requested", []
+    else:
+        entry, entry_contract_status, entry_contract_reasons = entry_contract_for_item(
+            parsed_content.get("entry") if isinstance(parsed_content, dict) else None,
+            item,
+        )
     try:
         summary = validate_groq_summary(parsed_content)
         summary = normalize_malaysia_terms(summary, item)
@@ -1544,6 +1581,7 @@ def render_with_groq(
     max_retry_after_seconds: int = MAX_429_RETRY_AFTER_SECONDS,
     summary_prompt_layout: str = "production",
     summary_max_tokens: int = DEFAULT_COMPARISON_MAX_TOKENS,
+    summary_contract: str = "summary_entry",
 ) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str, int], list[dict[str, Any]]]:
     rendered_data = copy.deepcopy(data)
     accepted_records: list[dict[str, Any]] = []
@@ -1636,6 +1674,7 @@ def render_with_groq(
                 max_retry_after_seconds=max_retry_after_seconds,
                 summary_prompt_layout=summary_prompt_layout,
                 summary_max_tokens=summary_max_tokens,
+                summary_contract=summary_contract,
             )
             improved_summary = groq_result.summary
             decision_record["groq_call"] = groq_result.transport_diagnostic
@@ -1766,6 +1805,12 @@ def main() -> int:
         default=DEFAULT_COMPARISON_MAX_TOKENS,
         help="Artifact-comparison summary completion budget. The production workflow uses the default.",
     )
+    parser.add_argument(
+        "--summary-contract",
+        choices=sorted(COMPARISON_CONTRACTS),
+        default="summary_entry",
+        help="Artifact-comparison JSON contract. The production workflow uses the default.",
+    )
     parser.add_argument("--request-link-allowlist", help="JSON file containing comparison-only request links.")
     parser.add_argument("--disable-entry-review", action="store_true", help="Do not make observation-only entry review requests.")
     parser.add_argument(
@@ -1822,6 +1867,7 @@ def main() -> int:
         max_retry_after_seconds=max(args.max_429_retry_after_seconds, 0),
         summary_prompt_layout=args.summary_prompt_layout,
         summary_max_tokens=args.summary_max_tokens,
+        summary_contract=args.summary_contract,
     )
     items = rendered_data.get("items")
     render_decisions = build_render_decisions(

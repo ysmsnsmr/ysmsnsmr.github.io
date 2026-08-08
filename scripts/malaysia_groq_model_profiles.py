@@ -15,6 +15,7 @@ SAFE_ARTIFACT_KEY = re.compile(r"[a-z0-9][a-z0-9-]*\Z")
 RESPONSE_MODES = {"json_object", "json_schema_strict"}
 REASONING_MODES = {"default", "low_hidden", "hidden"}
 COMPARISON_PROMPT_LAYOUTS = {"production", "user_only", "user_only_explicit_contract"}
+COMPARISON_CONTRACTS = {"summary_entry", "summary_only"}
 DEFAULT_COMPARISON_MAX_TOKENS = 500
 MAX_COMPARISON_MAX_TOKENS = 1200
 
@@ -32,6 +33,7 @@ class ModelProfile:
     reasoning_mode: str = "default"
     comparison_prompt_layout: str = "production"
     comparison_max_tokens: int = DEFAULT_COMPARISON_MAX_TOKENS
+    comparison_contract: str = "summary_entry"
 
 
 @dataclass(frozen=True)
@@ -69,6 +71,7 @@ def load_model_profile_registry(path: Path = DEFAULT_CONFIG_PATH) -> ModelProfil
         reasoning_mode = clean_text(raw_profile.get("reasoning_mode"))
         comparison_prompt_layout = clean_text(raw_profile.get("comparison_prompt_layout")) or "production"
         comparison_max_tokens = raw_profile.get("comparison_max_tokens", DEFAULT_COMPARISON_MAX_TOKENS)
+        comparison_contract = clean_text(raw_profile.get("comparison_contract")) or "summary_entry"
         if not name or not model_id or not SAFE_ARTIFACT_KEY.fullmatch(artifact_key):
             raise ValueError("model profile requires a name, model_id, and safe artifact_key")
         if response_mode not in RESPONSE_MODES:
@@ -80,6 +83,8 @@ def load_model_profile_registry(path: Path = DEFAULT_CONFIG_PATH) -> ModelProfil
                 "unsupported model profile comparison_prompt_layout: "
                 f"{comparison_prompt_layout}"
             )
+        if comparison_contract not in COMPARISON_CONTRACTS:
+            raise ValueError(f"unsupported model profile comparison_contract: {comparison_contract}")
         if (
             not isinstance(comparison_max_tokens, int)
             or isinstance(comparison_max_tokens, bool)
@@ -113,6 +118,7 @@ def load_model_profile_registry(path: Path = DEFAULT_CONFIG_PATH) -> ModelProfil
                 reasoning_mode=reasoning_mode,
                 comparison_prompt_layout=comparison_prompt_layout,
                 comparison_max_tokens=comparison_max_tokens,
+                comparison_contract=comparison_contract,
             )
         )
         known_names.add(name)

@@ -30,6 +30,7 @@ class ModelComparisonTest(unittest.TestCase):
             {
                 "prompt_layout": "user_only",
                 "max_tokens": 800,
+                "contract": "summary_only",
                 "response_mode": "json_schema_strict",
                 "reasoning_mode": "low_hidden",
             },

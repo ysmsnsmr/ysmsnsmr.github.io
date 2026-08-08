@@ -35,6 +35,7 @@ class ModelProfileTest(unittest.TestCase):
         self.assertEqual(resolve_model_profile("gpt-oss", registry).reasoning_mode, "low_hidden")
         self.assertEqual(resolve_model_profile("gptoss120b", registry).comparison_prompt_layout, "user_only")
         self.assertEqual(resolve_model_profile("gptoss120b", registry).comparison_max_tokens, 800)
+        self.assertEqual(resolve_model_profile("gptoss120b", registry).comparison_contract, "summary_only")
         self.assertEqual(resolve_model_profile("qwen36", registry).comparison_prompt_layout, "user_only_explicit_contract")
 
     def test_artifact_only_profile_is_rejected_for_production(self) -> None:

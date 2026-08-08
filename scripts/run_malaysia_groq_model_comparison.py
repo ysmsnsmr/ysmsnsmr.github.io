@@ -21,7 +21,12 @@ from malaysia_groq_model_profiles import (
     load_model_profile_registry,
     resolve_model_profile,
 )
-from malaysia_groq_output_contract import SUMMARY_ENTRY_SCHEMA, summary_entry_schema_error
+from malaysia_groq_output_contract import (
+    SUMMARY_ENTRY_SCHEMA,
+    SUMMARY_ONLY_SCHEMA,
+    summary_entry_schema_error,
+    summary_only_schema_error,
+)
 from malaysia_groq_transport import error_diagnostic, request_chat_completion
 from render_malaysia_news_with_groq import USER_MESSAGE_JSON_CONTRACT
 
@@ -79,6 +84,7 @@ def comparison_request_configuration(profile: ModelProfile) -> dict[str, Any]:
     return {
         "prompt_layout": profile.comparison_prompt_layout,
         "max_tokens": profile.comparison_max_tokens,
+        "contract": profile.comparison_contract,
         "response_mode": profile.response_mode,
         "reasoning_mode": profile.reasoning_mode,
     }
@@ -389,8 +395,8 @@ def write_comparison_report(path: Path, report: dict[str, Any], selected: dict[s
             "",
             "## Candidate request configuration",
             "",
-            "| Profile | Prompt layout | Max tokens | Response mode | Reasoning mode |",
-            "|---|---|---:|---|---|",
+            "| Profile | Prompt layout | Contract | Max tokens | Response mode | Reasoning mode |",
+            "|---|---|---|---:|---|---|",
         ]
     )
     for result in profiles:
@@ -398,9 +404,10 @@ def write_comparison_report(path: Path, report: dict[str, Any], selected: dict[s
             continue
         configuration = dict_value(result.get("comparison_request_configuration"))
         lines.append(
-            "| {profile} | {prompt_layout} | {max_tokens} | {response_mode} | {reasoning_mode} |".format(
+            "| {profile} | {prompt_layout} | {contract} | {max_tokens} | {response_mode} | {reasoning_mode} |".format(
                 profile=markdown_text(result.get("profile")),
                 prompt_layout=markdown_text(configuration.get("prompt_layout")),
+                contract=markdown_text(configuration.get("contract")),
                 max_tokens=int_value(configuration.get("max_tokens")),
                 response_mode=markdown_text(configuration.get("response_mode")),
                 reasoning_mode=markdown_text(configuration.get("reasoning_mode")),
@@ -685,6 +692,12 @@ def run_compatibility_probe(profile: ModelProfile, api_key: str, path: Path) -> 
     if not item:
         raise ValueError("compatibility probe fixture is missing item")
     try:
+        schema = SUMMARY_ONLY_SCHEMA if profile.comparison_contract == "summary_only" else SUMMARY_ENTRY_SCHEMA
+        schema_error = (
+            summary_only_schema_error
+            if profile.comparison_contract == "summary_only"
+            else summary_entry_schema_error
+        )
         completion = request_chat_completion(
             profile=profile,
             messages=compatibility_probe_messages(profile, item),
@@ -692,9 +705,13 @@ def run_compatibility_probe(profile: ModelProfile, api_key: str, path: Path) -> 
             max_tokens=profile.comparison_max_tokens,
             timeout_seconds=30,
             max_response_chars=4000,
-            json_schema_name="malaysia_news_summary_entry",
-            json_schema=SUMMARY_ENTRY_SCHEMA,
-            schema_error=summary_entry_schema_error,
+            json_schema_name=(
+                "malaysia_news_summary_only"
+                if profile.comparison_contract == "summary_only"
+                else "malaysia_news_summary_entry"
+            ),
+            json_schema=schema,
+            schema_error=schema_error,
             api_key=api_key,
         )
         contract_valid = completion.diagnostic.get("json_contract_status") == "valid"
@@ -806,6 +823,8 @@ def run_artifact_profile(
         profile.comparison_prompt_layout,
         "--summary-max-tokens",
         str(profile.comparison_max_tokens),
+        "--summary-contract",
+        profile.comparison_contract,
         "--improved-items-output",
         str(improved_path),
         "--json-render-output",

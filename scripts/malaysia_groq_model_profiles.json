@@ -15,7 +15,8 @@
       "response_mode": "json_object",
       "reasoning_mode": "default",
       "comparison_prompt_layout": "production",
-      "comparison_max_tokens": 500
+      "comparison_max_tokens": 500,
+      "comparison_contract": "summary_entry"
     },
     {
       "name": "gpt-oss-20b",
@@ -30,7 +31,8 @@
       "response_mode": "json_schema_strict",
       "reasoning_mode": "low_hidden",
       "comparison_prompt_layout": "production",
-      "comparison_max_tokens": 500
+      "comparison_max_tokens": 500,
+      "comparison_contract": "summary_entry"
     },
     {
       "name": "gpt-oss-120b",
@@ -44,7 +46,8 @@
       "response_mode": "json_schema_strict",
       "reasoning_mode": "low_hidden",
       "comparison_prompt_layout": "user_only",
-      "comparison_max_tokens": 800
+      "comparison_max_tokens": 800,
+      "comparison_contract": "summary_only"
     },
     {
       "name": "qwen3.6-27b",
@@ -59,7 +62,8 @@
       "response_mode": "json_object",
       "reasoning_mode": "hidden",
       "comparison_prompt_layout": "user_only_explicit_contract",
-      "comparison_max_tokens": 500
+      "comparison_max_tokens": 500,
+      "comparison_contract": "summary_entry"
     }
   ]
 }
