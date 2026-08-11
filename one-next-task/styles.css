@@ -1,15 +1,33 @@
 :root {
-  color-scheme: light;
-  font-family:
+  --ont-font-sans:
     -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic",
     sans-serif;
-  color: #242421;
-  background: #f3f2ed;
+  --ont-color-ink: #242421;
+  --ont-color-canvas: #f3f2ed;
+  --ont-color-surface: #fff;
+  --ont-color-control-border: #8c8a82;
+  --ont-color-focus: #8cab9b;
+  --ont-color-muted: #65645e;
+  --ont-color-subtle: #55544f;
+  --ont-color-line: #d2d0c8;
+  --ont-color-primary: #365e4d;
+  --ont-color-error: #a33f33;
+  --ont-color-error-ink: #742e26;
+  --ont-color-error-surface: #f8e9e6;
+  --ont-space-control-y: 0.65rem;
+  --ont-space-control-x: 1rem;
+  --ont-radius-control: 0.5rem;
+  --ont-radius-panel: 0.75rem;
+  --ont-target-min: 44px;
+  color-scheme: light;
+  font-family: var(--ont-font-sans);
+  color: var(--ont-color-ink);
+  background: var(--ont-color-canvas);
 }
 
 html {
   min-height: 100%;
-  background: #f3f2ed;
+  background: var(--ont-color-canvas);
 }
 
 * {
@@ -29,12 +47,12 @@ input {
 }
 
 button {
-  min-height: 44px;
-  padding: 0.65rem 1rem;
-  border: 1px solid #8c8a82;
-  border-radius: 0.5rem;
-  color: #242421;
-  background: #fff;
+  min-height: var(--ont-target-min);
+  padding: var(--ont-space-control-y) var(--ont-space-control-x);
+  border: 1px solid var(--ont-color-control-border);
+  border-radius: var(--ont-radius-control);
+  color: var(--ont-color-ink);
+  background: var(--ont-color-surface);
   cursor: pointer;
 }
 
@@ -46,7 +64,7 @@ input:disabled {
 
 button:focus-visible,
 input:focus-visible {
-  outline: 3px solid #8cab9b;
+  outline: 3px solid var(--ont-color-focus);
   outline-offset: 2px;
 }
 
@@ -84,7 +102,7 @@ input:focus-visible {
 .app-kicker,
 .state-label {
   margin: 0 0 0.4rem;
-  color: #65645e;
+  color: var(--ont-color-muted);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -109,11 +127,11 @@ h2 {
 
 .completion-count {
   margin-bottom: 0;
-  color: #55544f;
+  color: var(--ont-color-subtle);
 }
 
 .completion-count strong {
-  color: #242421;
+  color: var(--ont-color-ink);
 }
 
 .task-form {
@@ -133,13 +151,13 @@ h2 {
 
 .input-row input {
   min-width: 0;
-  min-height: 44px;
+  min-height: var(--ont-target-min);
   flex: 1;
   padding: 0.7rem 0.8rem;
-  border: 1px solid #8c8a82;
-  border-radius: 0.5rem;
-  color: #242421;
-  background: #fff;
+  border: 1px solid var(--ont-color-control-border);
+  border-radius: var(--ont-radius-control);
+  color: var(--ont-color-ink);
+  background: var(--ont-color-surface);
 }
 
 #add-button {
@@ -148,8 +166,8 @@ h2 {
 }
 
 #manage-button {
-  border-color: #d2d0c8;
-  color: #55544f;
+  border-color: var(--ont-color-line);
+  color: var(--ont-color-subtle);
   background: transparent;
   font-size: 0.92rem;
   white-space: nowrap;
@@ -158,9 +176,9 @@ h2 {
 .error-message {
   margin: 0 0 1rem;
   padding: 0.75rem;
-  border-left: 4px solid #a33f33;
-  color: #742e26;
-  background: #f8e9e6;
+  border-left: 4px solid var(--ont-color-error);
+  color: var(--ont-color-error-ink);
+  background: var(--ont-color-error-surface);
 }
 
 .task-area {
@@ -169,9 +187,9 @@ h2 {
 
 .state-panel {
   padding: 1.5rem;
-  border: 1px solid #d2d0c8;
-  border-radius: 0.75rem;
-  background: #fff;
+  border: 1px solid var(--ont-color-line);
+  border-radius: var(--ont-radius-panel);
+  background: var(--ont-color-surface);
 }
 
 .task-text {
@@ -192,14 +210,14 @@ h2 {
 }
 
 .primary-action {
-  border-color: #365e4d;
-  color: #fff;
-  background: #365e4d;
+  border-color: var(--ont-color-primary);
+  color: var(--ont-color-surface);
+  background: var(--ont-color-primary);
 }
 
 .message-panel p {
   margin-bottom: 0;
-  color: #65645e;
+  color: var(--ont-color-muted);
   line-height: 1.7;
 }
 
@@ -213,13 +231,13 @@ h2 {
 
 .management-empty {
   margin: 0;
-  color: #65645e;
+  color: var(--ont-color-muted);
 }
 
 .management-section + .management-section {
   margin-top: 2rem;
   padding-top: 2rem;
-  border-top: 1px solid #d2d0c8;
+  border-top: 1px solid var(--ont-color-line);
 }
 
 .management-section h2 {
@@ -228,7 +246,7 @@ h2 {
 
 .section-note {
   margin-bottom: 1rem;
-  color: #65645e;
+  color: var(--ont-color-muted);
   line-height: 1.6;
 }
 
@@ -243,9 +261,9 @@ h2 {
 
 .management-item {
   padding: 1rem;
-  border: 1px solid #d2d0c8;
-  border-radius: 0.75rem;
-  background: #fff;
+  border: 1px solid var(--ont-color-line);
+  border-radius: var(--ont-radius-panel);
+  background: var(--ont-color-surface);
 }
 
 .management-form label {
@@ -257,13 +275,13 @@ h2 {
 .management-form input {
   max-width: 100%;
   width: 100%;
-  min-height: 44px;
+  min-height: var(--ont-target-min);
   margin-bottom: 0.75rem;
   padding: 0.7rem 0.8rem;
-  border: 1px solid #8c8a82;
-  border-radius: 0.5rem;
-  color: #242421;
-  background: #fff;
+  border: 1px solid var(--ont-color-control-border);
+  border-radius: var(--ont-radius-control);
+  color: var(--ont-color-ink);
+  background: var(--ont-color-surface);
 }
 
 .management-actions {
@@ -276,8 +294,8 @@ h2 {
 }
 
 .delete-action {
-  border-color: #a33f33;
-  color: #742e26;
+  border-color: var(--ont-color-error);
+  color: var(--ont-color-error-ink);
 }
 
 .history-item {
@@ -286,9 +304,9 @@ h2 {
   gap: 0.25rem 0.75rem;
   align-items: center;
   padding: 1rem;
-  border: 1px solid #d2d0c8;
-  border-radius: 0.75rem;
-  background: #fff;
+  border: 1px solid var(--ont-color-line);
+  border-radius: var(--ont-radius-panel);
+  background: var(--ont-color-surface);
 }
 
 .history-text {
@@ -301,7 +319,7 @@ h2 {
 
 .history-meta {
   margin-bottom: 0;
-  color: #65645e;
+  color: var(--ont-color-muted);
   font-size: 0.88rem;
 }
 
@@ -319,13 +337,13 @@ h2 {
 
 .import-action {
   display: inline-flex;
-  min-height: 44px;
+  min-height: var(--ont-target-min);
   align-items: center;
   justify-content: center;
   padding: 0.65rem 1rem;
-  border: 1px solid #8c8a82;
-  border-radius: 0.5rem;
-  background: #fff;
+  border: 1px solid var(--ont-color-control-border);
+  border-radius: var(--ont-radius-control);
+  background: var(--ont-color-surface);
   cursor: pointer;
 }
 
@@ -342,7 +360,7 @@ h2 {
 }
 
 .visually-hidden:focus-visible + .import-action {
-  outline: 3px solid #8cab9b;
+  outline: 3px solid var(--ont-color-focus);
   outline-offset: 2px;
 }
 
@@ -353,7 +371,7 @@ h2 {
 
 .data-status {
   margin: 1rem 0 0;
-  color: #365e4d;
+  color: var(--ont-color-primary);
   font-weight: 700;
 }
 

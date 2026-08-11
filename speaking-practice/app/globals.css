@@ -1,3 +1,5 @@
+@import "./design-tokens.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,8 +19,8 @@ body {
 }
 
 body {
-  background: #f8f4ea;
-  color: #1f2933;
+  background: var(--sp-color-paper);
+  color: var(--sp-color-ink);
 }
 
 button,

@@ -8,15 +8,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: "#F8F4EA",
-        ink: "#1F2933",
-        calm: "#0F766E",
-        "calm-soft": "#DDF5EF",
-        honey: "#F5C542",
-        coral: "#F9735B"
+        paper: "rgb(var(--sp-color-paper-rgb) / <alpha-value>)",
+        ink: "rgb(var(--sp-color-ink-rgb) / <alpha-value>)",
+        calm: "rgb(var(--sp-color-calm-rgb) / <alpha-value>)",
+        "calm-soft": "rgb(var(--sp-color-calm-soft-rgb) / <alpha-value>)",
+        honey: "rgb(var(--sp-color-honey-rgb) / <alpha-value>)",
+        coral: "rgb(var(--sp-color-coral-rgb) / <alpha-value>)"
       },
       boxShadow: {
-        soft: "0 18px 45px rgba(31, 41, 51, 0.10)"
+        soft: "var(--sp-shadow-soft)"
       }
     }
   },

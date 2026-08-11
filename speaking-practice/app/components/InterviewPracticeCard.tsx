@@ -351,7 +351,7 @@ export default function InterviewPracticeCard({
   }
 
   return (
-    <main className="min-h-dvh bg-[linear-gradient(135deg,#F8F4EA_0%,#EEF8F6_52%,#FFF7DD_100%)] px-4 py-5">
+    <main className="min-h-dvh bg-[linear-gradient(135deg,var(--sp-color-paper)_0%,var(--sp-color-mint)_52%,var(--sp-color-honey-soft)_100%)] px-4 py-5">
       <div className="mx-auto flex min-h-[calc(100dvh-40px)] max-w-2xl flex-col pb-8">
         <header className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <div>

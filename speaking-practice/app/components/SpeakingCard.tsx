@@ -277,7 +277,7 @@ export default function SpeakingCard({
     state === "transcript";
 
   return (
-    <main className="min-h-dvh bg-[radial-gradient(circle_at_top,#FFF7DD_0,#F8F4EA_42%,#EEF8F6_100%)] px-4 py-5">
+    <main className="min-h-dvh bg-[radial-gradient(circle_at_top,var(--sp-color-honey-soft)_0,var(--sp-color-paper)_42%,var(--sp-color-mint)_100%)] px-4 py-5">
       <div
         className={[
           "mx-auto flex min-h-[calc(100dvh-40px)] max-w-md flex-col",
