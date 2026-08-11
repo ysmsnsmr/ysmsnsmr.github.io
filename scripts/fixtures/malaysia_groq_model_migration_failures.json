@@ -1082,6 +1082,333 @@
           "unsupported_conditions"
         ]
       }
+    },
+    {
+      "link": "https://www.astroawani.com/berita-malaysia/kada-mohon-tambahan-rm1-juta-hadapi-cuaca-panas-ekstrem",
+      "first_observed_on": "2026-08-11",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "HTTP 429"
+      ],
+      "item": {
+        "category": "【速報】",
+        "source": "Astro Awani",
+        "published_date": "2026年8月11日",
+        "title": "KADA mohon tambahan RM1 juta hadapi cuaca panas ekstrem",
+        "description": "Peruntukan itu, selain RM880,000 yang diluluskan sebelum ini, antaranya akan digunakan untuk membeli pam mudah alih pelbagai kapasiti.",
+        "link": "https://www.astroawani.com/berita-malaysia/kada-mohon-tambahan-rm1-juta-hadapi-cuaca-panas-ekstrem",
+        "selected_summary": {
+          "conclusion": "全国で熱中症関連の健康リスクが高まっています。",
+          "what_happened": [
+            "保健省が熱中症・熱疲労などの発生状況を公表しました。",
+            "屋外活動や運動時の発症が主なリスクとして挙げられています。"
+          ],
+          "life_impact": "学校行事、屋外勤務、子どもや高齢者の外出管理に影響します。",
+          "next_action": "水分補給、屋外活動の短縮、車内放置防止を徹底。"
+        },
+        "tags": [
+          "health"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": true,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": false,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_fallback",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://paultan.org/2026/08/10/prasarana-to-run-24-hour-public-transport-services-for-national-day-from-night-of-aug-30-into-31-fahmi-fadzil/",
+      "first_observed_on": "2026-08-11",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "HTTP 429"
+      ],
+      "item": {
+        "category": "【生活インパクト】",
+        "source": "Paul Tan",
+        "published_date": "2026年8月10日",
+        "title": "Prasarana to run 24-hour public transport services for National Day, from night of Aug 30 into 31 – Fahmi Fadzil",
+        "description": "In conjunction with this year’s National Day celebrations, Prasarana will operate public transport services around the clock from the night of August 30 into August 31, according to government spokesman Datuk Seri Fahmi Fadzil. “Prasarana has committed to providing 24-hour public transport services in conjunction with National Day. We hope […]",
+        "link": "https://paultan.org/2026/08/10/prasarana-to-run-24-hour-public-transport-services-for-national-day-from-night-of-aug-30-into-31-fahmi-fadzil/",
+        "selected_summary": {
+          "conclusion": "公共交通の運行や通勤手段に影響する可能性があります。",
+          "what_happened": [
+            "Paul TanのRSSで、公共交通や運行状況に関する情報が報じられています。",
+            "LRT、MRT、Rapid KL、KTMBなどの公共交通に関わる移動情報として扱います。"
+          ],
+          "life_impact": "通勤・通学・都心移動では、遅延、代替ルート、運行再開時期を確認しておく必要があります。",
+          "next_action": "出発前に運行会社の公式情報を確認。"
+        },
+        "tags": [
+          "public_transport"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": true,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": false,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_fallback",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.astroawani.com/berita-malaysia/ikatan-gesa-majikan-utamakan-kesihatan-mental-di-tempat-kerja",
+      "first_observed_on": "2026-08-11",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "ValueError: force_all accepted gate: no_strong_source_life_impact_signal"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Astro Awani",
+        "published_date": "2026年8月11日",
+        "title": "Ikatan gesa majikan utamakan kesihatan mental di tempat kerja",
+        "description": "Ikatan Komuniti Selamat (Ikatan) menegaskan, penyediaan persekitaran kerja yang selamat dan menyokong aspek psikososial merupakan satu tanggungjawab asas majikan dan bukan sekadar satu pilihan.",
+        "link": "https://www.astroawani.com/berita-malaysia/ikatan-gesa-majikan-utamakan-kesihatan-mental-di-tempat-kerja",
+        "selected_summary": {
+          "conclusion": "Ikatan gesa majikan utamakan kesihatan mental di tempat kerja",
+          "what_happened": [
+            "Ikatan Komuniti Selamat (Ikatan) menegaskan, penyediaan persekitaran kerja yang selamat dan menyokong aspek psikososial merupakan satu tanggungjawab asas majikan dan bukan sekadar satu pilihan.",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "health"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": true,
+          "is_urban_development": false,
+          "is_klang_valley": false,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_fallback",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.astroawani.com/berita-malaysia/selangor-suntik-rm35-juta-geran-selidik-2026-pacu-agenda-rs-2",
+      "first_observed_on": "2026-08-11",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "HTTP 429"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Astro Awani",
+        "published_date": "2026年8月10日",
+        "title": "Selangor suntik RM3.5 juta geran selidik 2026, pacu agenda RS-2",
+        "description": "Kerajaan Negeri Selangor melalui Jawatankuasa Tetap Pendidikan dan Modal Insan memperuntukkan dana berjumlah RM3.5 juta bagi pelaksanaan Geran Pembangunan Negeri Selangor (SELidik) 2026.",
+        "link": "https://www.astroawani.com/berita-malaysia/selangor-suntik-rm35-juta-geran-selidik-2026-pacu-agenda-rs-2",
+        "selected_summary": {
+          "conclusion": "Selangor suntik RM3.5 juta geran selidik 2026, pacu agenda RS-2",
+          "what_happened": [
+            "Kerajaan Negeri Selangor melalui Jawatankuasa Tetap Pendidikan dan Modal Insan memperuntukkan dana berjumlah RM3.5 juta bagi pelaksanaan Geran Pembangunan Negeri Selangor (SELidik) 2026.",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "klang_valley"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": true,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_fallback",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.malaymail.com/news/malaysia/2026/08/10/housing-ministry-resolves-rm153b-worth-of-sick-or-abandoned-housing-projects-says-nga-kor-ming/230851",
+      "first_observed_on": "2026-08-11",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "ValueError: unsafe numeric unit conversion: rm153b"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Malay Mail",
+        "published_date": "2026年8月10日",
+        "title": "Housing Ministry resolves RM153b worth of sick or abandoned housing projects, says Nga Kor Ming",
+        "description": "KUALA LUMPUR, Aug 10 — The Ministry of Housing and Local Government (KPKT) has resolved 1,647 “sick” a...",
+        "link": "https://www.malaymail.com/news/malaysia/2026/08/10/housing-ministry-resolves-rm153b-worth-of-sick-or-abandoned-housing-projects-says-nga-kor-ming/230851",
+        "selected_summary": {
+          "conclusion": "Housing Ministry resolves RM153b worth of sick or abandoned housing projects, says Nga Kor Ming",
+          "what_happened": [
+            "KUALA LUMPUR, Aug 10 — The Ministry of Housing and Local Government (KPKT) has resolved 1,647 “sick” a...",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "klang_valley"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": true,
+          "is_official": true,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_only",
+        "body_evidence_excerpt": "The Ministry of Housing and Local Government (KPKT) has resolved 1,647 “sick” and abandoned private housing projects worth RM153 billion, benefiting nearly 200,000 homebuyers to date, said its Minister Nga Kor Ming. He said the achievement was the result of efforts by the Special Task Force on Sick and Abandoned Private Housing Projects, established in January 2023 to address the issue and deliver a significant impact to the public. Nga said the ministry is targeting zero abandoned housing projects by 2030 as part of the national housing sector reform agenda, supported by several mechanisms. “These mechanisms include the Housing Integrated Management System (HIMS), Transforming and Empowering Data Usage in Housing (TEDUH), the electronic Sale and Purchase Agreement (e-SPA), periodic audits of the Housing Development Account (HDA), and the Option to Purchase (OTP), which will be introduced later this year,” he told reporters after launching the National Housing Policy (DRN) 2026-2035 here today. Also present were Chief Secretary to the Government Tan Sri Shamsul Azri Abu Bakar, Attorney General Tan Sri Mohd Dusuki Mokhtar and KPKT Secretary-General Datuk Dr...",
+        "body_evidence_focus": [
+          "procedure_or_public_service"
+        ],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
     }
   ]
 }
