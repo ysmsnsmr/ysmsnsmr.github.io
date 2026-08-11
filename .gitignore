@@ -53,3 +53,9 @@ local-tools/bank-statement-sorter/**/*.statement.csv
 local-tools/bank-statement-sorter/**/*.statement.json
 local-tools/bank-statement-sorter/**/*.manifest.json
 local-tools/bank-statement-sorter/**/*.pdf
+
+# Lazyweb local workflow state
+lazyweb/inbox/
+lazyweb/output/
+lazyweb/logs/
+lazyweb/quarantine/
