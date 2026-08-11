@@ -48,6 +48,35 @@ QUALITY_REVIEW_CRITERIA = (
 )
 PROBE_PROMPT = "Return one concise Japanese news summary and entry using only the supplied source. Return JSON only."
 
+GATE_REASON_HARD_SAFETY_MARKERS = (
+    "unsafe ",
+    "unsupported ",
+    "english lead leakage",
+    "forbidden",
+)
+GATE_REASON_USEFULNESS_MARKERS = (
+    "no_strong_source_life_impact_signal",
+    "no_strong_summary_life_impact_signal",
+    "generic_life_impact",
+    "generic life_impact for body_evidence focus",
+    "transport_political_background_without_operational_impact",
+    "transport_political_invitation_context",
+    "money_market_background_without_concrete_life_impact",
+    "paul_tan_noise_without_driver_impact",
+    "paul_tan_no_transport_driver_signal",
+)
+GATE_REASON_TRANSPORT_OR_CONTRACT_MARKERS = (
+    "http ",
+    "429",
+    "timeout",
+    "network",
+    "urlerror",
+    "json",
+    "schema",
+    "contract",
+    "missing_groq_api_key",
+)
+
 
 def load_json(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
@@ -110,6 +139,98 @@ def counter_dict(values: list[str]) -> dict[str, int]:
     for value in values:
         counts[value] = counts.get(value, 0) + 1
     return {key: counts[key] for key in sorted(counts)}
+
+
+def classify_gate_failure_reason(reason: Any) -> str:
+    """Classify recorded failures without changing the production gate."""
+    normalized = str(reason or "").strip().lower()
+    if not normalized:
+        return "unknown"
+    if any(marker in normalized for marker in GATE_REASON_HARD_SAFETY_MARKERS):
+        return "hard_safety"
+    if any(marker in normalized for marker in GATE_REASON_USEFULNESS_MARKERS):
+        return "usefulness"
+    if any(marker in normalized for marker in GATE_REASON_TRANSPORT_OR_CONTRACT_MARKERS):
+        return "transport_or_contract"
+    return "unknown"
+
+
+def golden_item_gate_observation(entry: dict[str, Any]) -> dict[str, Any]:
+    reasons = [str(reason) for reason in list_value(entry.get("failure_reasons")) if str(reason).strip()]
+    classifications = [classify_gate_failure_reason(reason) for reason in reasons]
+    has_hard_safety = "hard_safety" in classifications
+    has_usefulness = "usefulness" in classifications
+    has_unavailable = any(
+        classification in {"transport_or_contract", "unknown"}
+        for classification in classifications
+    )
+    if has_hard_safety:
+        safety_status = "reject"
+    elif has_usefulness and not has_unavailable:
+        safety_status = "pass"
+    else:
+        safety_status = "not_evaluated"
+    if has_hard_safety:
+        usefulness_status = "not_evaluated"
+    elif has_usefulness and not has_unavailable:
+        usefulness_status = "reject"
+    else:
+        usefulness_status = "not_evaluated"
+    if has_hard_safety or has_usefulness:
+        current_decision = "reject"
+    else:
+        current_decision = "not_evaluated"
+    if has_hard_safety:
+        hard_safety_only_accept_possible: bool | None = False
+    elif has_usefulness and not has_unavailable:
+        hard_safety_only_accept_possible = True
+    else:
+        hard_safety_only_accept_possible = None
+    return {
+        "safety_gate_status": safety_status,
+        "usefulness_gate_status": usefulness_status,
+        "current_gate_decision": current_decision,
+        "hard_safety_only_accept_possible": hard_safety_only_accept_possible,
+        "reason_classifications": classifications,
+    }
+
+
+def golden_fixture_gate_observation(fixture: dict[str, Any] | None) -> dict[str, Any]:
+    """Summarize the current-vs-hard-safety-only view of recorded fixture failures."""
+    entries = [entry for entry in list_value((fixture or {}).get("items")) if isinstance(entry, dict)]
+    observations: list[dict[str, Any]] = []
+    reason_classes: list[str] = []
+    safety_statuses: list[str] = []
+    usefulness_statuses: list[str] = []
+    decisions: list[str] = []
+    hard_safety_only_count = 0
+    for entry in entries:
+        observation = golden_item_gate_observation(entry)
+        reason_classes.extend(observation["reason_classifications"])
+        safety_statuses.append(observation["safety_gate_status"])
+        usefulness_statuses.append(observation["usefulness_gate_status"])
+        decisions.append(observation["current_gate_decision"])
+        if observation["hard_safety_only_accept_possible"] is True:
+            hard_safety_only_count += 1
+        observations.append(
+            {
+                "link": str(entry.get("link") or ""),
+                "failure_reasons": [str(reason) for reason in list_value(entry.get("failure_reasons"))],
+                **observation,
+            }
+        )
+    return {
+        "observation_only": True,
+        "source": "recorded_golden_fixture_failure_reasons",
+        "fixture_item_count": len(entries),
+        "safety_gate_status_counts": counter_dict(safety_statuses),
+        "usefulness_gate_status_counts": counter_dict(usefulness_statuses),
+        "current_gate_decision_counts": counter_dict(decisions),
+        "reason_class_counts": counter_dict(reason_classes),
+        "hard_safety_only_accept_possible_count": hard_safety_only_count,
+        "hard_safety_only_accept_possible_rate": safe_ratio(hard_safety_only_count, len(entries)),
+        "items": observations,
+    }
 
 
 def decision_records(improved: dict[str, Any] | None) -> list[dict[str, Any]]:
@@ -463,6 +584,40 @@ def write_comparison_report(path: Path, report: dict[str, Any], selected: dict[s
                 rate=percentage_text(metrics.get("groq_replaced_summary_line_rate")),
                 replaced=int_value(metrics.get("groq_replaced_summary_line_count")),
                 inherited=int_value(metrics.get("groq_inherited_summary_line_count")),
+            )
+        )
+
+    golden_observation = dict_value(report.get("golden_fixture_observation"))
+    lines.extend(
+        [
+            "",
+            "## Golden fixture gate observation",
+            "",
+            "This is observation-only classification of recorded fixture failure reasons; it does not change the production gate.",
+            "",
+            f"- fixture_item_count: {int_value(golden_observation.get('fixture_item_count'))}",
+            f"- safety_gate_status_counts: {markdown_text(golden_observation.get('safety_gate_status_counts'))}",
+            f"- usefulness_gate_status_counts: {markdown_text(golden_observation.get('usefulness_gate_status_counts'))}",
+            f"- current_gate_decision_counts: {markdown_text(golden_observation.get('current_gate_decision_counts'))}",
+            f"- hard_safety_only_accept_possible_count: {int_value(golden_observation.get('hard_safety_only_accept_possible_count'))}",
+            f"- hard_safety_only_accept_possible_rate: {percentage_text(golden_observation.get('hard_safety_only_accept_possible_rate'))}",
+            f"- reason_class_counts: {markdown_text(golden_observation.get('reason_class_counts'))}",
+            "",
+            "| Fixture URL | Safety gate | Usefulness gate | Current gate | Hard safety only accept possible | Reasons |",
+            "|---|---|---|---|---|---|",
+        ]
+    )
+    for item in list_value(golden_observation.get("items")):
+        if not isinstance(item, dict):
+            continue
+        lines.append(
+            "| {link} | {safety} | {usefulness} | {current} | {hard_only} | {reasons} |".format(
+                link=markdown_text(item.get("link")),
+                safety=markdown_text(item.get("safety_gate_status")),
+                usefulness=markdown_text(item.get("usefulness_gate_status")),
+                current=markdown_text(item.get("current_gate_decision")),
+                hard_only=markdown_text(item.get("hard_safety_only_accept_possible")),
+                reasons=markdown_text(item.get("failure_reasons")),
             )
         )
 
@@ -962,6 +1117,15 @@ def main() -> int:
     for profile in artifact_only_model_profiles(registry):
         profiles.append(run_artifact_profile(profile, args, selected_count, cohort_links))
 
+    observed_on = datetime.now(tz=ZoneInfo("Asia/Kuala_Lumpur")).date().isoformat()
+    added = update_golden_fixture(
+        args.golden_fixture,
+        load_optional_json(args.json_input) or selected,
+        baseline_improved,
+        baseline_profile,
+        observed_on,
+    )
+    golden_observation = golden_fixture_gate_observation(load_optional_json(args.golden_fixture))
     generated_at = datetime.now(tz=ZoneInfo("UTC")).replace(microsecond=0).isoformat()
     report = {
         "schema_version": COMPARISON_SCHEMA,
@@ -971,6 +1135,7 @@ def main() -> int:
         "quality_cohort_links": cohort_links,
         "fixed_quality_review_criteria": list(QUALITY_REVIEW_CRITERIA),
         "profiles": profiles,
+        "golden_fixture_observation": golden_observation,
         "production_boundary": {
             "production_changed": False,
             "comparison_can_overwrite_production": False,
@@ -981,14 +1146,6 @@ def main() -> int:
     args.json_output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     write_comparison_report(args.report_output, report, selected)
 
-    observed_on = datetime.now(tz=ZoneInfo("Asia/Kuala_Lumpur")).date().isoformat()
-    added = update_golden_fixture(
-        args.golden_fixture,
-        load_optional_json(args.json_input) or selected,
-        baseline_improved,
-        baseline_profile,
-        observed_on,
-    )
     statuses = [str(dict_value(result).get("run_status") or "unavailable") for result in profiles[1:]]
     args.status_output.parent.mkdir(parents=True, exist_ok=True)
     args.status_output.write_text(
@@ -998,6 +1155,7 @@ def main() -> int:
                 "artifact_profile_statuses": statuses,
                 "quality_cohort_links": cohort_links,
                 "golden_fixture_items_added": added,
+                "golden_fixture_observation": golden_observation,
             },
             ensure_ascii=False,
             indent=2,
