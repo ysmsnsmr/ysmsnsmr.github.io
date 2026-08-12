@@ -291,6 +291,79 @@ class EntryObjectObservationTest(unittest.TestCase):
         self.assertEqual(records[0]["reason"], "ValueError: force_all accepted gate: no_strong_signal")
         self.assertEqual(records[0]["groq_call"], transport_diagnostic)
 
+    def test_force_all_usefulness_warning_keeps_summary_with_limited_display(self) -> None:
+        item = copy.deepcopy(fixture_item())
+        summary = {
+            "conclusion": "当局が制度改正を提案しました。",
+            "what_happened": ["制度改正案の内容が説明されました。"],
+            "life_impact": "生活・仕事に関わる可能性があります。",
+            "next_action": "詳細は出典本文を確認してください。",
+        }
+        transport_diagnostic = {
+            "transport_status": "success",
+            "http_status": 200,
+            "json_contract_status": "valid",
+        }
+        result = groq_renderer.GroqSummaryResult(
+            summary, None, "not_requested", [], transport_diagnostic
+        )
+        with (
+            mock.patch.object(groq_renderer, "item_needs_groq", return_value=True),
+            mock.patch.object(
+                groq_renderer,
+                "force_all_gate_reason",
+                return_value="no_strong_source_life_impact_signal",
+            ),
+            mock.patch.object(groq_renderer, "request_groq_summary_with_retry", return_value=result),
+        ):
+            rendered, accepted_records, stats, records = render_with_groq(
+                {"items": [item]}, "test-key", "test-model", True, False
+            )
+
+        self.assertEqual(stats, {"requested": 1, "accepted": 1, "fallback": 0})
+        self.assertTrue(records[0]["accepted"])
+        self.assertEqual(records[0]["usefulness_gate_status"], "warning")
+        self.assertEqual(records[0]["json_render_display_tier"], "full_summary_usefulness_limited")
+        self.assertEqual(
+            rendered["items"][0]["selected_summary"]["conclusion"],
+            summary["conclusion"],
+        )
+        self.assertEqual(
+            rendered["items"][0]["selected_summary"]["life_impact"],
+            groq_renderer.SAFE_FALLBACK_LIFE_IMPACT_LINE,
+        )
+
+    def test_force_all_hard_safety_gate_still_rejects(self) -> None:
+        item = copy.deepcopy(fixture_item())
+        result = groq_renderer.GroqSummaryResult(
+            {
+                "conclusion": "安全な結論です。",
+                "what_happened": ["安全な詳細です。"],
+                "life_impact": "安全な影響です。",
+                "next_action": "",
+            },
+            None,
+            "not_requested",
+            [],
+            {"transport_status": "success", "http_status": 200, "json_contract_status": "valid"},
+        )
+        with (
+            mock.patch.object(groq_renderer, "item_needs_groq", return_value=True),
+            mock.patch.object(
+                groq_renderer,
+                "force_all_gate_reason",
+                return_value="unsafe numeric unit conversion: rm153b",
+            ),
+            mock.patch.object(groq_renderer, "request_groq_summary_with_retry", return_value=result),
+        ):
+            _, accepted_records, stats, records = render_with_groq(
+                {"items": [item]}, "test-key", "test-model", True, False
+            )
+
+        self.assertEqual(accepted_records, [])
+        self.assertEqual(stats, {"requested": 1, "accepted": 0, "fallback": 1})
+        self.assertEqual(records[0]["reason"], "ValueError: force_all accepted gate: unsafe numeric unit conversion: rm153b")
+
     def test_missing_api_key_keeps_entry_diagnostics_safe(self) -> None:
         _, _, _, records = render_with_groq(
             {"items": [copy.deepcopy(fixture_item())]}, "", "test-model", False, False

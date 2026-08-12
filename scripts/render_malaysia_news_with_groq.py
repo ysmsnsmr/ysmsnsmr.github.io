@@ -9,7 +9,7 @@ import time
 import urllib.error
 import urllib.request
 from collections import Counter
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -17,6 +17,7 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from malaysia_groq_body_focus import life_impact_matches_body_focus
 from malaysia_groq_common import (
+    SAFE_FALLBACK_LIFE_IMPACT_LINE,
     clean_text,
     collect_item_text,
     contains_any,
@@ -29,6 +30,7 @@ from malaysia_groq_common import (
 )
 from malaysia_groq_entry_review import request_entry_review
 from malaysia_groq_force_all_policy import (
+    classify_force_all_gate_reason,
     force_all_gate_reason,
     force_all_pre_request_skip_reason,
     force_all_request_cap,
@@ -304,6 +306,7 @@ class GroqSummaryResult:
     entry_contract_status: str
     entry_contract_reasons: list[str]
     transport_diagnostic: dict[str, Any]
+    usefulness_warnings: list[str] = field(default_factory=list)
 
 
 class GroqSummaryRejected(ValueError):
@@ -710,7 +713,13 @@ def reject_life_impact_reason(topic: str, item: dict[str, Any], life_impact: str
     return ""
 
 
-def validate_summary_against_source(item: dict[str, Any], summary: dict[str, Any]) -> None:
+def validate_summary_against_source(
+    item: dict[str, Any],
+    summary: dict[str, Any],
+    *,
+    allow_usefulness_warnings: bool = False,
+) -> list[str]:
+    usefulness_warnings: list[str] = []
     source_text = item_source_text(item)
     rendered_text = summary_text(summary)
     rendered_lower = rendered_text.lower()
@@ -769,7 +778,11 @@ def validate_summary_against_source(item: dict[str, Any], summary: dict[str, Any
 
     life_impact_text = summary.get("life_impact", "")
     if not life_impact_matches_body_focus(item, life_impact_text):
-        raise ValueError("generic life_impact for body_evidence focus")
+        reason = "generic life_impact for body_evidence focus"
+        if allow_usefulness_warnings:
+            usefulness_warnings.append(reason)
+        else:
+            raise ValueError(reason)
 
     if "進学条件" in life_impact_text:
         admission_evidence = [
@@ -791,7 +804,12 @@ def validate_summary_against_source(item: dict[str, Any], summary: dict[str, Any
     topic = normalize_topic(fallback_renderer.detect_topic(item))
     reason = reject_life_impact_reason(topic, item, summary["life_impact"])
     if reason:
-        raise ValueError(f"life_impact topic mismatch: {reason}")
+        warning = f"life_impact topic mismatch: {reason}"
+        if allow_usefulness_warnings:
+            usefulness_warnings.append(warning)
+        else:
+            raise ValueError(warning)
+    return usefulness_warnings
 
 def is_enforcement_or_misuse_item(item: dict[str, Any]) -> bool:
     """Skip Groq for narrow enforcement/misuse articles where display gains are low."""
@@ -840,6 +858,7 @@ def request_groq_summary_with_retry(
     summary_prompt_layout: str = "production",
     summary_max_tokens: int = DEFAULT_COMPARISON_MAX_TOKENS,
     summary_contract: str = "summary_entry",
+    allow_usefulness_warnings: bool = False,
 ) -> GroqSummaryResult:
     profile = model_profile or profile_for_model_id(model)
     try:
@@ -853,6 +872,7 @@ def request_groq_summary_with_retry(
             summary_prompt_layout,
             summary_max_tokens,
             summary_contract,
+            allow_usefulness_warnings,
         )
     except urllib.error.HTTPError as error:
         first_diagnostic = error_diagnostic(error)
@@ -872,6 +892,7 @@ def request_groq_summary_with_retry(
                 summary_prompt_layout,
                 summary_max_tokens,
                 summary_contract,
+                allow_usefulness_warnings,
             )
         except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError) as retry_error:
             retry_diagnostic = error_diagnostic(retry_error)
@@ -894,6 +915,7 @@ def request_groq_summary(
     summary_prompt_layout: str = "production",
     summary_max_tokens: int = DEFAULT_COMPARISON_MAX_TOKENS,
     summary_contract: str = "summary_entry",
+    allow_usefulness_warnings: bool = False,
 ) -> GroqSummaryResult:
     if not isinstance(summary_max_tokens, int) or isinstance(summary_max_tokens, bool) or summary_max_tokens < 1:
         raise ValueError("summary max_tokens must be a positive integer")
@@ -930,7 +952,12 @@ def request_groq_summary(
     try:
         summary = validate_groq_summary(parsed_content)
         summary = normalize_malaysia_terms(summary, item)
-        validate_summary_against_source(item, summary)
+        validation_warnings = validate_summary_against_source(
+            item,
+            summary,
+            allow_usefulness_warnings=allow_usefulness_warnings,
+        )
+        usefulness_warnings = validation_warnings if isinstance(validation_warnings, list) else []
     except ValueError as error:
         raise GroqSummaryRejected(
             str(error) or "validation failed",
@@ -939,7 +966,25 @@ def request_groq_summary(
             entry_contract_reasons,
             completion.diagnostic,
         ) from error
-    return GroqSummaryResult(summary, entry, entry_contract_status, entry_contract_reasons, completion.diagnostic)
+    return GroqSummaryResult(
+        summary,
+        entry,
+        entry_contract_status,
+        entry_contract_reasons,
+        completion.diagnostic,
+        usefulness_warnings,
+    )
+
+
+def apply_usefulness_display_policy(
+    summary: dict[str, Any],
+    usefulness_reasons: list[str],
+) -> dict[str, Any]:
+    """Keep useful factual fields while making the weak impact field conservative."""
+    display_summary = copy.deepcopy(summary)
+    if usefulness_reasons:
+        display_summary["life_impact"] = SAFE_FALLBACK_LIFE_IMPACT_LINE
+    return display_summary
 
 
 def validate_groq_summary(value: Any) -> dict[str, Any]:
@@ -1018,6 +1063,9 @@ def build_decision_record(
         "entry_review_policy": "enabled",
         "groq_call": None,
         "full_rejection_reason": "",
+        "usefulness_gate_status": "not_evaluated",
+        "usefulness_gate_reasons": [],
+        "json_render_display_tier": "not_evaluated",
     }
 
 
@@ -1462,6 +1510,26 @@ def body_evidence_observation(decision_records: list[dict[str, Any]]) -> dict[st
     }
 
 
+def usefulness_gate_observation(decision_records: list[dict[str, Any]]) -> dict[str, Any]:
+    status_counts: Counter[str] = Counter()
+    reason_counts: Counter[str] = Counter()
+    display_tier_counts: Counter[str] = Counter()
+    for record in decision_records:
+        status = clean_text(record.get("usefulness_gate_status")) or "not_evaluated"
+        status_counts[status] += 1
+        for reason in record.get("usefulness_gate_reasons", []):
+            if clean_text(reason):
+                reason_counts[clean_text(reason)] += 1
+        tier = clean_text(record.get("json_render_display_tier")) or "not_evaluated"
+        display_tier_counts[tier] += 1
+    return {
+        "observation_only": True,
+        "status_counts": sorted_counter_dict(status_counts),
+        "reason_counts": sorted_counter_dict(reason_counts),
+        "display_tier_counts": sorted_counter_dict(display_tier_counts),
+    }
+
+
 def build_improved_items_payload(
     accepted_records: list[dict[str, Any]],
     model: str,
@@ -1491,6 +1559,7 @@ def build_improved_items_payload(
             "entry_render_observation": entry_render_observation_counts(decision_records),
             "request_priority_observation": request_priority_observation(decision_records, force_all),
             "body_evidence_observation": body_evidence_observation(decision_records),
+            "usefulness_gate_observation": usefulness_gate_observation(decision_records),
             "decision_records": decision_records,
         }
     return payload
@@ -1675,6 +1744,7 @@ def render_with_groq(
                 summary_prompt_layout=summary_prompt_layout,
                 summary_max_tokens=summary_max_tokens,
                 summary_contract=summary_contract,
+                allow_usefulness_warnings=force_all,
             )
             improved_summary = groq_result.summary
             decision_record["groq_call"] = groq_result.transport_diagnostic
@@ -1682,6 +1752,12 @@ def render_with_groq(
             decision_record["entry_candidate"] = entry_text(groq_result.entry)
             decision_record["entry_contract_status"] = groq_result.entry_contract_status
             decision_record["entry_contract_reasons"] = groq_result.entry_contract_reasons
+            raw_usefulness_warnings = groq_result.usefulness_warnings
+            usefulness_reasons = [
+                clean_text(reason)
+                for reason in (raw_usefulness_warnings if isinstance(raw_usefulness_warnings, list) else [])
+                if clean_text(reason)
+            ]
             if enable_entry_review:
                 attach_entry_review_observation(
                     decision_record,
@@ -1694,9 +1770,26 @@ def render_with_groq(
             if force_all:
                 gate_reason = force_all_gate_reason(item, improved_summary)
                 if gate_reason:
-                    raise ValueError(f"force_all accepted gate: {gate_reason}")
+                    gate_kind = classify_force_all_gate_reason(gate_reason)
+                    if gate_kind != "usefulness":
+                        raise ValueError(f"force_all accepted gate: {gate_reason}")
+                    usefulness_reasons.append(gate_reason)
                 if debug:
                     safe_log(f"groq-debug: item={index + 1} force_all_gate passed")
+            usefulness_reasons = list(dict.fromkeys(usefulness_reasons))
+            decision_record["usefulness_gate_status"] = (
+                "warning" if usefulness_reasons else "pass"
+            )
+            decision_record["usefulness_gate_reasons"] = usefulness_reasons
+            decision_record["json_render_display_tier"] = (
+                "full_summary_usefulness_limited"
+                if usefulness_reasons
+                else "full_summary"
+            )
+            improved_summary = apply_usefulness_display_policy(
+                improved_summary,
+                usefulness_reasons,
+            )
             item["selected_summary"] = improved_summary
             accepted_records.append(
                 {

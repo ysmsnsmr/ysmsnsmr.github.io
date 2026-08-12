@@ -14,6 +14,9 @@ from run_malaysia_groq_model_comparison import (
     compatibility_probe_messages,
     comparison_request_configuration,
     comparison_metrics,
+    classify_gate_failure_reason,
+    golden_fixture_gate_observation,
+    golden_item_gate_observation,
     probe_contract_observation,
     probe_status_from_diagnostic,
     quality_cohort_links,
@@ -22,6 +25,64 @@ from run_malaysia_groq_model_comparison import (
 
 
 class ModelComparisonTest(unittest.TestCase):
+    def test_gate_failure_reason_classification_separates_safety_usefulness_and_transport(self) -> None:
+        self.assertEqual(
+            classify_gate_failure_reason("ValueError: unsafe numeric unit conversion: rm153b"),
+            "hard_safety",
+        )
+        self.assertEqual(
+            classify_gate_failure_reason(
+                "ValueError: force_all accepted gate: no_strong_source_life_impact_signal"
+            ),
+            "usefulness",
+        )
+        self.assertEqual(classify_gate_failure_reason("HTTP 429"), "transport_or_contract")
+
+    def test_golden_fixture_observation_identifies_hard_safety_only_acceptability(self) -> None:
+        usefulness_only = golden_item_gate_observation(
+            {
+                "link": "https://example.test/usefulness",
+                "failure_reasons": [
+                    "ValueError: force_all accepted gate: no_strong_source_life_impact_signal"
+                ],
+            }
+        )
+        safety_failure = golden_item_gate_observation(
+            {
+                "link": "https://example.test/safety",
+                "failure_reasons": ["ValueError: unsafe numeric unit conversion: rm153b"],
+            }
+        )
+
+        self.assertEqual(usefulness_only["safety_gate_status"], "pass")
+        self.assertEqual(usefulness_only["usefulness_gate_status"], "reject")
+        self.assertTrue(usefulness_only["hard_safety_only_accept_possible"])
+        self.assertEqual(safety_failure["safety_gate_status"], "reject")
+        self.assertEqual(safety_failure["usefulness_gate_status"], "not_evaluated")
+        self.assertFalse(safety_failure["hard_safety_only_accept_possible"])
+
+        observation = golden_fixture_gate_observation(
+            {
+                "items": [
+                    {
+                        "link": "https://example.test/usefulness",
+                        "failure_reasons": [
+                            "ValueError: force_all accepted gate: no_strong_source_life_impact_signal"
+                        ],
+                    },
+                    {
+                        "link": "https://example.test/safety",
+                        "failure_reasons": ["ValueError: unsafe numeric unit conversion: rm153b"],
+                    },
+                    {"link": "https://example.test/rate", "failure_reasons": ["HTTP 429"]},
+                ]
+            }
+        )
+        self.assertEqual(observation["fixture_item_count"], 3)
+        self.assertEqual(observation["hard_safety_only_accept_possible_count"], 1)
+        self.assertEqual(observation["current_gate_decision_counts"]["reject"], 2)
+        self.assertEqual(observation["current_gate_decision_counts"]["not_evaluated"], 1)
+
     def test_candidate_request_configuration_keeps_experiments_profile_scoped(self) -> None:
         registry = load_model_profile_registry()
 
