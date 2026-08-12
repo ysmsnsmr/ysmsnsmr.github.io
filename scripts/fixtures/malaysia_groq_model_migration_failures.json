@@ -1409,6 +1409,74 @@
           "unsupported_conditions"
         ]
       }
+    },
+    {
+      "link": "https://www.malaymail.com/news/malaysia/2026/08/11/tabung-haji-act-amendments-to-introduce-tougher-financial-reporting-rules-penalties/230949",
+      "first_observed_on": "2026-08-12",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "ValueError: generic life_impact for body_evidence focus"
+      ],
+      "item": {
+        "category": "【生活インパクト】",
+        "source": "Malay Mail",
+        "published_date": "2026年8月11日",
+        "title": "Tabung Haji Act amendments to introduce tougher financial reporting rules, penalties",
+        "description": "KUALA LUMPUR, Aug 11 — Clearer legal provisions, including prescribed accounting standards and penalties for...",
+        "link": "https://www.malaymail.com/news/malaysia/2026/08/11/tabung-haji-act-amendments-to-introduce-tougher-financial-reporting-rules-penalties/230949",
+        "selected_summary": {
+          "conclusion": "Tabung Haji Act amendments to introduce tougher financial reporting rules, penalties",
+          "what_happened": [
+            "KUALA LUMPUR, Aug 11 — Clearer legal provisions, including prescribed accounting standards and penalties for...",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "klang_valley"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": true,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "use_body",
+        "body_evidence_excerpt": "Clearer legal provisions, including prescribed accounting standards and penalties for misreporting financial statements, will be included in proposed amendments to the Tabung Haji (TH) Act 1995 to tighten financial reporting rules in line with recommendations by the Royal Commission of Inquiry (RCI). Minister in the Prime Minister’s Department (Religious Affairs) Zulkifli Hasan said the changes were intended to prevent a recurrence of the issues highlighted by the RCI in its report on TH management and operations from 2014 to 2020. “All relevant RCI recommendations have been reviewed for inclusion in the proposed amendments to the TH Act, including the suitability of a Securities Commission oversight and supervisory framework for TH’s fund management and investments,” he said when presenting his ministerial briefing on the RCI report at the special Dewan Rakyat sitting today. Zulkifli said a task force chaired by the TH chairman and comprising the Bank Negara Malaysia (BNM) governor and Securities Commission (SC) chairman had been established to examine the matter. “I have been informed that the task force has agreed to recommend that TH’s fund management...",
+        "body_evidence_focus": [
+          "transport_or_infra",
+          "financial_service_access"
+        ],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
     }
   ]
 }
