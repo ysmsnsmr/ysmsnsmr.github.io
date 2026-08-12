@@ -1,10 +1,76 @@
 :root {
-  color-scheme: light;
-  font-family:
+  --ds-font-sans:
     -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic",
     sans-serif;
-  color: #2e2925;
-  background: #f5f0e7;
+  --ds-color-ink: #2e2925;
+  --ds-color-canvas: #f5f0e7;
+  --ds-color-white: #fff;
+  --ds-color-brand: #a84f32;
+  --ds-color-brand-dark: #8a4b37;
+  --ds-color-focus: #276b62;
+  --ds-color-muted: #766d65;
+  --ds-color-muted-strong: #6f665e;
+  --ds-color-field-label: #4e4741;
+  --ds-color-field-border: #cfc4b8;
+  --ds-color-field-placeholder: #a29a92;
+  --ds-color-amount-placeholder: #b6ada4;
+  --ds-color-panel-border: #ddd3c6;
+  --ds-color-panel-border-strong: #ded5c8;
+  --ds-color-panel: #fffdf9;
+  --ds-color-panel-raised: rgb(255 253 249 / 88%);
+  --ds-color-panel-translucent: rgb(255 253 249 / 82%);
+  --ds-color-reflection-border: #dfbaa5;
+  --ds-color-reflection-surface: #fff7f1;
+  --ds-color-summary-label: #746b63;
+  --ds-color-success: #175849;
+  --ds-color-success-border: #a9d3bd;
+  --ds-color-success-surface: #edf8f1;
+  --ds-color-success-soft: #e2f0e9;
+  --ds-color-warning: #8a5b13;
+  --ds-color-warning-ink: #664010;
+  --ds-color-warning-border: #d3a770;
+  --ds-color-warning-surface: #fff4d8;
+  --ds-color-warning-soft: #f8ebc8;
+  --ds-color-danger: #963d30;
+  --ds-color-danger-ink: #923f31;
+  --ds-color-danger-surface: #fff7f5;
+  --ds-color-danger-soft: #f7dfd8;
+  --ds-color-error: #8e3428;
+  --ds-color-error-border: #e2aaa0;
+  --ds-color-error-surface: #fff0ed;
+  --ds-color-subtle: #938a81;
+  --ds-color-control-ink: #655d56;
+  --ds-color-control-border: #b9aea2;
+  --ds-color-control-border-soft: #c8bdb1;
+  --ds-color-choice-ink: #5c544d;
+  --ds-color-choice-surface: #fbf9f5;
+  --ds-color-tag-surface: #ede8e1;
+  --ds-color-empty-border: #c9beb2;
+  --ds-color-empty-ink: #81786f;
+  --ds-color-time: #877e75;
+  --ds-color-data-border: #d6ccc0;
+  --ds-color-data-ink: #5e554e;
+  --ds-color-data-copy: #776e66;
+  --ds-color-danger-border: #e0b3aa;
+  --ds-color-danger-copy: #733b32;
+  --ds-color-info: #8a4b37;
+  --ds-color-info-surface: #f7e6dc;
+  --ds-color-overlay-surface: rgb(255 255 255 / 65%);
+  --ds-color-glow: rgb(237 197 149 / 42%);
+  --ds-radius-control: 0.65rem;
+  --ds-radius-card: 0.85rem;
+  --ds-radius-panel: 1rem;
+  --ds-radius-pill: 999px;
+  --ds-shadow-card: 0 5px 18px rgb(76 54 37 / 6%);
+  --ds-shadow-panel: 0 10px 28px rgb(76 54 37 / 8%);
+  --ds-shadow-focus: 0 0 0 2px rgb(39 107 98 / 14%);
+  --ds-shadow-selected: 0 3px 10px rgb(39 107 98 / 20%);
+  --ds-shadow-primary: 0 5px 14px rgb(168 79 50 / 22%);
+  --ds-target-min: 44px;
+  color-scheme: light;
+  font-family: var(--ds-font-sans);
+  color: var(--ds-color-ink);
+  background: var(--ds-color-canvas);
   font-synthesis: none;
 }
 
@@ -14,7 +80,7 @@
 
 html {
   min-height: 100%;
-  background: #f5f0e7;
+  background: var(--ds-color-canvas);
 }
 
 body {
@@ -23,8 +89,8 @@ body {
   margin: 0;
   overflow-x: hidden;
   background:
-    radial-gradient(circle at 94% 0%, rgb(237 197 149 / 42%), transparent 18rem),
-    #f5f0e7;
+    radial-gradient(circle at 94% 0%, var(--ds-color-glow), transparent 18rem),
+    var(--ds-color-canvas);
 }
 
 button,
@@ -45,7 +111,7 @@ input:disabled {
 button:focus-visible,
 input:focus-visible,
 .choice input:focus-visible + span {
-  outline: 3px solid #276b62;
+  outline: 3px solid var(--ds-color-focus);
   outline-offset: 2px;
 }
 
@@ -87,7 +153,7 @@ input:focus-visible,
 .eyebrow,
 .section-kicker {
   margin: 0 0 0.15rem;
-  color: #8a4b37;
+  color: var(--ds-color-info);
   font-size: 0.65rem;
   font-weight: 800;
   letter-spacing: 0.13em;
@@ -115,7 +181,7 @@ h2 {
 .today-label {
   flex: 0 0 auto;
   margin-bottom: 0.15rem;
-  color: #766d65;
+  color: var(--ds-color-muted);
   font-size: 0.78rem;
   font-weight: 650;
 }
@@ -130,10 +196,10 @@ h2 {
 .origin-notice {
   margin-bottom: 0.7rem;
   padding: 0.75rem;
-  border: 1px solid #d3a770;
-  border-radius: 0.85rem;
-  color: #664010;
-  background: #fff4d8;
+  border: 1px solid var(--ds-color-warning-border);
+  border-radius: var(--ds-radius-card);
+  color: var(--ds-color-warning-ink);
+  background: var(--ds-color-warning-surface);
   font-size: 0.78rem;
   line-height: 1.5;
 }
@@ -152,9 +218,9 @@ h2 {
   min-height: 44px;
   align-items: center;
   padding: 0.5rem 0.75rem;
-  border-radius: 0.65rem;
-  color: #fff;
-  background: #8a5b13;
+  border-radius: var(--ds-radius-control);
+  color: var(--ds-color-white);
+  background: var(--ds-color-warning);
   font-weight: 800;
   text-decoration: none;
 }
@@ -162,20 +228,20 @@ h2 {
 .summary-card {
   min-width: 0;
   padding: 0.7rem 0.75rem;
-  border: 1px solid #ddd3c6;
+  border: 1px solid var(--ds-color-panel-border);
   border-radius: 0.9rem;
-  background: rgb(255 253 249 / 88%);
-  box-shadow: 0 5px 18px rgb(76 54 37 / 6%);
+  background: var(--ds-color-panel-raised);
+  box-shadow: var(--ds-shadow-card);
 }
 
 .summary-card--reflection {
-  border-color: #dfbaa5;
-  background: #fff7f1;
+  border-color: var(--ds-color-reflection-border);
+  background: var(--ds-color-reflection-surface);
 }
 
 .summary-card p {
   margin-bottom: 0.2rem;
-  color: #746b63;
+  color: var(--ds-color-summary-label);
   font-size: 0.7rem;
   font-weight: 700;
 }
@@ -192,7 +258,7 @@ h2 {
 .summary-card small {
   display: block;
   margin-top: 0.2rem;
-  color: #8a4b37;
+  color: var(--ds-color-info);
   font-size: 0.58rem;
   line-height: 1.2;
 }
@@ -204,10 +270,10 @@ h2 {
   gap: 0.65rem;
   margin: 0 0 0.65rem;
   padding: 0.65rem 0.75rem;
-  border: 1px solid #a9d3bd;
+  border: 1px solid var(--ds-color-success-border);
   border-radius: 0.75rem;
-  color: #175849;
-  background: #edf8f1;
+  color: var(--ds-color-success);
+  background: var(--ds-color-success-surface);
   font-size: 0.8rem;
   font-weight: 700;
   line-height: 1.4;
@@ -220,23 +286,23 @@ h2 {
   border: 1px solid currentColor;
   border-radius: 0.6rem;
   color: inherit;
-  background: rgb(255 255 255 / 65%);
+  background: var(--ds-color-overlay-surface);
   font-size: 0.75rem;
   font-weight: 850;
 }
 
 .feedback[data-tone="error"] {
-  border-color: #e2aaa0;
-  color: #8e3428;
-  background: #fff0ed;
+  border-color: var(--ds-color-error-border);
+  color: var(--ds-color-error);
+  background: var(--ds-color-error-surface);
 }
 
 .entry-panel {
   padding: 0.8rem;
-  border: 1px solid #ded5c8;
-  border-radius: 1rem;
-  background: #fffdf9;
-  box-shadow: 0 10px 28px rgb(76 54 37 / 8%);
+  border: 1px solid var(--ds-color-panel-border-strong);
+  border-radius: var(--ds-radius-panel);
+  background: var(--ds-color-panel);
+  box-shadow: var(--ds-shadow-panel);
 }
 
 .entry-heading,
@@ -258,9 +324,9 @@ h2 {
   align-items: center;
   justify-content: center;
   padding: 0.2rem 0.55rem;
-  border-radius: 999px;
-  color: #8a4b37;
-  background: #f7e6dc;
+  border-radius: var(--ds-radius-pill);
+  color: var(--ds-color-info);
+  background: var(--ds-color-info-surface);
   font-size: 0.67rem;
   font-weight: 800;
 }
@@ -274,7 +340,7 @@ h2 {
 fieldset legend {
   margin: 0 0 0.3rem;
   padding: 0;
-  color: #4e4741;
+  color: var(--ds-color-field-label);
   font-size: 0.75rem;
   font-weight: 800;
 }
@@ -285,7 +351,7 @@ fieldset legend {
 
 .field-label span {
   margin-left: 0.25rem;
-  color: #938a81;
+  color: var(--ds-color-subtle);
   font-size: 0.65rem;
   font-weight: 600;
 }
@@ -302,19 +368,19 @@ fieldset {
   min-height: 3.2rem;
   align-items: center;
   overflow: hidden;
-  border: 1px solid #b9aea2;
+  border: 1px solid var(--ds-color-control-border);
   border-radius: 0.75rem;
-  background: #fff;
+  background: var(--ds-color-white);
 }
 
 .amount-field:focus-within {
-  border-color: #276b62;
-  box-shadow: 0 0 0 2px rgb(39 107 98 / 14%);
+  border-color: var(--ds-color-focus);
+  box-shadow: var(--ds-shadow-focus);
 }
 
 .amount-field > span {
   padding-left: 0.85rem;
-  color: #766d65;
+  color: var(--ds-color-muted);
   font-size: 0.9rem;
   font-weight: 800;
 }
@@ -326,7 +392,7 @@ fieldset {
   padding: 0.35rem 0.85rem 0.35rem 0.45rem;
   border: 0;
   outline: 0;
-  color: #2e2925;
+  color: var(--ds-color-ink);
   background: transparent;
   font-size: 1.65rem;
   font-weight: 750;
@@ -334,7 +400,7 @@ fieldset {
 }
 
 .amount-field input::placeholder {
-  color: #b6ada4;
+  color: var(--ds-color-amount-placeholder);
 }
 
 .choice-grid {
@@ -366,10 +432,10 @@ fieldset {
   align-items: center;
   justify-content: center;
   padding: 0.35rem 0.25rem;
-  border: 1px solid #cfc4b8;
-  border-radius: 0.65rem;
-  color: #5c544d;
-  background: #fbf9f5;
+  border: 1px solid var(--ds-color-field-border);
+  border-radius: var(--ds-radius-control);
+  color: var(--ds-color-choice-ink);
+  background: var(--ds-color-choice-surface);
   font-size: 0.7rem;
   font-weight: 750;
   line-height: 1.15;
@@ -382,10 +448,10 @@ fieldset {
 }
 
 .choice input:checked + span {
-  border-color: #276b62;
-  color: #fff;
-  background: #276b62;
-  box-shadow: 0 3px 10px rgb(39 107 98 / 20%);
+  border-color: var(--ds-color-focus);
+  color: var(--ds-color-white);
+  background: var(--ds-color-focus);
+  box-shadow: var(--ds-shadow-selected);
 }
 
 .choice:active span {
@@ -401,15 +467,15 @@ fieldset {
   width: 100%;
   min-height: 2.75rem;
   padding: 0.55rem 0.7rem;
-  border: 1px solid #cfc4b8;
-  border-radius: 0.65rem;
-  color: #2e2925;
-  background: #fff;
+  border: 1px solid var(--ds-color-field-border);
+  border-radius: var(--ds-radius-control);
+  color: var(--ds-color-ink);
+  background: var(--ds-color-white);
   font-size: 0.85rem;
 }
 
 .note-field::placeholder {
-  color: #a29a92;
+  color: var(--ds-color-field-placeholder);
 }
 
 .form-actions {
@@ -425,22 +491,22 @@ fieldset {
 .save-button,
 .cancel-button,
 .record-action {
-  min-height: 44px;
+  min-height: var(--ds-target-min);
   border-radius: 0.7rem;
   font-weight: 800;
 }
 
 .save-button {
   min-height: 3rem;
-  border: 1px solid #a84f32;
-  color: #fff;
-  background: #a84f32;
-  box-shadow: 0 5px 14px rgb(168 79 50 / 22%);
+  border: 1px solid var(--ds-color-brand);
+  color: var(--ds-color-white);
+  background: var(--ds-color-brand);
+  box-shadow: var(--ds-shadow-primary);
 }
 
 .cancel-button {
-  border: 1px solid #cfc4b8;
-  color: #655d56;
+  border: 1px solid var(--ds-color-field-border);
+  color: var(--ds-color-control-ink);
   background: transparent;
 }
 
@@ -455,16 +521,16 @@ fieldset {
 }
 
 .record-count {
-  color: #276b62;
-  background: #e2f0e9;
+  color: var(--ds-color-focus);
+  background: var(--ds-color-success-soft);
 }
 
 .empty-message {
   margin: 0;
   padding: 1rem;
-  border: 1px dashed #c9beb2;
+  border: 1px dashed var(--ds-color-empty-border);
   border-radius: 0.85rem;
-  color: #81786f;
+  color: var(--ds-color-empty-ink);
   font-size: 0.8rem;
   line-height: 1.6;
   text-align: center;
@@ -483,9 +549,9 @@ fieldset {
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 0.65rem;
   padding: 0.75rem;
-  border: 1px solid #ddd3c6;
+  border: 1px solid var(--ds-color-panel-border);
   border-radius: 0.85rem;
-  background: rgb(255 253 249 / 88%);
+  background: var(--ds-color-panel-raised);
 }
 
 .expense-item--readonly {
@@ -513,7 +579,7 @@ fieldset {
 
 .expense-time {
   flex: 0 0 auto;
-  color: #877e75;
+  color: var(--ds-color-time);
   font-size: 0.7rem;
   font-variant-numeric: tabular-nums;
 }
@@ -527,31 +593,31 @@ fieldset {
 
 .expense-tag {
   padding: 0.2rem 0.42rem;
-  border-radius: 999px;
-  color: #655d56;
-  background: #ede8e1;
+  border-radius: var(--ds-radius-pill);
+  color: var(--ds-color-control-ink);
+  background: var(--ds-color-tag-surface);
   font-size: 0.62rem;
   font-weight: 750;
 }
 
 .expense-tag--needed {
-  color: #276b62;
-  background: #e2f0e9;
+  color: var(--ds-color-focus);
+  background: var(--ds-color-success-soft);
 }
 
 .expense-tag--hesitated {
-  color: #8a5b13;
-  background: #f8ebc8;
+  color: var(--ds-color-warning);
+  background: var(--ds-color-warning-soft);
 }
 
 .expense-tag--unnecessary {
-  color: #923f31;
-  background: #f7dfd8;
+  color: var(--ds-color-danger-ink);
+  background: var(--ds-color-danger-soft);
 }
 
 .expense-note {
   margin: 0.45rem 0 0;
-  color: #6f665e;
+  color: var(--ds-color-muted-strong);
   font-size: 0.75rem;
   line-height: 1.4;
   overflow-wrap: anywhere;
@@ -566,16 +632,16 @@ fieldset {
 .record-action {
   min-width: 3.4rem;
   padding: 0.4rem 0.55rem;
-  border: 1px solid #cfc4b8;
-  color: #655d56;
-  background: #fff;
+  border: 1px solid var(--ds-color-field-border);
+  color: var(--ds-color-control-ink);
+  background: var(--ds-color-white);
   font-size: 0.7rem;
 }
 
 .record-action--delete {
-  border-color: #e0b3aa;
-  color: #963d30;
-  background: #fff7f5;
+  border-color: var(--ds-color-danger-border);
+  color: var(--ds-color-danger);
+  background: var(--ds-color-danger-surface);
 }
 
 .history-list {
@@ -585,7 +651,7 @@ fieldset {
 
 .history-day h3 {
   margin: 0 0 0.45rem;
-  color: #6f665e;
+  color: var(--ds-color-muted-strong);
   font-size: 0.75rem;
 }
 
@@ -599,15 +665,15 @@ fieldset {
 
 .data-tools {
   margin-top: 1rem;
-  border: 1px solid #d6ccc0;
+  border: 1px solid var(--ds-color-data-border);
   border-radius: 0.9rem;
-  background: rgb(255 253 249 / 82%);
+  background: var(--ds-color-panel-translucent);
 }
 
 .data-tools summary {
   min-height: 48px;
   padding: 0.85rem;
-  color: #5e554e;
+  color: var(--ds-color-data-ink);
   font-size: 0.8rem;
   font-weight: 850;
   cursor: pointer;
@@ -619,7 +685,7 @@ fieldset {
 
 .data-tools__body > p {
   margin-bottom: 0.75rem;
-  color: #776e66;
+  color: var(--ds-color-data-copy);
   font-size: 0.74rem;
   line-height: 1.55;
 }
@@ -634,14 +700,14 @@ fieldset {
 .file-button,
 .recovery-panel button {
   display: inline-flex;
-  min-height: 44px;
+  min-height: var(--ds-target-min);
   align-items: center;
   justify-content: center;
   padding: 0.5rem;
-  border: 1px solid #c8bdb1;
+  border: 1px solid var(--ds-color-control-border-soft);
   border-radius: 0.65rem;
-  color: #5e554e;
-  background: #fff;
+  color: var(--ds-color-data-ink);
+  background: var(--ds-color-white);
   font-size: 0.7rem;
   font-weight: 800;
   line-height: 1.25;
@@ -654,16 +720,16 @@ fieldset {
 
 .data-note {
   margin: 0.7rem 0 0 !important;
-  color: #8a4b37 !important;
+  color: var(--ds-color-info) !important;
 }
 
 .recovery-panel {
   margin-top: 1rem;
   padding: 0.85rem;
-  border: 1px solid #e0b3aa;
+  border: 1px solid var(--ds-color-danger-border);
   border-radius: 0.9rem;
-  color: #733b32;
-  background: #fff7f5;
+  color: var(--ds-color-danger-copy);
+  background: var(--ds-color-danger-surface);
 }
 
 .recovery-panel .section-heading {
@@ -688,7 +754,7 @@ fieldset {
 
 .app-footer {
   padding: 1.3rem 0 0.3rem;
-  color: #938a81;
+  color: var(--ds-color-subtle);
   font-size: 0.68rem;
   text-align: center;
 }

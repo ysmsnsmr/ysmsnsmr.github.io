@@ -1,0 +1,26 @@
+:root {
+  --sp-color-paper-rgb: 248 244 234;
+  --sp-color-ink-rgb: 31 41 51;
+  --sp-color-calm-rgb: 15 118 110;
+  --sp-color-calm-soft-rgb: 221 245 239;
+  --sp-color-honey-rgb: 245 197 66;
+  --sp-color-coral-rgb: 249 115 91;
+  --sp-color-mint-rgb: 238 248 246;
+  --sp-color-honey-soft-rgb: 255 247 221;
+  --sp-color-ledger-canvas-rgb: 243 247 246;
+  --sp-color-calm-strong-rgb: 11 98 92;
+  --sp-color-honey-surface-rgb: 255 249 232;
+  --sp-color-coral-ink-rgb: 161 60 42;
+  --sp-color-paper: rgb(var(--sp-color-paper-rgb));
+  --sp-color-ink: rgb(var(--sp-color-ink-rgb));
+  --sp-color-mint: rgb(var(--sp-color-mint-rgb));
+  --sp-color-honey-soft: rgb(var(--sp-color-honey-soft-rgb));
+  --sp-color-ledger-canvas: rgb(var(--sp-color-ledger-canvas-rgb));
+  --sp-color-calm-strong: rgb(var(--sp-color-calm-strong-rgb));
+  --sp-color-honey-surface: rgb(var(--sp-color-honey-surface-rgb));
+  --sp-color-coral-ink: rgb(var(--sp-color-coral-ink-rgb));
+  --sp-font-sans: ui-sans-serif, system-ui, sans-serif;
+  --sp-radius-card: 0.5rem;
+  --sp-target-min: 2.75rem;
+  --sp-shadow-soft: 0 18px 45px rgb(var(--sp-color-ink-rgb) / 0.1);
+}

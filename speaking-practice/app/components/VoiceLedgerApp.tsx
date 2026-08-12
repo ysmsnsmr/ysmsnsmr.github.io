@@ -442,7 +442,7 @@ export default function VoiceLedgerApp() {
   }
 
   return (
-    <main className="min-h-dvh bg-[#F3F7F6] px-4 py-5 text-slate-800 sm:px-6 sm:py-7">
+    <main className="min-h-dvh bg-[var(--sp-color-ledger-canvas)] px-4 py-5 text-slate-800 sm:px-6 sm:py-7">
       <div className="mx-auto max-w-6xl">
         <header className="flex flex-wrap items-end justify-between gap-4 border-b border-slate-200 pb-5">
           <div>
@@ -537,7 +537,7 @@ export default function VoiceLedgerApp() {
                     <button
                       type="button"
                       onClick={() => void copySessionPrompt()}
-                      className="mt-3 min-h-11 rounded-lg bg-calm px-4 py-2 text-sm font-bold text-white transition hover:bg-[#0B625C]"
+                      className="mt-3 min-h-11 rounded-lg bg-calm px-4 py-2 text-sm font-bold text-white transition hover:bg-[var(--sp-color-calm-strong)]"
                     >
                       まとめ用テンプレートをコピー
                     </button>
@@ -597,7 +597,7 @@ export default function VoiceLedgerApp() {
                         <button
                           type="submit"
                           disabled={!canSave}
-                          className="min-h-11 rounded-lg bg-calm px-5 py-2 text-sm font-bold text-white transition hover:bg-[#0B625C] disabled:cursor-not-allowed disabled:bg-slate-300"
+                          className="min-h-11 rounded-lg bg-calm px-5 py-2 text-sm font-bold text-white transition hover:bg-[var(--sp-color-calm-strong)] disabled:cursor-not-allowed disabled:bg-slate-300"
                         >
                           記録を保存
                         </button>
@@ -627,7 +627,7 @@ export default function VoiceLedgerApp() {
                   <button
                     type="submit"
                     disabled={!canSave}
-                    className="mt-5 min-h-11 w-full rounded-lg bg-calm px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-[#0B625C] active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-slate-300"
+                    className="mt-5 min-h-11 w-full rounded-lg bg-calm px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-[var(--sp-color-calm-strong)] active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-slate-300"
                   >
                     記録を保存
                   </button>
@@ -694,7 +694,7 @@ export default function VoiceLedgerApp() {
                   <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-slate-600">
                     {entry.summary}
                   </p>
-                  <div className="mt-3 border-l-4 border-honey bg-[#FFF9E8] px-3 py-2">
+                  <div className="mt-3 border-l-4 border-honey bg-[var(--sp-color-honey-surface)] px-3 py-2">
                     <p className="text-xs font-bold uppercase tracking-[0.08em] text-slate-500">
                       次回の課題
                     </p>
@@ -745,14 +745,14 @@ function ParseFeedback({
   return (
     <div className="mt-4 grid gap-3">
       {parseResult.status === "incomplete" && (
-        <p className="rounded-lg bg-coral/10 px-4 py-3 text-sm font-semibold leading-relaxed text-[#A13C2A]">
+        <p className="rounded-lg bg-coral/10 px-4 py-3 text-sm font-semibold leading-relaxed text-[var(--sp-color-coral-ink)]">
           保存前に入力してください: {parseResult.missingFields.join("、")}
         </p>
       )}
       {parseResult.warnings.map((warning) => (
         <p
           key={warning}
-          className="rounded-lg bg-[#FFF9E8] px-4 py-3 text-sm leading-relaxed text-slate-700"
+          className="rounded-lg bg-[var(--sp-color-honey-surface)] px-4 py-3 text-sm leading-relaxed text-slate-700"
         >
           {warning}
         </p>
@@ -786,7 +786,7 @@ function ImportPreviewPanel({
             "rounded-full px-3 py-1 text-xs font-bold",
             preview.status === "valid"
               ? "bg-calm-soft text-calm"
-              : "bg-coral/10 text-[#A13C2A]"
+              : "bg-coral/10 text-[var(--sp-color-coral-ink)]"
           ].join(" ")}
         >
           {preview.status === "valid" ? "読み込み可能" : "読み込み不可"}
@@ -806,7 +806,7 @@ function ImportPreviewPanel({
           {preview.warnings.map((warning) => (
             <p
               key={warning}
-              className="mt-3 rounded-lg bg-[#FFF9E8] px-4 py-3 text-sm leading-relaxed text-slate-700"
+              className="mt-3 rounded-lg bg-[var(--sp-color-honey-surface)] px-4 py-3 text-sm leading-relaxed text-slate-700"
             >
               {warning}
             </p>
@@ -815,7 +815,7 @@ function ImportPreviewPanel({
             <button
               type="button"
               onClick={onApply}
-              className="min-h-11 rounded-lg bg-calm px-5 py-2 text-sm font-bold text-white transition hover:bg-[#0B625C]"
+              className="min-h-11 rounded-lg bg-calm px-5 py-2 text-sm font-bold text-white transition hover:bg-[var(--sp-color-calm-strong)]"
             >
               この内容をv2台帳へ追加
             </button>
@@ -833,7 +833,7 @@ function ImportPreviewPanel({
           {preview.errors.map((error) => (
             <p
               key={error}
-              className="rounded-lg bg-coral/10 px-4 py-3 text-sm font-semibold leading-relaxed text-[#A13C2A]"
+              className="rounded-lg bg-coral/10 px-4 py-3 text-sm font-semibold leading-relaxed text-[var(--sp-color-coral-ink)]"
             >
               {error}
             </p>
@@ -1115,7 +1115,7 @@ function ListField({
 function StatusNotice({ message }: { message: StatusMessage | null }) {
   const className =
     message?.kind === "error"
-      ? "bg-coral/10 text-[#A13C2A]"
+      ? "bg-coral/10 text-[var(--sp-color-coral-ink)]"
       : message?.kind === "success"
         ? "bg-calm-soft text-calm"
         : "bg-slate-50 text-slate-600";

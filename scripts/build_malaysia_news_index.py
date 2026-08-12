@@ -6,6 +6,8 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+from malaysia_news_design_tokens import MALAYSIA_NEWS_TOKENS_CSS
+
 
 MYT = timezone(timedelta(hours=8))
 NEWS_DIR = Path("news/malaysia")
@@ -351,19 +353,7 @@ def render_html(days: list[NewsDay]) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Malaysia RSSニュース要約</title>
   <style>
-    :root {{
-      color-scheme: light;
-      --bg: #f5f7f4;
-      --panel: #ffffff;
-      --ink: #1b2420;
-      --muted: #65716c;
-      --line: #dce3dd;
-      --accent: #006b5f;
-      --accent-strong: #004c45;
-      --accent-soft: #e5f3ef;
-      --warn: #8f4c00;
-      --shadow: 0 12px 28px rgba(27, 36, 32, 0.07);
-    }}
+{MALAYSIA_NEWS_TOKENS_CSS}
     * {{ box-sizing: border-box; }}
     html {{ overflow-x: hidden; }}
     body {{
@@ -371,7 +361,7 @@ def render_html(days: list[NewsDay]) -> str:
       overflow-x: hidden;
       background: var(--bg);
       color: var(--ink);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: var(--font-sans);
       line-height: 1.65;
     }}
     main {{
@@ -405,9 +395,9 @@ def render_html(days: list[NewsDay]) -> str:
       text-underline-offset: 0.18em;
     }}
     a:focus-visible {{
-      outline: 3px solid #f4c04d;
+      outline: 3px solid var(--focus);
       outline-offset: 3px;
-      border-radius: 6px;
+      border-radius: var(--radius-control);
     }}
     .subhead {{ max-width: 620px; margin-bottom: 0; color: var(--muted); }}
     .header-actions {{
@@ -441,8 +431,8 @@ def render_html(days: list[NewsDay]) -> str:
       margin: 0 0 28px;
       padding: 10px;
       border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.68);
+      border-radius: var(--radius-card);
+      background: var(--panel-translucent);
     }}
     .status-chip {{
       display: inline-flex;
@@ -451,8 +441,8 @@ def render_html(days: list[NewsDay]) -> str:
       min-height: 32px;
       max-width: 100%;
       border: 1px solid var(--line);
-      border-radius: 999px;
-      background: #fff;
+      border-radius: var(--radius-pill);
+      background: var(--panel);
       padding: 5px 11px;
       font-size: 0.88rem;
     }}
@@ -490,8 +480,8 @@ def render_html(days: list[NewsDay]) -> str:
       gap: 12px;
       min-width: 0;
       border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fbfcfa;
+      border-radius: var(--radius-card);
+      background: var(--panel-subtle);
       padding: 16px;
     }}
     .focus-card h3 {{
@@ -502,7 +492,7 @@ def render_html(days: list[NewsDay]) -> str:
     .item-category {{
       align-self: flex-start;
       margin-bottom: 0;
-      border-radius: 999px;
+      border-radius: var(--radius-pill);
       background: var(--accent-soft);
       padding: 4px 10px;
       color: var(--accent-strong);
@@ -542,7 +532,7 @@ def render_html(days: list[NewsDay]) -> str:
       gap: 10px;
       min-width: 0;
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: var(--radius-card);
       background: var(--panel);
       padding: 14px;
     }}
@@ -607,9 +597,9 @@ def render_html(days: list[NewsDay]) -> str:
       justify-content: center;
       min-height: 38px;
       border: 1px solid var(--line);
-      border-radius: 999px;
+      border-radius: var(--radius-pill);
       padding: 7px 13px;
-      background: #fff;
+      background: var(--panel);
       font-size: 0.9rem;
       line-height: 1.2;
       text-decoration: none;
@@ -618,7 +608,7 @@ def render_html(days: list[NewsDay]) -> str:
     .primary-link {{
       border-color: var(--accent);
       background: var(--accent);
-      color: #fff;
+      color: var(--panel);
       font-weight: 700;
     }}
     .secondary-link {{
@@ -637,7 +627,7 @@ def render_html(days: list[NewsDay]) -> str:
       align-items: center;
       min-height: 28px;
       max-width: 100%;
-      border-radius: 999px;
+      border-radius: var(--radius-pill);
       background: var(--accent-soft);
       padding: 4px 10px;
       font-size: 0.88rem;
