@@ -303,6 +303,7 @@ def comparison_metrics(
     entry_review = dict_value(diagnostics.get("entry_review_observation"))
     provenance = dict_value(diagnostics.get("json_render_summary_provenance"))
     provenance_line_counts = dict_value(provenance.get("line_counts"))
+    usefulness_gate = dict_value(diagnostics.get("usefulness_gate_observation"))
     validator_counts = dict_value(validator.get("counts"))
     url_validation = dict_value(validator.get("url_validation"))
     markdown_validation = dict_value(validator.get("markdown_validation"))
@@ -357,6 +358,9 @@ def comparison_metrics(
             None if review_disabled else safe_ratio(reviewed_available, requested) if has_improved else None
         ),
         "entry_review_policy": entry_review.get("entry_review_policy") or "enabled",
+        "usefulness_gate_status_counts": dict_value(usefulness_gate.get("status_counts")),
+        "usefulness_gate_reason_counts": dict_value(usefulness_gate.get("reason_counts")),
+        "json_render_display_tier_counts": dict_value(usefulness_gate.get("display_tier_counts")),
         "quality_cohort": cohort_metrics(improved, cohort_links or []),
         **transport_observation(improved),
         "groq_replaced_summary_line_count": replaced_lines,
@@ -508,6 +512,30 @@ def write_comparison_report(path: Path, report: dict[str, Any], selected: dict[s
                     if metrics.get("entry_review_policy") == "disabled_for_model_comparison"
                     else percentage_text(metrics.get("reviewed_entry_available_rate_of_requested"))
                 ),
+            )
+        )
+
+    lines.extend(
+        [
+            "",
+            "## Usefulness gate observation",
+            "",
+            "Usefulness warnings do not reject the summary in force-all comparison; the display tier may limit the life-impact field. Hard safety failures remain rejected.",
+            "",
+            "| Profile | Usefulness status | Display tier | Reasons |",
+            "|---|---|---|---|",
+        ]
+    )
+    for result in profiles:
+        if not isinstance(result, dict):
+            continue
+        metrics = dict_value(result.get("metrics"))
+        lines.append(
+            "| {profile} | {status} | {tier} | {reasons} |".format(
+                profile=markdown_text(result.get("profile")),
+                status=markdown_text(metrics.get("usefulness_gate_status_counts")),
+                tier=markdown_text(metrics.get("json_render_display_tier_counts")),
+                reasons=markdown_text(metrics.get("usefulness_gate_reason_counts")),
             )
         )
 

@@ -16,6 +16,22 @@ from malaysia_groq_common import (
 
 DEFAULT_FORCE_ALL_REQUEST_CAP = 6
 
+HARD_SAFETY_GATE_REASON_MARKERS = (
+    "unsafe ",
+    "unsupported ",
+    "english lead leakage",
+)
+USEFULNESS_GATE_REASON_MARKERS = (
+    "paul_tan_",
+    "transport_political_",
+    "money_market_background_without_concrete_life_impact",
+    "no_strong_source_life_impact_signal",
+    "no_strong_summary_life_impact_signal",
+    "generic_life_impact",
+    "generic life_impact for body_evidence focus",
+    "life_impact topic mismatch:",
+)
+
 FINANCIAL_MARKET_PHRASES = [
     "ringgit",
     "bursa",
@@ -546,6 +562,18 @@ def force_all_gate_reason(item: dict[str, Any], summary: dict[str, Any]) -> str:
         return "no_strong_summary_life_impact_signal"
 
     return ""
+
+
+def classify_force_all_gate_reason(reason: str) -> str:
+    """Classify an existing gate reason without changing its matching rules."""
+    normalized = clean_text(reason).lower()
+    if not normalized:
+        return "none"
+    if any(marker in normalized for marker in HARD_SAFETY_GATE_REASON_MARKERS):
+        return "hard_safety"
+    if any(marker in normalized for marker in USEFULNESS_GATE_REASON_MARKERS):
+        return "usefulness"
+    return "unknown"
 
 
 def force_all_pre_request_skip_reason(item: dict[str, Any]) -> str:
