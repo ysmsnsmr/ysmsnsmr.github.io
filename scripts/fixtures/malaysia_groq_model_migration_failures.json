@@ -1477,6 +1477,272 @@
           "unsupported_conditions"
         ]
       }
+    },
+    {
+      "link": "https://paultan.org/2026/08/12/mrt-putrajaya-line-back-to-normal-at-4-29-pm-power-restored-free-shuttle-buses-continue-to-run-till-10pm/",
+      "first_observed_on": "2026-08-13",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "HTTP 429"
+      ],
+      "item": {
+        "category": "【生活インパクト】",
+        "source": "Paul Tan",
+        "published_date": "2026年8月12日",
+        "title": "MRT Putrajaya Line back to normal at 4.29 pm, power restored – free shuttle buses continue to run till 10pm",
+        "description": "MRT Putrajaya Line users, good news. Repair works on the power supply system between Taman Equine and Putrajaya Sentral stations have completed and normal operations resumed at 4.29 pm this evening. However, Rapid KL has elected to maintain the shuttle bus service that was deployed earlier today, and the free […]",
+        "link": "https://paultan.org/2026/08/12/mrt-putrajaya-line-back-to-normal-at-4-29-pm-power-restored-free-shuttle-buses-continue-to-run-till-10pm/",
+        "selected_summary": {
+          "conclusion": "公共交通の運行や通勤手段に影響する可能性があります。",
+          "what_happened": [
+            "Paul TanのRSSで、公共交通や運行状況に関する情報が報じられています。",
+            "LRT、MRT、Rapid KL、KTMBなどの公共交通に関わる移動情報として扱います。"
+          ],
+          "life_impact": "通勤・通学・都心移動では、遅延、代替ルート、運行再開時期を確認しておく必要があります。",
+          "next_action": "出発前に運行会社の公式情報を確認。"
+        },
+        "tags": [
+          "public_transport",
+          "klang_valley"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": true,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": true,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_fallback",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.astroawani.com/berita-malaysia/latihan-kecemasan-ktmb-fokus-aspek-akses-respons-di-pedalaman",
+      "first_observed_on": "2026-08-13",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "HTTP 429"
+      ],
+      "item": {
+        "category": "【生活インパクト】",
+        "source": "Astro Awani",
+        "published_date": "2026年8月12日",
+        "title": "Latihan kecemasan KTMB fokus aspek akses, respons di pedalaman",
+        "description": "Cabaran akses ke kawasan pedalaman, tempoh respons pasukan penyelamat dan penyampaian maklumat antara aspek yang dinilai Keretapi Tanah Melayu Berhad (KTMB) dalam latihan kecemasan di laluan Ex Kemubu.",
+        "link": "https://www.astroawani.com/berita-malaysia/latihan-kecemasan-ktmb-fokus-aspek-akses-respons-di-pedalaman",
+        "selected_summary": {
+          "conclusion": "公共交通や通勤手段の選び方に影響する可能性があります。",
+          "what_happened": [
+            "公共交通や移動サービスに関する案内が報じられています。",
+            "通勤・通学・都心移動の選択肢を確認しておくと安心です。"
+          ],
+          "life_impact": "混雑回避や移動費、所要時間の見直しに関わります。",
+          "next_action": ""
+        },
+        "tags": [
+          "public_transport"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": true,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": false,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_fallback",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.malaymail.com/news/malaysia/2026/08/12/got-haze-health-worries-ministry-steps-up-monitoring-medical-readiness/231095",
+      "first_observed_on": "2026-08-13",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "ValueError: unsupported damage claim"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Malay Mail",
+        "published_date": "2026年8月12日",
+        "title": "Got haze health worries? Ministry steps up monitoring, medical readiness",
+        "description": "PUTRAJAYA, Aug 12 — The Health Ministry (MOH) is strengthening surveillance of haze-related illnesses at health fa...",
+        "link": "https://www.malaymail.com/news/malaysia/2026/08/12/got-haze-health-worries-ministry-steps-up-monitoring-medical-readiness/231095",
+        "selected_summary": {
+          "conclusion": "Got haze health worries? Ministry steps up monitoring, medical readiness",
+          "what_happened": [
+            "PUTRAJAYA, Aug 12 — The Health Ministry (MOH) is strengthening surveillance of haze-related illnesses at health fa...",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "klang_valley",
+          "health"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": true,
+          "is_urban_development": false,
+          "is_klang_valley": true,
+          "is_official": true,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "use_body",
+        "body_evidence_excerpt": "The Health Ministry (MOH) is strengthening surveillance of haze-related illnesses at health facilities following 10 stations recording unhealthy Air Pollutant Index (API) readings, with nine in Sarawak and one in Selangor. In a statement today, MOH said the preparedness of health facilities, medicine supplies and healthcare personnel had also been stepped up to ensure health services could be provided appropriately should there be an increase in haze-related cases. According to the ministry, based on the Air Pollutant Index Management System (APIMS) at 9 am yesterday, the nine areas in Sarawak recording unhealthy API readings were Serian, Samarahan, Kuching, Bintulu, Samalaju, Mukah, Sibu, Sarikei and Sri Aman, while the other area was Johan Setia in Selangor. MOH advised the public, particularly those in affected areas, to reduce physical and strenuous outdoor activities when the API exceeds 100 and to wear an appropriate face mask if they needed to be outdoors. Educational institutions, government agencies and the private sector were also advised to monitor API readings and adjust outdoor activities according to the air quality level. “Outdoor sports, co-cu...",
+        "body_evidence_focus": [
+          "procedure_or_public_service",
+          "transport_or_infra",
+          "health_or_education"
+        ],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.astroawani.com/berita-malaysia/jerebu-108-sekolah-di-serian-ditutup-susulan-ipu-melebihi-200",
+      "first_observed_on": "2026-08-13",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "HTTP 429"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Astro Awani",
+        "published_date": "2026年8月12日",
+        "title": "Jerebu: 108 sekolah di Serian ditutup susulan IPU melebihi 200",
+        "description": "Sebanyak 108 sekolah ditutup sementara di kawasan Serian susulan bacaan Indeks Pencemaran Udara (IPU) melebihi 200 sebagai langkah pencegahan bagi melindungi keselamatan, kesihatan dan kesejahteraan murid serta warga sekolah.",
+        "link": "https://www.astroawani.com/berita-malaysia/jerebu-108-sekolah-di-serian-ditutup-susulan-ipu-melebihi-200",
+        "selected_summary": {
+          "conclusion": "Jerebu: 108 sekolah di Serian ditutup susulan IPU melebihi 200",
+          "what_happened": [
+            "Sebanyak 108 sekolah ditutup sementara di kawasan Serian susulan bacaan Indeks Pencemaran Udara (IPU) melebihi 200 sebagai langkah pencegahan bagi melindungi keselamatan, kesihatan dan kesejahteraan murid serta warga sekolah.",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "health"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": true,
+          "is_urban_development": false,
+          "is_klang_valley": false,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_fallback",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
     }
   ]
 }
