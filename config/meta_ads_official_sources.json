@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "meta-ads-official-sources/v1",
+  "policies": {
+    "officialSourcesOnly": true,
+    "bypassLoginOrConsent": false,
+    "persistRawResponseBody": false,
+    "failurePublicationAction": "keep_published_content_unchanged"
+  },
+  "sources": [
+    {
+      "id": "meta-product-news-rss",
+      "name": "Meta Newsroom Product News RSS",
+      "kind": "product_news",
+      "sourceUrl": "https://about.fb.com/news/category/product-news/feed/",
+      "fetchUrl": "https://about.fb.com/news/category/product-news/feed/",
+      "enabled": true,
+      "access": "public",
+      "expectedContentTypes": [
+        "application/rss+xml",
+        "application/xml",
+        "text/xml"
+      ],
+      "changeDetection": "feed_entry_and_content_fingerprint",
+      "failureAction": "keep_published_content_unchanged"
+    },
+    {
+      "id": "meta-ads-manager-help",
+      "name": "Meta Ads Manager Help",
+      "kind": "help_center",
+      "sourceUrl": "https://www.facebook.com/help/messenger-app/621956575422138/",
+      "fetchUrl": "https://www.facebook.com/help/messenger-app/621956575422138/",
+      "enabled": false,
+      "access": "login_required",
+      "expectedContentTypes": [
+        "text/html"
+      ],
+      "changeDetection": "url_content_fingerprint",
+      "failureAction": "keep_published_content_unchanged"
+    },
+    {
+      "id": "meta-audience-help",
+      "name": "Meta Audience Help",
+      "kind": "help_center",
+      "sourceUrl": "https://www.facebook.com/help/157306091096340",
+      "fetchUrl": "https://www.facebook.com/help/157306091096340",
+      "enabled": false,
+      "access": "login_required",
+      "expectedContentTypes": [
+        "text/html"
+      ],
+      "changeDetection": "url_content_fingerprint",
+      "failureAction": "keep_published_content_unchanged"
+    },
+    {
+      "id": "meta-business-sdk-releases",
+      "name": "Meta Business SDK Releases",
+      "kind": "sdk_release",
+      "sourceUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases",
+      "fetchUrl": "https://api.github.com/repos/facebook/facebook-nodejs-business-sdk/releases",
+      "enabled": true,
+      "access": "public",
+      "expectedContentTypes": [
+        "application/json"
+      ],
+      "changeDetection": "release_tag",
+      "failureAction": "keep_published_content_unchanged"
+    }
+  ]
+}

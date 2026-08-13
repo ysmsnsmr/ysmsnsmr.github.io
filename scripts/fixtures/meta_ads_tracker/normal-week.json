@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "meta-ads-weekly-index-fixture/v1",
+  "fixture": {
+    "name": "normal-week",
+    "state": "normal_week",
+    "description": "新規URL、同一URL本文変更、SDK releaseを並べる通常週。"
+  },
+  "week": {
+    "startDate": "2026-08-10",
+    "endDate": "2026-08-16",
+    "label": "2026年8月10日〜8月16日"
+  },
+  "filters": {
+    "sourceId": "all",
+    "priority": "all",
+    "query": ""
+  },
+  "items": [
+    {
+      "id": "sample-product-update-a",
+      "changeType": "new_url",
+      "sourceId": "meta-product-news-rss",
+      "title": "広告機能Aの提供範囲に関する公式更新",
+      "officialUrl": "https://official.example.test/product-news/sample-product-update-a",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2026-08-11"
+      },
+      "effectiveDate": {
+        "status": "stated",
+        "value": "2026-08-18"
+      },
+      "rollout": {
+        "status": "stated",
+        "value": "対象アカウントへ段階提供"
+      },
+      "targets": {
+        "status": "stated",
+        "value": "広告機能Aを利用するアカウント"
+      },
+      "businessImpact": {
+        "status": "human_assessed",
+        "summary": "既存設定とレポート表示の確認を推奨。",
+        "assessmentSource": "human_review"
+      },
+      "action": {
+        "status": "review_required",
+        "summary": "運用担当者が対象アカウントを確認する。",
+        "assessmentSource": "human_review"
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "sample-product-revision-b",
+      "changeType": "content_changed",
+      "sourceId": "meta-product-news-rss",
+      "title": "設定手順Bの説明追記",
+      "officialUrl": "https://official.example.test/product-news/sample-product-revision-b",
+      "priority": "low",
+      "announcementDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "stated",
+        "value": "設定手順Bを参照する利用者"
+      },
+      "businessImpact": {
+        "status": "human_assessed",
+        "summary": "運用変更の要否は確認待ち。",
+        "assessmentSource": "human_review"
+      },
+      "action": {
+        "status": "not_required",
+        "summary": "現時点では手順書の確認のみ。",
+        "assessmentSource": "human_review"
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "sample-sdk-release-99",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "架空Business SDK 99.0.0リリース",
+      "officialUrl": "https://official.example.test/sdk/sample-sdk-release-99",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2026-08-12"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "stated",
+        "value": "SDKを利用する実装環境"
+      },
+      "businessImpact": {
+        "status": "human_assessed",
+        "summary": "依存関係と廃止予定APIの確認を推奨。",
+        "assessmentSource": "human_review"
+      },
+      "action": {
+        "status": "review_required",
+        "summary": "更新前に互換性確認を行う。",
+        "assessmentSource": "human_review"
+      },
+      "reviewStatus": "approved"
+    }
+  ]
+}

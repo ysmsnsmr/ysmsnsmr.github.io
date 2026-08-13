@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "meta-ads-weekly-index-fixture/v1",
+  "fixture": {
+    "name": "filtered-no-results",
+    "state": "filtered_no_results",
+    "description": "検索または絞り込み後に一致項目がない状態。"
+  },
+  "week": {
+    "startDate": "2026-08-10",
+    "endDate": "2026-08-16",
+    "label": "2026年8月10日〜8月16日"
+  },
+  "filters": {
+    "sourceId": "all",
+    "priority": "high",
+    "query": "対象外の架空機能"
+  },
+  "items": []
+}

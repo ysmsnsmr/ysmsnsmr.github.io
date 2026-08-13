@@ -1,0 +1,380 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ysmsnsmr.github.io/schemas/meta-ads-weekly-index-fixture/v1",
+  "title": "Meta Ads weekly index fixture",
+  "description": "Anonymous static fixture contract for the Meta Ads Official Update Tracker workbench. Every public item is approved; unknown source facts remain explicitly not_stated and operational assessments require human_review.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "fixture",
+    "week",
+    "filters",
+    "items"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "meta-ads-weekly-index-fixture/v1"
+    },
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "state",
+        "description"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/identifier"
+        },
+        "state": {
+          "enum": [
+            "empty_week",
+            "normal_week",
+            "high_priority",
+            "long_and_unknown_dates",
+            "filtered_no_results"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "week": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "startDate",
+        "endDate",
+        "label"
+      ],
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "filters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceId",
+        "priority",
+        "query"
+      ],
+      "properties": {
+        "sourceId": {
+          "anyOf": [
+            {
+              "const": "all"
+            },
+            {
+              "$ref": "#/$defs/identifier"
+            }
+          ]
+        },
+        "priority": {
+          "enum": [
+            "all",
+            "high",
+            "standard",
+            "low"
+          ]
+        },
+        "query": {
+          "type": "string"
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/publicItem"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "fixture": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "empty_week",
+                  "filtered_no_results"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "items": {
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "dateFact": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "value"
+          ],
+          "properties": {
+            "status": {
+              "const": "stated"
+            },
+            "value": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "value"
+          ],
+          "properties": {
+            "status": {
+              "const": "not_stated"
+            },
+            "value": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "textFact": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "value"
+          ],
+          "properties": {
+            "status": {
+              "const": "stated"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "value"
+          ],
+          "properties": {
+            "status": {
+              "const": "not_stated"
+            },
+            "value": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "businessImpact": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "summary",
+            "assessmentSource"
+          ],
+          "properties": {
+            "status": {
+              "const": "human_assessed"
+            },
+            "summary": {
+              "type": "string",
+              "minLength": 1
+            },
+            "assessmentSource": {
+              "const": "human_review"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "summary",
+            "assessmentSource"
+          ],
+          "properties": {
+            "status": {
+              "const": "not_stated"
+            },
+            "summary": {
+              "type": "null"
+            },
+            "assessmentSource": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "action": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "summary",
+            "assessmentSource"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "action_required",
+                "review_required",
+                "not_required"
+              ]
+            },
+            "summary": {
+              "type": "string",
+              "minLength": 1
+            },
+            "assessmentSource": {
+              "const": "human_review"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "summary",
+            "assessmentSource"
+          ],
+          "properties": {
+            "status": {
+              "const": "not_stated"
+            },
+            "summary": {
+              "type": "null"
+            },
+            "assessmentSource": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "publicItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "changeType",
+        "sourceId",
+        "title",
+        "officialUrl",
+        "priority",
+        "announcementDate",
+        "effectiveDate",
+        "rollout",
+        "targets",
+        "businessImpact",
+        "action",
+        "reviewStatus"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "changeType": {
+          "enum": [
+            "new_url",
+            "content_changed",
+            "sdk_release"
+          ]
+        },
+        "sourceId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "officialUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "priority": {
+          "enum": [
+            "high",
+            "standard",
+            "low"
+          ]
+        },
+        "announcementDate": {
+          "$ref": "#/$defs/dateFact"
+        },
+        "effectiveDate": {
+          "$ref": "#/$defs/dateFact"
+        },
+        "rollout": {
+          "$ref": "#/$defs/textFact"
+        },
+        "targets": {
+          "$ref": "#/$defs/textFact"
+        },
+        "businessImpact": {
+          "$ref": "#/$defs/businessImpact"
+        },
+        "action": {
+          "$ref": "#/$defs/action"
+        },
+        "reviewStatus": {
+          "const": "approved"
+        }
+      }
+    }
+  }
+}
