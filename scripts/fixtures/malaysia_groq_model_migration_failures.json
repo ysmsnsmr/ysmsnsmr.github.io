@@ -1878,6 +1878,205 @@
           "unsupported_conditions"
         ]
       }
+    },
+    {
+      "link": "https://www.astroawani.com/berita-malaysia/dbkl-roboh-18-struktur-haram-di-setiawangsa",
+      "first_observed_on": "2026-08-15",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "HTTP 429"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Astro Awani",
+        "published_date": "2026年8月14日",
+        "title": "DBKL roboh 18 struktur haram di Setiawangsa",
+        "description": "Dewan Bandaraya Kuala Lumpur (DBKL) merobohkan 18 struktur tanpa kebenaran yang didirikan di rizab jalan awam sekitar Pasar Pagi Terbuka, Jalan Rejang, Setiawangsa, semalam.",
+        "link": "https://www.astroawani.com/berita-malaysia/dbkl-roboh-18-struktur-haram-di-setiawangsa",
+        "selected_summary": {
+          "conclusion": "DBKL roboh 18 struktur haram di Setiawangsa",
+          "what_happened": [
+            "Dewan Bandaraya Kuala Lumpur (DBKL) merobohkan 18 struktur tanpa kebenaran yang didirikan di rizab jalan awam sekitar Pasar Pagi Terbuka, Jalan Rejang, Setiawangsa, semalam.",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "klang_valley",
+          "urban_development"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": true,
+          "is_klang_valley": true,
+          "is_official": true,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_fallback",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.astroawani.com/berita-malaysia/kkm-tidak-kompromi-kelewatan-projek-sedia-tamatkan-kontrak-dzulkefly",
+      "first_observed_on": "2026-08-15",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "HTTP 429"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Astro Awani",
+        "published_date": "2026年8月15日",
+        "title": "KKM tidak kompromi kelewatan projek, sedia tamatkan kontrak - Dzulkefly",
+        "description": "KKM tidak akan berkompromi terhadap kelewatan projek fasiliti kesihatan dan bersedia menamatkan kontrak kontraktor gagal, bagi memastikan projek siap serta memberi manfaat kepada rakyat.",
+        "link": "https://www.astroawani.com/berita-malaysia/kkm-tidak-kompromi-kelewatan-projek-sedia-tamatkan-kontrak-dzulkefly",
+        "selected_summary": {
+          "conclusion": "KKM tidak kompromi kelewatan projek, sedia tamatkan kontrak - Dzulkefly",
+          "what_happened": [
+            "KKM tidak akan berkompromi terhadap kelewatan projek fasiliti kesihatan dan bersedia menamatkan kontrak kontraktor gagal, bagi memastikan projek siap serta memberi manfaat kepada rakyat.",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "health"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": true,
+          "is_urban_development": false,
+          "is_klang_valley": false,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_fallback",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.malaymail.com/news/malaysia/2026/08/14/sarawak-plans-third-cloud-seeding-operation-amid-prolonged-hot-dry-weather/231383",
+      "first_observed_on": "2026-08-15",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "HTTP 429"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Malay Mail",
+        "published_date": "2026年8月14日",
+        "title": "Sarawak plans third cloud seeding operation amid prolonged hot, dry weather",
+        "description": "KUCHING, Aug 14 — The Sarawak state government, in collaboration with the National Disaster Management Agency (Nad...",
+        "link": "https://www.malaymail.com/news/malaysia/2026/08/14/sarawak-plans-third-cloud-seeding-operation-amid-prolonged-hot-dry-weather/231383",
+        "selected_summary": {
+          "conclusion": "Sarawak plans third cloud seeding operation amid prolonged hot, dry weather",
+          "what_happened": [
+            "KUCHING, Aug 14 — The Sarawak state government, in collaboration with the National Disaster Management Agency (Nad...",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "food_supply"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": false,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "use_body",
+        "body_evidence_excerpt": "The Sarawak state government, in collaboration with the National Disaster Management Agency (Nadma), is planning to carry out a third series of cloud seeding operations (OPA) in the state soon. State Disaster Management Committee (JPBN) chairman Datuk Amar Douglas Uggah Embas said the mitigation measure was aimed at addressing prolonged hot and dry weather conditions that could affect water supply sources and worsen haze in several areas. “The main focus of OPA Series 3 will be on identified critical dam and water catchment areas, particularly those important for ensuring the continuity of water supply and maintaining dam levels. “The implementation is subject to the availability of suitable clouds, atmospheric conditions and favourable meteorological factors,” he said in a statement today. Uggah said the Malaysian Meteorological Department (MetMalaysia) would continue conducting technical analysis and assessments to determine the suitable locations, timing and atmospheric conditions before the operation is carried out. He said the current hot, dry and hazy conditions had increased the risk of open burning and reduced air quality in several districts. “Prolonge...",
+        "body_evidence_focus": [
+          "procedure_or_public_service",
+          "transport_or_infra"
+        ],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
     }
   ]
 }
