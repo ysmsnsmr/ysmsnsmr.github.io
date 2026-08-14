@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "meta-ads-weekly-index-fixture/v1",
+  "fixture": {
+    "name": "long-and-unknown-dates",
+    "state": "long_and_unknown_dates",
+    "description": "長いタイトルと、公式に明記されていない日付・rollout・対象を扱う表示確認。"
+  },
+  "week": {
+    "startDate": "2026-08-10",
+    "endDate": "2026-08-16",
+    "label": "2026年8月10日〜8月16日"
+  },
+  "filters": {
+    "sourceId": "all",
+    "priority": "all",
+    "query": ""
+  },
+  "items": [
+    {
+      "id": "sample-long-title-d",
+      "changeType": "new_url",
+      "sourceId": "meta-product-news-rss",
+      "title": "複数の広告設定画面と計測項目にまたがる長い名称の機能Dについて、対象範囲および切り替え時期を明記しない公式案内",
+      "officialUrl": "https://official.example.test/product-news/sample-long-title-d",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2026-08-10"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "approved"
+    }
+  ]
+}

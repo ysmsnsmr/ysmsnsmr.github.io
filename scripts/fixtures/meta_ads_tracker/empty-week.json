@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "meta-ads-weekly-index-fixture/v1",
+  "fixture": {
+    "name": "empty-week",
+    "state": "empty_week",
+    "description": "承認済みの公式更新がない週。"
+  },
+  "week": {
+    "startDate": "2026-08-10",
+    "endDate": "2026-08-16",
+    "label": "2026年8月10日〜8月16日"
+  },
+  "filters": {
+    "sourceId": "all",
+    "priority": "all",
+    "query": ""
+  },
+  "items": []
+}

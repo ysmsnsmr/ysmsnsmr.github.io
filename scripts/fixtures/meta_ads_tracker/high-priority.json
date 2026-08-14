@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "meta-ads-weekly-index-fixture/v1",
+  "fixture": {
+    "name": "high-priority",
+    "state": "high_priority",
+    "description": "即時確認が必要な高優先度の承認済み更新。"
+  },
+  "week": {
+    "startDate": "2026-08-10",
+    "endDate": "2026-08-16",
+    "label": "2026年8月10日〜8月16日"
+  },
+  "filters": {
+    "sourceId": "all",
+    "priority": "all",
+    "query": ""
+  },
+  "items": [
+    {
+      "id": "sample-breaking-change-c",
+      "changeType": "content_changed",
+      "sourceId": "meta-product-news-rss",
+      "title": "広告設定Cの必須項目に関する公式追記",
+      "officialUrl": "https://official.example.test/product-news/sample-breaking-change-c",
+      "priority": "high",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2026-08-12"
+      },
+      "effectiveDate": {
+        "status": "stated",
+        "value": "2026-08-15"
+      },
+      "rollout": {
+        "status": "stated",
+        "value": "指定日から対象設定へ適用"
+      },
+      "targets": {
+        "status": "stated",
+        "value": "広告設定Cを利用中のアカウント"
+      },
+      "businessImpact": {
+        "status": "human_assessed",
+        "summary": "未対応の場合に配信設定の確認が必要。",
+        "assessmentSource": "human_review"
+      },
+      "action": {
+        "status": "action_required",
+        "summary": "適用日前に対象設定を確認・更新する。",
+        "assessmentSource": "human_review"
+      },
+      "reviewStatus": "approved"
+    }
+  ]
+}
