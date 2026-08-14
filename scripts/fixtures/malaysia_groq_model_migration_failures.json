@@ -1743,6 +1743,141 @@
           "unsupported_conditions"
         ]
       }
+    },
+    {
+      "link": "https://paultan.org/2026/08/13/jpj-wants-tight-safety-measures-for-rxz-members-event/",
+      "first_observed_on": "2026-08-14",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "HTTP 429"
+      ],
+      "item": {
+        "category": "【生活インパクト】",
+        "source": "Paul Tan",
+        "published_date": "2026年8月13日",
+        "title": "JPJ wants tight safety measures for RXZ Members event",
+        "description": "The Road Transport Department (JPJ) has called for more systematic risk management and tighter safety measures for large-scale motorcycle gatherings, following an engagement session with the organisers of RXZ Members in Putrajaya. The session, chaired […]",
+        "link": "https://paultan.org/2026/08/13/jpj-wants-tight-safety-measures-for-rxz-members-event/",
+        "selected_summary": {
+          "conclusion": "JPJや車両関連手続きで、運転者の確認事項が出る可能性があります。",
+          "what_happened": [
+            "Paul TanのRSSで、運転者の手続きや義務に関する情報が報じられています。",
+            "JPJ、licence、road tax、inspection、summonsなど、運転者の義務や手続きに関わる内容として扱います。"
+          ],
+          "life_impact": "対象者は期限、必要書類、罰則、オンライン手続きの有無を確認する必要があります。",
+          "next_action": "JPJや関係機関の公式案内を確認。"
+        },
+        "tags": [
+          "jpj",
+          "klang_valley"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": true,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": true,
+          "is_official": true,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_fallback",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.malaymail.com/news/malaysia/2026/08/13/fadhlina-urges-calm-says-ministry-needs-space-to-explain-school-pupil-protection-pledge-policy/231202",
+      "first_observed_on": "2026-08-14",
+      "production_profile": "llama33-70b",
+      "failure_reasons": [
+        "HTTP 429"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Malay Mail",
+        "published_date": "2026年8月13日",
+        "title": "Fadhlina urges calm, says ministry needs space to explain school pupil protection pledge policy",
+        "description": "KUALA LUMPUR, Aug 13 — Education Minister Fadhlina Sidek called on educators to remain calm and give the Ministry...",
+        "link": "https://www.malaymail.com/news/malaysia/2026/08/13/fadhlina-urges-calm-says-ministry-needs-space-to-explain-school-pupil-protection-pledge-policy/231202",
+        "selected_summary": {
+          "conclusion": "Fadhlina urges calm, says ministry needs space to explain school pupil protection pledge policy",
+          "what_happened": [
+            "KUALA LUMPUR, Aug 13 — Education Minister Fadhlina Sidek called on educators to remain calm and give the Ministry...",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "tags": [
+          "klang_valley"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": true,
+          "is_official": true,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "body_excerpt_policy": "rss_only",
+        "body_evidence_excerpt": "Education Minister Fadhlina Sidek called on educators to remain calm and give the Ministry of Education (MOE) room to explain the School Pupil Protection Policy, which has recently caused concern among many parties. She said the policy was designed to ensure comprehensive protection for all parties dealing with pupils, with priority given to the safety of students, teachers and the entire school community. Fadhlina added that the policy also provides detailed guidelines on the responsibilities of all parties, as well as the actions to be taken should any untoward incident occur at schools. “I have instructed the Education director-general and MOE’s Legal Adviser to hold a special session with stakeholders to address the concerns raised by teachers. “MOE is committed to ensuring that every policy is executed carefully and responsibly to create a safe school environment,” she said in a Facebook post today. The policy, announced via a Professional Circular (SPI) dated July 1, requires staff and external parties with official dealings with schools and their members to sign a School Pupil Protection Policy Compliance Pledge as proof of their commitment to pupil...",
+        "body_evidence_focus": [
+          "procedure_or_public_service",
+          "health_or_education",
+          "agriculture_or_public_health"
+        ],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
     }
   ]
 }
