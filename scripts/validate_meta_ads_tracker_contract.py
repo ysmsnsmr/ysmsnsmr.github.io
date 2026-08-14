@@ -10,8 +10,8 @@ from pathlib import Path
 from meta_ads_tracker_contract import (
     ContractError,
     DEFAULT_FIXTURE_DIRECTORY,
+    load_and_validate_canonical_fixtures,
     DEFAULT_SOURCE_CONFIG,
-    load_and_validate_fixture,
     load_and_validate_source_config,
 )
 
@@ -24,10 +24,7 @@ def main() -> int:
 
     try:
         config = load_and_validate_source_config(args.config)
-        fixture_paths = sorted(args.fixtures_dir.glob("*.json"))
-        if not fixture_paths:
-            raise ContractError(f"no fixture JSON files found in {args.fixtures_dir}")
-        fixtures = [load_and_validate_fixture(path) for path in fixture_paths]
+        fixtures = load_and_validate_canonical_fixtures(args.fixtures_dir, config)
     except ContractError as error:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1

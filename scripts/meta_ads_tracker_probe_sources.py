@@ -106,8 +106,36 @@ def probe_source(source: dict[str, Any], timeout: float, fetch_headers: RequestH
     }
 
 
-def probe_sources(config: dict[str, Any], timeout: float, fetch_headers: RequestHeaders = request_headers) -> dict[str, Any]:
-    results = [probe_source(source, timeout, fetch_headers) for source in config["sources"]]
+def skipped_disabled_source(source: dict[str, Any]) -> dict[str, Any]:
+    """Record a disabled source without making a network request."""
+    return {
+        "id": source["id"],
+        "requestedMethod": "SKIPPED",
+        "reachable": False,
+        "statusCode": None,
+        "finalUrl": None,
+        "contentType": None,
+        "etag": None,
+        "lastModified": None,
+        "requiresAuthentication": source["access"] == "login_required",
+        "publicationAction": "disabled_auth_required" if source["access"] == "login_required" else "disabled_by_configuration",
+        "error": "disabled_by_configuration",
+    }
+
+
+def probe_sources(
+    config: dict[str, Any],
+    timeout: float,
+    fetch_headers: RequestHeaders = request_headers,
+    *,
+    include_disabled: bool = False,
+) -> dict[str, Any]:
+    results = [
+        probe_source(source, timeout, fetch_headers)
+        if source["enabled"] or include_disabled
+        else skipped_disabled_source(source)
+        for source in config["sources"]
+    ]
     return {
         "schemaVersion": "meta-ads-official-source-probe/v1",
         "probedAt": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
@@ -120,7 +148,11 @@ def probe_sources(config: dict[str, Any], timeout: float, fetch_headers: Request
             "disabledAuthenticationSourceIds": [
                 result["id"] for result in results if result["publicationAction"] == "disabled_auth_required"
             ],
-            "failedSourceIds": [result["id"] for result in results if not result["reachable"]],
+            "failedSourceIds": [
+                result["id"]
+                for result in results
+                if result["publicationAction"] == "keep_published_content_unchanged"
+            ],
         },
     }
 
@@ -129,13 +161,22 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=DEFAULT_SOURCE_CONFIG)
     parser.add_argument("--timeout", type=float, default=20.0)
+    parser.add_argument(
+        "--include-disabled",
+        action="store_true",
+        help="Probe disabled sources for a one-time feasibility check; normal monitoring skips them.",
+    )
     parser.add_argument("--output", type=Path, help="Optional local JSON report path; response bodies are never written.")
     args = parser.parse_args()
     if args.timeout <= 0:
         parser.error("--timeout must be positive")
 
     try:
-        report = probe_sources(load_and_validate_source_config(args.config), args.timeout)
+        report = probe_sources(
+            load_and_validate_source_config(args.config),
+            args.timeout,
+            include_disabled=args.include_disabled,
+        )
     except ContractError as error:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1

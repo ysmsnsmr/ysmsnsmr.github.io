@@ -19,6 +19,7 @@ SOURCE_SCHEMA_VERSION = "meta-ads-official-sources/v1"
 FIXTURE_SCHEMA_VERSION = "meta-ads-weekly-index-fixture/v1"
 DEFAULT_SOURCE_CONFIG = Path(__file__).resolve().parents[1] / "config/meta_ads_official_sources.json"
 DEFAULT_FIXTURE_DIRECTORY = Path(__file__).resolve().parent / "fixtures/meta_ads_tracker"
+DEFAULT_FIXTURE_SCHEMA = Path(__file__).resolve().parent / "fixtures/meta_ads_tracker_fixture.schema.json"
 
 SOURCE_KINDS = {"product_news", "help_center", "sdk_release"}
 CHANGE_DETECTION_MODES = {
@@ -38,6 +39,13 @@ FIXTURE_STATES = {
     "long_and_unknown_dates",
     "filtered_no_results",
 }
+CANONICAL_FIXTURES = {
+    "empty-week": "empty_week",
+    "normal-week": "normal_week",
+    "high-priority": "high_priority",
+    "long-and-unknown-dates": "long_and_unknown_dates",
+    "filtered-no-results": "filtered_no_results",
+}
 IDENTIFIER_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
@@ -53,6 +61,24 @@ def load_json(path: Path) -> Any:
         raise ContractError(f"missing file: {path}") from error
     except json.JSONDecodeError as error:
         raise ContractError(f"invalid JSON in {path}: {error}") from error
+
+
+def validate_fixture_json_schema(payload: Any, schema_path: Path = DEFAULT_FIXTURE_SCHEMA) -> None:
+    """Validate fixture structure with the versioned Draft 2020-12 JSON Schema."""
+    try:
+        from jsonschema import Draft202012Validator, FormatChecker
+    except ImportError as error:
+        raise ContractError(
+            "JSON Schema validation requires jsonschema; install requirements-meta-ads-tracker.txt"
+        ) from error
+
+    schema = load_json(schema_path)
+    validator = Draft202012Validator(schema, format_checker=FormatChecker())
+    errors = sorted(validator.iter_errors(payload), key=lambda item: list(item.absolute_path))
+    if errors:
+        first = errors[0]
+        location = ".".join(str(part) for part in first.absolute_path) or "root"
+        raise ContractError(f"fixture violates JSON Schema at {location}: {first.message}")
 
 
 def _expect_object(value: Any, label: str) -> dict[str, Any]:
@@ -216,7 +242,7 @@ def _validate_assessment(value: Any, label: str, statuses: set[str]) -> None:
         raise ContractError(f"{label}.assessmentSource must be human_review")
 
 
-def _validate_item(value: Any, label: str) -> None:
+def _validate_item(value: Any, label: str, display_sources: dict[str, dict[str, Any]]) -> None:
     item = _expect_keys(
         value,
         {
@@ -239,7 +265,14 @@ def _validate_item(value: Any, label: str) -> None:
     _expect_identifier(item["id"], f"{label}.id")
     if item["changeType"] not in CHANGE_TYPES:
         raise ContractError(f"{label}.changeType is not supported")
-    _expect_identifier(item["sourceId"], f"{label}.sourceId")
+    source_id = _expect_identifier(item["sourceId"], f"{label}.sourceId")
+    source = display_sources.get(source_id)
+    if source is None:
+        raise ContractError(f"{label}.sourceId must reference an enabled public configured source")
+    if item["changeType"] == "sdk_release" and source["kind"] != "sdk_release":
+        raise ContractError(f"{label}.changeType sdk_release requires an sdk_release source")
+    if source["kind"] == "sdk_release" and item["changeType"] != "sdk_release":
+        raise ContractError(f"{label}.sourceId for an sdk_release source requires changeType sdk_release")
     _expect_string(item["title"], f"{label}.title")
     _expect_https_url(item["officialUrl"], f"{label}.officialUrl")
     if item["priority"] not in PRIORITIES:
@@ -254,7 +287,8 @@ def _validate_item(value: Any, label: str) -> None:
         raise ContractError(f"{label}.reviewStatus must be approved for public display")
 
 
-def validate_weekly_fixture(payload: Any) -> dict[str, Any]:
+def validate_weekly_fixture(payload: Any, source_config: dict[str, Any] | None = None) -> dict[str, Any]:
+    validate_fixture_json_schema(payload)
     fixture = _expect_keys(payload, {"schemaVersion", "fixture", "week", "filters", "items"}, "fixture")
     if fixture["schemaVersion"] != FIXTURE_SCHEMA_VERSION:
         raise ContractError(f"fixture schemaVersion must be {FIXTURE_SCHEMA_VERSION}")
@@ -279,12 +313,18 @@ def validate_weekly_fixture(payload: Any) -> dict[str, Any]:
         raise ContractError("fixture.filters.priority is not supported")
     _expect_string(filters["query"], "fixture.filters.query", allow_empty=True)
 
+    config = source_config if source_config is not None else load_and_validate_source_config()
+    display_sources = {
+        source["id"]: source
+        for source in config["sources"]
+        if source["enabled"] and source["access"] == "public"
+    }
     items = fixture["items"]
     if not isinstance(items, list):
         raise ContractError("fixture.items must be an array")
     item_ids: set[str] = set()
     for index, item in enumerate(items):
-        _validate_item(item, f"fixture.items[{index}]")
+        _validate_item(item, f"fixture.items[{index}]", display_sources)
         item_id = item["id"]
         if item_id in item_ids:
             raise ContractError(f"duplicate fixture item id: {item_id}")
@@ -315,5 +355,32 @@ def load_and_validate_source_config(path: Path = DEFAULT_SOURCE_CONFIG) -> dict[
     return validate_source_config(load_json(path))
 
 
-def load_and_validate_fixture(path: Path) -> dict[str, Any]:
-    return validate_weekly_fixture(load_json(path))
+def load_and_validate_fixture(
+    path: Path, source_config: dict[str, Any] | None = None
+) -> dict[str, Any]:
+    fixture = validate_weekly_fixture(load_json(path), source_config)
+    if path.stem != fixture["fixture"]["name"]:
+        raise ContractError(f"fixture filename must match fixture.fixture.name: {path}")
+    return fixture
+
+
+def load_and_validate_canonical_fixtures(
+    directory: Path = DEFAULT_FIXTURE_DIRECTORY,
+    source_config: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
+    paths = sorted(directory.glob("*.json"))
+    actual_names = {path.stem for path in paths}
+    expected_names = set(CANONICAL_FIXTURES)
+    if actual_names != expected_names:
+        raise ContractError(
+            "fixture files must exactly match the canonical set: "
+            f"expected {sorted(expected_names)}, got {sorted(actual_names)}"
+        )
+    fixtures = [load_and_validate_fixture(path, source_config) for path in paths]
+    actual_states = {fixture["fixture"]["name"]: fixture["fixture"]["state"] for fixture in fixtures}
+    if actual_states != CANONICAL_FIXTURES:
+        raise ContractError(
+            "fixture name/state mapping must exactly match the canonical set: "
+            f"expected {CANONICAL_FIXTURES}, got {actual_states}"
+        )
+    return fixtures
