@@ -1,0 +1,55 @@
+name: Meta Ads tracker weekly assemble
+
+on:
+  schedule:
+    - cron: "0 9 * * 5"
+  workflow_dispatch:
+    inputs:
+      cutoff_at:
+        description: "Optional logical cutoff, Friday 17:00 MYT ISO timestamp"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: meta-ads-tracker-repository-write
+  cancel-in-progress: false
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    env:
+      REQUESTED_CUTOFF_AT: ${{ inputs.cutoff_at }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Install tracker validator dependency
+        run: python -m pip install -r requirements-meta-ads-tracker.txt
+      - name: Assemble immutable weekly artifact
+        run: |
+          if [ -n "${REQUESTED_CUTOFF_AT}" ]; then
+            python3 scripts/meta_ads_tracker_assemble_weekly.py --cutoff-at "${REQUESTED_CUTOFF_AT}"
+          else
+            python3 scripts/meta_ads_tracker_assemble_weekly.py
+          fi
+          python3 scripts/validate_meta_ads_tracker_weekly.py --directory data/meta_ads_tracker_weekly
+      - name: Commit weekly artifact
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/meta_ads_tracker_weekly
+          if git diff --cached --quiet; then
+            echo "No weekly artifact change."
+          else
+            git commit -m "chore: assemble Meta Ads weekly candidate"
+            git push
+          fi
+      - name: Upload weekly artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: meta-ads-tracker-weekly-${{ github.run_id }}
+          path: data/meta_ads_tracker_weekly/

@@ -1,0 +1,6 @@
+{
+  "initialRss": "<rss><channel><item><title>Existing update</title><link>https://about.fb.com/news/existing/</link><pubDate>Mon, 17 Aug 2026 00:00:00 GMT</pubDate><description>Initial body</description></item></channel></rss>",
+  "bodyAdditionRss": "<rss><channel><item><title>Existing update</title><link>https://about.fb.com/news/existing/</link><pubDate>Mon, 17 Aug 2026 00:00:00 GMT</pubDate><description>Initial body with an added official paragraph</description></item></channel></rss>",
+  "newRss": "<rss><channel><item><title>New update</title><link>https://about.fb.com/news/new/</link><pubDate>Thu, 20 Aug 2026 00:00:00 GMT</pubDate><description>New official body</description></item><item><title>Existing update</title><link>https://about.fb.com/news/existing/</link><pubDate>Mon, 17 Aug 2026 00:00:00 GMT</pubDate><description>Initial body</description></item></channel></rss>",
+  "initialSdk": "[{\"tag_name\":\"v1.0.0\",\"html_url\":\"https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v1.0.0\",\"name\":\"v1.0.0\",\"body\":\"First release\",\"published_at\":\"2026-08-17T00:00:00Z\"}]"
+}

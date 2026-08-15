@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "meta-ads-weekly-index/v1",
+  "generatedAt": "2026-08-15T00:00:00Z",
+  "week": {
+    "startDate": "2026-08-10",
+    "endDate": "2026-08-16",
+    "label": "2026-08-10〜2026-08-16"
+  },
+  "filters": {
+    "sourceId": "all",
+    "priority": "all",
+    "query": ""
+  },
+  "items": []
+}
