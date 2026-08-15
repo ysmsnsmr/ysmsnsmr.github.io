@@ -1,6 +1,6 @@
 {
   "schema_version": "malaysia-groq-model-profiles/v2",
-  "default_production_profile": "llama33-70b",
+  "default_production_profile": "gpt-oss-120b",
   "profiles": [
     {
       "name": "llama33-70b",
@@ -16,7 +16,11 @@
       "reasoning_mode": "default",
       "comparison_prompt_layout": "production",
       "comparison_max_tokens": 500,
-      "comparison_contract": "summary_entry"
+      "comparison_contract": "summary_entry",
+      "production_prompt_layout": "production",
+      "production_max_tokens": 500,
+      "production_contract": "summary_entry",
+      "production_rate_reset_wait_max_seconds": 0
     },
     {
       "name": "gpt-oss-20b",
@@ -42,12 +46,16 @@
       ],
       "artifact_key": "gptoss120b",
       "model_id": "openai/gpt-oss-120b",
-      "artifact_only": true,
+      "artifact_only": false,
       "response_mode": "json_schema_strict",
       "reasoning_mode": "low_hidden",
       "comparison_prompt_layout": "user_only",
       "comparison_max_tokens": 800,
-      "comparison_contract": "summary_only"
+      "comparison_contract": "summary_only",
+      "production_prompt_layout": "user_only",
+      "production_max_tokens": 800,
+      "production_contract": "summary_only",
+      "production_rate_reset_wait_max_seconds": 60
     },
     {
       "name": "qwen3.6-27b",

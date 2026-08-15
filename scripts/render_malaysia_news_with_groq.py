@@ -57,7 +57,9 @@ from malaysia_groq_model_profiles import (
     COMPARISON_PROMPT_LAYOUTS,
     DEFAULT_COMPARISON_MAX_TOKENS,
     ModelProfile,
+    load_model_profile_registry,
     profile_for_model_id,
+    production_model_profile,
 )
 from malaysia_groq_output_contract import (
     SUMMARY_ENTRY_SCHEMA,
@@ -69,7 +71,7 @@ from malaysia_groq_transport import error_diagnostic, request_chat_completion
 import render_malaysia_news_from_json as fallback_renderer
 
 
-DEFAULT_MODEL = "llama-3.3-70b-versatile"
+DEFAULT_MODEL = production_model_profile("", load_model_profile_registry()).model_id
 GROQ_CHAT_COMPLETIONS_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_USER_AGENT = "ysmsnsmr-malaysia-news/0.1 (+https://ysmsnsmr.github.io/news/malaysia/)"
 MAX_RESPONSE_CHARS = 4000
@@ -1383,7 +1385,12 @@ def entry_review_observation(decision_records: list[dict[str, Any]]) -> dict[str
         for record in requested_records
         if clean_text(record.get("entry_review_policy"))
     }
-    policy = "disabled_for_model_comparison" if policies == {"disabled_for_model_comparison"} else "enabled"
+    if policies == {"disabled_for_model_comparison"}:
+        policy = "disabled_for_model_comparison"
+    elif policies == {"not_applicable_summary_only"}:
+        policy = "not_applicable_summary_only"
+    else:
+        policy = "enabled"
     attempted_records = [
         record for record in requested_records
         if isinstance(record.get("entry"), dict) and entry_text(record.get("entry"))
@@ -1414,7 +1421,7 @@ def entry_review_observation(decision_records: list[dict[str, Any]]) -> dict[str
     return {
         "observation_only": True,
         "entry_review_policy": policy,
-        "not_run": policy == "disabled_for_model_comparison",
+        "not_run": policy in {"disabled_for_model_comparison", "not_applicable_summary_only"},
         "requested_count": len(requested_records),
         "entry_review_max_allowed_count": len(requested_records),
         "entry_review_attempted_count": len(attempted_records),
@@ -1673,6 +1680,7 @@ def render_with_groq(
     requested = 0
     accepted = 0
     failed = 0
+    entry_review_enabled = enable_entry_review and summary_contract != "summary_only"
     entries = ordered_force_all_entries(items) if force_all else [
         (index, item) for index, item in enumerate(items) if isinstance(item, dict)
     ]
@@ -1685,8 +1693,12 @@ def render_with_groq(
             continue
         needs_groq = item_needs_groq(item)
         decision_record = build_decision_record(index, item, force_all, needs_groq)
-        if not enable_entry_review:
-            decision_record["entry_review_policy"] = "disabled_for_model_comparison"
+        if not entry_review_enabled:
+            decision_record["entry_review_policy"] = (
+                "not_applicable_summary_only"
+                if summary_contract == "summary_only"
+                else "disabled_for_model_comparison"
+            )
         decision_records.append(decision_record)
         if request_link_allowlist is not None and clean_text(item.get("link")) not in request_link_allowlist:
             decision_record["decision"] = "skipped"
@@ -1758,7 +1770,7 @@ def render_with_groq(
                 for reason in (raw_usefulness_warnings if isinstance(raw_usefulness_warnings, list) else [])
                 if clean_text(reason)
             ]
-            if enable_entry_review:
+            if entry_review_enabled:
                 attach_entry_review_observation(
                     decision_record,
                     item,
@@ -1838,7 +1850,7 @@ def render_with_groq(
                     clean_text(value) for value in error_entry_reasons if clean_text(value)
                 ]
             if isinstance(error_entry, dict):
-                if enable_entry_review:
+                if entry_review_enabled:
                     attach_entry_review_observation(
                         decision_record,
                         item,
@@ -1883,26 +1895,26 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--json-input", required=True, help="Read selected Malaysia news items JSON from this path.")
     parser.add_argument("--output", help="Write rendered Markdown to this path. Defaults to stdout.")
-    parser.add_argument("--model", help="Groq model name. Defaults to GROQ_MODEL or llama-3.3-70b-versatile.")
+    parser.add_argument("--model", help=f"Groq model name. Defaults to GROQ_MODEL or {DEFAULT_MODEL}.")
     parser.add_argument("--force-all", action="store_true", help="Send all items to Groq for local comparison.")
     parser.add_argument("--debug-groq", action="store_true", help="Write short Groq validation diagnostics to stderr.")
     parser.add_argument(
         "--summary-prompt-layout",
         choices=sorted(COMPARISON_PROMPT_LAYOUTS),
         default="production",
-        help="Artifact-comparison summary prompt layout. The production workflow uses the default.",
+        help="Summary prompt layout selected by the model profile.",
     )
     parser.add_argument(
         "--summary-max-tokens",
         type=int,
         default=DEFAULT_COMPARISON_MAX_TOKENS,
-        help="Artifact-comparison summary completion budget. The production workflow uses the default.",
+        help="Summary completion budget selected by the model profile.",
     )
     parser.add_argument(
         "--summary-contract",
         choices=sorted(COMPARISON_CONTRACTS),
         default="summary_entry",
-        help="Artifact-comparison JSON contract. The production workflow uses the default.",
+        help="Summary JSON contract selected by the model profile.",
     )
     parser.add_argument("--request-link-allowlist", help="JSON file containing comparison-only request links.")
     parser.add_argument("--disable-entry-review", action="store_true", help="Do not make observation-only entry review requests.")
@@ -1910,7 +1922,7 @@ def main() -> int:
         "--rate-reset-wait-max-seconds",
         type=int,
         default=0,
-        help="Comparison-only maximum wait for the Groq token reset header.",
+        help="Maximum wait for the Groq token reset header.",
     )
     parser.add_argument(
         "--max-429-retry-after-seconds",

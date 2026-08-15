@@ -12,6 +12,7 @@ from malaysia_groq_model_profiles import (
     artifact_only_model_profiles,
     load_model_profile_registry,
     production_model_profile,
+    production_profile_workflow_fields,
     resolve_model_profile,
 )
 
@@ -20,18 +21,34 @@ class ModelProfileTest(unittest.TestCase):
     def test_registry_resolves_legacy_alias_and_artifact_profiles(self) -> None:
         registry = load_model_profile_registry()
 
-        production = production_model_profile("llama", registry)
-        self.assertEqual(production.model_id, "llama-3.3-70b-versatile")
+        production = production_model_profile("", registry)
+        self.assertEqual(production.model_id, "openai/gpt-oss-120b")
+        self.assertEqual(production.production_prompt_layout, "user_only")
+        self.assertEqual(production.production_max_tokens, 800)
+        self.assertEqual(production.production_contract, "summary_only")
+        self.assertEqual(production.production_rate_reset_wait_max_seconds, 60)
+        self.assertEqual(
+            production_profile_workflow_fields(production),
+            (
+                "gpt-oss-120b",
+                "gptoss120b",
+                "openai/gpt-oss-120b",
+                "user_only",
+                "800",
+                "summary_only",
+                "60",
+            ),
+        )
         self.assertEqual(
             [profile.model_id for profile in artifact_only_model_profiles(registry)],
             [
                 "openai/gpt-oss-20b",
-                "openai/gpt-oss-120b",
                 "qwen/qwen3.6-27b",
             ],
         )
         self.assertEqual(resolve_model_profile("gpt-oss", registry).name, "gpt-oss-20b")
-        self.assertEqual(production.response_mode, "json_object")
+        self.assertEqual(production.response_mode, "json_schema_strict")
+        self.assertEqual(production_model_profile("llama", registry).model_id, "llama-3.3-70b-versatile")
         self.assertEqual(resolve_model_profile("gpt-oss", registry).reasoning_mode, "low_hidden")
         self.assertEqual(resolve_model_profile("gptoss120b", registry).comparison_prompt_layout, "user_only")
         self.assertEqual(resolve_model_profile("gptoss120b", registry).comparison_max_tokens, 800)
@@ -42,7 +59,7 @@ class ModelProfileTest(unittest.TestCase):
         registry = load_model_profile_registry()
 
         with self.assertRaisesRegex(ValueError, "artifact-only"):
-            production_model_profile("gpt-oss-120b", registry)
+            production_model_profile("gpt-oss-20b", registry)
 
     def test_workflow_contains_no_model_ids(self) -> None:
         workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/malaysia-rss-summary.yml").read_text(

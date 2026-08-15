@@ -18,6 +18,10 @@ COMPARISON_PROMPT_LAYOUTS = {"production", "user_only", "user_only_explicit_cont
 COMPARISON_CONTRACTS = {"summary_entry", "summary_only"}
 DEFAULT_COMPARISON_MAX_TOKENS = 500
 MAX_COMPARISON_MAX_TOKENS = 1200
+DEFAULT_PRODUCTION_MAX_TOKENS = 500
+MAX_PRODUCTION_MAX_TOKENS = 1200
+DEFAULT_PRODUCTION_RATE_RESET_WAIT_MAX_SECONDS = 0
+MAX_PRODUCTION_RATE_RESET_WAIT_MAX_SECONDS = 60
 
 
 @dataclass(frozen=True)
@@ -34,6 +38,10 @@ class ModelProfile:
     comparison_prompt_layout: str = "production"
     comparison_max_tokens: int = DEFAULT_COMPARISON_MAX_TOKENS
     comparison_contract: str = "summary_entry"
+    production_prompt_layout: str = "production"
+    production_max_tokens: int = DEFAULT_PRODUCTION_MAX_TOKENS
+    production_contract: str = "summary_entry"
+    production_rate_reset_wait_max_seconds: int = DEFAULT_PRODUCTION_RATE_RESET_WAIT_MAX_SECONDS
 
 
 @dataclass(frozen=True)
@@ -72,6 +80,13 @@ def load_model_profile_registry(path: Path = DEFAULT_CONFIG_PATH) -> ModelProfil
         comparison_prompt_layout = clean_text(raw_profile.get("comparison_prompt_layout")) or "production"
         comparison_max_tokens = raw_profile.get("comparison_max_tokens", DEFAULT_COMPARISON_MAX_TOKENS)
         comparison_contract = clean_text(raw_profile.get("comparison_contract")) or "summary_entry"
+        production_prompt_layout = clean_text(raw_profile.get("production_prompt_layout")) or "production"
+        production_max_tokens = raw_profile.get("production_max_tokens", DEFAULT_PRODUCTION_MAX_TOKENS)
+        production_contract = clean_text(raw_profile.get("production_contract")) or "summary_entry"
+        production_rate_reset_wait_max_seconds = raw_profile.get(
+            "production_rate_reset_wait_max_seconds",
+            DEFAULT_PRODUCTION_RATE_RESET_WAIT_MAX_SECONDS,
+        )
         if not name or not model_id or not SAFE_ARTIFACT_KEY.fullmatch(artifact_key):
             raise ValueError("model profile requires a name, model_id, and safe artifact_key")
         if response_mode not in RESPONSE_MODES:
@@ -85,6 +100,13 @@ def load_model_profile_registry(path: Path = DEFAULT_CONFIG_PATH) -> ModelProfil
             )
         if comparison_contract not in COMPARISON_CONTRACTS:
             raise ValueError(f"unsupported model profile comparison_contract: {comparison_contract}")
+        if production_prompt_layout not in COMPARISON_PROMPT_LAYOUTS:
+            raise ValueError(
+                "unsupported model profile production_prompt_layout: "
+                f"{production_prompt_layout}"
+            )
+        if production_contract not in COMPARISON_CONTRACTS:
+            raise ValueError(f"unsupported model profile production_contract: {production_contract}")
         if (
             not isinstance(comparison_max_tokens, int)
             or isinstance(comparison_max_tokens, bool)
@@ -93,6 +115,24 @@ def load_model_profile_registry(path: Path = DEFAULT_CONFIG_PATH) -> ModelProfil
             raise ValueError(
                 "model profile comparison_max_tokens must be an integer between "
                 f"1 and {MAX_COMPARISON_MAX_TOKENS}"
+            )
+        if (
+            not isinstance(production_max_tokens, int)
+            or isinstance(production_max_tokens, bool)
+            or not 1 <= production_max_tokens <= MAX_PRODUCTION_MAX_TOKENS
+        ):
+            raise ValueError(
+                "model profile production_max_tokens must be an integer between "
+                f"1 and {MAX_PRODUCTION_MAX_TOKENS}"
+            )
+        if (
+            not isinstance(production_rate_reset_wait_max_seconds, int)
+            or isinstance(production_rate_reset_wait_max_seconds, bool)
+            or not 0 <= production_rate_reset_wait_max_seconds <= MAX_PRODUCTION_RATE_RESET_WAIT_MAX_SECONDS
+        ):
+            raise ValueError(
+                "model profile production_rate_reset_wait_max_seconds must be an integer between "
+                f"0 and {MAX_PRODUCTION_RATE_RESET_WAIT_MAX_SECONDS}"
             )
         if name in known_names or artifact_key in known_artifact_keys:
             raise ValueError("duplicate model profile name or artifact_key")
@@ -119,6 +159,10 @@ def load_model_profile_registry(path: Path = DEFAULT_CONFIG_PATH) -> ModelProfil
                 comparison_prompt_layout=comparison_prompt_layout,
                 comparison_max_tokens=comparison_max_tokens,
                 comparison_contract=comparison_contract,
+                production_prompt_layout=production_prompt_layout,
+                production_max_tokens=production_max_tokens,
+                production_contract=production_contract,
+                production_rate_reset_wait_max_seconds=production_rate_reset_wait_max_seconds,
             )
         )
         known_names.add(name)
@@ -157,6 +201,18 @@ def artifact_only_model_profiles(registry: ModelProfileRegistry) -> tuple[ModelP
     return tuple(profile for profile in registry.profiles if profile.artifact_only)
 
 
+def production_profile_workflow_fields(profile: ModelProfile) -> tuple[str, ...]:
+    return (
+        profile.name,
+        profile.artifact_key,
+        profile.model_id,
+        profile.production_prompt_layout,
+        str(profile.production_max_tokens),
+        profile.production_contract,
+        str(profile.production_rate_reset_wait_max_seconds),
+    )
+
+
 def profile_for_model_id(value: str) -> ModelProfile:
     """Resolve configured models while preserving a safe JSON-object fallback for unknown IDs."""
     try:
@@ -193,7 +249,7 @@ def main() -> int:
                 raise
             profile = production_model_profile(registry.default_production_profile, registry)
             print(f"warning: {error}; using {profile.name}", file=sys.stderr)
-        print("\t".join((profile.name, profile.artifact_key, profile.model_id)))
+        print("\t".join(production_profile_workflow_fields(profile)))
         return 0
 
     for profile in artifact_only_model_profiles(registry):
