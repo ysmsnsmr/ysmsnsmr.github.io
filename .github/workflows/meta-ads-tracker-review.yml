@@ -24,8 +24,8 @@ jobs:
       GROQ_MODEL: ${{ inputs.groq_model }}
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - name: Install tracker validator dependency
@@ -38,7 +38,7 @@ jobs:
             --output "${RUNNER_TEMP}/meta_ads_tracker_groq_review.json" \
             --model "${GROQ_MODEL}"
       - name: Upload Groq review artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: meta-ads-tracker-review-${{ github.run_id }}
           path: ${{ runner.temp }}/meta_ads_tracker_groq_review.json

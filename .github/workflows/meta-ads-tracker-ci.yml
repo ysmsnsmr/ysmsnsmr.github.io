@@ -11,11 +11,11 @@ jobs:
   contract-and-ui:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
           cache: npm
@@ -40,7 +40,7 @@ jobs:
         run: npm run test:meta-ads-ui
       - name: Upload 15 viewport and 15 full-page screenshots
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: meta-ads-tracker-ui-${{ github.run_id }}
           path: ${{ runner.temp }}/meta-ads-tracker-ui/
