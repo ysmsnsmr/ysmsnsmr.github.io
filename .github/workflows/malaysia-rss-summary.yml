@@ -30,11 +30,12 @@ on:
           - merge
           - json-render
       groq_model:
-        description: "Production Groq model profile (migration candidates remain artifact-only)"
+        description: "Production Groq model profile"
         required: false
-        default: "llama33-70b"
+        default: "gpt-oss-120b"
         type: choice
         options:
+          - gpt-oss-120b
           - llama33-70b
       force_all_groq:
         description: "Send all selected items to Groq when optional rendering is enabled"
@@ -105,7 +106,7 @@ jobs:
             production_candidate_input="${INPUT_GROQ_PRODUCTION_CANDIDATE:-merge}"
             force_all="$(bool_value "${INPUT_FORCE_ALL_GROQ:-false}")"
             debug_groq="$(bool_value "${INPUT_DEBUG_GROQ:-false}")"
-            model_input="${INPUT_GROQ_MODEL:-llama33-70b}"
+            model_input="${INPUT_GROQ_MODEL:-gpt-oss-120b}"
           else
             enable_body="$(bool_value "${VAR_ENABLE_BODY_ENRICHMENT:-false}")"
             enable_groq="$(bool_value "${VAR_ENABLE_GROQ_RENDERING:-false}")"
@@ -113,7 +114,7 @@ jobs:
             production_candidate_input="${VAR_GROQ_PRODUCTION_CANDIDATE:-merge}"
             force_all="$(bool_value "${VAR_FORCE_ALL_GROQ:-false}")"
             debug_groq="$(bool_value "${VAR_DEBUG_GROQ:-false}")"
-            model_input="${VAR_GROQ_MODEL:-llama33-70b}"
+            model_input="${VAR_GROQ_MODEL:-gpt-oss-120b}"
           fi
 
           case "${production_candidate_input,,}" in
@@ -126,7 +127,7 @@ jobs:
           esac
 
           model_profile_line="$(python3 -B scripts/malaysia_groq_model_profiles.py resolve-production "${model_input}" --fallback-to-default)"
-          IFS=$'\t' read -r model_profile model_short model_name <<< "${model_profile_line}"
+          IFS=$'\t' read -r model_profile model_short model_name model_prompt_layout model_max_tokens model_contract model_rate_reset_wait_max_seconds <<< "${model_profile_line}"
 
           today="$(TZ=Asia/Kuala_Lumpur date +%F)"
           run_dir="${RUNNER_TEMP}/malaysia-rss-summary-optional-${today}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
@@ -144,6 +145,10 @@ jobs:
             echo "- debug_groq: ${debug_groq}"
             echo "- groq_model_profile: ${model_profile}"
             echo "- groq_model: ${model_name}"
+            echo "- groq_summary_prompt_layout: ${model_prompt_layout}"
+            echo "- groq_summary_max_tokens: ${model_max_tokens}"
+            echo "- groq_summary_contract: ${model_contract}"
+            echo "- groq_rate_reset_wait_max_seconds: ${model_rate_reset_wait_max_seconds}"
             echo "- groq_model_comparison: artifact-only"
           } > "${run_dir}/optional_status.md"
 
@@ -157,6 +162,10 @@ jobs:
           echo "groq_model_profile=${model_profile}" >> "${GITHUB_OUTPUT}"
           echo "groq_model_short=${model_short}" >> "${GITHUB_OUTPUT}"
           echo "groq_model_name=${model_name}" >> "${GITHUB_OUTPUT}"
+          echo "groq_summary_prompt_layout=${model_prompt_layout}" >> "${GITHUB_OUTPUT}"
+          echo "groq_summary_max_tokens=${model_max_tokens}" >> "${GITHUB_OUTPUT}"
+          echo "groq_summary_contract=${model_contract}" >> "${GITHUB_OUTPUT}"
+          echo "groq_rate_reset_wait_max_seconds=${model_rate_reset_wait_max_seconds}" >> "${GITHUB_OUTPUT}"
 
       - name: Generate Malaysia RSS summary
         id: generate
@@ -221,6 +230,10 @@ jobs:
           run_dir="${{ steps.optional.outputs.run_dir }}"
           model_short="${{ steps.optional.outputs.groq_model_short }}"
           model_name="${{ steps.optional.outputs.groq_model_name }}"
+          summary_prompt_layout="${{ steps.optional.outputs.groq_summary_prompt_layout }}"
+          summary_max_tokens="${{ steps.optional.outputs.groq_summary_max_tokens }}"
+          summary_contract="${{ steps.optional.outputs.groq_summary_contract }}"
+          rate_reset_wait_max_seconds="${{ steps.optional.outputs.groq_rate_reset_wait_max_seconds }}"
           force_all="${{ steps.optional.outputs.force_all_groq }}"
           debug_groq="${{ steps.optional.outputs.debug_groq }}"
           rss_markdown_input="${{ steps.generate.outputs.output_path }}"
@@ -238,6 +251,10 @@ jobs:
             --rss-markdown-input "${rss_markdown_input}"
             --output "${run_dir}/groq_merged_candidate.md"
             --model "${model_name}"
+            --summary-prompt-layout "${summary_prompt_layout}"
+            --summary-max-tokens "${summary_max_tokens}"
+            --summary-contract "${summary_contract}"
+            --rate-reset-wait-max-seconds "${rate_reset_wait_max_seconds}"
             --improved-items-output "${run_dir}/groq_${model_short}_improved_items.json"
             --json-render-output "${run_dir}/groq_json_render_candidate.md"
             --entry-render-output "${run_dir}/groq_entry_render_candidate.md"

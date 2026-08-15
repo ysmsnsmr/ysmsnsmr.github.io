@@ -9,7 +9,12 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from malaysia_groq_entry_review import entry_review_payload, parse_entry_review_content
-from render_malaysia_news_with_groq import GroqSummaryRejected, render_with_groq, inspect_entry_candidate
+from render_malaysia_news_with_groq import (
+    GroqSummaryRejected,
+    GroqSummaryResult,
+    inspect_entry_candidate,
+    render_with_groq,
+)
 
 
 ENTRY = {
@@ -158,6 +163,44 @@ class EntryReviewTest(unittest.TestCase):
         self.assertEqual(stats, {"requested": 1, "accepted": 0, "fallback": 1})
         self.assertEqual(records[0]["entry_review_policy"], "disabled_for_model_comparison")
         self.assertEqual(records[1]["reason"], "comparison_cohort_excluded")
+        review.assert_not_called()
+
+    def test_summary_only_contract_marks_entry_review_not_applicable_without_calling_it(self) -> None:
+        item = {
+            "title": "Government plan",
+            "description": "The government announced a plan.",
+            "link": "https://example.test/summary-only",
+            "selected_summary": {},
+        }
+        result = GroqSummaryResult(
+            {
+                "conclusion": "計画が発表されました。",
+                "what_happened": ["政府が計画を発表しました。"],
+                "life_impact": "手続きに関わる可能性があります。",
+                "next_action": "公式情報を確認してください。",
+            },
+            None,
+            "not_requested",
+            [],
+            {"transport_status": "success", "http_status": 200, "json_contract_status": "valid"},
+        )
+        with patch("render_malaysia_news_with_groq.item_needs_groq", return_value=True), patch(
+            "render_malaysia_news_with_groq.groq_exclusion_reason", return_value=""
+        ), patch(
+            "render_malaysia_news_with_groq.request_groq_summary_with_retry", return_value=result
+        ), patch("render_malaysia_news_with_groq.request_entry_review") as review:
+            _, _, stats, records = render_with_groq(
+                {"items": [item]},
+                "key",
+                "openai/gpt-oss-120b",
+                False,
+                False,
+                summary_contract="summary_only",
+            )
+
+        self.assertEqual(stats, {"requested": 1, "accepted": 1, "fallback": 0})
+        self.assertEqual(records[0]["entry_review_policy"], "not_applicable_summary_only")
+        self.assertEqual(records[0]["entry_contract_status"], "not_requested")
         review.assert_not_called()
 
     def test_parse_pass_and_revise(self) -> None:

@@ -2,12 +2,12 @@
 
 ## Deadline
 
-- Current production model: `llama-3.3-70b-versatile`
+- Previous production model: `llama-3.3-70b-versatile`
 - Groq shutdown date: 2026-08-16
 - Replacement decision deadline: 2026-08-15
-- Artifact-only candidates:
+- Production replacement: `openai/gpt-oss-120b`
+- Remaining artifact-only candidates:
   - `openai/gpt-oss-20b`
-  - `openai/gpt-oss-120b`
   - `qwen/qwen3.6-27b`
 
 Qwen 3.6 27B is a preview profile and must remain artifact-only during this migration observation.
@@ -17,13 +17,24 @@ https://console.groq.com/docs/deprecations
 
 ## Change Boundary
 
-During observation:
+Before the cutover:
 
 - production continues to use the Llama profile;
 - candidates run from the same selected/enriched item JSON;
 - candidates are artifact-only and cannot overwrite production;
 - prompt, validator rules, request cap, and production gate remain unchanged;
 - no candidate is promoted automatically.
+
+## Production 120B Request Contract
+
+The production profile uses the already observed GPT-OSS 120B request configuration:
+
+- prompt layout: `user_only`;
+- JSON contract: `summary_only`;
+- completion budget: `800` tokens;
+- rate-reset wait maximum: `60` seconds.
+
+`summary_only` deliberately does not request an entry object or entry review. Accepted full summaries and the existing JSON-render fallback remain the production display path.
 
 The single profile registry is `scripts/malaysia_groq_model_profiles.json`. Workflow YAML must not contain a model-ID selection branch.
 
@@ -53,7 +64,7 @@ Validator pass alone is not treated as proof of summary quality.
 
 ## Decision Rule
 
-By 2026-08-15, select one candidate only after several scheduled artifacts show:
+The 2026-08-15 cutover selects GPT-OSS 120B after scheduled artifacts show:
 
 - URL retention remains 100%;
 - validator failures and forbidden expressions do not increase;
@@ -61,7 +72,7 @@ By 2026-08-15, select one candidate only after several scheduled artifacts show:
 - accepted summaries preserve subject, attribution, state, and certainty in manual review;
 - generic fallback does not materially increase compared with the Llama baseline.
 
-Do not change the model, prompt, and validator in the same release. The first production migration changes only the production profile.
+The system prompt text, semantic gate, validator, request cap, and JSON-render policy are unchanged. The model profile supplies the already observed 120B request envelope.
 
 ## RSS-only Rollback
 
@@ -73,6 +84,8 @@ Immediate rollback requires no code change:
 4. Confirm the next artifact reports `skipped_overwrite_disabled` and the committed daily page matches `rss_production_fallback.md`.
 
 The merge and JSON-render artifacts remain diagnostic rollback evidence; neither is deleted during migration.
+
+Do not use Llama as the primary rollback after its shutdown date. RSS-only is the supported rollback path.
 
 ## Golden Failures
 
