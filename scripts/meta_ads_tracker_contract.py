@@ -287,7 +287,12 @@ def _validate_item(value: Any, label: str, display_sources: dict[str, dict[str, 
         raise ContractError(f"{label}.reviewStatus must be approved for public display")
 
 
-def validate_weekly_fixture(payload: Any, source_config: dict[str, Any] | None = None) -> dict[str, Any]:
+def validate_weekly_fixture(
+    payload: Any,
+    source_config: dict[str, Any] | None = None,
+    *,
+    require_anonymised_urls: bool = True,
+) -> dict[str, Any]:
     validate_fixture_json_schema(payload)
     fixture = _expect_keys(payload, {"schemaVersion", "fixture", "week", "filters", "items"}, "fixture")
     if fixture["schemaVersion"] != FIXTURE_SCHEMA_VERSION:
@@ -329,7 +334,7 @@ def validate_weekly_fixture(payload: Any, source_config: dict[str, Any] | None =
         if item_id in item_ids:
             raise ContractError(f"duplicate fixture item id: {item_id}")
         item_ids.add(item_id)
-        if urlparse(item["officialUrl"]).hostname != "official.example.test":
+        if require_anonymised_urls and urlparse(item["officialUrl"]).hostname != "official.example.test":
             raise ContractError("fixtures must use anonymised official.example.test URLs")
 
     state = descriptor["state"]
