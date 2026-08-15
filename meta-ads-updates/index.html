@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Meta Ads公式更新の承認済み週次インデックス">
+    <title>Meta Ads Official Update Tracker</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="tracker-shell">
+      <header class="masthead">
+        <div>
+          <p class="eyebrow">Official change monitor</p>
+          <h1>Meta Ads Official Update Tracker</h1>
+          <p class="masthead-copy">公式URLを根拠に、発表日・適用日・rollout・対象・業務影響・対応要否を分けて確認する週次index。</p>
+        </div>
+        <p id="week-stamp" class="week-stamp"></p>
+      </header>
+      <section class="control-panel" aria-labelledby="filter-heading">
+        <p id="filter-heading" class="section-kicker">表示条件</p>
+        <form id="filter-form" class="filter-form">
+          <label>ソース<select id="source-filter"><option value="all">すべてのソース</option></select></label>
+          <label>優先度<select id="priority-filter"><option value="all">すべて</option><option value="high">高</option><option value="standard">標準</option><option value="low">低</option></select></label>
+          <label>キーワード<input id="query-filter" type="search" placeholder="更新名を絞り込む" autocomplete="off"></label>
+          <button id="reset-button" type="button">条件をリセット</button>
+        </form>
+        <p id="result-summary" class="result-summary" aria-live="polite"></p>
+      </section>
+      <ol id="update-list" class="update-list" aria-live="polite"></ol>
+      <section id="empty-state" class="empty-state" hidden aria-live="polite">
+        <h2 id="empty-title"></h2><p id="empty-copy"></p>
+      </section>
+      <p class="tracker-footer">承認済みの公式更新だけを掲載しています。取得・Groq・validatorが失敗した場合、公開済み内容は変更しません。</p>
+    </main>
+  </body>
+</html>
