@@ -2,7 +2,8 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0d3b78">
     <meta name="description" content="Meta Ads公式更新の承認済み週次インデックス">
     <title>Meta Ads Official Update Tracker</title>
     <link rel="stylesheet" href="./style.css">
@@ -18,21 +19,44 @@
         </div>
         <p id="week-stamp" class="week-stamp"></p>
       </header>
+
       <section class="control-panel" aria-labelledby="filter-heading">
         <p id="filter-heading" class="section-kicker">表示条件</p>
         <form id="filter-form" class="filter-form">
-          <label>ソース<select id="source-filter"><option value="all">すべてのソース</option></select></label>
-          <label>優先度<select id="priority-filter"><option value="all">すべて</option><option value="high">高</option><option value="standard">標準</option><option value="low">低</option></select></label>
-          <label>キーワード<input id="query-filter" type="search" placeholder="更新名を絞り込む" autocomplete="off"></label>
-          <button id="reset-button" type="button">条件をリセット</button>
+          <div class="filter-field">
+            <label for="source-filter">ソース</label>
+            <select id="source-filter" name="source">
+              <option value="all">すべてのソース</option>
+              <option value="meta-product-news-rss">Product News</option>
+              <option value="meta-business-sdk-releases">Business SDK Releases</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label for="priority-filter">優先度</label>
+            <select id="priority-filter" name="priority">
+              <option value="all">すべて</option>
+              <option value="high">高</option>
+              <option value="standard">標準</option>
+              <option value="low">低</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label for="query-filter">キーワード</label>
+            <input id="query-filter" name="query" type="search" placeholder="更新名を絞り込む" autocomplete="off">
+          </div>
+          <button id="reset-button" class="reset-button" type="button">条件をリセット</button>
         </form>
         <p id="result-summary" class="result-summary" aria-live="polite"></p>
       </section>
+
       <ol id="update-list" class="update-list" aria-live="polite"></ol>
-      <section id="empty-state" class="empty-state" hidden aria-live="polite">
-        <h2 id="empty-title"></h2><p id="empty-copy"></p>
+
+      <section id="empty-state" class="empty-state" aria-live="polite" hidden>
+        <h2 id="empty-title"></h2>
+        <p id="empty-copy"></p>
       </section>
-      <p class="tracker-footer">承認済みの公式更新だけを掲載しています。取得・Groq・validatorが失敗した場合、公開済み内容は変更しません。</p>
+
+      <p class="tracker-footer">承認済みの公式更新だけを掲載しています。取得・Groq・validatorが失敗したrunでは、公開済み内容を変更しません。</p>
     </main>
   </body>
 </html>

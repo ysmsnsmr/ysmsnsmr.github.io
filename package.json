@@ -1,0 +1,11 @@
+{
+  "name": "ysmsnsmr-github-io-meta-ads-tracker",
+  "private": true,
+  "scripts": {
+    "test:meta-ads-ui": "node scripts/test_meta_ads_tracker_ui.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1",
+    "axe-core": "4.13.0"
+  }
+}
