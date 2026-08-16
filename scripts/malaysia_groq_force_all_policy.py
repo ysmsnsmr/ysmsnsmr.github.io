@@ -14,7 +14,7 @@ from malaysia_groq_common import (
 )
 
 
-DEFAULT_FORCE_ALL_REQUEST_CAP = 6
+DEFAULT_FORCE_ALL_REQUEST_CAP = 12
 
 HARD_SAFETY_GATE_REASON_MARKERS = (
     "unsafe ",
