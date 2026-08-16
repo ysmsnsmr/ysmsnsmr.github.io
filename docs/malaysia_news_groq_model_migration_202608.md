@@ -22,7 +22,7 @@ Before the cutover:
 - production continues to use the Llama profile;
 - candidates run from the same selected/enriched item JSON;
 - candidates are artifact-only and cannot overwrite production;
-- prompt, validator rules, request cap, and production gate remain unchanged;
+- prompt, validator rules, request-cap mechanism, and production gate remain unchanged; the force-all default cap is now `12` requests per run;
 - no candidate is promoted automatically.
 
 ## Production 120B Request Contract
@@ -72,7 +72,7 @@ The 2026-08-15 cutover selects GPT-OSS 120B after scheduled artifacts show:
 - accepted summaries preserve subject, attribution, state, and certainty in manual review;
 - generic fallback does not materially increase compared with the Llama baseline.
 
-The system prompt text, semantic gate, validator, request cap, and JSON-render policy are unchanged. The model profile supplies the already observed 120B request envelope.
+The system prompt text, semantic gate, validator, request-cap mechanism, and JSON-render policy are unchanged. The force-all default cap is `12` requests per run. The model profile supplies the already observed 120B request envelope.
 
 ## RSS-only Rollback
 

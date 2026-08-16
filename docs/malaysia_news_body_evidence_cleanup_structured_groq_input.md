@@ -123,7 +123,7 @@ The force-all gate accepts items only when concrete daily-life impact is evident
 
 Items that are only political background, market background, transport commentary without operational impact, KTM/Komuter political invitation context, individual scam/victim incidents, or Paul Tan automotive noise fall back to RSS-rendered output.
 
-Force-all mode also uses a request cap and a pre-request skip layer before calling Groq. The default cap is `6` requests per run and can be overridden with `MALAYSIA_NEWS_GROQ_FORCE_ALL_REQUEST_CAP`. Known low-value force-all candidates, such as KTM/Komuter political invitation context, individual scam incidents, market background, and Paul Tan noise, are skipped before the API request so HTTP 429 risk is reduced.
+Force-all mode also uses a request cap and a pre-request skip layer before calling Groq. The default cap is `12` requests per run and can be overridden with `MALAYSIA_NEWS_GROQ_FORCE_ALL_REQUEST_CAP`. Known low-value force-all candidates, such as KTM/Komuter political invitation context, individual scam incidents, market background, and Paul Tan noise, are skipped before the API request so HTTP 429 risk is reduced.
 
 Merged candidate Markdown cleans non-accepted RSS fallback blocks after dateline cleanup. The generic fallback lines:
 
