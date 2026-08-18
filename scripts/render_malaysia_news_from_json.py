@@ -337,10 +337,13 @@ def normalize_selected_summary(item: dict[str, Any]) -> dict[str, Any]:
     summary = item.get("selected_summary")
     if not isinstance(summary, dict):
         summary = {}
+    life_impact = clean_display_text(summary.get("life_impact"))
+    if looks_generic(life_impact):
+        life_impact = ""
     return {
         "conclusion": clean_display_text(summary.get("conclusion")),
         "what_happened": normalized_lines(summary.get("what_happened")),
-        "life_impact": clean_display_text(summary.get("life_impact")),
+        "life_impact": life_impact,
         "next_action": clean_display_text(summary.get("next_action")),
     }
 
@@ -374,7 +377,8 @@ def render_item_summary(item: dict[str, Any], summary: dict[str, Any]) -> list[s
     lines.append(f"- 結論：{conclusion}")
     for line in summary_lines(summary.get("what_happened")):
         lines.append(f"- 何が起きた：{line}")
-    lines.append(f"- 生活への影響：{life_impact}")
+    if life_impact:
+        lines.append(f"- 生活への影響：{life_impact}")
     if next_action:
         lines.append(f"- 次アクション：{next_action}")
     lines.append(f"- 出典：{source}（{published_date}）")
@@ -391,6 +395,55 @@ def render_item(item: dict[str, Any]) -> list[str]:
 def render_prepared_item(item: dict[str, Any]) -> list[str]:
     """Render a summary already finalized by an upstream normalization policy."""
     return render_item_summary(item, normalize_selected_summary(item))
+
+
+def editorial_entry_from_legacy_summary(item: dict[str, Any]) -> dict[str, Any]:
+    """Keep one migration-stage RSS fallback for historical selected JSON."""
+    summary = normalize_selected_summary(item)
+    generic_points = {
+        "RSS内のタイトルと説明をもとに整理しました。",
+        "RSSの見出しと説明に基づく概要です。",
+    }
+    return {
+        "entry_ja": summary["conclusion"],
+        "supporting_points_ja": [
+            line
+            for line in summary["what_happened"]
+            if line not in generic_points and not looks_generic(line)
+        ][:2],
+    }
+
+
+def normalize_editorial_entry(item: dict[str, Any]) -> dict[str, Any]:
+    raw = item.get("editorial_entry")
+    if not isinstance(raw, dict):
+        raw = editorial_entry_from_legacy_summary(item)
+    entry_ja = clean_display_text(raw.get("entry_ja"))
+    points = [
+        clean_display_text(point)
+        for point in raw.get("supporting_points_ja", [])
+        if clean_display_text(point)
+    ] if isinstance(raw.get("supporting_points_ja"), list) else []
+    if not entry_ja:
+        entry_ja = clean_display_text(item.get("title"))
+    return {"entry_ja": entry_ja, "supporting_points_ja": points[:2]}
+
+
+def render_editorial_entry_item(item: dict[str, Any]) -> list[str]:
+    entry = normalize_editorial_entry(item)
+    source = text_value(item.get("source")).strip()
+    published_date = text_value(item.get("published_date")).strip()
+    link = text_value(item.get("link")).strip()
+    lines = [f"- 概要：{entry['entry_ja']}"]
+    lines.extend(f"- 補足：{point}" for point in entry["supporting_points_ja"])
+    lines.extend(
+        [
+            f"- 出典：{source}（{published_date}）",
+            f"- 出典元URL：{link}",
+            "",
+        ]
+    )
+    return lines
 
 
 def selected_items_from_data(data: dict[str, Any]) -> list[dict[str, Any]]:
@@ -472,6 +525,11 @@ def render_prepared(data: dict[str, Any]) -> str:
     return render_with_item_renderer(data, render_prepared_item)
 
 
+def render_editorial_entries(data: dict[str, Any]) -> str:
+    """Render final v2 entries without topic inference or display rewriting."""
+    return render_with_item_renderer(data, render_editorial_entry_item)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--json-input", required=True, help="Read selected Malaysia news items JSON from this path.")
@@ -483,7 +541,7 @@ def main() -> int:
     if args.diagnostics:
         print_diagnostics(data)
 
-    markdown = render(data)
+    markdown = render_editorial_entries(data)
     if args.output:
         output_path = Path(args.output)
         output_path.parent.mkdir(parents=True, exist_ok=True)

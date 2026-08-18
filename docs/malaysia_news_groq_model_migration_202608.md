@@ -22,19 +22,19 @@ Before the cutover:
 - production continues to use the Llama profile;
 - candidates run from the same selected/enriched item JSON;
 - candidates are artifact-only and cannot overwrite production;
-- prompt, validator rules, request-cap mechanism, and production gate remain unchanged; the force-all default cap is now `12` requests per run;
+- hard-safety checks, validator rules, request-cap mechanism, and RSS-only rollback remain unchanged; the default cap is `12` requests per run;
 - no candidate is promoted automatically.
 
-## Production 120B Request Contract
+## Production 120B Editorial Entry Contract
 
 The production profile uses the already observed GPT-OSS 120B request configuration:
 
 - prompt layout: `user_only`;
-- JSON contract: `summary_only`;
+- JSON contract: `editorial_entry_v2`;
 - completion budget: `800` tokens;
 - rate-reset wait maximum: `60` seconds.
 
-`summary_only` deliberately does not request an entry object or entry review. Accepted full summaries and the existing JSON-render fallback remain the production display path.
+The production response has one required Japanese `entry_ja` and zero to two `supporting_points_ja`. Subject, attribution, state, and certainty remain in this prose; life impact and next action are not independent required fields. Groq failures, request-cap skips, malformed JSON, and hard-safety rejections render the RSS Editorial Entry instead.
 
 The single profile registry is `scripts/malaysia_groq_model_profiles.json`. Workflow YAML must not contain a model-ID selection branch.
 
@@ -48,9 +48,8 @@ The comparison report records these mechanical metrics for every profile:
 - request fallback rate;
 - selected-item fallback rate;
 - forbidden-expression count;
-- entry-contract completion rate;
-- reviewed-entry availability rate;
-- Groq-replaced versus inherited summary-line rate.
+- Groq-replaced versus RSS-inherited entry-field rate;
+- hard-safety and transport/JSON-contract diagnostics.
 
 Semantic quality remains a manual review. Each selected article is shown with the same five review criteria:
 
@@ -69,10 +68,10 @@ The 2026-08-15 cutover selects GPT-OSS 120B after scheduled artifacts show:
 - URL retention remains 100%;
 - validator failures and forbidden expressions do not increase;
 - request fallback is operationally acceptable and not dominated by HTTP 429;
-- accepted summaries preserve subject, attribution, state, and certainty in manual review;
-- generic fallback does not materially increase compared with the Llama baseline.
+- accepted editorial entries preserve subject, attribution, state, and certainty in manual review;
+- RSS fallback remains complete and readable for all non-accepted articles.
 
-The system prompt text, semantic gate, validator, request-cap mechanism, and JSON-render policy are unchanged. The force-all default cap is `12` requests per run. The model profile supplies the already observed 120B request envelope.
+The hard-safety checks, validator, request-cap mechanism, and JSON-render policy are unchanged. The usefulness vocabulary gate, topic-specific Groq fallback templates, and the old four-item summary contract are not part of this production path. The request cap is `12` items per run in selected JSON order.
 
 ## RSS-only Rollback
 
@@ -83,7 +82,7 @@ Immediate rollback requires no code change:
 3. Set `MALAYSIA_NEWS_ENABLE_GROQ_RENDERING=false` as well if all Groq calls must stop.
 4. Confirm the next artifact reports `skipped_overwrite_disabled` and the committed daily page matches `rss_production_fallback.md`.
 
-The merge and JSON-render artifacts remain diagnostic rollback evidence; neither is deleted during migration.
+`groq_json_render_candidate.md` is the only Groq production candidate. Legacy RSS Markdown and `selected_summary` remain available for one migration stage solely as rollback compatibility data.
 
 Do not use Llama as the primary rollback after its shutdown date. RSS-only is the supported rollback path.
 

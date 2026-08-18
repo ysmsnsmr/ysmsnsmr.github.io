@@ -1,84 +1,52 @@
 #!/usr/bin/env python3
+"""Finalize v2 Malaysia news editorial entries in one place."""
+
 import copy
 from dataclasses import dataclass
-from typing import Any, Callable
+from typing import Any
 
-from malaysia_groq_common import (
-    SAFE_FALLBACK_LIFE_IMPACT_LINE,
-    SAFE_FALLBACK_WHAT_HAPPENED_LINE,
-    clean_text,
-    summary_lines,
-)
+from malaysia_groq_common import clean_text
 
 
-JSON_TIER_ACCEPTED = "accepted_full"
-JSON_TIER_TOPIC_FALLBACK = "topic_fallback"
-JSON_TIER_GENERIC_FALLBACK = "generic_fallback"
-ENTRY_TIER_ENTRY_CANDIDATE = "entry_candidate"
-ENTRY_TIER_REVIEWED_ENTRY = "reviewed_entry"
+GROQ_ACCEPTED = "groq_accepted"
+RSS_FALLBACK = "rss_fallback"
+PROVENANCE_ORIGINS = ("rss_derived", "groq_replaced", "groq_inherited")
 
 
 @dataclass(frozen=True)
 class RenderDecision:
-    """The finalized display inputs for one selected item across render modes."""
-
     index: int
     link: str
-    json_tier: str
-    entry_tier: str
-    fallback_topic: str
-    json_summary: dict[str, Any]
-    entry_summary: dict[str, Any]
+    source_kind: str
+    editorial_entry: dict[str, Any]
 
 
-def summary_payload(value: Any) -> dict[str, Any]:
-    summary = value if isinstance(value, dict) else {}
+def editorial_entry_payload(value: Any) -> dict[str, Any]:
+    entry = value if isinstance(value, dict) else {}
+    points = entry.get("supporting_points_ja")
     return {
-        "conclusion": clean_text(summary.get("conclusion")),
-        "what_happened": summary_lines(summary.get("what_happened")),
-        "life_impact": clean_text(summary.get("life_impact")),
-        "next_action": clean_text(summary.get("next_action")),
+        "entry_ja": clean_text(entry.get("entry_ja")),
+        "supporting_points_ja": [
+            clean_text(point) for point in points if clean_text(point)
+        ][:2]
+        if isinstance(points, list)
+        else [],
     }
 
 
-def entry_text(record: dict[str, Any]) -> str:
-    entry = record.get("entry")
-    if isinstance(entry, dict):
-        return clean_text(entry.get("text_ja"))
-    if "entry" not in record:
-        return clean_text(record.get("entry_candidate"))
-    return ""
-
-
-def reviewed_entry_text(record: dict[str, Any]) -> str:
-    if clean_text(record.get("entry_review_status")) != "complete":
-        return ""
-    if clean_text(record.get("entry_review_verdict")) not in {"pass", "revise"}:
-        return ""
-    return clean_text(record.get("entry_review_candidate"))
-
-
-def record_for_item(
+def _record_for_item(
     index: int,
     item: dict[str, Any],
-    records_by_index: dict[int, dict[str, Any]],
+    records: dict[int, dict[str, Any]],
 ) -> dict[str, Any] | None:
-    record = records_by_index.get(index + 1)
-    if not isinstance(record, dict):
-        return None
-    if clean_text(record.get("link")) != clean_text(item.get("link")):
+    record = records.get(index + 1)
+    if not isinstance(record, dict) or clean_text(record.get("link")) != clean_text(item.get("link")):
         return None
     return record
 
 
-def build_render_decisions(
-    items: list[Any],
-    decision_records: list[dict[str, Any]],
-    fallback_summary_for_item: Callable[[dict[str, Any] | None, str | None], dict[str, Any]],
-    fallback_topic_for_item: Callable[[dict[str, Any]], str],
-) -> list[RenderDecision]:
-    """Finalize JSON and entry render tiers once, keyed by item index and link."""
-    records_by_index = {
+def build_render_decisions(items: list[Any], decision_records: list[dict[str, Any]]) -> list[RenderDecision]:
+    records = {
         record.get("index"): record
         for record in decision_records
         if isinstance(record, dict) and isinstance(record.get("index"), int)
@@ -87,107 +55,114 @@ def build_render_decisions(
     for index, item in enumerate(items):
         if not isinstance(item, dict):
             continue
-        record = record_for_item(index, item, records_by_index)
-        link = clean_text(item.get("link"))
-        if record is not None and record.get("accepted") is True:
-            summary = summary_payload(item.get("selected_summary"))
-            decisions.append(
-                RenderDecision(
-                    index=index,
-                    link=link,
-                    json_tier=JSON_TIER_ACCEPTED,
-                    entry_tier=JSON_TIER_ACCEPTED,
-                    fallback_topic="",
-                    json_summary=summary,
-                    entry_summary=copy.deepcopy(summary),
-                )
-            )
-            continue
-
-        topic = fallback_topic_for_item(item)
-        fallback_summary = summary_payload(fallback_summary_for_item(item, topic))
-        json_tier = JSON_TIER_TOPIC_FALLBACK if topic else JSON_TIER_GENERIC_FALLBACK
-        entry_tier = json_tier
-        entry_summary = copy.deepcopy(fallback_summary)
-        reviewed_candidate = reviewed_entry_text(record) if record is not None else ""
-        if reviewed_candidate:
-            entry_tier = ENTRY_TIER_REVIEWED_ENTRY
-            entry_summary = {
-                "conclusion": reviewed_candidate,
-                "what_happened": [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
-                "life_impact": SAFE_FALLBACK_LIFE_IMPACT_LINE,
-                "next_action": "",
-            }
+        record = _record_for_item(index, item, records)
+        accepted = record is not None and record.get("accepted") is True
         decisions.append(
             RenderDecision(
                 index=index,
-                link=link,
-                json_tier=json_tier,
-                entry_tier=entry_tier,
-                fallback_topic=topic,
-                json_summary=fallback_summary,
-                entry_summary=entry_summary,
+                link=clean_text(item.get("link")),
+                source_kind=GROQ_ACCEPTED if accepted else RSS_FALLBACK,
+                editorial_entry=editorial_entry_payload(item.get("editorial_entry")),
             )
         )
     return decisions
 
 
-def apply_render_decisions(
-    data: dict[str, Any],
-    render_decisions: list[RenderDecision],
-    summary_field: str,
-) -> dict[str, Any]:
-    """Copy data and apply a precomputed summary without recomputing its tier."""
-    normalized_data = copy.deepcopy(data)
-    items = normalized_data.get("items")
+def apply_render_decisions(data: dict[str, Any], decisions: list[RenderDecision]) -> dict[str, Any]:
+    rendered = copy.deepcopy(data)
+    items = rendered.get("items")
     if not isinstance(items, list):
-        return normalized_data
-    decision_by_index = {decision.index: decision for decision in render_decisions}
+        return rendered
+    by_index = {decision.index: decision for decision in decisions}
     for index, item in enumerate(items):
         if not isinstance(item, dict):
             continue
-        decision = decision_by_index.get(index)
+        decision = by_index.get(index)
         if decision is None or decision.link != clean_text(item.get("link")):
             continue
-        summary = getattr(decision, summary_field)
-        item["selected_summary"] = copy.deepcopy(summary)
-    return normalized_data
+        item["editorial_entry"] = copy.deepcopy(decision.editorial_entry)
+    return rendered
 
 
-def apply_json_render_decisions(
-    data: dict[str, Any], render_decisions: list[RenderDecision]
-) -> dict[str, Any]:
-    return apply_render_decisions(data, render_decisions, "json_summary")
+# Migration-only aliases for the rollback merge helper.  Production v2 calls
+# apply_render_decisions directly and never creates the old render tiers.
+def apply_json_render_decisions(data: dict[str, Any], decisions: list[RenderDecision]) -> dict[str, Any]:
+    return apply_render_decisions(data, decisions)
 
 
-def apply_entry_render_decisions(
-    data: dict[str, Any], render_decisions: list[RenderDecision]
-) -> dict[str, Any]:
-    return apply_render_decisions(data, render_decisions, "entry_summary")
+def apply_entry_render_decisions(data: dict[str, Any], decisions: list[RenderDecision]) -> dict[str, Any]:
+    return apply_render_decisions(data, decisions)
+
+
+def _entry_lines(entry: dict[str, Any]) -> list[tuple[str, str]]:
+    lines: list[tuple[str, str]] = []
+    text = clean_text(entry.get("entry_ja"))
+    if text:
+        lines.append(("entry_ja", text))
+    points = entry.get("supporting_points_ja")
+    if isinstance(points, list):
+        lines.extend(("supporting_points_ja", clean_text(point)) for point in points if clean_text(point))
+    return lines
 
 
 def annotate_decision_records(
-    decision_records: list[dict[str, Any]], render_decisions: list[RenderDecision]
+    original_data: dict[str, Any],
+    final_data: dict[str, Any],
+    decision_records: list[dict[str, Any]],
+    decisions: list[RenderDecision],
 ) -> None:
-    """Keep existing diagnostics fields as projections of the render decisions."""
-    decisions_by_index = {decision.index + 1: decision for decision in render_decisions}
+    original_items = original_data.get("items")
+    final_items = final_data.get("items")
+    if not isinstance(original_items, list) or not isinstance(final_items, list):
+        return
+    decisions_by_index = {decision.index + 1: decision for decision in decisions}
     for record in decision_records:
-        if not isinstance(record, dict):
+        if not isinstance(record, dict) or not isinstance(record.get("index"), int):
             continue
-        index = record.get("index")
-        decision = decisions_by_index.get(index) if isinstance(index, int) else None
-        if decision is None or decision.link != clean_text(record.get("link")):
+        decision = decisions_by_index.get(record["index"])
+        item_index = record["index"] - 1
+        if (
+            decision is None
+            or not 0 <= item_index < len(original_items)
+            or item_index >= len(final_items)
+            or not isinstance(original_items[item_index], dict)
+            or not isinstance(final_items[item_index], dict)
+        ):
             continue
-        record["json_render_fallback_kind"] = {
-            JSON_TIER_ACCEPTED: "accepted",
-            JSON_TIER_TOPIC_FALLBACK: "topic",
-            JSON_TIER_GENERIC_FALLBACK: "generic",
-        }[decision.json_tier]
-        record["json_render_fallback_topic"] = decision.fallback_topic
-        record["entry_render_tier"] = {
-            JSON_TIER_ACCEPTED: "full_summary",
-            ENTRY_TIER_ENTRY_CANDIDATE: "entry_candidate",
-            ENTRY_TIER_REVIEWED_ENTRY: "reviewed_entry",
-            JSON_TIER_TOPIC_FALLBACK: "existing_fallback",
-            JSON_TIER_GENERIC_FALLBACK: "existing_fallback",
-        }[decision.entry_tier]
+        record["render_source_kind"] = decision.source_kind
+        original = editorial_entry_payload(original_items[item_index].get("editorial_entry"))
+        final = editorial_entry_payload(final_items[item_index].get("editorial_entry"))
+        remaining = {"entry_ja": {}, "supporting_points_ja": {}}
+        for field, text in _entry_lines(original):
+            remaining[field][text] = remaining[field].get(text, 0) + 1
+        lines: list[dict[str, Any]] = []
+        for field, text in _entry_lines(final):
+            origin = "rss_derived"
+            if decision.source_kind == GROQ_ACCEPTED:
+                if remaining[field].get(text, 0):
+                    remaining[field][text] -= 1
+                    origin = "groq_inherited"
+                else:
+                    origin = "groq_replaced"
+            lines.append({"field": field, "text": text, "origin": origin})
+        record["editorial_entry_line_provenance"] = lines
+
+
+def provenance_observation(records: list[dict[str, Any]]) -> dict[str, Any]:
+    counts = {origin: 0 for origin in PROVENANCE_ORIGINS}
+    fields = {
+        field: {origin: 0 for origin in PROVENANCE_ORIGINS}
+        for field in ("entry_ja", "supporting_points_ja")
+    }
+    for record in records:
+        raw_lines = record.get("editorial_entry_line_provenance") if isinstance(record, dict) else []
+        for line in raw_lines if isinstance(raw_lines, list) else []:
+            if not isinstance(line, dict):
+                continue
+            origin = clean_text(line.get("origin"))
+            field = clean_text(line.get("field"))
+            if origin in counts:
+                counts[origin] += 1
+                if field in fields:
+                    fields[field][origin] += 1
+    return {"observation_only": True, "line_counts": counts, "line_counts_by_field": fields}

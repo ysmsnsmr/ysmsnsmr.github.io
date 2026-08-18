@@ -25,7 +25,7 @@ class ModelProfileTest(unittest.TestCase):
         self.assertEqual(production.model_id, "openai/gpt-oss-120b")
         self.assertEqual(production.production_prompt_layout, "user_only")
         self.assertEqual(production.production_max_tokens, 800)
-        self.assertEqual(production.production_contract, "summary_only")
+        self.assertEqual(production.production_contract, "editorial_entry_v2")
         self.assertEqual(production.production_rate_reset_wait_max_seconds, 60)
         self.assertEqual(
             production_profile_workflow_fields(production),
@@ -35,7 +35,7 @@ class ModelProfileTest(unittest.TestCase):
                 "openai/gpt-oss-120b",
                 "user_only",
                 "800",
-                "summary_only",
+                "editorial_entry_v2",
                 "60",
             ),
         )
@@ -52,7 +52,7 @@ class ModelProfileTest(unittest.TestCase):
         self.assertEqual(resolve_model_profile("gpt-oss", registry).reasoning_mode, "low_hidden")
         self.assertEqual(resolve_model_profile("gptoss120b", registry).comparison_prompt_layout, "user_only")
         self.assertEqual(resolve_model_profile("gptoss120b", registry).comparison_max_tokens, 800)
-        self.assertEqual(resolve_model_profile("gptoss120b", registry).comparison_contract, "summary_only")
+        self.assertEqual(resolve_model_profile("gptoss120b", registry).comparison_contract, "editorial_entry_v2")
         self.assertEqual(resolve_model_profile("qwen36", registry).comparison_prompt_layout, "user_only_explicit_contract")
 
     def test_artifact_only_profile_is_rejected_for_production(self) -> None:

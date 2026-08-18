@@ -17,17 +17,16 @@ on:
         default: false
         type: boolean
       enable_groq_production_overwrite:
-        description: "Allow validated Groq merged Markdown to overwrite the production RSS Markdown"
+        description: "Allow validated Groq Editorial Entry Markdown to overwrite the production RSS Markdown"
         required: false
         default: false
         type: boolean
       groq_production_candidate:
-        description: "Candidate used for validated Groq production overwrite"
+        description: "Retained for dispatch compatibility; Editorial Entry v2 always uses json-render"
         required: false
-        default: "merge"
+        default: "json-render"
         type: choice
         options:
-          - merge
           - json-render
       groq_model:
         description: "Production Groq model profile"
@@ -38,7 +37,7 @@ on:
           - gpt-oss-120b
           - llama33-70b
       force_all_groq:
-        description: "Send all selected items to Groq when optional rendering is enabled"
+        description: "Retained for dispatch compatibility; Editorial Entry v2 uses the configured cap in source order"
         required: false
         default: false
         type: boolean
@@ -103,7 +102,7 @@ jobs:
             enable_body="$(bool_value "${INPUT_ENABLE_BODY_ENRICHMENT:-false}")"
             enable_groq="$(bool_value "${INPUT_ENABLE_GROQ_RENDERING:-false}")"
             enable_overwrite="$(bool_value "${INPUT_ENABLE_GROQ_PRODUCTION_OVERWRITE:-false}")"
-            production_candidate_input="${INPUT_GROQ_PRODUCTION_CANDIDATE:-merge}"
+            production_candidate_input="${INPUT_GROQ_PRODUCTION_CANDIDATE:-json-render}"
             force_all="$(bool_value "${INPUT_FORCE_ALL_GROQ:-false}")"
             debug_groq="$(bool_value "${INPUT_DEBUG_GROQ:-false}")"
             model_input="${INPUT_GROQ_MODEL:-gpt-oss-120b}"
@@ -111,7 +110,7 @@ jobs:
             enable_body="$(bool_value "${VAR_ENABLE_BODY_ENRICHMENT:-false}")"
             enable_groq="$(bool_value "${VAR_ENABLE_GROQ_RENDERING:-false}")"
             enable_overwrite="$(bool_value "${VAR_ENABLE_GROQ_PRODUCTION_OVERWRITE:-false}")"
-            production_candidate_input="${VAR_GROQ_PRODUCTION_CANDIDATE:-merge}"
+            production_candidate_input="${VAR_GROQ_PRODUCTION_CANDIDATE:-json-render}"
             force_all="$(bool_value "${VAR_FORCE_ALL_GROQ:-false}")"
             debug_groq="$(bool_value "${VAR_DEBUG_GROQ:-false}")"
             model_input="${VAR_GROQ_MODEL:-gpt-oss-120b}"
@@ -122,7 +121,7 @@ jobs:
               production_candidate="json-render"
               ;;
             *)
-              production_candidate="merge"
+              production_candidate="json-render"
               ;;
           esac
 
@@ -248,18 +247,13 @@ jobs:
           args=(
             python3 -B scripts/render_malaysia_news_with_groq.py
             --json-input "${json_input}"
-            --rss-markdown-input "${rss_markdown_input}"
-            --output "${run_dir}/groq_merged_candidate.md"
+            --output "${run_dir}/groq_json_render_candidate.md"
             --model "${model_name}"
             --summary-prompt-layout "${summary_prompt_layout}"
             --summary-max-tokens "${summary_max_tokens}"
             --summary-contract "${summary_contract}"
             --rate-reset-wait-max-seconds "${rate_reset_wait_max_seconds}"
             --improved-items-output "${run_dir}/groq_${model_short}_improved_items.json"
-            --json-render-output "${run_dir}/groq_json_render_candidate.md"
-            --entry-render-output "${run_dir}/groq_entry_render_candidate.md"
-            --reviewed-entry-render-output "${run_dir}/groq_reviewed_entry_render_candidate.md"
-            --merge-accepted-with-rss-markdown
           )
           if [ "${force_all}" = "true" ]; then
             args+=(--force-all)
@@ -273,10 +267,7 @@ jobs:
               echo "skipped_missing_groq_api_key" > "${run_dir}/groq_rendering_status.txt"
             else
               echo "failed_missing_key_fallback_render" > "${run_dir}/groq_rendering_status.txt"
-              cp "${rss_markdown_input}" "${run_dir}/groq_merged_candidate.md" || true
               cp "${rss_markdown_input}" "${run_dir}/groq_json_render_candidate.md" || true
-              cp "${rss_markdown_input}" "${run_dir}/groq_entry_render_candidate.md" || true
-              cp "${rss_markdown_input}" "${run_dir}/groq_reviewed_entry_render_candidate.md" || true
               echo "::warning::Optional Groq rendering skipped, and fallback artifact render failed; RSS-only output will continue."
               exit 0
             fi
@@ -302,11 +293,10 @@ jobs:
           enable_overwrite="${{ steps.optional.outputs.enable_groq_production_overwrite }}"
           production_candidate="${{ steps.optional.outputs.groq_production_candidate }}"
           rss_fallback="${run_dir}/rss_production_fallback.md"
-          merge_candidate="${run_dir}/groq_merged_candidate.md"
           json_candidate="${run_dir}/groq_json_render_candidate.md"
-          candidate="${merge_candidate}"
-          candidate_label="merge"
-          candidate_status="merge"
+          candidate="${json_candidate}"
+          candidate_label="json-render"
+          candidate_status="json_render"
           improved_items="${run_dir}/groq_${model_short}_improved_items.json"
           rendering_status_file="${run_dir}/groq_rendering_status.txt"
           overwrite_status="${run_dir}/groq_production_overwrite_status.txt"
@@ -314,11 +304,6 @@ jobs:
           validator_status="${run_dir}/groq_production_overwrite_validator_status.json"
           validator_report="${run_dir}/groq_production_overwrite_validator_report.md"
 
-          if [ "${production_candidate}" = "json-render" ]; then
-            candidate="${json_candidate}"
-            candidate_label="json-render"
-            candidate_status="json_render"
-          fi
           echo "${candidate_label}" > "${overwrite_candidate_status}"
 
           restore_rss_fallback() {
@@ -374,11 +359,7 @@ jobs:
             > "${run_dir}/groq_production_overwrite_validator_stdout.log" \
             2> "${run_dir}/groq_production_overwrite_validator_stderr.log"; then
             if cp "${candidate}" "${output_path}"; then
-              if [ "${candidate_label}" = "merge" ]; then
-                echo "applied" > "${overwrite_status}"
-              else
-                echo "applied_${candidate_status}" > "${overwrite_status}"
-              fi
+              echo "applied_${candidate_status}" > "${overwrite_status}"
             else
               echo "failed_candidate_copy" > "${overwrite_status}"
               restore_rss_fallback
@@ -399,29 +380,10 @@ jobs:
           run_dir="${{ steps.optional.outputs.run_dir }}"
           model_short="${{ steps.optional.outputs.groq_model_short }}"
           json_candidate="${run_dir}/groq_json_render_candidate.md"
-          merge_candidate="${run_dir}/groq_merged_candidate.md"
           rss_fallback="${run_dir}/rss_production_fallback.md"
           improved_items="${run_dir}/groq_${model_short}_improved_items.json"
           validator_status="${run_dir}/groq_json_render_validator_status.json"
           validator_report="${run_dir}/groq_json_render_validator_report.md"
-          diff_output="${run_dir}/groq_json_render_diff.txt"
-
-          if [ -s "${merge_candidate}" ] && [ -s "${json_candidate}" ]; then
-            if diff -u "${merge_candidate}" "${json_candidate}" > "${diff_output}"; then
-              if [ ! -s "${diff_output}" ]; then
-                echo "no differences" > "${diff_output}"
-              fi
-            else
-              :
-            fi
-          else
-            {
-              echo "merge_candidate=${merge_candidate}"
-              echo "json_candidate=${json_candidate}"
-              echo "one_or_both_candidates_missing"
-            } > "${diff_output}"
-          fi
-
           if [ ! -s "${json_candidate}" ] || [ ! -s "${improved_items}" ] || [ ! -s "${rss_fallback}" ]; then
             printf '%s\n' '{"passed": false, "failures": ["missing_json_render_observation_inputs"]}' > "${validator_status}"
             {
@@ -446,64 +408,6 @@ jobs:
             :
           else
             echo "::notice::Optional JSON render candidate validator failed; observation artifact only."
-          fi
-
-      - name: Validate optional Groq entry render candidate
-        if: always()
-        continue-on-error: true
-        shell: bash
-        run: |
-          set -u
-          run_dir="${{ steps.optional.outputs.run_dir }}"
-          model_short="${{ steps.optional.outputs.groq_model_short }}"
-          entry_candidate="${run_dir}/groq_entry_render_candidate.md"
-          json_candidate="${run_dir}/groq_json_render_candidate.md"
-          rss_fallback="${run_dir}/rss_production_fallback.md"
-          improved_items="${run_dir}/groq_${model_short}_improved_items.json"
-          validator_status="${run_dir}/groq_entry_render_validator_status.json"
-          validator_report="${run_dir}/groq_entry_render_validator_report.md"
-          diff_output="${run_dir}/groq_entry_render_diff.txt"
-
-          if [ -s "${json_candidate}" ] && [ -s "${entry_candidate}" ]; then
-            if diff -u "${json_candidate}" "${entry_candidate}" > "${diff_output}"; then
-              if [ ! -s "${diff_output}" ]; then
-                echo "no differences" > "${diff_output}"
-              fi
-            else
-              :
-            fi
-          else
-            {
-              echo "json_candidate=${json_candidate}"
-              echo "entry_candidate=${entry_candidate}"
-              echo "one_or_both_candidates_missing"
-            } > "${diff_output}"
-          fi
-
-          if [ ! -s "${entry_candidate}" ] || [ ! -s "${improved_items}" ] || [ ! -s "${rss_fallback}" ]; then
-            printf '%s\n' '{"passed": false, "failures": ["missing_entry_render_observation_inputs"]}' > "${validator_status}"
-            {
-              echo "# Groq entry render candidate validator"
-              echo ""
-              echo "- status: skipped"
-              echo "- reason: missing_entry_render_observation_inputs"
-            } > "${validator_report}"
-            echo "::notice::Optional entry render candidate validation skipped; observation inputs are missing."
-            exit 0
-          fi
-
-          if python3 -B scripts/validate_malaysia_groq_merged_candidate.py \
-            --selected-json "${run_dir}/selected_items.json" \
-            --candidate-markdown "${entry_candidate}" \
-            --improved-items-json "${improved_items}" \
-            --rss-fallback-markdown "${rss_fallback}" \
-            --status-output "${validator_status}" \
-            --report-output "${validator_report}" \
-            > "${run_dir}/groq_entry_render_validator_stdout.log" \
-            2> "${run_dir}/groq_entry_render_validator_stderr.log"; then
-            :
-          else
-            echo "::notice::Optional entry render candidate validator failed; observation artifact only."
           fi
 
       - name: Run artifact-only Groq model comparison

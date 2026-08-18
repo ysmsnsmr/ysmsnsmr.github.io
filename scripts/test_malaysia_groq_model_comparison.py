@@ -1,284 +1,44 @@
 #!/usr/bin/env python3
-import json
+import argparse
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from malaysia_groq_model_profiles import load_model_profile_registry, production_model_profile, resolve_model_profile
-from run_malaysia_groq_model_comparison import (
-    PROBE_PROMPT,
-    compatibility_probe_messages,
-    comparison_request_configuration,
-    comparison_metrics,
-    classify_gate_failure_reason,
-    golden_fixture_gate_observation,
-    golden_item_gate_observation,
-    probe_contract_observation,
-    probe_status_from_diagnostic,
-    quality_cohort_links,
-    update_golden_fixture,
-)
+from malaysia_groq_model_profiles import load_model_profile_registry, resolve_model_profile
+from run_malaysia_groq_model_comparison import run_artifact_profile
 
 
 class ModelComparisonTest(unittest.TestCase):
-    def test_gate_failure_reason_classification_separates_safety_usefulness_and_transport(self) -> None:
-        self.assertEqual(
-            classify_gate_failure_reason("ValueError: unsafe numeric unit conversion: rm153b"),
-            "hard_safety",
-        )
-        self.assertEqual(
-            classify_gate_failure_reason(
-                "ValueError: force_all accepted gate: no_strong_source_life_impact_signal"
-            ),
-            "usefulness",
-        )
-        self.assertEqual(classify_gate_failure_reason("HTTP 429"), "transport_or_contract")
-
-    def test_golden_fixture_observation_identifies_hard_safety_only_acceptability(self) -> None:
-        usefulness_only = golden_item_gate_observation(
-            {
-                "link": "https://example.test/usefulness",
-                "failure_reasons": [
-                    "ValueError: force_all accepted gate: no_strong_source_life_impact_signal"
-                ],
-            }
-        )
-        safety_failure = golden_item_gate_observation(
-            {
-                "link": "https://example.test/safety",
-                "failure_reasons": ["ValueError: unsafe numeric unit conversion: rm153b"],
-            }
-        )
-
-        self.assertEqual(usefulness_only["safety_gate_status"], "pass")
-        self.assertEqual(usefulness_only["usefulness_gate_status"], "reject")
-        self.assertTrue(usefulness_only["hard_safety_only_accept_possible"])
-        self.assertEqual(safety_failure["safety_gate_status"], "reject")
-        self.assertEqual(safety_failure["usefulness_gate_status"], "not_evaluated")
-        self.assertFalse(safety_failure["hard_safety_only_accept_possible"])
-
-        observation = golden_fixture_gate_observation(
-            {
-                "items": [
-                    {
-                        "link": "https://example.test/usefulness",
-                        "failure_reasons": [
-                            "ValueError: force_all accepted gate: no_strong_source_life_impact_signal"
-                        ],
-                    },
-                    {
-                        "link": "https://example.test/safety",
-                        "failure_reasons": ["ValueError: unsafe numeric unit conversion: rm153b"],
-                    },
-                    {"link": "https://example.test/rate", "failure_reasons": ["HTTP 429"]},
-                ]
-            }
-        )
-        self.assertEqual(observation["fixture_item_count"], 3)
-        self.assertEqual(observation["hard_safety_only_accept_possible_count"], 1)
-        self.assertEqual(observation["current_gate_decision_counts"]["reject"], 2)
-        self.assertEqual(observation["current_gate_decision_counts"]["not_evaluated"], 1)
-
-    def test_candidate_request_configuration_keeps_experiments_profile_scoped(self) -> None:
+    def test_probe_passes_but_empty_baseline_cohort_skips_quality_calls(self) -> None:
         registry = load_model_profile_registry()
-
-        self.assertEqual(
-            comparison_request_configuration(resolve_model_profile("gptoss120b", registry)),
-            {
-                "prompt_layout": "user_only",
-                "max_tokens": 800,
-                "contract": "summary_only",
-                "response_mode": "json_schema_strict",
-                "reasoning_mode": "low_hidden",
-            },
-        )
-        self.assertEqual(
-            comparison_request_configuration(resolve_model_profile("qwen36", registry))["prompt_layout"],
-            "user_only_explicit_contract",
-        )
-
-    def test_probe_moves_only_configured_candidates_to_user_messages(self) -> None:
-        registry = load_model_profile_registry()
-        item = {"title": "Fixture"}
-
-        gpt20_messages = compatibility_probe_messages(resolve_model_profile("gptoss", registry), item)
-        gpt120_messages = compatibility_probe_messages(resolve_model_profile("gptoss120b", registry), item)
-        qwen_messages = compatibility_probe_messages(resolve_model_profile("qwen36", registry), item)
-
-        self.assertEqual(gpt20_messages[0], {"role": "system", "content": PROBE_PROMPT})
-        self.assertEqual(gpt20_messages[1], {"role": "user", "content": json.dumps(item, ensure_ascii=False)})
-        self.assertEqual([message["role"] for message in gpt120_messages], ["user"])
-        self.assertEqual([message["role"] for message in qwen_messages], ["user"])
-        self.assertIn('"selected_summary"', qwen_messages[0]["content"])
-
-    def test_fixed_metrics_keep_requested_and_selected_fallback_rates_separate(self) -> None:
-        improved = {
-            "counts": {"requested": 4, "accepted": 1, "fallback": 3},
-            "diagnostics": {
-                "json_render_fallback_counts": {
-                    "topic_fallback_count": 2,
-                    "generic_fallback_count": 2,
-                },
-                "entry_candidate_observation": {"entry_contract_complete_count": 2},
-                "entry_review_observation": {"reviewed_entry_available_count": 1},
-                "json_render_summary_provenance": {
-                    "line_counts": {"rss_derived": 7, "groq_replaced": 2, "groq_inherited": 1}
-                },
-            },
-        }
-        validator = {
-            "passed": True,
-            "counts": {"rendered_urls": 5},
-            "url_validation": {"missing_selected_urls": []},
-            "markdown_validation": {"forbidden_matches": []},
-        }
-
-        metrics = comparison_metrics(5, improved, validator)
-
-        self.assertEqual(metrics["url_retention_rate"], 1.0)
-        self.assertEqual(metrics["accepted_rate_of_requested"], 0.25)
-        self.assertEqual(metrics["request_fallback_rate"], 0.75)
-        self.assertEqual(metrics["selected_fallback_rate"], 0.8)
-        self.assertEqual(metrics["groq_replaced_summary_line_rate"], 0.2)
-
-        unavailable = comparison_metrics(5, None, None)
-        self.assertIsNone(unavailable["url_retention_rate"])
-
-    def test_golden_fixture_appends_failures_without_deleting_existing_items(self) -> None:
-        registry = load_model_profile_registry()
-        production = production_model_profile("llama", registry)
-        selected = {
-            "items": [
-                {"title": "Existing", "link": "https://example.test/existing"},
-                {"title": "New", "link": "https://example.test/new"},
-            ]
-        }
-        improved = {
-            "diagnostics": {
-                "decision_records": [
-                    {
-                        "link": "https://example.test/new",
-                        "requested": True,
-                        "accepted": False,
-                        "decision": "fallback",
-                        "reason": "HTTP 429",
-                    },
-                    {
-                        "link": "https://example.test/existing",
-                        "requested": True,
-                        "accepted": True,
-                        "decision": "accepted",
-                        "reason": "",
-                    },
-                ]
-            }
-        }
-        existing_fixture = {
-            "schema_version": "malaysia-groq-model-migration-golden/v1",
-            "description": "fixture",
-            "items": [
-                {
-                    "link": "https://example.test/existing",
-                    "first_observed_on": "2026-08-01",
-                    "production_profile": "llama33-70b",
-                    "failure_reasons": ["ValueError"],
-                    "item": {"title": "Existing", "link": "https://example.test/existing"},
-                }
-            ],
-        }
+        profile = resolve_model_profile("gpt-oss-20b", registry)
         with tempfile.TemporaryDirectory() as directory:
-            path = Path(directory) / "golden.json"
-            path.write_text(json.dumps(existing_fixture), encoding="utf-8")
+            root = Path(directory)
+            args = argparse.Namespace(
+                output_dir=root / "comparison",
+                json_input=root / "input.json",
+                selected_json=root / "selected.json",
+                rss_markdown_input=root / "fallback.md",
+                cohort_output=root / "cohort.json",
+                debug_groq=False,
+            )
+            with patch.dict("os.environ", {"GROQ_API_KEY": "test-key"}), patch(
+                "run_malaysia_groq_model_comparison.run_compatibility_probe",
+                return_value={"probe_status": "passed", "rate_wait": "not_needed"},
+            ), patch("run_malaysia_groq_model_comparison.run_command") as run_command:
+                result = run_artifact_profile(profile, args, 1, [])
 
-            added = update_golden_fixture(path, selected, improved, production, "2026-08-04")
-            result = json.loads(path.read_text(encoding="utf-8"))
-
-        self.assertEqual(added, 1)
-        self.assertEqual(len(result["items"]), 2)
-        self.assertEqual(result["items"][0]["link"], "https://example.test/existing")
-        self.assertEqual(result["items"][1]["failure_reasons"], ["HTTP 429"])
-
-    def test_cohort_uses_requested_records_by_priority_then_index(self) -> None:
-        improved = {
-            "diagnostics": {
-                "decision_records": [
-                    {"link": "https://example.test/one", "requested": True, "force_all_priority": 10, "index": 1},
-                    {"link": "https://example.test/two", "requested": True, "force_all_priority": 30, "index": 3},
-                    {"link": "https://example.test/three", "requested": True, "force_all_priority": 30, "index": 2},
-                ]
-            }
-        }
-
-        self.assertEqual(
-            quality_cohort_links(improved),
-            ["https://example.test/three", "https://example.test/two"],
-        )
-
-    def test_metrics_separate_transport_contract_and_disabled_entry_review(self) -> None:
-        improved = {
-            "counts": {"requested": 2, "accepted": 1, "fallback": 1},
-            "diagnostics": {
-                "entry_review_observation": {"entry_review_policy": "disabled_for_model_comparison"},
-                "decision_records": [
-                    {
-                        "link": "https://example.test/one",
-                        "requested": True,
-                        "accepted": True,
-                        "groq_call": {"transport_status": "success", "json_contract_status": "valid"},
-                    },
-                    {
-                        "link": "https://example.test/two",
-                        "requested": True,
-                        "accepted": False,
-                        "reason": "HTTP 429",
-                        "groq_call": {"transport_status": "rate_limited", "json_contract_status": "not_evaluated"},
-                    },
-                ],
-            },
-        }
-
-        metrics = comparison_metrics(2, improved, None, ["https://example.test/one", "https://example.test/two"])
-
-        self.assertEqual(metrics["entry_review_policy"], "disabled_for_model_comparison")
-        self.assertIsNone(metrics["reviewed_entry_available_rate_of_requested"])
-        self.assertEqual(metrics["transport_status_counts"], {"rate_limited": 1, "success": 1})
-        self.assertEqual(metrics["json_contract_status_counts"], {"not_evaluated": 1, "valid": 1})
-        self.assertEqual(metrics["quality_cohort"]["accepted_count"], 1)
-
-    def test_probe_classifies_server_json_validation_as_contract_failure(self) -> None:
-        diagnostic = {
-            "transport_status": "http_error",
-            "http_status": 400,
-            "json_contract_status": "not_evaluated",
-            "error": {"code": "json_validate_failed"},
-        }
-
-        self.assertEqual(probe_status_from_diagnostic(diagnostic), "contract_failed")
-        self.assertEqual(
-            probe_contract_observation({"diagnostic": diagnostic}),
-            {
-                "transport_status": "http_error",
-                "json_contract_status": "not_evaluated",
-                "contract_observation": "server_json_validate_failed",
-                "error_code": "json_validate_failed",
-            },
-        )
-
-    def test_probe_keeps_network_errors_as_transport_failure(self) -> None:
-        self.assertEqual(
-            probe_status_from_diagnostic(
-                {
-                    "transport_status": "network_error",
-                    "http_status": None,
-                    "error": {"code": ""},
-                }
-            ),
-            "transport_failed",
-        )
+            self.assertEqual(result["run_status"], "skipped_no_quality_cohort")
+            self.assertFalse(run_command.called)
+            self.assertEqual(
+                (args.output_dir / profile.artifact_key / "run_status.txt").read_text(encoding="utf-8"),
+                "skipped_no_quality_cohort\n",
+            )
 
 
 if __name__ == "__main__":

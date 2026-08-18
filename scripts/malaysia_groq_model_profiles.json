@@ -16,10 +16,10 @@
       "reasoning_mode": "default",
       "comparison_prompt_layout": "production",
       "comparison_max_tokens": 500,
-      "comparison_contract": "summary_entry",
+      "comparison_contract": "editorial_entry_v2",
       "production_prompt_layout": "production",
       "production_max_tokens": 500,
-      "production_contract": "summary_entry",
+      "production_contract": "editorial_entry_v2",
       "production_rate_reset_wait_max_seconds": 0
     },
     {
@@ -36,7 +36,7 @@
       "reasoning_mode": "low_hidden",
       "comparison_prompt_layout": "production",
       "comparison_max_tokens": 500,
-      "comparison_contract": "summary_entry"
+      "comparison_contract": "editorial_entry_v2"
     },
     {
       "name": "gpt-oss-120b",
@@ -51,10 +51,10 @@
       "reasoning_mode": "low_hidden",
       "comparison_prompt_layout": "user_only",
       "comparison_max_tokens": 800,
-      "comparison_contract": "summary_only",
+      "comparison_contract": "editorial_entry_v2",
       "production_prompt_layout": "user_only",
       "production_max_tokens": 800,
-      "production_contract": "summary_only",
+      "production_contract": "editorial_entry_v2",
       "production_rate_reset_wait_max_seconds": 60
     },
     {
@@ -71,7 +71,7 @@
       "reasoning_mode": "hidden",
       "comparison_prompt_layout": "user_only_explicit_contract",
       "comparison_max_tokens": 500,
-      "comparison_contract": "summary_entry"
+      "comparison_contract": "editorial_entry_v2"
     }
   ]
 }
