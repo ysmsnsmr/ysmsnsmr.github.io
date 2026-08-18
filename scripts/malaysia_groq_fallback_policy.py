@@ -3,7 +3,6 @@ from typing import Any
 
 import render_malaysia_news_from_json as fallback_renderer
 from malaysia_groq_common import (
-    SAFE_FALLBACK_LIFE_IMPACT_LINE,
     SAFE_FALLBACK_WHAT_HAPPENED_LINE,
     clean_text,
     contains_any,
@@ -160,7 +159,7 @@ def safe_json_render_fallback_summary_for_item(
         return {
             "conclusion": SAFE_FALLBACK_CONCLUSION_LINE,
             "what_happened": [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
-            "life_impact": SAFE_FALLBACK_LIFE_IMPACT_LINE,
+            "life_impact": "",
             "next_action": "",
             "suppress_topic_next_action": True,
         }
@@ -169,7 +168,7 @@ def safe_json_render_fallback_summary_for_item(
         return {
             "conclusion": SAFE_FALLBACK_CONCLUSION_LINE,
             "what_happened": [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
-            "life_impact": SAFE_FALLBACK_LIFE_IMPACT_LINE,
+            "life_impact": "",
             "next_action": "",
             "suppress_topic_next_action": True,
         }
@@ -180,7 +179,7 @@ def safe_json_render_fallback_summary_for_item(
     return {
         "conclusion": clean_text(topic_text.get("conclusion")) or SAFE_FALLBACK_CONCLUSION_LINE,
         "what_happened": summary_lines(topic_text.get("what_happened")) or [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
-        "life_impact": clean_text(topic_text.get("life_impact")) or SAFE_FALLBACK_LIFE_IMPACT_LINE,
+        "life_impact": clean_text(topic_text.get("life_impact")),
         "next_action": next_action,
         "suppress_topic_next_action": False,
     }

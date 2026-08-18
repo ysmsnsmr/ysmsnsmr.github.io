@@ -337,10 +337,13 @@ def normalize_selected_summary(item: dict[str, Any]) -> dict[str, Any]:
     summary = item.get("selected_summary")
     if not isinstance(summary, dict):
         summary = {}
+    life_impact = clean_display_text(summary.get("life_impact"))
+    if looks_generic(life_impact):
+        life_impact = ""
     return {
         "conclusion": clean_display_text(summary.get("conclusion")),
         "what_happened": normalized_lines(summary.get("what_happened")),
-        "life_impact": clean_display_text(summary.get("life_impact")),
+        "life_impact": life_impact,
         "next_action": clean_display_text(summary.get("next_action")),
     }
 
@@ -374,7 +377,8 @@ def render_item_summary(item: dict[str, Any], summary: dict[str, Any]) -> list[s
     lines.append(f"- 結論：{conclusion}")
     for line in summary_lines(summary.get("what_happened")):
         lines.append(f"- 何が起きた：{line}")
-    lines.append(f"- 生活への影響：{life_impact}")
+    if life_impact:
+        lines.append(f"- 生活への影響：{life_impact}")
     if next_action:
         lines.append(f"- 次アクション：{next_action}")
     lines.append(f"- 出典：{source}（{published_date}）")

@@ -9,6 +9,7 @@ from unittest import mock
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from malaysia_groq_markdown_merge import normalize_entry_candidate_summaries_for_observation
+from malaysia_groq_force_all_policy import force_all_gate_reason
 import render_malaysia_news_with_groq as groq_renderer
 from render_malaysia_news_with_groq import (
     GroqSummaryRejected,
@@ -291,7 +292,7 @@ class EntryObjectObservationTest(unittest.TestCase):
         self.assertEqual(records[0]["reason"], "ValueError: force_all accepted gate: no_strong_signal")
         self.assertEqual(records[0]["groq_call"], transport_diagnostic)
 
-    def test_force_all_usefulness_warning_keeps_summary_with_limited_display(self) -> None:
+    def test_force_all_usefulness_warning_omits_unsupported_impact(self) -> None:
         item = copy.deepcopy(fixture_item())
         summary = {
             "conclusion": "当局が制度改正を提案しました。",
@@ -330,8 +331,30 @@ class EntryObjectObservationTest(unittest.TestCase):
         )
         self.assertEqual(
             rendered["items"][0]["selected_summary"]["life_impact"],
-            groq_renderer.SAFE_FALLBACK_LIFE_IMPACT_LINE,
+            "",
         )
+
+    def test_blank_life_impact_is_valid_for_an_article_without_grounded_reader_effect(self) -> None:
+        summary = groq_renderer.validate_groq_summary(
+            {
+                "conclusion": "当局が方針を説明しました。",
+                "what_happened": ["当局が関連する方針を説明しました。"],
+                "life_impact": "",
+                "next_action": "",
+            }
+        )
+
+        self.assertEqual(summary["life_impact"], "")
+
+    def test_blank_life_impact_does_not_create_a_usefulness_warning(self) -> None:
+        summary = {
+            "conclusion": "当局が方針を説明しました。",
+            "what_happened": ["当局が関連する方針を説明しました。"],
+            "life_impact": "",
+            "next_action": "",
+        }
+
+        self.assertEqual(force_all_gate_reason(fixture_item(), summary), "")
 
     def test_force_all_hard_safety_gate_still_rejects(self) -> None:
         item = copy.deepcopy(fixture_item())

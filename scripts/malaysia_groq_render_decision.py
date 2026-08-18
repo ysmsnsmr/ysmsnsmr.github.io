@@ -4,7 +4,6 @@ from dataclasses import dataclass
 from typing import Any, Callable
 
 from malaysia_groq_common import (
-    SAFE_FALLBACK_LIFE_IMPACT_LINE,
     SAFE_FALLBACK_WHAT_HAPPENED_LINE,
     clean_text,
     summary_lines,
@@ -115,7 +114,7 @@ def build_render_decisions(
             entry_summary = {
                 "conclusion": reviewed_candidate,
                 "what_happened": [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
-                "life_impact": SAFE_FALLBACK_LIFE_IMPACT_LINE,
+                "life_impact": "",
                 "next_action": "",
             }
         decisions.append(

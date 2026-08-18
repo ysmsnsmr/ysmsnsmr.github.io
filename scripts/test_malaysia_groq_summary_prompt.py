@@ -73,6 +73,7 @@ class SummaryPromptTest(unittest.TestCase):
 
         self.assertEqual([message["role"] for message in messages], ["user"])
         self.assertIn(SUMMARY_ONLY_CONTRACT_INSTRUCTION, messages[0]["content"])
+        self.assertIn("空文字列", messages[0]["content"])
         self.assertIn('"selected_summary"', messages[0]["content"])
         self.assertIn('"entry"', SYSTEM_PROMPT)
 

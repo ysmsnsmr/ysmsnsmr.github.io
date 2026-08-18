@@ -518,6 +518,9 @@ def paul_tan_force_all_gate_reason(source_text: str) -> str:
 
 def force_all_gate_reason(item: dict[str, Any], summary: dict[str, Any]) -> str:
     """Return a rejection reason for force-all accepted summaries, or empty string when safe."""
+    # An omitted impact is an intentional display choice, not a usefulness failure.
+    if not clean_text(summary.get("life_impact")):
+        return ""
     source_text = force_all_source_text(item)
     rendered_text = force_all_summary_text(summary)
     focus_values = body_evidence_focus_values(item)

@@ -6,7 +6,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from malaysia_groq_fallback_policy import high_confidence_json_fallback_topic
+from malaysia_groq_fallback_policy import high_confidence_json_fallback_topic, safe_json_render_fallback_summary_for_item
 
 
 class JsonFallbackTopicTest(unittest.TestCase):
@@ -53,6 +53,18 @@ class JsonFallbackTopicTest(unittest.TestCase):
         }
 
         self.assertEqual(high_confidence_json_fallback_topic(item), "storm_weather")
+
+    def test_generic_fallback_omits_unsupported_life_impact(self) -> None:
+        summary = safe_json_render_fallback_summary_for_item(
+            {
+                "title": "Council discusses a local issue",
+                "description": "The discussion remains ongoing.",
+                "tags": [],
+                "flags": {},
+            }
+        )
+
+        self.assertEqual(summary["life_impact"], "")
 
 
 if __name__ == "__main__":

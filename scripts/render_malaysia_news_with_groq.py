@@ -17,7 +17,6 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from malaysia_groq_body_focus import life_impact_matches_body_focus
 from malaysia_groq_common import (
-    SAFE_FALLBACK_LIFE_IMPACT_LINE,
     clean_text,
     collect_item_text,
     contains_any,
@@ -234,17 +233,16 @@ focusがtransport_or_infraなら、運行・道路・通勤・移動・利用者
 focusがconsumer_or_paymentなら、決済・アプリ・利用手段・手数料に関する影響として書いてください。
 focusがhealth_or_educationなら、受診・制度・学校・対象者に関する影響として書いてください。
 focusがfinancial_service_accessなら、銀行や金融サービス利用・窓口・顧客対応に関する影響として書いてください。
-body_evidence.focusが空、またはevidenceが弱い場合だけ、控えめな背景情報として書いてください。
-影響が分からない場合は「制度や進学条件に関わる背景情報として確認しておく価値があります。」程度にしてください。
+body_evidence.focusが空、またはevidenceが弱い場合、life_impactを無理に補わず空文字列にしてください。
+影響が入力から根拠を持って書けない場合は、life_impactを空文字列にしてください。
 RSSにない事実、対象者、影響、次アクションを足さないでください。
 “lost students”, “losing students” は死亡を意味すると明確でない限り、「生徒の利用が減った」「利用者を失った」「生徒が乗らなくなった」のように訳してください。
 死亡、事故、被害、収入減などはRSSに明記されていない限り書かないでください。
-個人の苦境・個別事例では、life_impactは広げすぎず「関連制度や当局対応を知る背景情報です」程度に留めてください。
+個人の苦境・個別事例では、読者の生活への直接影響を入力から言えない場合、life_impactを空文字列にしてください。
 “funeral transport” は文脈上「葬儀関連の送迎」「葬儀向け送迎」など、車両そのものを断定しすぎない表現にしてください。
 conclusionは自然な日本語にしつつ、titleにない因果関係を強めないでください。
 what_happenedは重複した内容を2行にしないでください。2行目が1行目と同じ意味なら1行だけにしてください。
-life_impactはRSSに具体的な生活影響がない場合、無理に個人の収入・生活への影響を作らないでください。
-個別事例では、読者の生活への直接影響を断定せず、制度・当局対応・地域事情の背景情報として控えめに述べてください。
+life_impactはRSSに具体的な生活影響がない場合、無理に個人の収入・生活への影響を作らず、空文字列にしてください。
 entryは、読者が次に出典リンクを開くか判断するための、短く自然な日本語の入口文です。
 entry.text_jaでは、記事の主体、発言者・帰属、出来事の状態、確定度を落とさないでください。
 発言記事では「〜氏が述べた」「当局が発表した」など、発言者または帰属を自然に残してください。
@@ -275,6 +273,7 @@ USER_MESSAGE_JSON_CONTRACT = """返答は次の形のJSON objectだけにして�
 }"""
 
 SUMMARY_ONLY_CONTRACT_INSTRUCTION = """この比較ではentry objectを生成しません。返答はselected_summaryだけを含む次のJSON objectにしてください。追加のkey、entry、説明文、Markdownは出力しません。
+life_impactは入力から具体的な根拠を示せる場合だけ書き、示せない場合は空文字列にしてください。
 {"selected_summary":{"conclusion":"string","what_happened":["string"],"life_impact":"string","next_action":"string"}}"""
 
 
@@ -778,8 +777,8 @@ def validate_summary_against_source(
         raise ValueError("unsupported life impact")
 
 
-    life_impact_text = summary.get("life_impact", "")
-    if not life_impact_matches_body_focus(item, life_impact_text):
+    life_impact_text = clean_text(summary.get("life_impact"))
+    if life_impact_text and not life_impact_matches_body_focus(item, life_impact_text):
         reason = "generic life_impact for body_evidence focus"
         if allow_usefulness_warnings:
             usefulness_warnings.append(reason)
@@ -803,14 +802,15 @@ def validate_summary_against_source(
         if not has_any_text(source_text, admission_evidence):
             raise ValueError("unsupported admission requirement claim")
 
-    topic = normalize_topic(fallback_renderer.detect_topic(item))
-    reason = reject_life_impact_reason(topic, item, summary["life_impact"])
-    if reason:
-        warning = f"life_impact topic mismatch: {reason}"
-        if allow_usefulness_warnings:
-            usefulness_warnings.append(warning)
-        else:
-            raise ValueError(warning)
+    if life_impact_text:
+        topic = normalize_topic(fallback_renderer.detect_topic(item))
+        reason = reject_life_impact_reason(topic, item, life_impact_text)
+        if reason:
+            warning = f"life_impact topic mismatch: {reason}"
+            if allow_usefulness_warnings:
+                usefulness_warnings.append(warning)
+            else:
+                raise ValueError(warning)
     return usefulness_warnings
 
 def is_enforcement_or_misuse_item(item: dict[str, Any]) -> bool:
@@ -982,10 +982,10 @@ def apply_usefulness_display_policy(
     summary: dict[str, Any],
     usefulness_reasons: list[str],
 ) -> dict[str, Any]:
-    """Keep useful factual fields while making the weak impact field conservative."""
+    """Keep useful factual fields while omitting an impact field without support."""
     display_summary = copy.deepcopy(summary)
     if usefulness_reasons:
-        display_summary["life_impact"] = SAFE_FALLBACK_LIFE_IMPACT_LINE
+        display_summary["life_impact"] = ""
     return display_summary
 
 
@@ -1007,8 +1007,6 @@ def validate_groq_summary(value: Any) -> dict[str, Any]:
         raise ValueError("what_happened is not list")
     if not what_happened:
         raise ValueError("missing what_happened")
-    if not life_impact:
-        raise ValueError("missing life_impact")
     return {
         "conclusion": conclusion,
         "what_happened": what_happened[:2],

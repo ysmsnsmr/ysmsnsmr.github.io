@@ -7,6 +7,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import render_malaysia_news_from_json as renderer
+from malaysia_groq_markdown_merge import render_accepted_record_block
 
 
 def fixture_data() -> dict:
@@ -52,6 +53,31 @@ class PreparedSummaryRendererTest(unittest.TestCase):
         markdown = renderer.render_prepared(data)
 
         self.assertIn("- 次アクション：公式案内を確認してください。", markdown)
+
+    def test_prepared_render_omits_blank_life_impact_line(self) -> None:
+        data = fixture_data()
+        data["items"][0]["selected_summary"]["life_impact"] = ""
+
+        markdown = renderer.render_prepared(data)
+
+        self.assertNotIn("- 生活への影響：", markdown)
+
+    def test_merge_block_omits_blank_life_impact_line(self) -> None:
+        block = render_accepted_record_block(
+            {
+                "source": "Example News",
+                "published_date": "2026年8月2日",
+                "link": "https://example.test/item",
+                "improved_summary": {
+                    "conclusion": "結論です。",
+                    "what_happened": ["事実です。"],
+                    "life_impact": "",
+                    "next_action": "",
+                },
+            }
+        )
+
+        self.assertNotIn("- 生活への影響：", block)
 
 
 if __name__ == "__main__":
