@@ -8,7 +8,6 @@ import render_malaysia_news_from_json as fallback_renderer
 from malaysia_groq_common import (
     GENERIC_LIFE_IMPACT_LINE,
     GENERIC_WHAT_HAPPENED_LINE,
-    SAFE_FALLBACK_LIFE_IMPACT_LINE,
     SAFE_FALLBACK_WHAT_HAPPENED_LINE,
     clean_text,
     looks_generic,
@@ -72,13 +71,13 @@ def safe_fallback_summary_for_item(item: dict[str, Any] | None) -> dict[str, Any
     if not item:
         return {
             "what_happened": [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
-            "life_impact": SAFE_FALLBACK_LIFE_IMPACT_LINE,
+            "life_impact": "",
         }
     topic = fallback_renderer.detect_topic(item)
     if not topic:
         return {
             "what_happened": [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
-            "life_impact": SAFE_FALLBACK_LIFE_IMPACT_LINE,
+            "life_impact": "",
         }
     summary = fallback_renderer.build_display_summary(item)
     what_happened = [
@@ -91,14 +90,14 @@ def safe_fallback_summary_for_item(item: dict[str, Any] | None) -> dict[str, Any
     if not what_happened:
         what_happened = [SAFE_FALLBACK_WHAT_HAPPENED_LINE]
     if not life_impact or life_impact == GENERIC_LIFE_IMPACT_LINE or looks_generic(life_impact):
-        life_impact = SAFE_FALLBACK_LIFE_IMPACT_LINE
+        life_impact = ""
     return {"what_happened": what_happened[:2], "life_impact": life_impact}
 
 
 def strip_generic_fallback_lines(block: str, item: dict[str, Any] | None) -> str:
     summary = safe_fallback_summary_for_item(item)
     replacement_what = summary_lines(summary.get("what_happened")) or [SAFE_FALLBACK_WHAT_HAPPENED_LINE]
-    replacement_life = clean_text(summary.get("life_impact")) or SAFE_FALLBACK_LIFE_IMPACT_LINE
+    replacement_life = clean_text(summary.get("life_impact"))
     lines = block.splitlines()
     cleaned_lines: list[str] = []
     seen_what_happened: set[str] = set()
@@ -115,7 +114,8 @@ def strip_generic_fallback_lines(block: str, item: dict[str, Any] | None) -> str
                 inserted_what = True
             continue
         if line == f"- 生活への影響：{GENERIC_LIFE_IMPACT_LINE}":
-            cleaned_lines.append(f"- 生活への影響：{clean_rss_fallback_text_value(replacement_life)}")
+            if replacement_life:
+                cleaned_lines.append(f"- 生活への影響：{clean_rss_fallback_text_value(replacement_life)}")
             continue
         if what_match:
             normalized_value = clean_rss_fallback_text_value(what_match.group(1))
@@ -213,7 +213,7 @@ def normalize_entry_candidate_summaries_for_observation(
         item["selected_summary"] = {
             "conclusion": entry_candidate,
             "what_happened": [SAFE_FALLBACK_WHAT_HAPPENED_LINE],
-            "life_impact": SAFE_FALLBACK_LIFE_IMPACT_LINE,
+            "life_impact": "",
             "next_action": "",
         }
         item["_suppress_topic_next_action"] = True
@@ -235,7 +235,8 @@ def render_accepted_record_block(record: dict[str, Any]) -> str:
     lines.append(f"- 結論：{conclusion}")
     for line in summary_lines(summary.get("what_happened")):
         lines.append(f"- 何が起きた：{line}")
-    lines.append(f"- 生活への影響：{life_impact}")
+    if life_impact:
+        lines.append(f"- 生活への影響：{life_impact}")
     if next_action:
         lines.append(f"- 次アクション：{next_action}")
     lines.append(f"- 出典：{source}（{published_date}）")

@@ -1969,6 +1969,27 @@ def selected_summary_json(item: Item) -> dict[str, object]:
     }
 
 
+def editorial_entry_json(item: Item) -> dict[str, object]:
+    """Adapt the existing RSS summary to the v2 renderer contract.
+
+    This remains deterministic RSS fallback data.  Generic impact and action
+    text is intentionally not promoted into supporting points.
+    """
+    summary = selected_summary_json(item)
+    entry_ja = str(summary.get("conclusion") or "").strip()
+    points = [
+        line.strip()
+        for line in summary.get("what_happened", [])
+        if isinstance(line, str)
+        and line.strip()
+        and "RSS内のタイトルと説明をもとに整理しました" not in line
+    ][:2]
+    return {
+        "entry_ja": entry_ja,
+        "supporting_points_ja": points,
+    }
+
+
 def item_json(item: Item) -> dict[str, object]:
     return {
         "category": item.category,
@@ -1986,6 +2007,7 @@ def item_json(item: Item) -> dict[str, object]:
         "penalties": item.penalties,
         "background_value": item.background_value,
         "selected_summary": selected_summary_json(item),
+        "editorial_entry": editorial_entry_json(item),
     }
 
 
@@ -2592,12 +2614,15 @@ def self_test() -> int:
     json_payload = build_selected_items_json([weather_guard], 1, [], now, freshness)
     json_item = json_payload["items"][0]
     selected_summary = json_item["selected_summary"]
+    editorial_entry = json_item["editorial_entry"]
     check("JSON payload uses selected items only", json_payload["counts"]["selected"] == 1 and len(json_payload["items"]) == 1)
     check("JSON payload carries freshness observation", json_payload.get("freshness_observation") == freshness)
     check("JSON item has canonical key", bool(json_item["canonical_key"]))
     check("JSON item keeps internal metadata", "score" in json_item and "flags" in json_item)
     check("JSON selected summary has next_action key", "next_action" in selected_summary)
     check("JSON selected summary splits what_happened like render", len(selected_summary["what_happened"]) <= 2)
+    check("JSON item carries Editorial Entry v2 fallback", bool(editorial_entry["entry_ja"]))
+    check("Editorial Entry v2 has at most two supporting points", len(editorial_entry["supporting_points_ja"]) <= 2)
 
     if failures:
         print("self-test failed:")

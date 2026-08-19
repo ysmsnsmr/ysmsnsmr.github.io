@@ -11,7 +11,7 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from malaysia_groq_model_profiles import load_model_profile_registry, resolve_model_profile
-from malaysia_groq_output_contract import SUMMARY_ENTRY_SCHEMA, summary_entry_schema_error
+from malaysia_groq_output_contract import EDITORIAL_ENTRY_V2_SCHEMA, editorial_entry_schema_error
 from malaysia_groq_transport import build_chat_request_body, error_diagnostic, request_chat_completion
 
 
@@ -34,19 +34,10 @@ class FakeResponse:
 
 
 VALID = {
-    "selected_summary": {
-        "conclusion": "計画が発表されました。",
-        "what_happened": ["来月に窓口を開く計画です。"],
-        "life_impact": "申請手続きに関わります。",
-        "next_action": "公式情報を確認してください。",
-    },
-    "entry": {
-        "text_ja": "省庁は来月の窓口開設を計画していると発表しました。",
-        "subject": {"source_text": "Ministry", "text_ja": "省庁"},
-        "attribution": {"source_text": "said", "text_ja": "発表しました"},
-        "state": {"kind": "plan_or_proposal", "source_text": "plans", "text_ja": "計画"},
-        "certainty": {"kind": "planned", "source_text": "plans", "text_ja": "計画"},
-    },
+    "editorial_entry": {
+        "entry_ja": "省庁は来月の窓口開設を計画していると発表しました。",
+        "supporting_points_ja": ["開始時期は来月とされています。"],
+    }
 }
 
 
@@ -62,9 +53,9 @@ class GroqTransportTest(unittest.TestCase):
             max_tokens=500,
             timeout_seconds=1,
             max_response_chars=4000,
-            json_schema_name="summary_entry",
-            json_schema=SUMMARY_ENTRY_SCHEMA,
-            schema_error=summary_entry_schema_error,
+            json_schema_name="editorial_entry_v2",
+            json_schema=EDITORIAL_ENTRY_V2_SCHEMA,
+            schema_error=editorial_entry_schema_error,
             api_key="test-key",
         )
 
@@ -76,8 +67,8 @@ class GroqTransportTest(unittest.TestCase):
             messages,
             0.2,
             500,
-            "summary_entry",
-            SUMMARY_ENTRY_SCHEMA,
+            "editorial_entry_v2",
+            EDITORIAL_ENTRY_V2_SCHEMA,
         )
         qwen = build_chat_request_body(resolve_model_profile("qwen36", self.registry), messages, 0.2, 500)
 
@@ -128,7 +119,7 @@ class GroqTransportTest(unittest.TestCase):
 
     def test_strict_schema_rejects_shape_mismatch(self) -> None:
         payload = {
-            "choices": [{"finish_reason": "stop", "message": {"content": json.dumps({"selected_summary": {}})}}]
+            "choices": [{"finish_reason": "stop", "message": {"content": json.dumps({"editorial_entry": {}})}}]
         }
         with patch("malaysia_groq_transport.urllib.request.urlopen", return_value=FakeResponse(payload)):
             with self.assertRaises(ValueError) as raised:

@@ -74,9 +74,10 @@ def parse_markdown(path: Path) -> NewsDay:
             current_category = line
             continue
 
-        if line.startswith("- 結論："):
+        if line.startswith("- 概要：") or line.startswith("- 結論："):
             flush_item()
-            conclusion = line[len("- 結論：") :].strip()
+            prefix = "- 概要：" if line.startswith("- 概要：") else "- 結論："
+            conclusion = line[len(prefix) :].strip()
             if current_category in category_counts:
                 category_counts[current_category] += 1
             conclusions.append(conclusion)

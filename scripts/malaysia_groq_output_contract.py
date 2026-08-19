@@ -77,6 +77,37 @@ def selected_summary_schema() -> dict[str, Any]:
     }
 
 
+def editorial_entry_schema() -> dict[str, Any]:
+    """The production display contract.
+
+    The renderer deliberately receives one editorial entry rather than the
+    former conclusion/impact/action fields.  This keeps editorial judgement in
+    the model response and makes the fallback shape identical.
+    """
+    return {
+        "type": "object",
+        "properties": {
+            "entry_ja": {"type": "string", "minLength": 1},
+            "supporting_points_ja": {
+                "type": "array",
+                "items": {"type": "string"},
+                "minItems": 0,
+                "maxItems": 2,
+            },
+        },
+        "required": ["entry_ja", "supporting_points_ja"],
+        "additionalProperties": False,
+    }
+
+
+EDITORIAL_ENTRY_V2_SCHEMA = {
+    "type": "object",
+    "properties": {"editorial_entry": editorial_entry_schema()},
+    "required": ["editorial_entry"],
+    "additionalProperties": False,
+}
+
+
 SUMMARY_ENTRY_SCHEMA = {
     "type": "object",
     "properties": {
@@ -175,6 +206,24 @@ def summary_only_schema_error(value: Any) -> str:
         or any(not _is_string(line) for line in happened)
     ):
         return "summary_value"
+    return ""
+
+
+def editorial_entry_schema_error(value: Any) -> str:
+    if not _exact_keys(value, {"editorial_entry"}):
+        return "root_shape"
+    entry = value["editorial_entry"]
+    if not _exact_keys(entry, {"entry_ja", "supporting_points_ja"}):
+        return "editorial_entry_shape"
+    points = entry["supporting_points_ja"]
+    if (
+        not _is_string(entry["entry_ja"])
+        or not entry["entry_ja"].strip()
+        or not isinstance(points, list)
+        or not 0 <= len(points) <= 2
+        or any(not _is_string(point) for point in points)
+    ):
+        return "editorial_entry_value"
     return ""
 
 
