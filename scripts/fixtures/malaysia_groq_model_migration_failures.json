@@ -2077,6 +2077,79 @@
           "unsupported_conditions"
         ]
       }
+    },
+    {
+      "link": "https://www.malaymail.com/news/money/2026/08/20/bursa-malaysia-ends-higher-as-easing-us-treasury-yields-boost-risk-appetite/232084",
+      "first_observed_on": "2026-08-21",
+      "production_profile": "gpt-oss-120b",
+      "failure_reasons": [
+        "ValueError: unsafe numeric unit conversion: rm4.01 billion"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Malay Mail",
+        "published_date": "2026年8月20日",
+        "published_at": "2026-08-20T18:27:03+08:00",
+        "title": "Bursa Malaysia ends higher as easing US Treasury yields boost risk appetite",
+        "description": "KUALA LUMPUR, Aug 20 — Bursa Malaysia ended higher on Thursday as easing US Treasury yields improved risk appetite...",
+        "link": "https://www.malaymail.com/news/money/2026/08/20/bursa-malaysia-ends-higher-as-easing-us-treasury-yields-boost-risk-appetite/232084",
+        "canonical_key": "bursa",
+        "tags": [
+          "klang_valley",
+          "economy"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": true,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": true,
+          "is_official": false,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "score": 8,
+        "reasons": [
+          "Klang Valley周辺に関連",
+          "医療・雇用・経済・都市生活の背景価値",
+          "生活者向けの背景価値"
+        ],
+        "penalties": [],
+        "background_value": true,
+        "selected_summary": {
+          "conclusion": "Bursa Malaysiaは慎重な値動きが見込まれています。",
+          "what_happened": [
+            "西アジア情勢などの外部要因を背景に、レンジ相場の見方が報じられました。",
+            "市場心理は不透明感に左右されやすい状況です。"
+          ],
+          "life_impact": "投資信託、株式投資、企業景況感を見ている人には参考になります。",
+          "next_action": ""
+        },
+        "editorial_entry": {
+          "entry_ja": "Bursa Malaysiaは慎重な値動きが見込まれています。",
+          "supporting_points_ja": [
+            "西アジア情勢などの外部要因を背景に、レンジ相場の見方が報じられました。",
+            "市場心理は不透明感に左右されやすい状況です。"
+          ]
+        }
+      }
     }
   ]
 }
