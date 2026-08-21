@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "meta-ads-tracker-candidates/v2",
+  "candidateHash": "9a32fa38322520ea50d0fb80aab21ba8d084c8811c3ba728676412a61774b207",
+  "generatedAt": "2026-08-21T01:58:31Z",
+  "baseline": {
+    "mode": "active",
+    "cutoffAt": "2026-08-16T01:58:08Z"
+  },
+  "week": {
+    "startDate": "2026-08-17",
+    "endDate": "2026-08-23",
+    "label": "2026-08-17〜2026-08-23"
+  },
+  "sourceRuns": [
+    {
+      "sourceId": "meta-product-news-rss",
+      "status": "success",
+      "fetchedAt": "2026-08-21T01:58:31Z"
+    },
+    {
+      "sourceId": "meta-business-sdk-releases",
+      "status": "success",
+      "fetchedAt": "2026-08-21T01:58:31Z"
+    }
+  ],
+  "items": []
+}
