@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "meta-ads-tracker-weekly-candidate/v1",
+  "weeklyHash": "20d2a7d83fc71d7a87941c681a74df9a519d9fd9007ab7753d72b97e71780efa",
+  "generatedAt": "2026-08-21T09:38:33Z",
+  "cutoffAt": "2026-08-21T09:00:00Z",
+  "week": {
+    "startDate": "2026-08-17",
+    "endDate": "2026-08-23",
+    "label": "2026-08-17〜2026-08-23"
+  },
+  "candidateRefs": [
+    {
+      "fileName": "20260817T015617Z-31986425937-1.json",
+      "candidateHash": "219be9358c55efdd9d197ea17c335d78d9d8b957ad65c91032992eab313dc23a",
+      "generatedAt": "2026-08-17T01:56:17Z"
+    },
+    {
+      "fileName": "20260818T015134Z-32089701903-1.json",
+      "candidateHash": "964bc3ca45d96523d600f744f86125f39594357cef631f7ceab8100be23605bc",
+      "generatedAt": "2026-08-18T01:51:34Z"
+    },
+    {
+      "fileName": "20260819T015407Z-32206588266-1.json",
+      "candidateHash": "e1650f57599c131eba0fccfe4bee4cb1652b759c124da450526be1cab2707254",
+      "generatedAt": "2026-08-19T01:54:08Z"
+    },
+    {
+      "fileName": "20260820T015238Z-32322583854-1.json",
+      "candidateHash": "64076345507965359183480f6ce642ded194f93c6b77fe7a8bbdb5648ce8dd42",
+      "generatedAt": "2026-08-20T01:52:38Z"
+    },
+    {
+      "fileName": "20260821T015831Z-32438170807-1.json",
+      "candidateHash": "9a32fa38322520ea50d0fb80aab21ba8d084c8811c3ba728676412a61774b207",
+      "generatedAt": "2026-08-21T01:58:31Z"
+    }
+  ],
+  "items": []
+}
