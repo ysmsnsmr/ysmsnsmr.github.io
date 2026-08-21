@@ -2150,6 +2150,77 @@
           ]
         }
       }
+    },
+    {
+      "link": "https://www.malaymail.com/news/malaysia/2026/08/21/dengue-cases-surge-56pc-as-moh-warns-of-nationwide-spread/232144",
+      "first_observed_on": "2026-08-22",
+      "production_profile": "gpt-oss-120b",
+      "failure_reasons": [
+        "ValueError: unsupported death claim"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Malay Mail",
+        "published_date": "2026年8月21日",
+        "published_at": "2026-08-21T10:29:03+08:00",
+        "title": "Dengue cases surge 56pc as MOH warns of nationwide spread",
+        "description": "KUALA LUMPUR, Aug 21 — The Ministry of Health (MOH) has sounded the alarm over a significant surge in dengue cases...",
+        "link": "https://www.malaymail.com/news/malaysia/2026/08/21/dengue-cases-surge-56pc-as-moh-warns-of-nationwide-spread/232144",
+        "canonical_key": "dengue cases surge 56pc as moh warns of nationwide spread",
+        "tags": [
+          "klang_valley"
+        ],
+        "flags": {
+          "is_weather": false,
+          "is_heat": false,
+          "is_public_transport": false,
+          "is_road_issue": false,
+          "is_flood_impact": false,
+          "is_utility_bill": false,
+          "is_sabah_electricity": false,
+          "is_jpj": false,
+          "is_mydigital_integration": false,
+          "is_mcmc": false,
+          "is_mcmc_3r": false,
+          "is_mcmc_service_quality": false,
+          "is_mcmc_wsis": false,
+          "is_social_security": false,
+          "is_scam": false,
+          "is_currency": false,
+          "is_market": false,
+          "is_ai_economy": false,
+          "is_cost_of_living": false,
+          "is_health_system": false,
+          "is_urban_development": false,
+          "is_klang_valley": true,
+          "is_official": true,
+          "is_individual_incident": false,
+          "is_political_noise": false
+        },
+        "score": 3,
+        "reasons": [
+          "公的機関・公式発表に関連",
+          "Klang Valley周辺に関連",
+          "生活者向けの背景価値"
+        ],
+        "penalties": [],
+        "background_value": true,
+        "selected_summary": {
+          "conclusion": "Dengue cases surge 56pc as MOH warns of nationwide spread",
+          "what_happened": [
+            "KUALA LUMPUR, Aug 21 — The Ministry of Health (MOH) has sounded the alarm over a significant surge in dengue cases...",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "editorial_entry": {
+          "entry_ja": "Dengue cases surge 56pc as MOH warns of nationwide spread",
+          "supporting_points_ja": [
+            "KUALA LUMPUR, Aug 21 — The Ministry of Health (MOH) has sounded the alarm over a significant surge in dengue cases..."
+          ]
+        }
+      }
     }
   ]
 }
