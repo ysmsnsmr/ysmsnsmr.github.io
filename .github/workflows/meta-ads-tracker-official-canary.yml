@@ -1,0 +1,25 @@
+name: Meta Ads official canary
+on:
+  schedule:
+    - cron: "45 0 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: meta-ads-tracker-official-canary
+  cancel-in-progress: false
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with: {python-version: "3.12"}
+      - name: Observe official canaries
+        run: python3 scripts/meta_ads_tracker_official_canary.py --output "${RUNNER_TEMP}/meta_ads_official_canary.json"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: meta-ads-official-canary-${{ github.run_id }}
+          path: ${{ runner.temp }}/meta_ads_official_canary.json
+          if-no-files-found: error
+          retention-days: 30

@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "meta-ads-official-canaries/v1",
+  "policies": {"artifactOnly": true, "persistRawResponseBody": false, "failureAction": "observe_only"},
+  "sources": [
+    {"id":"meta-graph-api-changelog","name":"Meta Graph API Changelog","url":"https://developers.facebook.com/docs/graph-api/changelog/","expectedContentTypes":["text/html"]},
+    {"id":"meta-marketing-api-docs","name":"Meta Marketing API Docs","url":"https://developers.facebook.com/docs/marketing-apis/","expectedContentTypes":["text/html"]},
+    {"id":"meta-developer-blog","name":"Meta Developer Blog","url":"https://developers.facebook.com/blog/","expectedContentTypes":["text/html"]}
+  ]
+}
