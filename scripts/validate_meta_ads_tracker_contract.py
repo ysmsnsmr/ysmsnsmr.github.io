@@ -12,6 +12,8 @@ from meta_ads_tracker_contract import (
     DEFAULT_FIXTURE_DIRECTORY,
     load_and_validate_canonical_fixtures,
     DEFAULT_SOURCE_CONFIG,
+    DEFAULT_SOURCE_GOVERNANCE,
+    load_and_validate_source_governance,
     load_and_validate_source_config,
 )
 
@@ -19,11 +21,13 @@ from meta_ads_tracker_contract import (
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=DEFAULT_SOURCE_CONFIG)
+    parser.add_argument("--governance", type=Path, default=DEFAULT_SOURCE_GOVERNANCE)
     parser.add_argument("--fixtures-dir", type=Path, default=DEFAULT_FIXTURE_DIRECTORY)
     args = parser.parse_args()
 
     try:
         config = load_and_validate_source_config(args.config)
+        governance = load_and_validate_source_governance(args.governance, config)
         fixtures = load_and_validate_canonical_fixtures(args.fixtures_dir, config)
     except ContractError as error:
         print(f"FAIL: {error}", file=sys.stderr)
@@ -31,7 +35,7 @@ def main() -> int:
 
     print(
         "PASS: "
-        f"{len(config['sources'])} official-source configurations and "
+        f"{len(governance['sources'])} governed official-source configurations and "
         f"{len(fixtures)} anonymous weekly fixtures satisfy the contract."
     )
     return 0

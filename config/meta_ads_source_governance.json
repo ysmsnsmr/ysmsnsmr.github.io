@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "meta-ads-source-governance/v1",
+  "policies": {
+    "establishedAt": "2026-08-22",
+    "legacyReviewDeadlineDays": 14,
+    "deadlineTimezone": "Asia/Kuala_Lumpur",
+    "newAutomatedSourceRequirement": "approved",
+    "deadlineAction": "stop_automatic_collection",
+    "prohibitedAction": "stop_automatic_collection"
+  },
+  "sources": [
+    {
+      "sourceId": "meta-product-news-rss",
+      "status": "legacy_pending_review",
+      "reviewDeadline": "2026-09-05",
+      "rationale": "Existing automatic source retained only for the 14-day P0-B re-review grace period."
+    },
+    {
+      "sourceId": "meta-ads-manager-help",
+      "status": "manual_only",
+      "rationale": "Login-required Help content remains outside scheduled collection."
+    },
+    {
+      "sourceId": "meta-audience-help",
+      "status": "manual_only",
+      "rationale": "Login-required Help content remains outside scheduled collection."
+    },
+    {
+      "sourceId": "meta-business-sdk-releases",
+      "status": "legacy_pending_review",
+      "reviewDeadline": "2026-09-05",
+      "rationale": "Existing automatic source retained only for the 14-day P0-B re-review grace period."
+    }
+  ]
+}

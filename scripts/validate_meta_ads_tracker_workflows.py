@@ -98,6 +98,8 @@ def main() -> int:
             fail("every collecting step after the kill switch must be gated")
         if 'git add -- "${CANDIDATE}" data/meta_ads_tracker_state.json' not in collect_runs:
             fail("collect workflow must stage only the current candidate and state")
+        if "--governance config/meta_ads_source_governance.json" not in collect_runs:
+            fail("collect workflow must validate source governance before collection")
         artifact = next((step for step in collect_steps if step.get("name") == "Upload daily candidate artifacts"), None)
         if not isinstance(artifact, dict) or artifact.get("with", {}).get("path") != "${{ steps.collect.outputs.candidate }}":
             fail("collect workflow must upload only the current candidate")
