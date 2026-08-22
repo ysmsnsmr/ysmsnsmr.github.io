@@ -17,6 +17,7 @@ WORKFLOWS = {
     "review": ROOT / ".github/workflows/meta-ads-tracker-review.yml",
     "publish": ROOT / ".github/workflows/meta-ads-tracker-publish.yml",
     "ci": ROOT / ".github/workflows/meta-ads-tracker-ci.yml",
+    "secondary_shadow": ROOT / ".github/workflows/meta-ads-tracker-secondary-shadow.yml",
 }
 PINNED_ACTIONS = {
     "actions/checkout": "3d3c42e5aac5ba805825da76410c181273ba90b1",
@@ -77,7 +78,7 @@ def main() -> int:
             group = parsed[name].get("concurrency", {}).get("group")
             if group != "meta-ads-tracker-repository-write":
                 fail(f"{name} must share repository-write concurrency")
-        for name in ("collect", "publish"):
+        for name in ("collect", "publish", "secondary_shadow"):
             require_pinned_actions(name, parsed[name])
         publish_runs = "\n".join(run_blocks(parsed["publish"]))
         if "meta_ads_tracker_groq.py" in publish_runs or "GROQ_API_KEY" in str(parsed["publish"]):
@@ -106,6 +107,35 @@ def main() -> int:
         artifact_with = artifact.get("with", {}) if isinstance(artifact, dict) else {}
         if artifact_with.get("if-no-files-found") != "error" or artifact_with.get("retention-days") != "30":
             fail("collect artifact must fail on absence and retain exactly 30 days")
+        shadow = parsed["secondary_shadow"]
+        if shadow.get("concurrency", {}).get("group") != "meta-ads-tracker-secondary-shadow-state":
+            fail("secondary shadow must use its dedicated state-branch concurrency group")
+        if shadow.get("permissions", {}).get("contents") != "write":
+            fail("secondary shadow needs contents: write only for its dedicated state branch")
+        shadow_steps = steps(shadow)
+        shadow_kill_switch = next((step for step in shadow_steps if step.get("id") == "kill_switch"), None)
+        if shadow_kill_switch is None or "META_ADS_TRACKER_SHADOW_ENABLED" not in str(shadow_kill_switch):
+            fail("secondary shadow must have a strict opt-in kill switch")
+        if "${META_ADS_TRACKER_SHADOW_ENABLED:-false}" not in str(shadow_kill_switch):
+            fail("secondary shadow must default to disabled when its variable is unset")
+        if any(
+            step is not shadow_kill_switch and "steps.kill_switch.outputs.enabled == 'true'" not in str(step.get("if", ""))
+            for step in shadow_steps
+        ):
+            fail("every secondary-shadow step after the kill switch must be gated")
+        shadow_runs = "\n".join(run_blocks(shadow))
+        if any(path in shadow_runs for path in ("meta_ads_tracker_candidates", "meta_ads_tracker_weekly", "meta_ads_tracker_state.json", "meta-ads-updates")):
+            fail("secondary shadow must not reference official candidates, state, weekly artifacts, or UI")
+        if "automation/meta-ads-shadow-state" not in str(shadow):
+            fail("secondary shadow must use the dedicated shadow state branch")
+        if 'git add -- "${SHADOW_REPORT_FILE}" "${SHADOW_STATE_FILE}"' not in shadow_runs:
+            fail("secondary shadow must stage only its report and state files explicitly")
+        shadow_artifact = next((step for step in shadow_steps if step.get("name") == "Upload secondary shadow observation artifact"), None)
+        if not isinstance(shadow_artifact, dict) or shadow_artifact.get("with", {}).get("path") != "${{ steps.collect.outputs.report }}":
+            fail("secondary shadow must upload only the current observation report")
+        shadow_artifact_with = shadow_artifact.get("with", {}) if isinstance(shadow_artifact, dict) else {}
+        if shadow_artifact_with.get("if-no-files-found") != "error" or shadow_artifact_with.get("retention-days") != "30":
+            fail("secondary shadow artifact must fail on absence and retain exactly 30 days")
     except (OSError, ValueError, yaml.YAMLError) as error:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1
