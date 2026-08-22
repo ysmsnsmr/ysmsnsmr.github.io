@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Render selected Malaysia news through the Editorial Entry v2 contract.
 
-The production path has one display object.  Groq may replace the RSS entry
-only after a strict JSON and hard-safety check; every other outcome keeps the
-RSS entry and therefore keeps the selected URL renderable.
+The production path has one display object. Groq may replace the code-owned
+RSS fallback entry only after a strict JSON and hard-safety check; every other
+outcome keeps the selected URL renderable without reusing legacy RSS prose.
 """
 
 import argparse
@@ -35,6 +35,7 @@ from malaysia_groq_model_profiles import (
 )
 from malaysia_groq_output_contract import (
     EDITORIAL_ENTRY_V2_SCHEMA,
+    editorial_entry_forbidden_patterns,
     editorial_entry_schema_error,
 )
 from malaysia_groq_render_decision import (
@@ -251,6 +252,8 @@ def validate_editorial_entry_against_source(item: dict[str, Any], entry: dict[st
         )
     ):
         raise ValueError("english lead leakage")
+    if editorial_entry_forbidden_patterns(rendered_text):
+        raise ValueError("forbidden display leakage")
     for reason in (
         reject_numeric_unit_reason(source_text, rendered_text),
         reject_currency_token_reason(source_text, rendered_text),
@@ -394,6 +397,9 @@ def editorial_entry_counts(records: list[dict[str, Any]]) -> dict[str, int]:
         "selected_count": len(records),
         "groq_accepted_count": sum(record.get("render_source_kind") == "groq_accepted" for record in records),
         "rss_fallback_count": sum(record.get("render_source_kind") == "rss_fallback" for record in records),
+        "rss_fallback_source_link_only_count": sum(
+            record.get("rss_fallback_entry_kind") == "source_link_only" for record in records
+        ),
         "request_cap_skipped_count": sum(clean_text(record.get("reason")) == "request_cap" for record in records),
     }
 

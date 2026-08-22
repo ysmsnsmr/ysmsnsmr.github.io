@@ -9,6 +9,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from malaysia_groq_output_contract import EDITORIAL_ENTRY_FORBIDDEN_PATTERNS
+
 
 SCHEMA_VERSION = "malaysia-groq-editorial-entry-validator/v2"
 CATEGORY_HEADERS = ["【速報】", "【生活インパクト】", "【知っておくと得】"]
@@ -17,21 +19,7 @@ REQUIRED_LINES = {
     "has_selected_count": "要約対象件数：",
     "has_failed_sources_line": "失敗したソース一覧：",
 }
-FORBIDDEN_PATTERNS = [
-    "KUALA LUMPUR,",
-    "PUTRAJAYA,",
-    "SHAH ALAM,",
-    "GEORGE TOWN,",
-    "MELAKA,",
-    "— The",
-    "::inbox-item",
-    "The post",
-    "appeared first",
-    "Lowyat",
-    "lowyat",
-    "RSS内のタイトルと説明をもとに整理しました。",
-    "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
-]
+FORBIDDEN_PATTERNS = EDITORIAL_ENTRY_FORBIDDEN_PATTERNS
 URL_RE = re.compile(r"出典元URL：(\S+)")
 
 
@@ -93,6 +81,7 @@ def parse_observation_diagnostics(value: dict[str, Any]) -> dict[str, Any]:
         "selected_count": None,
         "groq_accepted_count": None,
         "rss_fallback_count": None,
+        "rss_fallback_source_link_only_count": None,
         "request_cap_skipped_count": None,
         "hard_safety_rejection_reason_counts": {},
         "transport_status_counts": {},
@@ -103,7 +92,13 @@ def parse_observation_diagnostics(value: dict[str, Any]) -> dict[str, Any]:
         return result
     entries = diagnostics.get("editorial_entry_counts")
     if isinstance(entries, dict):
-        for key in ("selected_count", "groq_accepted_count", "rss_fallback_count", "request_cap_skipped_count"):
+        for key in (
+            "selected_count",
+            "groq_accepted_count",
+            "rss_fallback_count",
+            "rss_fallback_source_link_only_count",
+            "request_cap_skipped_count",
+        ):
             result[key] = optional_int(entries.get(key))
     for key in ("hard_safety_rejection_reason_counts", "transport_status_counts", "json_contract_status_counts"):
         raw = diagnostics.get(key)
@@ -211,6 +206,7 @@ def write_report(path: Path, result: dict[str, Any]) -> None:
         f"- groq_accepted: {result['counts']['groq_accepted']}",
         f"- groq_fallback: {result['counts']['groq_fallback']}",
         f"- rss_fallback_count: {observation['rss_fallback_count']}",
+        f"- rss_fallback_source_link_only_count: {observation['rss_fallback_source_link_only_count']}",
         f"- request_cap_skipped_count: {observation['request_cap_skipped_count']}",
         f"- hard_safety_rejection_reason_counts: {json.dumps(observation['hard_safety_rejection_reason_counts'], ensure_ascii=False)}",
         f"- transport_status_counts: {json.dumps(observation['transport_status_counts'], ensure_ascii=False)}",

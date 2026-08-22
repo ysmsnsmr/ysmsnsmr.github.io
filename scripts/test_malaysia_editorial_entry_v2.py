@@ -20,6 +20,7 @@ from malaysia_groq_render_decision import (
     apply_render_decisions,
     build_render_decisions,
     provenance_observation,
+    validated_rss_fallback_editorial_entry,
 )
 from malaysia_groq_transport import ChatCompletion
 from validate_malaysia_groq_merged_candidate import validate_candidate
@@ -88,6 +89,12 @@ class EditorialEntryV2Test(unittest.TestCase):
             "editorial_entry_shape",
         )
         self.assertEqual(EDITORIAL_ENTRY_V2_SCHEMA["required"], ["editorial_entry"])
+
+    def test_article_fallback_is_a_valid_v2_object(self) -> None:
+        self.assertEqual(
+            editorial_entry_schema_error({"editorial_entry": validated_rss_fallback_editorial_entry()}),
+            "",
+        )
 
     def test_v2_markdown_has_only_overview_and_supporting_points(self) -> None:
         data = {"counts": {"processed": 1, "selected": 1}, "failed_sources": [], "items": [item()]}
@@ -159,7 +166,7 @@ class EditorialEntryV2Test(unittest.TestCase):
         with patch.dict(os.environ, {"MALAYSIA_NEWS_GROQ_FORCE_ALL_REQUEST_CAP": "7"}, clear=False):
             self.assertEqual(force_all_request_cap(), 7)
 
-    def test_hard_safety_rejection_keeps_rss_entry_and_records_reason(self) -> None:
+    def test_hard_safety_rejection_uses_validated_v2_fallback_and_records_reason(self) -> None:
         data = {"items": [item()]}
         rejection = groq_renderer.GroqEditorialEntryRejected(
             "unsupported accident claim",
@@ -171,9 +178,66 @@ class EditorialEntryV2Test(unittest.TestCase):
         final = apply_render_decisions(rendered, decisions)
         annotate_decision_records(data, final, records, decisions)
         self.assertEqual(stats["fallback"], 1)
-        self.assertEqual(final["items"][0]["editorial_entry"]["entry_ja"], "RSS概要1")
+        self.assertEqual(
+            final["items"][0]["editorial_entry"],
+            validated_rss_fallback_editorial_entry(),
+        )
         self.assertEqual(records[0]["render_source_kind"], "rss_fallback")
+        self.assertEqual(records[0]["rss_fallback_entry_kind"], "source_link_only")
+        self.assertEqual(records[0]["rss_fallback_entry_contract_status"], "valid")
         self.assertEqual(records[0]["hard_safety_rejection_reason"], "unsupported accident claim")
+        self.assertEqual(
+            records[0]["editorial_entry_line_provenance"][0]["origin"],
+            "fallback_source_only",
+        )
+
+    def test_legacy_english_rss_entry_cannot_invalidate_other_accepted_entries(self) -> None:
+        data = {
+            "counts": {"processed": 2, "selected": 2},
+            "failed_sources": [],
+            "items": [item(1), item(2)],
+        }
+        data["items"][1]["editorial_entry"] = {
+            "entry_ja": "Dengue cases surge 56pc as MOH warns of nationwide spread",
+            "supporting_points_ja": [
+                "KUALA LUMPUR, Aug 21 — The Ministry of Health issued a warning.",
+            ],
+        }
+        rejection = groq_renderer.GroqEditorialEntryRejected(
+            "unsupported death claim",
+            {"transport_status": "success", "json_contract_status": "valid"},
+        )
+        with patch(
+            "render_malaysia_news_with_groq.request_groq_summary_with_retry",
+            side_effect=[accepted_result(1), rejection],
+        ):
+            rendered, accepted, stats, records = groq_renderer.render_with_groq(data, "key", "test-model")
+        decisions = build_render_decisions(rendered["items"], records)
+        final = apply_render_decisions(rendered, decisions)
+        annotate_decision_records(data, final, records, decisions)
+        improved = groq_renderer.build_improved_items_payload(
+            accepted, "test-model", stats, groq_renderer.datetime.now(), records
+        )
+        markdown = markdown_renderer.render_editorial_entries(final)
+        self.assertNotIn("KUALA LUMPUR,", markdown)
+        self.assertNotIn("Dengue cases surge", markdown)
+        self.assertIn("この記事の詳細は出典リンクで確認できます。", markdown)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            selected_path = root / "selected.json"
+            candidate_path = root / "candidate.md"
+            improved_path = root / "improved.json"
+            fallback_path = root / "fallback.md"
+            selected_path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+            candidate_path.write_text(markdown, encoding="utf-8")
+            improved_path.write_text(json.dumps(improved, ensure_ascii=False), encoding="utf-8")
+            fallback_path.write_text(markdown_renderer.render(data), encoding="utf-8")
+            result = validate_candidate(selected_path, candidate_path, improved_path, fallback_path)
+        self.assertTrue(result["passed"], result["failures"])
+        self.assertEqual(
+            result["observation"]["rss_fallback_source_link_only_count"],
+            1,
+        )
 
     def test_hard_safety_checks_apply_to_the_complete_editorial_entry(self) -> None:
         with self.assertRaisesRegex(ValueError, "unsafe numeric unit conversion"):
@@ -195,6 +259,11 @@ class EditorialEntryV2Test(unittest.TestCase):
             groq_renderer.validate_editorial_entry_against_source(
                 {"title": "Agency update", "description": ""},
                 {"entry_ja": "KUALA LUMPUR, May 1 — The agency issued an update.", "supporting_points_ja": []},
+            )
+        with self.assertRaisesRegex(ValueError, "forbidden display leakage"):
+            groq_renderer.validate_editorial_entry_against_source(
+                {"title": "Agency update", "description": ""},
+                {"entry_ja": "KUALA LUMPUR, Aug 1に当局が更新を発表しました。", "supporting_points_ja": []},
             )
         groq_renderer.validate_editorial_entry_against_source(
             {"title": "Road accident delayed traffic", "description": ""},
@@ -261,6 +330,7 @@ class EditorialEntryV2Test(unittest.TestCase):
                     "selected_count": 3,
                     "groq_accepted_count": 1,
                     "rss_fallback_count": 2,
+                    "rss_fallback_source_link_only_count": 2,
                     "request_cap_skipped_count": 0,
                 },
                 "hard_safety_rejection_reason_counts": {},

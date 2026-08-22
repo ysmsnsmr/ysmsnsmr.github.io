@@ -3,6 +3,26 @@
 from typing import Any
 
 
+# Final Markdown validation and per-item hard safety share this list. Keeping
+# it here prevents a rejected display token from reaching the document-wide
+# validator only after otherwise safe entries have already been assembled.
+EDITORIAL_ENTRY_FORBIDDEN_PATTERNS = (
+    "KUALA LUMPUR,",
+    "PUTRAJAYA,",
+    "SHAH ALAM,",
+    "GEORGE TOWN,",
+    "MELAKA,",
+    "— The",
+    "::inbox-item",
+    "The post",
+    "appeared first",
+    "Lowyat",
+    "lowyat",
+    "RSS内のタイトルと説明をもとに整理しました。",
+    "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+)
+
+
 ENTRY_STATE_KINDS = (
     "reported_event",
     "attributed_statement",
@@ -225,6 +245,11 @@ def editorial_entry_schema_error(value: Any) -> str:
     ):
         return "editorial_entry_value"
     return ""
+
+
+def editorial_entry_forbidden_patterns(value: str) -> list[str]:
+    """Return display tokens that remain forbidden in Editorial Entry v2."""
+    return [pattern for pattern in EDITORIAL_ENTRY_FORBIDDEN_PATTERNS if pattern in value]
 
 
 def entry_review_schema_error(value: Any) -> str:

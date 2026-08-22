@@ -6,11 +6,26 @@ from dataclasses import dataclass
 from typing import Any
 
 from malaysia_groq_common import clean_text
+from malaysia_groq_output_contract import editorial_entry_schema_error
 
 
 GROQ_ACCEPTED = "groq_accepted"
 RSS_FALLBACK = "rss_fallback"
-PROVENANCE_ORIGINS = ("rss_derived", "groq_replaced", "groq_inherited")
+RSS_FALLBACK_ENTRY_KIND = "source_link_only"
+PROVENANCE_ORIGINS = (
+    "rss_derived",
+    "groq_replaced",
+    "groq_inherited",
+    "fallback_source_only",
+)
+
+# This is the only article-level fallback emitted by the v2 candidate path.
+# It makes no claim about the article, so a rejected model response cannot
+# reintroduce unverified legacy RSS text into an otherwise valid document.
+RSS_FALLBACK_EDITORIAL_ENTRY = {
+    "entry_ja": "この記事の詳細は出典リンクで確認できます。",
+    "supporting_points_ja": [],
+}
 
 
 @dataclass(frozen=True)
@@ -19,6 +34,7 @@ class RenderDecision:
     link: str
     source_kind: str
     editorial_entry: dict[str, Any]
+    rss_fallback_entry_kind: str = ""
 
 
 def editorial_entry_payload(value: Any) -> dict[str, Any]:
@@ -32,6 +48,20 @@ def editorial_entry_payload(value: Any) -> dict[str, Any]:
         if isinstance(points, list)
         else [],
     }
+
+
+def validated_rss_fallback_editorial_entry() -> dict[str, Any]:
+    """Return the code-owned, validator-safe v2 fallback object.
+
+    Legacy RSS entries are not used here.  They can contain untranslated text
+    or old topic templates, while this object has no article-level assertion
+    that could conflict with a hard-safety rejection.
+    """
+    entry = editorial_entry_payload(RSS_FALLBACK_EDITORIAL_ENTRY)
+    error = editorial_entry_schema_error({"editorial_entry": entry})
+    if error:
+        raise ValueError(f"invalid code-owned RSS fallback entry: {error}")
+    return entry
 
 
 def _record_for_item(
@@ -57,12 +87,18 @@ def build_render_decisions(items: list[Any], decision_records: list[dict[str, An
             continue
         record = _record_for_item(index, item, records)
         accepted = record is not None and record.get("accepted") is True
+        source_kind = GROQ_ACCEPTED if accepted else RSS_FALLBACK
         decisions.append(
             RenderDecision(
                 index=index,
                 link=clean_text(item.get("link")),
-                source_kind=GROQ_ACCEPTED if accepted else RSS_FALLBACK,
-                editorial_entry=editorial_entry_payload(item.get("editorial_entry")),
+                source_kind=source_kind,
+                editorial_entry=(
+                    editorial_entry_payload(item.get("editorial_entry"))
+                    if accepted
+                    else validated_rss_fallback_editorial_entry()
+                ),
+                rss_fallback_entry_kind=RSS_FALLBACK_ENTRY_KIND if source_kind == RSS_FALLBACK else "",
             )
         )
     return decisions
@@ -130,6 +166,9 @@ def annotate_decision_records(
         ):
             continue
         record["render_source_kind"] = decision.source_kind
+        if decision.source_kind == RSS_FALLBACK:
+            record["rss_fallback_entry_kind"] = decision.rss_fallback_entry_kind
+            record["rss_fallback_entry_contract_status"] = "valid"
         original = editorial_entry_payload(original_items[item_index].get("editorial_entry"))
         final = editorial_entry_payload(final_items[item_index].get("editorial_entry"))
         remaining = {"entry_ja": {}, "supporting_points_ja": {}}
@@ -138,7 +177,9 @@ def annotate_decision_records(
         lines: list[dict[str, Any]] = []
         for field, text in _entry_lines(final):
             origin = "rss_derived"
-            if decision.source_kind == GROQ_ACCEPTED:
+            if decision.source_kind == RSS_FALLBACK:
+                origin = "fallback_source_only"
+            elif decision.source_kind == GROQ_ACCEPTED:
                 if remaining[field].get(text, 0):
                     remaining[field][text] -= 1
                     origin = "groq_inherited"
