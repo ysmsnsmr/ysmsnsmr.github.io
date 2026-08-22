@@ -7,8 +7,10 @@ import argparse
 import email.utils
 import hashlib
 import html
+import ipaddress
 import json
 import re
+import socket
 import sys
 import urllib.error
 import urllib.request
@@ -16,6 +18,10 @@ import xml.etree.ElementTree as ET
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Callable
+from urllib.parse import urljoin, urlsplit
+
+from defusedxml import ElementTree as SafeElementTree
+from defusedxml.common import DefusedXmlException
 
 from meta_ads_tracker_contract import ContractError, load_and_validate_source_config
 from meta_ads_tracker_publication import (
@@ -32,16 +38,114 @@ from meta_ads_tracker_publication import (
 USER_AGENT = "ysmsnsmr-meta-ads-tracker/1.0 (+https://ysmsnsmr.github.io/meta-ads-updates/)"
 MAX_SOURCE_CONTEXT = 3500
 STATE_SCHEMA_VERSION = "meta-ads-tracker-state/v2"
+READ_CHUNK_SIZE = 64 * 1024
 
 
-def _request(url: str, timeout: float) -> tuple[str, str]:
+class _RestrictedRedirectHandler(urllib.request.HTTPRedirectHandler):
+    """Follow only a bounded number of HTTPS redirects within a source allowlist."""
+
+    # Run before urllib's default redirect handler, so an unvalidated redirect
+    # cannot be followed by a second handler in the same opener.
+    handler_order = 100
+
+    def __init__(self, source: dict[str, Any], resolver: Callable[..., Any]) -> None:
+        super().__init__()
+        self.source = source
+        self.resolver = resolver
+        self.redirects = 0
+
+    def redirect_request(self, request: Any, fp: Any, code: int, message: str, headers: Any, newurl: str) -> Any:
+        if self.redirects >= self.source["transport"]["maxRedirects"]:
+            raise ContractError(f"source {self.source['id']} exceeded its redirect limit")
+        destination = urljoin(request.full_url, newurl)
+        _validate_transport_url(destination, self.source, self.resolver)
+        self.redirects += 1
+        return super().redirect_request(request, fp, code, message, headers, destination)
+
+
+def _validate_transport_url(
+    url: str,
+    source: dict[str, Any],
+    resolver: Callable[..., Any] | None = None,
+) -> None:
+    """Reject destinations that are outside a configured public HTTPS boundary."""
+    parsed = urlsplit(url)
+    if parsed.scheme != "https" or not parsed.hostname:
+        raise ContractError(f"source {source['id']} must use an absolute HTTPS URL")
+    if parsed.username or parsed.password:
+        raise ContractError(f"source {source['id']} URL must not contain credentials")
+    try:
+        port = parsed.port
+    except ValueError as error:
+        raise ContractError(f"source {source['id']} URL has an invalid port") from error
+    if port not in {None, 443}:
+        raise ContractError(f"source {source['id']} URL must use the standard HTTPS port")
+    hostname = parsed.hostname.lower()
+    try:
+        ipaddress.ip_address(hostname)
+    except ValueError:
+        pass
+    else:
+        raise ContractError(f"source {source['id']} URL must not use an IP address")
+    if hostname not in source["transport"]["allowedFetchHosts"]:
+        raise ContractError(f"source {source['id']} URL host is not allowed")
+    try:
+        resolved = (resolver or socket.getaddrinfo)(hostname, 443, type=socket.SOCK_STREAM)
+    except OSError as error:
+        raise ContractError(f"source {source['id']} hostname could not be resolved") from error
+    if not resolved:
+        raise ContractError(f"source {source['id']} hostname did not resolve to an address")
+    for record in resolved:
+        address = record[4][0]
+        try:
+            ip_address = ipaddress.ip_address(address)
+        except ValueError as error:
+            raise ContractError(f"source {source['id']} hostname resolved to an invalid address") from error
+        if not ip_address.is_global:
+            raise ContractError(f"source {source['id']} hostname resolved to a non-global address")
+
+
+def _normalise_content_type(value: str | None) -> str:
+    return (value or "").split(";", 1)[0].strip().lower()
+
+
+def _read_limited(response: Any, maximum_bytes: int, source_id: str) -> bytes:
+    header = response.headers.get("Content-Length")
+    if header:
+        try:
+            declared_size = int(header)
+        except ValueError as error:
+            raise ContractError(f"source {source_id} sent an invalid Content-Length") from error
+        if declared_size < 0 or declared_size > maximum_bytes:
+            raise ContractError(f"source {source_id} response exceeds its byte limit")
+
+    body = bytearray()
+    while True:
+        remaining = maximum_bytes - len(body)
+        chunk = response.read(min(READ_CHUNK_SIZE, remaining + 1))
+        if not chunk:
+            return bytes(body)
+        if len(chunk) > remaining:
+            raise ContractError(f"source {source_id} response exceeds its byte limit")
+        body.extend(chunk)
+
+
+def _request(source: dict[str, Any], timeout: float) -> tuple[str, str]:
+    """Fetch an enabled source without proxies, raw persistence, or unbounded reads."""
+    _validate_transport_url(source["fetchUrl"], source)
     request = urllib.request.Request(
-        url,
+        source["fetchUrl"],
         headers={"User-Agent": USER_AGENT, "Accept": "application/rss+xml, application/xml, application/json"},
     )
-    with urllib.request.urlopen(request, timeout=timeout) as response:
-        content_type = response.headers.get("Content-Type", "")
-        return response.read().decode("utf-8", errors="replace"), content_type
+    redirect_handler = _RestrictedRedirectHandler(source, socket.getaddrinfo)
+    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), redirect_handler)
+    with opener.open(request, timeout=timeout) as response:
+        _validate_transport_url(response.geturl(), source)
+        content_type = _normalise_content_type(response.headers.get("Content-Type"))
+        if content_type not in source["expectedContentTypes"]:
+            raise ContractError(f"source {source['id']} returned an unexpected Content-Type")
+        body = _read_limited(response, source["transport"]["maxResponseBytes"], source["id"])
+        return body.decode("utf-8", errors="replace"), content_type
 
 
 def _strip_html(value: str) -> str:
@@ -62,12 +166,14 @@ def _fingerprint(*parts: str) -> str:
     return hashlib.sha256("\n".join(parts).encode("utf-8")).hexdigest()
 
 
-def _parse_rss(body: str) -> list[dict[str, Any]]:
-    root = ET.fromstring(body)
+def _parse_rss(body: str, maximum_items: int) -> list[dict[str, Any]]:
+    root = SafeElementTree.fromstring(body)
     items: list[dict[str, Any]] = []
     for node in root.iter():
         if node.tag.rsplit("}", 1)[-1] != "item":
             continue
+        if len(items) >= maximum_items:
+            raise ContractError("RSS response exceeds its item limit")
         fields = {child.tag.rsplit("}", 1)[-1]: (child.text or "") for child in node}
         url = fields.get("link", "").strip()
         if not url.startswith("https://"):
@@ -87,7 +193,7 @@ def _parse_rss(body: str) -> list[dict[str, Any]]:
     return items
 
 
-def _parse_sdk(body: str) -> list[dict[str, Any]]:
+def _parse_sdk(body: str, maximum_items: int) -> list[dict[str, Any]]:
     payload = json.loads(body)
     if not isinstance(payload, list):
         raise ContractError("SDK release response must be an array")
@@ -99,6 +205,8 @@ def _parse_sdk(body: str) -> list[dict[str, Any]]:
         url = str(release.get("html_url") or "").strip()
         if not tag or not url.startswith("https://"):
             continue
+        if len(items) >= maximum_items:
+            raise ContractError("SDK release response exceeds its item limit")
         items.append(
             {
                 "stateKey": tag,
@@ -151,7 +259,7 @@ def collect(
     state: dict[str, Any],
     timeout: float,
     now: datetime,
-    fetch_body: Callable[[str, float], tuple[str, str]] = _request,
+    fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = _request,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     if now.tzinfo is None:
         raise ContractError("collector now must include a timezone")
@@ -171,8 +279,12 @@ def collect(
     for source in config["sources"]:
         if not source["enabled"] or source["access"] != "public":
             continue
-        body, _content_type = fetch_body(source["fetchUrl"], timeout)
-        parsed = _parse_rss(body) if source["kind"] == "product_news" else _parse_sdk(body)
+        body, _content_type = fetch_body(source, timeout)
+        parsed = (
+            _parse_rss(body, source["transport"]["maxItems"])
+            if source["kind"] == "product_news"
+            else _parse_sdk(body, source["transport"]["maxItems"])
+        )
         previous = state.get("sources", {}).get(source["id"], {}).get("items", {})
         current: dict[str, Any] = dict(previous)
         for raw in parsed:
@@ -203,6 +315,30 @@ def collect(
     return candidate, next_state
 
 
+def collect_and_write(
+    config_path: Path,
+    state_path: Path,
+    output_path: Path,
+    timeout: float,
+    *,
+    now: datetime | None = None,
+    fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = _request,
+) -> dict[str, Any]:
+    """Collect completely before atomically replacing either persisted output file."""
+    config = load_and_validate_source_config(config_path)
+    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {"sources": {}}
+    candidate, next_state = collect(
+        config,
+        state,
+        timeout,
+        now or datetime.now(timezone.utc).replace(microsecond=0),
+        fetch_body,
+    )
+    write_json(output_path, candidate)
+    write_json(state_path, next_state)
+    return candidate
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=Path("config/meta_ads_official_sources.json"))
@@ -211,12 +347,8 @@ def main() -> int:
     parser.add_argument("--timeout", type=float, default=30.0)
     args = parser.parse_args()
     try:
-        config = load_and_validate_source_config(args.config)
-        state = json.loads(args.state.read_text(encoding="utf-8")) if args.state.exists() else {"sources": {}}
-        candidate, next_state = collect(config, state, args.timeout, datetime.now(timezone.utc).replace(microsecond=0))
-        write_json(args.output, candidate)
-        write_json(args.state, next_state)
-    except (ContractError, OSError, ValueError, ET.ParseError, urllib.error.URLError) as error:
+        candidate = collect_and_write(args.config, args.state, args.output, args.timeout)
+    except (ContractError, DefusedXmlException, ET.ParseError, OSError, ValueError, urllib.error.URLError) as error:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1
     print(f"PASS: collected {len(candidate['items'])} changed official events ({candidate['baseline']['mode']})")
