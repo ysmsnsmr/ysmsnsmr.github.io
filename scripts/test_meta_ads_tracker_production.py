@@ -135,6 +135,20 @@ class MetaAdsDeltaContractTest(unittest.TestCase):
         )
         self.assertFalse(any(item["changeType"] == "sdk_release" for item in candidate["items"]))
 
+    def test_processing_epoch_counts_tombstones_and_sdk_revisions(self) -> None:
+        _, state = self.baseline()
+        updated_sdk = FIXTURES["initialSdk"].replace("First release", "Corrected release notes")
+        candidate, state = collect(
+            self.config, state, 1, MONDAY + timedelta(days=1),
+            fetcher(self.config, "<rss><channel /></rss>", updated_sdk),
+        )
+        self.assertEqual(candidate["schemaVersion"], "meta-ads-tracker-candidates/v3")
+        self.assertEqual(candidate["processingEpoch"]["status"], "completed")
+        self.assertEqual(candidate["summary"]["tombstonedItems"], 1)
+        self.assertEqual(candidate["summary"]["changedEvents"], 1)
+        self.assertEqual(candidate["items"][0]["changeType"], "sdk_release")
+        self.assertTrue(any("tombstonedAt" in item for item in state["sources"]["meta-product-news-rss"]["items"].values()))
+
     def test_fetch_failure_returns_no_candidate_or_state_mutation(self) -> None:
         _, state = self.baseline()
         original = copy.deepcopy(state)
@@ -207,15 +221,17 @@ class MetaAdsWeeklyAndApprovalTest(unittest.TestCase):
         # Reconstruct a schema-valid empty daily candidate for date-coverage testing.
         generated = reference["generatedAt"]
         payload = {
-            "schemaVersion": "meta-ads-tracker-candidates/v2",
+            "schemaVersion": "meta-ads-tracker-candidates/v3",
             "candidateHash": "",
             "generatedAt": generated,
             "baseline": {"mode": "active", "cutoffAt": weekly["candidateRefs"][0]["generatedAt"]},
             "week": weekly["week"],
+            "processingEpoch": {"id": "epoch-20260817t001500z", "startedAt": generated, "completedAt": generated, "status": "completed"},
             "sourceRuns": [
-                {"sourceId": source["id"], "status": "success", "fetchedAt": generated}
+                {"sourceId": source["id"], "status": "success", "startedAt": generated, "completedAt": generated, "parsedItems": 0, "newEvents": 0, "changedEvents": 0, "unchangedItems": 0, "tombstonedItems": 0}
                 for source in self.config["sources"] if source["enabled"] and source["access"] == "public"
             ],
+            "summary": {"parsedItems": 0, "newEvents": 0, "changedEvents": 0, "unchangedItems": 0, "tombstonedItems": 0},
             "items": [],
         }
         payload["candidateHash"] = canonical_hash(payload, "candidateHash")

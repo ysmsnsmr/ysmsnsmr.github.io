@@ -43,7 +43,7 @@ from meta_ads_tracker_publication import (
 
 USER_AGENT = "ysmsnsmr-meta-ads-tracker/1.0 (+https://ysmsnsmr.github.io/meta-ads-updates/)"
 MAX_SOURCE_CONTEXT = 3500
-STATE_SCHEMA_VERSION = "meta-ads-tracker-state/v2"
+STATE_SCHEMA_VERSION = "meta-ads-tracker-state/v3"
 READ_CHUNK_SIZE = 64 * 1024
 
 
@@ -216,7 +216,7 @@ def _parse_sdk(body: str, maximum_items: int) -> list[dict[str, Any]]:
         items.append(
             {
                 "stateKey": tag,
-                "fingerprint": _fingerprint(tag),
+                "fingerprint": _fingerprint(tag, _strip_html(str(release.get("name") or tag)), _strip_html(str(release.get("body") or ""))),
                 "title": _strip_html(str(release.get("name") or tag)),
                 "url": url,
                 "announced": _date_from_value(str(release.get("published_at") or release.get("created_at") or "")),
@@ -274,6 +274,7 @@ def collect(
     existing_cutoff = state.get("baselineCutoffAt")
     baseline_mode = "active" if isinstance(existing_cutoff, str) and existing_cutoff else "seeded"
     baseline_cutoff = existing_cutoff if baseline_mode == "active" else generated_at
+    epoch_id = f"epoch-{now.astimezone(timezone.utc).strftime('%Y%m%dt%H%M%sz')}"
     next_state = {
         "schemaVersion": STATE_SCHEMA_VERSION,
         "updatedAt": generated_at,
@@ -281,7 +282,7 @@ def collect(
         "sources": {},
     }
     changes: list[dict[str, Any]] = []
-    source_runs: list[dict[str, str]] = []
+    source_runs: list[dict[str, Any]] = []
     governance = governance or load_and_validate_source_governance(source_config=config)
     automated_sources = governed_automated_sources(config, governance, now.astimezone(KUALA_LUMPUR).date())
 
@@ -294,8 +295,11 @@ def collect(
         )
         previous = state.get("sources", {}).get(source["id"], {}).get("items", {})
         current: dict[str, Any] = dict(previous)
+        seen: set[str] = set()
+        counts = {"parsedItems": len(parsed), "newEvents": 0, "changedEvents": 0, "unchangedItems": 0, "tombstonedItems": 0}
         for raw in parsed:
             key = raw["stateKey"]
+            seen.add(key)
             fingerprint = raw["fingerprint"]
             prior = previous.get(key)
             current[key] = {"fingerprint": fingerprint, "lastSeenAt": generated_at}
@@ -303,10 +307,20 @@ def collect(
                 continue
             if prior is None:
                 changes.append(_event(source["id"], source["kind"], raw, "new_url", generated_at))
-            elif source["kind"] != "sdk_release" and prior.get("fingerprint") != fingerprint:
+                counts["newEvents"] += 1
+            elif prior.get("fingerprint") != fingerprint:
                 changes.append(_event(source["id"], source["kind"], raw, "content_changed", generated_at))
+                counts["changedEvents"] += 1
+            else:
+                counts["unchangedItems"] += 1
+        for key, prior in previous.items():
+            if key not in seen:
+                current[key] = {**prior, "tombstonedAt": prior.get("tombstonedAt") or generated_at}
+                counts["tombstonedItems"] += 1
         next_state["sources"][source["id"]] = {"items": current}
-        source_runs.append({"sourceId": source["id"], "status": "success", "fetchedAt": generated_at})
+        source_runs.append({"sourceId": source["id"], "status": "success", "startedAt": generated_at, "completedAt": generated_at, **counts})
+
+    summary = {key: sum(run[key] for run in source_runs) for key in ("parsedItems", "newEvents", "changedEvents", "unchangedItems", "tombstonedItems")}
 
     candidate = {
         "schemaVersion": CANDIDATE_SCHEMA_VERSION,
@@ -314,7 +328,9 @@ def collect(
         "generatedAt": generated_at,
         "baseline": {"mode": baseline_mode, "cutoffAt": baseline_cutoff},
         "week": _week(now.astimezone(KUALA_LUMPUR).date()),
+        "processingEpoch": {"id": epoch_id, "startedAt": generated_at, "completedAt": generated_at, "status": "completed"},
         "sourceRuns": source_runs,
+        "summary": summary,
         "items": changes,
     }
     candidate["candidateHash"] = canonical_hash(candidate, "candidateHash")
