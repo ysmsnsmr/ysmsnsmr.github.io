@@ -1,0 +1,112 @@
+{
+  "schemaVersion": "meta-ads-secondary-shadow-sources/v1",
+  "policies": {
+    "publicationEligible": false,
+    "officialCandidateIntegration": false,
+    "persistRawResponseBody": false,
+    "requireHumanOfficialVerification": true,
+    "stateBranch": "automation/meta-ads-shadow-state"
+  },
+  "sources": [
+    {
+      "id": "ppc-land-meta-ads",
+      "name": "PPC Land",
+      "kind": "secondary_signal",
+      "sourceUrl": "https://ppc.land/",
+      "fetchUrl": "https://ppc.land/",
+      "enabled": true,
+      "collectionMode": "automatic_shadow",
+      "expectedContentTypes": [
+        "text/html"
+      ],
+      "transport": {
+        "allowedFetchHosts": [
+          "ppc.land"
+        ],
+        "allowedContentHosts": [
+          "ppc.land"
+        ],
+        "maxResponseBytes": 1048576,
+        "maxRedirects": 3,
+        "maxItems": 50
+      },
+      "matchKeywords": [
+        "meta",
+        "facebook",
+        "instagram",
+        "ads manager",
+        "advertising",
+        "marketing api",
+        "business manager",
+        "advantage+"
+      ],
+      "rationale": "Secondary early-warning signal only; official verification is required before any tracker decision."
+    },
+    {
+      "id": "jon-loomer-meta-ads",
+      "name": "Jon Loomer Digital",
+      "kind": "secondary_signal",
+      "sourceUrl": "https://www.jonloomer.com/",
+      "fetchUrl": "https://www.jonloomer.com/",
+      "enabled": true,
+      "collectionMode": "automatic_shadow",
+      "expectedContentTypes": [
+        "text/html"
+      ],
+      "transport": {
+        "allowedFetchHosts": [
+          "www.jonloomer.com"
+        ],
+        "allowedContentHosts": [
+          "www.jonloomer.com"
+        ],
+        "maxResponseBytes": 1048576,
+        "maxRedirects": 3,
+        "maxItems": 50
+      },
+      "matchKeywords": [
+        "meta",
+        "facebook",
+        "instagram",
+        "ads manager",
+        "advertising",
+        "marketing api",
+        "business manager",
+        "advantage+"
+      ],
+      "rationale": "Practitioner observations are retained only as unverified early-warning signals."
+    },
+    {
+      "id": "anagrams-meta-ads",
+      "name": "Anagrams",
+      "kind": "secondary_signal",
+      "sourceUrl": "https://anagrams.jp/blog/latest/",
+      "fetchUrl": "https://anagrams.jp/blog/latest/",
+      "enabled": false,
+      "collectionMode": "manual_only",
+      "expectedContentTypes": [
+        "text/html"
+      ],
+      "transport": {
+        "allowedFetchHosts": [
+          "anagrams.jp"
+        ],
+        "allowedContentHosts": [
+          "anagrams.jp"
+        ],
+        "maxResponseBytes": 1048576,
+        "maxRedirects": 3,
+        "maxItems": 50
+      },
+      "matchKeywords": [
+        "meta",
+        "facebook",
+        "instagram",
+        "広告",
+        "facebook広告",
+        "instagram広告"
+      ],
+      "rationale": "Japanese source remains manual-only until a separate source-specific collection review approves automation."
+    }
+  ]
+}

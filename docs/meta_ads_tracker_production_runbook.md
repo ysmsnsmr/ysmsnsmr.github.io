@@ -26,6 +26,12 @@ The existing Product News RSS and SDK release sources are temporarily permitted 
 
 `Meta Ads official canary` observes the Graph API Changelog, Marketing API documentation, and Developer Blog as a separate read-only, header-only workflow. Its JSON is an artifact only: it never updates candidate/state data, weekly assembly, publication, or the UI. A `429` rate limit, network error, or unexpected response is recorded as an observation and must never block the daily official tracker pipeline.
 
+## Secondary shadow signals
+
+PPC Land and Jon Loomer are configured as non-official, metadata-only early-warning sources in `config/meta_ads_secondary_shadow_sources.json`. Their collector is disabled by default: set the repository variable `META_ADS_TRACKER_SHADOW_ENABLED=true` only after reviewing each source's current terms and access expectations. Any unset or `false` value makes the workflow exit successfully before checkout, dependency installation, network access, commits, or artifacts.
+
+When enabled, the workflow writes only to the dedicated `automation/meta-ads-shadow-state` branch. It stores a bounded title, original same-site URL, keyword matches, timestamp, and fingerprint; it does not store response bodies, excerpts, summaries, Groq output, official candidates, weekly artifacts, decisions, public reports, or UI files. The first successful run seeds a zero-signal baseline. Every later signal has `verificationStatus: unverified` and `publicationEligible: false`; a human must independently verify an official source before making any official-tracker decision. Anagrams remains `manual_only` in this PR.
+
 ## Immutable weekly assembly
 
 The weekly assembler is separate from daily collection and is scheduled for Friday 17:00 MYT (`09:00 UTC`). `cutoffAt` records that logical business cutoff; `generatedAt` records when GitHub Actions actually assembled the artifact. Scheduler delay therefore does not change the collection window.
