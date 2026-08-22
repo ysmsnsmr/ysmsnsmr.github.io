@@ -31,7 +31,10 @@
     list: document.querySelector("#update-list"),
     empty: document.querySelector("#empty-state"),
     emptyTitle: document.querySelector("#empty-title"),
-    emptyCopy: document.querySelector("#empty-copy")
+    emptyCopy: document.querySelector("#empty-copy"),
+    secondaryStatus: document.querySelector("#secondary-beta-status"),
+    secondaryStatusTitle: document.querySelector("#secondary-beta-status-title"),
+    secondaryStatusCopy: document.querySelector("#secondary-beta-status-copy")
   };
 
   function element(tagName, className, text) {
@@ -95,6 +98,39 @@
     return listItem;
   }
 
+  function isSafeSecondaryStatus(status) {
+    const expectedKeys = ["schemaVersion", "gateB", "secondarySignalsVisible", "officialCandidateIntegration", "publicationEligible"];
+    return status &&
+      typeof status === "object" &&
+      !Array.isArray(status) &&
+      Object.keys(status).length === expectedKeys.length &&
+      expectedKeys.every((key) => Object.prototype.hasOwnProperty.call(status, key)) &&
+      status.schemaVersion === "meta-ads-secondary-beta-status/v1" &&
+      status.gateB && typeof status.gateB === "object" && !Array.isArray(status.gateB) &&
+      Object.keys(status.gateB).length === 2 &&
+      (status.gateB.status === "PASS" || status.gateB.status === "BLOCK") &&
+      typeof status.gateB.message === "string" &&
+      status.secondarySignalsVisible === false &&
+      status.officialCandidateIntegration === false &&
+      status.publicationEligible === false;
+  }
+
+  async function renderSecondaryStatus() {
+    try {
+      const response = await fetch("./secondary-beta.json", { cache: "no-store" });
+      if (!response.ok) throw new Error(`secondary beta status HTTP ${response.status}`);
+      const status = await response.json();
+      if (!isSafeSecondaryStatus(status)) throw new Error("secondary beta status violates the public boundary");
+      elements.secondaryStatus.classList.toggle("beta-banner--blocked", status.gateB.status === "BLOCK");
+      elements.secondaryStatusTitle.textContent = status.gateB.status === "PASS" ? "Gate B：証跡確認済み" : "Gate B：証跡不足";
+      elements.secondaryStatusCopy.textContent = status.gateB.message;
+    } catch {
+      elements.secondaryStatus.classList.add("beta-banner--blocked");
+      elements.secondaryStatusTitle.textContent = "Secondary βの状態を表示できません";
+      elements.secondaryStatusCopy.textContent = "状態を確認できないため、Secondary signalは表示しません。公式週次indexの内容には影響しません。";
+    }
+  }
+
   try {
     const response = await fetch("./latest.json", { cache: "no-store" });
     if (!response.ok) throw new Error(`latest report HTTP ${response.status}`);
@@ -150,6 +186,7 @@
     });
     syncControls();
     render();
+    await renderSecondaryStatus();
   } catch (error) {
     elements.week.textContent = "公開レポートを読み込めません";
     elements.emptyTitle.textContent = "現在の公開内容を表示できません";

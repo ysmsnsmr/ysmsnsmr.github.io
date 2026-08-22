@@ -215,6 +215,57 @@ h1 {
   border-left-color: var(--tracker-red);
 }
 
+.section-heading {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--tracker-space-2);
+  align-items: center;
+  justify-content: space-between;
+  margin: var(--tracker-space-5) 0 var(--tracker-space-3);
+}
+
+.section-heading h2 {
+  margin: 0;
+  color: var(--tracker-navy);
+  font-size: 1.1rem;
+}
+
+.section-copy {
+  margin: var(--tracker-space-1) 0 0;
+  color: var(--tracker-muted);
+  font-size: 0.875rem;
+}
+
+.beta-banner,
+.secondary-empty {
+  margin: var(--tracker-space-4) 0 0;
+  padding: var(--tracker-space-3);
+  border: 1px solid var(--tracker-teal);
+  border-radius: var(--tracker-radius-md);
+  background: var(--tracker-teal-soft);
+  color: var(--tracker-ink);
+}
+
+.beta-banner p,
+.secondary-empty p {
+  margin: var(--tracker-space-1) 0 0;
+}
+
+.beta-banner strong {
+  color: var(--tracker-teal);
+}
+
+.beta-banner--blocked {
+  border-color: var(--tracker-line);
+  background: var(--tracker-surface-muted);
+}
+
+.secondary-empty h3 {
+  margin: 0;
+  color: var(--tracker-ink);
+  font-size: 1rem;
+}
+
 .card-heading {
   display: flex;
   flex-wrap: wrap;
