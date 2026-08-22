@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "meta-ads-secondary-beta-status/v1",
+  "gateB": {
+    "status": "BLOCK",
+    "message": "Gate BはBLOCKです。必要な人間レビュー証跡が揃うまで、Secondary βを進めません。"
+  },
+  "secondarySignalsVisible": false,
+  "officialCandidateIntegration": false,
+  "publicationEligible": false
+}

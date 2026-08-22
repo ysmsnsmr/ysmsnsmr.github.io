@@ -139,6 +139,8 @@ def main() -> int:
         ci_runs = "\n".join(run_blocks(parsed["ci"]))
         if "validate_meta_ads_tracker_gate_b.py" not in ci_runs:
             fail("Tracker CI must validate the Gate B review-ledger contract")
+        if "validate_meta_ads_tracker_secondary_beta_status.py" not in ci_runs:
+            fail("Tracker CI must validate the public Secondary β status against the Gate B ledger")
     except (OSError, ValueError, yaml.YAMLError) as error:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1
