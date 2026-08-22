@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ysmsnsmr.github.io/schemas/meta-ads-tracker-candidate/v2",
+  "$id": "https://ysmsnsmr.github.io/schemas/meta-ads-tracker-candidate/v3",
   "title": "Meta Ads daily change candidate",
   "type": "object",
   "additionalProperties": false,
@@ -10,11 +10,11 @@
     "generatedAt",
     "baseline",
     "week",
-    "sourceRuns",
+    "processingEpoch", "sourceRuns", "summary",
     "items"
   ],
   "properties": {
-    "schemaVersion": { "const": "meta-ads-tracker-candidates/v2" },
+    "schemaVersion": { "const": "meta-ads-tracker-candidates/v3" },
     "candidateHash": { "$ref": "#/$defs/hash" },
     "generatedAt": { "type": "string", "format": "date-time" },
     "baseline": {
@@ -27,20 +27,23 @@
       }
     },
     "week": { "$ref": "#/$defs/week" },
+    "processingEpoch": { "type": "object", "additionalProperties": false, "required": ["id", "startedAt", "completedAt", "status"], "properties": {"id": {"$ref":"#/$defs/identifier"}, "startedAt":{"type":"string","format":"date-time"}, "completedAt":{"type":"string","format":"date-time"}, "status":{"const":"completed"}} },
     "sourceRuns": {
       "type": "array",
       "minItems": 1,
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["sourceId", "status", "fetchedAt"],
+        "required": ["sourceId", "status", "startedAt", "completedAt", "parsedItems", "newEvents", "changedEvents", "unchangedItems", "tombstonedItems"],
         "properties": {
           "sourceId": { "$ref": "#/$defs/identifier" },
           "status": { "const": "success" },
-          "fetchedAt": { "type": "string", "format": "date-time" }
+          "startedAt": { "type": "string", "format": "date-time" }, "completedAt": { "type": "string", "format": "date-time" },
+          "parsedItems": {"type":"integer","minimum":0}, "newEvents":{"type":"integer","minimum":0}, "changedEvents":{"type":"integer","minimum":0}, "unchangedItems":{"type":"integer","minimum":0}, "tombstonedItems":{"type":"integer","minimum":0}
         }
       }
     },
+    "summary": {"type":"object","additionalProperties":false,"required":["parsedItems","newEvents","changedEvents","unchangedItems","tombstonedItems"],"properties":{"parsedItems":{"type":"integer","minimum":0},"newEvents":{"type":"integer","minimum":0},"changedEvents":{"type":"integer","minimum":0},"unchangedItems":{"type":"integer","minimum":0},"tombstonedItems":{"type":"integer","minimum":0}}},
     "items": {
       "type": "array",
       "items": { "$ref": "#/$defs/candidateItem" }

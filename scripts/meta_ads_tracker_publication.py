@@ -21,7 +21,7 @@ from meta_ads_tracker_contract import ContractError, load_and_validate_source_co
 
 PUBLIC_SCHEMA_VERSION = "meta-ads-weekly-index/v1"
 DECISIONS_SCHEMA_VERSION = "meta-ads-tracker-decisions/v2"
-CANDIDATE_SCHEMA_VERSION = "meta-ads-tracker-candidates/v2"
+CANDIDATE_SCHEMA_VERSION = "meta-ads-tracker-candidates/v3"
 WEEKLY_SCHEMA_VERSION = "meta-ads-tracker-weekly-candidate/v1"
 SCHEMA_DIRECTORY = Path(__file__).resolve().parent / "schemas"
 CANDIDATE_SCHEMA = SCHEMA_DIRECTORY / "meta_ads_tracker_candidate.schema.json"
@@ -184,8 +184,17 @@ def validate_candidate(candidate: Any, source_config: dict[str, Any] | None = No
     run_ids = [run["sourceId"] for run in candidate["sourceRuns"]]
     if len(run_ids) != len(set(run_ids)) or set(run_ids) != set(configured_sources):
         raise ContractError("candidate.sourceRuns must contain every enabled public source exactly once")
-    if any(parse_timestamp(run["fetchedAt"], "candidate.sourceRuns.fetchedAt") != generated_at for run in candidate["sourceRuns"]):
-        raise ContractError("candidate source run timestamps must equal generatedAt")
+    epoch = candidate["processingEpoch"]
+    if parse_timestamp(epoch["startedAt"], "candidate.processingEpoch.startedAt") != generated_at or parse_timestamp(epoch["completedAt"], "candidate.processingEpoch.completedAt") != generated_at:
+        raise ContractError("candidate processing epoch timestamps must equal generatedAt")
+    summary = {key: 0 for key in ("parsedItems", "newEvents", "changedEvents", "unchangedItems", "tombstonedItems")}
+    for run in candidate["sourceRuns"]:
+        if parse_timestamp(run["startedAt"], "candidate.sourceRuns.startedAt") != generated_at or parse_timestamp(run["completedAt"], "candidate.sourceRuns.completedAt") != generated_at:
+            raise ContractError("candidate source run timestamps must equal generatedAt")
+        for key in summary:
+            summary[key] += run[key]
+    if summary != candidate["summary"]:
+        raise ContractError("candidate summary must equal source-run totals")
 
     event_ids: set[str] = set()
     for index, item in enumerate(candidate["items"]):

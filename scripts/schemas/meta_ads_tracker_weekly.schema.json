@@ -39,7 +39,7 @@
       "type": "array",
       "items": {
         "allOf": [
-          { "$ref": "https://ysmsnsmr.github.io/schemas/meta-ads-tracker-candidate/v2#/$defs/candidateItem" },
+          { "$ref": "https://ysmsnsmr.github.io/schemas/meta-ads-tracker-candidate/v3#/$defs/candidateItem" },
           {
             "type": "object",
             "required": ["originCandidateHash"],
