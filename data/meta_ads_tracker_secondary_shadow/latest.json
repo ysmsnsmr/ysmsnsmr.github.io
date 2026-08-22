@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "meta-ads-secondary-shadow-observation/v1",
+  "generatedAt": "2026-08-22T08:02:21Z",
+  "baseline": {
+    "mode": "seeded",
+    "cutoffAt": "2026-08-22T08:02:21Z"
+  },
+  "publicationEligible": false,
+  "officialCandidateIntegration": false,
+  "requireHumanOfficialVerification": true,
+  "responseBodyStored": false,
+  "sourceRuns": [
+    {
+      "sourceId": "ppc-land-meta-ads",
+      "status": "success",
+      "extractedItems": 0,
+      "newSignals": 0,
+      "unchangedItems": 0
+    },
+    {
+      "sourceId": "jon-loomer-meta-ads",
+      "status": "success",
+      "extractedItems": 8,
+      "newSignals": 0,
+      "unchangedItems": 8
+    }
+  ],
+  "summary": {
+    "sources": 2,
+    "signals": 0
+  },
+  "signals": []
+}
