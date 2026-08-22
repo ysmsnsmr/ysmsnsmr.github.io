@@ -8,6 +8,7 @@ fixtures. It does not fetch, retain, or interpret official source content.
 from __future__ import annotations
 
 import json
+import ipaddress
 import re
 from datetime import date
 from pathlib import Path
@@ -15,7 +16,7 @@ from typing import Any
 from urllib.parse import urlparse
 
 
-SOURCE_SCHEMA_VERSION = "meta-ads-official-sources/v1"
+SOURCE_SCHEMA_VERSION = "meta-ads-official-sources/v2"
 FIXTURE_SCHEMA_VERSION = "meta-ads-weekly-index-fixture/v1"
 DEFAULT_SOURCE_CONFIG = Path(__file__).resolve().parents[1] / "config/meta_ads_official_sources.json"
 DEFAULT_FIXTURE_DIRECTORY = Path(__file__).resolve().parent / "fixtures/meta_ads_tracker"
@@ -48,6 +49,7 @@ CANONICAL_FIXTURES = {
 }
 IDENTIFIER_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+HOSTNAME_RE = re.compile(r"^(?=.{1,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$")
 
 
 class ContractError(ValueError):
@@ -123,6 +125,17 @@ def _expect_https_url(value: Any, label: str) -> str:
     return url
 
 
+def _expect_hostname(value: Any, label: str) -> str:
+    hostname = _expect_string(value, label).lower()
+    if hostname != value or not HOSTNAME_RE.fullmatch(hostname):
+        raise ContractError(f"{label} must be a lowercase DNS hostname")
+    try:
+        ipaddress.ip_address(hostname)
+    except ValueError:
+        return hostname
+    raise ContractError(f"{label} must not be an IP address")
+
+
 def _expect_date(value: Any, label: str) -> str:
     parsed_value = _expect_string(value, label)
     if not DATE_RE.fullmatch(parsed_value):
@@ -175,6 +188,7 @@ def validate_source_config(payload: Any) -> dict[str, Any]:
                 "enabled",
                 "access",
                 "expectedContentTypes",
+                "transport",
                 "changeDetection",
                 "failureAction",
             },
@@ -188,7 +202,16 @@ def validate_source_config(payload: Any) -> dict[str, Any]:
         if source["kind"] not in SOURCE_KINDS:
             raise ContractError(f"sources[{index}].kind is not supported")
         _expect_https_url(source["sourceUrl"], f"sources[{index}].sourceUrl")
-        _expect_https_url(source["fetchUrl"], f"sources[{index}].fetchUrl")
+        fetch_url = _expect_https_url(source["fetchUrl"], f"sources[{index}].fetchUrl")
+        parsed_fetch_url = urlparse(fetch_url)
+        if parsed_fetch_url.username or parsed_fetch_url.password:
+            raise ContractError(f"sources[{index}].fetchUrl must not contain credentials")
+        try:
+            port = parsed_fetch_url.port
+        except ValueError as error:
+            raise ContractError(f"sources[{index}].fetchUrl has an invalid port") from error
+        if port not in {None, 443}:
+            raise ContractError(f"sources[{index}].fetchUrl must use the standard HTTPS port")
         if not isinstance(source["enabled"], bool):
             raise ContractError(f"sources[{index}].enabled must be boolean")
         if source["access"] not in {"public", "login_required"}:
@@ -201,7 +224,37 @@ def validate_source_config(payload: Any) -> dict[str, Any]:
         if not isinstance(content_types, list) or not content_types:
             raise ContractError(f"sources[{index}].expectedContentTypes must be a non-empty array")
         for content_type_index, content_type in enumerate(content_types):
-            _expect_string(content_type, f"sources[{index}].expectedContentTypes[{content_type_index}]")
+            text = _expect_string(content_type, f"sources[{index}].expectedContentTypes[{content_type_index}]")
+            if text != text.lower() or ";" in text or "/" not in text:
+                raise ContractError(f"sources[{index}].expectedContentTypes[{content_type_index}] must be a lowercase media type")
+        if len(set(content_types)) != len(content_types):
+            raise ContractError(f"sources[{index}].expectedContentTypes must not contain duplicates")
+        transport = _expect_keys(
+            source["transport"],
+            {"allowedFetchHosts", "maxResponseBytes", "maxRedirects", "maxItems"},
+            f"sources[{index}].transport",
+        )
+        allowed_hosts = transport["allowedFetchHosts"]
+        if not isinstance(allowed_hosts, list) or not allowed_hosts:
+            raise ContractError(f"sources[{index}].transport.allowedFetchHosts must be a non-empty array")
+        validated_hosts = [
+            _expect_hostname(host, f"sources[{index}].transport.allowedFetchHosts[{host_index}]")
+            for host_index, host in enumerate(allowed_hosts)
+        ]
+        if len(set(validated_hosts)) != len(validated_hosts):
+            raise ContractError(f"sources[{index}].transport.allowedFetchHosts must not contain duplicates")
+        if parsed_fetch_url.hostname not in validated_hosts:
+            raise ContractError(f"sources[{index}].fetchUrl host must be in transport.allowedFetchHosts")
+        for key, minimum, maximum in (
+            ("maxResponseBytes", 1, 16 * 1024 * 1024),
+            ("maxRedirects", 0, 5),
+            ("maxItems", 1, 250),
+        ):
+            value = transport[key]
+            if isinstance(value, bool) or not isinstance(value, int) or not minimum <= value <= maximum:
+                raise ContractError(
+                    f"sources[{index}].transport.{key} must be an integer between {minimum} and {maximum}"
+                )
         if source["changeDetection"] not in CHANGE_DETECTION_MODES:
             raise ContractError(f"sources[{index}].changeDetection is not supported")
         if source["failureAction"] != "keep_published_content_unchanged":

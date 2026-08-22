@@ -35,9 +35,10 @@ def fetcher(config: dict, rss: str, sdk: str, *, fail: bool = False):
         config["sources"][3]["fetchUrl"]: sdk,
     }
 
-    def fetch(url: str, _timeout: float) -> tuple[str, str]:
+    def fetch(source: dict, _timeout: float) -> tuple[str, str]:
         if fail:
             raise URLError("fixture fetch failure")
+        url = source["fetchUrl"]
         return bodies[url], "application/json" if "api.github.com" in url else "application/rss+xml"
 
     return fetch

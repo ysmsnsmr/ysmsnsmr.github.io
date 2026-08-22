@@ -10,6 +10,12 @@ After bootstrap, RSS URL additions become `new_url`, fingerprint changes on an e
 
 If any source fetch, parse, schema, or semantic validation fails, neither the candidate nor state is committed.
 
+### Emergency stop and transport boundary
+
+Set the repository Actions variable `META_ADS_TRACKER_COLLECT_ENABLED` to `false` to stop daily collection before dependency installation or any official-source request. A disabled run finishes successfully without creating an artifact or committing data. Set it to `true` (or leave it unset) to enable collection; any other value intentionally fails the run as a configuration error.
+
+Every configured source has an explicit HTTPS host allowlist, three-redirect limit, 1 MiB response limit, item limit, and allowed media types. The collector disables environment proxy settings, rejects credentials, non-standard ports, literal or non-global IP addresses, disallowed redirects, unexpected media types, oversized payloads, and XML DTDs. These checks are transport safety controls, not evidence that an unavailable official source has no updates.
+
 ## Immutable weekly assembly
 
 The weekly assembler is separate from daily collection and is scheduled for Friday 17:00 MYT (`09:00 UTC`). `cutoffAt` records that logical business cutoff; `generatedAt` records when GitHub Actions actually assembled the artifact. Scheduler delay therefore does not change the collection window.
