@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "meta-ads-secondary-shadow-gate-b-config/v1",
+  "criteria": {
+    "minimumObservationDays": 14,
+    "minimumReviewsTotal": 10,
+    "minimumReviewsPerAutomaticSource": 3,
+    "minimumUsefulReviews": 3,
+    "maximumReviewMinutesPerIsoWeek": 60,
+    "blockingFindingCategories": [
+      "fix",
+      "dlq"
+    ]
+  },
+  "reviewRecordPath": "data/meta_ads_tracker_secondary_shadow_gate_b.json",
+  "reviewTimezone": "Asia/Kuala_Lumpur"
+}

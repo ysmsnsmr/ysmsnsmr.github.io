@@ -32,6 +32,20 @@ PPC Land and Jon Loomer are configured as non-official, metadata-only early-warn
 
 When enabled, the workflow writes only to the dedicated `automation/meta-ads-shadow-state` branch. It stores a bounded title, original same-site URL, keyword matches, timestamp, and fingerprint; it does not store response bodies, excerpts, summaries, Groq output, official candidates, weekly artifacts, decisions, public reports, or UI files. The first successful run seeds a zero-signal baseline. Every later signal has `verificationStatus: unverified` and `publicationEligible: false`; a human must independently verify an official source before making any official-tracker decision. Anagrams remains `manual_only` in this PR.
 
+## Gate B: Beta Readiness
+
+Gate B is an evidence gate, not a timer. Its fixed criteria are a 14-day observation window, at least 10 distinct reviewed signal revisions, at least 3 reviews from each automatic shadow source, at least 3 reviews judged useful, no more than 60 minutes of review time in any MYT ISO week, and no unresolved `fix` or `dlq` finding. `dlq` means a dead-letter-queue finding: an input that could not be processed safely and needs explicit handling.
+
+Keep human review evidence in `data/meta_ads_tracker_secondary_shadow_gate_b.json`, through a normal main-branch PR. Each record binds the review to the original signal ID, Actions run ID, shadow-branch commit, and artifact SHA-256; duplicate signal revisions cannot be counted twice. A review may be useful even if no official reference is found, but it remains non-public and unverified. Never treat this ledger as proof that no unrecorded defect exists.
+
+CI validates the ledger's shape only. It intentionally does not pass Gate B merely because the empty template is valid. After the observation period, run:
+
+```bash
+python3 scripts/meta_ads_tracker_gate_b.py --require-ready
+```
+
+Only a `Gate B: PASS` result permits a separate beta-promotion decision. The current starter ledger correctly evaluates as `BLOCK` until real human review evidence is committed.
+
 ## Immutable weekly assembly
 
 The weekly assembler is separate from daily collection and is scheduled for Friday 17:00 MYT (`09:00 UTC`). `cutoffAt` records that logical business cutoff; `generatedAt` records when GitHub Actions actually assembled the artifact. Scheduler delay therefore does not change the collection window.

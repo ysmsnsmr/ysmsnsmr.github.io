@@ -136,6 +136,9 @@ def main() -> int:
         shadow_artifact_with = shadow_artifact.get("with", {}) if isinstance(shadow_artifact, dict) else {}
         if shadow_artifact_with.get("if-no-files-found") != "error" or shadow_artifact_with.get("retention-days") != "30":
             fail("secondary shadow artifact must fail on absence and retain exactly 30 days")
+        ci_runs = "\n".join(run_blocks(parsed["ci"]))
+        if "validate_meta_ads_tracker_gate_b.py" not in ci_runs:
+            fail("Tracker CI must validate the Gate B review-ledger contract")
     except (OSError, ValueError, yaml.YAMLError) as error:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1
