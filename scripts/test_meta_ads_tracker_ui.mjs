@@ -64,18 +64,11 @@ async function startServer() {
         response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
         return response.end(JSON.stringify(reportFor(fixture)));
       }
-      if (url.pathname === "/meta-ads-updates/secondary-beta.json") {
-        const referer = new URL(request.headers.referer || "http://127.0.0.1/");
-        if (referer.searchParams.get("secondaryStatus") === "invalid") {
-          response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
-          return response.end(JSON.stringify({ schemaVersion: "meta-ads-secondary-beta-status/v1", signals: [{ title: "must not render" }] }));
-        }
-      }
       let filePath = path.resolve(repositoryRoot, `.${decodeURIComponent(url.pathname)}`);
       if (!isInside(repositoryRoot, filePath)) return response.writeHead(403).end("Forbidden");
       const stat = await fs.stat(filePath).catch(() => null);
       if (stat?.isDirectory()) filePath = path.join(filePath, "index.html");
-      const mime = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".json": "application/json" }[path.extname(filePath)] || "application/octet-stream";
+      const mime = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript" }[path.extname(filePath)] || "application/octet-stream";
       response.writeHead(200, { "content-type": `${mime}; charset=utf-8` });
       response.end(await fs.readFile(filePath));
     } catch {
@@ -105,7 +98,6 @@ async function assertTokens(page) {
     const root = getComputedStyle(document.documentElement);
     const masthead = getComputedStyle(document.querySelector(".masthead"));
     const panel = getComputedStyle(document.querySelector(".control-panel"));
-    const betaStatus = getComputedStyle(document.querySelector("#secondary-beta-status"));
     return {
       canvas: root.getPropertyValue("--tracker-canvas").trim(),
       blue: root.getPropertyValue("--tracker-blue").trim(),
@@ -113,10 +105,7 @@ async function assertTokens(page) {
       target: root.getPropertyValue("--tracker-target-min").trim(),
       mastheadDisplay: masthead.display,
       mastheadBorder: masthead.borderBottomStyle,
-      panelRadius: panel.borderRadius,
-      betaRadius: betaStatus.borderRadius,
-      betaBorder: betaStatus.borderTopStyle,
-      betaMargin: betaStatus.marginTop
+      panelRadius: panel.borderRadius
     };
   });
   assert(JSON.stringify(values) === JSON.stringify({
@@ -126,10 +115,7 @@ async function assertTokens(page) {
     target: "44px",
     mastheadDisplay: "grid",
     mastheadBorder: "solid",
-    panelRadius: "10px",
-    betaRadius: "10px",
-    betaBorder: "solid",
-    betaMargin: "16px"
+    panelRadius: "10px"
   }), `Approved Workbench token/layout mismatch: ${JSON.stringify(values)}`);
 }
 
@@ -173,9 +159,6 @@ try {
       const expectedCount = fixtureName === "filtered-no-results" ? 0 : fixture.items.length;
       assert(await page.locator("#update-list .update-card").count() === expectedCount, `${label}: unexpected card count`);
       if (expectedCount === 0) assert(await page.locator("#empty-state").isVisible(), `${label}: empty state is missing`);
-      assert(await page.locator("#secondary-beta-status-title").innerText() === "Gate B：証跡不足", `${label}: Secondary β must reflect the current Gate B BLOCK status`);
-      assert((await page.locator("#secondary-beta-status-copy").innerText()).includes("Secondary βを進めません"), `${label}: Secondary β boundary copy is missing`);
-      assert((await page.locator(".secondary-empty").innerText()).includes("この公開UI・公式候補データ・週次indexには追加しません"), `${label}: Secondary signals must remain outside public and official paths`);
       assert(consoleErrors.length === 0 && pageErrors.length === 0, `${label}: runtime errors: ${[...consoleErrors, ...pageErrors].join("; ")}`);
       await assertTokens(page);
       await assertAccessibilityAndLayout(page, label);
@@ -199,9 +182,6 @@ try {
   assert(await page.locator("#update-list .update-card").count() === 3, "reset failed");
   await page.fill("#query-filter", "設定手順B");
   assert(await page.locator("#update-list .update-card").count() === 1, "query filter failed");
-  await page.goto(`${server.origin}/meta-ads-updates/index.html?fixture=normal-week&secondaryStatus=invalid`, { waitUntil: "networkidle" });
-  assert(await page.locator("#secondary-beta-status-title").innerText() === "Secondary βの状態を表示できません", "Malformed Secondary β status must fail closed");
-  assert(!(await page.locator(".secondary-beta").innerText()).includes("must not render"), "Malformed Secondary β data must not be displayed");
   await page.close();
   console.log(`PASS: production UI ${caseCount}/15 viewport cases, interactions, overflow, targets, focus, axe, and approved tokens`);
 } finally {

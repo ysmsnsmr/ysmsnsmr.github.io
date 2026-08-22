@@ -46,8 +46,6 @@ python3 scripts/meta_ads_tracker_gate_b.py --require-ready
 
 Only a `Gate B: PASS` result permits a separate beta-promotion decision. The current starter ledger correctly evaluates as `BLOCK` until real human review evidence is committed.
 
-P5-B1 adds a lower `Secondary signal β` status section to the production UI. It reads the separately validated `meta-ads-updates/secondary-beta.json`, which is derived from the Gate B ledger and deliberately contains only the Gate B status and boundary copy. It contains no shadow signals, source URLs, response bodies, excerpts, reviewer identities, or review records. A `PASS` status still requires a separate human promotion decision; it does not make any signal public automatically.
-
 ## Immutable weekly assembly
 
 The weekly assembler is separate from daily collection and is scheduled for Friday 17:00 MYT (`09:00 UTC`). `cutoffAt` records that logical business cutoff; `generatedAt` records when GitHub Actions actually assembled the artifact. Scheduler delay therefore does not change the collection window.
