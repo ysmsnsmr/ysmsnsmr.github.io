@@ -22,6 +22,10 @@ Every configured source has an explicit HTTPS host allowlist, three-redirect lim
 
 The existing Product News RSS and SDK release sources are temporarily permitted only before `2026-09-05` MYT. On that date, an unresolved record stops the daily workflow before any source request, candidate write, or state write. A `prohibited` decision must disable the source in the same configuration change. Login-required Help sources remain `manual_only` and are never scheduled for collection.
 
+## Official Developers canary
+
+`Meta Ads official canary` observes the Graph API Changelog, Marketing API documentation, and Developer Blog as a separate read-only, header-only workflow. Its JSON is an artifact only: it never updates candidate/state data, weekly assembly, publication, or the UI. A `429` rate limit, network error, or unexpected response is recorded as an observation and must never block the daily official tracker pipeline.
+
 ## Immutable weekly assembly
 
 The weekly assembler is separate from daily collection and is scheduled for Friday 17:00 MYT (`09:00 UTC`). `cutoffAt` records that logical business cutoff; `generatedAt` records when GitHub Actions actually assembled the artifact. Scheduler delay therefore does not change the collection window.
