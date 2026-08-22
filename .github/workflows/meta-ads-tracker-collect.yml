@@ -52,6 +52,7 @@ jobs:
           candidate="data/meta_ads_tracker_candidates/$(date -u +%Y%m%dT%H%M%SZ)-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.json"
           python3 scripts/meta_ads_tracker_collect.py \
             --output "${candidate}" \
+            --governance config/meta_ads_source_governance.json \
             --state data/meta_ads_tracker_state.json
           python3 scripts/validate_meta_ads_tracker_candidate.py --input "${candidate}"
           echo "candidate=${candidate}" >> "${GITHUB_OUTPUT}"

@@ -23,7 +23,13 @@ from urllib.parse import urljoin, urlsplit
 from defusedxml import ElementTree as SafeElementTree
 from defusedxml.common import DefusedXmlException
 
-from meta_ads_tracker_contract import ContractError, load_and_validate_source_config
+from meta_ads_tracker_contract import (
+    ContractError,
+    DEFAULT_SOURCE_GOVERNANCE,
+    governed_automated_sources,
+    load_and_validate_source_config,
+    load_and_validate_source_governance,
+)
 from meta_ads_tracker_publication import (
     CANDIDATE_SCHEMA_VERSION,
     KUALA_LUMPUR,
@@ -260,6 +266,7 @@ def collect(
     timeout: float,
     now: datetime,
     fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = _request,
+    governance: dict[str, Any] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     if now.tzinfo is None:
         raise ContractError("collector now must include a timezone")
@@ -275,10 +282,10 @@ def collect(
     }
     changes: list[dict[str, Any]] = []
     source_runs: list[dict[str, str]] = []
+    governance = governance or load_and_validate_source_governance(source_config=config)
+    automated_sources = governed_automated_sources(config, governance, now.astimezone(KUALA_LUMPUR).date())
 
-    for source in config["sources"]:
-        if not source["enabled"] or source["access"] != "public":
-            continue
+    for source in automated_sources:
         body, _content_type = fetch_body(source, timeout)
         parsed = (
             _parse_rss(body, source["transport"]["maxItems"])
@@ -321,11 +328,13 @@ def collect_and_write(
     output_path: Path,
     timeout: float,
     *,
+    governance_path: Path = DEFAULT_SOURCE_GOVERNANCE,
     now: datetime | None = None,
     fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = _request,
 ) -> dict[str, Any]:
     """Collect completely before atomically replacing either persisted output file."""
     config = load_and_validate_source_config(config_path)
+    governance = load_and_validate_source_governance(governance_path, config)
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {"sources": {}}
     candidate, next_state = collect(
         config,
@@ -333,6 +342,7 @@ def collect_and_write(
         timeout,
         now or datetime.now(timezone.utc).replace(microsecond=0),
         fetch_body,
+        governance,
     )
     write_json(output_path, candidate)
     write_json(state_path, next_state)
@@ -342,12 +352,19 @@ def collect_and_write(
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=Path("config/meta_ads_official_sources.json"))
+    parser.add_argument("--governance", type=Path, default=DEFAULT_SOURCE_GOVERNANCE)
     parser.add_argument("--state", type=Path, default=Path("data/meta_ads_tracker_state.json"))
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--timeout", type=float, default=30.0)
     args = parser.parse_args()
     try:
-        candidate = collect_and_write(args.config, args.state, args.output, args.timeout)
+        candidate = collect_and_write(
+            args.config,
+            args.state,
+            args.output,
+            args.timeout,
+            governance_path=args.governance,
+        )
     except (ContractError, DefusedXmlException, ET.ParseError, OSError, ValueError, urllib.error.URLError) as error:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1

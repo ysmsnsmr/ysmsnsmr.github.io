@@ -16,6 +16,12 @@ Set the repository Actions variable `META_ADS_TRACKER_COLLECT_ENABLED` to `false
 
 Every configured source has an explicit HTTPS host allowlist, three-redirect limit, 1 MiB response limit, item limit, and allowed media types. The collector disables environment proxy settings, rejects credentials, non-standard ports, literal or non-global IP addresses, disallowed redirects, unexpected media types, oversized payloads, and XML DTDs. These checks are transport safety controls, not evidence that an unavailable official source has no updates.
 
+### Source governance and the 14-day re-review
+
+`config/meta_ads_source_governance.json` is the authority for whether a configured source may be collected automatically. New automatic sources require a human `approved` record with reviewer, timestamp, evidence URL, and rationale in the same change that enables the source. A source cannot use the legacy grace status unless it is one of the two sources that existed when P0-B was established.
+
+The existing Product News RSS and SDK release sources are temporarily permitted only before `2026-09-05` MYT. On that date, an unresolved record stops the daily workflow before any source request, candidate write, or state write. A `prohibited` decision must disable the source in the same configuration change. Login-required Help sources remain `manual_only` and are never scheduled for collection.
+
 ## Immutable weekly assembly
 
 The weekly assembler is separate from daily collection and is scheduled for Friday 17:00 MYT (`09:00 UTC`). `cutoffAt` records that logical business cutoff; `generatedAt` records when GitHub Actions actually assembled the artifact. Scheduler delay therefore does not change the collection window.
