@@ -1,11 +1,12 @@
 {
-  "schemaVersion": "meta-ads-secondary-shadow-sources/v1",
+  "schemaVersion": "meta-ads-secondary-shadow-sources/v2",
   "policies": {
     "publicationEligible": false,
     "officialCandidateIntegration": false,
     "persistRawResponseBody": false,
     "requireHumanOfficialVerification": true,
-    "stateBranch": "automation/meta-ads-shadow-state"
+    "stateBranch": "automation/meta-ads-shadow-state",
+    "baselineGeneration": "rss-migration-2026-08"
   },
   "sources": [
     {
@@ -13,68 +14,51 @@
       "name": "PPC Land",
       "kind": "secondary_signal",
       "sourceUrl": "https://ppc.land/",
-      "fetchUrl": "https://ppc.land/",
+      "fetchUrl": "https://ppc.land/rss/",
       "enabled": true,
       "collectionMode": "automatic_shadow",
-      "expectedContentTypes": [
-        "text/html"
-      ],
+      "parser": "rss",
+      "expectedContentTypes": ["application/rss+xml", "application/xml", "text/xml"],
       "transport": {
-        "allowedFetchHosts": [
-          "ppc.land"
-        ],
-        "allowedContentHosts": [
-          "ppc.land"
-        ],
+        "allowedFetchHosts": ["ppc.land"],
+        "allowedContentHosts": ["ppc.land"],
         "maxResponseBytes": 1048576,
         "maxRedirects": 3,
-        "maxItems": 50
+        "maxItems": 50,
+        "maxFeedItems": 100
       },
-      "matchKeywords": [
-        "meta",
-        "facebook",
-        "instagram",
-        "ads manager",
-        "advertising",
-        "marketing api",
-        "business manager",
-        "advantage+"
-      ],
-      "rationale": "Secondary early-warning signal only; official verification is required before any tracker decision."
+      "match": {
+        "kind": "all_groups",
+        "groups": [
+          ["meta", "facebook", "instagram", "threads", "whatsapp"],
+          ["ads", "advertising", "ads manager", "marketing api", "business manager", "advantage+", "pixel", "conversions api"]
+        ]
+      },
+      "rationale": "RSS metadata is a secondary early-warning signal only; a Meta-related term and an advertising-product term are both required before human official verification."
     },
     {
       "id": "jon-loomer-meta-ads",
       "name": "Jon Loomer Digital",
       "kind": "secondary_signal",
       "sourceUrl": "https://www.jonloomer.com/",
-      "fetchUrl": "https://www.jonloomer.com/",
+      "fetchUrl": "https://www.jonloomer.com/feed/",
       "enabled": true,
       "collectionMode": "automatic_shadow",
-      "expectedContentTypes": [
-        "text/html"
-      ],
+      "parser": "rss",
+      "expectedContentTypes": ["application/rss+xml", "application/xml", "text/xml"],
       "transport": {
-        "allowedFetchHosts": [
-          "www.jonloomer.com"
-        ],
-        "allowedContentHosts": [
-          "www.jonloomer.com"
-        ],
-        "maxResponseBytes": 1048576,
+        "allowedFetchHosts": ["www.jonloomer.com"],
+        "allowedContentHosts": ["www.jonloomer.com"],
+        "maxResponseBytes": 2097152,
         "maxRedirects": 3,
-        "maxItems": 50
+        "maxItems": 50,
+        "maxFeedItems": 50
       },
-      "matchKeywords": [
-        "meta",
-        "facebook",
-        "instagram",
-        "ads manager",
-        "advertising",
-        "marketing api",
-        "business manager",
-        "advantage+"
-      ],
-      "rationale": "Practitioner observations are retained only as unverified early-warning signals."
+      "match": {
+        "kind": "rss_category",
+        "categories": ["Meta Advertising"]
+      },
+      "rationale": "RSS entries categorised by the publisher as Meta Advertising are retained only as unverified practitioner early-warning signals."
     },
     {
       "id": "anagrams-meta-ads",
@@ -84,28 +68,19 @@
       "fetchUrl": "https://anagrams.jp/blog/latest/",
       "enabled": false,
       "collectionMode": "manual_only",
-      "expectedContentTypes": [
-        "text/html"
-      ],
+      "parser": "html",
+      "expectedContentTypes": ["text/html"],
       "transport": {
-        "allowedFetchHosts": [
-          "anagrams.jp"
-        ],
-        "allowedContentHosts": [
-          "anagrams.jp"
-        ],
+        "allowedFetchHosts": ["anagrams.jp"],
+        "allowedContentHosts": ["anagrams.jp"],
         "maxResponseBytes": 1048576,
         "maxRedirects": 3,
         "maxItems": 50
       },
-      "matchKeywords": [
-        "meta",
-        "facebook",
-        "instagram",
-        "広告",
-        "facebook広告",
-        "instagram広告"
-      ],
+      "match": {
+        "kind": "any_keywords",
+        "keywords": ["meta", "facebook", "instagram", "広告", "facebook広告", "instagram広告"]
+      },
       "rationale": "Japanese source remains manual-only until a separate source-specific collection review approves automation."
     }
   ]

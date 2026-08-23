@@ -22,7 +22,7 @@ from meta_ads_tracker_contract import ContractError, _expect_identifier, _expect
 
 
 CONFIG_SCHEMA_VERSION = "meta-ads-secondary-shadow-gate-b-config/v1"
-RECORD_SCHEMA_VERSION = "meta-ads-secondary-shadow-gate-b-record/v1"
+RECORD_SCHEMA_VERSION = "meta-ads-secondary-shadow-gate-b-record/v2"
 DEFAULT_CONFIG = Path(__file__).resolve().parents[1] / "config/meta_ads_secondary_shadow_gate_b.json"
 DEFAULT_RECORD = Path(__file__).resolve().parents[1] / "data/meta_ads_tracker_secondary_shadow_gate_b.json"
 HASH_RE = re.compile(r"^[a-f0-9]{64}$")
@@ -110,11 +110,15 @@ def load_config(path: Path = DEFAULT_CONFIG) -> dict[str, Any]:
     return validate_config(_load_json(path, "Gate B config"))
 
 
-def _automatic_source_ids(shadow_config_path: Path) -> set[str]:
+def _shadow_contract(shadow_config_path: Path) -> tuple[set[str], str]:
     # Keep Gate B's required source set tied to the P5-D source registry.
     from meta_ads_tracker_secondary_shadow import load_and_validate_config
 
-    return {source["id"] for source in load_and_validate_config(shadow_config_path)["sources"] if source["enabled"]}
+    shadow_config = load_and_validate_config(shadow_config_path)
+    return (
+        {source["id"] for source in shadow_config["sources"] if source["enabled"]},
+        shadow_config["policies"]["baselineGeneration"],
+    )
 
 
 def _validate_optional_timestamp(value: Any, label: str) -> datetime | None:
@@ -127,10 +131,29 @@ def validate_record(
     payload: Any,
     *,
     automatic_source_ids: set[str],
+    baseline_generation: str,
 ) -> dict[str, Any]:
-    record = _expect_keys(payload, {"schemaVersion", "observationWindow", "reviews", "findings"}, "Gate B review record")
+    record = _expect_keys(payload, {"schemaVersion", "baselineGeneration", "baseline", "observationWindow", "reviews", "findings"}, "Gate B review record")
     if record["schemaVersion"] != RECORD_SCHEMA_VERSION:
         raise ContractError(f"Gate B review record schemaVersion must be {RECORD_SCHEMA_VERSION}")
+    if _expect_identifier(record["baselineGeneration"], "Gate B review record.baselineGeneration") != baseline_generation:
+        raise ContractError("Gate B review record.baselineGeneration must match the active shadow baseline generation")
+    baseline = _expect_keys(record["baseline"], {"cutoffAt", "workflowRunId", "stateBranchCommit", "artifactSha256"}, "Gate B baseline")
+    baseline_values = [baseline["cutoffAt"], baseline["workflowRunId"], baseline["stateBranchCommit"], baseline["artifactSha256"]]
+    if any(value is None for value in baseline_values) and any(value is not None for value in baseline_values):
+        raise ContractError("Gate B baseline must set all provenance fields or none")
+    baseline_cutoff: datetime | None = None
+    if all(value is not None for value in baseline_values):
+        baseline_cutoff = parse_timestamp(baseline["cutoffAt"], "Gate B baseline.cutoffAt")
+        baseline_run_id = _expect_string(baseline["workflowRunId"], "Gate B baseline.workflowRunId")
+        if not baseline_run_id.isdigit():
+            raise ContractError("Gate B baseline.workflowRunId must be a GitHub run id")
+        baseline_commit = _expect_string(baseline["stateBranchCommit"], "Gate B baseline.stateBranchCommit")
+        if not GIT_SHA_RE.fullmatch(baseline_commit):
+            raise ContractError("Gate B baseline.stateBranchCommit must be a 40-character commit SHA")
+        baseline_hash = _expect_string(baseline["artifactSha256"], "Gate B baseline.artifactSha256")
+        if not HASH_RE.fullmatch(baseline_hash):
+            raise ContractError("Gate B baseline.artifactSha256 must be SHA-256")
     window = _expect_keys(record["observationWindow"], {"startedAt", "endedAt"}, "Gate B observationWindow")
     started_at = _validate_optional_timestamp(window["startedAt"], "Gate B observationWindow.startedAt")
     ended_at = _validate_optional_timestamp(window["endedAt"], "Gate B observationWindow.endedAt")
@@ -138,6 +161,10 @@ def validate_record(
         raise ContractError("Gate B observationWindow must set both timestamps or neither")
     if started_at and ended_at and ended_at < started_at:
         raise ContractError("Gate B observationWindow.endedAt must not precede startedAt")
+    if baseline_cutoff is None and (started_at is not None or record["reviews"]):
+        raise ContractError("Gate B baseline provenance is required before an observation window or reviews")
+    if baseline_cutoff and started_at and started_at < baseline_cutoff:
+        raise ContractError("Gate B observationWindow.startedAt must not precede the RSS baseline cutoff")
 
     reviews = record["reviews"]
     if not isinstance(reviews, list):
@@ -149,6 +176,7 @@ def validate_record(
             value,
             {
                 "reviewId",
+                "baselineGeneration",
                 "sourceId",
                 "signalId",
                 "observedAt",
@@ -168,6 +196,8 @@ def validate_record(
         if review_id in review_ids:
             raise ContractError(f"duplicate Gate B reviewId: {review_id}")
         review_ids.add(review_id)
+        if _expect_identifier(review["baselineGeneration"], f"Gate B reviews[{index}].baselineGeneration") != baseline_generation:
+            raise ContractError(f"Gate B reviews[{index}].baselineGeneration must match the active shadow baseline generation")
         source_id = _expect_identifier(review["sourceId"], f"Gate B reviews[{index}].sourceId")
         if source_id not in automatic_source_ids:
             raise ContractError(f"Gate B reviews[{index}].sourceId is not an automatic shadow source")
@@ -176,6 +206,8 @@ def validate_record(
         reviewed_at = parse_timestamp(review["reviewedAt"], f"Gate B reviews[{index}].reviewedAt")
         if reviewed_at < observed_at:
             raise ContractError(f"Gate B reviews[{index}].reviewedAt must not precede observedAt")
+        if baseline_cutoff and observed_at < baseline_cutoff:
+            raise ContractError(f"Gate B reviews[{index}].observedAt must not precede the RSS baseline cutoff")
         if started_at and ended_at and not started_at <= observed_at <= ended_at:
             raise ContractError(f"Gate B reviews[{index}].observedAt must be within observationWindow")
         run_id = _expect_string(review["workflowRunId"], f"Gate B reviews[{index}].workflowRunId")
@@ -275,6 +307,7 @@ def evaluate(config: dict[str, Any], record: dict[str, Any], *, automatic_source
         "status": "PASS" if not reasons else "BLOCK",
         "criteria": criteria,
         "evidence": {
+            "baselineGeneration": record["baselineGeneration"],
             "reviewCount": len(reviews),
             "usefulReviewCount": useful_count,
             "reviewsByAutomaticSource": {source_id: source_counts[source_id] for source_id in sorted(automatic_source_ids)},
@@ -296,8 +329,12 @@ def main() -> int:
     args = parser.parse_args()
     try:
         config = load_config(args.config)
-        source_ids = _automatic_source_ids(args.shadow_config)
-        record = validate_record(_load_json(args.record, "Gate B review record"), automatic_source_ids=source_ids)
+        source_ids, baseline_generation = _shadow_contract(args.shadow_config)
+        record = validate_record(
+            _load_json(args.record, "Gate B review record"),
+            automatic_source_ids=source_ids,
+            baseline_generation=baseline_generation,
+        )
         result = evaluate(config, record, automatic_source_ids=source_ids)
     except (ContractError, OSError, ValueError, json.JSONDecodeError) as error:
         print(f"FAIL: {error}", file=sys.stderr)

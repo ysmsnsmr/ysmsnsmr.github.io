@@ -1,5 +1,12 @@
 {
-  "schemaVersion": "meta-ads-secondary-shadow-gate-b-record/v1",
+  "schemaVersion": "meta-ads-secondary-shadow-gate-b-record/v2",
+  "baselineGeneration": "rss-migration-2026-08",
+  "baseline": {
+    "cutoffAt": null,
+    "workflowRunId": null,
+    "stateBranchCommit": null,
+    "artifactSha256": null
+  },
   "observationWindow": {
     "startedAt": null,
     "endedAt": null
