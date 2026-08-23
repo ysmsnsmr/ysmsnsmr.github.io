@@ -1,0 +1,1201 @@
+{
+  "schemaVersion": "meta-ads-tracker-candidates/v3",
+  "candidateHash": "9171d68d91f89fe619cac6de68553d9ee1b1bb7c9a9eca695a2d4dc499fe339b",
+  "generatedAt": "2026-08-23T02:00:51Z",
+  "baseline": {
+    "mode": "active",
+    "cutoffAt": "2026-08-16T01:58:08Z"
+  },
+  "week": {
+    "startDate": "2026-08-17",
+    "endDate": "2026-08-23",
+    "label": "2026-08-17〜2026-08-23"
+  },
+  "processingEpoch": {
+    "id": "epoch-20260823t02001787450451z",
+    "startedAt": "2026-08-23T02:00:51Z",
+    "completedAt": "2026-08-23T02:00:51Z",
+    "status": "completed"
+  },
+  "sourceRuns": [
+    {
+      "sourceId": "meta-product-news-rss",
+      "status": "success",
+      "startedAt": "2026-08-23T02:00:51Z",
+      "completedAt": "2026-08-23T02:00:51Z",
+      "parsedItems": 10,
+      "newEvents": 0,
+      "changedEvents": 0,
+      "unchangedItems": 10,
+      "tombstonedItems": 0
+    },
+    {
+      "sourceId": "meta-business-sdk-releases",
+      "status": "success",
+      "startedAt": "2026-08-23T02:00:51Z",
+      "completedAt": "2026-08-23T02:00:51Z",
+      "parsedItems": 28,
+      "newEvents": 0,
+      "changedEvents": 28,
+      "unchangedItems": 0,
+      "tombstonedItems": 0
+    }
+  ],
+  "summary": {
+    "parsedItems": 38,
+    "newEvents": 0,
+    "changedEvents": 28,
+    "unchangedItems": 10,
+    "tombstonedItems": 0
+  },
+  "items": [
+    {
+      "id": "meta-business-sdk-releases-f5d7bbca96b50982c0d4",
+      "eventId": "meta-business-sdk-releases-f5d7bbca96b50982c0d4",
+      "subjectId": "meta-business-sdk-releases-b25cfa7dff27aacf",
+      "revision": "01420e860ab7af0bdcb1040b301c92016d91f16b510333f999a6cc2a47d4f817",
+      "sourceFingerprint": "01420e860ab7af0bdcb1040b301c92016d91f16b510333f999a6cc2a47d4f817",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v26.0.0",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v26.0.0",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2026-08-06"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "The Meta Business SDK v26 release will be published shortly after the release of Graph API v26. This release will include dependency upgrades, [Conversions API Parameter Builder integration](https://developers.facebook.com/documentation/ads-commerce/conversions-api/guides/business-sdk-features#conversions-api-parameter-builder-integration), new API features, and deprecation of the Commerce Order Management API and several legacy protocol features. The Business SDK is now integrated with open sourced [Conversions API Parameter Builder](https://github.com/facebook/capi-param-builder/tree/main?fbclid=IwcGRvZgNleHRuA2FlbQIxMQBicmlkETE0aUdRNWtVNkk2cHJLRTJBc3J0YwZhcHBfaWQBMAABHrn3PDMCFm11LncbQEsNRPa97EsSarLfdCeo23GOoa4dKqM1xJ_fRy4yihMc_aem_Qa8uNEntP5Gh-6bVivDB_A). You can leverage this new integration to improve the quality of your Conversions API integration. Key features: Auto-generates (gated by preference set by advertisers) and enhances parameters fbc, fbp, event_source_url, referrer_url, client_ip_address and automatic PII normalization/hashing for supported languages, see more [here](https://developers.facebook.com/documentation/ads-commerce/conversions-api/guides/business-sdk-features#conversions-api-parameter-builder-integration). The Commerce Order Management API (47 endpoints) is fully deprecated with no replacement. The Instagram Explore Feed ad placement is removed and returns errors if specified. Messenger Stories placement is silently removed from messenger_positions. Ads in WhatsApp Status gain new capabilities including identity spec, carousel up to 10 cards, and offsite-conversion optimization. As part of our [2-year deprecation](https://developers.facebook.com/docs/graph-api/changelog) schedule for Platform SDKs, please note the upcoming deprecations and sunsets: Sept, 2026: Facebook Platform SDK v20.0 will be deprecated Jan, 2027:: Facebook Platform SDK v21.0 will be deprecated"
+    },
+    {
+      "id": "meta-business-sdk-releases-b76eabfe9613087fc86a",
+      "eventId": "meta-business-sdk-releases-b76eabfe9613087fc86a",
+      "subjectId": "meta-business-sdk-releases-7e5e3be47a33e91b",
+      "revision": "0840841b6054ad8f754a6d6e06e6c6bc182ab835e8480ec0676d181023cf8ad1",
+      "sourceFingerprint": "0840841b6054ad8f754a6d6e06e6c6bc182ab835e8480ec0676d181023cf8ad1",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v25.0.3",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v25.0.3",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2026-07-17"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "**Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v25.0.2...v25.0.3"
+    },
+    {
+      "id": "meta-business-sdk-releases-634b350ec5eaa9d778e7",
+      "eventId": "meta-business-sdk-releases-634b350ec5eaa9d778e7",
+      "subjectId": "meta-business-sdk-releases-4b9669ef44e0d812",
+      "revision": "e222e02f365ca2d585e6ef775dfd87c31e00c9bd6b3dd69a1294c4c9c73693b0",
+      "sourceFingerprint": "e222e02f365ca2d585e6ef775dfd87c31e00c9bd6b3dd69a1294c4c9c73693b0",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v25.0.2",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v25.0.2",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2026-06-08"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "In this release, we added [Conversions API Parameter Builder integration](https://github.com/facebook/facebook-nodejs-business-sdk/blob/main/README.md#conversions-api-parameter-builder-integration). The server-side Event/ServerEvent can now auto-fill Conversions API parameters from the incoming HTTP request: call setRequestContext(request) (optionally with a Preference allowlist) and the SDK fills any empty fbc, fbp, event_source_url, and referrer_url fields at send time — plus client_ip_address and automatic PII normalization/hashing on PHP and NodeJS. Auto-fill is gated by Preference, never overwrites values you set, and is fully opt-in (no behavior change unless you call setRequestContext). **Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v25.0.1...v25.0.2"
+    },
+    {
+      "id": "meta-business-sdk-releases-4b1b0201805c43f056ce",
+      "eventId": "meta-business-sdk-releases-4b1b0201805c43f056ce",
+      "subjectId": "meta-business-sdk-releases-19321f0bbbb01bfa",
+      "revision": "0ebae690b833c9c2a14b0dd0c1c9873c3efb9296ebef0f0f656eebfc0e67aa60",
+      "sourceFingerprint": "0ebae690b833c9c2a14b0dd0c1c9873c3efb9296ebef0f0f656eebfc0e67aa60",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v25.0.1",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v25.0.1",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2026-03-30"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "**Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v25.0.0...v25.0.1"
+    },
+    {
+      "id": "meta-business-sdk-releases-b5cb8d951f63c673347c",
+      "eventId": "meta-business-sdk-releases-b5cb8d951f63c673347c",
+      "subjectId": "meta-business-sdk-releases-d7ec71ad2db66d3b",
+      "revision": "536f7d268c0a238f0d0e5f8d32fbd54130489f9eeeb883c74e36a8ffa61b1e35",
+      "sourceFingerprint": "536f7d268c0a238f0d0e5f8d32fbd54130489f9eeeb883c74e36a8ffa61b1e35",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK 25.0.0",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v25.0.0",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2026-03-10"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "In this release, Advantage+ Shopping Campaigns (ASC) and Advantage+ App Campaigns (AAC) can no longer be created or updated via the Marketing API starting v25.0, extending to all versions by May 19, 2026, as part of the Automation Unification toward the streamlined Advantage+ setup. The Ads Insights Async API now returns detailed error information on report failures, and several legacy metrics including Page Reach, Impressions, and 3-second Viewers are planned for deprecation in June 2026 in favor of the new Media Views and Media Viewers metrics. Webhooks mTLS certificates will transition to a new Meta-owned Certificate Authority starting March 31, 2026. For full details, see the [official blog post](https://l.facebook.com/l.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fblog%2Fpost%2F2026%2F02%2F18%2Fintroducing-graph-api-v25-and-marketing-api-v25%2F&h=AT6ilvKJ_aG7GSAJR__j7SztUDEe_sTTTwEiCaclaxYqXOipp94YR6aJrNKztgIvdhihRnYtOYeQF5B5nnFtKi8kjmLz4nczTaR1LV7y-heZBNxcuzvFmMfRttoF9YXF4xchdNK49d6IQziVF9zCjm2y1-tH) **Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v24.0.1...v25.0.0"
+    },
+    {
+      "id": "meta-business-sdk-releases-f735b9703df6b3652b74",
+      "eventId": "meta-business-sdk-releases-f735b9703df6b3652b74",
+      "subjectId": "meta-business-sdk-releases-799d1f46f743ce75",
+      "revision": "c15fba3dbedd34a45212da9678b24b07cdf06cf80400ff7b9a6215969b673724",
+      "sourceFingerprint": "c15fba3dbedd34a45212da9678b24b07cdf06cf80400ff7b9a6215969b673724",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v24.0.1",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v24.0.1",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2025-11-21"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "**Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v24.0.0...v24.0.1"
+    },
+    {
+      "id": "meta-business-sdk-releases-d5cab7960a02ee0e7390",
+      "eventId": "meta-business-sdk-releases-d5cab7960a02ee0e7390",
+      "subjectId": "meta-business-sdk-releases-f3dd88a2d7230390",
+      "revision": "31bd7aabeb12bc95995fdb6c79e224bc6d98f9c7b93c649a50ebb348769978ee",
+      "sourceFingerprint": "31bd7aabeb12bc95995fdb6c79e224bc6d98f9c7b93c649a50ebb348769978ee",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v24.0.0",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v24.0.0",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2025-10-24"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "In this release, there are major changes like Dynamic Media will be enabled by default for Advantage+ Catalog ads via the Marketing API, requiring developers to explicitly opt out if desired. The daily budget flexibility is increased from 25% to 75%, allowing higher spend on days with better opportunities while maintaining weekly spend limits. A new feature allows up to 20% of an ad set’s daily budget to be shared with other ad sets in the same campaign for improved performance without campaign budget optimization. The Facebook video feeds ad placement is no longer available in Marketing API v24.0, and attempts to use it will result in errors. Third-party access to create Click to Messenger Lead Gen (CTMLG) ads through the Marketing API is discontinued, though Ads Manager creation remains available. **Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v23.0.3...v24.0.0"
+    },
+    {
+      "id": "meta-business-sdk-releases-0c8e2bc8f2965442d76a",
+      "eventId": "meta-business-sdk-releases-0c8e2bc8f2965442d76a",
+      "subjectId": "meta-business-sdk-releases-ad044e1b52bedd78",
+      "revision": "014be8ded76db8ddbf61617c8d860cd79feedb1c6344f7aaa8f7571b19bfd85d",
+      "sourceFingerprint": "014be8ded76db8ddbf61617c8d860cd79feedb1c6344f7aaa8f7571b19bfd85d",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v23.0.3",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v23.0.3",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2025-10-14"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "**Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v23.0.2...v23.0.3"
+    },
+    {
+      "id": "meta-business-sdk-releases-4ec21d356be074c223a3",
+      "eventId": "meta-business-sdk-releases-4ec21d356be074c223a3",
+      "subjectId": "meta-business-sdk-releases-33726ac4b7947fe3",
+      "revision": "60bc19e56394495384ab2e1b565816c63b121c3fc59dfc986db74bd640ab9696",
+      "sourceFingerprint": "60bc19e56394495384ab2e1b565816c63b121c3fc59dfc986db74bd640ab9696",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v23.0.2",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v23.0.2",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2025-09-26"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "**Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v23.0.1...v23.0.2"
+    },
+    {
+      "id": "meta-business-sdk-releases-c814f15ba729a69d5a1c",
+      "eventId": "meta-business-sdk-releases-c814f15ba729a69d5a1c",
+      "subjectId": "meta-business-sdk-releases-1d679fdb3a59346b",
+      "revision": "2c8ff4291bb6df2607ccdc7b307e89a812f7e4140537515945a329f9e00afa99",
+      "sourceFingerprint": "2c8ff4291bb6df2607ccdc7b307e89a812f7e4140537515945a329f9e00afa99",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v23.0.1",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v23.0.1",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2025-07-18"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "**Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v23.0.0...v23.0.1"
+    },
+    {
+      "id": "meta-business-sdk-releases-0c5f6fb4b2136e7b6764",
+      "eventId": "meta-business-sdk-releases-0c5f6fb4b2136e7b6764",
+      "subjectId": "meta-business-sdk-releases-42b3af0e4b20042c",
+      "revision": "87b550fdd59ae1a135d675bd44be15d6ed547c2a7195bc7ef1233dd8b64b2543",
+      "sourceFingerprint": "87b550fdd59ae1a135d675bd44be15d6ed547c2a7195bc7ef1233dd8b64b2543",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v23.0.0",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v23.0.0",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2025-06-17"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "In this release, we introduced version one of ThirdPartyAccount library in Python and Node.js SDKs to simplify the usage of the 2Tier APIs. Additionally, updated parameter list for the original_event_data parameter. We are planning to extend these features to other languages soon. **Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v22.0.3...v23.0.0"
+    },
+    {
+      "id": "meta-business-sdk-releases-dde99189d93c7cbae1b5",
+      "eventId": "meta-business-sdk-releases-dde99189d93c7cbae1b5",
+      "subjectId": "meta-business-sdk-releases-e93aeb2cfd767263",
+      "revision": "ca4087733eda203786331062dd37c1d9c7eef7f3e337d0f3d623ad9bc2255200",
+      "sourceFingerprint": "ca4087733eda203786331062dd37c1d9c7eef7f3e337d0f3d623ad9bc2255200",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v22.0.3",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v22.0.3",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2025-05-14"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "**Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v22.0.2...v22.0.3"
+    },
+    {
+      "id": "meta-business-sdk-releases-f0c70bc3dc38152cab83",
+      "eventId": "meta-business-sdk-releases-f0c70bc3dc38152cab83",
+      "subjectId": "meta-business-sdk-releases-227680251038629f",
+      "revision": "b4c8493e26bcb6a471b639a8172f917913e3cb2d7e3d181e6a0e77b4a8abd5b6",
+      "sourceFingerprint": "b4c8493e26bcb6a471b639a8172f917913e3cb2d7e3d181e6a0e77b4a8abd5b6",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v22.0.2",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v22.0.2",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2025-05-06"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "This release contains V1 of ThirdPartyAccount Library - SDK library to simplify the usage of the 2 Tier APIs **Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v22.0.1...v22.0.2"
+    },
+    {
+      "id": "meta-business-sdk-releases-bf1f2053685d6264156c",
+      "eventId": "meta-business-sdk-releases-bf1f2053685d6264156c",
+      "subjectId": "meta-business-sdk-releases-5c0dcbf05d480ecb",
+      "revision": "e36eeb9b47d991dfe5706cf53b4fa4fb5904c46e68a2eeb3415fd7b53b9fed54",
+      "sourceFingerprint": "e36eeb9b47d991dfe5706cf53b4fa4fb5904c46e68a2eeb3415fd7b53b9fed54",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v22.0.1",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v22.0.1",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2025-04-01"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "Hey Everyone, We are releasing latest minor version of Meta Business SDK v22.0.1 **Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v22.0.0...v22.0.1"
+    },
+    {
+      "id": "meta-business-sdk-releases-a004329cf1fc6c5f3165",
+      "eventId": "meta-business-sdk-releases-a004329cf1fc6c5f3165",
+      "subjectId": "meta-business-sdk-releases-a766e4044efaa2f6",
+      "revision": "006695d74ffebca07ebfdeba34ca5c635c60fa195459f2a311e4b8d067754c87",
+      "sourceFingerprint": "006695d74ffebca07ebfdeba34ca5c635c60fa195459f2a311e4b8d067754c87",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v22.0.0",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v22.0.0",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2025-02-13"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "Hey Everyone, We are thrilled to announce the release of Meta Business SDK v22.0, which now supports [Graph API v22.0 and Marketing API v22.0](https://developers.facebook.com/blog/post/2025/01/21/introducing-graph-api-v22-and-marketing-api-v22/). This release will include bug fixes, dependency upgrades, new features, and most importantly, an updated API interface to match Graph API v22. Here are few highlighted changes Added support on POST /{ad-account-id}/video_ads, deprecation of few instagram endpoints **Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v21.0.5...v22.0.0"
+    },
+    {
+      "id": "meta-business-sdk-releases-2c9e4eb65de5f1b40dd2",
+      "eventId": "meta-business-sdk-releases-2c9e4eb65de5f1b40dd2",
+      "subjectId": "meta-business-sdk-releases-bb03f0ecdb5f9320",
+      "revision": "634ddfad8d18b2a45a9cef3dde471749687d18d6b6740d4401cdb462d6c256e5",
+      "sourceFingerprint": "634ddfad8d18b2a45a9cef3dde471749687d18d6b6740d4401cdb462d6c256e5",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v21.0.0",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v21.0.0",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2024-10-10"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "**Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v20.0.3...v21.0.0"
+    },
+    {
+      "id": "meta-business-sdk-releases-1c8930a7ae38fcae6636",
+      "eventId": "meta-business-sdk-releases-1c8930a7ae38fcae6636",
+      "subjectId": "meta-business-sdk-releases-f32bb2320f57cf27",
+      "revision": "de085c2b53e0fd44a76fe937dc6c6f828e9f29ed0b025bc86e67746653838094",
+      "sourceFingerprint": "de085c2b53e0fd44a76fe937dc6c6f828e9f29ed0b025bc86e67746653838094",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v20.0.0",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v20.0.0",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2024-08-15"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "**Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v19.0.3...v20.0.0"
+    },
+    {
+      "id": "meta-business-sdk-releases-a43d65e68b15b081c420",
+      "eventId": "meta-business-sdk-releases-a43d65e68b15b081c420",
+      "subjectId": "meta-business-sdk-releases-8089dced4dbf3ce8",
+      "revision": "57cabd73459c1f4ab7bd04875c83e2e8671513936a31d07baecc5836d30a913b",
+      "sourceFingerprint": "57cabd73459c1f4ab7bd04875c83e2e8671513936a31d07baecc5836d30a913b",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v19.0.2",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v19.0.2",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2024-04-15"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "**Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v19.0.1...v19.0.2"
+    },
+    {
+      "id": "meta-business-sdk-releases-bbd903af329986c39dbe",
+      "eventId": "meta-business-sdk-releases-bbd903af329986c39dbe",
+      "subjectId": "meta-business-sdk-releases-d2c0011c92918904",
+      "revision": "e03617808f9686fd6675f26d5654d12dc69fe927eca421985dc0ff2b05f7af2d",
+      "sourceFingerprint": "e03617808f9686fd6675f26d5654d12dc69fe927eca421985dc0ff2b05f7af2d",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v19.0.1",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v19.0.1",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2024-03-14"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "Hello again! Apologies for the delay in rolling out this minor version update. Your patience is to be rewarded! We're offering much more than you might expect from a typical minor version bump. **Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v19.0.0...v19.0.1"
+    },
+    {
+      "id": "meta-business-sdk-releases-7951dcdc6ae5041c961a",
+      "eventId": "meta-business-sdk-releases-7951dcdc6ae5041c961a",
+      "subjectId": "meta-business-sdk-releases-d53195dbb95b555d",
+      "revision": "9da5593b76b7e779282da96d46fee735e70083f173ab1d87440af3c40a5affe4",
+      "sourceFingerprint": "9da5593b76b7e779282da96d46fee735e70083f173ab1d87440af3c40a5affe4",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v19.0.0",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v19.0.0",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2024-01-24"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "**Happy New Year!** As of January 23, 2024, we are thrilled to announce the release of Meta Business SDK v19.0, which now supports [[Graph API v19.0 and Marketing API v19.0](https://developers.facebook.com/blog/post/2024/01/23/introducing-facebook-graph-and-marketing-api-v19/)]. Due to the code freeze in December, we bypassed the minor version increments for v18.0. However, during this period, our developers remained actively engaged in our community, submitting issues and pull requests. While we updated the [[Changelog](https://developers.facebook.com/docs/marketing-api/marketing-api-changelog)] to include all API interface changes, you can access comprehensive code modifications in our repositories. **Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v18.0.4...v19.0.0"
+    },
+    {
+      "id": "meta-business-sdk-releases-19a9e2bfb2cd6877810c",
+      "eventId": "meta-business-sdk-releases-19a9e2bfb2cd6877810c",
+      "subjectId": "meta-business-sdk-releases-61af1b422c7c798f",
+      "revision": "dc03a22a62cdc8c96bdba7f77148a4e0b1643169356d5a78701bf441c31f91fc",
+      "sourceFingerprint": "dc03a22a62cdc8c96bdba7f77148a4e0b1643169356d5a78701bf441c31f91fc",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v18.0.4",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.4",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2023-12-04"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "[v18.0.3..v18.0.4](https://github.com/facebook/facebook-nodejs-business-sdk/compare/v18.0.3..v18.0.4)"
+    },
+    {
+      "id": "meta-business-sdk-releases-662cd11044d6a851f71e",
+      "eventId": "meta-business-sdk-releases-662cd11044d6a851f71e",
+      "subjectId": "meta-business-sdk-releases-5e6bf95c1372d436",
+      "revision": "cc09bad8809532512efcc7cf1e6fd9ecffb3320dbf8f9e138a4515534e9c2b0a",
+      "sourceFingerprint": "cc09bad8809532512efcc7cf1e6fd9ecffb3320dbf8f9e138a4515534e9c2b0a",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v18.0.3",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.3",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2023-11-06"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "[v18.0.2..v18.0.3](https://github.com/facebook/facebook-nodejs-business-sdk/compare/v18.0.2..v18.0.3)"
+    },
+    {
+      "id": "meta-business-sdk-releases-8992341c8c69495ca78b",
+      "eventId": "meta-business-sdk-releases-8992341c8c69495ca78b",
+      "subjectId": "meta-business-sdk-releases-ac710d189edee2d5",
+      "revision": "f9af21e6573206bf09b3d30fd2649e9259ab10448463553f2dcbf043520ae7a0",
+      "sourceFingerprint": "f9af21e6573206bf09b3d30fd2649e9259ab10448463553f2dcbf043520ae7a0",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v18.0.2",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.2",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2023-10-15"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "[v18.0.1..v18.0.2](https://github.com/facebook/facebook-nodejs-business-sdk/compare/v18.0.1..v18.0.2) 🐛 resolve a bug in returning the content of error due to the introduction of axios (#262)"
+    },
+    {
+      "id": "meta-business-sdk-releases-e28837924b4d01e6acd5",
+      "eventId": "meta-business-sdk-releases-e28837924b4d01e6acd5",
+      "subjectId": "meta-business-sdk-releases-49ff08b4e084e01b",
+      "revision": "a5ecb0db7f59a0bd0de2a400d4b6f876fd9c6e3a08f9b59dc90b29ec123dc777",
+      "sourceFingerprint": "a5ecb0db7f59a0bd0de2a400d4b6f876fd9c6e3a08f9b59dc90b29ec123dc777",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v18.0.1",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.1",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2023-09-26"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "[v18.0.0..v18.0.1](https://github.com/facebook/facebook-nodejs-business-sdk/compare/v18.0.0..v18.0.1)"
+    },
+    {
+      "id": "meta-business-sdk-releases-921af4521fde03d05dd4",
+      "eventId": "meta-business-sdk-releases-921af4521fde03d05dd4",
+      "subjectId": "meta-business-sdk-releases-a3e6e83d0f944b6a",
+      "revision": "fffed246342cc6a5f14766c4de6a448a6e3add245f28a78e4e142521d4b5034d",
+      "sourceFingerprint": "fffed246342cc6a5f14766c4de6a448a6e3add245f28a78e4e142521d4b5034d",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v18.0",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.0",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2023-09-15"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "### Introducing Meta Business SDK v18.0 for Node.js Time flies. Today, (September 15, 2023) we’re announcing the release of **Meta Business SDK v18.0** to support the [[Graph API v18.0 and Marketing API v18.0](https://developers.facebook.com/blog/post/2023/09/12/introducing-facebook-graph-and-marketing-api-v18/)]. It represents a major update which addresses numerous longstanding issues and expands support to additional features, nodes, and types. While you can find a comprehensive list of changes in our [[Chagnelog](https://developers.facebook.com/docs/graph-api/changelog/version18.0)], here are also following notable SDK-only updates that we believe are relevant to our developer community. - [AdAssetFeedSpecAssetCustomizationRule and AdAssetMessageExtensions](https://developers.facebook.com/docs/marketing-api/reference/ad-asset-feed-spec/) Support: Developer is able to Get a list of structuralized AdAssetFeedSpecAssetCustomizationRule and AdAssetMessageExtensions objects from AdAssetFeedSpec node. - [AdsHistogramStats](https://developers.facebook.com/docs/marketing-api/reference/ads-insights/) Support: Developer is able to Get a list of structuralized AdsHistogramStats objects from multiple video play related metrics. - [BusinessImage, BusinessVideo, BusinessCreativeFolder](https://developers.facebook.com/docs/marketing-api/business-creative-asset-management/reference) Support: Developer is able to Post and Get these types of objects via Business node. - Four [Instagram Nodes](https://developers.facebook.com/docs/instagram/ads-api/requirements) Support: InstagramCarousel, InstagramComment, InstagramMedia, and InstagramUser are now available for developers to work on, including all POST and GET APIs. - Multiple [LeadGen Form Objects](https://developers.facebook.com/docs/graph-api/reference/page/leadgen_forms/) Support: Developer is able to work on multiple LeadGen Form related objects, including LeadGenContextCard, LeadGenCustomDisclaimer, LeadGenThankYouPage. A full API spec change could be viewed [here](https://github.com/facebook/facebook-business-sdk-codegen/compare/848631c..4fb0cfc)."
+    },
+    {
+      "id": "meta-business-sdk-releases-bf16f40dbc542345271b",
+      "eventId": "meta-business-sdk-releases-bf16f40dbc542345271b",
+      "subjectId": "meta-business-sdk-releases-0f741dbaa56c1d83",
+      "revision": "1a02d5b74a1d3dc1ccd74af01cb83b37498089a9f0e5fbd7c7f1270958dc3b12",
+      "sourceFingerprint": "1a02d5b74a1d3dc1ccd74af01cb83b37498089a9f0e5fbd7c7f1270958dc3b12",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Releasing the Facebook Ads Node JS SDK for v2.11.3 of Marketing APIs",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v2.11.3",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2018-01-09"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "Release of v2.11.3 includes the following changes: - Handle errors from Batch API - Handle network errors e.g. timeout, destination unreachable (#19, #20)"
+    },
+    {
+      "id": "meta-business-sdk-releases-cfc1ae3e846010913e68",
+      "eventId": "meta-business-sdk-releases-cfc1ae3e846010913e68",
+      "subjectId": "meta-business-sdk-releases-683f57cf4d5d0741",
+      "revision": "b94cc5a2730a8ffc6fb5771ec0dfc9d5ec97b919bb32aa1fb695a8f3cb636c0a",
+      "sourceFingerprint": "b94cc5a2730a8ffc6fb5771ec0dfc9d5ec97b919bb32aa1fb695a8f3cb636c0a",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Releasing the Facebook Ads Node JS SDK for v2.11.2 of Marketing APIs",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v2.11.2",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2018-01-06"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "Release of v2.11.2 includes the following changes: - Fix equality testing (#13) - Add Code of Conduct (#17) - Remove full_funnel_exploration_mode for AdCampaign - Remove unused code (AdAccountAdRuleHistory has been changed to AdAccountAdRulesHistory)"
+    },
+    {
+      "id": "meta-business-sdk-releases-c7e6ac6837ff5451ba62",
+      "eventId": "meta-business-sdk-releases-c7e6ac6837ff5451ba62",
+      "subjectId": "meta-business-sdk-releases-8361149aef15ed21",
+      "revision": "aa2476bb957d5d384badc7e422443ec6844d2334c5064f9881dacc6e247de55d",
+      "sourceFingerprint": "aa2476bb957d5d384badc7e422443ec6844d2334c5064f9881dacc6e247de55d",
+      "detectedAt": "2026-08-23T02:00:51Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Releasing the Facebook Ads Node JS SDK for v2.10 of Marketing APIs",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v2.10",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2017-11-08"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "This release includes the Facebook Ads Node JS SDK for v2.10 of Marketing APIs. It also includes a fix to example/BasicExample.js. Developers can specify an accessToken, campaign id, business id and run the example with the command 'node BasicExample.js'"
+    }
+  ]
+}
