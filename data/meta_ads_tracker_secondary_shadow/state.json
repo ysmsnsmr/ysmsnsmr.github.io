@@ -1,6 +1,6 @@
 {
   "schemaVersion": "meta-ads-secondary-shadow-state/v1",
-  "updatedAt": "2026-08-22T08:02:21Z",
+  "updatedAt": "2026-08-23T02:20:08Z",
   "baselineCutoffAt": "2026-08-22T08:02:21Z",
   "sources": {
     "ppc-land-meta-ads": {
@@ -10,35 +10,35 @@
       "items": {
         "https://www.jonloomer.com/andromeda-subscribe/": {
           "fingerprint": "0129b5aef846eb94308f185b4de126f988473f031e4b8ce01cdde80f8b0a8473",
-          "lastSeenAt": "2026-08-22T08:02:21Z"
+          "lastSeenAt": "2026-08-23T02:20:08Z"
         },
         "https://www.jonloomer.com/meta-removing-placement-controls-ad-sets/": {
           "fingerprint": "cc799dbd71dc2f217bb2bf6c64766f4f446bf5d66709eb1c0d369815f8c589cc",
-          "lastSeenAt": "2026-08-22T08:02:21Z"
+          "lastSeenAt": "2026-08-23T02:20:08Z"
         },
         "https://www.jonloomer.com/category/meta-advertising/": {
           "fingerprint": "cc09b3e74e3a841e8a0abfec0d00961a29b48bd8c9cc238f8de2509c3933419b",
-          "lastSeenAt": "2026-08-22T08:02:21Z"
+          "lastSeenAt": "2026-08-23T02:20:08Z"
         },
         "https://www.jonloomer.com/meta-ads-ai-connectors-security-controls/": {
           "fingerprint": "153680a07a962a1f6df2ac8809a2307cc7c3c0c0a62537401c8173f5ea0798c9",
-          "lastSeenAt": "2026-08-22T08:02:21Z"
+          "lastSeenAt": "2026-08-23T02:20:08Z"
         },
         "https://www.jonloomer.com/meta-tests-sequenced-events-preferred-lead-answers/": {
           "fingerprint": "9e961b9cbbff199d6033c9e0f709cafea6a9094b3c2de726560a52bcaf77879a",
-          "lastSeenAt": "2026-08-22T08:02:21Z"
+          "lastSeenAt": "2026-08-23T02:20:08Z"
         },
         "https://www.jonloomer.com/facebook-pixel-event-generator/": {
           "fingerprint": "e6c6ba92fa1b0c7e1500f0cd6a10829580ce5543e4c56a7efd5e4630774d14c1",
-          "lastSeenAt": "2026-08-22T08:02:21Z"
+          "lastSeenAt": "2026-08-23T02:20:08Z"
         },
         "https://www.jonloomer.com/strategic-audit/": {
           "fingerprint": "83cf7f3189bc0268a65a26d7a6a898fff0c36bba575961fbfc6711fda725949a",
-          "lastSeenAt": "2026-08-22T08:02:21Z"
+          "lastSeenAt": "2026-08-23T02:20:08Z"
         },
         "https://www.jonloomer.com/cornerstone/": {
           "fingerprint": "9bcb289a732c8502f799b4bf829e270700a913d7756b752a99df8904c2fd6af1",
-          "lastSeenAt": "2026-08-22T08:02:21Z"
+          "lastSeenAt": "2026-08-23T02:20:08Z"
         }
       }
     }

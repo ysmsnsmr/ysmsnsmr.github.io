@@ -1,8 +1,8 @@
 {
   "schemaVersion": "meta-ads-secondary-shadow-observation/v1",
-  "generatedAt": "2026-08-22T08:02:21Z",
+  "generatedAt": "2026-08-23T02:20:08Z",
   "baseline": {
-    "mode": "seeded",
+    "mode": "active",
     "cutoffAt": "2026-08-22T08:02:21Z"
   },
   "publicationEligible": false,
