@@ -19,6 +19,7 @@ CATEGORIES = ("【速報】", "【生活インパクト】", "【知っておく
 class NewsItem:
     category: str
     conclusion: str = ""
+    what_happened: str = ""
     life_impact: str = ""
     next_action: str = ""
     source: str = ""
@@ -61,6 +62,7 @@ def parse_markdown(path: Path) -> NewsDay:
         current_item = None
 
     optional_labels = {
+        "- 何が起きた：": "what_happened",
         "- 生活への影響：": "life_impact",
         "- 次アクション：": "next_action",
         "- 出典：": "source",
@@ -88,7 +90,9 @@ def parse_markdown(path: Path) -> NewsDay:
         if current_item:
             for prefix, field_name in optional_labels.items():
                 if line.startswith(prefix):
-                    setattr(current_item, field_name, line[len(prefix) :].strip())
+                    value = line[len(prefix) :].strip()
+                    previous = getattr(current_item, field_name)
+                    setattr(current_item, field_name, f"{previous} {value}".strip())
                     break
 
     flush_item()
@@ -109,8 +113,12 @@ def esc(value: object) -> str:
     return html.escape(str(value), quote=True)
 
 
-def relative_link(day: NewsDay) -> str:
+def markdown_link(day: NewsDay) -> str:
     return f"./{esc(day.path.name)}"
+
+
+def daily_page_link(day: NewsDay) -> str:
+    return f"./{esc(day.date)}.html"
 
 
 def format_date(date_text: str) -> str:
@@ -184,6 +192,7 @@ def render_status_chips(day: NewsDay, generated: str) -> str:
     <div class="status-strip" aria-label="更新状況と集計">
       {status}
       {render_counts(day)}
+      <a class="markdown-link" href="{markdown_link(day)}">Markdown版</a>
     </div>
     """
 
@@ -248,9 +257,9 @@ def render_latest_summary(day: NewsDay) -> str:
           <div>
             <p class="eyebrow">Latest</p>
             <h2>{esc(format_date(day.date))}</h2>
-            <p class="muted">カテゴリ順に、既存Markdownの並びを保って表示しています。</p>
+            <p class="muted">カテゴリ順に、生活への影響を確認できます。</p>
           </div>
-          <a class="primary-link" href="{relative_link(day)}">今日の全文</a>
+          <a class="primary-link" href="{daily_page_link(day)}">10件すべて読む</a>
         </div>
         <div class="focus-grid">
           {render_latest_items(day)}
@@ -278,7 +287,7 @@ def render_recent_day(day: NewsDay) -> str:
             {point_list}
           </div>
           <p class="recent-meta">{esc(format_count(day.summarized_count))} / {esc(failed_label(day))}</p>
-          <a class="open-link" href="{relative_link(day)}">日別メモ</a>
+          <a class="open-link" href="{daily_page_link(day)}">その日のまとめ</a>
         </article>
     """
 
@@ -302,7 +311,7 @@ def render_archive(days: list[NewsDay]) -> str:
         rows = "\n".join(
             f"""
             <li>
-              <a href="{relative_link(day)}">{esc(format_date(day.date))}</a>
+              <a href="{daily_page_link(day)}">{esc(format_date(day.date))}</a>
               <span>{esc(format_count(day.summarized_count))}</span>
               <span>{esc(day.failed_sources)}</span>
             </li>
@@ -326,6 +335,159 @@ def render_archive(days: list[NewsDay]) -> str:
     return "\n".join(groups)
 
 
+def render_daily_item(item: NewsItem, position: int) -> str:
+    details = []
+    if item.what_happened:
+        details.append(("何が起きた", item.what_happened))
+    if item.life_impact:
+        details.append(("生活への影響", item.life_impact))
+    if item.next_action:
+        details.append(("次アクション", item.next_action))
+    detail_html = "\n".join(
+        f"""
+          <div class="daily-detail">
+            <dt>{esc(label)}</dt>
+            <dd>{esc(value)}</dd>
+          </div>
+        """
+        for label, value in details
+    )
+
+    if item.source_url:
+        source_label = item.source or "出典を開く"
+        source = f'<a class="source-link" href="{esc(item.source_url)}">出典: {esc(source_label)}</a>'
+    elif item.source:
+        source = f'<p class="source-note">出典: {esc(item.source)}</p>'
+    else:
+        source = ""
+
+    return f"""
+      <article class="daily-item">
+        <div class="daily-item-head">
+          <span class="item-number">{position}</span>
+          <p class="item-category">{esc(category_label(item.category))}</p>
+        </div>
+        <h3>{esc(item.conclusion)}</h3>
+        <dl class="daily-details">
+          {detail_html}
+        </dl>
+        {source}
+      </article>
+    """
+
+
+def render_daily_sections(day: NewsDay) -> str:
+    sections = []
+    position = 0
+    for category in CATEGORIES:
+        category_items = [item for item in ordered_items(day) if item.category == category]
+        if category_items:
+            cards = []
+            for item in category_items:
+                position += 1
+                cards.append(render_daily_item(item, position))
+            content = "\n".join(cards)
+        else:
+            content = '<p class="muted">このカテゴリの掲載はありません。</p>'
+        category_id = f"category-{CATEGORIES.index(category) + 1}"
+        sections.append(
+            f"""
+            <section class="daily-category" aria-labelledby="{category_id}">
+              <div class="daily-category-head">
+                <h2 id="{category_id}">{esc(category_label(category))}</h2>
+                <span>{day.category_counts.get(category, 0)}件</span>
+              </div>
+              <div class="daily-item-list">
+                {content}
+              </div>
+            </section>
+            """
+        )
+    return "\n".join(sections)
+
+
+def render_daily_page(day: NewsDay) -> str:
+    return f"""<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{esc(format_date(day.date))}のニュースまとめ | マレーシア生活ニュース</title>
+  <style>
+{MALAYSIA_NEWS_TOKENS_CSS}
+    * {{ box-sizing: border-box; }}
+    body {{
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+    }}
+    main {{ width: min(880px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 56px; }}
+    h1, h2, h3, p {{ margin-top: 0; }}
+    h1 {{ margin-bottom: 8px; font-size: clamp(2rem, 6vw, 3.1rem); line-height: 1.16; }}
+    h2 {{ margin: 0; font-size: 1.25rem; }}
+    h3 {{ margin: 0; font-size: 1.1rem; line-height: 1.55; overflow-wrap: anywhere; }}
+    a {{ color: var(--accent); text-underline-offset: 0.18em; }}
+    a:focus-visible {{ outline: 3px solid var(--focus); outline-offset: 3px; border-radius: var(--radius-control); }}
+    .page-header {{ margin-bottom: 28px; }}
+    .page-nav {{ display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 28px; }}
+    .back-link {{ font-weight: 700; }}
+    .markdown-link {{ color: var(--muted); font-size: .9rem; }}
+    .eyebrow {{ margin-bottom: 3px; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }}
+    .subhead {{ max-width: 650px; margin-bottom: 0; color: var(--muted); }}
+    .summary-strip {{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }}
+    .count-pill {{ display: inline-flex; gap: 8px; align-items: center; min-height: 30px; border-radius: var(--radius-pill); background: var(--accent-soft); padding: 4px 10px; font-size: .88rem; }}
+    .count-pill strong {{ color: var(--accent-strong); }}
+    .category-nav {{ display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }}
+    .category-nav a {{ border: 1px solid var(--line); border-radius: var(--radius-pill); background: var(--panel); padding: 6px 11px; color: var(--accent-strong); font-size: .9rem; font-weight: 700; text-decoration: none; }}
+    .daily-category + .daily-category {{ margin-top: 32px; }}
+    .daily-category-head {{ display: flex; justify-content: space-between; gap: 12px; align-items: baseline; border-bottom: 2px solid var(--accent-soft); padding-bottom: 9px; }}
+    .daily-category-head span {{ color: var(--muted); font-size: .9rem; }}
+    .daily-item-list {{ display: grid; gap: 12px; margin-top: 12px; }}
+    .daily-item {{ border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--panel); padding: 18px; box-shadow: var(--shadow); }}
+    .daily-item-head {{ display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }}
+    .item-number {{ display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }}
+    .item-category {{ margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }}
+    .daily-details {{ margin: 16px 0 0; }}
+    .daily-detail {{ border-top: 1px solid var(--line); padding: 10px 0; }}
+    .daily-detail:last-child {{ padding-bottom: 0; }}
+    dt {{ color: var(--muted); font-size: .8rem; font-weight: 700; }}
+    dd {{ margin: 3px 0 0; overflow-wrap: anywhere; }}
+    .source-link, .source-note {{ display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }}
+    .source-note {{ color: var(--muted); }}
+    .muted {{ color: var(--muted); }}
+    @media (max-width: 600px) {{
+      main {{ width: min(100% - 20px, 880px); padding-top: 20px; }}
+      .page-nav {{ align-items: flex-start; flex-direction: column; gap: 6px; margin-bottom: 24px; }}
+      .daily-item {{ padding: 15px; }}
+    }}
+  </style>
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <nav class="page-nav" aria-label="ページ内ナビゲーション">
+        <a class="back-link" href="./index.html">← マレーシア生活ニュース</a>
+        <a class="markdown-link" href="{markdown_link(day)}">Markdown版</a>
+      </nav>
+      <p class="eyebrow">Daily summary</p>
+      <h1>{esc(format_date(day.date))}のニュースまとめ</h1>
+      <p class="subhead">RSSから収集・要約したニュースを、生活への影響と次の行動が分かる形でまとめています。</p>
+      <div class="summary-strip" aria-label="カテゴリ別件数">
+        {render_counts(day)}
+      </div>
+    </header>
+    <nav class="category-nav" aria-label="カテゴリへ移動">
+      {''.join(f'<a href="#category-{index + 1}">{esc(category_label(category))} {day.category_counts.get(category, 0)}件</a>' for index, category in enumerate(CATEGORIES))}
+    </nav>
+    {render_daily_sections(day)}
+  </main>
+</body>
+</html>
+"""
+
+
 def render_html(days: list[NewsDay]) -> str:
     generated_at = datetime.now(MYT)
     generated = (
@@ -340,7 +502,7 @@ def render_html(days: list[NewsDay]) -> str:
         latest_summary = render_latest_summary(latest).strip()
         status_chips = render_status_chips(latest, generated).strip()
         recent_rows = render_recent(recent).strip()
-        primary_href = relative_link(latest)
+        primary_href = daily_page_link(latest)
     else:
         latest_summary = '<p class="muted">まだ記事がありません。</p>'
         status_chips = '<p class="muted">まだ記事がありません。</p>'
@@ -352,7 +514,7 @@ def render_html(days: list[NewsDay]) -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Malaysia RSSニュース要約</title>
+  <title>マレーシア生活ニュース</title>
   <style>
 {MALAYSIA_NEWS_TOKENS_CSS}
     * {{ box-sizing: border-box; }}
@@ -616,6 +778,16 @@ def render_html(days: list[NewsDay]) -> str:
       color: var(--accent-strong);
       font-weight: 700;
     }}
+    .markdown-link {{
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 4px 8px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      white-space: nowrap;
+    }}
+    .status-strip .markdown-link {{ margin-left: auto; }}
     .counts {{
       display: flex;
       flex-wrap: wrap;
@@ -684,6 +856,7 @@ def render_html(days: list[NewsDay]) -> str:
         min-height: 34px;
         white-space: normal;
       }}
+      .status-strip .markdown-link {{ margin-left: 0; }}
       .today-panel {{ padding: 18px; }}
       .today-head {{
         display: grid;
@@ -726,11 +899,11 @@ def render_html(days: list[NewsDay]) -> str:
   <main>
     <header>
       <div>
-        <h1>Malaysia RSSニュース要約</h1>
+        <h1>マレーシア生活ニュース</h1>
         <p class="subhead">生活に関わるマレーシアニュースをRSSから日次で収集・要約しています。</p>
       </div>
       <div class="header-actions">
-        <a class="primary-link" href="{primary_href}">今日の全文</a>
+        <a class="primary-link" href="{primary_href}">今日のまとめを読む</a>
         <a class="secondary-link" href="#archive-heading">過去分を見る</a>
       </div>
     </header>
@@ -738,7 +911,7 @@ def render_html(days: list[NewsDay]) -> str:
 
     <section aria-labelledby="today-heading">
       <div class="section-head">
-        <h2 id="today-heading">今日見るべき3件</h2>
+        <h2 id="today-heading">今日のピックアップ3件</h2>
         <p>速報、生活インパクト、知っておくと得の順に表示</p>
       </div>
       {latest_summary}
@@ -746,7 +919,7 @@ def render_html(days: list[NewsDay]) -> str:
 
     <section aria-labelledby="recent-heading">
       <div class="section-head">
-        <h2 id="recent-heading">直近7日の流れ</h2>
+        <h2 id="recent-heading">直近7日のまとめ</h2>
         <p>今日を除く直近日を比較</p>
       </div>
       <div class="recent-list">
@@ -776,7 +949,14 @@ def main() -> int:
     ]
     rendered = "\n".join(line.rstrip() for line in render_html(days).splitlines()) + "\n"
     OUTPUT_PATH.write_text(rendered, encoding="utf-8")
+    for day in days:
+        daily_output = NEWS_DIR / f"{day.date}.html"
+        daily_rendered = "\n".join(
+            line.rstrip() for line in render_daily_page(day).splitlines()
+        ) + "\n"
+        daily_output.write_text(daily_rendered, encoding="utf-8")
     print(f"Wrote index: {OUTPUT_PATH}")
+    print(f"Wrote daily pages: {len(days)}")
     print(f"Indexed days: {len(days)}")
     return 0
 
