@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Collect non-official Meta Ads signals into an isolated, non-public shadow queue.
 
-This module is intentionally not an adapter for the official tracker.  It never
+This module is intentionally not an adapter for the official tracker. It never
 writes official candidates, weekly artifacts, decisions, public reports, or UI
-files.  It retains URL/title metadata and fingerprints only; response bodies
-and excerpts are discarded before the result is returned.
+files. It retains URL/title metadata, match evidence, and fingerprints only;
+response bodies and excerpts are discarded before the result is returned.
 """
 
 from __future__ import annotations
@@ -15,23 +15,32 @@ import json
 import re
 import sys
 import urllib.error
+import xml.etree.ElementTree as StandardElementTree
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Callable
 from urllib.parse import parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
 
+from defusedxml import ElementTree as SafeElementTree
+from defusedxml.common import DefusedXmlException
+
 from meta_ads_tracker_collect import _request as bounded_request
 from meta_ads_tracker_contract import ContractError, _expect_hostname, _expect_https_url, _expect_identifier
 from meta_ads_tracker_publication import write_json
 
 
-SHADOW_SOURCE_SCHEMA_VERSION = "meta-ads-secondary-shadow-sources/v1"
-SHADOW_STATE_SCHEMA_VERSION = "meta-ads-secondary-shadow-state/v1"
-SHADOW_REPORT_SCHEMA_VERSION = "meta-ads-secondary-shadow-observation/v1"
+SHADOW_SOURCE_SCHEMA_VERSION = "meta-ads-secondary-shadow-sources/v2"
+SHADOW_STATE_SCHEMA_VERSION = "meta-ads-secondary-shadow-state/v2"
+LEGACY_STATE_SCHEMA_VERSION = "meta-ads-secondary-shadow-state/v1"
+SHADOW_REPORT_SCHEMA_VERSION = "meta-ads-secondary-shadow-observation/v2"
 DEFAULT_CONFIG = Path(__file__).resolve().parents[1] / "config/meta_ads_secondary_shadow_sources.json"
 TRACKING_QUERY_KEYS = {"fbclid", "gclid", "mc_cid", "mc_eid"}
 HASH_RE = re.compile(r"^[a-f0-9]{64}$")
+PARSER_CONTENT_TYPES = {
+    "html": ["text/html"],
+    "rss": ["application/rss+xml", "application/xml", "text/xml"],
+}
 
 
 def _expect_keys(value: Any, expected: set[str], label: str) -> dict[str, Any]:
@@ -55,13 +64,56 @@ def _expect_limit(value: Any, label: str, minimum: int, maximum: int) -> int:
     return value
 
 
+def _validate_match(match: Any, parser: str, label: str) -> dict[str, Any]:
+    if not isinstance(match, dict):
+        raise ContractError(f"{label} must be an object")
+    kind = match.get("kind")
+    if kind == "all_groups":
+        payload = _expect_keys(match, {"kind", "groups"}, label)
+        groups = payload["groups"]
+        if not isinstance(groups, list) or len(groups) < 2:
+            raise ContractError(f"{label}.groups must contain at least two groups")
+        for group_index, group in enumerate(groups):
+            if not isinstance(group, list) or not group or len(group) != len(set(group)):
+                raise ContractError(f"{label}.groups[{group_index}] must be a unique non-empty array")
+            for term_index, term in enumerate(group):
+                _expect_string(term, f"{label}.groups[{group_index}][{term_index}]")
+        return payload
+    if kind == "rss_category":
+        if parser != "rss":
+            raise ContractError(f"{label}.kind rss_category requires an rss parser")
+        payload = _expect_keys(match, {"kind", "categories"}, label)
+        categories = payload["categories"]
+        if not isinstance(categories, list) or not categories or len(categories) != len(set(categories)):
+            raise ContractError(f"{label}.categories must be a unique non-empty array")
+        for index, category in enumerate(categories):
+            _expect_string(category, f"{label}.categories[{index}]")
+        return payload
+    if kind == "any_keywords":
+        payload = _expect_keys(match, {"kind", "keywords"}, label)
+        keywords = payload["keywords"]
+        if not isinstance(keywords, list) or not keywords or len(keywords) != len(set(keywords)):
+            raise ContractError(f"{label}.keywords must be a unique non-empty array")
+        for index, keyword in enumerate(keywords):
+            _expect_string(keyword, f"{label}.keywords[{index}]")
+        return payload
+    raise ContractError(f"{label}.kind is unsupported")
+
+
 def validate_config(payload: Any) -> dict[str, Any]:
     config = _expect_keys(payload, {"schemaVersion", "policies", "sources"}, "secondary shadow config")
     if config["schemaVersion"] != SHADOW_SOURCE_SCHEMA_VERSION:
         raise ContractError(f"secondary shadow config schemaVersion must be {SHADOW_SOURCE_SCHEMA_VERSION}")
     policies = _expect_keys(
         config["policies"],
-        {"publicationEligible", "officialCandidateIntegration", "persistRawResponseBody", "requireHumanOfficialVerification", "stateBranch"},
+        {
+            "publicationEligible",
+            "officialCandidateIntegration",
+            "persistRawResponseBody",
+            "requireHumanOfficialVerification",
+            "stateBranch",
+            "baselineGeneration",
+        },
         "secondary shadow policies",
     )
     if policies["publicationEligible"] is not False or policies["officialCandidateIntegration"] is not False:
@@ -70,6 +122,7 @@ def validate_config(payload: Any) -> dict[str, Any]:
         raise ContractError("secondary shadow policies must remain body-free and human-verified")
     if policies["stateBranch"] != "automation/meta-ads-shadow-state":
         raise ContractError("secondary shadow stateBranch must be the dedicated automation branch")
+    _expect_identifier(policies["baselineGeneration"], "secondary shadow policies.baselineGeneration")
 
     sources = config["sources"]
     if not isinstance(sources, list) or not sources:
@@ -79,7 +132,7 @@ def validate_config(payload: Any) -> dict[str, Any]:
     for index, value in enumerate(sources):
         source = _expect_keys(
             value,
-            {"id", "name", "kind", "sourceUrl", "fetchUrl", "enabled", "collectionMode", "expectedContentTypes", "transport", "matchKeywords", "rationale"},
+            {"id", "name", "kind", "sourceUrl", "fetchUrl", "enabled", "collectionMode", "parser", "expectedContentTypes", "transport", "match", "rationale"},
             f"secondary shadow sources[{index}]",
         )
         source_id = _expect_identifier(source["id"], f"secondary shadow sources[{index}].id")
@@ -90,6 +143,11 @@ def validate_config(payload: Any) -> dict[str, Any]:
         _expect_string(source["rationale"], f"secondary shadow sources[{index}].rationale")
         if source["kind"] != "secondary_signal":
             raise ContractError(f"secondary shadow sources[{index}].kind must be secondary_signal")
+        parser = source["parser"]
+        if parser not in PARSER_CONTENT_TYPES:
+            raise ContractError(f"secondary shadow sources[{index}].parser is unsupported")
+        if source["expectedContentTypes"] != PARSER_CONTENT_TYPES[parser]:
+            raise ContractError(f"secondary shadow sources[{index}].expectedContentTypes must match its parser")
         fetch_url = _expect_https_url(source["fetchUrl"], f"secondary shadow sources[{index}].fetchUrl")
         _expect_https_url(source["sourceUrl"], f"secondary shadow sources[{index}].sourceUrl")
         parsed = urlsplit(fetch_url)
@@ -106,13 +164,10 @@ def validate_config(payload: Any) -> dict[str, Any]:
             raise ContractError(f"secondary shadow sources[{index}].collectionMode must match enabled state")
         if source["enabled"]:
             automatic_count += 1
-        if source["expectedContentTypes"] != ["text/html"]:
-            raise ContractError(f"secondary shadow sources[{index}] must accept only text/html")
-        transport = _expect_keys(
-            source["transport"],
-            {"allowedFetchHosts", "allowedContentHosts", "maxResponseBytes", "maxRedirects", "maxItems"},
-            f"secondary shadow sources[{index}].transport",
-        )
+        transport_keys = {"allowedFetchHosts", "allowedContentHosts", "maxResponseBytes", "maxRedirects", "maxItems"}
+        if parser == "rss":
+            transport_keys.add("maxFeedItems")
+        transport = _expect_keys(source["transport"], transport_keys, f"secondary shadow sources[{index}].transport")
         for name in ("allowedFetchHosts", "allowedContentHosts"):
             hosts = transport[name]
             if not isinstance(hosts, list) or not hosts:
@@ -126,11 +181,9 @@ def validate_config(payload: Any) -> dict[str, Any]:
         _expect_limit(transport["maxResponseBytes"], f"secondary shadow sources[{index}].transport.maxResponseBytes", 1, 16 * 1024 * 1024)
         _expect_limit(transport["maxRedirects"], f"secondary shadow sources[{index}].transport.maxRedirects", 0, 5)
         _expect_limit(transport["maxItems"], f"secondary shadow sources[{index}].transport.maxItems", 1, 100)
-        keywords = source["matchKeywords"]
-        if not isinstance(keywords, list) or not keywords or len(keywords) != len(set(keywords)):
-            raise ContractError(f"secondary shadow sources[{index}].matchKeywords must be a unique non-empty array")
-        for keyword_index, keyword in enumerate(keywords):
-            _expect_string(keyword, f"secondary shadow sources[{index}].matchKeywords[{keyword_index}]")
+        if parser == "rss":
+            _expect_limit(transport["maxFeedItems"], f"secondary shadow sources[{index}].transport.maxFeedItems", 1, 200)
+        _validate_match(source["match"], parser, f"secondary shadow sources[{index}].match")
     if automatic_count == 0:
         raise ContractError("secondary shadow config must contain at least one automatic shadow source")
     return config
@@ -157,6 +210,46 @@ def _canonical_url(value: str) -> str:
         if not key.lower().startswith("utm_") and key.lower() not in TRACKING_QUERY_KEYS
     ]
     return urlunsplit((parsed.scheme.lower(), parsed.netloc.lower(), parsed.path or "/", urlencode(pairs), ""))
+
+
+def _metadata(url: str, title: str, evidence: list[str]) -> dict[str, Any]:
+    title = title[:280]
+    return {
+        "url": url,
+        "title": title,
+        "matchEvidence": evidence,
+        "fingerprint": hashlib.sha256(f"{url}\n{title}\n{'|'.join(evidence)}".encode("utf-8")).hexdigest(),
+    }
+
+
+def _contains_term(text: str, term: str) -> bool:
+    """Match ASCII words as terms, not as an accidental substring (for example, ads in Threads)."""
+    normalized_term = term.casefold()
+    if re.fullmatch(r"[a-z0-9+ ]+", normalized_term):
+        return re.search(rf"(?<![a-z0-9]){re.escape(normalized_term)}(?![a-z0-9])", text) is not None
+    return normalized_term in text
+
+
+def _match_evidence(source: dict[str, Any], title: str, categories: list[str] | None = None) -> list[str] | None:
+    policy = source["match"]
+    kind = policy["kind"]
+    lowered = title.casefold()
+    if kind == "any_keywords":
+        matched = [keyword for keyword in policy["keywords"] if _contains_term(lowered, keyword)]
+        return [f"keyword:{keyword}" for keyword in matched] or None
+    if kind == "all_groups":
+        evidence: list[str] = []
+        for group in policy["groups"]:
+            matched = next((term for term in group if _contains_term(lowered, term)), None)
+            if matched is None:
+                return None
+            evidence.append(f"keyword:{matched}")
+        return evidence
+    if kind == "rss_category":
+        category_set = {category.casefold(): category for category in categories or []}
+        matched = [category for category in policy["categories"] if category.casefold() in category_set]
+        return [f"category:{category}" for category in matched] or None
+    raise ContractError(f"secondary shadow source {source['id']} has an unsupported match policy")
 
 
 class _LinkCollector(HTMLParser):
@@ -186,14 +279,12 @@ class _LinkCollector(HTMLParser):
             self._parts = []
 
 
-def extract_signals(source: dict[str, Any], body: str) -> list[dict[str, Any]]:
-    """Extract bounded metadata from same-site anchor text, then discard HTML."""
+def _extract_html_signals(source: dict[str, Any], body: str) -> list[dict[str, Any]]:
     parser = _LinkCollector()
     parser.feed(body)
     parser.close()
     signals: list[dict[str, Any]] = []
     seen: set[str] = set()
-    keywords = {keyword.casefold(): keyword for keyword in source["matchKeywords"]}
     for href, title in parser.links:
         if not title:
             continue
@@ -201,17 +292,70 @@ def extract_signals(source: dict[str, Any], body: str) -> list[dict[str, Any]]:
         parsed = urlsplit(url)
         if parsed.scheme != "https" or parsed.hostname not in source["transport"]["allowedContentHosts"]:
             continue
-        title = title[:280]
-        lowered = title.casefold()
-        matched = [original for normalised, original in keywords.items() if normalised in lowered]
-        if not matched or url in seen:
+        evidence = _match_evidence(source, title)
+        if evidence is None or url in seen:
             continue
         seen.add(url)
-        fingerprint = hashlib.sha256(f"{url}\n{title}".encode("utf-8")).hexdigest()
-        signals.append({"url": url, "title": title, "matchedKeywords": matched, "fingerprint": fingerprint})
+        signals.append(_metadata(url, title, evidence))
         if len(signals) > source["transport"]["maxItems"]:
             raise ContractError(f"secondary shadow source {source['id']} exceeds its item limit")
     return signals
+
+
+def _child_text(node: Any) -> str:
+    return _normalise_text("".join(node.itertext()))
+
+
+def _extract_rss_signals(source: dict[str, Any], body: str) -> list[dict[str, Any]]:
+    try:
+        root = SafeElementTree.fromstring(body)
+    except (DefusedXmlException, StandardElementTree.ParseError) as error:
+        raise ContractError(f"secondary shadow source {source['id']} returned invalid or unsafe RSS") from error
+    signals: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    feed_items = 0
+    for node in root.iter():
+        if node.tag.rsplit("}", 1)[-1] != "item":
+            continue
+        feed_items += 1
+        if feed_items > source["transport"]["maxFeedItems"]:
+            raise ContractError(f"secondary shadow source {source['id']} exceeds its RSS item limit")
+        title = ""
+        url = ""
+        categories: list[str] = []
+        for child in node:
+            name = child.tag.rsplit("}", 1)[-1]
+            if name == "title":
+                title = _child_text(child)
+            elif name == "link":
+                url = _child_text(child)
+            elif name == "category":
+                category = _child_text(child)
+                if category:
+                    categories.append(category)
+        if not title or not url:
+            continue
+        canonical_url = _canonical_url(url)
+        parsed = urlsplit(canonical_url)
+        if parsed.scheme != "https" or parsed.hostname not in source["transport"]["allowedContentHosts"]:
+            continue
+        evidence = _match_evidence(source, title, categories)
+        if evidence is None or canonical_url in seen:
+            continue
+        seen.add(canonical_url)
+        signals.append(_metadata(canonical_url, title, evidence))
+        if len(signals) > source["transport"]["maxItems"]:
+            raise ContractError(f"secondary shadow source {source['id']} exceeds its item limit")
+    return signals
+
+
+def extract_signals(source: dict[str, Any], body: str) -> list[dict[str, Any]]:
+    """Extract bounded source metadata and discard HTML/XML before returning."""
+    if source["parser"] == "html":
+        return _extract_html_signals(source, body)
+    if source["parser"] == "rss":
+        return _extract_rss_signals(source, body)
+    raise ContractError(f"secondary shadow source {source['id']} has an unsupported parser")
 
 
 def _timestamp(now: datetime) -> str:
@@ -231,15 +375,17 @@ def _validate_timestamp(value: Any, label: str) -> str:
     return text
 
 
-def validate_state(state: Any, config: dict[str, Any]) -> dict[str, Any]:
-    """Reject malformed isolated state before network access or any write."""
-    if state == {"sources": {}}:
-        return state
-    payload = _expect_keys(state, {"schemaVersion", "updatedAt", "baselineCutoffAt", "sources"}, "secondary shadow state")
-    if payload["schemaVersion"] != SHADOW_STATE_SCHEMA_VERSION:
-        raise ContractError(f"secondary shadow state schemaVersion must be {SHADOW_STATE_SCHEMA_VERSION}")
+def _validate_state_payload(state: Any, config: dict[str, Any], schema_version: str, *, has_generation: bool) -> dict[str, Any]:
+    keys = {"schemaVersion", "updatedAt", "baselineCutoffAt", "sources"}
+    if has_generation:
+        keys.add("baselineGeneration")
+    payload = _expect_keys(state, keys, "secondary shadow state")
+    if payload["schemaVersion"] != schema_version:
+        raise ContractError(f"secondary shadow state schemaVersion must be {schema_version}")
     _validate_timestamp(payload["updatedAt"], "secondary shadow state.updatedAt")
     _validate_timestamp(payload["baselineCutoffAt"], "secondary shadow state.baselineCutoffAt")
+    if has_generation:
+        _expect_identifier(payload["baselineGeneration"], "secondary shadow state.baselineGeneration")
     if not isinstance(payload["sources"], dict):
         raise ContractError("secondary shadow state.sources must be an object")
     automatic_ids = {source["id"] for source in config["sources"] if source["enabled"]}
@@ -258,6 +404,26 @@ def validate_state(state: Any, config: dict[str, Any]) -> dict[str, Any]:
     return payload
 
 
+def validate_state(state: Any, config: dict[str, Any]) -> dict[str, Any]:
+    """Validate a current-generation isolated state without network access."""
+    if state == {"sources": {}}:
+        return state
+    return _validate_state_payload(state, config, SHADOW_STATE_SCHEMA_VERSION, has_generation=True)
+
+
+def _prepare_state_for_generation(state: Any, config: dict[str, Any]) -> tuple[dict[str, Any], str | None]:
+    """Accept only the explicit v1-to-v2 migration, never malformed state resets."""
+    if state == {"sources": {}}:
+        return state, "initial"
+    if isinstance(state, dict) and state.get("schemaVersion") == LEGACY_STATE_SCHEMA_VERSION:
+        _validate_state_payload(state, config, LEGACY_STATE_SCHEMA_VERSION, has_generation=False)
+        return {"sources": {}}, "legacy_html_state"
+    validated = validate_state(state, config)
+    if validated["baselineGeneration"] != config["policies"]["baselineGeneration"]:
+        return {"sources": {}}, "baseline_generation_changed"
+    return validated, None
+
+
 def collect(
     config: dict[str, Any],
     state: dict[str, Any],
@@ -266,14 +432,22 @@ def collect(
     fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = bounded_request,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     generated_at = _timestamp(now)
-    state = validate_state(state, config)
+    state, reset_reason = _prepare_state_for_generation(state, config)
     prior_sources = state.get("sources", {})
     baseline_mode = "active" if isinstance(state.get("baselineCutoffAt"), str) and state["baselineCutoffAt"] else "seeded"
     cutoff = state.get("baselineCutoffAt") if baseline_mode == "active" else generated_at
-    next_state: dict[str, Any] = {"schemaVersion": SHADOW_STATE_SCHEMA_VERSION, "updatedAt": generated_at, "baselineCutoffAt": cutoff, "sources": {}}
+    generation = config["policies"]["baselineGeneration"]
+    next_state: dict[str, Any] = {
+        "schemaVersion": SHADOW_STATE_SCHEMA_VERSION,
+        "updatedAt": generated_at,
+        "baselineCutoffAt": cutoff,
+        "baselineGeneration": generation,
+        "sources": {},
+    }
     runs: list[dict[str, Any]] = []
     observed: list[dict[str, Any]] = []
-    for source in (item for item in config["sources"] if item["enabled"]):
+    automatic_sources = [item for item in config["sources"] if item["enabled"]]
+    for source in automatic_sources:
         body, content_type = fetch_body(source, timeout)
         if not isinstance(body, str) or (content_type or "").split(";", 1)[0].strip().lower() not in source["expectedContentTypes"]:
             raise ContractError(f"secondary shadow source {source['id']} returned an unexpected response")
@@ -293,8 +467,9 @@ def collect(
                     "observedAt": generated_at,
                     "title": signal["title"],
                     "url": signal["url"],
-                    "matchedKeywords": signal["matchedKeywords"],
+                    "matchEvidence": signal["matchEvidence"],
                     "fingerprint": signal["fingerprint"],
+                    "baselineGeneration": generation,
                     "verificationStatus": "unverified",
                     "publicationEligible": False,
                 })
@@ -305,7 +480,13 @@ def collect(
     report = {
         "schemaVersion": SHADOW_REPORT_SCHEMA_VERSION,
         "generatedAt": generated_at,
-        "baseline": {"mode": baseline_mode, "cutoffAt": cutoff},
+        "baseline": {
+            "mode": baseline_mode,
+            "cutoffAt": cutoff,
+            "generation": generation,
+            "resetReason": reset_reason,
+            "sourceIds": [source["id"] for source in automatic_sources],
+        },
         "publicationEligible": False,
         "officialCandidateIntegration": False,
         "requireHumanOfficialVerification": True,
@@ -328,7 +509,6 @@ def collect_and_write(
 ) -> dict[str, Any]:
     config = load_and_validate_config(config_path)
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {"sources": {}}
-    validate_state(state, config)
     report, next_state = collect(config, state, timeout, now or datetime.now(timezone.utc), fetch_body)
     # Both writes happen only after every fetch and parse succeeds.
     write_json(output_path, report)

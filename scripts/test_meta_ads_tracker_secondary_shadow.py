@@ -21,97 +21,142 @@ from meta_ads_tracker_secondary_shadow import (
 
 
 NOW = datetime(2026, 8, 22, 2, 0, tzinfo=timezone.utc)
-PPC_HTML = """
-<html><body>
-  <a href="/meta-marketing-api-update/?utm_source=newsletter">Meta Marketing API update</a>
-  <a href="https://evil.example.test/meta-ads">Meta Ads on an untrusted host</a>
-  <a href="/about/">About PPC Land</a>
-</body></html>
-"""
-JON_HTML = "<html><body><a href='/meta-ads-manager-rollout/'>Meta Ads Manager rollout</a></body></html>"
+PPC_RSS = """<?xml version="1.0"?>
+<rss><channel>
+  <item><title>Meta Ads Manager API update</title><link>https://ppc.land/meta-ads-manager-api-update/?utm_source=newsletter</link></item>
+  <item><title>Microsoft Advertising account update</title><link>https://ppc.land/microsoft-advertising-account-update/</link></item>
+  <item><title>Facebook consumer feature update</title><link>https://ppc.land/facebook-consumer-feature-update/</link></item>
+  <item><title>Threads consumer feature update</title><link>https://ppc.land/threads-consumer-feature-update/</link></item>
+  <item><title>Meta Ads on an untrusted host</title><link>https://evil.example.test/meta-ads/</link></item>
+</channel></rss>"""
+JON_RSS = """<?xml version="1.0"?>
+<rss><channel>
+  <item><title>How to review a new Meta Ads setting</title><link>https://www.jonloomer.com/meta-ads-manager-rollout/</link><category>Meta Advertising</category></item>
+  <item><title>General marketing notes</title><link>https://www.jonloomer.com/general-marketing-notes/</link><category>Marketing</category></item>
+</channel></rss>"""
 
 
 class SecondaryShadowTest(unittest.TestCase):
     def setUp(self) -> None:
         self.config = load_and_validate_config()
 
-    def fetcher(self, *, fail: bool = False):
-        bodies = {
-            "ppc-land-meta-ads": PPC_HTML,
-            "jon-loomer-meta-ads": JON_HTML,
+    def fetcher(self, *, fail: bool = False, bodies: dict[str, str] | None = None):
+        source_bodies = bodies or {
+            "ppc-land-meta-ads": PPC_RSS,
+            "jon-loomer-meta-ads": JON_RSS,
         }
 
         def fetch(source: dict, _timeout: float) -> tuple[str, str]:
             if fail:
                 raise URLError("secondary response body must never be retained")
-            return bodies[source["id"]], "text/html"
+            content_type = "text/xml; charset=utf-8" if source["id"] == "ppc-land-meta-ads" else "application/rss+xml; charset=UTF-8"
+            return source_bodies[source["id"]], content_type
 
         return fetch
 
-    def test_config_declares_an_isolated_non_public_shadow_boundary(self) -> None:
+    def test_config_declares_an_isolated_non_public_rss_shadow_boundary(self) -> None:
         self.assertEqual(self.config["policies"], {
             "publicationEligible": False,
             "officialCandidateIntegration": False,
             "persistRawResponseBody": False,
             "requireHumanOfficialVerification": True,
             "stateBranch": "automation/meta-ads-shadow-state",
+            "baselineGeneration": "rss-migration-2026-08",
         })
-        automatic = [source["id"] for source in self.config["sources"] if source["enabled"]]
-        self.assertEqual(automatic, ["ppc-land-meta-ads", "jon-loomer-meta-ads"])
-        anagrams = next(source for source in self.config["sources"] if source["id"] == "anagrams-meta-ads")
-        self.assertFalse(anagrams["enabled"])
-        self.assertEqual(anagrams["collectionMode"], "manual_only")
+        sources = {source["id"]: source for source in self.config["sources"]}
+        self.assertEqual(sources["ppc-land-meta-ads"]["fetchUrl"], "https://ppc.land/rss/")
+        self.assertEqual(sources["ppc-land-meta-ads"]["parser"], "rss")
+        self.assertEqual(sources["jon-loomer-meta-ads"]["fetchUrl"], "https://www.jonloomer.com/feed/")
+        self.assertEqual(sources["jon-loomer-meta-ads"]["parser"], "rss")
+        self.assertFalse(sources["anagrams-meta-ads"]["enabled"])
+        self.assertEqual(sources["anagrams-meta-ads"]["collectionMode"], "manual_only")
 
-    def test_config_rejects_public_or_official_integration_escape_hatches(self) -> None:
+    def test_config_rejects_public_escape_hatches_and_invalid_rss_contracts(self) -> None:
         invalid = copy.deepcopy(self.config)
         invalid["policies"]["publicationEligible"] = True
         with self.assertRaisesRegex(ContractError, "never be public"):
             validate_config(invalid)
         invalid = copy.deepcopy(self.config)
-        invalid["sources"][0]["collectionMode"] = "manual_only"
-        with self.assertRaisesRegex(ContractError, "must match enabled"):
+        invalid["sources"][0]["expectedContentTypes"] = ["text/html"]
+        with self.assertRaisesRegex(ContractError, "must match its parser"):
             validate_config(invalid)
         invalid = copy.deepcopy(self.config)
-        invalid["sources"][0]["transport"]["allowedContentHosts"] = ["127.0.0.1"]
-        with self.assertRaisesRegex(ContractError, "DNS hostname"):
+        invalid["sources"][0]["match"] = {"kind": "rss_category", "categories": ["Meta Advertising"]}
+        invalid["sources"][0]["parser"] = "html"
+        invalid["sources"][0]["expectedContentTypes"] = ["text/html"]
+        invalid["sources"][0]["transport"].pop("maxFeedItems")
+        with self.assertRaisesRegex(ContractError, "requires an rss parser"):
             validate_config(invalid)
 
-    def test_extractor_keeps_only_same_site_metadata_and_strips_tracking(self) -> None:
-        source = self.config["sources"][0]
-        signals = extract_signals(source, PPC_HTML)
-        self.assertEqual(len(signals), 1)
-        self.assertEqual(signals[0]["url"], "https://ppc.land/meta-marketing-api-update/")
-        self.assertEqual(signals[0]["title"], "Meta Marketing API update")
-        self.assertEqual(signals[0]["matchedKeywords"], ["meta", "marketing api"])
-        self.assertNotIn("evil.example.test", json.dumps(signals))
+    def test_rss_extractors_use_metadata_and_source_specific_match_contracts(self) -> None:
+        ppc = extract_signals(self.config["sources"][0], PPC_RSS)
+        self.assertEqual(ppc, [{
+            "url": "https://ppc.land/meta-ads-manager-api-update/",
+            "title": "Meta Ads Manager API update",
+            "matchEvidence": ["keyword:meta", "keyword:ads"],
+            "fingerprint": ppc[0]["fingerprint"],
+        }])
+        jon = extract_signals(self.config["sources"][1], JON_RSS)
+        self.assertEqual(len(jon), 1)
+        self.assertEqual(jon[0]["url"], "https://www.jonloomer.com/meta-ads-manager-rollout/")
+        self.assertEqual(jon[0]["matchEvidence"], ["category:Meta Advertising"])
+        serialised = json.dumps(ppc + jon)
+        self.assertNotIn("Microsoft", serialised)
+        self.assertNotIn("consumer", serialised)
+        self.assertNotIn("Threads", serialised)
+        self.assertNotIn("evil.example.test", serialised)
+        self.assertNotIn("<item>", serialised)
 
-    def test_initial_baseline_emits_no_signals_then_new_metadata_is_unverified_only(self) -> None:
-        baseline, state = collect(self.config, {"sources": {}}, 1, NOW, self.fetcher())
-        self.assertEqual(baseline["baseline"]["mode"], "seeded")
-        self.assertEqual(baseline["signals"], [])
-        self.assertTrue(state["sources"]["ppc-land-meta-ads"]["items"])
-        active, _ = collect(self.config, state, 1, NOW.replace(day=23), self.fetcher())
-        self.assertEqual(active["baseline"]["mode"], "active")
-        self.assertEqual(active["summary"]["signals"], 0)
-
-        changed_bodies = {
-            "ppc-land-meta-ads": PPC_HTML + "<a href='/new-meta-ad-format/'>New Meta ad format</a>",
-            "jon-loomer-meta-ads": JON_HTML,
+    def test_rss_reseed_replaces_legacy_html_state_for_both_sources_and_emits_zero_signals(self) -> None:
+        legacy_state = {
+            "schemaVersion": "meta-ads-secondary-shadow-state/v1",
+            "updatedAt": "2026-08-22T00:00:00Z",
+            "baselineCutoffAt": "2026-08-22T00:00:00Z",
+            "sources": {
+                "ppc-land-meta-ads": {"items": {"https://ppc.land/old/": {"fingerprint": "a" * 64, "lastSeenAt": "2026-08-22T00:00:00Z"}}},
+                "jon-loomer-meta-ads": {"items": {"https://www.jonloomer.com/old/": {"fingerprint": "b" * 64, "lastSeenAt": "2026-08-22T00:00:00Z"}}},
+            },
         }
-        next_report, _ = collect(
-            self.config,
-            state,
-            1,
-            NOW.replace(day=23),
-            lambda source, _timeout: (changed_bodies[source["id"]], "text/html"),
+        report, state = collect(self.config, legacy_state, 1, NOW, self.fetcher())
+        self.assertEqual(report["baseline"], {
+            "mode": "seeded",
+            "cutoffAt": "2026-08-22T02:00:00Z",
+            "generation": "rss-migration-2026-08",
+            "resetReason": "legacy_html_state",
+            "sourceIds": ["ppc-land-meta-ads", "jon-loomer-meta-ads"],
+        })
+        self.assertEqual(report["signals"], [])
+        self.assertEqual(set(state["sources"]), {"ppc-land-meta-ads", "jon-loomer-meta-ads"})
+        self.assertNotIn("https://ppc.land/old/", state["sources"]["ppc-land-meta-ads"]["items"])
+        self.assertNotIn("https://www.jonloomer.com/old/", state["sources"]["jon-loomer-meta-ads"]["items"])
+
+    def test_active_rss_state_emits_only_new_unverified_metadata(self) -> None:
+        _baseline, state = collect(self.config, {"sources": {}}, 1, NOW, self.fetcher())
+        active, _ = collect(self.config, state, 1, NOW.replace(day=23), self.fetcher())
+        self.assertEqual(active["summary"]["signals"], 0)
+        changed = {
+            "ppc-land-meta-ads": PPC_RSS.replace("</channel>", "<item><title>Instagram Ads API update</title><link>https://ppc.land/instagram-ads-api-update/</link></item></channel>"),
+            "jon-loomer-meta-ads": JON_RSS.replace("</channel>", "<item><title>New setting</title><link>https://www.jonloomer.com/new-meta-setting/</link><category>Meta Advertising</category></item></channel>"),
+        }
+        report, _ = collect(self.config, state, 1, NOW.replace(day=23), self.fetcher(bodies=changed))
+        self.assertEqual(report["summary"]["signals"], 2)
+        self.assertTrue(all(signal["baselineGeneration"] == "rss-migration-2026-08" for signal in report["signals"]))
+        self.assertTrue(all(signal["verificationStatus"] == "unverified" for signal in report["signals"]))
+        self.assertTrue(all(signal["publicationEligible"] is False for signal in report["signals"]))
+        self.assertFalse(report["officialCandidateIntegration"])
+        self.assertFalse(report["responseBodyStored"])
+        self.assertNotIn("<item>", json.dumps(report))
+
+    def test_unsafe_xml_and_feed_item_overflow_fail_closed(self) -> None:
+        source = self.config["sources"][0]
+        with self.assertRaisesRegex(ContractError, "invalid or unsafe RSS"):
+            extract_signals(source, "<!DOCTYPE rss [<!ENTITY xxe SYSTEM 'file:///etc/passwd'>]><rss><channel><item><title>&xxe;</title><link>https://ppc.land/x/</link></item></channel></rss>")
+        items = "".join(
+            f"<item><title>General marketing note {index}</title><link>https://ppc.land/{index}/</link></item>"
+            for index in range(101)
         )
-        self.assertEqual(next_report["summary"]["signals"], 1)
-        signal = next_report["signals"][0]
-        self.assertEqual(signal["verificationStatus"], "unverified")
-        self.assertFalse(signal["publicationEligible"])
-        self.assertFalse(next_report["officialCandidateIntegration"])
-        self.assertFalse(next_report["responseBodyStored"])
-        self.assertNotIn("<a href", json.dumps(next_report))
+        with self.assertRaisesRegex(ContractError, "RSS item limit"):
+            extract_signals(source, f"<rss><channel>{items}</channel></rss>")
 
     def test_any_fetch_failure_preserves_existing_state_and_output_bytes(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -131,11 +176,11 @@ class SecondaryShadowTest(unittest.TestCase):
             self.assertEqual(state.read_bytes(), original_state)
             self.assertEqual(output.read_bytes(), original_output)
 
-    def test_invalid_state_or_content_type_stops_before_or_during_collection(self) -> None:
+    def test_invalid_state_or_content_type_stops_collection(self) -> None:
         with self.assertRaisesRegex(ContractError, "schemaVersion"):
             validate_state({"schemaVersion": "wrong", "updatedAt": "2026-08-22T00:00:00Z", "baselineCutoffAt": "2026-08-22T00:00:00Z", "sources": {}}, self.config)
         with self.assertRaisesRegex(ContractError, "unexpected response"):
-            collect(self.config, {"sources": {}}, 1, NOW, lambda _source, _timeout: ("<html></html>", "application/json"))
+            collect(self.config, {"sources": {}}, 1, NOW, lambda _source, _timeout: ("<rss/>", "application/json"))
 
 
 if __name__ == "__main__":
