@@ -28,6 +28,8 @@ const fixtures = new Map(
     ])
   )
 );
+const demoReport = JSON.parse(await fs.readFile(path.join(repositoryRoot, "meta-ads-updates/demo-latest.json"), "utf8"));
+const productionReport = JSON.parse(await fs.readFile(path.join(repositoryRoot, "meta-ads-updates/latest.json"), "utf8"));
 const axeSource = await fs.readFile(require.resolve("axe-core/axe.min.js"), "utf8");
 const artifactDirectory = process.env.META_ADS_UI_ARTIFACT_DIR
   ? path.resolve(process.env.META_ADS_UI_ARTIFACT_DIR)
@@ -57,18 +59,20 @@ async function startServer() {
     try {
       const url = new URL(request.url || "/", "http://127.0.0.1");
       if (url.pathname === "/meta-ads-updates/latest.json") {
-        const referer = new URL(request.headers.referer || "http://127.0.0.1/?fixture=normal-week");
-        const fixtureName = referer.searchParams.get("fixture") || "normal-week";
-        const fixture = fixtures.get(fixtureName);
-        if (!fixture) return response.writeHead(404).end("Unknown fixture");
-        response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
-        return response.end(JSON.stringify(reportFor(fixture)));
+        const referer = new URL(request.headers.referer || "http://127.0.0.1/");
+        const fixtureName = referer.searchParams.get("fixture");
+        if (fixtureName) {
+          const fixture = fixtures.get(fixtureName);
+          if (!fixture) return response.writeHead(404).end("Unknown fixture");
+          response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
+          return response.end(JSON.stringify(reportFor(fixture)));
+        }
       }
       let filePath = path.resolve(repositoryRoot, `.${decodeURIComponent(url.pathname)}`);
       if (!isInside(repositoryRoot, filePath)) return response.writeHead(403).end("Forbidden");
       const stat = await fs.stat(filePath).catch(() => null);
       if (stat?.isDirectory()) filePath = path.join(filePath, "index.html");
-      const mime = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript" }[path.extname(filePath)] || "application/octet-stream";
+      const mime = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".json": "application/json" }[path.extname(filePath)] || "application/octet-stream";
       response.writeHead(200, { "content-type": `${mime}; charset=utf-8` });
       response.end(await fs.readFile(filePath));
     } catch {
@@ -171,6 +175,59 @@ try {
     }
   }
 
+  const productionPage = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await productionPage.goto(`${server.origin}/meta-ads-updates/index.html`, { waitUntil: "networkidle" });
+  assert(await productionPage.locator("#update-list .update-card").count() === productionReport.items.length, "production route did not read latest.json");
+  assert(!(await productionPage.locator("#demo-banner").isVisible()), "production route must not show the demo banner");
+  await productionPage.close();
+
+  for (const viewport of [viewports[0], viewports[2]]) {
+    const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });
+    const consoleErrors = [];
+    const pageErrors = [];
+    page.on("console", (message) => { if (message.type() === "error") consoleErrors.push(message.text()); });
+    page.on("pageerror", (error) => pageErrors.push(error.message));
+    const label = `demo/${viewport.name}`;
+    await page.goto(`${server.origin}/meta-ads-updates/index.html?demo=1`, { waitUntil: "networkidle" });
+    assert(await page.locator("#demo-banner").isVisible(), `${label}: demo banner is missing`);
+    assert(await page.locator("#demo-banner").evaluate((node) => node.textContent.replace(/\s+/g, " ").trim()) === "デモ環境 架空データを表示しています。実運用の承認・判断には使用しないでください。", `${label}: demo banner text changed`);
+    assert(await page.locator("#update-list .update-card").count() === demoReport.items.length, `${label}: unexpected demo card count`);
+    assert((await page.locator("#result-summary").textContent()).includes("デモ用の架空更新"), `${label}: demo summary is misleading`);
+    assert(await page.locator(".source-link").evaluateAll((links) => links.every((link) =>
+      link.textContent === "公式ソース例を開く" &&
+      link.href.startsWith("https://") &&
+      link.target === "_blank" &&
+      link.rel.includes("noreferrer") &&
+      !link.href.includes("example.test")
+    )), `${label}: demo source links are unsafe or misleading`);
+    assert(consoleErrors.length === 0 && pageErrors.length === 0, `${label}: runtime errors: ${[...consoleErrors, ...pageErrors].join("; ")}`);
+    await assertTokens(page);
+    await assertAccessibilityAndLayout(page, label);
+    if (artifactDirectory) {
+      await page.screenshot({ path: path.join(artifactDirectory, `demo-${viewport.name}-viewport.png`) });
+      await page.screenshot({ path: path.join(artifactDirectory, `demo-${viewport.name}-full-page.png`), fullPage: true });
+    }
+    if (viewport.name === "desktop") {
+      await page.selectOption("#source-filter", "meta-product-news-rss");
+      assert(await page.locator("#update-list .update-card").count() === 3, "demo Product News filter failed");
+      await page.click("#reset-button");
+      await page.selectOption("#source-filter", "meta-business-sdk-releases");
+      assert(await page.locator("#update-list .update-card").count() === 1, "demo SDK filter failed");
+      await page.click("#reset-button");
+      await page.selectOption("#priority-filter", "high");
+      assert(await page.locator("#update-list .update-card").count() === 1, "demo high-priority filter failed");
+      await page.click("#reset-button");
+      await page.fill("#query-filter", "設定手順B");
+      assert(await page.locator("#update-list .update-card").count() === 1, "demo query filter failed");
+      await page.selectOption("#priority-filter", "high");
+      assert(await page.locator("#update-list .update-card").count() === 0, "demo combined filters must show no results");
+      assert(await page.locator("#empty-state").isVisible(), "demo filtered empty state is missing");
+      await page.click("#reset-button");
+      assert(await page.locator("#update-list .update-card").count() === demoReport.items.length, "demo reset failed");
+    }
+    await page.close();
+  }
+
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await page.goto(`${server.origin}/meta-ads-updates/index.html?fixture=normal-week`, { waitUntil: "networkidle" });
   assert(await page.locator("#update-list .update-card").count() === 3, "normal-week initial count must be three");
@@ -183,7 +240,7 @@ try {
   await page.fill("#query-filter", "設定手順B");
   assert(await page.locator("#update-list .update-card").count() === 1, "query filter failed");
   await page.close();
-  console.log(`PASS: production UI ${caseCount}/15 viewport cases, interactions, overflow, targets, focus, axe, and approved tokens`);
+  console.log(`PASS: production UI ${caseCount}/15 fixture viewport cases plus production and demo E2E flows, overflow, targets, focus, axe, and approved tokens`);
 } finally {
   await browser.close();
   await server.close();
