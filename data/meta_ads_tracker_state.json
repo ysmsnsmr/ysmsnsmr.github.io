@@ -1,49 +1,49 @@
 {
   "schemaVersion": "meta-ads-tracker-state/v3",
-  "updatedAt": "2026-08-23T02:00:51Z",
+  "updatedAt": "2026-08-24T01:58:49Z",
   "baselineCutoffAt": "2026-08-16T01:58:08Z",
   "sources": {
     "meta-product-news-rss": {
       "items": {
         "https://about.fb.com/news/2026/08/were-upgrading-your-whatsapp-group-chats/": {
           "fingerprint": "b81a46704d5c92bf4d3f479f5e8f15d0a59aeae95061b327072a5b0f2e767302",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "https://about.fb.com/news/2026/07/whatsapp-web-calling-new-features/": {
           "fingerprint": "40b20bf7d56afd969bb9729566274aed8ec734539904dcfbfdc0dc099f48ec2d",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "https://about.fb.com/news/2026/07/meta-ai-muse-spark-doesnt-just-think-it-acts/": {
           "fingerprint": "71039f126831c6ff7430702525210be1236765d191d12590d458d70f3f327092",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "https://about.fb.com/news/2026/07/introducing-seller-app-facebook-marketplace/": {
           "fingerprint": "a60f35610caf9970b40b1707ee15aab831b16b93681c68b08fce101d7f1f808c",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "https://about.fb.com/news/2026/07/connecting-real-people-on-facebook/": {
           "fingerprint": "c1383ef295666599db8b94f118d2da210e77a9f334f67f85e9ef3efa25ff6ef7",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "https://about.fb.com/news/2026/07/new-parental-supervision-tools-coming-threads/": {
           "fingerprint": "1b2ee1fd37c12baef4c223848eef8cfe709a6b7a513fd3e79636cb443764b463",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/": {
           "fingerprint": "260d4c2d96375e3e7aa4724ef1623a8d38804661fd30e059aedf7b41a36f360f",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "https://about.fb.com/news/2026/06/its-time-to-reserve-your-whatsapp-username/": {
           "fingerprint": "71a7ea30935b367fca5ccb4f0a4765db6fd5d3ad03ebdeca6f245f431d9f113c",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "https://about.fb.com/news/2026/06/meta-essilorluxottica-partner-launch-meta-glasses/": {
           "fingerprint": "8cff9fe420896ba66eead82287788ddd5b4c3075fb7b5fe9656a8af3b206a25b",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "https://about.fb.com/news/2026/06/instagram-for-tv-gets-bigger-with-new-ways-to-watch-together/": {
           "fingerprint": "7e38223fa222f92080a1f0ee671e28b7bdc101694f7b07d6b223f92365276b15",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         }
       }
     },
@@ -51,115 +51,115 @@
       "items": {
         "v26.0.0": {
           "fingerprint": "01420e860ab7af0bdcb1040b301c92016d91f16b510333f999a6cc2a47d4f817",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v25.0.3": {
           "fingerprint": "0840841b6054ad8f754a6d6e06e6c6bc182ab835e8480ec0676d181023cf8ad1",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v25.0.2": {
           "fingerprint": "e222e02f365ca2d585e6ef775dfd87c31e00c9bd6b3dd69a1294c4c9c73693b0",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v25.0.1": {
           "fingerprint": "0ebae690b833c9c2a14b0dd0c1c9873c3efb9296ebef0f0f656eebfc0e67aa60",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v25.0.0": {
           "fingerprint": "536f7d268c0a238f0d0e5f8d32fbd54130489f9eeeb883c74e36a8ffa61b1e35",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v24.0.1": {
           "fingerprint": "c15fba3dbedd34a45212da9678b24b07cdf06cf80400ff7b9a6215969b673724",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v24.0.0": {
           "fingerprint": "31bd7aabeb12bc95995fdb6c79e224bc6d98f9c7b93c649a50ebb348769978ee",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v23.0.3": {
           "fingerprint": "014be8ded76db8ddbf61617c8d860cd79feedb1c6344f7aaa8f7571b19bfd85d",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v23.0.2": {
           "fingerprint": "60bc19e56394495384ab2e1b565816c63b121c3fc59dfc986db74bd640ab9696",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v23.0.1": {
           "fingerprint": "2c8ff4291bb6df2607ccdc7b307e89a812f7e4140537515945a329f9e00afa99",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v23.0.0": {
           "fingerprint": "87b550fdd59ae1a135d675bd44be15d6ed547c2a7195bc7ef1233dd8b64b2543",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v22.0.3": {
           "fingerprint": "ca4087733eda203786331062dd37c1d9c7eef7f3e337d0f3d623ad9bc2255200",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v22.0.2": {
           "fingerprint": "b4c8493e26bcb6a471b639a8172f917913e3cb2d7e3d181e6a0e77b4a8abd5b6",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v22.0.1": {
           "fingerprint": "e36eeb9b47d991dfe5706cf53b4fa4fb5904c46e68a2eeb3415fd7b53b9fed54",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v22.0.0": {
           "fingerprint": "006695d74ffebca07ebfdeba34ca5c635c60fa195459f2a311e4b8d067754c87",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v21.0.0": {
           "fingerprint": "634ddfad8d18b2a45a9cef3dde471749687d18d6b6740d4401cdb462d6c256e5",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v20.0.0": {
           "fingerprint": "de085c2b53e0fd44a76fe937dc6c6f828e9f29ed0b025bc86e67746653838094",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v19.0.2": {
           "fingerprint": "57cabd73459c1f4ab7bd04875c83e2e8671513936a31d07baecc5836d30a913b",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v19.0.1": {
           "fingerprint": "e03617808f9686fd6675f26d5654d12dc69fe927eca421985dc0ff2b05f7af2d",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v19.0.0": {
           "fingerprint": "9da5593b76b7e779282da96d46fee735e70083f173ab1d87440af3c40a5affe4",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v18.0.4": {
           "fingerprint": "dc03a22a62cdc8c96bdba7f77148a4e0b1643169356d5a78701bf441c31f91fc",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v18.0.3": {
           "fingerprint": "cc09bad8809532512efcc7cf1e6fd9ecffb3320dbf8f9e138a4515534e9c2b0a",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v18.0.2": {
           "fingerprint": "f9af21e6573206bf09b3d30fd2649e9259ab10448463553f2dcbf043520ae7a0",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v18.0.1": {
           "fingerprint": "a5ecb0db7f59a0bd0de2a400d4b6f876fd9c6e3a08f9b59dc90b29ec123dc777",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v18.0.0": {
           "fingerprint": "fffed246342cc6a5f14766c4de6a448a6e3add245f28a78e4e142521d4b5034d",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v2.11.3": {
           "fingerprint": "1a02d5b74a1d3dc1ccd74af01cb83b37498089a9f0e5fbd7c7f1270958dc3b12",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v2.11.2": {
           "fingerprint": "b94cc5a2730a8ffc6fb5771ec0dfc9d5ec97b919bb32aa1fb695a8f3cb636c0a",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         },
         "v2.10": {
           "fingerprint": "aa2476bb957d5d384badc7e422443ec6844d2334c5064f9881dacc6e247de55d",
-          "lastSeenAt": "2026-08-23T02:00:51Z"
+          "lastSeenAt": "2026-08-24T01:58:49Z"
         }
       }
     }
