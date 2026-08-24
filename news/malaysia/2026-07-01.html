@@ -60,11 +60,7 @@
     .daily-item-head { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
-    .daily-details { margin: 16px 0 0; }
-    .daily-detail { border-top: 1px solid var(--line); padding: 10px 0; }
-    .daily-detail:last-child { padding-bottom: 0; }
-    dt { color: var(--muted); font-size: .8rem; font-weight: 700; }
-    dd { margin: 3px 0 0; overflow-wrap: anywhere; }
+    .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
     .muted { color: var(--muted); }
@@ -107,27 +103,8 @@
           <span class="item-number">1</span>
           <p class="item-category">速報</p>
         </div>
-        <h3>KLを含む複数地域で雷雨・大雨・強風への注意が必要です。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>MetMalaysiaが悪天候への注意を出しました。 対象地域では短時間の強い雨や突風が見込まれています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>冠水、渋滞、屋外予定の中断に注意が必要です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>移動前にMetMalaysiaと道路状況を確認。</dd>
-          </div>
-
-        </dl>
+        <h3>KLを含む複数地域で雷雨・大雨…</h3>
+        <p class="daily-summary">KLを含む複数地域で雷雨・大雨・強風への注意が必要です。 MetMalaysiaが悪天候への注意を出しました。 対象地域では短時間の強い雨や突風が見込まれています。 冠水、渋滞、屋外予定の中断に注意が必要です。 移動前にMetMalaysiaと道路状況を確認。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/06/30/wet-weather-alert-thunderstorms-heavy-rain-expected-across-multiple-states-until-7pm-says-metmalaysia/225832">出典: Malay Mail（2026年6月30日）</a>
       </article>
 
@@ -147,27 +124,8 @@
           <span class="item-number">2</span>
           <p class="item-category">生活インパクト</p>
         </div>
-        <h3>公共交通の運行や通勤手段に影響する可能性があります。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>Paul TanのRSSで、公共交通や運行状況に関する情報が報じられています。 LRT、MRT、Rapid KL、KTMBなどの公共交通に関わる移動情報として扱います。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>通勤・通学・都心移動では、遅延、代替ルート、運行再開時期を確認しておく必要があります。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>出発前に運行会社の公式情報を確認。</dd>
-          </div>
-
-        </dl>
+        <h3>公共交通の運行や通勤手段に影…</h3>
+        <p class="daily-summary">公共交通の運行や通勤手段に影響する可能性があります。 Paul TanのRSSで、公共交通や運行状況に関する情報が報じられています。 LRT、MRT、Rapid KL、KTMBなどの公共交通に関わる移動情報として扱います。 通勤・通学・都心移動では、遅延、代替ルート、運行再開時期を確認しておく必要があります。 出発前に運行会社の公式情報を確認。</p>
         <a class="source-link" href="https://paultan.org/2026/06/30/affordable-homes-to-be-built-next-to-lrt-mrt-stations-kayu-ara-sri-andalas-bdr-bukit-tinggi-johan-setia/">出典: Paul Tan（2026年6月30日）</a>
       </article>
 
@@ -177,27 +135,8 @@
           <span class="item-number">3</span>
           <p class="item-category">生活インパクト</p>
         </div>
-        <h3>道路閉鎖や渋滞により、移動計画の見直しが必要です。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>道路利用者に移動計画の調整や迂回が呼びかけられています。 対象道路や周辺エリアでは混雑や通行規制が起きる可能性があります。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>通勤、送迎、買い物、都心部への移動時間に影響します。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>出発前に道路状況と迂回路を確認。</dd>
-          </div>
-
-        </dl>
+        <h3>道路閉鎖や渋滞により、移動計…</h3>
+        <p class="daily-summary">道路閉鎖や渋滞により、移動計画の見直しが必要です。 道路利用者に移動計画の調整や迂回が呼びかけられています。 対象道路や周辺エリアでは混雑や通行規制が起きる可能性があります。 通勤、送迎、買い物、都心部への移動時間に影響します。 出発前に道路状況と迂回路を確認。</p>
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/pengoperasian-lrt3-beri-impak-positif-kelancaran-pergerakan-pelajar-zambry">出典: Astro Awani（2026年6月30日）</a>
       </article>
 
@@ -207,21 +146,8 @@
           <span class="item-number">4</span>
           <p class="item-category">生活インパクト</p>
         </div>
-        <h3>公共交通や通勤手段の選び方に影響する可能性があります。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>シャー・アラムLRT3が最初のフル稼働日に6万回以上の乗車を記録しました。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>混雑回避や移動費、所要時間の見直しに関わります。</dd>
-          </div>
-
-        </dl>
+        <h3>公共交通や通勤手段の選び方に…</h3>
+        <p class="daily-summary">公共交通や通勤手段の選び方に影響する可能性があります。 シャー・アラムLRT3が最初のフル稼働日に6万回以上の乗車を記録しました。 混雑回避や移動費、所要時間の見直しに関わります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/06/30/strong-start-for-shah-alam-lrt3-as-rapid-kl-reports-60000-trips-on-first-full-day-of-service/225845">出典: Malay Mail（2026年6月30日）</a>
       </article>
 
@@ -241,21 +167,8 @@
           <span class="item-number">5</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>In Dewan Rakyat today: Focus on Suhakam Act amendments, cost of living and Cybercrime Bill</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>Proposed amendments to the Human Rights Commission of Malaysia (Suhakam) Act 1999 and...</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>家計や買い物先の選択に関わる可能性があります。</dd>
-          </div>
-
-        </dl>
+        <h3>In Dewan Rakyat today: Focus…</h3>
+        <p class="daily-summary">In Dewan Rakyat today: Focus on Suhakam Act amendments, cost of living and Cybercrime Bill Proposed amendments to the Human Rights Commission of Malaysia (Suhakam) Act 1999 and... 家計や買い物先の選択に関わる可能性があります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/01/in-dewan-rakyat-today-focus-on-suhakam-act-amendments-cost-of-living-and-cybercrime-bill/225875">出典: Malay Mail（2026年7月1日）</a>
       </article>
 
@@ -265,21 +178,8 @@
           <span class="item-number">6</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>Bursa Malaysiaは慎重な値動きが見込まれています。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>西アジア情勢などの外部要因を背景に、レンジ相場の見方が報じられました。 市場心理は不透明感に左右されやすい状況です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>投資信託、株式投資、企業景況感を見ている人には参考になります。</dd>
-          </div>
-
-        </dl>
+        <h3>Bursa Malaysiaは慎重な値動き…</h3>
+        <p class="daily-summary">Bursa Malaysiaは慎重な値動きが見込まれています。 西アジア情勢などの外部要因を背景に、レンジ相場の見方が報じられました。 市場心理は不透明感に左右されやすい状況です。 投資信託、株式投資、企業景況感を見ている人には参考になります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/06/30/bursa-malaysia-dips-as-investors-await-domestic-catalysts-amid-market-caution/225776">出典: Malay Mail（2026年6月30日）</a>
       </article>
 
@@ -289,21 +189,8 @@
           <span class="item-number">7</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>約915万人のSTR受給者がmySalamの健康支払いに対象となり、政府は延長を検討</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>約915万人のSTR受給者がmySalamの健康支払いに対象となる 政府は延長を検討している</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>mySalamの健康支払いを受けられる対象者が増えたことにより、低所得世帯の医療費の負担が軽減される可能性がある</dd>
-          </div>
-
-        </dl>
+        <h3>約915万人のSTR受給者がmySalam…</h3>
+        <p class="daily-summary">約915万人のSTR受給者がmySalamの健康支払いに対象となり、政府は延長を検討 約915万人のSTR受給者がmySalamの健康支払いに対象となる 政府は延長を検討している mySalamの健康支払いを受けられる対象者が増えたことにより、低所得世帯の医療費の負担が軽減される可能性がある</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/06/30/over-nine-million-str-recipients-now-eligible-for-mysalam-health-payouts-govt-mulls-extension/225833">出典: Malay Mail（2026年6月30日）</a>
       </article>
 
@@ -313,21 +200,8 @@
           <span class="item-number">8</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>MOF: Health Ministry spending adjustment capped at RM500m, not RM3.1b as claimed online</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>The Ministry of Finance (MOF) has considered an adjustment to the Health Ministry’s...</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>体調管理や医療機関の利用判断に関わる可能性があります。</dd>
-          </div>
-
-        </dl>
+        <h3>MOF: Health Ministry spending…</h3>
+        <p class="daily-summary">MOF: Health Ministry spending adjustment capped at RM500m, not RM3.1b as claimed online The Ministry of Finance (MOF) has considered an adjustment to the Health Ministry’s... 体調管理や医療機関の利用判断に関わる可能性があります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/06/30/mof-health-ministry-spending-adjustment-capped-at-rm500m-not-rm31b-as-claimed-online/225816">出典: Malay Mail（2026年6月30日）</a>
       </article>
 
@@ -337,21 +211,8 @@
           <span class="item-number">9</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>リンギット相場と経済見通しが引き続き注目されています。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>リンギットの動きや経済見通しについて、慎重または前向きな評価が報じられました。 外部指標や政策判断が為替材料になります。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>海外送金、旅行、輸入品、外貨建て支払いに影響する可能性があります。</dd>
-          </div>
-
-        </dl>
+        <h3>リンギット相場と経済見通しが…</h3>
+        <p class="daily-summary">リンギット相場と経済見通しが引き続き注目されています。 リンギットの動きや経済見通しについて、慎重または前向きな評価が報じられました。 外部指標や政策判断が為替材料になります。 海外送金、旅行、輸入品、外貨建て支払いに影響する可能性があります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/06/30/ringgit-gains-against-us-dollar-in-early-trade-ahead-of-key-economic-data/225713">出典: Malay Mail（2026年6月30日）</a>
       </article>
 
@@ -361,21 +222,8 @@
           <span class="item-number">10</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>Pembaharuan lesen vokasional wajib jalani pemeriksaan kesihatan menerusi PSS - Ramanan</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>Pemandu yang ingin memperbaharui lesen vokasional kini perlu menjalani pemeriksaan kesihatan komprehensif menerusi Program Pemandu Sihat dan Selamat (PSS) di 500 klinik panel di seluruh negara.</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>体調管理や医療機関の利用判断に関わる可能性があります。</dd>
-          </div>
-
-        </dl>
+        <h3>Pembaharuan lesen vokasional…</h3>
+        <p class="daily-summary">Pembaharuan lesen vokasional wajib jalani pemeriksaan kesihatan menerusi PSS - Ramanan Pemandu yang ingin memperbaharui lesen vokasional kini perlu menjalani pemeriksaan kesihatan komprehensif menerusi Program Pemandu Sihat dan Selamat (PSS) di 500 klinik panel di seluruh negara. 体調管理や医療機関の利用判断に関わる可能性があります。</p>
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/pembaharuan-lesen-vokasional-wajib-jalani-pemeriksaan-kesihatan-menerusi-pss-ramanan">出典: Astro Awani（2026年6月30日）</a>
       </article>
 
@@ -385,21 +233,8 @@
           <span class="item-number">11</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>マレーシアの燃料補助金は400億リンギットに達する見込み</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>マレーシアの燃料補助金は400億リンギットに達する見込みで、予算額の2倍を超える 燃料補助金は、世界的なエネルギー危機の影響を吸収して、小売りの燃料価格を安価に保つために政府が支出するもの</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>燃料価格が安価に保たれるため、生活や仕事に影響が出る可能性があります。また、補助金の対象となる人は、RON95ガソリンを1.99リンギット/リットルで購入できることになります。</dd>
-          </div>
-
-        </dl>
+        <h3>マレーシアの燃料補助金は400億…</h3>
+        <p class="daily-summary">マレーシアの燃料補助金は400億リンギットに達する見込み マレーシアの燃料補助金は400億リンギットに達する見込みで、予算額の2倍を超える 燃料補助金は、世界的なエネルギー危機の影響を吸収して、小売りの燃料価格を安価に保つために政府が支出するもの 燃料価格が安価に保たれるため、生活や仕事に影響が出る可能性があります。また、補助金の対象となる人は、RON95ガソリンを1.99リンギット/リットルで購入できることになります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/01/pm-anwar-malaysias-fuel-subsidy-bill-set-to-hit-rm40b-more-than-double-budget-estimate/225879">出典: Malay Mail（2026年7月1日）</a>
       </article>
 
@@ -409,21 +244,8 @@
           <span class="item-number">12</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>Ringgit opens higher against dollar as US consumer confidence dips below expectations</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>The ringgit was firmer against the US dollar in the early session, supported by weaker-than...</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>海外送金、両替、輸入品価格などの判断材料になります。</dd>
-          </div>
-
-        </dl>
+        <h3>Ringgit opens higher against…</h3>
+        <p class="daily-summary">Ringgit opens higher against dollar as US consumer confidence dips below expectations The ringgit was firmer against the US dollar in the early session, supported by weaker-than... 海外送金、両替、輸入品価格などの判断材料になります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/07/01/ringgit-opens-higher-against-dollar-as-us-consumer-confidence-dips-below-expectations/225866">出典: Malay Mail（2026年7月1日）</a>
       </article>
 

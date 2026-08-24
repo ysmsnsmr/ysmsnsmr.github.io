@@ -60,11 +60,7 @@
     .daily-item-head { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
-    .daily-details { margin: 16px 0 0; }
-    .daily-detail { border-top: 1px solid var(--line); padding: 10px 0; }
-    .daily-detail:last-child { padding-bottom: 0; }
-    dt { color: var(--muted); font-size: .8rem; font-weight: 700; }
-    dd { margin: 3px 0 0; overflow-wrap: anywhere; }
+    .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
     .muted { color: var(--muted); }
@@ -107,27 +103,8 @@
           <span class="item-number">1</span>
           <p class="item-category">速報</p>
         </div>
-        <h3>雷雨や大雨への注意が必要です。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、雷雨・大雨などの天候リスクが伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>外出や移動は、急な雨や強風による遅れに注意が必要です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>外出前に最新の気象情報を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>雷雨や大雨への注意が必要です</h3>
+        <p class="daily-summary">雷雨や大雨への注意が必要です。 RSSでは、雷雨・大雨などの天候リスクが伝えられています。 外出や移動は、急な雨や強風による遅れに注意が必要です。 外出前に最新の気象情報を確認してください。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/20/sweeping-storm-alert-issued-metmalaysia-says-treacherous-weather-threatens-peninsula-and-sarawak/228323">出典: Malay Mail（2026年7月20日）</a>
       </article>
 
@@ -147,21 +124,8 @@
           <span class="item-number">2</span>
           <p class="item-category">生活インパクト</p>
         </div>
-        <h3>為替動向に関するニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、生活費支援や日用品価格に関する情報が伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>海外送金、両替、輸入品価格などの判断材料になります。</dd>
-          </div>
-
-        </dl>
+        <h3>為替動向に関するニュースです</h3>
+        <p class="daily-summary">為替動向に関するニュースです。 RSSでは、生活費支援や日用品価格に関する情報が伝えられています。 海外送金、両替、輸入品価格などの判断材料になります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/21/why-is-my-tnb-electricity-bill-suddenly-high-the-afa-fuel-surcharge-explained/227856">出典: Malay Mail（2026年7月21日）</a>
       </article>
 
@@ -171,27 +135,8 @@
           <span class="item-number">3</span>
           <p class="item-category">生活インパクト</p>
         </div>
-        <h3>洪水や冠水への注意が必要です。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、洪水・冠水に関する注意情報が伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>低地や冠水しやすい道路では、移動に時間がかかる可能性があります。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>移動前に自治体や交通情報を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>洪水や冠水への注意が必要です</h3>
+        <p class="daily-summary">洪水や冠水への注意が必要です。 RSSでは、洪水・冠水に関する注意情報が伝えられています。 低地や冠水しやすい道路では、移動に時間がかかる可能性があります。 移動前に自治体や交通情報を確認してください。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/20/pj-flash-floods-gobind-orders-urgent-meeting-action-plan-after-repeated-incidents/228301">出典: Malay Mail（2026年7月20日）</a>
       </article>
 
@@ -211,21 +156,8 @@
           <span class="item-number">4</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>燃料補助制度の登録状況が発表されました。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>SKDS燃料補助制度に172,955社、464,797台の車両が登録された。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>対象車両を所有する人は、制度の詳細を確認する必要があります。</dd>
-          </div>
-
-        </dl>
+        <h3>燃料補助制度の登録状況が発表…</h3>
+        <p class="daily-summary">燃料補助制度の登録状況が発表されました。 SKDS燃料補助制度に172,955社、464,797台の車両が登録された。 対象車両を所有する人は、制度の詳細を確認する必要があります。</p>
         <a class="source-link" href="https://paultan.org/2026/07/20/skds-subsidised-diesel-control-system-172955-companies-and-464797-vehicles-registered-kpdn/">出典: Paul Tan（2026年7月20日）</a>
       </article>
 
@@ -235,21 +167,8 @@
           <span class="item-number">5</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>市場動向に関するニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、株式市場や金融市場の動きが伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>投資環境や景気感を把握する材料になります。</dd>
-          </div>
-
-        </dl>
+        <h3>市場動向に関するニュースです</h3>
+        <p class="daily-summary">市場動向に関するニュースです。 RSSでは、株式市場や金融市場の動きが伝えられています。 投資環境や景気感を把握する材料になります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/07/20/bursa-malaysia-closes-lower-as-profit-taking-weighs-on-key-banking-counters/228377">出典: Malay Mail（2026年7月20日）</a>
       </article>
 
@@ -259,21 +178,8 @@
           <span class="item-number">6</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>詳細を出典本文で確認しておきたいニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSの見出しと説明に基づく概要です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>内容に応じて、対象者や利用条件を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>詳細を出典本文で確認しておき…</h3>
+        <p class="daily-summary">詳細を出典本文で確認しておきたいニュースです。 RSSの見出しと説明に基づく概要です。 内容に応じて、対象者や利用条件を確認してください。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/20/hannah-yeoh-blasts-litterbugs-praises-dbkl-for-extratime-cleanup/228347">出典: Malay Mail（2026年7月20日）</a>
       </article>
 
@@ -283,21 +189,8 @@
           <span class="item-number">7</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>RON95ガソリン補助金の節約額は、対象を絞った支援や食料安全対策に充てられている</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RON95ガソリン補助金の節約額は、対象を絞った支援や食料安全対策に充てられている 政府は、IPKPやパディーハーベスティングインセンティブを通じて食料供給の安定を図っている</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>ガソリン価格や食料価格への影響を考慮して、対象を絞った支援や食料安全対策の内容を知っておくことが重要です</dd>
-          </div>
-
-        </dl>
+        <h3>対象を絞った支援や食料安全対…</h3>
+        <p class="daily-summary">RON95ガソリン補助金の節約額は、対象を絞った支援や食料安全対策に充てられている RON95ガソリン補助金の節約額は、対象を絞った支援や食料安全対策に充てられている 政府は、IPKPやパディーハーベスティングインセンティブを通じて食料供給の安定を図っている ガソリン価格や食料価格への影響を考慮して、対象を絞った支援や食料安全対策の内容を知っておくことが重要です</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/21/mof-ron95-subsidy-savings-channelled-to-targeted-aid-food-security-measures/228390">出典: Malay Mail（2026年7月21日）</a>
       </article>
 
@@ -307,21 +200,8 @@
           <span class="item-number">8</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>為替動向に関するニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、リンギット相場の動きが伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>海外送金、両替、輸入品価格などの判断材料になります。</dd>
-          </div>
-
-        </dl>
+        <h3>為替動向に関するニュースです</h3>
+        <p class="daily-summary">為替動向に関するニュースです。 RSSでは、リンギット相場の動きが伝えられています。 海外送金、両替、輸入品価格などの判断材料になります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/07/20/ringgit-ends-higher-as-strong-export-data-boosts-sentiment/228380">出典: Malay Mail（2026年7月20日）</a>
       </article>
 
@@ -331,21 +211,8 @@
           <span class="item-number">9</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>Sungai Bakap Tamil学校の建設プロジェクトが2027年までに完了する予定</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>Sungai Bakap Tamil学校の建設プロジェクトは2015年から遅れていたが、2027年第四四半期に完成する予定 教育大臣は、総理大臣がRM12,667,367.59の予算を承認し、Yayasan Didik Negaraが実施機関として任命されたと述べた</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>学校の新しい建物が完成すると、生徒や教員の環境が改善される可能性がある</dd>
-          </div>
-
-        </dl>
+        <h3>Sungai Bakap Tamil学校の建設…</h3>
+        <p class="daily-summary">Sungai Bakap Tamil学校の建設プロジェクトが2027年までに完了する予定 Sungai Bakap Tamil学校の建設プロジェクトは2015年から遅れていたが、2027年第四四半期に完成する予定 教育大臣は、総理大臣がRM12,667,367.59の予算を承認し、Yayasan Didik Negaraが実施機関として任命されたと述べた 学校の新しい建物が完成すると、生徒や教員の環境が改善される可能性がある</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/20/sungai-bakap-tamil-school-project-gets-2027-deadline-after-long-delays/228313">出典: Malay Mail（2026年7月20日）</a>
       </article>
 
@@ -355,21 +222,8 @@
           <span class="item-number">10</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>詳細を出典本文で確認しておきたいニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSの見出しと説明に基づく概要です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>内容に応じて、対象者や利用条件を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>詳細を出典本文で確認しておき…</h3>
+        <p class="daily-summary">詳細を出典本文で確認しておきたいニュースです。 RSSの見出しと説明に基づく概要です。 内容に応じて、対象者や利用条件を確認してください。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/20/gobind-says-network-school-approvals-followed-procedures-investigations-must-respect-jurisdictions/228291">出典: Malay Mail（2026年7月20日）</a>
       </article>
 
@@ -379,21 +233,8 @@
           <span class="item-number">11</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>為替動向に関するニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、リンギット相場の動きが伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>海外送金、両替、輸入品価格などの判断材料になります。</dd>
-          </div>
-
-        </dl>
+        <h3>為替動向に関するニュースです</h3>
+        <p class="daily-summary">為替動向に関するニュースです。 RSSでは、リンギット相場の動きが伝えられています。 海外送金、両替、輸入品価格などの判断材料になります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/07/20/stronger-gdp-estimate-lifts-ringgit-at-mondays-open/228250">出典: Malay Mail（2026年7月20日）</a>
       </article>
 

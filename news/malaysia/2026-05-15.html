@@ -60,11 +60,7 @@
     .daily-item-head { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
-    .daily-details { margin: 16px 0 0; }
-    .daily-detail { border-top: 1px solid var(--line); padding: 10px 0; }
-    .daily-detail:last-child { padding-bottom: 0; }
-    dt { color: var(--muted); font-size: .8rem; font-weight: 700; }
-    dd { margin: 3px 0 0; overflow-wrap: anywhere; }
+    .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
     .muted { color: var(--muted); }
@@ -107,27 +103,8 @@
           <span class="item-number">1</span>
           <p class="item-category">速報</p>
         </div>
-        <h3>KLを含む複数地域で雷雨・大雨・強風への注意が必要です。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>MetMalaysiaが悪天候への注意を出しました。 対象地域では短時間の強い雨や突風が見込まれています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>冠水、渋滞、屋外予定の中断に注意が必要です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>移動前にMetMalaysiaと道路状況を確認。</dd>
-          </div>
-
-        </dl>
+        <h3>KLを含む複数地域で雷雨・大雨…</h3>
+        <p class="daily-summary">KLを含む複数地域で雷雨・大雨・強風への注意が必要です。 MetMalaysiaが悪天候への注意を出しました。 対象地域では短時間の強い雨や突風が見込まれています。 冠水、渋滞、屋外予定の中断に注意が必要です。 移動前にMetMalaysiaと道路状況を確認。</p>
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/cuaca-panas-tahap-1-di-tiga-lokasi-di-kelantan-metmalaysia">出典: Astro Awani（2026年5月14日）</a>
       </article>
 
@@ -158,21 +135,8 @@
           <span class="item-number">2</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>リンギット相場と経済見通しが引き続き注目されています。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>リンギットの動きや経済見通しについて、慎重または前向きな評価が報じられました。 外部指標や政策判断が為替材料になります。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>海外送金、旅行、輸入品、外貨建て支払いに影響する可能性があります。</dd>
-          </div>
-
-        </dl>
+        <h3>リンギット相場と経済見通しが…</h3>
+        <p class="daily-summary">リンギット相場と経済見通しが引き続き注目されています。 リンギットの動きや経済見通しについて、慎重または前向きな評価が報じられました。 外部指標や政策判断が為替材料になります。 海外送金、旅行、輸入品、外貨建て支払いに影響する可能性があります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/05/14/ringgit-opens-higher-for-seventh-straight-day-ahead-of-trump-xi-talks-in-beijing/219862">出典: Malay Mail（2026年5月14日）</a>
       </article>
 
@@ -182,21 +146,8 @@
           <span class="item-number">3</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>Bursa Malaysiaは慎重な値動きが見込まれています。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>西アジア情勢などの外部要因を背景に、レンジ相場の見方が報じられました。 市場心理は不透明感に左右されやすい状況です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>投資信託、株式投資、企業景況感を見ている人には参考になります。</dd>
-          </div>
-
-        </dl>
+        <h3>Bursa Malaysiaは慎重な値動き…</h3>
+        <p class="daily-summary">Bursa Malaysiaは慎重な値動きが見込まれています。 西アジア情勢などの外部要因を背景に、レンジ相場の見方が報じられました。 市場心理は不透明感に左右されやすい状況です。 投資信託、株式投資、企業景況感を見ている人には参考になります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/05/13/bursa-malaysia-ends-lower-as-investors-remain-cautious-amid-macro-geopolitical-concerns/219810">出典: Malay Mail（2026年5月13日）</a>
       </article>
 
@@ -206,21 +157,8 @@
           <span class="item-number">4</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>Kesihatan mental bukan lagi isu sampingan di tempat kerja - JKKP</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>Kesejahteraan mental pekerja kini tidak lagi boleh dianggap isu sampingan, sebaliknya perlu diangkat sebagai teras KKP yang lebih holistik. RSS内のタイトルと説明をもとに整理しました。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</dd>
-          </div>
-
-        </dl>
+        <h3>Kesihatan mental bukan lagi i…</h3>
+        <p class="daily-summary">Kesihatan mental bukan lagi isu sampingan di tempat kerja - JKKP Kesejahteraan mental pekerja kini tidak lagi boleh dianggap isu sampingan, sebaliknya perlu diangkat sebagai teras KKP yang lebih holistik. RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
         <a class="source-link" href="https://www.astroawani.com/gaya-hidup-terkini-malaysia/kesihatan-mental-bukan-lagi-isu-sampingan-di-tempat-kerja-jkkp">出典: Astro Awani（2026年5月15日）</a>
       </article>
 
@@ -230,21 +168,8 @@
           <span class="item-number">5</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>Vigneswaran: MIC’s 80th anniversary celebration to feature community programmes nationwide</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>KUALA LUMPUR, May 14 — Various programmes will be held nationwide from May 21 in conjunction with MIC&amp;r... RSS内のタイトルと説明をもとに整理しました。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</dd>
-          </div>
-
-        </dl>
+        <h3>Vigneswaran: MIC’s 80th anni…</h3>
+        <p class="daily-summary">Vigneswaran: MIC’s 80th anniversary celebration to feature community programmes nationwide KUALA LUMPUR, May 14 — Various programmes will be held nationwide from May 21 in conjunction with MIC&amp;r... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/05/14/vigneswaran-mics-80th-anniversary-celebration-to-feature-community-programmes-nationwide/219978">出典: Malay Mail（2026年5月14日）</a>
       </article>
 
@@ -254,21 +179,8 @@
           <span class="item-number">6</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>Malaysia’s diesel subsidy surges to RM2.5b monthly, Loke says EV trucks must replace fuel‑hungry fleets</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>KUALA LUMPUR, May 14 — Malaysia’s diesel subsidy has jumped to RM2.5 billion a month as ongoing tensions in... RSS内のタイトルと説明をもとに整理しました。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</dd>
-          </div>
-
-        </dl>
+        <h3>Malaysia’s diesel subsidy su…</h3>
+        <p class="daily-summary">Malaysia’s diesel subsidy surges to RM2.5b monthly, Loke says EV trucks must replace fuel‑hungry fleets KUALA LUMPUR, May 14 — Malaysia’s diesel subsidy has jumped to RM2.5 billion a month as ongoing tensions in... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/05/14/malaysias-diesel-subsidy-surges-to-rm25b-monthly-loke-says-ev-trucks-must-replace-fuelhungry-fleets/219895">出典: Malay Mail（2026年5月14日）</a>
       </article>
 
@@ -278,21 +190,8 @@
           <span class="item-number">7</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>Ringgit closes higher against US dollar, major currencies as expectations mount for Trump-Xi meeting</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>KUALA LUMPUR, May 13 — The ringgit closed higher against the US dollar and other major currencies today, supported... RSS内のタイトルと説明をもとに整理しました。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</dd>
-          </div>
-
-        </dl>
+        <h3>Ringgit closes higher against…</h3>
+        <p class="daily-summary">Ringgit closes higher against US dollar, major currencies as expectations mount for Trump-Xi meeting KUALA LUMPUR, May 13 — The ringgit closed higher against the US dollar and other major currencies today, supported... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/05/13/ringgit-closes-higher-against-us-dollar-major-currencies-as-expectations-mount-for-trump-xi-meeting/219820">出典: Malay Mail（2026年5月13日）</a>
       </article>
 
@@ -302,21 +201,8 @@
           <span class="item-number">8</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>Ringgit defies stronger US dollar as Malaysia growth outlook shines</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>KUALA LUMPUR, May 13 — The ringgit opened higher against a basket of major currencies, including the US dollar tod... RSS内のタイトルと説明をもとに整理しました。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</dd>
-          </div>
-
-        </dl>
+        <h3>Ringgit defies stronger US do…</h3>
+        <p class="daily-summary">Ringgit defies stronger US dollar as Malaysia growth outlook shines KUALA LUMPUR, May 13 — The ringgit opened higher against a basket of major currencies, including the US dollar tod... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/05/13/ringgit-defies-stronger-us-dollar-as-malaysia-growth-outlook-shines/219730">出典: Malay Mail（2026年5月13日）</a>
       </article>
 

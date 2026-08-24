@@ -60,11 +60,7 @@
     .daily-item-head { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
-    .daily-details { margin: 16px 0 0; }
-    .daily-detail { border-top: 1px solid var(--line); padding: 10px 0; }
-    .daily-detail:last-child { padding-bottom: 0; }
-    dt { color: var(--muted); font-size: .8rem; font-weight: 700; }
-    dd { margin: 3px 0 0; overflow-wrap: anywhere; }
+    .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
     .muted { color: var(--muted); }
@@ -107,27 +103,8 @@
           <span class="item-number">1</span>
           <p class="item-category">速報</p>
         </div>
-        <h3>暑さによる健康リスクに注意が必要です。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、暑さや熱中症リスクに関する情報が伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>屋外活動や通勤・通学では、体調管理に注意が必要です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>水分補給を意識し、体調不良時は無理な外出を避けてください。</dd>
-          </div>
-
-        </dl>
+        <h3>暑さによる健康リスクに注意が…</h3>
+        <p class="daily-summary">暑さによる健康リスクに注意が必要です。 RSSでは、暑さや熱中症リスクに関する情報が伝えられています。 屋外活動や通勤・通学では、体調管理に注意が必要です。 水分補給を意識し、体調不良時は無理な外出を避けてください。</p>
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/kada-mohon-tambahan-rm1-juta-hadapi-cuaca-panas-ekstrem">出典: Astro Awani（2026年8月11日）</a>
       </article>
 
@@ -147,27 +124,8 @@
           <span class="item-number">2</span>
           <p class="item-category">生活インパクト</p>
         </div>
-        <h3>公共交通や移動計画に影響する可能性があります。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、公共交通や移動需要に関する情報が伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>通勤・通学・帰省の移動時間に影響する可能性があります。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>利用前に運行情報と混雑状況を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>公共交通や移動計画に影響する…</h3>
+        <p class="daily-summary">公共交通や移動計画に影響する可能性があります。 RSSでは、公共交通や移動需要に関する情報が伝えられています。 通勤・通学・帰省の移動時間に影響する可能性があります。 利用前に運行情報と混雑状況を確認してください。</p>
         <a class="source-link" href="https://paultan.org/2026/08/10/prasarana-to-run-24-hour-public-transport-services-for-national-day-from-night-of-aug-30-into-31-fahmi-fadzil/">出典: Paul Tan（2026年8月10日）</a>
       </article>
 
@@ -187,21 +145,8 @@
           <span class="item-number">3</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>市場動向に関するニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、株式市場や金融市場の動きが伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>投資環境や景気感を把握する材料になります。</dd>
-          </div>
-
-        </dl>
+        <h3>市場動向に関するニュースです</h3>
+        <p class="daily-summary">市場動向に関するニュースです。 RSSでは、株式市場や金融市場の動きが伝えられています。 投資環境や景気感を把握する材料になります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/08/10/bursa-malaysia-ends-marginally-lower-as-investors-stay-on-sidelines/230870">出典: Malay Mail（2026年8月10日）</a>
       </article>
 
@@ -211,27 +156,8 @@
           <span class="item-number">4</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>健康や公衆衛生に関わる注意情報です。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、健康リスクや医療に関する情報が伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>体調管理や医療機関の利用判断に関わる可能性があります。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>関係する場合は、関係当局や公式発表で対象者・時期・利用条件を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>健康や公衆衛生に関わる注意情…</h3>
+        <p class="daily-summary">健康や公衆衛生に関わる注意情報です。 RSSでは、健康リスクや医療に関する情報が伝えられています。 体調管理や医療機関の利用判断に関わる可能性があります。 関係する場合は、関係当局や公式発表で対象者・時期・利用条件を確認してください。</p>
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/ikatan-gesa-majikan-utamakan-kesihatan-mental-di-tempat-kerja">出典: Astro Awani（2026年8月11日）</a>
       </article>
 
@@ -241,21 +167,8 @@
           <span class="item-number">5</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>詳細を出典本文で確認しておきたいニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSの見出しと説明に基づく概要です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>内容に応じて、対象者や利用条件を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>詳細を出典本文で確認しておき…</h3>
+        <p class="daily-summary">詳細を出典本文で確認しておきたいニュースです。 RSSの見出しと説明に基づく概要です。 内容に応じて、対象者や利用条件を確認してください。</p>
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/selangor-suntik-rm35-juta-geran-selidik-2026-pacu-agenda-rs-2">出典: Astro Awani（2026年8月10日）</a>
       </article>
 
@@ -265,21 +178,8 @@
           <span class="item-number">6</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>為替動向に関するニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、リンギット相場の動きが伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>海外送金、両替、輸入品価格などの判断材料になります。</dd>
-          </div>
-
-        </dl>
+        <h3>為替動向に関するニュースです</h3>
+        <p class="daily-summary">為替動向に関するニュースです。 RSSでは、リンギット相場の動きが伝えられています。 海外送金、両替、輸入品価格などの判断材料になります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/08/10/ringgit-steady-as-us-job-dip-casts-rate-hike-in-doubt/230871">出典: Malay Mail（2026年8月10日）</a>
       </article>
 
@@ -289,21 +189,8 @@
           <span class="item-number">7</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>警察はデュリアン・トゥンガルの銃撃事件に関する検察の開始を今週申請する予定です</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>警察はデュリアン・トゥンガルの銃撃事件に関する検察の開始を今週申請する予定です</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>関連する制度や当局の対応を知る背景情報です</dd>
-          </div>
-
-        </dl>
+        <h3>警察はデュリアン・トゥンガル…</h3>
+        <p class="daily-summary">警察はデュリアン・トゥンガルの銃撃事件に関する検察の開始を今週申請する予定です 関連する制度や当局の対応を知る背景情報です</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/08/10/police-to-file-for-inquest-into-deadly-durian-tunggal-shooting-this-week/230862">出典: Malay Mail（2026年8月10日）</a>
       </article>
 
@@ -313,21 +200,8 @@
           <span class="item-number">8</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>詳細を出典本文で確認しておきたいニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSの見出しと説明に基づく概要です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>内容に応じて、対象者や利用条件を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>詳細を出典本文で確認しておき…</h3>
+        <p class="daily-summary">詳細を出典本文で確認しておきたいニュースです。 RSSの見出しと説明に基づく概要です。 内容に応じて、対象者や利用条件を確認してください。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/08/10/pkrs-wong-chen-resigns-subang-parliamentary-seat-effective-aug-10-press-conference-wednesday/230854">出典: Malay Mail（2026年8月10日）</a>
       </article>
 
@@ -337,21 +211,8 @@
           <span class="item-number">9</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>詳細を出典本文で確認しておきたいニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSの見出しと説明に基づく概要です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>内容に応じて、対象者や利用条件を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>詳細を出典本文で確認しておき…</h3>
+        <p class="daily-summary">詳細を出典本文で確認しておきたいニュースです。 RSSの見出しと説明に基づく概要です。 内容に応じて、対象者や利用条件を確認してください。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/08/10/housing-ministry-resolves-rm153b-worth-of-sick-or-abandoned-housing-projects-says-nga-kor-ming/230851">出典: Malay Mail（2026年8月10日）</a>
       </article>
 
@@ -361,21 +222,8 @@
           <span class="item-number">10</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>為替動向に関するニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、リンギット相場の動きが伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>海外送金、両替、輸入品価格などの判断材料になります。</dd>
-          </div>
-
-        </dl>
+        <h3>為替動向に関するニュースです</h3>
+        <p class="daily-summary">為替動向に関するニュースです。 RSSでは、リンギット相場の動きが伝えられています。 海外送金、両替、輸入品価格などの判断材料になります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/08/10/ringgit-could-find-its-footing-by-end-august-kenanga-ib-says/230768">出典: Malay Mail（2026年8月10日）</a>
       </article>
 

@@ -2,7 +2,7 @@ from __future__ import annotations
 #!/usr/bin/env python3
 import html
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -13,13 +13,15 @@ MYT = timezone(timedelta(hours=8))
 NEWS_DIR = Path("news/malaysia")
 OUTPUT_PATH = NEWS_DIR / "index.html"
 CATEGORIES = ("【速報】", "【生活インパクト】", "【知っておくと得】")
-PICKUP_HEADLINE_MAX_CHARS = 52
+PICKUP_HEADLINE_MAX_WIDTH = 15.5
 
 
 @dataclass
 class NewsItem:
     category: str
     conclusion: str = ""
+    short_headline: str = ""
+    summary_points: list[str] = field(default_factory=list)
     what_happened: str = ""
     life_impact: str = ""
     next_action: str = ""
@@ -63,6 +65,8 @@ def parse_markdown(path: Path) -> NewsDay:
         current_item = None
 
     optional_labels = {
+        "- 短見出し：": "short_headline",
+        "- 補足：": "summary_points",
         "- 何が起きた：": "what_happened",
         "- 生活への影響：": "life_impact",
         "- 次アクション：": "next_action",
@@ -92,6 +96,9 @@ def parse_markdown(path: Path) -> NewsDay:
             for prefix, field_name in optional_labels.items():
                 if line.startswith(prefix):
                     value = line[len(prefix) :].strip()
+                    if field_name == "summary_points":
+                        current_item.summary_points.append(value)
+                        break
                     previous = getattr(current_item, field_name)
                     setattr(current_item, field_name, f"{previous} {value}".strip())
                     break
@@ -114,12 +121,61 @@ def esc(value: object) -> str:
     return html.escape(str(value), quote=True)
 
 
-def shorten_pickup_headline(text: str, limit: int = PICKUP_HEADLINE_MAX_CHARS) -> str:
-    """Keep TOP-page pickup headlines scan-friendly without changing source summaries."""
+def headline_width(text: str) -> float:
+    return sum(0.5 if ord(character) < 128 else 1.0 for character in text)
+
+
+def take_headline_width(text: str, max_width: float) -> str:
+    result: list[str] = []
+    used = 0.0
+    for character in text:
+        character_width = 0.5 if ord(character) < 128 else 1.0
+        if used + character_width > max_width:
+            break
+        result.append(character)
+        used += character_width
+    return "".join(result).rstrip("、，,・:： ")
+
+
+def semantic_headline(text: str) -> str:
+    """Turn the long editorial summary into a compact, topic-preserving label."""
     normalized = " ".join(text.split())
-    if len(normalized) <= limit:
-        return normalized
-    return f"{normalized[: limit - 1].rstrip()}…"
+    if ("呼吸器" in normalized or ("喘息" in normalized and "上気道感染" in normalized)) and "急増" in normalized:
+        return "煙害で呼吸器疾患が急増"
+    if "2027年度予算" in normalized and "生活費" in normalized:
+        return "27年度予算 生活費対策重視"
+    if ("倒壊リスク" in normalized or "老朽化した木" in normalized) and "センサー" in normalized:
+        return "KL市 倒木監視にセンサー"
+    if "ECOSS" in normalized and "苦情" in normalized and "減少" in normalized:
+        return "ECOSSで油隠し苦情減"
+    if "テレンガヌ" in normalized and "市場" in normalized and "遵守" in normalized:
+        return "テレンガヌ 5市場が遵守認定"
+    if "留学生" in normalized and "経済効果" in normalized:
+        return "留学生が経済効果2百億RM"
+
+    first_sentence = re.split(r"[。.!！?？]", normalized, maxsplit=1)[0]
+    first_sentence = re.sub(r"（[^）]*）", "", first_sentence)
+    first_sentence = re.sub(r"^.+?は、", "", first_sentence)
+    first_sentence = re.sub(r"と(?:発表|説明|述べ)しました?$", "", first_sentence)
+    return first_sentence.strip()
+
+
+def shorten_pickup_headline(text: str, limit: float = PICKUP_HEADLINE_MAX_WIDTH) -> str:
+    compact = semantic_headline(text)
+    if headline_width(compact) <= limit:
+        return compact
+    truncated = take_headline_width(compact, limit - 1.0)
+    return f"{truncated}…"
+
+
+def item_summary_body(item: NewsItem) -> str:
+    parts = [item.conclusion, *item.summary_points, item.what_happened, item.life_impact, item.next_action]
+    unique_parts: list[str] = []
+    for part in parts:
+        normalized = part.strip()
+        if normalized and normalized not in unique_parts:
+            unique_parts.append(normalized)
+    return " ".join(unique_parts)
 
 
 def markdown_link(day: NewsDay) -> str:
@@ -208,24 +264,6 @@ def render_status_chips(day: NewsDay, generated: str) -> str:
 
 def render_item_card(item: NewsItem) -> str:
     display_headline = shorten_pickup_headline(item.conclusion)
-    impact = ""
-    if item.life_impact:
-        impact = f"""
-          <div class="item-detail">
-            <span>生活への影響</span>
-            <p>{esc(item.life_impact)}</p>
-          </div>
-        """
-
-    action = ""
-    if item.next_action:
-        action = f"""
-          <div class="item-detail">
-            <span>次アクション</span>
-            <p>{esc(item.next_action)}</p>
-          </div>
-        """
-
     source = ""
     if item.source_url:
         source_label = item.source or "出典"
@@ -237,8 +275,6 @@ def render_item_card(item: NewsItem) -> str:
         <article class="focus-card">
           <p class="item-category">{esc(category_label(item.category))}</p>
           <h3 title="{esc(item.conclusion)}">{esc(display_headline)}</h3>
-          {impact}
-          {action}
           {source}
         </article>
     """
@@ -346,23 +382,6 @@ def render_archive(days: list[NewsDay]) -> str:
 
 
 def render_daily_item(item: NewsItem, position: int) -> str:
-    details = []
-    if item.what_happened:
-        details.append(("何が起きた", item.what_happened))
-    if item.life_impact:
-        details.append(("生活への影響", item.life_impact))
-    if item.next_action:
-        details.append(("次アクション", item.next_action))
-    detail_html = "\n".join(
-        f"""
-          <div class="daily-detail">
-            <dt>{esc(label)}</dt>
-            <dd>{esc(value)}</dd>
-          </div>
-        """
-        for label, value in details
-    )
-
     if item.source_url:
         source_label = item.source or "出典を開く"
         source = f'<a class="source-link" href="{esc(item.source_url)}">出典: {esc(source_label)}</a>'
@@ -377,10 +396,8 @@ def render_daily_item(item: NewsItem, position: int) -> str:
           <span class="item-number">{position}</span>
           <p class="item-category">{esc(category_label(item.category))}</p>
         </div>
-        <h3>{esc(item.conclusion)}</h3>
-        <dl class="daily-details">
-          {detail_html}
-        </dl>
+        <h3>{esc(shorten_pickup_headline(item.short_headline or item.conclusion))}</h3>
+        <p class="daily-summary">{esc(item_summary_body(item))}</p>
         {source}
       </article>
     """
@@ -459,11 +476,7 @@ def render_daily_page(day: NewsDay) -> str:
     .daily-item-head {{ display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }}
     .item-number {{ display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }}
     .item-category {{ margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }}
-    .daily-details {{ margin: 16px 0 0; }}
-    .daily-detail {{ border-top: 1px solid var(--line); padding: 10px 0; }}
-    .daily-detail:last-child {{ padding-bottom: 0; }}
-    dt {{ color: var(--muted); font-size: .8rem; font-weight: 700; }}
-    dd {{ margin: 3px 0 0; overflow-wrap: anywhere; }}
+    .daily-summary {{ margin: 16px 0 0; overflow-wrap: anywhere; }}
     .source-link, .source-note {{ display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }}
     .source-note {{ color: var(--muted); }}
     .muted {{ color: var(--muted); }}
@@ -675,22 +688,6 @@ def render_html(days: list[NewsDay]) -> str:
       color: var(--accent-strong);
       font-size: 0.82rem;
       font-weight: 700;
-    }}
-    .item-detail {{
-      border-top: 1px solid var(--line);
-      padding-top: 10px;
-    }}
-    .item-detail span {{
-      display: block;
-      margin-bottom: 3px;
-      color: var(--muted);
-      font-size: 0.78rem;
-      font-weight: 700;
-    }}
-    .item-detail p {{
-      margin-bottom: 0;
-      font-size: 0.94rem;
-      overflow-wrap: anywhere;
     }}
     .source-link,
     .source-note {{

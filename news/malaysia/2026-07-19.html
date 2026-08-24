@@ -60,11 +60,7 @@
     .daily-item-head { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
-    .daily-details { margin: 16px 0 0; }
-    .daily-detail { border-top: 1px solid var(--line); padding: 10px 0; }
-    .daily-detail:last-child { padding-bottom: 0; }
-    dt { color: var(--muted); font-size: .8rem; font-weight: 700; }
-    dd { margin: 3px 0 0; overflow-wrap: anywhere; }
+    .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
     .muted { color: var(--muted); }
@@ -107,27 +103,8 @@
           <span class="item-number">1</span>
           <p class="item-category">速報</p>
         </div>
-        <h3>洪水や冠水への注意が必要です。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、洪水・冠水に関する注意情報が伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>低地や冠水しやすい道路では、移動に時間がかかる可能性があります。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>移動前に自治体や交通情報を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>洪水や冠水への注意が必要です</h3>
+        <p class="daily-summary">洪水や冠水への注意が必要です。 RSSでは、洪水・冠水に関する注意情報が伝えられています。 低地や冠水しやすい道路では、移動に時間がかかる可能性があります。 移動前に自治体や交通情報を確認してください。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/18/flash-floods-swamp-petaling-jaya-after-heavy-rain-video/228134">出典: Malay Mail（2026年7月18日）</a>
       </article>
 
@@ -137,21 +114,8 @@
           <span class="item-number">2</span>
           <p class="item-category">速報</p>
         </div>
-        <h3>詳細を出典本文で確認しておきたいニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSの見出しと説明に基づく概要です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>内容に応じて、対象者や利用条件を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>詳細を出典本文で確認しておき…</h3>
+        <p class="daily-summary">詳細を出典本文で確認しておきたいニュースです。 RSSの見出しと説明に基づく概要です。 内容に応じて、対象者や利用条件を確認してください。</p>
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/angin-kencang-rosakkan-bangunan-kedai-pejabat-dan-rumah-di-sibu-jaya">出典: Astro Awani（2026年7月19日）</a>
       </article>
 
@@ -182,21 +146,8 @@
           <span class="item-number">3</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>食用石油価格格安定化制度の管理を強化</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>国内貿易・生活費省（KPDN）は、食用石油価格格管理と補助金管理に関する公共会計委員会（PAC）の勧告を検討する 食用石油価格格安定化制度（eCOSS）の導入を進める</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>食用石油価格格安定化制度の管理強化により、補助金の対象者や価格に影響が出る可能性がある</dd>
-          </div>
-
-        </dl>
+        <h3>食用石油価格格安定化制度の管…</h3>
+        <p class="daily-summary">食用石油価格格安定化制度の管理を強化 国内貿易・生活費省（KPDN）は、食用石油価格格管理と補助金管理に関する公共会計委員会（PAC）の勧告を検討する 食用石油価格格安定化制度（eCOSS）の導入を進める 食用石油価格格安定化制度の管理強化により、補助金の対象者や価格に影響が出る可能性がある</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/18/qr-code-checks-and-tighter-controls-govt-moves-to-tighten-cooking-oil-subsidy-scheme/228079">出典: Malay Mail（2026年7月18日）</a>
       </article>
 
@@ -206,21 +157,8 @@
           <span class="item-number">4</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>公衆衛生を強化するために、66,000人の新規ポストが追加される</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>公衆サービス局は、公衆衛生省に66,312人の新規ポストを追加することを承認した</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>公衆衛生サービスが強化されることで、医療を受けやすくなり、医療の質が向上する可能性がある</dd>
-          </div>
-
-        </dl>
+        <h3>公衆衛生を強化するために、66…</h3>
+        <p class="daily-summary">公衆衛生を強化するために、66,000人の新規ポストが追加される 公衆サービス局は、公衆衛生省に66,312人の新規ポストを追加することを承認した 公衆衛生サービスが強化されることで、医療を受けやすくなり、医療の質が向上する可能性がある</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/18/health-ministry-gets-66000-new-posts-boost-to-strengthen-public-healthcare/228071">出典: Malay Mail（2026年7月18日）</a>
       </article>
 

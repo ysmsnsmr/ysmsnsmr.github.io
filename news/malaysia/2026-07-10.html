@@ -60,11 +60,7 @@
     .daily-item-head { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
-    .daily-details { margin: 16px 0 0; }
-    .daily-detail { border-top: 1px solid var(--line); padding: 10px 0; }
-    .daily-detail:last-child { padding-bottom: 0; }
-    dt { color: var(--muted); font-size: .8rem; font-weight: 700; }
-    dd { margin: 3px 0 0; overflow-wrap: anywhere; }
+    .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
     .muted { color: var(--muted); }
@@ -107,27 +103,8 @@
           <span class="item-number">1</span>
           <p class="item-category">速報</p>
         </div>
-        <h3>雷雨や大雨への注意が必要です。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、雷雨・大雨などの天候リスクが伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>外出や移動は、急な雨や強風による遅れに注意が必要です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>外出前に最新の気象情報を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>雷雨や大雨への注意が必要です</h3>
+        <p class="daily-summary">雷雨や大雨への注意が必要です。 RSSでは、雷雨・大雨などの天候リスクが伝えられています。 外出や移動は、急な雨や強風による遅れに注意が必要です。 外出前に最新の気象情報を確認してください。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/09/metmalaysia-eight-states-face-thunderstorms-heavy-rain-until-7pm-today/226984">出典: Malay Mail（2026年7月9日）</a>
       </article>
 
@@ -158,21 +135,8 @@
           <span class="item-number">2</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>市場動向に関するニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、株式市場や金融市場の動きが伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>投資環境や景気感を把握する材料になります。</dd>
-          </div>
-
-        </dl>
+        <h3>市場動向に関するニュースです</h3>
+        <p class="daily-summary">市場動向に関するニュースです。 RSSでは、株式市場や金融市場の動きが伝えられています。 投資環境や景気感を把握する材料になります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/07/09/bursa-closes-lower-as-middle-east-tensions-rattle-investor-sentiment/227012">出典: Malay Mail（2026年7月9日）</a>
       </article>
 
@@ -182,27 +146,8 @@
           <span class="item-number">3</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>健康や公衆衛生に関わる注意情報です。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、健康リスクや医療に関する情報が伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>体調管理や医療機関の利用判断に関わる可能性があります。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>関係する場合は、MOHなどの公式発表で対象者・時期・利用条件を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>健康や公衆衛生に関わる注意情…</h3>
+        <p class="daily-summary">健康や公衆衛生に関わる注意情報です。 RSSでは、健康リスクや医療に関する情報が伝えられています。 体調管理や医療機関の利用判断に関わる可能性があります。 関係する場合は、MOHなどの公式発表で対象者・時期・利用条件を確認してください。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/09/sabah-doctor-shortage-health-ministry-plans-560-permanent-medical-officer-postings-from-october/226994">出典: Malay Mail（2026年7月9日）</a>
       </article>
 
@@ -212,21 +157,8 @@
           <span class="item-number">4</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>マレーシアとタイは水産物に関する紛争を解決</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>マレーシアとタイは水産物市場へのアクセスに関する未解決の問題を解決し、農業協力に関する覚書（MoU）を締結した 両国は覚書を1週間以内に発効させることで合意した</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>食糧安全保障と二国間貿易の拡大に寄与する取り組みとして注目される</dd>
-          </div>
-
-        </dl>
+        <h3>マレーシアとタイは水産物に関…</h3>
+        <p class="daily-summary">マレーシアとタイは水産物に関する紛争を解決 マレーシアとタイは水産物市場へのアクセスに関する未解決の問題を解決し、農業協力に関する覚書（MoU）を締結した 両国は覚書を1週間以内に発効させることで合意した 食糧安全保障と二国間貿易の拡大に寄与する取り組みとして注目される</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/09/malaysia-and-thailand-end-seafood-dispute-with-landmark-agriculture-mou/226978">出典: Malay Mail（2026年7月9日）</a>
       </article>
 
@@ -236,21 +168,8 @@
           <span class="item-number">5</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>LPT3の建設と料金が決定される可能性があります。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>LPT3の建設が進行中で、提案依頼書の作成が今年中に完了する見込みです。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>LPT3の建設と料金の決定により、通勤や長距離移動のルートや料金が変化する可能性があります。</dd>
-          </div>
-
-        </dl>
+        <h3>LPT3の建設と料金が決定される…</h3>
+        <p class="daily-summary">LPT3の建設と料金が決定される可能性があります。 LPT3の建設が進行中で、提案依頼書の作成が今年中に完了する見込みです。 LPT3の建設と料金の決定により、通勤や長距離移動のルートや料金が変化する可能性があります。</p>
         <a class="source-link" href="https://paultan.org/2026/07/09/lpt3-request-for-proposal-expected-to-be-completed-this-year-toll-rates-not-yet-defined-ahmad-maslan/">出典: Paul Tan（2026年7月9日）</a>
       </article>
 
@@ -260,27 +179,8 @@
           <span class="item-number">6</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>健康や公衆衛生に関わる注意情報です。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、健康リスクや医療に関する情報が伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>体調管理や医療機関の利用判断に関わる可能性があります。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>関係する場合は、MOHなどの公式発表で対象者・時期・利用条件を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>健康や公衆衛生に関わる注意情…</h3>
+        <p class="daily-summary">健康や公衆衛生に関わる注意情報です。 RSSでは、健康リスクや医療に関する情報が伝えられています。 体調管理や医療機関の利用判断に関わる可能性があります。 関係する場合は、MOHなどの公式発表で対象者・時期・利用条件を確認してください。</p>
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/mof-nafi-sekatan-menyeluruh-peruntukan-kkm-dan-kpm-untuk-tahun-2026">出典: Astro Awani（2026年7月10日）</a>
       </article>
 
@@ -290,21 +190,8 @@
           <span class="item-number">7</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>為替動向に関するニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、リンギット相場の動きが伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>海外送金、両替、輸入品価格などの判断材料になります。</dd>
-          </div>
-
-        </dl>
+        <h3>為替動向に関するニュースです</h3>
+        <p class="daily-summary">為替動向に関するニュースです。 RSSでは、リンギット相場の動きが伝えられています。 海外送金、両替、輸入品価格などの判断材料になります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/07/09/ringgit-ends-flat-versus-us-dollar-as-markets-digest-latest-fed-minutes/227014">出典: Malay Mail（2026年7月9日）</a>
       </article>
 
@@ -314,21 +201,8 @@
           <span class="item-number">8</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>内容の詳細確認が必要なニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSの見出しと説明に基づく概要です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>内容に応じて、対象者や利用条件を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>内容の詳細確認が必要なニュー…</h3>
+        <p class="daily-summary">内容の詳細確認が必要なニュースです。 RSSの見出しと説明に基づく概要です。 内容に応じて、対象者や利用条件を確認してください。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/09/govt-reviewing-maritime-laws-mulls-tougher-penalties-for-marine-pollution-offences/227007">出典: Malay Mail（2026年7月9日）</a>
       </article>
 
@@ -338,21 +212,8 @@
           <span class="item-number">9</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>内容の詳細確認が必要なニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSの見出しと説明に基づく概要です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>内容に応じて、対象者や利用条件を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>内容の詳細確認が必要なニュー…</h3>
+        <p class="daily-summary">内容の詳細確認が必要なニュースです。 RSSの見出しと説明に基づく概要です。 内容に応じて、対象者や利用条件を確認してください。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/09/malaysian-bars-challenge-to-zahids-yayasan-akalbudi-dnaa-postponed-to-october/226970">出典: Malay Mail（2026年7月9日）</a>
       </article>
 

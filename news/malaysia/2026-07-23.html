@@ -60,11 +60,7 @@
     .daily-item-head { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
-    .daily-details { margin: 16px 0 0; }
-    .daily-detail { border-top: 1px solid var(--line); padding: 10px 0; }
-    .daily-detail:last-child { padding-bottom: 0; }
-    dt { color: var(--muted); font-size: .8rem; font-weight: 700; }
-    dd { margin: 3px 0 0; overflow-wrap: anywhere; }
+    .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
     .muted { color: var(--muted); }
@@ -107,27 +103,8 @@
           <span class="item-number">1</span>
           <p class="item-category">速報</p>
         </div>
-        <h3>雷雨や大雨への注意が必要です。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、雷雨・大雨などの天候リスクが伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>外出や移動は、急な雨や強風による遅れに注意が必要です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>外出前に最新の気象情報を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>雷雨や大雨への注意が必要です</h3>
+        <p class="daily-summary">雷雨や大雨への注意が必要です。 RSSでは、雷雨・大雨などの天候リスクが伝えられています。 外出や移動は、急な雨や強風による遅れに注意が必要です。 外出前に最新の気象情報を確認してください。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/22/metmalaysia-sounds-thunderstorm-warning-for-kedah-penang-perak-johor-sabah/228514">出典: Malay Mail（2026年7月22日）</a>
       </article>
 
@@ -147,27 +124,8 @@
           <span class="item-number">2</span>
           <p class="item-category">生活インパクト</p>
         </div>
-        <h3>公共交通や移動計画に影響する可能性があります。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、公共交通や移動需要に関する情報が伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>通勤・通学・帰省の移動時間に影響する可能性があります。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>利用前に運行情報と混雑状況を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>公共交通や移動計画に影響する…</h3>
+        <p class="daily-summary">公共交通や移動計画に影響する可能性があります。 RSSでは、公共交通や移動需要に関する情報が伝えられています。 通勤・通学・帰省の移動時間に影響する可能性があります。 利用前に運行情報と混雑状況を確認してください。</p>
         <a class="source-link" href="https://paultan.org/2026/07/22/ktm-improves-komuter-sektor-utara-new-schedule-with-six-extra-train-services-starting-from-july-24/">出典: Paul Tan（2026年7月22日）</a>
       </article>
 
@@ -187,21 +145,8 @@
           <span class="item-number">3</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>市場動向に関するニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、株式市場や金融市場の動きが伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>投資環境や景気感を把握する材料になります。</dd>
-          </div>
-
-        </dl>
+        <h3>市場動向に関するニュースです</h3>
+        <p class="daily-summary">市場動向に関するニュースです。 RSSでは、株式市場や金融市場の動きが伝えられています。 投資環境や景気感を把握する材料になります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/07/22/bursa-malaysia-ends-lower-amid-profit-taking-higher-oil-prices/228594">出典: Malay Mail（2026年7月22日）</a>
       </article>
 
@@ -211,21 +156,8 @@
           <span class="item-number">4</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>アンワー首相は、生活費を軽減するために近くSARA（Sumbangan Asas Rahmah）援助を増やす予定であると述べた。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>アンワー首相は、生活費を軽減するために近くSARA援助を増やす予定であると述べた。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>生活費や家計に関わる背景情報として確認しておく価値があります。</dd>
-          </div>
-
-        </dl>
+        <h3>生活費を軽減するために近くSAR…</h3>
+        <p class="daily-summary">アンワー首相は、生活費を軽減するために近くSARA（Sumbangan Asas Rahmah）援助を増やす予定であると述べた。 アンワー首相は、生活費を軽減するために近くSARA援助を増やす予定であると述べた。 生活費や家計に関わる背景情報として確認しておく価値があります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/23/anwar-sara-aid-to-be-increased-soon-to-ease-cost-of-living/228618">出典: Malay Mail（2026年7月23日）</a>
       </article>
 
@@ -235,21 +167,8 @@
           <span class="item-number">5</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>生活費や日用品価格に関わる動きです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、生活費支援や日用品価格に関する情報が伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>家計や買い物先の選択に関わる可能性があります。</dd>
-          </div>
-
-        </dl>
+        <h3>生活費や日用品価格に関わる動…</h3>
+        <p class="daily-summary">生活費や日用品価格に関わる動きです。 RSSでは、生活費支援や日用品価格に関する情報が伝えられています。 家計や買い物先の選択に関わる可能性があります。</p>
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/kerajaan-naikkan-kadar-sara-dalam-tempoh-terdekat-anwar">出典: Astro Awani（2026年7月23日）</a>
       </article>
 
@@ -259,21 +178,8 @@
           <span class="item-number">6</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>マレーシア人の38％が月200リットルの燃料補助金枠を超え、ほぼ半数が追加費用を支払って対応</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>マレーシア人の38.1％が月200リットルの燃料補助金枠を超えている ほぼ半数の49.5％が月200リットル以下の燃料を使用</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>燃料補助金の対象となる家計や、追加費用を支払うことによる生活への影響を考慮する必要がある</dd>
-          </div>
-
-        </dl>
+        <h3>マレーシア人の38％が月200リッ…</h3>
+        <p class="daily-summary">マレーシア人の38％が月200リットルの燃料補助金枠を超え、ほぼ半数が追加費用を支払って対応 マレーシア人の38.1％が月200リットルの燃料補助金枠を超えている ほぼ半数の49.5％が月200リットル以下の燃料を使用 燃料補助金の対象となる家計や、追加費用を支払うことによる生活への影響を考慮する必要がある</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/23/in-survey-38pc-malaysians-go-over-200-litre-fuel-subsidy-quota-nearly-half-cope-by-just-paying-more/228574">出典: Malay Mail（2026年7月23日）</a>
       </article>
 
@@ -283,21 +189,8 @@
           <span class="item-number">7</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>為替動向に関するニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、リンギット相場の動きが伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>海外送金、両替、輸入品価格などの判断材料になります。</dd>
-          </div>
-
-        </dl>
+        <h3>為替動向に関するニュースです</h3>
+        <p class="daily-summary">為替動向に関するニュースです。 RSSでは、リンギット相場の動きが伝えられています。 海外送金、両替、輸入品価格などの判断材料になります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/07/22/higher-oil-prices-lift-ringgit-against-us-dollar-major-currencies/228593">出典: Malay Mail（2026年7月22日）</a>
       </article>
 
@@ -307,21 +200,8 @@
           <span class="item-number">8</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>原石油価格格の上昇により、ガソリン・軽油の補助金が月額35億リンギットに達する可能性があるとリー・チン・トン氏は述べた</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>リー・チン・トン財務副大臣は、原石油価格格が1バレルあたり90ドル程度の場合、RON95ガソリンの補助金は月額約20億リンギット、軽油の補助金は約15億リンギットに達する見込みであると述べた 政府の財政状況は依然として強固であり、原石油価格格の上昇にもかかわらず財政予測に変更はない</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>ガソリン・軽石油価格格の上昇により、生活費や交通費が増加する可能性があるため、補助金の増加が必要になるかもしれない</dd>
-          </div>
-
-        </dl>
+        <h3>原石油価格格の上昇により、ガ…</h3>
+        <p class="daily-summary">原石油価格格の上昇により、ガソリン・軽油の補助金が月額35億リンギットに達する可能性があるとリー・チン・トン氏は述べた リー・チン・トン財務副大臣は、原石油価格格が1バレルあたり90ドル程度の場合、RON95ガソリンの補助金は月額約20億リンギット、軽油の補助金は約15億リンギットに達する見込みであると述べた 政府の財政状況は依然として強固であり、原石油価格格の上昇にもかかわらず財政予測に変更はない ガソリン・軽石油価格格の上昇により、生活費や交通費が増加する可能性があるため、補助金の増加が必要になるかもしれない</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/22/higher-oil-prices-may-push-petrol-diesel-subsidies-to-rm35b-monthly-says-liew-chin-tong/228547">出典: Malay Mail（2026年7月22日）</a>
       </article>
 
@@ -331,21 +211,8 @@
           <span class="item-number">9</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>為替動向に関するニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、リンギット相場の動きが伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>海外送金、両替、輸入品価格などの判断材料になります。</dd>
-          </div>
-
-        </dl>
+        <h3>為替動向に関するニュースです</h3>
+        <p class="daily-summary">為替動向に関するニュースです。 RSSでは、リンギット相場の動きが伝えられています。 海外送金、両替、輸入品価格などの判断材料になります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/07/22/ringgit-opens-higher-against-major-currencies-flat-vs-us-dollar/228509">出典: Malay Mail（2026年7月22日）</a>
       </article>
 

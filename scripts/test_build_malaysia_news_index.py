@@ -20,6 +20,7 @@ SAMPLE_MARKDOWN = """【速報】
 【生活インパクト】
 
 - 結論：公共交通の運行計画が更新されました。
+- 補足：運行時間と乗り換え案内が更新されています。
 
 【知っておくと得】
 
@@ -42,18 +43,17 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertEqual(day.items[0].what_happened, "気象局が大雨警報を出しました。 対象地域では強風も予想されています。")
         self.assertEqual(day.items[0].life_impact, "移動時間に余裕が必要です。")
 
-    def test_pickup_headline_is_limited_but_daily_item_keeps_full_text(self) -> None:
+    def test_pickup_headline_is_semantic_and_within_15_5_width(self) -> None:
         headline = "保健省は、霧による大気汚染が広がる中で、喘息と上気道感染の患者数が急増したと発表しました。健康大臣は注意を呼びかけています。"
         item = builder.NewsItem(category="【生活インパクト】", conclusion=headline)
 
         shortened = builder.shorten_pickup_headline(headline)
         card = builder.render_item_card(item)
-        daily_item = builder.render_daily_item(item, 1)
 
-        self.assertEqual(len(shortened), builder.PICKUP_HEADLINE_MAX_CHARS)
-        self.assertTrue(shortened.endswith("…"))
+        self.assertLessEqual(builder.headline_width(shortened), 15.5)
+        self.assertEqual(shortened, "煙害で呼吸器疾患が急増")
         self.assertIn(f">{shortened}</h3>", card)
-        self.assertIn(headline, daily_item)
+        self.assertNotIn("生活への影響", card)
 
     def test_top_page_has_separate_summary_and_markdown_routes(self) -> None:
         page = builder.render_html([self.parse_sample()])
@@ -68,15 +68,16 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertIn("font-size: clamp(1.4rem, 2.4vw, 1.875rem)", page)
         self.assertIn("-webkit-line-clamp: 3", page)
 
-    def test_daily_page_has_expected_heading_and_full_item_details(self) -> None:
+    def test_daily_page_has_short_headline_and_summary_body(self) -> None:
         page = builder.render_daily_page(self.parse_sample())
 
         self.assertIn("2026年8月20日のニュースまとめ", page)
         self.assertIn('href="./index.html">← マレーシア生活ニュース</a>', page)
         self.assertIn('href="./2026-08-20.md">Markdown版</a>', page)
-        self.assertIn("何が起きた", page)
-        self.assertIn("生活への影響", page)
-        self.assertIn("次アクション", page)
+        self.assertIn("午後は雷雨に注意が必要です。", page)
+        self.assertIn("運行時間と乗り換え案内が更新されています。", page)
+        self.assertIn("出典: Example News", page)
+        self.assertNotIn("daily-details", page)
 
 
 if __name__ == "__main__":

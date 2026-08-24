@@ -60,11 +60,7 @@
     .daily-item-head { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
-    .daily-details { margin: 16px 0 0; }
-    .daily-detail { border-top: 1px solid var(--line); padding: 10px 0; }
-    .daily-detail:last-child { padding-bottom: 0; }
-    dt { color: var(--muted); font-size: .8rem; font-weight: 700; }
-    dd { margin: 3px 0 0; overflow-wrap: anywhere; }
+    .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
     .muted { color: var(--muted); }
@@ -107,27 +103,8 @@
           <span class="item-number">1</span>
           <p class="item-category">速報</p>
         </div>
-        <h3>雷雨や大雨への注意が必要です。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、雷雨・大雨などの天候リスクが伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>外出や移動は、急な雨や強風による遅れに注意が必要です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>外出前に最新の気象情報を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>雷雨や大雨への注意が必要です</h3>
+        <p class="daily-summary">雷雨や大雨への注意が必要です。 RSSでは、雷雨・大雨などの天候リスクが伝えられています。 外出や移動は、急な雨や強風による遅れに注意が必要です。 外出前に最新の気象情報を確認してください。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/15/kedah-penang-perak-among-states-under-metmalaysia-thunderstorm-warning-until-9pm/227731">出典: Malay Mail（2026年7月15日）</a>
       </article>
 
@@ -147,27 +124,8 @@
           <span class="item-number">2</span>
           <p class="item-category">生活インパクト</p>
         </div>
-        <h3>公共交通や移動計画に影響する可能性があります。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、公共交通や移動需要に関する情報が伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>通勤・通学・帰省の移動時間に影響する可能性があります。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>利用前に運行情報と混雑状況を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>公共交通や移動計画に影響する…</h3>
+        <p class="daily-summary">公共交通や移動計画に影響する可能性があります。 RSSでは、公共交通や移動需要に関する情報が伝えられています。 通勤・通学・帰省の移動時間に影響する可能性があります。 利用前に運行情報と混雑状況を確認してください。</p>
         <a class="source-link" href="https://paultan.org/2026/07/15/lrt-mrt-disruptions-down-to-12-incidents-from-jan-may-2026-reliability-improved-10x-since-2022-loke/">出典: Paul Tan（2026年7月15日）</a>
       </article>
 
@@ -177,27 +135,8 @@
           <span class="item-number">3</span>
           <p class="item-category">生活インパクト</p>
         </div>
-        <h3>洪水や冠水への注意が必要です。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、洪水・冠水に関する注意情報が伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>低地や冠水しやすい道路では、移動に時間がかかる可能性があります。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>移動前に自治体や交通情報を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>洪水や冠水への注意が必要です</h3>
+        <p class="daily-summary">洪水や冠水への注意が必要です。 RSSでは、洪水・冠水に関する注意情報が伝えられています。 低地や冠水しやすい道路では、移動に時間がかかる可能性があります。 移動前に自治体や交通情報を確認してください。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/15/melaka-sets-aside-rm5-million-for-urgent-flood-repairs-after-saturdays-flash-floods/227661">出典: Malay Mail（2026年7月15日）</a>
       </article>
 
@@ -217,21 +156,8 @@
           <span class="item-number">4</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>詳細を出典本文で確認しておきたいニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSの見出しと説明に基づく概要です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>内容に応じて、対象者や利用条件を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>詳細を出典本文で確認しておき…</h3>
+        <p class="daily-summary">詳細を出典本文で確認しておきたいニュースです。 RSSの見出しと説明に基づく概要です。 内容に応じて、対象者や利用条件を確認してください。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/15/super-el-nino-threat-anwar-orders-urgent-steps-to-safeguard-malaysias-food-supply/227742">出典: Malay Mail（2026年7月15日）</a>
       </article>
 
@@ -241,21 +167,8 @@
           <span class="item-number">5</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>為替動向に関するニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、リンギット相場の動きが伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>海外送金、両替、輸入品価格などの判断材料になります。</dd>
-          </div>
-
-        </dl>
+        <h3>為替動向に関するニュースです</h3>
+        <p class="daily-summary">為替動向に関するニュースです。 RSSでは、リンギット相場の動きが伝えられています。 海外送金、両替、輸入品価格などの判断材料になります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/07/15/ringgit-holds-steady-as-daily-trade-closes-while-traders-juggle-china-fears-and-us-inflation/227729">出典: Malay Mail（2026年7月15日）</a>
       </article>
 
@@ -265,27 +178,8 @@
           <span class="item-number">6</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>健康や公衆衛生に関わる注意情報です。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、健康リスクや医療に関する情報が伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>体調管理や医療機関の利用判断に関わる可能性があります。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>次アクション</dt>
-            <dd>関係する場合は、関係当局や公式発表で対象者・時期・利用条件を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>健康や公衆衛生に関わる注意情…</h3>
+        <p class="daily-summary">健康や公衆衛生に関わる注意情報です。 RSSでは、健康リスクや医療に関する情報が伝えられています。 体調管理や医療機関の利用判断に関わる可能性があります。 関係する場合は、関係当局や公式発表で対象者・時期・利用条件を確認してください。</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/15/health-ministry-says-generic-drugs-made-up-nearly-78pc-of-medicine-spending-in-2025/227722">出典: Malay Mail（2026年7月15日）</a>
       </article>
 
@@ -295,21 +189,8 @@
           <span class="item-number">7</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>2023年から2025年の間に3500人以上の医師が公的医療から離職した</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>2023年から2025年の間に3500人以上の医師が公的医療から離職した</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>医師の離職により、医療サービスの質や医師の不足が懸念される</dd>
-          </div>
-
-        </dl>
+        <h3>2023年から2025年の間に3500人…</h3>
+        <p class="daily-summary">2023年から2025年の間に3500人以上の医師が公的医療から離職した 医師の離職により、医療サービスの質や医師の不足が懸念される</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/15/more-than-3500-medical-officers-quit-public-healthcare-between-2023-and-2025-says-health-ministry/227667">出典: Malay Mail（2026年7月15日）</a>
       </article>
 
@@ -319,21 +200,8 @@
           <span class="item-number">8</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>詳細を出典本文で確認しておきたいニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSの見出しと説明に基づく概要です。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>内容に応じて、対象者や利用条件を確認してください。</dd>
-          </div>
-
-        </dl>
+        <h3>詳細を出典本文で確認しておき…</h3>
+        <p class="daily-summary">詳細を出典本文で確認しておきたいニュースです。 RSSの見出しと説明に基づく概要です。 内容に応じて、対象者や利用条件を確認してください。</p>
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/kpdn-pulau-pinang-rampas-jersi-tiruan-bernilai-rm360000">出典: Astro Awani（2026年7月15日）</a>
       </article>
 
@@ -343,21 +211,8 @@
           <span class="item-number">9</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>予算2027の見通しについて、燃料補助金の増加にもかかわらず見直しは不要とされる</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>政府は予算2027の見通しについて、燃料補助金の増加にもかかわらず見直しは不要と述べた</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>燃料補助金の増加が家計や生活に与える影響について、関連制度や政府の対応を知る背景情報として確認しておく価値があります</dd>
-          </div>
-
-        </dl>
+        <h3>予算2027の見通しについて、燃…</h3>
+        <p class="daily-summary">予算2027の見通しについて、燃料補助金の増加にもかかわらず見直しは不要とされる 政府は予算2027の見通しについて、燃料補助金の増加にもかかわらず見直しは不要と述べた 燃料補助金の増加が家計や生活に与える影響について、関連制度や政府の対応を知る背景情報として確認しておく価値があります</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/15/no-need-to-review-budget-2027-projections-despite-higher-fuel-subsidy-bill-says-deputy-minister/227673">出典: Malay Mail（2026年7月15日）</a>
       </article>
 
@@ -368,20 +223,7 @@
           <p class="item-category">知っておくと得</p>
         </div>
         <h3>補助金の削減は計画されていない</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>政府は、補助金の削減を計画していない</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>補助金の削減がないため、生活や家計への影響は少ないと考えられる</dd>
-          </div>
-
-        </dl>
+        <p class="daily-summary">補助金の削減は計画されていない 政府は、補助金の削減を計画していない 補助金の削減がないため、生活や家計への影響は少ないと考えられる</p>
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/15/liew-no-subsidy-cuts-planned-despite-soaring-petroleum-costs-linked-to-west-asia-conflict/227665">出典: Malay Mail（2026年7月15日）</a>
       </article>
 
@@ -391,21 +233,8 @@
           <span class="item-number">11</span>
           <p class="item-category">知っておくと得</p>
         </div>
-        <h3>為替動向に関するニュースです。</h3>
-        <dl class="daily-details">
-
-          <div class="daily-detail">
-            <dt>何が起きた</dt>
-            <dd>RSSでは、リンギット相場の動きが伝えられています。</dd>
-          </div>
-
-
-          <div class="daily-detail">
-            <dt>生活への影響</dt>
-            <dd>海外送金、両替、輸入品価格などの判断材料になります。</dd>
-          </div>
-
-        </dl>
+        <h3>為替動向に関するニュースです</h3>
+        <p class="daily-summary">為替動向に関するニュースです。 RSSでは、リンギット相場の動きが伝えられています。 海外送金、両替、輸入品価格などの判断材料になります。</p>
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/07/15/ringgit-strengthens-against-us-dollar-as-investors-eye-upbeat-malaysia-gdp-outlook/227623">出典: Malay Mail（2026年7月15日）</a>
       </article>
 
