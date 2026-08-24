@@ -13,6 +13,7 @@ MYT = timezone(timedelta(hours=8))
 NEWS_DIR = Path("news/malaysia")
 OUTPUT_PATH = NEWS_DIR / "index.html"
 CATEGORIES = ("【速報】", "【生活インパクト】", "【知っておくと得】")
+PICKUP_HEADLINE_MAX_CHARS = 52
 
 
 @dataclass
@@ -113,6 +114,14 @@ def esc(value: object) -> str:
     return html.escape(str(value), quote=True)
 
 
+def shorten_pickup_headline(text: str, limit: int = PICKUP_HEADLINE_MAX_CHARS) -> str:
+    """Keep TOP-page pickup headlines scan-friendly without changing source summaries."""
+    normalized = " ".join(text.split())
+    if len(normalized) <= limit:
+        return normalized
+    return f"{normalized[: limit - 1].rstrip()}…"
+
+
 def markdown_link(day: NewsDay) -> str:
     return f"./{esc(day.path.name)}"
 
@@ -198,6 +207,7 @@ def render_status_chips(day: NewsDay, generated: str) -> str:
 
 
 def render_item_card(item: NewsItem) -> str:
+    display_headline = shorten_pickup_headline(item.conclusion)
     impact = ""
     if item.life_impact:
         impact = f"""
@@ -226,7 +236,7 @@ def render_item_card(item: NewsItem) -> str:
     return f"""
         <article class="focus-card">
           <p class="item-category">{esc(category_label(item.category))}</p>
-          <h3>{esc(item.conclusion)}</h3>
+          <h3 title="{esc(item.conclusion)}">{esc(display_headline)}</h3>
           {impact}
           {action}
           {source}
@@ -542,13 +552,13 @@ def render_html(days: list[NewsDay]) -> str:
     h1, h2, h3, p {{ margin-top: 0; }}
     h1 {{
       margin-bottom: 8px;
-      font-size: clamp(2rem, 4vw, 3.35rem);
+      font-size: clamp(1.75rem, 3vw, 2.625rem);
       line-height: 1.08;
       letter-spacing: 0;
     }}
     h2 {{
       margin-bottom: 0;
-      font-size: clamp(1.65rem, 3vw, 2.4rem);
+      font-size: clamp(1.4rem, 2.4vw, 1.875rem);
       line-height: 1.16;
     }}
     h3 {{ margin: 0; font-size: 1rem; line-height: 1.35; }}
@@ -651,6 +661,10 @@ def render_html(days: list[NewsDay]) -> str:
       font-size: 1.04rem;
       line-height: 1.45;
       overflow-wrap: anywhere;
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
     }}
     .item-category {{
       align-self: flex-start;
