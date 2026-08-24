@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "meta-ads-weekly-index/v1",
+  "generatedAt": "2026-08-24T10:00:00Z",
+  "week": {
+    "startDate": "2026-08-24",
+    "endDate": "2026-08-30",
+    "label": "デモ週（2026年8月24日〜8月30日）"
+  },
+  "filters": {
+    "sourceId": "all",
+    "priority": "all",
+    "query": ""
+  },
+  "items": [
+    {
+      "id": "demo-product-update-a",
+      "changeType": "new_url",
+      "sourceId": "meta-product-news-rss",
+      "title": "【デモ】広告機能Aの提供範囲に関する更新",
+      "officialUrl": "https://about.fb.com/news/category/product-news/",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2026-08-25"
+      },
+      "effectiveDate": {
+        "status": "stated",
+        "value": "2026-09-01"
+      },
+      "rollout": {
+        "status": "stated",
+        "value": "対象アカウントへ段階提供"
+      },
+      "targets": {
+        "status": "stated",
+        "value": "広告機能Aを利用するアカウント"
+      },
+      "businessImpact": {
+        "status": "human_assessed",
+        "summary": "デモ用の架空評価です。既存設定とレポート表示の確認を想定します。",
+        "assessmentSource": "human_review"
+      },
+      "action": {
+        "status": "review_required",
+        "summary": "デモ用の架空評価です。対象アカウントの確認を想定します。",
+        "assessmentSource": "human_review"
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "demo-product-revision-b",
+      "changeType": "content_changed",
+      "sourceId": "meta-product-news-rss",
+      "title": "【デモ】設定手順Bの説明追記",
+      "officialUrl": "https://about.fb.com/news/category/product-news/",
+      "priority": "low",
+      "announcementDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "stated",
+        "value": "設定手順Bを参照する利用者"
+      },
+      "businessImpact": {
+        "status": "human_assessed",
+        "summary": "デモ用の架空評価です。運用変更の要否を確認する想定です。",
+        "assessmentSource": "human_review"
+      },
+      "action": {
+        "status": "not_required",
+        "summary": "デモ用の架空評価です。手順書確認のみを想定します。",
+        "assessmentSource": "human_review"
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "demo-sdk-release-c",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "【デモ】Business SDK 99.0.0 リリース",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2026-08-26"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "stated",
+        "value": "SDKを利用する実装環境"
+      },
+      "businessImpact": {
+        "status": "human_assessed",
+        "summary": "デモ用の架空評価です。依存関係と廃止予定APIの確認を想定します。",
+        "assessmentSource": "human_review"
+      },
+      "action": {
+        "status": "review_required",
+        "summary": "デモ用の架空評価です。更新前の互換性確認を想定します。",
+        "assessmentSource": "human_review"
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "demo-high-priority-d",
+      "changeType": "content_changed",
+      "sourceId": "meta-product-news-rss",
+      "title": "【デモ】広告設定Cの必須項目に関する追記",
+      "officialUrl": "https://about.fb.com/news/category/product-news/",
+      "priority": "high",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2026-08-25"
+      },
+      "effectiveDate": {
+        "status": "stated",
+        "value": "2026-08-28"
+      },
+      "rollout": {
+        "status": "stated",
+        "value": "指定日から対象設定へ適用"
+      },
+      "targets": {
+        "status": "stated",
+        "value": "広告設定Cを利用中のアカウント"
+      },
+      "businessImpact": {
+        "status": "human_assessed",
+        "summary": "デモ用の架空評価です。配信設定の確認を想定します。",
+        "assessmentSource": "human_review"
+      },
+      "action": {
+        "status": "action_required",
+        "summary": "デモ用の架空評価です。適用前の設定確認を想定します。",
+        "assessmentSource": "human_review"
+      },
+      "reviewStatus": "approved"
+    }
+  ]
+}

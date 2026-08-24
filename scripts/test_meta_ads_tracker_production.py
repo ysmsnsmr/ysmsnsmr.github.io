@@ -7,6 +7,7 @@ import unittest
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.error import URLError
+from urllib.parse import urlparse
 
 from meta_ads_tracker_assemble_weekly import assemble_weekly, write_immutable_weekly
 from meta_ads_tracker_collect import collect
@@ -27,6 +28,19 @@ FIXTURES = json.loads(
     (Path(__file__).resolve().parent / "fixtures/meta_ads_tracker_delta_cases.json").read_text(encoding="utf-8")
 )
 MONDAY = datetime(2026, 8, 17, 0, 15, tzinfo=timezone.utc)
+ROOT = Path(__file__).resolve().parents[1]
+
+
+class MetaAdsDemoReportTest(unittest.TestCase):
+    def test_demo_report_is_valid_and_explicitly_synthetic(self) -> None:
+        report = json.loads((ROOT / "meta-ads-updates/demo-latest.json").read_text(encoding="utf-8"))
+        validate_public_report(report, load_and_validate_source_config(ROOT / "config/meta_ads_official_sources.json"))
+        self.assertEqual(len(report["items"]), 4)
+        self.assertEqual({item["sourceId"] for item in report["items"]}, {"meta-product-news-rss", "meta-business-sdk-releases"})
+        self.assertEqual(sum(item["priority"] == "high" for item in report["items"]), 1)
+        self.assertTrue(all("デモ" in item["title"] for item in report["items"]))
+        self.assertTrue(all("デモ用の架空評価" in item["businessImpact"]["summary"] for item in report["items"]))
+        self.assertTrue(all(urlparse(item["officialUrl"]).scheme == "https" for item in report["items"]))
 
 
 def fetcher(config: dict, rss: str, sdk: str, *, fail: bool = False):

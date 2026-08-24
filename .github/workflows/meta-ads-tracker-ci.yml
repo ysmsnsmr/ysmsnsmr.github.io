@@ -40,7 +40,7 @@ jobs:
         env:
           META_ADS_UI_ARTIFACT_DIR: ${{ runner.temp }}/meta-ads-tracker-ui
         run: npm run test:meta-ads-ui
-      - name: Upload 15 viewport and 15 full-page screenshots
+      - name: Upload Meta Ads UI screenshots
         if: always()
         uses: actions/upload-artifact@v7
         with:

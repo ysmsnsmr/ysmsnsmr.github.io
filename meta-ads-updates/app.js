@@ -20,7 +20,10 @@
     review_required: "確認が必要",
     not_required: "現時点の対応不要"
   };
+  const demoMode = new URLSearchParams(window.location.search).get("demo") === "1";
+  const reportPath = demoMode ? "./demo-latest.json" : "./latest.json";
   const elements = {
+    demoBanner: document.querySelector("#demo-banner"),
     week: document.querySelector("#week-stamp"),
     form: document.querySelector("#filter-form"),
     source: document.querySelector("#source-filter"),
@@ -31,7 +34,8 @@
     list: document.querySelector("#update-list"),
     empty: document.querySelector("#empty-state"),
     emptyTitle: document.querySelector("#empty-title"),
-    emptyCopy: document.querySelector("#empty-copy")
+    emptyCopy: document.querySelector("#empty-copy"),
+    footer: document.querySelector("#tracker-footer")
   };
 
   function element(tagName, className, text) {
@@ -86,7 +90,7 @@
     const assessments = element("div", "assessment-grid");
     appendAssessment(assessments, "実務影響", item.businessImpact, false);
     appendAssessment(assessments, "対応要否", item.action, true);
-    const sourceLink = element("a", "source-link", "公式URLを開く");
+    const sourceLink = element("a", "source-link", demoMode ? "公式ソース例を開く" : "公式URLを開く");
     sourceLink.href = item.officialUrl;
     sourceLink.target = "_blank";
     sourceLink.rel = "noreferrer";
@@ -96,8 +100,12 @@
   }
 
   try {
-    const response = await fetch("./latest.json", { cache: "no-store" });
-    if (!response.ok) throw new Error(`latest report HTTP ${response.status}`);
+    elements.demoBanner.hidden = !demoMode;
+    if (demoMode) {
+      elements.footer.textContent = "この画面は架空データによるデモです。実運用の承認・判断には使用しないでください。";
+    }
+    const response = await fetch(reportPath, { cache: "no-store" });
+    if (!response.ok) throw new Error(`report HTTP ${response.status}`);
     const report = await response.json();
     const state = { filters: { sourceId: "all", priority: "all", query: "" } };
 
@@ -128,7 +136,7 @@
       elements.summary.replaceChildren(
         document.createTextNode("表示中："),
         Object.assign(document.createElement("strong"), { textContent: `${items.length}件` }),
-        document.createTextNode("（承認済みの公式更新）")
+        document.createTextNode(demoMode ? "（デモ用の架空更新）" : "（承認済みの公式更新）")
       );
     }
 
