@@ -1,11 +1,11 @@
 {
   "schemaVersion": "meta-ads-secondary-shadow-observation/v2",
-  "generatedAt": "2026-08-24T02:37:37Z",
+  "generatedAt": "2026-08-25T02:31:11Z",
   "baseline": {
-    "mode": "seeded",
+    "mode": "active",
     "cutoffAt": "2026-08-24T02:37:37Z",
     "generation": "rss-migration-2026-08",
-    "resetReason": "legacy_html_state",
+    "resetReason": null,
     "sourceIds": [
       "ppc-land-meta-ads",
       "jon-loomer-meta-ads"
