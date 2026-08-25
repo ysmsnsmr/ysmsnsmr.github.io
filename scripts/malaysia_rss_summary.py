@@ -1985,6 +1985,7 @@ def editorial_entry_json(item: Item) -> dict[str, object]:
         and "RSS内のタイトルと説明をもとに整理しました" not in line
     ][:2]
     return {
+        "headline_ja": "記事詳細は出典へ",
         "entry_ja": entry_ja,
         "supporting_points_ja": points,
     }
@@ -2621,7 +2622,7 @@ def self_test() -> int:
     check("JSON item keeps internal metadata", "score" in json_item and "flags" in json_item)
     check("JSON selected summary has next_action key", "next_action" in selected_summary)
     check("JSON selected summary splits what_happened like render", len(selected_summary["what_happened"]) <= 2)
-    check("JSON item carries Editorial Entry v2 fallback", bool(editorial_entry["entry_ja"]))
+    check("JSON item carries Editorial Entry v2 fallback", bool(editorial_entry["headline_ja"]) and bool(editorial_entry["entry_ja"]))
     check("Editorial Entry v2 has at most two supporting points", len(editorial_entry["supporting_points_ja"]) <= 2)
 
     if failures:

@@ -37,6 +37,7 @@ from malaysia_groq_output_contract import (
     EDITORIAL_ENTRY_V2_SCHEMA,
     editorial_entry_forbidden_patterns,
     editorial_entry_schema_error,
+    headline_is_valid,
 )
 from malaysia_groq_render_decision import (
     apply_render_decisions,
@@ -57,14 +58,15 @@ SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュースダッ�
 入力はRSSのtitle、description、既存のRSS entry、必要に応じてbody_evidenceだけです。
 body_evidenceがない場合はRSSの情報だけを使ってください。入力にない事実を追加せず、カテゴリ、出典、URL、日付は変更しないでください。
 英語またはマレー語の文を、自然で短い日本語に整えてください。dateline、wire credit、広告、関連記事、body_evidence.forbiddenの要素は出力しません。
-返答はeditorial_entryだけを持つJSON objectです。entry_jaは、読者が出典リンクを開くか判断できる日本語の概要です。主体、発言者・帰属、計画・提案・予報・調査・疑惑・否定などの確定度を、自然文の中で落とさないでください。
+返答はeditorial_entryだけを持つJSON objectです。headline_jaは一覧に載せる短見出しです。全角文字は1、半角英数字・記号は0.5として15.5文字幅以内にし、末尾に「…」を付けず、記事の主体と出来事または注意点が分かる自然な日本語にしてください。入力にない固有名詞・数値・断定は加えないでください。
+entry_jaは、読者が出典リンクを開くか判断できる日本語の概要です。主体、発言者・帰属、計画・提案・予報・調査・疑惑・否定などの確定度を、自然文の中で落とさないでください。
 発言記事では発言者または当局を自然に残してください。計画・提案・予報・警報・調査・疑惑・否定を、完了・確定した事実として書き換えないでください。
 supporting_points_jaは0〜2件の補足事実です。生活影響や次アクションを独立項目として作らず、入力に明確な根拠がある場合だけ概要または補足に自然に含めてください。
 RSSにない数値、対象者、死亡、事故、被害、収入減、因果関係を足さないでください。“lost students”, “losing students” は死亡を意味すると明確でない限り、利用者・生徒の減少として訳してください。
 出力はJSONのみです。"""
 
 EDITORIAL_ENTRY_V2_CONTRACT_INSTRUCTION = """返答は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
-{"editorial_entry":{"entry_ja":"string","supporting_points_ja":["string"]}}"""
+{"editorial_entry":{"headline_ja":"string","entry_ja":"string","supporting_points_ja":["string"]}}"""
 
 # Kept as an import-compatible alias for the comparison runner while profiles
 # move to the sole v2 contract.
@@ -93,6 +95,7 @@ def normalize_editorial_entry(value: Any) -> dict[str, Any]:
     entry = value if isinstance(value, dict) else {}
     points = entry.get("supporting_points_ja")
     return {
+        "headline_ja": clean_text(entry.get("headline_ja")),
         "entry_ja": clean_text(entry.get("entry_ja")),
         "supporting_points_ja": [
             clean_text(point) for point in points if clean_text(point)
@@ -104,7 +107,7 @@ def normalize_editorial_entry(value: Any) -> dict[str, Any]:
 
 def editorial_entry_text(entry: dict[str, Any]) -> str:
     return " ".join(
-        [entry["entry_ja"], *entry["supporting_points_ja"]]
+        [clean_text(entry.get("headline_ja")), clean_text(entry.get("entry_ja")), *entry.get("supporting_points_ja", [])]
     ).strip()
 
 
@@ -275,11 +278,19 @@ def validate_groq_editorial_entry(value: Any) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ValueError("editorial entry response is not object")
     entry = normalize_editorial_entry(value.get("editorial_entry"))
+    if not entry["headline_ja"]:
+        raise ValueError("missing headline_ja")
+    if not headline_is_valid(entry["headline_ja"]):
+        raise ValueError("headline_ja exceeds 15.5 display width")
     if not entry["entry_ja"]:
         raise ValueError("missing entry_ja")
     raw = value.get("editorial_entry")
-    if not isinstance(raw, dict) or not isinstance(raw.get("supporting_points_ja"), list):
-        raise ValueError("supporting_points_ja is not list")
+    if (
+        not isinstance(raw, dict)
+        or not isinstance(raw.get("headline_ja"), str)
+        or not isinstance(raw.get("supporting_points_ja"), list)
+    ):
+        raise ValueError("editorial_entry fields are invalid")
     return entry
 
 

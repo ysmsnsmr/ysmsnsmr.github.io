@@ -23,6 +23,7 @@ PROVENANCE_ORIGINS = (
 # It makes no claim about the article, so a rejected model response cannot
 # reintroduce unverified legacy RSS text into an otherwise valid document.
 RSS_FALLBACK_EDITORIAL_ENTRY = {
+    "headline_ja": "記事詳細は出典へ",
     "entry_ja": "この記事の詳細は出典リンクで確認できます。",
     "supporting_points_ja": [],
 }
@@ -41,6 +42,7 @@ def editorial_entry_payload(value: Any) -> dict[str, Any]:
     entry = value if isinstance(value, dict) else {}
     points = entry.get("supporting_points_ja")
     return {
+        "headline_ja": clean_text(entry.get("headline_ja")) or "記事詳細は出典へ",
         "entry_ja": clean_text(entry.get("entry_ja")),
         "supporting_points_ja": [
             clean_text(point) for point in points if clean_text(point)
@@ -132,6 +134,9 @@ def apply_entry_render_decisions(data: dict[str, Any], decisions: list[RenderDec
 
 def _entry_lines(entry: dict[str, Any]) -> list[tuple[str, str]]:
     lines: list[tuple[str, str]] = []
+    headline = clean_text(entry.get("headline_ja"))
+    if headline:
+        lines.append(("headline_ja", headline))
     text = clean_text(entry.get("entry_ja"))
     if text:
         lines.append(("entry_ja", text))
@@ -171,7 +176,7 @@ def annotate_decision_records(
             record["rss_fallback_entry_contract_status"] = "valid"
         original = editorial_entry_payload(original_items[item_index].get("editorial_entry"))
         final = editorial_entry_payload(final_items[item_index].get("editorial_entry"))
-        remaining = {"entry_ja": {}, "supporting_points_ja": {}}
+        remaining = {"headline_ja": {}, "entry_ja": {}, "supporting_points_ja": {}}
         for field, text in _entry_lines(original):
             remaining[field][text] = remaining[field].get(text, 0) + 1
         lines: list[dict[str, Any]] = []
@@ -193,7 +198,7 @@ def provenance_observation(records: list[dict[str, Any]]) -> dict[str, Any]:
     counts = {origin: 0 for origin in PROVENANCE_ORIGINS}
     fields = {
         field: {origin: 0 for origin in PROVENANCE_ORIGINS}
-        for field in ("entry_ja", "supporting_points_ja")
+        for field in ("headline_ja", "entry_ja", "supporting_points_ja")
     }
     for record in records:
         raw_lines = record.get("editorial_entry_line_provenance") if isinstance(record, dict) else []

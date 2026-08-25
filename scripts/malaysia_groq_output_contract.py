@@ -3,6 +3,9 @@
 from typing import Any
 
 
+HEADLINE_MAX_DISPLAY_WIDTH = 15.5
+
+
 # Final Markdown validation and per-item hard safety share this list. Keeping
 # it here prevents a rejected display token from reaching the document-wide
 # validator only after otherwise safe entries have already been assembled.
@@ -107,6 +110,10 @@ def editorial_entry_schema() -> dict[str, Any]:
     return {
         "type": "object",
         "properties": {
+            # 15.5 display units is also checked in editorial_entry_schema_error.
+            # maxLength protects the strict JSON response from unbounded output;
+            # ASCII characters count as half a display unit in the UI.
+            "headline_ja": {"type": "string", "minLength": 1, "maxLength": 31},
             "entry_ja": {"type": "string", "minLength": 1},
             "supporting_points_ja": {
                 "type": "array",
@@ -115,7 +122,7 @@ def editorial_entry_schema() -> dict[str, Any]:
                 "maxItems": 2,
             },
         },
-        "required": ["entry_ja", "supporting_points_ja"],
+        "required": ["headline_ja", "entry_ja", "supporting_points_ja"],
         "additionalProperties": False,
     }
 
@@ -161,6 +168,18 @@ ENTRY_REVIEW_SCHEMA = {
 
 def _is_string(value: Any) -> bool:
     return isinstance(value, str)
+
+
+def headline_display_width(value: str) -> float:
+    """Match the UI's full-width/half-width headline measurement."""
+    return sum(0.5 if ord(character) < 128 else 1.0 for character in value)
+
+
+def headline_is_valid(value: Any) -> bool:
+    if not _is_string(value):
+        return False
+    headline = value.strip()
+    return bool(headline) and headline_display_width(headline) <= HEADLINE_MAX_DISPLAY_WIDTH
 
 
 def _exact_keys(value: Any, keys: set[str]) -> bool:
@@ -233,11 +252,12 @@ def editorial_entry_schema_error(value: Any) -> str:
     if not _exact_keys(value, {"editorial_entry"}):
         return "root_shape"
     entry = value["editorial_entry"]
-    if not _exact_keys(entry, {"entry_ja", "supporting_points_ja"}):
+    if not _exact_keys(entry, {"headline_ja", "entry_ja", "supporting_points_ja"}):
         return "editorial_entry_shape"
     points = entry["supporting_points_ja"]
     if (
-        not _is_string(entry["entry_ja"])
+        not headline_is_valid(entry["headline_ja"])
+        or not _is_string(entry["entry_ja"])
         or not entry["entry_ja"].strip()
         or not isinstance(points, list)
         or not 0 <= len(points) <= 2

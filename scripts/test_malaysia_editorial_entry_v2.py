@@ -13,7 +13,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import render_malaysia_news_from_json as markdown_renderer
 import render_malaysia_news_with_groq as groq_renderer
-from malaysia_groq_output_contract import EDITORIAL_ENTRY_V2_SCHEMA, editorial_entry_schema_error
+from malaysia_groq_output_contract import (
+    EDITORIAL_ENTRY_V2_SCHEMA,
+    headline_display_width,
+    editorial_entry_schema_error,
+)
 from malaysia_groq_force_all_policy import force_all_request_cap
 from malaysia_groq_render_decision import (
     annotate_decision_records,
@@ -41,6 +45,7 @@ def item(index: int = 1) -> dict:
             "next_action": "旧形式の行動",
         },
         "editorial_entry": {
+            "headline_ja": f"交通計画{index} 来月開始",
             "entry_ja": f"RSS概要{index}",
             "supporting_points_ja": [f"RSS補足{index}"],
         },
@@ -50,6 +55,7 @@ def item(index: int = 1) -> dict:
 def accepted_result(index: int) -> groq_renderer.GroqEditorialEntryResult:
     return groq_renderer.GroqEditorialEntryResult(
         {
+            "headline_ja": f"交通計画{index} 来月開始",
             "entry_ja": f"当局は計画{index}を来月開始する見通しだと述べました。",
             "supporting_points_ja": [f"開始時期は9月とされています。"],
         },
@@ -61,7 +67,7 @@ class EditorialEntryV2Test(unittest.TestCase):
     def test_strict_contract_accepts_zero_or_two_points_and_rejects_legacy_shape(self) -> None:
         self.assertEqual(
             editorial_entry_schema_error(
-                {"editorial_entry": {"entry_ja": "概要です。", "supporting_points_ja": []}}
+                {"editorial_entry": {"headline_ja": "概要", "entry_ja": "概要です。", "supporting_points_ja": []}}
             ),
             "",
         )
@@ -69,6 +75,7 @@ class EditorialEntryV2Test(unittest.TestCase):
             editorial_entry_schema_error(
                 {
                     "editorial_entry": {
+                        "headline_ja": "概要",
                         "entry_ja": "概要です。",
                         "supporting_points_ja": ["補足1", "補足2"],
                     }
@@ -84,11 +91,36 @@ class EditorialEntryV2Test(unittest.TestCase):
         )
         self.assertEqual(
             editorial_entry_schema_error(
-                {"editorial_entry": {"entry_ja": "", "supporting_points_ja": [], "extra": "x"}}
+                {"editorial_entry": {"headline_ja": "概要", "entry_ja": "", "supporting_points_ja": [], "extra": "x"}}
             ),
             "editorial_entry_shape",
         )
         self.assertEqual(EDITORIAL_ENTRY_V2_SCHEMA["required"], ["editorial_entry"])
+
+    def test_headline_is_required_and_limited_to_15_5_display_width(self) -> None:
+        self.assertEqual(headline_display_width("KLで雷雨・大雨に注意"), 10.0)
+        self.assertEqual(
+            editorial_entry_schema_error(
+                {
+                    "editorial_entry": {
+                        "headline_ja": "複数地域で雷雨と大雨への注意が必要です",
+                        "entry_ja": "気象当局は複数地域に雷雨と大雨への注意を呼びかけました。",
+                        "supporting_points_ja": [],
+                    }
+                }
+            ),
+            "editorial_entry_value",
+        )
+        with self.assertRaisesRegex(ValueError, "headline_ja exceeds 15.5"):
+            groq_renderer.validate_groq_editorial_entry(
+                {
+                    "editorial_entry": {
+                        "headline_ja": "複数地域で雷雨と大雨への注意が必要です",
+                        "entry_ja": "気象当局は複数地域に雷雨と大雨への注意を呼びかけました。",
+                        "supporting_points_ja": [],
+                    }
+                }
+            )
 
     def test_article_fallback_is_a_valid_v2_object(self) -> None:
         self.assertEqual(
@@ -99,6 +131,7 @@ class EditorialEntryV2Test(unittest.TestCase):
     def test_v2_markdown_has_only_overview_and_supporting_points(self) -> None:
         data = {"counts": {"processed": 1, "selected": 1}, "failed_sources": [], "items": [item()]}
         markdown = markdown_renderer.render_editorial_entries(data)
+        self.assertIn("- 短見出し：交通計画1 来月開始", markdown)
         self.assertIn("- 概要：RSS概要1", markdown)
         self.assertIn("- 補足：RSS補足1", markdown)
         self.assertNotIn("- 結論：", markdown)
@@ -118,6 +151,7 @@ class EditorialEntryV2Test(unittest.TestCase):
     def test_request_uses_v2_schema_and_user_only_contract(self) -> None:
         parsed = {
             "editorial_entry": {
+                "headline_ja": "交通計画 来月開始",
                 "entry_ja": "当局は来月の交通計画開始を見込むと述べました。",
                 "supporting_points_ja": ["開始時期は9月です。"],
             }
@@ -305,7 +339,7 @@ class EditorialEntryV2Test(unittest.TestCase):
         decisions = build_render_decisions(final["items"], records)
         annotate_decision_records(original, final, records, decisions)
         counts = provenance_observation(records)["line_counts"]
-        self.assertEqual(counts["groq_replaced"], 2)
+        self.assertEqual(counts["groq_replaced"], 3)
         self.assertEqual(counts["groq_inherited"], 1)
 
     def test_v2_validator_accepts_overview_and_supporting_points(self) -> None:

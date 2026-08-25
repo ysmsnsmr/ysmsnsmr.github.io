@@ -57,6 +57,7 @@ def parse_markdown(path: Path) -> NewsDay:
     items: list[NewsItem] = []
     current_category = ""
     current_item: NewsItem | None = None
+    pending_short_headline = ""
 
     def flush_item() -> None:
         nonlocal current_item
@@ -79,6 +80,15 @@ def parse_markdown(path: Path) -> NewsDay:
         if line in CATEGORIES:
             flush_item()
             current_category = line
+            pending_short_headline = ""
+            continue
+
+        if line.startswith("- 短見出し："):
+            short_headline = line[len("- 短見出し：") :].strip()
+            if current_item:
+                current_item.short_headline = short_headline
+            else:
+                pending_short_headline = short_headline
             continue
 
         if line.startswith("- 概要：") or line.startswith("- 結論："):
@@ -89,7 +99,12 @@ def parse_markdown(path: Path) -> NewsDay:
                 category_counts[current_category] += 1
             conclusions.append(conclusion)
             if current_category in CATEGORIES:
-                current_item = NewsItem(category=current_category, conclusion=conclusion)
+                current_item = NewsItem(
+                    category=current_category,
+                    conclusion=conclusion,
+                    short_headline=pending_short_headline,
+                )
+            pending_short_headline = ""
             continue
 
         if current_item:
@@ -166,6 +181,13 @@ def shorten_pickup_headline(text: str, limit: float = PICKUP_HEADLINE_MAX_WIDTH)
         return compact
     truncated = take_headline_width(compact, limit - 1.0)
     return f"{truncated}…"
+
+
+def display_headline(item: NewsItem) -> str:
+    """Use the model's semantic label when it passes the display-width rule."""
+    if item.short_headline and headline_width(item.short_headline) <= PICKUP_HEADLINE_MAX_WIDTH:
+        return item.short_headline
+    return shorten_pickup_headline(item.conclusion)
 
 
 def item_summary_body(item: NewsItem) -> str:
@@ -263,7 +285,7 @@ def render_status_chips(day: NewsDay, generated: str) -> str:
 
 
 def render_item_card(item: NewsItem) -> str:
-    display_headline = shorten_pickup_headline(item.conclusion)
+    headline = display_headline(item)
     source = ""
     if item.source_url:
         source_label = item.source or "出典"
@@ -274,7 +296,7 @@ def render_item_card(item: NewsItem) -> str:
     return f"""
         <article class="focus-card">
           <p class="item-category">{esc(category_label(item.category))}</p>
-          <h3 title="{esc(item.conclusion)}">{esc(display_headline)}</h3>
+          <h3 title="{esc(item.conclusion)}">{esc(headline)}</h3>
           {source}
         </article>
     """
@@ -396,7 +418,7 @@ def render_daily_item(item: NewsItem, position: int) -> str:
           <span class="item-number">{position}</span>
           <p class="item-category">{esc(category_label(item.category))}</p>
         </div>
-        <h3>{esc(shorten_pickup_headline(item.short_headline or item.conclusion))}</h3>
+        <h3>{esc(display_headline(item))}</h3>
         <p class="daily-summary">{esc(item_summary_body(item))}</p>
         {source}
       </article>

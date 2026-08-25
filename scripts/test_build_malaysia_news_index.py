@@ -9,6 +9,7 @@ import build_malaysia_news_index as builder
 
 SAMPLE_MARKDOWN = """【速報】
 
+- 短見出し：雷雨・大雨に注意
 - 結論：午後は雷雨に注意が必要です。
 - 何が起きた：気象局が大雨警報を出しました。
 - 何が起きた：対象地域では強風も予想されています。
@@ -75,9 +76,15 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertIn('href="./index.html">← マレーシア生活ニュース</a>', page)
         self.assertIn('href="./2026-08-20.md">Markdown版</a>', page)
         self.assertIn("午後は雷雨に注意が必要です。", page)
+        self.assertIn("雷雨・大雨に注意", page)
         self.assertIn("運行時間と乗り換え案内が更新されています。", page)
         self.assertIn("出典: Example News", page)
         self.assertNotIn("daily-details", page)
+
+    def test_editorial_short_headline_is_used_without_heuristic_rewrite(self) -> None:
+        day = self.parse_sample()
+        self.assertEqual(day.items[0].short_headline, "雷雨・大雨に注意")
+        self.assertEqual(builder.display_headline(day.items[0]), "雷雨・大雨に注意")
 
 
 if __name__ == "__main__":

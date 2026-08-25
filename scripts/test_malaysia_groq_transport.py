@@ -35,6 +35,7 @@ class FakeResponse:
 
 VALID = {
     "editorial_entry": {
+        "headline_ja": "窓口を来月開設",
         "entry_ja": "省庁は来月の窓口開設を計画していると発表しました。",
         "supporting_points_ja": ["開始時期は来月とされています。"],
     }
