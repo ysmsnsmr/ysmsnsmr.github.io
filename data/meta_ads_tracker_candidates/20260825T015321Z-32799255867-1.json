@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "meta-ads-tracker-candidates/v3",
+  "candidateHash": "554d060fa215d89f83ece0e78d723fa889588709f9e596eb0e2be92ce3166c71",
+  "generatedAt": "2026-08-25T01:53:21Z",
+  "baseline": {
+    "mode": "active",
+    "cutoffAt": "2026-08-16T01:58:08Z"
+  },
+  "week": {
+    "startDate": "2026-08-24",
+    "endDate": "2026-08-30",
+    "label": "2026-08-24〜2026-08-30"
+  },
+  "processingEpoch": {
+    "id": "epoch-20260825t01531787622801z",
+    "startedAt": "2026-08-25T01:53:21Z",
+    "completedAt": "2026-08-25T01:53:21Z",
+    "status": "completed"
+  },
+  "sourceRuns": [
+    {
+      "sourceId": "meta-product-news-rss",
+      "status": "success",
+      "startedAt": "2026-08-25T01:53:21Z",
+      "completedAt": "2026-08-25T01:53:21Z",
+      "parsedItems": 10,
+      "newEvents": 0,
+      "changedEvents": 0,
+      "unchangedItems": 10,
+      "tombstonedItems": 0
+    },
+    {
+      "sourceId": "meta-business-sdk-releases",
+      "status": "success",
+      "startedAt": "2026-08-25T01:53:21Z",
+      "completedAt": "2026-08-25T01:53:21Z",
+      "parsedItems": 28,
+      "newEvents": 0,
+      "changedEvents": 0,
+      "unchangedItems": 28,
+      "tombstonedItems": 0
+    }
+  ],
+  "summary": {
+    "parsedItems": 38,
+    "newEvents": 0,
+    "changedEvents": 0,
+    "unchangedItems": 38,
+    "tombstonedItems": 0
+  },
+  "items": []
+}
