@@ -1,6 +1,6 @@
 {
   "schemaVersion": "meta-ads-secondary-shadow-observation/v2",
-  "generatedAt": "2026-08-25T02:31:11Z",
+  "generatedAt": "2026-08-26T02:39:04Z",
   "baseline": {
     "mode": "active",
     "cutoffAt": "2026-08-24T02:37:37Z",
@@ -27,13 +27,28 @@
       "sourceId": "jon-loomer-meta-ads",
       "status": "success",
       "extractedItems": 32,
-      "newSignals": 0,
-      "unchangedItems": 32
+      "newSignals": 1,
+      "unchangedItems": 31
     }
   ],
   "summary": {
     "sources": 2,
-    "signals": 0
+    "signals": 1
   },
-  "signals": []
+  "signals": [
+    {
+      "signalId": "jon-loomer-meta-ads-575fb7a07d55a89363af",
+      "sourceId": "jon-loomer-meta-ads",
+      "observedAt": "2026-08-26T02:39:04Z",
+      "title": "Reply to Keywords Meta Ads Feature",
+      "url": "https://www.jonloomer.com/reply-to-keywords-meta-ads-feature/",
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ],
+      "fingerprint": "575fb7a07d55a89363af971cee2469f4ec729598d1f862d21d96922e651d9c32",
+      "baselineGeneration": "rss-migration-2026-08",
+      "verificationStatus": "unverified",
+      "publicationEligible": false
+    }
+  ]
 }
