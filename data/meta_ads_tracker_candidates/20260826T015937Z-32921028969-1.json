@@ -1,0 +1,135 @@
+{
+  "schemaVersion": "meta-ads-tracker-candidates/v3",
+  "candidateHash": "e1ac94c3f77b993c9a094165f1d1eda3f1acc9a90b4b9d8e70612b21004385fc",
+  "generatedAt": "2026-08-26T01:59:37Z",
+  "baseline": {
+    "mode": "active",
+    "cutoffAt": "2026-08-16T01:58:08Z"
+  },
+  "week": {
+    "startDate": "2026-08-24",
+    "endDate": "2026-08-30",
+    "label": "2026-08-24〜2026-08-30"
+  },
+  "processingEpoch": {
+    "id": "epoch-20260826t01591787709577z",
+    "startedAt": "2026-08-26T01:59:37Z",
+    "completedAt": "2026-08-26T01:59:37Z",
+    "status": "completed"
+  },
+  "sourceRuns": [
+    {
+      "sourceId": "meta-product-news-rss",
+      "status": "success",
+      "startedAt": "2026-08-26T01:59:37Z",
+      "completedAt": "2026-08-26T01:59:37Z",
+      "parsedItems": 10,
+      "newEvents": 1,
+      "changedEvents": 0,
+      "unchangedItems": 9,
+      "tombstonedItems": 1
+    },
+    {
+      "sourceId": "meta-business-sdk-releases",
+      "status": "success",
+      "startedAt": "2026-08-26T01:59:37Z",
+      "completedAt": "2026-08-26T01:59:37Z",
+      "parsedItems": 29,
+      "newEvents": 1,
+      "changedEvents": 0,
+      "unchangedItems": 28,
+      "tombstonedItems": 0
+    }
+  ],
+  "summary": {
+    "parsedItems": 39,
+    "newEvents": 2,
+    "changedEvents": 0,
+    "unchangedItems": 37,
+    "tombstonedItems": 1
+  },
+  "items": [
+    {
+      "id": "meta-product-news-rss-37770f7f2e6bf85cc6c2",
+      "eventId": "meta-product-news-rss-37770f7f2e6bf85cc6c2",
+      "subjectId": "meta-product-news-rss-6c94e51f6f97aa47",
+      "revision": "7d12785ada0d2210865b729bacfc7ac05c52ecdeaf06e8ab2581755b437bc6ef",
+      "sourceFingerprint": "7d12785ada0d2210865b729bacfc7ac05c52ecdeaf06e8ab2581755b437bc6ef",
+      "detectedAt": "2026-08-26T01:59:37Z",
+      "changeType": "new_url",
+      "sourceId": "meta-product-news-rss",
+      "title": "New Account Security Features for WhatsApp",
+      "officialUrl": "https://about.fb.com/news/2026/08/new-account-security-features-for-whatsapp/",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2026-08-25"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "On WhatsApp, your conversations belong only to you and the people you’re talking to. It’s why we built end-to-end encryption by default, and it’s why we continue adding new ways to keep your account secure and in your hands. Here are a few we’ve been working on. Two-Step Verification Is Setting Stronger Two-step verification is an extra protection layer that helps prevent someone from taking over your account, even if they get a hold of your one-time passcode. Until now, it was a six-digit PIN, but we’ve upgraded it to a full password: longer, alphanumeric, and even with special characters to make it harder to guess. More Context Before You Pick Up When you get a call from someone who isn’t saved in your contacts, a little context can help you decide whether to pick up. On Android, you’ll now see more information about a non-contact caller, like whether the number is from a different country and if you have any groups in common. Scammers rely on urgency — now you can take a beat with some more info before answering. 1 Billion People Are Using Passkeys A passkey lets you log back into WhatsApp with your fingerprint, face ID, or screen lock code. It’s the fastest and most secure way to verify it’s really you, with no codes or PINs. More than a billion people have already set one up, and you can now add more than one passkey to your account if you use both Android and iOS devices. To get started, go to Settings > Account > Passkeys. We’ll keep building tools that help you stay in control of your account and boost account security. The post New Account Security Features for WhatsApp appeared first on Meta Newsroom ."
+    },
+    {
+      "id": "meta-business-sdk-releases-7ee49cbac0f6489b4f54",
+      "eventId": "meta-business-sdk-releases-7ee49cbac0f6489b4f54",
+      "subjectId": "meta-business-sdk-releases-9cb955fdc74bf5ea",
+      "revision": "68ef116138484b4240900a05982c0290e8f5d714566ca69e7c6ff449b94a119a",
+      "sourceFingerprint": "68ef116138484b4240900a05982c0290e8f5d714566ca69e7c6ff449b94a119a",
+      "detectedAt": "2026-08-26T01:59:37Z",
+      "changeType": "sdk_release",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v26.0.1",
+      "officialUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v26.0.1",
+      "priority": "standard",
+      "announcementDate": {
+        "status": "stated",
+        "value": "2026-08-25"
+      },
+      "effectiveDate": {
+        "status": "not_stated",
+        "value": null
+      },
+      "rollout": {
+        "status": "not_stated",
+        "value": null
+      },
+      "targets": {
+        "status": "not_stated",
+        "value": null
+      },
+      "businessImpact": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "action": {
+        "status": "not_stated",
+        "summary": null,
+        "assessmentSource": null
+      },
+      "reviewStatus": "pending",
+      "sourceContext": "**Full Changelog**: https://github.com/facebook/facebook-nodejs-business-sdk/compare/v26.0.0...v26.0.1"
+    }
+  ]
+}
