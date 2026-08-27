@@ -126,7 +126,36 @@ class GroqTransportTest(unittest.TestCase):
             with self.assertRaises(ValueError) as raised:
                 self.request("gpt-oss")
 
-        self.assertEqual(error_diagnostic(raised.exception)["json_contract_status"], "schema_invalid")
+        diagnostic = error_diagnostic(raised.exception)
+        self.assertEqual(diagnostic["json_contract_status"], "schema_invalid")
+        self.assertEqual(diagnostic["json_contract_reason"], "editorial_entry_shape")
+
+    def test_strict_schema_records_value_mismatch_reason(self) -> None:
+        payload = {
+            "choices": [
+                {
+                    "finish_reason": "stop",
+                    "message": {
+                        "content": json.dumps(
+                            {
+                                "editorial_entry": {
+                                    "headline_ja": "",
+                                    "entry_ja": "概要",
+                                    "supporting_points_ja": [],
+                                }
+                            }
+                        )
+                    },
+                }
+            ]
+        }
+        with patch("malaysia_groq_transport.urllib.request.urlopen", return_value=FakeResponse(payload)):
+            with self.assertRaises(ValueError) as raised:
+                self.request("gpt-oss")
+
+        diagnostic = error_diagnostic(raised.exception)
+        self.assertEqual(diagnostic["json_contract_status"], "schema_invalid")
+        self.assertEqual(diagnostic["json_contract_reason"], "editorial_entry_value")
 
 
 if __name__ == "__main__":

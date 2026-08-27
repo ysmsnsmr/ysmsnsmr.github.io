@@ -15,6 +15,19 @@ from malaysia_groq_model_profiles import ModelProfile
 GROQ_CHAT_COMPLETIONS_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_USER_AGENT = "ysmsnsmr-malaysia-news/0.1 (+https://ysmsnsmr.github.io/news/malaysia/)"
 ERROR_MESSAGE_LIMIT = 500
+SAFE_CONTRACT_REASONS = frozenset(
+    {
+        "root_shape",
+        "summary_shape",
+        "summary_value",
+        "entry_shape",
+        "editorial_entry_shape",
+        "editorial_entry_value",
+        "verdict",
+        "issues",
+        "reviewed_entry",
+    }
+)
 
 
 @dataclass(frozen=True)
@@ -32,6 +45,10 @@ class GroqTransportValueError(ValueError):
 
 def _clean_error_message(value: Any) -> str:
     return value.strip()[:ERROR_MESSAGE_LIMIT] if isinstance(value, str) else ""
+
+
+def _safe_contract_reason(value: Any) -> str:
+    return value if isinstance(value, str) and value in SAFE_CONTRACT_REASONS else "unknown"
 
 
 def _rate_limit_headers(headers: Any) -> dict[str, Any]:
@@ -59,6 +76,7 @@ def empty_diagnostic() -> dict[str, Any]:
         "usage": {"prompt_tokens": None, "completion_tokens": None, "total_tokens": None},
         "rate_limit": _rate_limit_headers(None),
         "json_contract_status": "not_evaluated",
+        "json_contract_reason": "",
         "error": {
             "type": "",
             "code": "",
@@ -243,6 +261,7 @@ def request_chat_completion(
     schema_failure = schema_error(parsed)
     if schema_failure:
         diagnostic["json_contract_status"] = "schema_invalid"
+        diagnostic["json_contract_reason"] = _safe_contract_reason(schema_failure)
         if profile.response_mode == "json_schema_strict":
             raise GroqTransportValueError(f"Groq JSON schema mismatch: {schema_failure}", diagnostic)
         diagnostic["transport_status"] = "success"

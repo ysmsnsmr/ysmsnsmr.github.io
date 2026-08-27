@@ -328,6 +328,32 @@ class EditorialEntryV2Test(unittest.TestCase):
             payload = json.loads(improved_path.read_text(encoding="utf-8"))
             self.assertEqual(payload["diagnostics"]["editorial_entry_counts"]["rss_fallback_count"], 2)
 
+    def test_schema_invalid_reason_counts_are_kept_separate(self) -> None:
+        records = [
+            {
+                "groq_call": {
+                    "transport_status": "invalid_envelope",
+                    "json_contract_status": "schema_invalid",
+                    "json_contract_reason": "editorial_entry_shape",
+                }
+            },
+            {
+                "groq_call": {
+                    "transport_status": "invalid_envelope",
+                    "json_contract_status": "schema_invalid",
+                    "json_contract_reason": "editorial_entry_value",
+                }
+            },
+            {"groq_call": {"transport_status": "success", "json_contract_status": "valid"}},
+        ]
+
+        observation = groq_renderer.transport_observation(records)
+
+        self.assertEqual(
+            observation["json_contract_reason_counts"],
+            {"editorial_entry_shape": 1, "editorial_entry_value": 1},
+        )
+
     def test_provenance_is_per_entry_field(self) -> None:
         original = {"items": [item()]}
         final = copy.deepcopy(original)

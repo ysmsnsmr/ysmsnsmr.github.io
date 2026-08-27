@@ -418,18 +418,23 @@ def editorial_entry_counts(records: list[dict[str, Any]]) -> dict[str, int]:
 def transport_observation(records: list[dict[str, Any]]) -> dict[str, Any]:
     transport = Counter()
     contracts = Counter()
+    contract_reasons = Counter()
     hard_safety = Counter()
     for record in records:
         call = record.get("groq_call")
         if isinstance(call, dict):
             transport[clean_text(call.get("transport_status")) or "not_recorded"] += 1
-            contracts[clean_text(call.get("json_contract_status")) or "not_evaluated"] += 1
+            contract_status = clean_text(call.get("json_contract_status")) or "not_evaluated"
+            contracts[contract_status] += 1
+            if contract_status == "schema_invalid":
+                contract_reasons[clean_text(call.get("json_contract_reason")) or "not_recorded"] += 1
         reason = clean_text(record.get("hard_safety_rejection_reason"))
         if reason:
             hard_safety[reason] += 1
     return {
         "transport_status_counts": dict(sorted(transport.items())),
         "json_contract_status_counts": dict(sorted(contracts.items())),
+        "json_contract_reason_counts": dict(sorted(contract_reasons.items())),
         "hard_safety_rejection_reason_counts": dict(sorted(hard_safety.items())),
     }
 

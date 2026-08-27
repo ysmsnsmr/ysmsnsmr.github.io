@@ -86,6 +86,7 @@ def parse_observation_diagnostics(value: dict[str, Any]) -> dict[str, Any]:
         "hard_safety_rejection_reason_counts": {},
         "transport_status_counts": {},
         "json_contract_status_counts": {},
+        "json_contract_reason_counts": {},
         "entry_provenance_line_counts": {},
     }
     if not isinstance(diagnostics, dict):
@@ -100,7 +101,12 @@ def parse_observation_diagnostics(value: dict[str, Any]) -> dict[str, Any]:
             "request_cap_skipped_count",
         ):
             result[key] = optional_int(entries.get(key))
-    for key in ("hard_safety_rejection_reason_counts", "transport_status_counts", "json_contract_status_counts"):
+    for key in (
+        "hard_safety_rejection_reason_counts",
+        "transport_status_counts",
+        "json_contract_status_counts",
+        "json_contract_reason_counts",
+    ):
         raw = diagnostics.get(key)
         if isinstance(raw, dict):
             result[key] = raw
@@ -211,6 +217,7 @@ def write_report(path: Path, result: dict[str, Any]) -> None:
         f"- hard_safety_rejection_reason_counts: {json.dumps(observation['hard_safety_rejection_reason_counts'], ensure_ascii=False)}",
         f"- transport_status_counts: {json.dumps(observation['transport_status_counts'], ensure_ascii=False)}",
         f"- json_contract_status_counts: {json.dumps(observation['json_contract_status_counts'], ensure_ascii=False)}",
+        f"- json_contract_reason_counts: {json.dumps(observation['json_contract_reason_counts'], ensure_ascii=False)}",
     ]
     if result["failures"]:
         lines.extend(["", "## Failures", "", *[f"- {failure}" for failure in result["failures"]]])
