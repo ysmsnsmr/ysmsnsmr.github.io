@@ -85,10 +85,7 @@ def parse_markdown(path: Path) -> NewsDay:
 
         if line.startswith("- 短見出し："):
             short_headline = line[len("- 短見出し：") :].strip()
-            if current_item:
-                current_item.short_headline = short_headline
-            else:
-                pending_short_headline = short_headline
+            pending_short_headline = short_headline
             continue
 
         if line.startswith("- 概要：") or line.startswith("- 結論："):

@@ -31,6 +31,38 @@ SAMPLE_MARKDOWN = """【速報】
 """
 
 
+SHIFT_MARKDOWN = """【速報】
+
+- 短見出し：速報記事
+- 概要：速報の概要です。
+- 出典：速報紙（2026年8月27日）
+- 出典元URL：https://example.test/速報
+
+【生活インパクト】
+
+- 短見出し：生活記事
+- 概要：生活への影響がある概要です。
+- 出典：生活紙（2026年8月27日）
+- 出典元URL：https://example.test/生活
+
+【知っておくと得】
+
+- 短見出し：記事詳細は出典へ
+- 概要：この記事の詳細は出典リンクで確認できます。
+- 出典：自動車紙（2026年8月27日）
+- 出典元URL：https://example.test/fallback
+
+- 短見出し：市場記事
+- 概要：市場の概要です。
+- 出典：市場紙（2026年8月27日）
+- 出典元URL：https://example.test/market
+
+処理対象件数：4件
+要約対象件数：4件
+失敗したソース一覧：なし
+"""
+
+
 class MalaysiaNewsIndexTests(unittest.TestCase):
     def parse_sample(self) -> builder.NewsDay:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -85,6 +117,23 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         day = self.parse_sample()
         self.assertEqual(day.items[0].short_headline, "雷雨・大雨に注意")
         self.assertEqual(builder.display_headline(day.items[0]), "雷雨・大雨に注意")
+
+    def test_daily_html_keeps_fallback_heading_and_source_aligned(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "2026-08-27.md"
+            path.write_text(SHIFT_MARKDOWN, encoding="utf-8")
+            day = builder.parse_markdown(path)
+
+        self.assertEqual(
+            [item.short_headline for item in day.items],
+            ["速報記事", "生活記事", "記事詳細は出典へ", "市場記事"],
+        )
+        html = builder.render_daily_page(day)
+        fallback = html.index("<h3>記事詳細は出典へ</h3>")
+        market = html.index("<h3>市場記事</h3>")
+        self.assertLess(fallback, market)
+        self.assertIn("https://example.test/fallback", html[fallback:market])
+        self.assertNotIn("https://example.test/market", html[fallback:market])
 
 
 if __name__ == "__main__":
