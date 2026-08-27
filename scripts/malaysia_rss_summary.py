@@ -7,6 +7,7 @@ import re
 import ssl
 import subprocess
 import sys
+import time
 import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -18,6 +19,15 @@ from typing import Optional
 
 
 UA = "Mozilla/5.0"
+DNS_RETRY_ATTEMPTS = 3
+DNS_RETRY_BACKOFF_SECONDS = 2
+DNS_ERROR_MARKERS = (
+    "could not resolve host",
+    "nodename nor servname",
+    "name or service not known",
+    "temporary failure in name resolution",
+    "getaddrinfo failed",
+)
 SOURCES = [
     ("Malay Mail", "Malay Mail Malaysia", "https://www.malaymail.com/feed/rss/malaysia"),
     ("Malay Mail", "Malay Mail Money", "https://www.malaymail.com/feed/rss/money"),
@@ -409,16 +419,39 @@ def fetch_curl(url: str) -> FetchResult:
     )
 
 
+def is_name_resolution_error(error: str) -> bool:
+    normalized = error.lower()
+    return any(marker in normalized for marker in DNS_ERROR_MARKERS)
+
+
 def fetch_rss(url: str) -> FetchResult:
-    first = fetch_urllib(url)
-    if first.ok:
-        return first
-    fallback = fetch_curl(url)
-    if fallback.ok:
-        fallback.error = f"urllib failed; fallback used: {first.error}"
-        return fallback
-    fallback.error = f"urllib failed: {first.error}; curl failed: {fallback.error}"
-    return fallback
+    last_result: FetchResult | None = None
+    last_error = ""
+    for attempt in range(1, DNS_RETRY_ATTEMPTS + 1):
+        first = fetch_urllib(url)
+        if first.ok:
+            return first
+        fallback = fetch_curl(url)
+        if fallback.ok:
+            fallback.error = f"urllib failed; fallback used: {first.error}"
+            return fallback
+
+        combined_error = f"urllib failed: {first.error}; curl failed: {fallback.error}"
+        last_result = fallback
+        last_error = combined_error
+        if not is_name_resolution_error(combined_error):
+            break
+        if attempt < DNS_RETRY_ATTEMPTS:
+            time.sleep(DNS_RETRY_BACKOFF_SECONDS * attempt)
+
+    assert last_result is not None
+    if attempt > 1 and is_name_resolution_error(last_error):
+        last_result.error = (
+            f"after {attempt} DNS-resolution attempts: {last_error}"
+        )
+    else:
+        last_result.error = last_error
+    return last_result
 
 
 def lenient_xml(data: bytes) -> ET.Element:
