@@ -1,6 +1,6 @@
 {
   "schemaVersion": "meta-ads-secondary-shadow-state/v2",
-  "updatedAt": "2026-08-27T11:10:46Z",
+  "updatedAt": "2026-08-28T13:20:59Z",
   "baselineCutoffAt": "2026-08-24T02:37:37Z",
   "baselineGeneration": "rss-migration-2026-08",
   "sources": {
@@ -11,127 +11,127 @@
       "items": {
         "https://www.jonloomer.com/meta-removing-placement-controls-ad-sets/": {
           "fingerprint": "5d377e1c7d145b7220d94edc040388e58b3cf958c996161825cab678a7262997",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/chatgpt-ads-automated-bidding-placements-url-parameters/": {
           "fingerprint": "e111b8b88d29a863836e0c1ae51b0ff42946a815241a5e910c76e4d81515e262",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/meta-ads-ai-connectors-security-controls/": {
           "fingerprint": "d00c0898d93e32288ead71e8d32a0fad63c8ac21e79576fab5e1919c0465f932",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/meta-tests-sequenced-events-preferred-lead-answers/": {
           "fingerprint": "9b4b3a439738c55f1c9ba9e9e2953e0011aa4e3bff48b07cda40fef7a0a2232f",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/exclusion-only-custom-audiences/": {
           "fingerprint": "ffc8ab2a763ba21f07563f5715618a755fe903c817ba8ea81b697569fd5c9ccf",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/15-years-facebook-meta-advertising/": {
           "fingerprint": "bbac5fab0d2be6a6e17c406070760e4c63dc2255b43345dc64aa7598c08f1922",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/meta-rewrite-text-ad-images/": {
           "fingerprint": "27557932437e10f4e4fd48730cc9a690d451de3322e240d94ea927207aed570b",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/meta-ads-lead-generation/": {
           "fingerprint": "b5392b26500b9430d8fb2259fb04347e5ec82decf7c3235d15cae82b29997f07",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/meta-redesigns-audiences-around-labels/": {
           "fingerprint": "11099d9367d9098d49d9f2b2996d99c42a3f9fae99a115d9025542bfc5fc8eed",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/meta-ads-strategy-principles/": {
           "fingerprint": "28983bf8edec175fcad1e0ef8192a5852dc6570d2d7dda2621dda5c70b47372a",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/lead-capture-ai-agent-instant-forms/": {
           "fingerprint": "3ddcb0ea4f4fc5fce795106b27d1ed6e221fd0c9a0eb55b5eb97afdbe174240e",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/chatgpt-ads-custom-audiences/": {
           "fingerprint": "c06f6e344d3954f97bab43abe3f8e89cd93b378bd66b364c1d9b95427a018fd8",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/meta-ads-master-brief/": {
           "fingerprint": "59535a52a9a8ea9dbea7b5f8c83a4432342655dc917ba9e70f64f36e32898215",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/meta-ads-arent-converting/": {
           "fingerprint": "458a346515ca1d3dc5bc50005c54c225650cd7a8485b16315bb799f9ba54901d",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/instant-form-appointments-chatgpt-conversion-optimization/": {
           "fingerprint": "1bce32d52b9e7062e3cc6e0fcade49b63ed1dba8444e51e7870aba5e68287458",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/active-ad-sets-meta-ads-campaign/": {
           "fingerprint": "4fb0288ba3ef132570ad0561eb1d624258094fb5572149f00eb94ddd1f53ce0b",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/ai-disclosure-checkbox-chatgpt-attribution/": {
           "fingerprint": "e5f033572eaeb41a826b5d1e7f3d91bebe7d7cb53885454575efe20a70909faa",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/how-many-meta-ads-campaigns/": {
           "fingerprint": "53e1d768d24efb78c933a88f541b522e789002bb9fdc3f1463a039cb6c3096e1",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/push-delivery-tests-chatgpt-ads-updates/": {
           "fingerprint": "c8fd95759141bb9249ce5869f21f2ec597f6c37d4a8d84f6137b36b53cd61331",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/hands-on-push-delivery-to-this-ad/": {
           "fingerprint": "f8ddff91382821bdd266cd290f6babc07852633cc0970a7edb45a26f1ee88d3c",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/customer-lifecycle-strategy-not-what-advertisers-thought/": {
           "fingerprint": "40ae1c2ae63c309a04ea1357653e413157db7691c04f0afa7c2bef7b4f6e3bae",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/meta-ads-attribution-reporting/": {
           "fingerprint": "5ce2651ba4bb35618c935228a5084d0c57a768897827a86ac4d4706b2db96719",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/meta-ads-grouping-reports-chatgpt-conversions/": {
           "fingerprint": "e7177bce0a538f809515b2fe925c378fcbd320e2358399cdd1d96ea3371c9cd8",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/meta-ads-mistakes-agencies/": {
           "fingerprint": "acf7defbd3a841efbd11e164b6c6922b89f0ac90202f3475b7444155bbe8d2d1",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/chatgpt-ads-limitations-ai-instant-forms/": {
           "fingerprint": "e438ce24078529e53ca00fbba14e4d9f695e0132ce17a556e0f739970c1af2a1",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/chatgpt-ads-initial-impressions/": {
           "fingerprint": "75909fe3752b311363dba8c43529317c04740165d1521115d494246f7101c96f",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/one-click-capi-activated-new-meta-ads-features/": {
           "fingerprint": "3154624f86318caa8bb33c21c786ded2361f03999e57d2a5900858a1db43a901",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/future-of-meta-advertiser/": {
           "fingerprint": "8db7437e1db34ae6e505ef38b0926613f2aac7de2371281398ecb70f71336b9b",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/chatgpt-ads-self-serve/": {
           "fingerprint": "3801454313d660dd0f60ec0e0027cbc873061aa3416dd117b075b7a9beb2f166",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/meta-ads-ai-connectors-claude/": {
           "fingerprint": "3200a7f86beac514a472d26f49bbf1d2818a37f1f5dc3fb4b349a8ed22f25221",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/meta-ads-ai-connectors/": {
           "fingerprint": "891b56ac7efffdaf81252fbcf78b2c108f853651ef50db41c26e885c8ab056ca",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         },
         "https://www.jonloomer.com/lead-generation-meta-ads/": {
           "fingerprint": "64636891f8ed8e8dcddecf73d3350b7f18ce6c890b577b6ddf8ef00f2eae9248",
@@ -139,7 +139,7 @@
         },
         "https://www.jonloomer.com/reply-to-keywords-meta-ads-feature/": {
           "fingerprint": "575fb7a07d55a89363af971cee2469f4ec729598d1f862d21d96922e651d9c32",
-          "lastSeenAt": "2026-08-27T11:10:46Z"
+          "lastSeenAt": "2026-08-28T13:20:59Z"
         }
       }
     }
