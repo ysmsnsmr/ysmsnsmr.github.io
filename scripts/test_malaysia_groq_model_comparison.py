@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import json
 import sys
 import tempfile
 import unittest
@@ -10,10 +11,25 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from malaysia_groq_model_profiles import load_model_profile_registry, resolve_model_profile
+import malaysia_groq_force_all_policy
 from run_malaysia_groq_model_comparison import run_artifact_profile
 
 
 class ModelComparisonTest(unittest.TestCase):
+    def test_semantic_quality_fixture_preserves_original_and_observed_output(self) -> None:
+        fixture_path = Path(__file__).resolve().parent / "fixtures/malaysia_groq_model_migration_failures.json"
+        payload = json.loads(fixture_path.read_text(encoding="utf-8"))
+        item = next(
+            row for row in payload["items"]
+            if row.get("link") == "https://www.astroawani.com/berita-malaysia/pemilik-kilang-melecur-ketika-cuba-padam-kebakaran"
+        )
+        self.assertIn("first-degree burn", item["failure_reasons"][0])
+        self.assertIn("kelecuran tahap satu", item["item"]["description"])
+        self.assertIn("失神", item["observed_output"]["entry_ja"])
+
+    def test_force_all_policy_has_no_source_priority_override(self) -> None:
+        self.assertFalse(hasattr(malaysia_groq_force_all_policy, "force_all_request_priority"))
+
     def test_probe_passes_but_empty_baseline_cohort_skips_quality_calls(self) -> None:
         registry = load_model_profile_registry()
         profile = resolve_model_profile("gpt-oss-20b", registry)

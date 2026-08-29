@@ -2221,6 +2221,64 @@
           ]
         }
       }
+    },
+    {
+      "link": "https://www.astroawani.com/berita-malaysia/pemilik-kilang-melecur-ketika-cuba-padam-kebakaran",
+      "first_observed_on": "2026-08-29",
+      "production_profile": "gpt-oss-120b",
+      "failure_reasons": [
+        "Semantic quality observation: Malay first-degree burn was rendered as fainting"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Astro Awani",
+        "published_date": "2026年8月29日",
+        "published_at": "2026-08-29T11:00:00+08:00",
+        "title": "Pemilik kilang melecur ketika cuba padam kebakaran",
+        "description": "Mangsa, H’ng Seng Peng, 58, mengalami kelecuran tahap satu dan diberi rawatan awal oleh petugas Kementerian Kesihatan (KKM) sebelum dibawa ke hospital berhampiran untuk rawatan lanjut.",
+        "link": "https://www.astroawani.com/berita-malaysia/pemilik-kilang-melecur-ketika-cuba-padam-kebakaran",
+        "selected_summary": {
+          "conclusion": "Pemilik kilang melecur ketika cuba padam kebakaran",
+          "what_happened": [
+            "Mangsa, H’ng Seng Peng, 58, mengalami kelecuran tahap satu dan diberi rawatan awal oleh petugas Kementerian Kesihatan (KKM) sebelum dibawa ke hospital berhampiran untuk rawatan lanjut.",
+            "RSS内のタイトルと説明をもとに整理しました。"
+          ],
+          "life_impact": "生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。",
+          "next_action": ""
+        },
+        "editorial_entry": {
+          "headline_ja": "記事詳細は出典へ",
+          "entry_ja": "Pemilik kilang melecur ketika cuba padam kebakaran",
+          "supporting_points_ja": [
+            "Mangsa, H’ng Seng Peng, 58, mengalami kelecuran tahap satu dan diberi rawatan awal oleh petugas Kementerian Kesihatan (KKM) sebelum dibawa ke hospital berhampiran untuk rawatan lanjut."
+          ]
+        },
+        "content_source": "rss_fallback",
+        "body_fetched": false,
+        "body_text_length": 0,
+        "body_excerpt": "",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ],
+        "body_error": "skipped_by_policy",
+        "body_excerpt_policy": "rss_fallback",
+        "body_excerpt_used": false,
+        "body_excerpt_reason": "rss_fallback",
+        "selected_context_source": "rss_summary"
+      },
+      "observed_output": {
+        "headline_ja": "火災消火中に工場主が倒れる",
+        "entry_ja": "工場の所有者が火災を消そうとした際に倒れ、58歳の洪姓彭さんは軽度の失神と診断され、保健省職員が一次処置を行い、近くの病院へ搬送された。",
+        "supporting_points_ja": [
+          "洪姓彭さんは倒れた時点で失神レベルが1と判定された。"
+        ]
+      }
     }
   ]
 }
