@@ -1,35 +1,1132 @@
 {
   "schemaVersion": "meta-ads-personal-feed/v1",
-  "generatedAt": null,
+  "generatedAt": "2026-08-29T09:59:42Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
       "name": "Meta Newsroom Product News",
       "classification": "official",
       "sourceUrl": "https://about.fb.com/news/category/product-news/",
-      "platforms": ["Metaプラットフォーム全般"]
+      "platforms": [
+        "Metaプラットフォーム全般"
+      ]
     },
     {
       "id": "meta-business-sdk-releases",
       "name": "Meta Business SDK Releases",
       "classification": "official",
       "sourceUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases",
-      "platforms": ["Meta Business SDK", "Marketing API"]
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ]
     },
     {
       "id": "ppc-land-meta-ads",
       "name": "PPC Land",
       "classification": "unofficial",
       "sourceUrl": "https://ppc.land/",
-      "platforms": ["Meta Ads"]
+      "platforms": [
+        "Meta Ads"
+      ]
     },
     {
       "id": "jon-loomer-meta-ads",
       "name": "Jon Loomer Digital",
       "classification": "unofficial",
       "sourceUrl": "https://www.jonloomer.com/",
-      "platforms": ["Meta Ads"]
+      "platforms": [
+        "Meta Ads"
+      ]
     }
   ],
-  "items": []
+  "items": [
+    {
+      "id": "meta-product-news-rss-e5c8e6e318c05227bb3a",
+      "sourceId": "meta-product-news-rss",
+      "title": "New Account Security Features for WhatsApp",
+      "url": "https://about.fb.com/news/2026/08/new-account-security-features-for-whatsapp/",
+      "publishedDate": "2026-08-25",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Metaプラットフォーム全般"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-8d6ef09ff40fb8dc9177",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v26.0.1",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v26.0.1",
+      "publishedDate": "2026-08-25",
+      "updatedDate": "2026-08-25",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "jon-loomer-meta-ads-c4bf4e277a9f0027a356",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Reply to Keywords Meta Ads Feature",
+      "url": "https://www.jonloomer.com/reply-to-keywords-meta-ads-feature/",
+      "publishedDate": "2026-08-25",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-933a7dd9942789a5571e",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Meta Is Removing Placement Controls From Ad Sets",
+      "url": "https://www.jonloomer.com/meta-removing-placement-controls-ad-sets/",
+      "publishedDate": "2026-08-20",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-17878aaf26c067f9d9f1",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "ChatGPT Ads Get Automated Bidding, Placements, and URL Parameters",
+      "url": "https://www.jonloomer.com/chatgpt-ads-automated-bidding-placements-url-parameters/",
+      "publishedDate": "2026-08-13",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-c44302392e350d6d2ccf",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Meta Ads AI Connectors Get More Security Controls",
+      "url": "https://www.jonloomer.com/meta-ads-ai-connectors-security-controls/",
+      "publishedDate": "2026-08-11",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-f05b3794cf271a4b11b2",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Exclusion-Only Custom Audiences",
+      "url": "https://www.jonloomer.com/exclusion-only-custom-audiences/",
+      "publishedDate": "2026-08-07",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-ab67b99f61591b6d17a9",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Meta Tests Sequenced Events and Preferred Lead Answers for Lead Quality",
+      "url": "https://www.jonloomer.com/meta-tests-sequenced-events-preferred-lead-answers/",
+      "publishedDate": "2026-08-07",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "meta-business-sdk-releases-b3238ea0e1eab0c34919",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v26.0.0",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v26.0.0",
+      "publishedDate": "2026-08-06",
+      "updatedDate": "2026-08-06",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "jon-loomer-meta-ads-82a82ca86bab81e33381",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "15 Years of Facebook and Meta Advertising",
+      "url": "https://www.jonloomer.com/15-years-facebook-meta-advertising/",
+      "publishedDate": "2026-08-05",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "meta-product-news-rss-e2a1597bca3d8e1195b6",
+      "sourceId": "meta-product-news-rss",
+      "title": "We’re Upgrading Your WhatsApp Group Chats",
+      "url": "https://about.fb.com/news/2026/08/were-upgrading-your-whatsapp-group-chats/",
+      "publishedDate": "2026-08-04",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Metaプラットフォーム全般"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-product-news-rss-769f92e511260a7f47b3",
+      "sourceId": "meta-product-news-rss",
+      "title": "Introducing WhatsApp Web Calling, Plus More New Features",
+      "url": "https://about.fb.com/news/2026/07/whatsapp-web-calling-new-features/",
+      "publishedDate": "2026-07-28",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Metaプラットフォーム全般"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "jon-loomer-meta-ads-ac878b990a539d917011",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Meta Can Now Rewrite the Text on Your Ad Images",
+      "url": "https://www.jonloomer.com/meta-rewrite-text-ad-images/",
+      "publishedDate": "2026-07-28",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "meta-product-news-rss-989b9ea74995b935c50e",
+      "sourceId": "meta-product-news-rss",
+      "title": "Connecting Real People on Facebook",
+      "url": "https://about.fb.com/news/2026/07/connecting-real-people-on-facebook/",
+      "publishedDate": "2026-07-24",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Metaプラットフォーム全般"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-product-news-rss-46963c14b98883a71929",
+      "sourceId": "meta-product-news-rss",
+      "title": "Meta AI Doesn’t Just Think, It Acts",
+      "url": "https://about.fb.com/news/2026/07/meta-ai-muse-spark-doesnt-just-think-it-acts/",
+      "publishedDate": "2026-07-24",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Metaプラットフォーム全般"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-product-news-rss-03179afadc490cdc5723",
+      "sourceId": "meta-product-news-rss",
+      "title": "Introducing Seller, an App for Facebook Marketplace Sellers",
+      "url": "https://about.fb.com/news/2026/07/introducing-seller-app-facebook-marketplace/",
+      "publishedDate": "2026-07-24",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Metaプラットフォーム全般"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-product-news-rss-6222b463e1e4bb1a6ba8",
+      "sourceId": "meta-product-news-rss",
+      "title": "New Parental Supervision Tools Coming To Threads",
+      "url": "https://about.fb.com/news/2026/07/new-parental-supervision-tools-coming-threads/",
+      "publishedDate": "2026-07-21",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Metaプラットフォーム全般"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "jon-loomer-meta-ads-42f71ae9952a02e40169",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "How to Use Meta Ads for Lead Generation",
+      "url": "https://www.jonloomer.com/meta-ads-lead-generation/",
+      "publishedDate": "2026-07-21",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "meta-business-sdk-releases-fbea544d91c8d8d6ada9",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v25.0.3",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v25.0.3",
+      "publishedDate": "2026-07-17",
+      "updatedDate": "2026-07-17",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "jon-loomer-meta-ads-cf316f911166253e8378",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Meta Redesigns Audiences Around Labels",
+      "url": "https://www.jonloomer.com/meta-redesigns-audiences-around-labels/",
+      "publishedDate": "2026-07-16",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-fd61667f967ca6d5c1f4",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "The Principles Behind My Meta Ads Strategy",
+      "url": "https://www.jonloomer.com/meta-ads-strategy-principles/",
+      "publishedDate": "2026-07-14",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-0edb1525a8cc8c7f1fd7",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Lead Capture AI Agent for Instant Forms and More",
+      "url": "https://www.jonloomer.com/lead-capture-ai-agent-instant-forms/",
+      "publishedDate": "2026-07-09",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "meta-product-news-rss-95b9e7126c683b61d116",
+      "sourceId": "meta-product-news-rss",
+      "title": "Introducing Muse Image: Image Generation Built for Your World",
+      "url": "https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/",
+      "publishedDate": "2026-07-07",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Metaプラットフォーム全般"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "jon-loomer-meta-ads-4493f6b28640e980b348",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Custom Audiences Come to ChatGPT Ads",
+      "url": "https://www.jonloomer.com/chatgpt-ads-custom-audiences/",
+      "publishedDate": "2026-07-07",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "meta-business-sdk-releases-31629b80580465a0f2a9",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v25.0.2",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v25.0.2",
+      "publishedDate": "2026-06-08",
+      "updatedDate": "2026-07-06",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "jon-loomer-meta-ads-758a423b566717844d39",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "The Master Brief: My Complete Approach to Meta Ads",
+      "url": "https://www.jonloomer.com/meta-ads-master-brief/",
+      "publishedDate": "2026-07-02",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-39bfceaeb58b08ae04e2",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "What to Check When Meta Ads Aren’t Converting",
+      "url": "https://www.jonloomer.com/meta-ads-arent-converting/",
+      "publishedDate": "2026-06-30",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "meta-product-news-rss-f2887671295dba8f3081",
+      "sourceId": "meta-product-news-rss",
+      "title": "It’s Time to Reserve Your WhatsApp Username",
+      "url": "https://about.fb.com/news/2026/06/its-time-to-reserve-your-whatsapp-username/",
+      "publishedDate": "2026-06-29",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Metaプラットフォーム全般"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "jon-loomer-meta-ads-124ec7992f423bfc1264",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Book Appointments from Instant Forms, ChatGPT Conversion Optimization, and More",
+      "url": "https://www.jonloomer.com/instant-form-appointments-chatgpt-conversion-optimization/",
+      "publishedDate": "2026-06-25",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "meta-product-news-rss-3c941c11190e6bcbba66",
+      "sourceId": "meta-product-news-rss",
+      "title": "We’re Partnering With EssilorLuxottica to Launch Meta Glasses",
+      "url": "https://about.fb.com/news/2026/06/meta-essilorluxottica-partner-launch-meta-glasses/",
+      "publishedDate": "2026-06-23",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Metaプラットフォーム全般"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "jon-loomer-meta-ads-fba6ace2b8a7c2b2bb79",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "How Many Active Ad Sets Should You Have in a Meta Ads Campaign?",
+      "url": "https://www.jonloomer.com/active-ad-sets-meta-ads-campaign/",
+      "publishedDate": "2026-06-23",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-333ad9ec8c9dc384d764",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "AI Disclosure Checkbox, ChatGPT Attribution, and More",
+      "url": "https://www.jonloomer.com/ai-disclosure-checkbox-chatgpt-attribution/",
+      "publishedDate": "2026-06-18",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-994c911f8c3ba2766138",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "How Many Meta Ads Campaigns Should You Have at Once?",
+      "url": "https://www.jonloomer.com/how-many-meta-ads-campaigns/",
+      "publishedDate": "2026-06-16",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-38807162bb1bf5359efb",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Push Delivery Tests, ChatGPT Ads Updates, and More",
+      "url": "https://www.jonloomer.com/push-delivery-tests-chatgpt-ads-updates/",
+      "publishedDate": "2026-06-11",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-b7265f2f1963615aa131",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Hands-On With Push Delivery to This Ad",
+      "url": "https://www.jonloomer.com/hands-on-push-delivery-to-this-ad/",
+      "publishedDate": "2026-06-09",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-efc9153e95a2d93db8b7",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Customer Lifecycle Strategy Is Not What Advertisers Thought",
+      "url": "https://www.jonloomer.com/customer-lifecycle-strategy-not-what-advertisers-thought/",
+      "publishedDate": "2026-06-04",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-42cd6283b8ba04e200b5",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Meta Ads Attribution Reporting: What Your Results Really Mean",
+      "url": "https://www.jonloomer.com/meta-ads-attribution-reporting/",
+      "publishedDate": "2026-06-02",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-37b7d9a4bf924c8bad33",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Meta Ads Grouping Reports, ChatGPT Conversions, and More",
+      "url": "https://www.jonloomer.com/meta-ads-grouping-reports-chatgpt-conversions/",
+      "publishedDate": "2026-05-28",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-e4fe07c017307d6465f1",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "7 Common Meta Ads Mistakes Agencies Make",
+      "url": "https://www.jonloomer.com/meta-ads-mistakes-agencies/",
+      "publishedDate": "2026-05-26",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-dca791caa13b275020e2",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "ChatGPT Ads Limitations, AI Instant Forms, and More",
+      "url": "https://www.jonloomer.com/chatgpt-ads-limitations-ai-instant-forms/",
+      "publishedDate": "2026-05-21",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-9b62812df8439b66c6ff",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Hands-On With ChatGPT Ads: Initial Impressions",
+      "url": "https://www.jonloomer.com/chatgpt-ads-initial-impressions/",
+      "publishedDate": "2026-05-19",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-f7c6abcc2ed1fe8771a0",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "One-Click CAPI Activated, New Meta Ads Features, and More",
+      "url": "https://www.jonloomer.com/one-click-capi-activated-new-meta-ads-features/",
+      "publishedDate": "2026-05-14",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-1248d3867d3af8790329",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "The Future of the Meta Advertiser",
+      "url": "https://www.jonloomer.com/future-of-meta-advertiser/",
+      "publishedDate": "2026-05-12",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-237fdce3311562af8426",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "ChatGPT Ads Go Self-Serve, Purchase Retention Expands, and More",
+      "url": "https://www.jonloomer.com/chatgpt-ads-self-serve/",
+      "publishedDate": "2026-05-07",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-899e4f862cde6613b90e",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Meta Ads AI Connectors and Claude: Setup, Uses, and Risks",
+      "url": "https://www.jonloomer.com/meta-ads-ai-connectors-claude/",
+      "publishedDate": "2026-05-05",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-ccf01526f549aa8d46ca",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Meta Ads AI Connectors, App Usage Drops, and More",
+      "url": "https://www.jonloomer.com/meta-ads-ai-connectors/",
+      "publishedDate": "2026-04-30",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ]
+    },
+    {
+      "id": "meta-business-sdk-releases-d2d23ee6281081941d63",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v25.0.1",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v25.0.1",
+      "publishedDate": "2026-03-30",
+      "updatedDate": "2026-03-30",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-b4d50c0b47495c699447",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK 25.0.0",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v25.0.0",
+      "publishedDate": "2026-03-10",
+      "updatedDate": "2026-03-10",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-1c993ae3bc02eca40a1e",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v24.0.1",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v24.0.1",
+      "publishedDate": "2025-11-21",
+      "updatedDate": "2025-11-21",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-b6962ffaaca43d623d71",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v24.0.0",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v24.0.0",
+      "publishedDate": "2025-10-24",
+      "updatedDate": "2025-10-24",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-581bbc09669bc20a6557",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v23.0.3",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v23.0.3",
+      "publishedDate": "2025-10-14",
+      "updatedDate": "2025-10-14",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-a37569d7c984bed4e81a",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v23.0.2",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v23.0.2",
+      "publishedDate": "2025-09-26",
+      "updatedDate": "2025-09-26",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-b4a1d1327fb9dcfb0e23",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v23.0.1",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v23.0.1",
+      "publishedDate": "2025-07-18",
+      "updatedDate": "2025-07-18",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-2bd56393e42b695b04d3",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v23.0.0",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v23.0.0",
+      "publishedDate": "2025-06-17",
+      "updatedDate": "2025-06-17",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-1631658ea5dc42244158",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v22.0.3",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v22.0.3",
+      "publishedDate": "2025-05-14",
+      "updatedDate": "2025-05-14",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-839386cd10e0f28012da",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v22.0.2",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v22.0.2",
+      "publishedDate": "2025-05-06",
+      "updatedDate": "2025-05-06",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-795abe87930ec45e4832",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v22.0.1",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v22.0.1",
+      "publishedDate": "2025-04-01",
+      "updatedDate": "2025-04-01",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-562a8756bbf38f0ec24b",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v22.0.0",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v22.0.0",
+      "publishedDate": "2025-02-13",
+      "updatedDate": "2025-02-14",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-4ed3abd836a552aba940",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v21.0.0",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v21.0.0",
+      "publishedDate": "2024-10-10",
+      "updatedDate": "2024-10-10",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-a29a58fc59fb698c0190",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v20.0.0",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v20.0.0",
+      "publishedDate": "2024-08-15",
+      "updatedDate": "2024-08-15",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-269e4b3003f7056d2b29",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v19.0.2",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v19.0.2",
+      "publishedDate": "2024-04-15",
+      "updatedDate": "2024-04-15",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-d5061ef9dfb1d18af55f",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v19.0.1",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v19.0.1",
+      "publishedDate": "2024-03-14",
+      "updatedDate": "2024-03-14",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-f2d35a0d6bcbbdb659ff",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v19.0.0",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v19.0.0",
+      "publishedDate": "2024-01-24",
+      "updatedDate": "2024-01-24",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-6f789ae84ec245c30797",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v18.0.4",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.4",
+      "publishedDate": "2023-12-04",
+      "updatedDate": "2023-12-04",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-a4fafd8bb8dc331d95c2",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v18.0.3",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.3",
+      "publishedDate": "2023-11-06",
+      "updatedDate": "2023-11-06",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-c6f5e8047ba95fd1abce",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v18.0.2",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.2",
+      "publishedDate": "2023-10-15",
+      "updatedDate": "2023-10-15",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-178bd68cbd55c543381a",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v18.0.1",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.1",
+      "publishedDate": "2023-09-26",
+      "updatedDate": "2023-09-26",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-3fed04f32d8471e671c7",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Meta Business SDK v18.0",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.0",
+      "publishedDate": "2023-09-15",
+      "updatedDate": "2023-09-15",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-72b6b45dad7d01734357",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Releasing the Facebook Ads Node JS SDK for v2.11.3 of Marketing APIs",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v2.11.3",
+      "publishedDate": "2018-01-09",
+      "updatedDate": "2018-01-09",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-32b48178bd353a86865d",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Releasing the Facebook Ads Node JS SDK for v2.11.2 of Marketing APIs",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v2.11.2",
+      "publishedDate": "2018-01-06",
+      "updatedDate": "2018-01-06",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    },
+    {
+      "id": "meta-business-sdk-releases-f85e8a21751d65149210",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "Releasing the Facebook Ads Node JS SDK for v2.10 of Marketing APIs",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v2.10",
+      "publishedDate": "2017-11-08",
+      "updatedDate": "2017-11-08",
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-08-29T09:59:42Z",
+      "platforms": [
+        "Meta Business SDK",
+        "Marketing API"
+      ],
+      "matchEvidence": []
+    }
+  ]
 }
