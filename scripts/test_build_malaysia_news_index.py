@@ -97,6 +97,7 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertIn('href="./2026-08-20.md">Markdown版</a>', page)
         self.assertIn("今日のピックアップ3件", page)
         self.assertIn("直近7日のまとめ", page)
+        self.assertIn("recent-headline-list", page)
         self.assertIn("font-size: clamp(1.75rem, 3vw, 2.625rem)", page)
         self.assertIn("font-size: clamp(1.4rem, 2.4vw, 1.875rem)", page)
         self.assertIn("-webkit-line-clamp: 3", page)
@@ -117,6 +118,34 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         day = self.parse_sample()
         self.assertEqual(day.items[0].short_headline, "雷雨・大雨に注意")
         self.assertEqual(builder.display_headline(day.items[0]), "雷雨・大雨に注意")
+
+    def test_recent_day_lists_at_most_five_short_headlines(self) -> None:
+        items = [
+            builder.NewsItem(
+                category="【速報】",
+                conclusion=f"長い要約本文 {index}",
+                short_headline=f"短見出し{index}",
+            )
+            for index in range(1, 7)
+        ]
+        day = builder.NewsDay(
+            date="2026-08-28",
+            path=Path("2026-08-28.md"),
+            conclusions=[item.conclusion for item in items],
+            items=items,
+            category_counts={"【速報】": 6, "【生活インパクト】": 0, "【知っておくと得】": 0},
+            processed_count="6",
+            summarized_count="6",
+            failed_sources="なし",
+        )
+
+        html = builder.render_recent_day(day)
+
+        self.assertIn('<ol class="recent-headline-list">', html)
+        for index in range(1, 6):
+            self.assertIn(f"<li>短見出し{index}</li>", html)
+        self.assertNotIn("短見出し6", html)
+        self.assertNotIn("長い要約本文", html)
 
     def test_daily_html_keeps_fallback_heading_and_source_aligned(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

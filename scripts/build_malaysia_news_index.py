@@ -335,11 +335,15 @@ def render_latest_summary(day: NewsDay) -> str:
 
 
 def render_recent_day(day: NewsDay) -> str:
-    points = [item.conclusion for item in ordered_items(day)[:2]] or day.conclusions[:2]
-    if points:
-        point_list = "<ol>" + "\n".join(f"<li>{esc(point)}</li>" for point in points) + "</ol>"
+    headlines = [display_headline(item) for item in ordered_items(day)[:5]]
+    if not headlines:
+        headlines = [shorten_pickup_headline(point) for point in day.conclusions[:5]]
+    if headlines:
+        headline_list = "<ol class=\"recent-headline-list\">" + "\n".join(
+            f"<li>{esc(headline)}</li>" for headline in headlines
+        ) + "</ol>"
     else:
-        point_list = '<p class="muted">見出しを抽出できませんでした。</p>'
+        headline_list = '<p class="muted">見出しを抽出できませんでした。</p>'
 
     return f"""
         <article class="recent-card">
@@ -349,7 +353,7 @@ def render_recent_day(day: NewsDay) -> str:
             {render_counts(day)}
           </div>
           <div class="recent-body">
-            {point_list}
+            {headline_list}
           </div>
           <p class="recent-meta">{esc(format_count(day.summarized_count))} / {esc(failed_label(day))}</p>
           <a class="open-link" href="{daily_page_link(day)}">その日のまとめ</a>
@@ -730,7 +734,8 @@ def render_html(days: list[NewsDay]) -> str:
       padding: 14px;
     }}
     .recent-card h3 {{ font-size: 1rem; }}
-    .recent-body ol {{ margin-top: 0; }}
+    .recent-headline-list {{ margin: 0; padding-left: 1.35em; }}
+    .recent-headline-list li + li {{ margin-top: 0.35rem; }}
     .recent-meta {{
       margin: auto 0 0;
       color: var(--muted);
