@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Render selected Malaysia news through the Editorial Entry v2 contract.
 
-The production path has one display object. Groq may replace the code-owned
-RSS fallback entry only after a strict JSON and hard-safety check; every other
-outcome keeps the selected URL renderable without reusing legacy RSS prose.
+The production path has one display object. A failed primary call gets one
+small-contract repair attempt; items never sent to Groq retain their original
+source title and description. Only a hard-safety rejection or failed repair
+uses the code-owned source-link-only entry.
 """
 
 import argparse
@@ -34,8 +35,10 @@ from malaysia_groq_model_profiles import (
     production_model_profile,
 )
 from malaysia_groq_output_contract import (
+    EDITORIAL_ENTRY_REPAIR_SCHEMA,
     EDITORIAL_ENTRY_V2_SCHEMA,
     editorial_entry_forbidden_patterns,
+    editorial_entry_repair_schema_error,
     editorial_entry_schema_error,
     headline_is_valid,
 )
@@ -53,6 +56,7 @@ DEFAULT_MODEL = production_model_profile("", load_model_profile_registry()).mode
 MAX_RESPONSE_CHARS = 4000
 TIMEOUT_SECONDS = 30
 MAX_429_RETRY_AFTER_SECONDS = 5
+REPAIR_MAX_TOKENS = 320
 
 SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュースダッシュボードの日本語編集者です。
 入力はRSSのtitle、description、既存のRSS entry、必要に応じてbody_evidenceだけです。
@@ -67,6 +71,13 @@ RSSにない数値、対象者、死亡、事故、被害、収入減、因果�
 
 EDITORIAL_ENTRY_V2_CONTRACT_INSTRUCTION = """返答は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
 {"editorial_entry":{"headline_ja":"string","entry_ja":"string","supporting_points_ja":["string"]}}"""
+
+REPAIR_SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュースダッシュボードの日本語編集者です。
+入力記事JSONのtitle、description、必要に応じてbody_evidenceだけを根拠にしてください。入力にない事実、数値、主体、因果関係、死亡、事故、被害、収入減を加えないでください。
+原文が発言、計画、予報、警報、調査、疑惑、否定を表す場合は、確定した事実に書き換えないでください。dateline、wire credit、広告、関連記事は出力しません。
+短見出しは全角文字を1、半角英数字・記号を0.5として15.5文字幅以内の自然な日本語にしてください。概要は読者が出典を開くか判断できる日本語にしてください。
+出力は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
+{"editorial_entry":{"headline_ja":"string","entry_ja":"string"}}"""
 
 # Kept as an import-compatible alias for the comparison runner while profiles
 # move to the sole v2 contract.
@@ -85,6 +96,14 @@ class GroqEditorialEntryRejected(ValueError):
     def __init__(self, reason: str, transport_diagnostic: dict[str, Any] | None = None) -> None:
         super().__init__(reason)
         self.transport_diagnostic = copy.deepcopy(transport_diagnostic) if isinstance(transport_diagnostic, dict) else None
+
+
+class GroqEditorialEntryContractError(ValueError):
+    """Keep a successful response diagnostic when local contract checks fail."""
+
+    def __init__(self, reason: str, transport_diagnostic: dict[str, Any] | None = None) -> None:
+        super().__init__(reason)
+        self.groq_diagnostic = copy.deepcopy(transport_diagnostic) if isinstance(transport_diagnostic, dict) else None
 
 
 # Legacy public name retained for scripts that catch the old exception.
@@ -135,6 +154,21 @@ def groq_payload_for_item(item: dict[str, Any]) -> dict[str, Any]:
     return payload
 
 
+def repair_source_payload_for_item(item: dict[str, Any]) -> dict[str, Any]:
+    """Provide only source-grounded fields to the one-shot repair request."""
+    payload: dict[str, Any] = {
+        "source": item.get("source"),
+        "published_date": item.get("published_date"),
+        "title": item.get("title"),
+        "description": item.get("description"),
+    }
+    if item.get("body_excerpt_policy") == "use_body":
+        excerpt = clean_text(item.get("body_evidence_excerpt"))
+        if excerpt:
+            payload["body_evidence"] = {"excerpt": excerpt}
+    return payload
+
+
 def summary_request_messages(
     item: dict[str, Any],
     prompt_layout: str = "production",
@@ -154,6 +188,11 @@ def summary_request_messages(
         f"{SYSTEM_PROMPT}\n\n{EDITORIAL_ENTRY_V2_CONTRACT_INSTRUCTION}\n\n"
         f"入力記事JSON:\n{article_json}"
     )
+    return [{"role": "user", "content": content}]
+
+
+def repair_request_messages(item: dict[str, Any]) -> list[dict[str, str]]:
+    content = f"{REPAIR_SYSTEM_PROMPT}\n\n入力記事JSON:\n{json.dumps(repair_source_payload_for_item(item), ensure_ascii=False)}"
     return [{"role": "user", "content": content}]
 
 
@@ -294,6 +333,17 @@ def validate_groq_editorial_entry(value: Any) -> dict[str, Any]:
     return entry
 
 
+def validate_groq_repair_entry(value: Any) -> dict[str, Any]:
+    if editorial_entry_repair_schema_error(value):
+        raise ValueError("repair editorial entry fields are invalid")
+    raw = value.get("editorial_entry")
+    entry = normalize_editorial_entry(raw)
+    entry["supporting_points_ja"] = []
+    if not headline_is_valid(entry["headline_ja"]) or not entry["entry_ja"]:
+        raise ValueError("repair editorial entry fields are invalid")
+    return entry
+
+
 def retry_after_seconds(error: urllib.error.HTTPError, max_seconds: int) -> int | None:
     raw = error.headers.get("Retry-After") if error.headers else None
     if not raw or not raw.strip().isdigit():
@@ -331,11 +381,45 @@ def request_groq_summary(
     )
     try:
         entry = validate_groq_editorial_entry(completion.parsed)
+    except ValueError as error:
+        raise GroqEditorialEntryContractError(str(error) or "contract validation failed", completion.diagnostic) from error
+    try:
         validate_editorial_entry_against_source(item, entry)
     except ValueError as error:
         raise GroqEditorialEntryRejected(str(error) or "validation failed", completion.diagnostic) from error
     if debug:
         debug_groq_payload(index, item)
+    return GroqEditorialEntryResult(entry, completion.diagnostic)
+
+
+def request_groq_repair_entry(
+    item: dict[str, Any],
+    api_key: str,
+    model: str,
+    model_profile: ModelProfile | None = None,
+    summary_max_tokens: int = DEFAULT_COMPARISON_MAX_TOKENS,
+) -> GroqEditorialEntryResult:
+    """Make at most one small-contract recovery attempt after a non-safety failure."""
+    completion = request_chat_completion(
+        profile=model_profile or profile_for_model_id(model),
+        messages=repair_request_messages(item),
+        temperature=0.0,
+        max_tokens=min(summary_max_tokens, REPAIR_MAX_TOKENS),
+        timeout_seconds=TIMEOUT_SECONDS,
+        max_response_chars=MAX_RESPONSE_CHARS,
+        json_schema_name="malaysia_news_editorial_entry_repair",
+        json_schema=EDITORIAL_ENTRY_REPAIR_SCHEMA,
+        schema_error=editorial_entry_repair_schema_error,
+        api_key=api_key,
+    )
+    try:
+        entry = validate_groq_repair_entry(completion.parsed)
+    except ValueError as error:
+        raise GroqEditorialEntryContractError(str(error) or "repair contract validation failed", completion.diagnostic) from error
+    try:
+        validate_editorial_entry_against_source(item, entry)
+    except ValueError as error:
+        raise GroqEditorialEntryRejected(str(error) or "repair validation failed", completion.diagnostic) from error
     return GroqEditorialEntryResult(entry, completion.diagnostic)
 
 
@@ -389,6 +473,10 @@ def build_decision_record(index: int, item: dict[str, Any]) -> dict[str, Any]:
         "accepted": False,
         "render_source_kind": "not_evaluated",
         "groq_call": None,
+        "repair_attempted": False,
+        "repair_accepted": False,
+        "groq_repair_call": None,
+        "repair_failure_reason": "",
         "hard_safety_rejection_reason": "",
     }
 
@@ -407,6 +495,8 @@ def editorial_entry_counts(records: list[dict[str, Any]]) -> dict[str, int]:
     return {
         "selected_count": len(records),
         "groq_accepted_count": sum(record.get("render_source_kind") == "groq_accepted" for record in records),
+        "groq_repaired_count": sum(record.get("render_source_kind") == "groq_repaired" for record in records),
+        "source_display_count": sum(record.get("render_source_kind") == "source_display" for record in records),
         "rss_fallback_count": sum(record.get("render_source_kind") == "rss_fallback" for record in records),
         "rss_fallback_source_link_only_count": sum(
             record.get("rss_fallback_entry_kind") == "source_link_only" for record in records
@@ -420,6 +510,8 @@ def transport_observation(records: list[dict[str, Any]]) -> dict[str, Any]:
     contracts = Counter()
     contract_reasons = Counter()
     hard_safety = Counter()
+    repair_transport = Counter()
+    repair_contracts = Counter()
     for record in records:
         call = record.get("groq_call")
         if isinstance(call, dict):
@@ -431,11 +523,19 @@ def transport_observation(records: list[dict[str, Any]]) -> dict[str, Any]:
         reason = clean_text(record.get("hard_safety_rejection_reason"))
         if reason:
             hard_safety[reason] += 1
+        repair_call = record.get("groq_repair_call")
+        if isinstance(repair_call, dict):
+            repair_transport[clean_text(repair_call.get("transport_status")) or "not_recorded"] += 1
+            repair_contracts[clean_text(repair_call.get("json_contract_status")) or "not_evaluated"] += 1
     return {
         "transport_status_counts": dict(sorted(transport.items())),
         "json_contract_status_counts": dict(sorted(contracts.items())),
         "json_contract_reason_counts": dict(sorted(contract_reasons.items())),
         "hard_safety_rejection_reason_counts": dict(sorted(hard_safety.items())),
+        "repair_attempted_count": sum(record.get("repair_attempted") is True for record in records),
+        "repair_accepted_count": sum(record.get("repair_accepted") is True for record in records),
+        "repair_transport_status_counts": dict(sorted(repair_transport.items())),
+        "repair_json_contract_status_counts": dict(sorted(repair_contracts.items())),
     }
 
 
@@ -496,6 +596,41 @@ def load_request_link_allowlist(path: str | None) -> set[str] | None:
     return links
 
 
+def accepted_record_payload(
+    index: int,
+    item: dict[str, Any],
+    original_entry: dict[str, Any],
+    improved_entry: dict[str, Any],
+    generation_kind: str,
+) -> dict[str, Any]:
+    return {
+        "index": index + 1,
+        "category": item.get("category", ""),
+        "source": item.get("source", ""),
+        "published_date": item.get("published_date", ""),
+        "title": item.get("title", ""),
+        "link": item.get("link", ""),
+        "original_editorial_entry": original_entry,
+        "improved_editorial_entry": copy.deepcopy(improved_entry),
+        "generation_kind": generation_kind,
+    }
+
+
+def repair_is_eligible(error: BaseException) -> bool:
+    """Do not spend an extra call after a deliberate safety rejection or 429."""
+    return not isinstance(error, GroqEditorialEntryRejected) and not (
+        isinstance(error, urllib.error.HTTPError) and error.code == 429
+    )
+
+
+def repair_failure_reason(error: BaseException) -> str:
+    if isinstance(error, GroqEditorialEntryRejected):
+        return f"hard_safety: {str(error) or 'validation failed'}"
+    if isinstance(error, urllib.error.HTTPError):
+        return f"HTTP {error.code}"
+    return error.__class__.__name__
+
+
 def render_with_groq(
     data: dict[str, Any],
     api_key: str,
@@ -539,8 +674,8 @@ def render_with_groq(
             continue
         requested += 1
         record.update(decision="requested", requested=True)
+        original_entry = fallback_renderer.normalize_editorial_entry(item)
         try:
-            original_entry = fallback_renderer.normalize_editorial_entry(item)
             result = request_groq_summary_with_retry(
                 item, api_key, model, debug, index,
                 max_retry_after_seconds=max_retry_after_seconds,
@@ -554,26 +689,8 @@ def render_with_groq(
                 accepted=True,
                 groq_call=result.transport_diagnostic,
             )
-            accepted_records.append(
-                {
-                    "index": index + 1,
-                    "category": item.get("category", ""),
-                    "source": item.get("source", ""),
-                    "published_date": item.get("published_date", ""),
-                    "title": item.get("title", ""),
-                    "link": item.get("link", ""),
-                    "original_editorial_entry": original_entry,
-                    "improved_editorial_entry": copy.deepcopy(result.editorial_entry),
-                }
-            )
+            accepted_records.append(accepted_record_payload(index, item, original_entry, result.editorial_entry, "primary"))
             accepted += 1
-        except urllib.error.HTTPError as error:
-            fallback += 1
-            record.update(
-                decision="fallback",
-                reason=f"HTTP {error.code}",
-                groq_call=error_diagnostic(error),
-            )
         except GroqEditorialEntryRejected as error:
             fallback += 1
             reason = str(error) or "validation failed"
@@ -585,13 +702,49 @@ def render_with_groq(
             )
             if debug:
                 debug_groq_payload(index, item, reason)
-        except (urllib.error.URLError, TimeoutError, ValueError, KeyError, IndexError, TypeError) as error:
-            fallback += 1
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError, KeyError, IndexError, TypeError) as error:
+            primary_reason = f"HTTP {error.code}" if isinstance(error, urllib.error.HTTPError) else error.__class__.__name__
             record.update(
                 decision="fallback",
-                reason=error.__class__.__name__,
+                reason=primary_reason,
                 groq_call=error_diagnostic(error),
             )
+            if repair_is_eligible(error):
+                record["repair_attempted"] = True
+                try:
+                    repair = request_groq_repair_entry(
+                        item,
+                        api_key,
+                        model,
+                        summary_max_tokens=summary_max_tokens,
+                    )
+                    item["editorial_entry"] = repair.editorial_entry
+                    record.update(
+                        decision="accepted",
+                        accepted=True,
+                        repair_accepted=True,
+                        groq_repair_call=repair.transport_diagnostic,
+                    )
+                    accepted_records.append(
+                        accepted_record_payload(index, item, original_entry, repair.editorial_entry, "repair")
+                    )
+                    accepted += 1
+                except GroqEditorialEntryRejected as repair_error:
+                    repair_reason = str(repair_error) or "repair validation failed"
+                    record.update(
+                        groq_repair_call=repair_error.transport_diagnostic or error_diagnostic(repair_error),
+                        repair_failure_reason=repair_failure_reason(repair_error),
+                        hard_safety_rejection_reason=repair_reason,
+                    )
+                    fallback += 1
+                except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError, KeyError, IndexError, TypeError) as repair_error:
+                    record.update(
+                        groq_repair_call=error_diagnostic(repair_error),
+                        repair_failure_reason=repair_failure_reason(repair_error),
+                    )
+                    fallback += 1
+            else:
+                fallback += 1
         wait = rate_reset_wait_seconds(record.get("groq_call"))
         if rate_reset_wait_max_seconds > 0 and wait is not None:
             if wait > rate_reset_wait_max_seconds:

@@ -80,6 +80,8 @@ def parse_observation_diagnostics(value: dict[str, Any]) -> dict[str, Any]:
     result: dict[str, Any] = {
         "selected_count": None,
         "groq_accepted_count": None,
+        "groq_repaired_count": None,
+        "source_display_count": None,
         "rss_fallback_count": None,
         "rss_fallback_source_link_only_count": None,
         "request_cap_skipped_count": None,
@@ -87,6 +89,10 @@ def parse_observation_diagnostics(value: dict[str, Any]) -> dict[str, Any]:
         "transport_status_counts": {},
         "json_contract_status_counts": {},
         "json_contract_reason_counts": {},
+        "repair_attempted_count": None,
+        "repair_accepted_count": None,
+        "repair_transport_status_counts": {},
+        "repair_json_contract_status_counts": {},
         "entry_provenance_line_counts": {},
     }
     if not isinstance(diagnostics, dict):
@@ -96,6 +102,8 @@ def parse_observation_diagnostics(value: dict[str, Any]) -> dict[str, Any]:
         for key in (
             "selected_count",
             "groq_accepted_count",
+            "groq_repaired_count",
+            "source_display_count",
             "rss_fallback_count",
             "rss_fallback_source_link_only_count",
             "request_cap_skipped_count",
@@ -110,10 +118,62 @@ def parse_observation_diagnostics(value: dict[str, Any]) -> dict[str, Any]:
         raw = diagnostics.get(key)
         if isinstance(raw, dict):
             result[key] = raw
+    for key in ("repair_attempted_count", "repair_accepted_count"):
+        result[key] = optional_int(diagnostics.get(key))
+    for key in ("repair_transport_status_counts", "repair_json_contract_status_counts"):
+        raw = diagnostics.get(key)
+        if isinstance(raw, dict):
+            result[key] = raw
     provenance = diagnostics.get("editorial_entry_provenance")
     if isinstance(provenance, dict) and isinstance(provenance.get("line_counts"), dict):
         result["entry_provenance_line_counts"] = provenance["line_counts"]
     return result
+
+
+def candidate_blocks_by_url(candidate: str) -> dict[str, str]:
+    """Split the renderer's stable item blocks without interpreting article text."""
+    blocks: dict[str, str] = {}
+    current: list[str] = []
+    for line in candidate.splitlines():
+        current.append(line)
+        if line.startswith("- 出典元URL："):
+            link = line.partition("：")[2].strip()
+            if link:
+                blocks[link] = "\n".join(current)
+            current = []
+    return blocks
+
+
+def source_display_links(improved: dict[str, Any]) -> set[str]:
+    diagnostics = improved.get("diagnostics")
+    records = diagnostics.get("decision_records") if isinstance(diagnostics, dict) else []
+    if not isinstance(records, list):
+        return set()
+    return {
+        record["link"]
+        for record in records if isinstance(record, dict)
+        and record.get("render_source_kind") == "source_display"
+        and isinstance(record.get("link"), str) and record["link"]
+    }
+
+
+def forbidden_matches_by_provenance(candidate: str, improved: dict[str, Any]) -> tuple[list[str], list[str]]:
+    """Apply generated-text leakage checks only to model-generated item blocks.
+
+    A source display intentionally preserves the publisher's title and
+    description. Those fields are not generated claims, so dateline-style
+    tokens there are observable source text rather than model leakage.
+    """
+    blocks = candidate_blocks_by_url(candidate)
+    source_links = source_display_links(improved)
+    remainder = candidate
+    for block in blocks.values():
+        remainder = remainder.replace(block, "", 1)
+    matches = {pattern for pattern in FORBIDDEN_PATTERNS if pattern in remainder}
+    for link, block in blocks.items():
+        if link not in source_links:
+            matches.update(pattern for pattern in FORBIDDEN_PATTERNS if pattern in block)
+    return sorted(matches), sorted(source_links)
 
 
 def validate_candidate(
@@ -159,7 +219,7 @@ def validate_candidate(
     for key, marker in REQUIRED_LINES.items():
         if marker not in candidate:
             failures.append(f"candidate Markdown is missing {key}")
-    forbidden = [pattern for pattern in FORBIDDEN_PATTERNS if pattern in candidate]
+    forbidden, source_display = forbidden_matches_by_provenance(candidate, improved)
     if forbidden:
         failures.append("candidate Markdown contains forbidden leakage strings")
     if counts["accepted"] and candidate == rss_fallback:
@@ -194,6 +254,7 @@ def validate_candidate(
             "category_headers": {header: header in candidate for header in CATEGORY_HEADERS},
             "required_lines": {key: marker in candidate for key, marker in REQUIRED_LINES.items()},
             "forbidden_matches": forbidden,
+            "source_display_links": source_display,
             "matches_rss_fallback": candidate == rss_fallback,
         },
         "observation": diagnostics,
@@ -211,6 +272,8 @@ def write_report(path: Path, result: dict[str, Any]) -> None:
         f"- groq_requested: {result['counts']['groq_requested']}",
         f"- groq_accepted: {result['counts']['groq_accepted']}",
         f"- groq_fallback: {result['counts']['groq_fallback']}",
+        f"- groq_repaired_count: {observation['groq_repaired_count']}",
+        f"- source_display_count: {observation['source_display_count']}",
         f"- rss_fallback_count: {observation['rss_fallback_count']}",
         f"- rss_fallback_source_link_only_count: {observation['rss_fallback_source_link_only_count']}",
         f"- request_cap_skipped_count: {observation['request_cap_skipped_count']}",
@@ -218,6 +281,10 @@ def write_report(path: Path, result: dict[str, Any]) -> None:
         f"- transport_status_counts: {json.dumps(observation['transport_status_counts'], ensure_ascii=False)}",
         f"- json_contract_status_counts: {json.dumps(observation['json_contract_status_counts'], ensure_ascii=False)}",
         f"- json_contract_reason_counts: {json.dumps(observation['json_contract_reason_counts'], ensure_ascii=False)}",
+        f"- repair_attempted_count: {observation['repair_attempted_count']}",
+        f"- repair_accepted_count: {observation['repair_accepted_count']}",
+        f"- repair_transport_status_counts: {json.dumps(observation['repair_transport_status_counts'], ensure_ascii=False)}",
+        f"- repair_json_contract_status_counts: {json.dumps(observation['repair_json_contract_status_counts'], ensure_ascii=False)}",
     ]
     if result["failures"]:
         lines.extend(["", "## Failures", "", *[f"- {failure}" for failure in result["failures"]]])

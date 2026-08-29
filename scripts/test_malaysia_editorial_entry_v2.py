@@ -14,7 +14,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import render_malaysia_news_from_json as markdown_renderer
 import render_malaysia_news_with_groq as groq_renderer
 from malaysia_groq_output_contract import (
+    EDITORIAL_ENTRY_REPAIR_SCHEMA,
     EDITORIAL_ENTRY_V2_SCHEMA,
+    editorial_entry_repair_schema_error,
     headline_display_width,
     editorial_entry_schema_error,
 )
@@ -24,6 +26,7 @@ from malaysia_groq_render_decision import (
     apply_render_decisions,
     build_render_decisions,
     provenance_observation,
+    validated_source_display_editorial_entry,
     validated_rss_fallback_editorial_entry,
 )
 from malaysia_groq_transport import ChatCompletion
@@ -96,6 +99,19 @@ class EditorialEntryV2Test(unittest.TestCase):
             "editorial_entry_shape",
         )
         self.assertEqual(EDITORIAL_ENTRY_V2_SCHEMA["required"], ["editorial_entry"])
+        self.assertEqual(
+            editorial_entry_repair_schema_error(
+                {"editorial_entry": {"headline_ja": "概要", "entry_ja": "概要です。"}}
+            ),
+            "",
+        )
+        self.assertEqual(
+            editorial_entry_repair_schema_error(
+                {"editorial_entry": {"headline_ja": "概要", "entry_ja": "概要です。", "supporting_points_ja": []}}
+            ),
+            "editorial_entry_shape",
+        )
+        self.assertEqual(EDITORIAL_ENTRY_REPAIR_SCHEMA["required"], ["editorial_entry"])
 
     def test_headline_is_required_and_limited_to_15_5_display_width(self) -> None:
         self.assertEqual(headline_display_width("KLで雷雨・大雨に注意"), 10.0)
@@ -225,6 +241,44 @@ class EditorialEntryV2Test(unittest.TestCase):
             "fallback_source_only",
         )
 
+    def test_contract_failure_uses_one_repair_and_keeps_both_diagnostics(self) -> None:
+        data = {"items": [item()]}
+        primary = groq_renderer.GroqEditorialEntryContractError(
+            "headline_ja exceeds 15.5 display width",
+            {"transport_status": "success", "json_contract_status": "schema_invalid"},
+        )
+        repaired = groq_renderer.GroqEditorialEntryResult(
+            {"headline_ja": "交通計画", "entry_ja": "当局は交通計画を来月始める見通しだと述べました。", "supporting_points_ja": []},
+            {"transport_status": "success", "json_contract_status": "valid"},
+        )
+        with patch("render_malaysia_news_with_groq.request_groq_summary_with_retry", side_effect=primary), patch(
+            "render_malaysia_news_with_groq.request_groq_repair_entry", return_value=repaired
+        ) as repair_request:
+            rendered, accepted, stats, records = groq_renderer.render_with_groq(data, "key", "test-model")
+        decisions = build_render_decisions(rendered["items"], records)
+        final = apply_render_decisions(rendered, decisions)
+        annotate_decision_records(data, final, records, decisions)
+        self.assertEqual(repair_request.call_count, 1)
+        self.assertEqual(stats, {"requested": 1, "accepted": 1, "fallback": 0})
+        self.assertEqual(accepted[0]["generation_kind"], "repair")
+        self.assertEqual(records[0]["render_source_kind"], "groq_repaired")
+        self.assertTrue(records[0]["repair_attempted"])
+        self.assertTrue(records[0]["repair_accepted"])
+        self.assertEqual(records[0]["groq_call"]["json_contract_status"], "schema_invalid")
+        self.assertEqual(records[0]["groq_repair_call"]["json_contract_status"], "valid")
+
+    def test_api_not_run_uses_source_display_with_title_and_description(self) -> None:
+        data = {"items": [item()]}
+        rendered, _, stats, records = groq_renderer.render_with_groq(data, "", "test-model")
+        decisions = build_render_decisions(rendered["items"], records)
+        final = apply_render_decisions(rendered, decisions)
+        annotate_decision_records(data, final, records, decisions)
+        self.assertEqual(stats, {"requested": 0, "accepted": 0, "fallback": 0})
+        self.assertEqual(final["items"][0]["editorial_entry"], validated_source_display_editorial_entry(item()))
+        self.assertEqual(records[0]["render_source_kind"], "source_display")
+        self.assertEqual(records[0]["source_display_entry_kind"], "source_title_and_description")
+        self.assertEqual(records[0]["editorial_entry_line_provenance"][0]["origin"], "source_display")
+
     def test_legacy_english_rss_entry_cannot_invalidate_other_accepted_entries(self) -> None:
         data = {
             "counts": {"processed": 2, "selected": 2},
@@ -273,6 +327,48 @@ class EditorialEntryV2Test(unittest.TestCase):
             1,
         )
 
+    def test_validator_allows_forbidden_source_text_only_in_source_display(self) -> None:
+        data = {
+            "counts": {"processed": 2, "selected": 2},
+            "failed_sources": [],
+            "items": [item(1), item(2)],
+        }
+        data["items"][1]["title"] = "Agency update from Kuala Lumpur"
+        data["items"][1]["description"] = "KUALA LUMPUR, Aug 28 — The agency issued an update."
+        rendered = copy.deepcopy(data)
+        rendered["items"][0]["editorial_entry"] = accepted_result(1).editorial_entry
+        records = [
+            {"index": 1, "link": item(1)["link"], "accepted": True},
+            {
+                "index": 2,
+                "link": item(2)["link"],
+                "decision": "skipped",
+                "reason": "request_cap",
+                "requested": False,
+                "accepted": False,
+            },
+        ]
+        decisions = build_render_decisions(rendered["items"], records)
+        final = apply_render_decisions(rendered, decisions)
+        annotate_decision_records(data, final, records, decisions)
+        improved = {
+            "counts": {"requested": 1, "accepted": 1, "fallback": 0},
+            "diagnostics": {"decision_records": records},
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            selected_path = root / "selected.json"
+            candidate_path = root / "candidate.md"
+            improved_path = root / "improved.json"
+            fallback_path = root / "fallback.md"
+            selected_path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+            candidate_path.write_text(markdown_renderer.render_editorial_entries(final), encoding="utf-8")
+            improved_path.write_text(json.dumps(improved, ensure_ascii=False), encoding="utf-8")
+            fallback_path.write_text(markdown_renderer.render(data), encoding="utf-8")
+            result = validate_candidate(selected_path, candidate_path, improved_path, fallback_path)
+        self.assertTrue(result["passed"], result["failures"])
+        self.assertEqual(result["markdown_validation"]["source_display_links"], [item(2)["link"]])
+
     def test_hard_safety_checks_apply_to_the_complete_editorial_entry(self) -> None:
         with self.assertRaisesRegex(ValueError, "unsafe numeric unit conversion"):
             groq_renderer.validate_editorial_entry_against_source(
@@ -304,7 +400,7 @@ class EditorialEntryV2Test(unittest.TestCase):
             {"entry_ja": "道路事故により交通の遅れが出ています。", "supporting_points_ja": []},
         )
 
-    def test_missing_api_key_preserves_every_url_as_rss_entry(self) -> None:
+    def test_missing_api_key_preserves_every_url_as_source_display(self) -> None:
         data = {"counts": {"processed": 2, "selected": 2}, "failed_sources": [], "items": [item(1), item(2)]}
         with tempfile.TemporaryDirectory() as directory:
             input_path = Path(directory) / "selected.json"
@@ -326,7 +422,8 @@ class EditorialEntryV2Test(unittest.TestCase):
             self.assertIn("https://example.test/1", markdown)
             self.assertIn("https://example.test/2", markdown)
             payload = json.loads(improved_path.read_text(encoding="utf-8"))
-            self.assertEqual(payload["diagnostics"]["editorial_entry_counts"]["rss_fallback_count"], 2)
+            self.assertEqual(payload["diagnostics"]["editorial_entry_counts"]["source_display_count"], 2)
+            self.assertEqual(payload["diagnostics"]["editorial_entry_counts"]["rss_fallback_count"], 0)
 
     def test_schema_invalid_reason_counts_are_kept_separate(self) -> None:
         records = [

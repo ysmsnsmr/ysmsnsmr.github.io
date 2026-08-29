@@ -10,12 +10,16 @@ from malaysia_groq_output_contract import editorial_entry_schema_error
 
 
 GROQ_ACCEPTED = "groq_accepted"
+GROQ_REPAIRED = "groq_repaired"
+SOURCE_DISPLAY = "source_display"
 RSS_FALLBACK = "rss_fallback"
 RSS_FALLBACK_ENTRY_KIND = "source_link_only"
+SOURCE_DISPLAY_ENTRY_KIND = "source_title_and_description"
 PROVENANCE_ORIGINS = (
     "rss_derived",
     "groq_replaced",
     "groq_inherited",
+    "source_display",
     "fallback_source_only",
 )
 
@@ -66,6 +70,31 @@ def validated_rss_fallback_editorial_entry() -> dict[str, Any]:
     return entry
 
 
+def validated_source_display_editorial_entry(item: dict[str, Any]) -> dict[str, Any]:
+    """Keep ungenerated source fields visible when the model was not run."""
+    description = clean_text(item.get("description"))
+    entry = {
+        "headline_ja": "原題・出典情報",
+        "entry_ja": clean_text(item.get("title")) or "原題は出典リンクで確認できます。",
+        "supporting_points_ja": [description] if description else [],
+    }
+    error = editorial_entry_schema_error({"editorial_entry": entry})
+    if error:
+        raise ValueError(f"invalid source display entry: {error}")
+    return entry
+
+
+def _uses_source_display(record: dict[str, Any] | None) -> bool:
+    if not isinstance(record, dict) or record.get("requested") is True:
+        return False
+    return clean_text(record.get("reason")) in {
+        "missing_groq_api_key",
+        "request_cap",
+        "rate_budget_deferred",
+        "comparison_cohort_excluded",
+    }
+
+
 def _record_for_item(
     index: int,
     item: dict[str, Any],
@@ -89,7 +118,13 @@ def build_render_decisions(items: list[Any], decision_records: list[dict[str, An
             continue
         record = _record_for_item(index, item, records)
         accepted = record is not None and record.get("accepted") is True
-        source_kind = GROQ_ACCEPTED if accepted else RSS_FALLBACK
+        repaired = accepted and record is not None and record.get("repair_accepted") is True
+        source_kind = (
+            GROQ_REPAIRED if repaired
+            else GROQ_ACCEPTED if accepted
+            else SOURCE_DISPLAY if _uses_source_display(record)
+            else RSS_FALLBACK
+        )
         decisions.append(
             RenderDecision(
                 index=index,
@@ -99,8 +134,14 @@ def build_render_decisions(items: list[Any], decision_records: list[dict[str, An
                     editorial_entry_payload(item.get("editorial_entry"))
                     if accepted
                     else validated_rss_fallback_editorial_entry()
+                    if source_kind == RSS_FALLBACK
+                    else validated_source_display_editorial_entry(item)
                 ),
-                rss_fallback_entry_kind=RSS_FALLBACK_ENTRY_KIND if source_kind == RSS_FALLBACK else "",
+                rss_fallback_entry_kind=(
+                    RSS_FALLBACK_ENTRY_KIND if source_kind == RSS_FALLBACK
+                    else SOURCE_DISPLAY_ENTRY_KIND if source_kind == SOURCE_DISPLAY
+                    else ""
+                ),
             )
         )
     return decisions
@@ -174,6 +215,9 @@ def annotate_decision_records(
         if decision.source_kind == RSS_FALLBACK:
             record["rss_fallback_entry_kind"] = decision.rss_fallback_entry_kind
             record["rss_fallback_entry_contract_status"] = "valid"
+        elif decision.source_kind == SOURCE_DISPLAY:
+            record["source_display_entry_kind"] = decision.rss_fallback_entry_kind
+            record["source_display_entry_contract_status"] = "valid"
         original = editorial_entry_payload(original_items[item_index].get("editorial_entry"))
         final = editorial_entry_payload(final_items[item_index].get("editorial_entry"))
         remaining = {"headline_ja": {}, "entry_ja": {}, "supporting_points_ja": {}}
@@ -184,7 +228,9 @@ def annotate_decision_records(
             origin = "rss_derived"
             if decision.source_kind == RSS_FALLBACK:
                 origin = "fallback_source_only"
-            elif decision.source_kind == GROQ_ACCEPTED:
+            elif decision.source_kind == SOURCE_DISPLAY:
+                origin = "source_display"
+            elif decision.source_kind in {GROQ_ACCEPTED, GROQ_REPAIRED}:
                 if remaining[field].get(text, 0):
                     remaining[field][text] -= 1
                     origin = "groq_inherited"

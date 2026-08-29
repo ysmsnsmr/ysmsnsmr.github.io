@@ -135,6 +135,28 @@ EDITORIAL_ENTRY_V2_SCHEMA = {
 }
 
 
+# The repair request intentionally has a smaller surface than the production
+# entry contract. It is only used once after a transport or JSON-contract
+# failure, so a short headline and a single source-grounded overview are
+# enough to recover a usable entry without recreating the full response.
+EDITORIAL_ENTRY_REPAIR_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "editorial_entry": {
+            "type": "object",
+            "properties": {
+                "headline_ja": {"type": "string", "minLength": 1, "maxLength": 31},
+                "entry_ja": {"type": "string", "minLength": 1},
+            },
+            "required": ["headline_ja", "entry_ja"],
+            "additionalProperties": False,
+        }
+    },
+    "required": ["editorial_entry"],
+    "additionalProperties": False,
+}
+
+
 SUMMARY_ENTRY_SCHEMA = {
     "type": "object",
     "properties": {
@@ -263,6 +285,17 @@ def editorial_entry_schema_error(value: Any) -> str:
         or not 0 <= len(points) <= 2
         or any(not _is_string(point) for point in points)
     ):
+        return "editorial_entry_value"
+    return ""
+
+
+def editorial_entry_repair_schema_error(value: Any) -> str:
+    if not _exact_keys(value, {"editorial_entry"}):
+        return "root_shape"
+    entry = value["editorial_entry"]
+    if not _exact_keys(entry, {"headline_ja", "entry_ja"}):
+        return "editorial_entry_shape"
+    if not headline_is_valid(entry["headline_ja"]) or not _is_string(entry["entry_ja"]) or not entry["entry_ja"].strip():
         return "editorial_entry_value"
     return ""
 
