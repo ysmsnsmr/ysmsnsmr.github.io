@@ -1,4 +1,6 @@
-# Meta Ads Tracker production runbook
+# Meta Ads Tracker legacy production runbook
+
+> 現在の通常運用は [Personal Feed runbook](meta_ads_personal_feed_runbook.md) です。この文書のweekly、承認、recovery、shadow手順は既存履歴を再現・確認するためのlegacy手順であり、Personal Feedの公開条件ではありません。
 
 ## Bootstrap and daily collection
 

@@ -103,13 +103,15 @@ def main() -> int:
             for step in collect_steps
         ):
             fail("every collecting step after the kill switch must be gated")
-        if 'git add -- "${CANDIDATE}" data/meta_ads_tracker_state.json' not in collect_runs:
-            fail("collect workflow must stage only the current candidate and state")
-        if "--governance config/meta_ads_source_governance.json" not in collect_runs:
-            fail("collect workflow must validate source governance before collection")
-        artifact = next((step for step in collect_steps if step.get("name") == "Upload daily candidate artifacts"), None)
-        if not isinstance(artifact, dict) or artifact.get("with", {}).get("path") != "${{ steps.collect.outputs.candidate }}":
-            fail("collect workflow must upload only the current candidate")
+        if "meta_ads_personal_feed.py" not in collect_runs or "validate_meta_ads_personal_feed.py" not in collect_runs:
+            fail("collect workflow must build and validate the Personal Feed")
+        if any(value in collect_runs for value in ("meta_ads_tracker_collect.py", "meta_ads_tracker_weekly", "meta_ads_tracker_decisions", "meta_ads_tracker_groq.py")):
+            fail("Personal Feed collection must not depend on candidate, weekly, decision, or Groq stages")
+        if 'git add -- data/meta_ads_personal_feed_state.json meta-ads-updates/personal-feed.json' not in collect_runs:
+            fail("Personal Feed collection must stage only its explicit state and public feed paths")
+        artifact = next((step for step in collect_steps if step.get("name") == "Upload Personal Feed artifact"), None)
+        if not isinstance(artifact, dict) or artifact.get("with", {}).get("path") != "meta-ads-updates/personal-feed.json":
+            fail("Personal Feed collection must upload only the current public feed")
         artifact_with = artifact.get("with", {}) if isinstance(artifact, dict) else {}
         if artifact_with.get("if-no-files-found") != "error" or artifact_with.get("retention-days") != "30":
             fail("collect artifact must fail on absence and retain exactly 30 days")
@@ -204,6 +206,8 @@ def main() -> int:
             fail("Tracker CI must validate delayed-recovery promotion records")
         if "validate_meta_ads_tracker_recovery_decisions.py" not in ci_runs:
             fail("Tracker CI must validate delayed-recovery human decisions")
+        if "validate_meta_ads_personal_feed.py" not in ci_runs:
+            fail("Tracker CI must validate the Personal Feed contract")
     except (OSError, ValueError, yaml.YAMLError) as error:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1

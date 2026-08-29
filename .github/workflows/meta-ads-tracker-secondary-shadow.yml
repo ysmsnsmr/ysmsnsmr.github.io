@@ -1,8 +1,6 @@
 name: Meta Ads tracker secondary shadow
 
 on:
-  schedule:
-    - cron: "15 1 * * *"
   workflow_dispatch:
 
 permissions:

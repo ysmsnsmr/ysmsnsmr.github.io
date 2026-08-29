@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "meta-ads-personal-feed/v1",
+  "generatedAt": null,
+  "sources": [
+    {
+      "id": "meta-product-news-rss",
+      "name": "Meta Newsroom Product News",
+      "classification": "official",
+      "sourceUrl": "https://about.fb.com/news/category/product-news/",
+      "platforms": ["Metaプラットフォーム全般"]
+    },
+    {
+      "id": "meta-business-sdk-releases",
+      "name": "Meta Business SDK Releases",
+      "classification": "official",
+      "sourceUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases",
+      "platforms": ["Meta Business SDK", "Marketing API"]
+    },
+    {
+      "id": "ppc-land-meta-ads",
+      "name": "PPC Land",
+      "classification": "unofficial",
+      "sourceUrl": "https://ppc.land/",
+      "platforms": ["Meta Ads"]
+    },
+    {
+      "id": "jon-loomer-meta-ads",
+      "name": "Jon Loomer Digital",
+      "classification": "unofficial",
+      "sourceUrl": "https://www.jonloomer.com/",
+      "platforms": ["Meta Ads"]
+    }
+  ],
+  "items": []
+}

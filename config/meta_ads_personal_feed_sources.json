@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "meta-ads-personal-feed-sources/v1",
+  "policies": {
+    "persistRawResponseBody": false,
+    "historyRetentionDays": 180,
+    "maxPublishedItems": 100
+  },
+  "sources": [
+    {
+      "id": "meta-product-news-rss",
+      "name": "Meta Newsroom Product News",
+      "classification": "official",
+      "sourceUrl": "https://about.fb.com/news/category/product-news/",
+      "fetchUrl": "https://about.fb.com/news/category/product-news/feed/",
+      "parser": "rss",
+      "expectedContentTypes": ["application/rss+xml", "application/xml", "text/xml"],
+      "platforms": ["Metaプラットフォーム全般"],
+      "transport": {
+        "allowedFetchHosts": ["about.fb.com"],
+        "allowedContentHosts": ["about.fb.com"],
+        "maxResponseBytes": 1048576,
+        "maxRedirects": 3,
+        "maxItems": 50
+      },
+      "match": {"kind": "all"}
+    },
+    {
+      "id": "meta-business-sdk-releases",
+      "name": "Meta Business SDK Releases",
+      "classification": "official",
+      "sourceUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases",
+      "fetchUrl": "https://api.github.com/repos/facebook/facebook-nodejs-business-sdk/releases",
+      "parser": "github_releases",
+      "expectedContentTypes": ["application/json"],
+      "platforms": ["Meta Business SDK", "Marketing API"],
+      "transport": {
+        "allowedFetchHosts": ["api.github.com"],
+        "allowedContentHosts": ["github.com"],
+        "maxResponseBytes": 1048576,
+        "maxRedirects": 3,
+        "maxItems": 50
+      },
+      "match": {"kind": "all"}
+    },
+    {
+      "id": "ppc-land-meta-ads",
+      "name": "PPC Land",
+      "classification": "unofficial",
+      "sourceUrl": "https://ppc.land/",
+      "fetchUrl": "https://ppc.land/rss/",
+      "parser": "rss",
+      "expectedContentTypes": ["application/rss+xml", "application/xml", "text/xml"],
+      "platforms": ["Meta Ads"],
+      "transport": {
+        "allowedFetchHosts": ["ppc.land"],
+        "allowedContentHosts": ["ppc.land"],
+        "maxResponseBytes": 1048576,
+        "maxRedirects": 3,
+        "maxItems": 50
+      },
+      "match": {
+        "kind": "all_groups",
+        "groups": [
+          ["meta", "facebook", "instagram", "threads", "whatsapp"],
+          ["ads", "advertising", "ads manager", "marketing api", "business manager", "advantage+", "pixel", "conversions api"]
+        ]
+      }
+    },
+    {
+      "id": "jon-loomer-meta-ads",
+      "name": "Jon Loomer Digital",
+      "classification": "unofficial",
+      "sourceUrl": "https://www.jonloomer.com/",
+      "fetchUrl": "https://www.jonloomer.com/feed/",
+      "parser": "rss",
+      "expectedContentTypes": ["application/rss+xml", "application/xml", "text/xml"],
+      "platforms": ["Meta Ads"],
+      "transport": {
+        "allowedFetchHosts": ["www.jonloomer.com"],
+        "allowedContentHosts": ["www.jonloomer.com"],
+        "maxResponseBytes": 2097152,
+        "maxRedirects": 3,
+        "maxItems": 50
+      },
+      "match": {"kind": "rss_category", "categories": ["Meta Advertising"]}
+    }
+  ]
+}

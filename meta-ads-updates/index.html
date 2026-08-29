@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0d3b78">
-    <meta name="description" content="Meta Ads公式更新の承認済み週次インデックス">
-    <title>Meta Ads Official Update Tracker</title>
+    <meta name="description" content="Meta Adsの公式・非公式情報を区別して表示する個人向け更新フィード">
+    <title>Meta Ads Personal Feed</title>
     <link rel="stylesheet" href="./style.css">
     <script src="./app.js" defer></script>
   </head>
@@ -19,11 +19,15 @@
         <strong>遅延回復データ</strong>
         <span id="recovery-banner-copy"></span>
       </section>
+      <section id="unofficial-notice" class="unofficial-notice" aria-label="非公式情報の注意" hidden>
+        <strong>非公式情報の取り扱い</strong>
+        <span>非公式ソースは早期検知の参考情報です。内容の正確性や対応の判断は、必ずMeta公式情報で確認してください。</span>
+      </section>
       <header class="masthead">
         <div>
-          <p class="eyebrow">Official change monitor</p>
-          <h1>Meta Ads Official Update Tracker</h1>
-          <p class="masthead-copy">公式URLを根拠に、発表日・適用日・rollout・対象・業務影響・対応要否を分けて確認する週次index。</p>
+          <p class="eyebrow">Personal information feed</p>
+          <h1>Meta Ads Update Feed</h1>
+          <p class="masthead-copy">Meta公式と非公式の情報を区別し、発表日・最新更新日・対象プラットフォームを確認する個人・同僚向けフィード。</p>
         </div>
         <p id="week-stamp" class="week-stamp"></p>
       </header>
@@ -40,12 +44,11 @@
             </select>
           </div>
           <div class="filter-field">
-            <label for="priority-filter">優先度</label>
+            <label id="priority-filter-label" for="priority-filter">ソース区分</label>
             <select id="priority-filter" name="priority">
               <option value="all">すべて</option>
-              <option value="high">高</option>
-              <option value="standard">標準</option>
-              <option value="low">低</option>
+              <option value="official">Meta公式</option>
+              <option value="unofficial">非公式・未確認</option>
             </select>
           </div>
           <div class="filter-field">
@@ -64,7 +67,7 @@
         <p id="empty-copy"></p>
       </section>
 
-      <p id="tracker-footer" class="tracker-footer">承認済みの公式更新だけを掲載しています。取得・Groq・validatorが失敗したrunでは、公開済み内容を変更しません。</p>
+      <p id="tracker-footer" class="tracker-footer">個人・同僚向けの自動情報フィードです。非公式情報は判断・対応の根拠にせず、必ず公式情報を確認してください。</p>
     </main>
   </body>
 </html>
