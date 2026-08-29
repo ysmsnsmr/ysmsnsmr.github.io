@@ -76,6 +76,9 @@ def main() -> int:
             for block in run_blocks(workflow):
                 if "${{ inputs." in block:
                     fail(f"{name} interpolates workflow input directly into shell code")
+        for name in ("friday_preflight", "weekly_recovery"):
+            if r"\\n" in WORKFLOWS[name].read_text(encoding="utf-8"):
+                fail(f"{name} must write GitHub output values with real newlines")
         for name in ("collect", "weekly", "publish", "friday_preflight", "weekly_recovery"):
             group = parsed[name].get("concurrency", {}).get("group")
             if group != "meta-ads-tracker-repository-write":
