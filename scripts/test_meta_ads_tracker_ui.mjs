@@ -226,7 +226,7 @@ try {
   assert(await productionPage.locator("#unofficial-notice").isVisible(), "Personal Feed must show the non-official-source notice");
   await productionPage.close();
 
-  for (const viewport of [viewports[0], viewports[2]]) {
+  for (const viewport of viewports) {
     const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });
     const consoleErrors = [];
     const pageErrors = [];
@@ -238,7 +238,12 @@ try {
     assert(await page.locator("#update-list .update-card").count() === 3, `${label}: personal feed cards are missing`);
     assert(await page.locator(".origin-label--official").count() === 1, `${label}: official badge is missing`);
     assert(await page.locator(".origin-label--unofficial").count() === 2, `${label}: non-official badge is missing`);
-    assert(await page.locator(".unofficial-copy").count() === 2, `${label}: non-official warning is missing`);
+    assert(await page.locator(".unofficial-copy").count() === 0, `${label}: per-card non-official warning must not be rendered`);
+    assert((await page.locator(".fact-label").allTextContents()).filter((label) => label === "最終更新日").length === 3, `${label}: final update date label is missing`);
+    assert(await page.locator(".masthead").textContent().then((text) => !text.includes("Personal information feed") && !text.includes("個人・同僚向けフィード")), `${label}: removed personal-feed copy is still visible`);
+    const personalColumns = await page.locator("#update-list").evaluate((node) => getComputedStyle(node).gridTemplateColumns.trim().split(/\s+/).length);
+    const expectedColumns = viewport.name === "desktop" ? 3 : viewport.name === "tablet" ? 2 : 1;
+    assert(personalColumns === expectedColumns, `${label}: expected ${expectedColumns} personal-feed column(s), found ${personalColumns}`);
     assert(await page.locator(".source-link").evaluateAll((links) => links.every((link) => link.href.startsWith("https://") && link.target === "_blank" && link.rel.includes("noreferrer"))), `${label}: source links are unsafe`);
     assert(consoleErrors.length === 0 && pageErrors.length === 0, `${label}: runtime errors: ${[...consoleErrors, ...pageErrors].join("; ")}`);
     await assertTokens(page);
@@ -252,6 +257,10 @@ try {
       assert(await page.locator("#update-list .update-card").count() === 1, "personal feed query filter failed");
       await page.click("#reset-button");
       assert(await page.locator("#update-list .update-card").count() === 3, "personal feed reset failed");
+    }
+    if (artifactDirectory) {
+      await page.screenshot({ path: path.join(artifactDirectory, `personal-feed-${viewport.name}-viewport.png`) });
+      await page.screenshot({ path: path.join(artifactDirectory, `personal-feed-${viewport.name}-full-page.png`), fullPage: true });
     }
     await page.close();
   }

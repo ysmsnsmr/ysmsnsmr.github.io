@@ -87,11 +87,10 @@
     heading.append(badge, element("p", "source-name", source.name));
     const facts = element("dl", "fact-grid");
     appendFact(facts, "発表日", item.publishedDate);
-    appendFact(facts, "最新更新日", item.updatedDate, "確認できず");
+    appendFact(facts, "最終更新日", item.updatedDate, "確認できず");
     appendFact(facts, "対象", item.platforms.join(" / "), "未分類");
     appendFact(facts, "最終確認", item.lastObservedAt.slice(0, 10), "確認できず");
     card.append(heading, element("h2", "", item.title), facts);
-    if (source.classification === "unofficial") card.append(element("p", "unofficial-copy", "この情報は非公式ソースです。対応や判断の前に、必ずMeta公式情報を確認してください。"));
     const sourceLink = element("a", "source-link", source.classification === "official" ? "公式ソースを開く" : "非公式ソースを開く");
     sourceLink.href = item.url;
     sourceLink.target = "_blank";
@@ -116,6 +115,7 @@
     if (!response.ok) throw new Error(`report HTTP ${response.status}`);
     const report = await response.json();
     const personalMode = report.schemaVersion === "meta-ads-personal-feed/v1";
+    elements.list.classList.toggle("update-list--personal", personalMode);
     const sourceMap = new Map((report.sources || []).map((source) => [source.id, source]));
     const delayedRecovery = !personalMode && report.publication?.mode === "delayed_recovery";
     elements.demoBanner.hidden = !demoMode;
@@ -129,10 +129,11 @@
     if (personalMode) {
       elements.week.textContent = report.generatedAt ? `最終取得: ${report.generatedAt.replace("T", " ").replace("Z", " UTC")}` : "初回取得待ち";
       elements.priorityLabel.textContent = "ソース区分";
-      elements.footer.textContent = "個人・同僚向けの自動情報フィードです。Meta公式と非公式情報を区別して表示します。非公式情報は判断・対応の根拠にせず、必ず公式情報を確認してください。";
+      elements.footer.textContent = "Meta公式・非公式の情報を区別して表示しています。";
       setOptions(elements.source, [{ value: "all", label: "すべてのソース" }, ...report.sources.map((source) => ({ value: source.id, label: source.name }))], "all");
       setOptions(elements.priority, [{ value: "all", label: "すべて" }, { value: "official", label: "Meta公式" }, { value: "unofficial", label: "非公式・未確認" }], "all");
     } else {
+      elements.footer.textContent = "承認済みの公式更新だけを掲載しています。取得・Groq・validatorが失敗したrunでは、公開済み内容を変更しません。";
       elements.week.textContent = report.week.label;
       elements.priorityLabel.textContent = "優先度";
       setOptions(elements.source, [{ value: "all", label: "すべてのソース" }, { value: "meta-product-news-rss", label: "Product News" }, { value: "meta-business-sdk-releases", label: "Business SDK Releases" }], "all");
