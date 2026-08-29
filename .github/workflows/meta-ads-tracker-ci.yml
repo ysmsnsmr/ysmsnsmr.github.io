@@ -29,6 +29,8 @@ jobs:
           python3 scripts/validate_meta_ads_tracker_secondary_shadow.py
           python3 scripts/validate_meta_ads_tracker_gate_b.py
           python3 scripts/validate_meta_ads_tracker_weekly_recovery.py
+          python3 scripts/validate_meta_ads_tracker_recovery_decisions.py
+          python3 scripts/validate_meta_ads_tracker_recovery_promotion.py
           python3 scripts/validate_meta_ads_tracker_publication.py --input meta-ads-updates/latest.json
           python3 scripts/validate_meta_ads_tracker_workflows.py
           node --check meta-ads-updates/app.js

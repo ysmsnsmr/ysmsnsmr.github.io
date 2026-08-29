@@ -24,6 +24,8 @@
   const reportPath = demoMode ? "./demo-latest.json" : "./latest.json";
   const elements = {
     demoBanner: document.querySelector("#demo-banner"),
+    recoveryBanner: document.querySelector("#recovery-banner"),
+    recoveryBannerCopy: document.querySelector("#recovery-banner-copy"),
     week: document.querySelector("#week-stamp"),
     form: document.querySelector("#filter-form"),
     source: document.querySelector("#source-filter"),
@@ -107,6 +109,14 @@
     const response = await fetch(reportPath, { cache: "no-store" });
     if (!response.ok) throw new Error(`report HTTP ${response.status}`);
     const report = await response.json();
+    const delayedRecovery = report.publication?.mode === "delayed_recovery";
+    elements.recoveryBanner.hidden = !delayedRecovery;
+    if (delayedRecovery) {
+      const missingDates = Array.isArray(report.publication.missingPreCutoffDates)
+        ? report.publication.missingPreCutoffDates.join("、")
+        : "不明";
+      elements.recoveryBannerCopy.textContent = `金曜17:00 MYTの締切前candidateが不足したため、人間確認済みの回復データを表示しています。不足日: ${missingDates}。`;
+    }
     const state = { filters: { sourceId: "all", priority: "all", query: "" } };
 
     function hasActiveFilter() {
