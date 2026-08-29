@@ -52,6 +52,14 @@ The weekly assembler is separate from daily collection and is scheduled for Frid
 
 Assembly requires at least one schema-valid successful candidate for every Monday-Friday date. Missing days fail closed. Exact duplicate `eventId` values are deduplicated. If the same URL changes more than once during the week, every distinct fingerprint revision remains as a separate event in chronological order. The resulting `weeklyHash` covers the complete artifact, and an existing weekly file cannot be replaced with different content.
 
+### Friday preflight and delayed-run recovery
+
+At Friday 16:00 MYT (`08:00 UTC`), `Meta Ads tracker Friday preflight` writes a small evidence artifact showing whether each Monday-Friday date already has a valid candidate before the 17:00 cutoff. It never changes production data on its scheduled run. If—and only if—the missing coverage is Friday alone and the current time is in the 16:00–17:00 MYT window, the report is `backup_recommended`.
+
+An operator may then manually run that workflow with `run_backup=true`. This performs **one** normal daily collection, stores only its candidate and state, and leaves the normal weekly cutoff unchanged. Do not use it to repair an earlier missing weekday, or after 17:00 MYT; those states are reported as `recovery_required` or `window_closed` instead. The collector kill switch still applies before checkout, dependencies, network access, commits, and artifacts.
+
+If the ordinary weekly assembly has already missed its cutoff because a valid candidate arrived late, manually run `Meta Ads tracker weekly recovery` with that Friday's `YYYY-MM-DD` date. It creates an immutable record in `data/meta_ads_tracker_weekly_recovery/`, labeling each candidate as on-time or late. This record is deliberately `publicationEligible: false` and `requiresHumanDisposition: true`: it does not alter the normal weekly artifact, decisions, public report, or UI. It is evidence for a later human decision, not a way to silently publish late data.
+
 ## Review and approval
 
 Run `Meta Ads tracker generate review artifact` with the Friday cutoff date. Groq receives only the immutable weekly artifact and may return a Japanese summary plus explicitly stated effective date, rollout, and target facts. Every extracted value needs an exact excerpt from the supplied source text. Groq does not produce business-impact or action decisions, and its artifact is never public.
