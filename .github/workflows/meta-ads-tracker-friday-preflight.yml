@@ -65,9 +65,9 @@ jobs:
           with open(sys.argv[1], encoding="utf-8") as handle:
               report = json.load(handle)
           with open(__import__("os").environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
-              handle.write(f"report={sys.argv[1]}\\n")
-              handle.write(f"backup_eligible={'true' if report['backup']['eligible'] else 'false'}\\n")
-              handle.write(f"status={report['status']}\\n")
+              handle.write(f"report={sys.argv[1]}\n")
+              handle.write(f"backup_eligible={'true' if report['backup']['eligible'] else 'false'}\n")
+              handle.write(f"status={report['status']}\n")
           PY
       - name: Upload Friday preflight evidence
         if: steps.kill_switch.outputs.enabled == 'true'

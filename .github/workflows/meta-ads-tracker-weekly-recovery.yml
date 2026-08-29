@@ -38,7 +38,7 @@ jobs:
           if cutoff_date.weekday() != 4:
               raise ValueError("cutoff_date must be a Friday")
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
-              handle.write(f"path=data/meta_ads_tracker_weekly_recovery/{cutoff_date.isoformat()}.json\\n")
+              handle.write(f"path=data/meta_ads_tracker_weekly_recovery/{cutoff_date.isoformat()}.json\n")
           PY
       - name: Create non-public weekly recovery record
         run: |
