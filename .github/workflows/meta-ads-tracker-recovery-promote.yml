@@ -1,0 +1,78 @@
+name: Meta Ads tracker promote delayed recovery
+
+on:
+  workflow_dispatch:
+    inputs:
+      cutoff_date:
+        description: "Friday recovery cutoff date in YYYY-MM-DD"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: meta-ads-tracker-repository-write
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    env:
+      CUTOFF_DATE: ${{ inputs.cutoff_date }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: "3.12"
+      - name: Install tracker validator dependency
+        run: python -m pip install -r requirements-meta-ads-tracker.txt
+      - name: Validate cutoff and resolve promotion paths
+        id: paths
+        run: |
+          python3 - <<'PY'
+          import os
+          from datetime import date, timedelta
+
+          cutoff_date = date.fromisoformat(os.environ["CUTOFF_DATE"])
+          if cutoff_date.weekday() != 4:
+              raise ValueError("cutoff_date must be a Friday")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write(f"promotion=data/meta_ads_tracker_recovery_promotions/{cutoff_date.isoformat()}.json\n")
+              handle.write(f"public_week=meta-ads-updates/{(cutoff_date + timedelta(days=2)).isoformat()}.json\n")
+          PY
+      - name: Promote only human-approved delayed recovery events
+        run: |
+          report="${RUNNER_TEMP}/meta_ads_tracker_recovery_report.json"
+          python3 scripts/meta_ads_tracker_recovery_promotion.py \
+            --recovery-dir data/meta_ads_tracker_weekly_recovery \
+            --promotions-dir data/meta_ads_tracker_recovery_promotions \
+            --cutoff-date "${CUTOFF_DATE}" \
+            --decisions data/meta_ads_tracker_recovery_decisions.json \
+            --report-output "${report}"
+          python3 scripts/validate_meta_ads_tracker_recovery_promotion.py \
+            --directory data/meta_ads_tracker_recovery_promotions \
+            --recovery-directory data/meta_ads_tracker_weekly_recovery
+          python3 scripts/validate_meta_ads_tracker_publication.py --input "${report}"
+          python3 scripts/build_meta_ads_tracker_index.py --input "${report}"
+      - name: Commit approved delayed recovery report
+        env:
+          PROMOTION: ${{ steps.paths.outputs.promotion }}
+          PUBLIC_WEEK: ${{ steps.paths.outputs.public_week }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "${PROMOTION}" meta-ads-updates/latest.json "${PUBLIC_WEEK}"
+          if git diff --cached --quiet; then
+            echo "No approved delayed recovery report change."
+          else
+            git commit -m "chore: publish recovered Meta Ads tracker report"
+            git push
+          fi
+      - name: Upload delayed recovery promotion record
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: meta-ads-tracker-recovery-promotion-${{ github.run_id }}
+          path: ${{ steps.paths.outputs.promotion }}
+          if-no-files-found: error
+          retention-days: 30

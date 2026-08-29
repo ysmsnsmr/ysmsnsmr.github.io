@@ -60,6 +60,14 @@ An operator may then manually run that workflow with `run_backup=true`. This per
 
 If the ordinary weekly assembly has already missed its cutoff because a valid candidate arrived late, manually run `Meta Ads tracker weekly recovery` with that Friday's `YYYY-MM-DD` date. It creates an immutable record in `data/meta_ads_tracker_weekly_recovery/`, labeling each candidate as on-time or late. This record is deliberately `publicationEligible: false` and `requiresHumanDisposition: true`: it does not alter the normal weekly artifact, decisions, public report, or UI. It is evidence for a later human decision, not a way to silently publish late data.
 
+### Promoting a delayed recovery after human approval
+
+`data/meta_ads_tracker_recovery_decisions.json` is a separate approval register for recovery records. Each approval must bind the exact `recoveryHash`, `eventId`, `revision`, `sourceFingerprint`, and `originCandidateHash`; it must also include the reviewer, review time, priority, business impact, and action judgment. Do not reuse a normal weekly decision and do not approve a URL or source category broadly.
+
+After the approval register has been reviewed and merged through a normal PR, manually run `Meta Ads tracker promote delayed recovery` with the same Friday date. It validates the immutable recovery record and every approval binding, writes an immutable promotion record under `data/meta_ads_tracker_recovery_promotions/`, and only then updates the public static report. It cannot collect sources or run Groq.
+
+The resulting public report is explicitly marked **遅延回復データ** in the UI, including the dates absent before the Friday 17:00 MYT cutoff. This is a transparency label, not an indication that the normal weekly cutoff was met. A recovery promotion never overwrites the normal weekly artifact or removes the original recovery record.
+
 ## Review and approval
 
 Run `Meta Ads tracker generate review artifact` with the Friday cutoff date. Groq receives only the immutable weekly artifact and may return a Japanese summary plus explicitly stated effective date, rollout, and target facts. Every extracted value needs an exact excerpt from the supplied source text. Groq does not produce business-impact or action decisions, and its artifact is never public.

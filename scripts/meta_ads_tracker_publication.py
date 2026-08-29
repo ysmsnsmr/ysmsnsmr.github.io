@@ -20,6 +20,7 @@ from meta_ads_tracker_contract import ContractError, load_and_validate_source_co
 
 
 PUBLIC_SCHEMA_VERSION = "meta-ads-weekly-index/v1"
+RECOVERY_PUBLIC_SCHEMA_VERSION = "meta-ads-weekly-index/v2"
 DECISIONS_SCHEMA_VERSION = "meta-ads-tracker-decisions/v2"
 CANDIDATE_SCHEMA_VERSION = "meta-ads-tracker-candidates/v3"
 WEEKLY_SCHEMA_VERSION = "meta-ads-tracker-weekly-candidate/v1"
@@ -352,9 +353,44 @@ def build_public_report(weekly: dict[str, Any], decisions: list[dict[str, Any]],
     return report
 
 
+def _validate_delayed_recovery_publication(publication: Any, week: dict[str, Any]) -> None:
+    if not isinstance(publication, dict) or set(publication) != {
+        "mode", "label", "recoveryHash", "recoveryGeneratedAt", "cutoffAt", "missingPreCutoffDates"
+    }:
+        raise ContractError("delayed recovery publication metadata has an invalid shape")
+    if publication["mode"] != "delayed_recovery" or publication["label"] != "遅延回復データ":
+        raise ContractError("public recovery report must explicitly identify delayed recovery data")
+    if not HASH_RE.fullmatch(publication["recoveryHash"]):
+        raise ContractError("public recovery report recoveryHash must be a SHA-256 hash")
+    recovery_generated_at = parse_timestamp(publication["recoveryGeneratedAt"], "public publication.recoveryGeneratedAt")
+    cutoff_at = parse_timestamp(publication["cutoffAt"], "public publication.cutoffAt")
+    local_cutoff = cutoff_at.astimezone(KUALA_LUMPUR)
+    if local_cutoff.weekday() != 4 or (local_cutoff.hour, local_cutoff.minute, local_cutoff.second) != (17, 0, 0):
+        raise ContractError("public recovery report cutoffAt must be Friday 17:00 Asia/Kuala_Lumpur")
+    if recovery_generated_at < cutoff_at:
+        raise ContractError("public recovery report recoveryGeneratedAt cannot precede cutoffAt")
+    missing_dates = publication["missingPreCutoffDates"]
+    if not isinstance(missing_dates, list) or not missing_dates or len(missing_dates) != len(set(missing_dates)):
+        raise ContractError("public recovery report missingPreCutoffDates must be a non-empty unique array")
+    start = date.fromisoformat(week["startDate"])
+    friday = start.fromordinal(start.toordinal() + 4)
+    for value in missing_dates:
+        try:
+            missing_date = date.fromisoformat(value)
+        except (TypeError, ValueError) as error:
+            raise ContractError("public recovery report missingPreCutoffDates must contain dates") from error
+        if not start <= missing_date <= friday:
+            raise ContractError("public recovery report missingPreCutoffDates must stay inside Monday-Friday")
+
+
 def validate_public_report(report: Any, source_config: dict[str, Any] | None = None) -> dict[str, Any]:
-    if not isinstance(report, dict) or report.get("schemaVersion") != PUBLIC_SCHEMA_VERSION:
-        raise ContractError(f"public report schemaVersion must be {PUBLIC_SCHEMA_VERSION}")
+    if not isinstance(report, dict) or report.get("schemaVersion") not in {PUBLIC_SCHEMA_VERSION, RECOVERY_PUBLIC_SCHEMA_VERSION}:
+        raise ContractError(f"public report schemaVersion must be {PUBLIC_SCHEMA_VERSION} or {RECOVERY_PUBLIC_SCHEMA_VERSION}")
+    expected_fields = {"schemaVersion", "generatedAt", "week", "filters", "items"}
+    if report["schemaVersion"] == RECOVERY_PUBLIC_SCHEMA_VERSION:
+        expected_fields.add("publication")
+    if set(report) != expected_fields:
+        raise ContractError("public report has an invalid shape")
     parse_timestamp(report.get("generatedAt"), "public report.generatedAt")
     week = report.get("week")
     if not isinstance(week, dict) or not {"startDate", "endDate", "label"} <= set(week):
@@ -373,4 +409,7 @@ def validate_public_report(report: Any, source_config: dict[str, Any] | None = N
         "filters": {"sourceId": "all", "priority": "all", "query": ""},
         "items": items,
     }
-    return validate_weekly_fixture(fixture, source_config, require_anonymised_urls=False)
+    validate_weekly_fixture(fixture, source_config, require_anonymised_urls=False)
+    if report["schemaVersion"] == RECOVERY_PUBLIC_SCHEMA_VERSION:
+        _validate_delayed_recovery_publication(report["publication"], week)
+    return report

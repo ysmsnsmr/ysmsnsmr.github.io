@@ -54,6 +54,21 @@ function reportFor(fixture) {
   };
 }
 
+function delayedRecoveryReportFor(fixture) {
+  return {
+    ...reportFor(fixture),
+    schemaVersion: "meta-ads-weekly-index/v2",
+    publication: {
+      mode: "delayed_recovery",
+      label: "遅延回復データ",
+      recoveryHash: "a".repeat(64),
+      recoveryGeneratedAt: "2026-08-29T03:03:02Z",
+      cutoffAt: "2026-08-28T09:00:00Z",
+      missingPreCutoffDates: ["2026-08-28"]
+    }
+  };
+}
+
 async function startServer() {
   const server = createServer(async (request, response) => {
     try {
@@ -62,6 +77,10 @@ async function startServer() {
         const referer = new URL(request.headers.referer || "http://127.0.0.1/");
         const fixtureName = referer.searchParams.get("fixture");
         if (fixtureName) {
+          if (fixtureName === "delayed-recovery") {
+            response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
+            return response.end(JSON.stringify(delayedRecoveryReportFor(fixtures.get("normal-week"))));
+          }
           const fixture = fixtures.get(fixtureName);
           if (!fixture) return response.writeHead(404).end("Unknown fixture");
           response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
@@ -179,7 +198,25 @@ try {
   await productionPage.goto(`${server.origin}/meta-ads-updates/index.html`, { waitUntil: "networkidle" });
   assert(await productionPage.locator("#update-list .update-card").count() === productionReport.items.length, "production route did not read latest.json");
   assert(!(await productionPage.locator("#demo-banner").isVisible()), "production route must not show the demo banner");
+  assert(!(await productionPage.locator("#recovery-banner").isVisible()), "ordinary production route must not show the delayed-recovery banner");
   await productionPage.close();
+
+  for (const viewport of [viewports[0], viewports[2]]) {
+    const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });
+    const label = `delayed-recovery/${viewport.name}`;
+    await page.goto(`${server.origin}/meta-ads-updates/index.html?fixture=delayed-recovery`, { waitUntil: "networkidle" });
+    assert(await page.locator("#recovery-banner").isVisible(), `${label}: delayed-recovery banner is missing`);
+    assert((await page.locator("#recovery-banner").textContent()).includes("金曜17:00 MYTの締切前candidateが不足"), `${label}: delayed-recovery banner is misleading`);
+    assert(!(await page.locator("#demo-banner").isVisible()), `${label}: delayed recovery must not be labelled as a demo`);
+    assert(await page.locator("#update-list .update-card").count() === 3, `${label}: recovery cards are missing`);
+    await assertTokens(page);
+    await assertAccessibilityAndLayout(page, label);
+    if (artifactDirectory) {
+      await page.screenshot({ path: path.join(artifactDirectory, `delayed-recovery-${viewport.name}-viewport.png`) });
+      await page.screenshot({ path: path.join(artifactDirectory, `delayed-recovery-${viewport.name}-full-page.png`), fullPage: true });
+    }
+    await page.close();
+  }
 
   for (const viewport of [viewports[0], viewports[2]]) {
     const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });

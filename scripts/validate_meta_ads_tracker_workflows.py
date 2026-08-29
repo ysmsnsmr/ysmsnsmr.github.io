@@ -20,6 +20,7 @@ WORKFLOWS = {
     "secondary_shadow": ROOT / ".github/workflows/meta-ads-tracker-secondary-shadow.yml",
     "friday_preflight": ROOT / ".github/workflows/meta-ads-tracker-friday-preflight.yml",
     "weekly_recovery": ROOT / ".github/workflows/meta-ads-tracker-weekly-recovery.yml",
+    "recovery_promotion": ROOT / ".github/workflows/meta-ads-tracker-recovery-promote.yml",
 }
 PINNED_ACTIONS = {
     "actions/checkout": "3d3c42e5aac5ba805825da76410c181273ba90b1",
@@ -76,14 +77,14 @@ def main() -> int:
             for block in run_blocks(workflow):
                 if "${{ inputs." in block:
                     fail(f"{name} interpolates workflow input directly into shell code")
-        for name in ("friday_preflight", "weekly_recovery"):
+        for name in ("friday_preflight", "weekly_recovery", "recovery_promotion"):
             if r"\\n" in WORKFLOWS[name].read_text(encoding="utf-8"):
                 fail(f"{name} must write GitHub output values with real newlines")
-        for name in ("collect", "weekly", "publish", "friday_preflight", "weekly_recovery"):
+        for name in ("collect", "weekly", "publish", "friday_preflight", "weekly_recovery", "recovery_promotion"):
             group = parsed[name].get("concurrency", {}).get("group")
             if group != "meta-ads-tracker-repository-write":
                 fail(f"{name} must share repository-write concurrency")
-        for name in ("collect", "publish", "secondary_shadow", "friday_preflight", "weekly_recovery"):
+        for name in ("collect", "publish", "secondary_shadow", "friday_preflight", "weekly_recovery", "recovery_promotion"):
             require_pinned_actions(name, parsed[name])
         publish_runs = "\n".join(run_blocks(parsed["publish"]))
         if "meta_ads_tracker_groq.py" in publish_runs or "GROQ_API_KEY" in str(parsed["publish"]):
@@ -150,6 +151,21 @@ def main() -> int:
         recovery_artifact_with = recovery_artifact.get("with", {}) if isinstance(recovery_artifact, dict) else {}
         if recovery_artifact_with.get("if-no-files-found") != "error" or recovery_artifact_with.get("retention-days") != "30":
             fail("weekly recovery artifact must fail on absence and retain exactly 30 days")
+        promotion = parsed["recovery_promotion"]
+        promotion_runs = "\n".join(run_blocks(promotion))
+        if "meta_ads_tracker_recovery_promotion.py" not in promotion_runs:
+            fail("recovery promotion workflow must build a promotion from immutable recovery data")
+        if any(value in promotion_runs for value in ("meta_ads_tracker_collect.py", "meta_ads_tracker_groq.py")):
+            fail("recovery promotion must not collect sources or run Groq")
+        if 'git add -- "${PROMOTION}" meta-ads-updates/latest.json "${PUBLIC_WEEK}"' not in promotion_runs:
+            fail("recovery promotion must stage only its promotion and explicit public report paths")
+        promotion_steps = steps(promotion)
+        promotion_artifact = next((step for step in promotion_steps if step.get("name") == "Upload delayed recovery promotion record"), None)
+        if not isinstance(promotion_artifact, dict) or promotion_artifact.get("with", {}).get("path") != "${{ steps.paths.outputs.promotion }}":
+            fail("recovery promotion must upload only its immutable promotion record")
+        promotion_artifact_with = promotion_artifact.get("with", {}) if isinstance(promotion_artifact, dict) else {}
+        if promotion_artifact_with.get("if-no-files-found") != "error" or promotion_artifact_with.get("retention-days") != "30":
+            fail("recovery promotion artifact must fail on absence and retain exactly 30 days")
         shadow = parsed["secondary_shadow"]
         if shadow.get("concurrency", {}).get("group") != "meta-ads-tracker-secondary-shadow-state":
             fail("secondary shadow must use its dedicated state-branch concurrency group")
@@ -184,6 +200,10 @@ def main() -> int:
             fail("Tracker CI must validate the Gate B review-ledger contract")
         if "validate_meta_ads_tracker_weekly_recovery.py" not in ci_runs:
             fail("Tracker CI must validate non-public weekly recovery records")
+        if "validate_meta_ads_tracker_recovery_promotion.py" not in ci_runs:
+            fail("Tracker CI must validate delayed-recovery promotion records")
+        if "validate_meta_ads_tracker_recovery_decisions.py" not in ci_runs:
+            fail("Tracker CI must validate delayed-recovery human decisions")
     except (OSError, ValueError, yaml.YAMLError) as error:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1

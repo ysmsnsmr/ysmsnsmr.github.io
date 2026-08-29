@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ysmsnsmr.github.io/schemas/meta-ads-tracker-recovery-promotion/v1",
+  "title": "Human-approved public promotion of a delayed Meta Ads recovery",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "promotionHash", "generatedAt", "recoveryHash", "recoveryGeneratedAt", "cutoffAt", "week", "recoveryReason", "missingPreCutoffDates", "items", "approvalRefs", "publicationEligible"],
+  "properties": {
+    "schemaVersion": {"const": "meta-ads-tracker-recovery-promotion/v1"},
+    "promotionHash": {"$ref": "#/$defs/hash"},
+    "generatedAt": {"type": "string", "format": "date-time"},
+    "recoveryHash": {"$ref": "#/$defs/hash"},
+    "recoveryGeneratedAt": {"type": "string", "format": "date-time"},
+    "cutoffAt": {"type": "string", "format": "date-time"},
+    "week": {"$ref": "#/$defs/week"},
+    "recoveryReason": {"const": "missing_pre_cutoff_coverage"},
+    "missingPreCutoffDates": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "format": "date"}},
+    "items": {"type": "array", "minItems": 1, "items": {"allOf": [{"$ref": "https://ysmsnsmr.github.io/schemas/meta-ads-tracker-candidate/v3#/$defs/candidateItem"}, {"type": "object", "required": ["originCandidateHash"]}]}},
+    "approvalRefs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/approval"}},
+    "publicationEligible": {"const": true}
+  },
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "identifier": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "week": {"type": "object", "additionalProperties": false, "required": ["startDate", "endDate", "label"], "properties": {"startDate": {"type": "string", "format": "date"}, "endDate": {"type": "string", "format": "date"}, "label": {"type": "string", "minLength": 1}}},
+    "dateFact": {"oneOf": [{"type": "object", "additionalProperties": false, "required": ["status", "value"], "properties": {"status": {"const": "stated"}, "value": {"type": "string", "format": "date"}}}, {"type": "object", "additionalProperties": false, "required": ["status", "value"], "properties": {"status": {"const": "not_stated"}, "value": {"type": "null"}}}]},
+    "textFact": {"oneOf": [{"type": "object", "additionalProperties": false, "required": ["status", "value"], "properties": {"status": {"const": "stated"}, "value": {"type": "string", "minLength": 1}}}, {"type": "object", "additionalProperties": false, "required": ["status", "value"], "properties": {"status": {"const": "not_stated"}, "value": {"type": "null"}}}]},
+    "impact": {"type": "object", "additionalProperties": false, "required": ["status", "summary", "assessmentSource"], "properties": {"status": {"const": "human_assessed"}, "summary": {"type": "string", "minLength": 1}, "assessmentSource": {"const": "human_review"}}},
+    "action": {"type": "object", "additionalProperties": false, "required": ["status", "summary", "assessmentSource"], "properties": {"status": {"enum": ["action_required", "review_required", "not_required"]}, "summary": {"type": "string", "minLength": 1}, "assessmentSource": {"const": "human_review"}}},
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recoveryHash", "eventId", "revision", "sourceFingerprint", "originCandidateHash", "reviewStatus", "reviewer", "reviewedAt", "priority", "businessImpact", "action"],
+      "properties": {
+        "recoveryHash": {"$ref": "#/$defs/hash"},
+        "eventId": {"$ref": "#/$defs/identifier"},
+        "revision": {"$ref": "#/$defs/hash"},
+        "sourceFingerprint": {"$ref": "#/$defs/hash"},
+        "originCandidateHash": {"$ref": "#/$defs/hash"},
+        "reviewStatus": {"const": "approved"},
+        "reviewer": {"type": "string", "minLength": 1},
+        "reviewedAt": {"type": "string", "format": "date-time"},
+        "priority": {"enum": ["high", "standard", "low"]},
+        "effectiveDate": {"$ref": "#/$defs/dateFact"},
+        "rollout": {"$ref": "#/$defs/textFact"},
+        "targets": {"$ref": "#/$defs/textFact"},
+        "businessImpact": {"$ref": "#/$defs/impact"},
+        "action": {"$ref": "#/$defs/action"},
+        "notes": {"type": "string"}
+      }
+    }
+  }
+}
