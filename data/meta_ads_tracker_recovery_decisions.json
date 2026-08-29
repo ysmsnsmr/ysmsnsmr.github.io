@@ -1,4 +1,47 @@
 {
   "schemaVersion": "meta-ads-tracker-recovery-decisions/v1",
-  "items": []
+  "items": [
+    {
+      "recoveryHash": "c74fd7be3740fd2de6aae8ee55cf7817436a320f407c8a4ecbf8d96e7888f7be",
+      "eventId": "meta-business-sdk-releases-7ee49cbac0f6489b4f54",
+      "revision": "68ef116138484b4240900a05982c0290e8f5d714566ca69e7c6ff449b94a119a",
+      "sourceFingerprint": "68ef116138484b4240900a05982c0290e8f5d714566ca69e7c6ff449b94a119a",
+      "originCandidateHash": "e1ac94c3f77b993c9a094165f1d1eda3f1acc9a90b4b9d8e70612b21004385fc",
+      "reviewStatus": "approved",
+      "reviewer": "ysmsnsmr",
+      "reviewedAt": "2026-08-29T05:38:06Z",
+      "priority": "standard",
+      "businessImpact": {
+        "status": "human_assessed",
+        "summary": "人間確認の結果、情報として監視するが現時点の広告運用への対応は不要と判断しました。",
+        "assessmentSource": "human_review"
+      },
+      "action": {
+        "status": "not_required",
+        "summary": "現時点での追加対応は不要です。今後の公式更新を監視します。",
+        "assessmentSource": "human_review"
+      }
+    },
+    {
+      "recoveryHash": "c74fd7be3740fd2de6aae8ee55cf7817436a320f407c8a4ecbf8d96e7888f7be",
+      "eventId": "meta-product-news-rss-37770f7f2e6bf85cc6c2",
+      "revision": "7d12785ada0d2210865b729bacfc7ac05c52ecdeaf06e8ab2581755b437bc6ef",
+      "sourceFingerprint": "7d12785ada0d2210865b729bacfc7ac05c52ecdeaf06e8ab2581755b437bc6ef",
+      "originCandidateHash": "e1ac94c3f77b993c9a094165f1d1eda3f1acc9a90b4b9d8e70612b21004385fc",
+      "reviewStatus": "approved",
+      "reviewer": "ysmsnsmr",
+      "reviewedAt": "2026-08-29T05:38:06Z",
+      "priority": "standard",
+      "businessImpact": {
+        "status": "human_assessed",
+        "summary": "人間確認の結果、情報として監視するが現時点の広告運用への対応は不要と判断しました。",
+        "assessmentSource": "human_review"
+      },
+      "action": {
+        "status": "not_required",
+        "summary": "現時点での追加対応は不要です。今後の公式更新を監視します。",
+        "assessmentSource": "human_review"
+      }
+    }
+  ]
 }
