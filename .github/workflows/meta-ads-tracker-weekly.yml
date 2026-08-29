@@ -1,8 +1,6 @@
 name: Meta Ads tracker weekly assemble
 
 on:
-  schedule:
-    - cron: "0 9 * * 5"
   workflow_dispatch:
     inputs:
       cutoff_at:

@@ -29,7 +29,7 @@ const fixtures = new Map(
   )
 );
 const demoReport = JSON.parse(await fs.readFile(path.join(repositoryRoot, "meta-ads-updates/demo-latest.json"), "utf8"));
-const productionReport = JSON.parse(await fs.readFile(path.join(repositoryRoot, "meta-ads-updates/latest.json"), "utf8"));
+const personalFeedReport = JSON.parse(await fs.readFile(path.join(repositoryRoot, "meta-ads-updates/personal-feed.json"), "utf8"));
 const axeSource = await fs.readFile(require.resolve("axe-core/axe.min.js"), "utf8");
 const artifactDirectory = process.env.META_ADS_UI_ARTIFACT_DIR
   ? path.resolve(process.env.META_ADS_UI_ARTIFACT_DIR)
@@ -69,6 +69,23 @@ function delayedRecoveryReportFor(fixture) {
   };
 }
 
+function personalFeedFixture() {
+  const sources = [
+    { id: "meta-product-news-rss", name: "Meta Newsroom Product News", classification: "official", sourceUrl: "https://about.fb.com/news/category/product-news/", platforms: ["Metaプラットフォーム全般"] },
+    { id: "ppc-land-meta-ads", name: "PPC Land", classification: "unofficial", sourceUrl: "https://ppc.land/", platforms: ["Meta Ads"] }
+  ];
+  return {
+    schemaVersion: "meta-ads-personal-feed/v1",
+    generatedAt: "2026-08-29T09:00:00Z",
+    sources,
+    items: [
+      { id: "meta-product-news-rss-aaaaaaaaaaaaaaaaaaaa", sourceId: "meta-product-news-rss", title: "Meta公式の製品更新", url: "https://about.fb.com/news/2026/08/product-update/", publishedDate: "2026-08-29", updatedDate: null, firstObservedAt: "2026-08-29T09:00:00Z", lastObservedAt: "2026-08-29T09:00:00Z", platforms: ["Metaプラットフォーム全般"], matchEvidence: [] },
+      { id: "ppc-land-meta-ads-bbbbbbbbbbbbbbbbbbbb", sourceId: "ppc-land-meta-ads", title: "Meta Ads APIの観測記事", url: "https://ppc.land/meta-ads-api/", publishedDate: "2026-08-28", updatedDate: "2026-08-29", firstObservedAt: "2026-08-29T09:00:00Z", lastObservedAt: "2026-08-29T09:00:00Z", platforms: ["Meta Ads"], matchEvidence: ["keyword:meta", "keyword:ads"] },
+      { id: "ppc-land-meta-ads-cccccccccccccccccccc", sourceId: "ppc-land-meta-ads", title: "Meta Adsの表示変更", url: "https://ppc.land/meta-ads-ui/", publishedDate: null, updatedDate: null, firstObservedAt: "2026-08-29T09:00:00Z", lastObservedAt: "2026-08-29T09:00:00Z", platforms: ["Meta Ads"], matchEvidence: ["keyword:meta", "keyword:ads"] }
+    ]
+  };
+}
+
 async function startServer() {
   const server = createServer(async (request, response) => {
     try {
@@ -85,6 +102,13 @@ async function startServer() {
           if (!fixture) return response.writeHead(404).end("Unknown fixture");
           response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
           return response.end(JSON.stringify(reportFor(fixture)));
+        }
+      }
+      if (url.pathname === "/meta-ads-updates/personal-feed.json") {
+        const referer = new URL(request.headers.referer || "http://127.0.0.1/");
+        if (referer.searchParams.get("personal-fixture") === "1") {
+          response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
+          return response.end(JSON.stringify(personalFeedFixture()));
         }
       }
       let filePath = path.resolve(repositoryRoot, `.${decodeURIComponent(url.pathname)}`);
@@ -196,10 +220,41 @@ try {
 
   const productionPage = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await productionPage.goto(`${server.origin}/meta-ads-updates/index.html`, { waitUntil: "networkidle" });
-  assert(await productionPage.locator("#update-list .update-card").count() === productionReport.items.length, "production route did not read latest.json");
+  assert(await productionPage.locator("#update-list .update-card").count() === personalFeedReport.items.length, "production route did not read personal-feed.json");
   assert(!(await productionPage.locator("#demo-banner").isVisible()), "production route must not show the demo banner");
   assert(!(await productionPage.locator("#recovery-banner").isVisible()), "ordinary production route must not show the delayed-recovery banner");
+  assert(await productionPage.locator("#unofficial-notice").isVisible(), "Personal Feed must show the non-official-source notice");
   await productionPage.close();
+
+  for (const viewport of [viewports[0], viewports[2]]) {
+    const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });
+    const consoleErrors = [];
+    const pageErrors = [];
+    page.on("console", (message) => { if (message.type() === "error") consoleErrors.push(message.text()); });
+    page.on("pageerror", (error) => pageErrors.push(error.message));
+    const label = `personal-feed/${viewport.name}`;
+    await page.goto(`${server.origin}/meta-ads-updates/index.html?personal-fixture=1`, { waitUntil: "networkidle" });
+    assert(await page.locator("#unofficial-notice").isVisible(), `${label}: non-official notice is missing`);
+    assert(await page.locator("#update-list .update-card").count() === 3, `${label}: personal feed cards are missing`);
+    assert(await page.locator(".origin-label--official").count() === 1, `${label}: official badge is missing`);
+    assert(await page.locator(".origin-label--unofficial").count() === 2, `${label}: non-official badge is missing`);
+    assert(await page.locator(".unofficial-copy").count() === 2, `${label}: non-official warning is missing`);
+    assert(await page.locator(".source-link").evaluateAll((links) => links.every((link) => link.href.startsWith("https://") && link.target === "_blank" && link.rel.includes("noreferrer"))), `${label}: source links are unsafe`);
+    assert(consoleErrors.length === 0 && pageErrors.length === 0, `${label}: runtime errors: ${[...consoleErrors, ...pageErrors].join("; ")}`);
+    await assertTokens(page);
+    await assertAccessibilityAndLayout(page, label);
+    if (viewport.name === "desktop") {
+      await page.selectOption("#priority-filter", "unofficial");
+      assert(await page.locator("#update-list .update-card").count() === 2, "personal feed non-official filter failed");
+      await page.selectOption("#source-filter", "ppc-land-meta-ads");
+      assert(await page.locator("#update-list .update-card").count() === 2, "personal feed source filter failed");
+      await page.fill("#query-filter", "表示変更");
+      assert(await page.locator("#update-list .update-card").count() === 1, "personal feed query filter failed");
+      await page.click("#reset-button");
+      assert(await page.locator("#update-list .update-card").count() === 3, "personal feed reset failed");
+    }
+    await page.close();
+  }
 
   for (const viewport of [viewports[0], viewports[2]]) {
     const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });
