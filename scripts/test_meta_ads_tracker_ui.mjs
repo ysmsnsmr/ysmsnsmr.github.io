@@ -72,7 +72,7 @@ function delayedRecoveryReportFor(fixture) {
 function personalFeedFixture() {
   const sources = [
     { id: "meta-product-news-rss", name: "Meta Newsroom Product News", classification: "official", sourceUrl: "https://about.fb.com/news/category/product-news/", platforms: ["Metaプラットフォーム全般"] },
-    { id: "ppc-land-meta-ads", name: "PPC Land", classification: "unofficial", sourceUrl: "https://ppc.land/", platforms: ["Meta Ads"] }
+    { id: "search-engine-land-meta-rss", name: "Search Engine Land (Meta / PPC)", classification: "unofficial", sourceUrl: "https://searchengineland.com/library/platforms/meta", platforms: ["Meta Ads"] }
   ];
   return {
     schemaVersion: "meta-ads-personal-feed/v1",
@@ -80,8 +80,8 @@ function personalFeedFixture() {
     sources,
     items: [
       { id: "meta-product-news-rss-aaaaaaaaaaaaaaaaaaaa", sourceId: "meta-product-news-rss", title: "Meta公式の製品更新", url: "https://about.fb.com/news/2026/08/product-update/", publishedDate: "2026-08-29", updatedDate: null, firstObservedAt: "2026-08-29T09:00:00Z", lastObservedAt: "2026-08-29T09:00:00Z", platforms: ["Metaプラットフォーム全般"], matchEvidence: [] },
-      { id: "ppc-land-meta-ads-bbbbbbbbbbbbbbbbbbbb", sourceId: "ppc-land-meta-ads", title: "Meta Ads APIの観測記事", url: "https://ppc.land/meta-ads-api/", publishedDate: "2026-08-28", updatedDate: "2026-08-29", firstObservedAt: "2026-08-29T09:00:00Z", lastObservedAt: "2026-08-29T09:00:00Z", platforms: ["Meta Ads"], matchEvidence: ["keyword:meta", "keyword:ads"] },
-      { id: "ppc-land-meta-ads-cccccccccccccccccccc", sourceId: "ppc-land-meta-ads", title: "Meta Adsの表示変更", url: "https://ppc.land/meta-ads-ui/", publishedDate: null, updatedDate: null, firstObservedAt: "2026-08-29T09:00:00Z", lastObservedAt: "2026-08-29T09:00:00Z", platforms: ["Meta Ads"], matchEvidence: ["keyword:meta", "keyword:ads"] }
+      { id: "search-engine-land-meta-rss-bbbbbbbbbbbbbbbbbbbb", sourceId: "search-engine-land-meta-rss", title: "Meta Ads APIの観測記事", url: "https://searchengineland.com/meta-ads-api/", publishedDate: "2026-08-28", updatedDate: "2026-08-29", firstObservedAt: "2026-08-29T09:00:00Z", lastObservedAt: "2026-08-29T09:00:00Z", platforms: ["Meta Ads"], matchEvidence: ["category:PPC"] },
+      { id: "search-engine-land-meta-rss-cccccccccccccccccccc", sourceId: "search-engine-land-meta-rss", title: "Meta Adsの表示変更", url: "https://searchengineland.com/meta-ads-ui/", publishedDate: null, updatedDate: null, firstObservedAt: "2026-08-29T09:00:00Z", lastObservedAt: "2026-08-29T09:00:00Z", platforms: ["Meta Ads"], matchEvidence: ["category:PPC"] }
     ]
   };
 }
@@ -251,7 +251,7 @@ try {
     if (viewport.name === "desktop") {
       await page.selectOption("#priority-filter", "unofficial");
       assert(await page.locator("#update-list .update-card").count() === 2, "personal feed non-official filter failed");
-      await page.selectOption("#source-filter", "ppc-land-meta-ads");
+      await page.selectOption("#source-filter", "search-engine-land-meta-rss");
       assert(await page.locator("#update-list .update-card").count() === 2, "personal feed source filter failed");
       await page.fill("#query-filter", "表示変更");
       assert(await page.locator("#update-list .update-card").count() === 1, "personal feed query filter failed");

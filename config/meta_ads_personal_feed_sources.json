@@ -43,28 +43,22 @@
       "match": {"kind": "all"}
     },
     {
-      "id": "ppc-land-meta-ads",
-      "name": "PPC Land",
+      "id": "search-engine-land-meta-rss",
+      "name": "Search Engine Land (Meta / PPC)",
       "classification": "unofficial",
-      "sourceUrl": "https://ppc.land/",
-      "fetchUrl": "https://ppc.land/rss/",
+      "sourceUrl": "https://searchengineland.com/library/platforms/meta",
+      "fetchUrl": "https://searchengineland.com/library/platforms/meta/feed",
       "parser": "rss",
       "expectedContentTypes": ["application/rss+xml", "application/xml", "text/xml"],
       "platforms": ["Meta Ads"],
       "transport": {
-        "allowedFetchHosts": ["ppc.land"],
-        "allowedContentHosts": ["ppc.land"],
+        "allowedFetchHosts": ["searchengineland.com"],
+        "allowedContentHosts": ["searchengineland.com"],
         "maxResponseBytes": 1048576,
         "maxRedirects": 3,
         "maxItems": 50
       },
-      "match": {
-        "kind": "all_groups",
-        "groups": [
-          ["meta", "facebook", "instagram", "threads", "whatsapp"],
-          ["ads", "advertising", "ads manager", "marketing api", "business manager", "advantage+", "pixel", "conversions api"]
-        ]
-      }
+      "match": {"kind": "rss_category", "categories": ["PPC"]}
     },
     {
       "id": "jon-loomer-meta-ads",
