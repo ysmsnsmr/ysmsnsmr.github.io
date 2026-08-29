@@ -18,6 +18,8 @@ WORKFLOWS = {
     "publish": ROOT / ".github/workflows/meta-ads-tracker-publish.yml",
     "ci": ROOT / ".github/workflows/meta-ads-tracker-ci.yml",
     "secondary_shadow": ROOT / ".github/workflows/meta-ads-tracker-secondary-shadow.yml",
+    "friday_preflight": ROOT / ".github/workflows/meta-ads-tracker-friday-preflight.yml",
+    "weekly_recovery": ROOT / ".github/workflows/meta-ads-tracker-weekly-recovery.yml",
 }
 PINNED_ACTIONS = {
     "actions/checkout": "3d3c42e5aac5ba805825da76410c181273ba90b1",
@@ -74,11 +76,11 @@ def main() -> int:
             for block in run_blocks(workflow):
                 if "${{ inputs." in block:
                     fail(f"{name} interpolates workflow input directly into shell code")
-        for name in ("collect", "weekly", "publish"):
+        for name in ("collect", "weekly", "publish", "friday_preflight", "weekly_recovery"):
             group = parsed[name].get("concurrency", {}).get("group")
             if group != "meta-ads-tracker-repository-write":
                 fail(f"{name} must share repository-write concurrency")
-        for name in ("collect", "publish", "secondary_shadow"):
+        for name in ("collect", "publish", "secondary_shadow", "friday_preflight", "weekly_recovery"):
             require_pinned_actions(name, parsed[name])
         publish_runs = "\n".join(run_blocks(parsed["publish"]))
         if "meta_ads_tracker_groq.py" in publish_runs or "GROQ_API_KEY" in str(parsed["publish"]):
@@ -107,6 +109,44 @@ def main() -> int:
         artifact_with = artifact.get("with", {}) if isinstance(artifact, dict) else {}
         if artifact_with.get("if-no-files-found") != "error" or artifact_with.get("retention-days") != "30":
             fail("collect artifact must fail on absence and retain exactly 30 days")
+        preflight = parsed["friday_preflight"]
+        preflight_steps = steps(preflight)
+        preflight_kill_switch = next((step for step in preflight_steps if step.get("id") == "kill_switch"), None)
+        if preflight_kill_switch is None or "META_ADS_TRACKER_COLLECT_ENABLED" not in str(preflight_kill_switch):
+            fail("Friday preflight must have the strict collector kill switch")
+        if any(
+            step is not preflight_kill_switch and "steps.kill_switch.outputs.enabled == 'true'" not in str(step.get("if", ""))
+            for step in preflight_steps
+        ):
+            fail("every Friday-preflight step after the kill switch must be gated")
+        preflight_runs = "\n".join(run_blocks(preflight))
+        if "meta_ads_tracker_weekly_recovery.py preflight" not in preflight_runs:
+            fail("Friday preflight must create explicit weekly coverage evidence")
+        if "env.RUN_BACKUP == 'true'" not in str(preflight) or "backup_eligible" not in str(preflight):
+            fail("Friday backup collection must require an explicit human request and preflight eligibility")
+        if 'git add -- "${CANDIDATE}" data/meta_ads_tracker_state.json' not in preflight_runs:
+            fail("Friday preflight must stage only its backup candidate and state")
+        preflight_artifact = next((step for step in preflight_steps if step.get("name") == "Upload Friday preflight evidence"), None)
+        if not isinstance(preflight_artifact, dict) or preflight_artifact.get("with", {}).get("path") != "${{ steps.preflight.outputs.report }}":
+            fail("Friday preflight must upload only its evidence report")
+        preflight_artifact_with = preflight_artifact.get("with", {}) if isinstance(preflight_artifact, dict) else {}
+        if preflight_artifact_with.get("if-no-files-found") != "error" or preflight_artifact_with.get("retention-days") != "30":
+            fail("Friday preflight artifact must fail on absence and retain exactly 30 days")
+        weekly_recovery = parsed["weekly_recovery"]
+        recovery_runs = "\n".join(run_blocks(weekly_recovery))
+        if "meta_ads_tracker_weekly_recovery.py recover" not in recovery_runs:
+            fail("weekly recovery workflow must create only a recovery record")
+        if any(value in recovery_runs for value in ("publish_meta_ads_tracker.py", "meta_ads_tracker_collect.py", "meta_ads_tracker_decisions", "meta-ads-updates")):
+            fail("weekly recovery must not collect, publish, or modify decisions or UI")
+        if 'git add -- "${RECOVERY}"' not in recovery_runs:
+            fail("weekly recovery must stage only the resolved recovery record")
+        recovery_steps = steps(weekly_recovery)
+        recovery_artifact = next((step for step in recovery_steps if step.get("name") == "Upload non-public weekly recovery record"), None)
+        if not isinstance(recovery_artifact, dict) or recovery_artifact.get("with", {}).get("path") != "${{ steps.recovery_path.outputs.path }}":
+            fail("weekly recovery must upload only its recovery record")
+        recovery_artifact_with = recovery_artifact.get("with", {}) if isinstance(recovery_artifact, dict) else {}
+        if recovery_artifact_with.get("if-no-files-found") != "error" or recovery_artifact_with.get("retention-days") != "30":
+            fail("weekly recovery artifact must fail on absence and retain exactly 30 days")
         shadow = parsed["secondary_shadow"]
         if shadow.get("concurrency", {}).get("group") != "meta-ads-tracker-secondary-shadow-state":
             fail("secondary shadow must use its dedicated state-branch concurrency group")
@@ -139,6 +179,8 @@ def main() -> int:
         ci_runs = "\n".join(run_blocks(parsed["ci"]))
         if "validate_meta_ads_tracker_gate_b.py" not in ci_runs:
             fail("Tracker CI must validate the Gate B review-ledger contract")
+        if "validate_meta_ads_tracker_weekly_recovery.py" not in ci_runs:
+            fail("Tracker CI must validate non-public weekly recovery records")
     except (OSError, ValueError, yaml.YAMLError) as error:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1

@@ -1,0 +1,113 @@
+name: Meta Ads tracker Friday preflight
+
+on:
+  schedule:
+    - cron: "0 8 * * 5"
+  workflow_dispatch:
+    inputs:
+      run_backup:
+        description: "Run one backup daily collection when Friday coverage alone is missing"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: meta-ads-tracker-repository-write
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    env:
+      RUN_BACKUP: ${{ inputs.run_backup }}
+    steps:
+      - name: Check collector kill switch
+        id: kill_switch
+        env:
+          META_ADS_TRACKER_COLLECT_ENABLED: ${{ vars.META_ADS_TRACKER_COLLECT_ENABLED }}
+        run: |
+          setting="${META_ADS_TRACKER_COLLECT_ENABLED:-true}"
+          case "${setting}" in
+            true)
+              echo "enabled=true" >> "${GITHUB_OUTPUT}"
+              ;;
+            false)
+              echo "enabled=false" >> "${GITHUB_OUTPUT}"
+              echo "Meta Ads tracker collection is disabled by META_ADS_TRACKER_COLLECT_ENABLED=false."
+              ;;
+            *)
+              echo "::error::META_ADS_TRACKER_COLLECT_ENABLED must be true, false, or unset."
+              exit 1
+              ;;
+          esac
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        if: steps.kill_switch.outputs.enabled == 'true'
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        if: steps.kill_switch.outputs.enabled == 'true'
+        with:
+          python-version: "3.12"
+      - name: Install tracker validator dependency
+        if: steps.kill_switch.outputs.enabled == 'true'
+        run: python -m pip install -r requirements-meta-ads-tracker.txt
+      - name: Inspect Friday weekly coverage
+        id: preflight
+        if: steps.kill_switch.outputs.enabled == 'true'
+        run: |
+          report="${RUNNER_TEMP}/meta_ads_tracker_weekly_preflight.json"
+          python3 scripts/meta_ads_tracker_weekly_recovery.py preflight --output "${report}"
+          python3 - "${report}" <<'PY'
+          import json
+          import sys
+
+          with open(sys.argv[1], encoding="utf-8") as handle:
+              report = json.load(handle)
+          with open(__import__("os").environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write(f"report={sys.argv[1]}\\n")
+              handle.write(f"backup_eligible={'true' if report['backup']['eligible'] else 'false'}\\n")
+              handle.write(f"status={report['status']}\\n")
+          PY
+      - name: Upload Friday preflight evidence
+        if: steps.kill_switch.outputs.enabled == 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: meta-ads-tracker-friday-preflight-${{ github.run_id }}
+          path: ${{ steps.preflight.outputs.report }}
+          if-no-files-found: error
+          retention-days: 30
+      - name: Collect one backup Friday candidate
+        id: collect
+        if: steps.kill_switch.outputs.enabled == 'true' && env.RUN_BACKUP == 'true' && steps.preflight.outputs.backup_eligible == 'true'
+        run: |
+          mkdir -p data/meta_ads_tracker_candidates
+          candidate="data/meta_ads_tracker_candidates/$(date -u +%Y%m%dT%H%M%SZ)-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.json"
+          python3 scripts/meta_ads_tracker_collect.py \
+            --output "${candidate}" \
+            --governance config/meta_ads_source_governance.json \
+            --state data/meta_ads_tracker_state.json
+          python3 scripts/validate_meta_ads_tracker_candidate.py --input "${candidate}"
+          echo "candidate=${candidate}" >> "${GITHUB_OUTPUT}"
+      - name: Commit backup Friday candidate and state
+        if: steps.kill_switch.outputs.enabled == 'true' && steps.collect.outputs.candidate != ''
+        env:
+          CANDIDATE: ${{ steps.collect.outputs.candidate }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "${CANDIDATE}" data/meta_ads_tracker_state.json
+          if git diff --cached --quiet; then
+            echo "No tracker state change."
+          else
+            git commit -m "chore: recover Meta Ads Friday candidate"
+            git push
+          fi
+      - name: Upload backup Friday candidate
+        if: steps.kill_switch.outputs.enabled == 'true' && steps.collect.outputs.candidate != ''
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: meta-ads-tracker-friday-backup-${{ github.run_id }}
+          path: ${{ steps.collect.outputs.candidate }}
+          if-no-files-found: error
+          retention-days: 30
