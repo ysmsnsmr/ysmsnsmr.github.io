@@ -61,11 +61,19 @@ def assemble_weekly(
     covered_dates: set[Any] = set()
     seen_hashes: set[str] = set()
     for file_name, candidate in candidates:
-        validate_candidate(candidate)
-        candidate_time = parse_timestamp(candidate["generatedAt"], f"{file_name}.generatedAt")
+        # Historical candidate artifacts are immutable and may use an older
+        # schema.  Read only their timestamp to decide whether they belong to
+        # this weekly window; fully validate every candidate that does.
+        if not isinstance(candidate, dict):
+            raise ContractError(f"{file_name} must contain a JSON object")
+        candidate_time = parse_timestamp(candidate.get("generatedAt"), f"{file_name}.generatedAt")
         local_date = candidate_time.astimezone(KUALA_LUMPUR).date()
         if local_date not in required_dates or candidate_time > cutoff_utc:
             continue
+        try:
+            validate_candidate(candidate)
+        except ContractError as error:
+            raise ContractError(f"invalid weekly candidate {file_name}: {error}") from error
         if candidate["candidateHash"] in seen_hashes:
             continue
         seen_hashes.add(candidate["candidateHash"])

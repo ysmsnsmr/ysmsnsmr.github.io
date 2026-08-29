@@ -231,6 +231,37 @@ class MetaAdsWeeklyAndApprovalTest(unittest.TestCase):
                 datetime(2026, 8, 21, 9, 5, tzinfo=timezone.utc),
             )
 
+    def test_weekly_ignores_legacy_candidate_outside_its_window_but_validates_current_week(self) -> None:
+        weekly = self.weekly()
+        candidates = [
+            (reference["fileName"], self._candidate_from_reference(weekly, reference))
+            for reference in weekly["candidateRefs"]
+        ]
+        legacy = {
+            "schemaVersion": "meta-ads-tracker-candidates/v2",
+            "generatedAt": "2026-08-16T01:58:08Z",
+        }
+        assembled = assemble_weekly(
+            [("20260816T015808Z-legacy.json", legacy), *candidates],
+            datetime(2026, 8, 21, 9, 0, tzinfo=timezone.utc),
+            datetime(2026, 8, 21, 9, 5, tzinfo=timezone.utc),
+        )
+        self.assertEqual(len(assembled["candidateRefs"]), 5)
+
+        invalid_current = copy.deepcopy(candidates[0][1])
+        invalid_current["schemaVersion"] = "meta-ads-tracker-candidates/v2"
+        invalid_current.pop("processingEpoch")
+        with self.assertRaisesRegex(ContractError, "20260817T001500Z-0.json.*processingEpoch"):
+            assemble_weekly(
+                [
+                    ("20260816T015808Z-legacy.json", legacy),
+                    ("20260817T001500Z-0.json", invalid_current),
+                    *candidates[1:],
+                ],
+                datetime(2026, 8, 21, 9, 0, tzinfo=timezone.utc),
+                datetime(2026, 8, 21, 9, 5, tzinfo=timezone.utc),
+            )
+
     def _candidate_from_reference(self, weekly: dict, reference: dict) -> dict:
         # Reconstruct a schema-valid empty daily candidate for date-coverage testing.
         generated = reference["generatedAt"]
