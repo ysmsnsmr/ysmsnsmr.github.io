@@ -6,10 +6,10 @@
 
 - Meta Newsroom Product News RSS — Meta公式
 - Meta Business SDK Releases（Node.js）— Meta公式GitHub公開API
-- PPC Land RSS — 非公式・未確認
+- Search Engine Land Meta RSS（PPCカテゴリのみ）— 非公式・未確認
 - Jon Loomer Digital RSS — 非公式・未確認
 
-非公式カードと画面上部の注意表示は削除しません。非公式情報は早期検知の参考であり、対応や正確性の判断には必ずMeta公式情報を確認してください。
+非公式の文字付きラベルと画面上部の注意表示は削除しません。非公式情報は早期検知の参考であり、対応や正確性の判断には必ずMeta公式情報を確認してください。
 
 この一覧にない候補は、HTTPSで公開され、RSSまたは安定した公開APIがあり、タイトル・URL・日付を安全に抽出できる場合だけ追加します。HTMLスクレイピング、ログインが必要なページ、429やアクセス制限が確認されているページは自動収集へ追加しません。Python/PHP/Java版SDK Releases APIは取得可能ですが、同じversionを重複表示するため、横断dedupeを実装するまで追加しません。
 

@@ -22,10 +22,10 @@
       ]
     },
     {
-      "id": "ppc-land-meta-ads",
-      "name": "PPC Land",
+      "id": "search-engine-land-meta-rss",
+      "name": "Search Engine Land (Meta / PPC)",
       "classification": "unofficial",
-      "sourceUrl": "https://ppc.land/",
+      "sourceUrl": "https://searchengineland.com/library/platforms/meta",
       "platforms": [
         "Meta Ads"
       ]
