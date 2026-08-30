@@ -32,6 +32,7 @@
     emptyCopy: document.querySelector("#empty-copy"),
     footer: document.querySelector("#tracker-footer")
   };
+  const state = { filters: { sourceId: "all", type: "all", query: "" } };
 
   function element(tagName, className, text) {
     const node = document.createElement(tagName);
@@ -77,6 +78,23 @@
     return listItem;
   }
 
+  function personalHeadline(item) {
+    return item.presentation?.status === "generated" && item.presentation.shortHeadlineJa
+      ? item.presentation.shortHeadlineJa
+      : item.title;
+  }
+
+  function personalDetailHref(item, filters) {
+    const params = new URLSearchParams({ id: item.id });
+    if (filters.sourceId !== "all") params.set("source", filters.sourceId);
+    if (filters.type !== "all") params.set("type", filters.type);
+    if (filters.query.trim()) params.set("q", filters.query.trim());
+    if (new URLSearchParams(window.location.search).has("personal-fixture")) {
+      params.set("personal-fixture", "1");
+    }
+    return `./detail.html?${params.toString()}`;
+  }
+
   function renderPersonalItem(item, source) {
     const listItem = document.createElement("li");
     const card = element("article", `update-card update-card--${source.classification}`);
@@ -90,12 +108,11 @@
     appendFact(facts, "最終更新日", item.updatedDate, "確認できず");
     appendFact(facts, "対象", item.platforms.join(" / "), "未分類");
     appendFact(facts, "最終確認", item.lastObservedAt.slice(0, 10), "確認できず");
-    card.append(heading, element("h2", "", item.title), facts);
-    const sourceLink = element("a", "source-link", source.classification === "official" ? "公式ソースを開く" : "非公式ソースを開く");
-    sourceLink.href = item.url;
-    sourceLink.target = "_blank";
-    sourceLink.rel = "noreferrer";
-    card.append(sourceLink);
+    card.append(heading, element("h2", "", personalHeadline(item)), facts);
+    const detailLink = element("a", "detail-link", "詳細を見る");
+    detailLink.href = personalDetailHref(item, state.filters);
+    detailLink.setAttribute("aria-label", `${personalHeadline(item)}の詳細を見る`);
+    card.append(detailLink);
     listItem.append(card);
     return listItem;
   }
@@ -139,7 +156,14 @@
       setOptions(elements.source, [{ value: "all", label: "すべてのソース" }, { value: "meta-product-news-rss", label: "Product News" }, { value: "meta-business-sdk-releases", label: "Business SDK Releases" }], "all");
       setOptions(elements.priority, [{ value: "all", label: "すべて" }, { value: "high", label: "高" }, { value: "standard", label: "標準" }, { value: "low", label: "低" }], "all");
     }
-    const state = { filters: { sourceId: "all", type: "all", query: "" } };
+    if (personalMode) {
+      const params = new URLSearchParams(window.location.search);
+      const requestedSource = params.get("source");
+      const requestedType = params.get("type");
+      state.filters.sourceId = sourceMap.has(requestedSource) ? requestedSource : "all";
+      state.filters.type = requestedType === "official" || requestedType === "unofficial" ? requestedType : "all";
+      state.filters.query = (params.get("q") || "").slice(0, 160);
+    }
 
     function hasActiveFilter() {
       return state.filters.sourceId !== "all" || state.filters.type !== "all" || Boolean(state.filters.query.trim());
@@ -149,8 +173,23 @@
       return report.items.filter((item) => {
         const source = sourceMap.get(item.sourceId);
         const type = personalMode ? source?.classification : item.priority;
-        return (state.filters.sourceId === "all" || item.sourceId === state.filters.sourceId) && (state.filters.type === "all" || type === state.filters.type) && (!query || item.title.toLocaleLowerCase("ja-JP").includes(query));
+        const searchable = personalMode
+          ? [item.title, personalHeadline(item), item.presentation?.summaryJa || ""].join(" ")
+          : item.title;
+        return (state.filters.sourceId === "all" || item.sourceId === state.filters.sourceId) && (state.filters.type === "all" || type === state.filters.type) && (!query || searchable.toLocaleLowerCase("ja-JP").includes(query));
       });
+    }
+    function syncLocation() {
+      if (!personalMode || demoMode || fixtureMode) return;
+      const params = new URLSearchParams();
+      if (state.filters.sourceId !== "all") params.set("source", state.filters.sourceId);
+      if (state.filters.type !== "all") params.set("type", state.filters.type);
+      if (state.filters.query.trim()) params.set("q", state.filters.query.trim());
+      if (new URLSearchParams(window.location.search).has("personal-fixture")) {
+        params.set("personal-fixture", "1");
+      }
+      const suffix = params.size ? `?${params.toString()}` : "";
+      window.history.replaceState(null, "", `${window.location.pathname}${suffix}`);
     }
     function render() {
       const items = visibleItems();
@@ -168,10 +207,10 @@
       elements.query.value = state.filters.query;
     }
     elements.form.addEventListener("submit", (event) => event.preventDefault());
-    elements.source.addEventListener("change", () => { state.filters.sourceId = elements.source.value; render(); });
-    elements.priority.addEventListener("change", () => { state.filters.type = elements.priority.value; render(); });
-    elements.query.addEventListener("input", () => { state.filters.query = elements.query.value; render(); });
-    elements.reset.addEventListener("click", () => { state.filters = { sourceId: "all", type: "all", query: "" }; syncControls(); render(); });
+    elements.source.addEventListener("change", () => { state.filters.sourceId = elements.source.value; syncLocation(); render(); });
+    elements.priority.addEventListener("change", () => { state.filters.type = elements.priority.value; syncLocation(); render(); });
+    elements.query.addEventListener("input", () => { state.filters.query = elements.query.value; syncLocation(); render(); });
+    elements.reset.addEventListener("click", () => { state.filters = { sourceId: "all", type: "all", query: "" }; syncLocation(); syncControls(); render(); });
     syncControls();
     render();
   } catch (error) {

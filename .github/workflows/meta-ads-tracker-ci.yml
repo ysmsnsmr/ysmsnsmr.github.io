@@ -37,6 +37,7 @@ jobs:
           python3 scripts/validate_meta_ads_personal_feed.py
           python3 scripts/validate_meta_ads_tracker_workflows.py
           node --check meta-ads-updates/app.js
+          node --check meta-ads-updates/detail.js
           node --check scripts/test_meta_ads_tracker_ui.mjs
       - name: Install locked UI dependencies and Chromium
         run: |
