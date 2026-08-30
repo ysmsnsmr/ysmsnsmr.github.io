@@ -107,7 +107,6 @@
     appendFact(facts, "発表日", item.publishedDate);
     appendFact(facts, "最終更新日", item.updatedDate, "確認できず");
     appendFact(facts, "対象", item.platforms.join(" / "), "未分類");
-    appendFact(facts, "最終確認", item.lastObservedAt.slice(0, 10), "確認できず");
     card.append(heading, element("h2", "", personalHeadline(item)), facts);
     const detailLink = element("a", "detail-link", "詳細を見る");
     detailLink.href = personalDetailHref(item, state.filters);

@@ -269,6 +269,7 @@ try {
     assert((await page.locator("#update-list h2").allTextContents()).includes("Meta Ads APIの観測"), `${label}: generated Japanese headline is missing from the list`);
     assert(await page.locator(".unofficial-copy").count() === 0, `${label}: per-card non-official warning must not be rendered`);
     assert((await page.locator(".fact-label").allTextContents()).filter((label) => label === "最終更新日").length === 3, `${label}: final update date label is missing`);
+    assert(!(await page.locator(".fact-label").allTextContents()).includes("最終確認"), `${label}: automated observation timestamp must not be shown as human confirmation`);
     assert(await page.locator(".masthead").textContent().then((text) => !text.includes("Personal information feed") && !text.includes("個人・同僚向けフィード")), `${label}: removed personal-feed copy is still visible`);
     const personalColumns = await page.locator("#update-list").evaluate((node) => getComputedStyle(node).gridTemplateColumns.trim().split(/\s+/).length);
     const expectedColumns = viewport.name === "desktop" ? 3 : viewport.name === "tablet" ? 2 : 1;
@@ -313,6 +314,7 @@ try {
     assert((await page.locator("#detail-title").textContent()).includes("Meta Adsの表示変更"), `${label}: Japanese short headline is missing`);
     assert((await page.locator("#detail-summary").textContent()).includes("日本語要約を準備中"), `${label}: pending-summary fallback is missing`);
     assert((await page.locator("#detail-original-title").textContent()).includes("Meta Adsの表示変更"), `${label}: original title is missing`);
+    assert(!(await page.locator(".fact-label").allTextContents()).includes("最終確認"), `${label}: automated observation timestamp must not be shown on detail page`);
     assert(await page.locator("#detail-unofficial-notice").isVisible(), `${label}: non-official notice is missing`);
     assert(await page.locator("#detail-source-link").evaluate((link) => link.href.startsWith("https://") && link.target === "_blank" && link.rel.includes("noreferrer")), `${label}: source link is unsafe`);
     assert((await page.locator("#back-link").getAttribute("href")).includes("source=search-engine-land-meta-rss"), `${label}: back link did not preserve filters`);

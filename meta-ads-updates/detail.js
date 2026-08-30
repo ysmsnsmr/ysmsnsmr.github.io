@@ -95,7 +95,6 @@
     appendFact(elements.facts, "発表日", item.publishedDate);
     appendFact(elements.facts, "最終更新日", item.updatedDate);
     appendFact(elements.facts, "対象", Array.isArray(item.platforms) ? item.platforms.join(" / ") : null, "未分類");
-    appendFact(elements.facts, "最終確認", typeof item.lastObservedAt === "string" ? item.lastObservedAt.slice(0, 10) : null);
     elements.sourceLink.href = sourceUrl;
     elements.sourceLink.textContent = isOfficial ? "公式ソースを開く" : "非公式ソースを開く";
     elements.notice.hidden = isOfficial;
