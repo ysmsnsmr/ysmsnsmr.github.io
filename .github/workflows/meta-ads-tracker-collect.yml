@@ -47,6 +47,10 @@ jobs:
       - name: Collect Personal Feed sources
         id: collect
         if: steps.kill_switch.outputs.enabled == 'true'
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          META_ADS_PERSONAL_FEED_JA_ENABLED: ${{ vars.META_ADS_PERSONAL_FEED_JA_ENABLED }}
+          META_ADS_PERSONAL_FEED_GROQ_MODEL: ${{ vars.META_ADS_PERSONAL_FEED_GROQ_MODEL }}
         run: |
           python3 scripts/meta_ads_personal_feed.py \
             --config config/meta_ads_personal_feed_sources.json \

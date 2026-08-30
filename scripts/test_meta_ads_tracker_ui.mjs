@@ -75,13 +75,13 @@ function personalFeedFixture() {
     { id: "search-engine-land-meta-rss", name: "Search Engine Land (Meta / PPC)", classification: "unofficial", sourceUrl: "https://searchengineland.com/library/platforms/meta", platforms: ["Meta Ads"] }
   ];
   return {
-    schemaVersion: "meta-ads-personal-feed/v1",
+    schemaVersion: "meta-ads-personal-feed/v2",
     generatedAt: "2026-08-29T09:00:00Z",
     sources,
     items: [
-      { id: "meta-product-news-rss-aaaaaaaaaaaaaaaaaaaa", sourceId: "meta-product-news-rss", title: "Meta公式の製品更新", url: "https://about.fb.com/news/2026/08/product-update/", publishedDate: "2026-08-29", updatedDate: null, firstObservedAt: "2026-08-29T09:00:00Z", lastObservedAt: "2026-08-29T09:00:00Z", platforms: ["Metaプラットフォーム全般"], matchEvidence: [] },
-      { id: "search-engine-land-meta-rss-bbbbbbbbbbbbbbbbbbbb", sourceId: "search-engine-land-meta-rss", title: "Meta Ads APIの観測記事", url: "https://searchengineland.com/meta-ads-api/", publishedDate: "2026-08-28", updatedDate: "2026-08-29", firstObservedAt: "2026-08-29T09:00:00Z", lastObservedAt: "2026-08-29T09:00:00Z", platforms: ["Meta Ads"], matchEvidence: ["category:PPC"] },
-      { id: "search-engine-land-meta-rss-cccccccccccccccccccc", sourceId: "search-engine-land-meta-rss", title: "Meta Adsの表示変更", url: "https://searchengineland.com/meta-ads-ui/", publishedDate: null, updatedDate: null, firstObservedAt: "2026-08-29T09:00:00Z", lastObservedAt: "2026-08-29T09:00:00Z", platforms: ["Meta Ads"], matchEvidence: ["category:PPC"] }
+      { id: "meta-product-news-rss-aaaaaaaaaaaaaaaaaaaa", sourceId: "meta-product-news-rss", title: "Meta公式の製品更新", url: "https://about.fb.com/news/2026/08/product-update/", publishedDate: "2026-08-29", updatedDate: null, firstObservedAt: "2026-08-29T09:00:00Z", lastObservedAt: "2026-08-29T09:00:00Z", platforms: ["Metaプラットフォーム全般"], matchEvidence: [], presentation: { schemaVersion: "meta-ads-personal-feed-presentation/v1", status: "generated", shortHeadlineJa: "Meta公式の製品更新", summaryJa: "Metaの製品更新に関するお知らせです。", sourceFingerprint: "a".repeat(64), generatedAt: "2026-08-29T09:00:00Z" } },
+      { id: "search-engine-land-meta-rss-bbbbbbbbbbbbbbbbbbbb", sourceId: "search-engine-land-meta-rss", title: "Meta Ads APIの観測記事", url: "https://searchengineland.com/meta-ads-api/", publishedDate: "2026-08-28", updatedDate: "2026-08-29", firstObservedAt: "2026-08-29T09:00:00Z", lastObservedAt: "2026-08-29T09:00:00Z", platforms: ["Meta Ads"], matchEvidence: ["category:PPC"], presentation: { schemaVersion: "meta-ads-personal-feed-presentation/v1", status: "generated", shortHeadlineJa: "Meta Ads APIの観測", summaryJa: "Meta Ads APIに関する観測記事です。", sourceFingerprint: "b".repeat(64), generatedAt: "2026-08-29T09:00:00Z" } },
+      { id: "search-engine-land-meta-rss-cccccccccccccccccccc", sourceId: "search-engine-land-meta-rss", title: "Meta Adsの表示変更", url: "https://searchengineland.com/meta-ads-ui/", publishedDate: null, updatedDate: null, firstObservedAt: "2026-08-29T09:00:00Z", lastObservedAt: "2026-08-29T09:00:00Z", platforms: ["Meta Ads"], matchEvidence: ["category:PPC"], presentation: { schemaVersion: "meta-ads-personal-feed-presentation/v1", status: "pending", shortHeadlineJa: null, summaryJa: null, sourceFingerprint: "c".repeat(64), generatedAt: null } }
     ]
   };
 }

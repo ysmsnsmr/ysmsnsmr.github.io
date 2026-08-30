@@ -107,6 +107,12 @@ def main() -> int:
             fail("collect workflow must build and validate the Personal Feed")
         if any(value in collect_runs for value in ("meta_ads_tracker_collect.py", "meta_ads_tracker_weekly", "meta_ads_tracker_decisions", "meta_ads_tracker_groq.py")):
             fail("Personal Feed collection must not depend on candidate, weekly, decision, or Groq stages")
+        personal_collect = next((step for step in collect_steps if step.get("name") == "Collect Personal Feed sources"), None)
+        personal_env = personal_collect.get("env", {}) if isinstance(personal_collect, dict) else {}
+        if not isinstance(personal_env, dict) or personal_env.get("GROQ_API_KEY") != "${{ secrets.GROQ_API_KEY }}":
+            fail("Personal Feed collection must provide the optional Japanese-presentation API key")
+        if "META_ADS_PERSONAL_FEED_JA_ENABLED" not in personal_env or "META_ADS_PERSONAL_FEED_GROQ_MODEL" not in personal_env:
+            fail("Personal Feed collection must expose Japanese-presentation controls")
         if 'git add -- data/meta_ads_personal_feed_state.json meta-ads-updates/personal-feed.json' not in collect_runs:
             fail("Personal Feed collection must stage only its explicit state and public feed paths")
         artifact = next((step for step in collect_steps if step.get("name") == "Upload Personal Feed artifact"), None)

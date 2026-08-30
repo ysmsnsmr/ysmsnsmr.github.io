@@ -17,10 +17,18 @@
 
 `Meta Ads Personal Feed daily collect` は毎日 `00:15 UTC`（通常08:15 MYT）に実行されます。すべてのソースの取得・形式検査・解析・契約検証が成功した場合にだけ、次の2ファイルを更新します。
 
-- `data/meta_ads_personal_feed_state.json` — URL、タイトル、日付、fingerprint、取得日時だけを保持する状態
+- `data/meta_ads_personal_feed_state.json` — URL、タイトル、日付、fingerprint、取得日時と、日本語表示データのキャッシュを保持する状態
 - `meta-ads-updates/personal-feed.json` — GitHub Pagesで表示する公開フィード
 
 生HTML、記事本文、画像、認証情報、Cookieは保存しません。いずれかのソースで失敗したrunは既存の公開フィードを更新しません。
+
+## 日本語短見出し・要約
+
+収集時には、RSSの説明文またはSDK release notesを**そのrunの一時入力だけ**として、短見出しと要約の日本語表示データを生成します。元の本文・説明文・release notesはstate、公開JSON、artifact、ログへ保存しません。
+
+生成済みの表示データは記事内容のfingerprintに結び付けて再利用します。同じ内容には再課金しません。内容が変わった記事、または未生成の記事だけを新しい順に1 runあたり最大12件処理します。
+
+GroqのAPIキーがない、生成に失敗する、または出力契約に合わない場合でも、収集と公開は継続します。その記事は `pending` として記録され、原文タイトルのまま表示できます。日本語表示データは事実確認や運用判断を代替しません。
 
 初回成功runは、各RSS/APIの現在の項目をbaselineとして表示します。これは「その日に発表された」という意味ではなく、`最終確認` が初回取得日であることを意味します。
 
@@ -29,6 +37,8 @@
 リポジトリ変数 `META_ADS_TRACKER_COLLECT_ENABLED` を `false` にすると、checkout・依存関係インストール・外部アクセス・commit・artifact uploadの前に正常終了します。`true` または未設定で有効です。それ以外の値は設定ミスとして失敗します。
 
 手動で初回取得または再確認する場合は、Actionsの `Meta Ads Personal Feed daily collect` を `main` に対して実行します。成功後はartifact `meta-ads-personal-feed-<run id>` と公開画面を確認してください。
+
+日本語表示の呼び出しは、リポジトリ変数 `META_ADS_PERSONAL_FEED_JA_ENABLED` で制御します。未設定または `true` で有効、`false` で停止します。`META_ADS_PERSONAL_FEED_GROQ_MODEL` は使用モデルを上書きできます。未設定時は `openai/gpt-oss-120b` を使います。値が `true` / `false` 以外の場合は、設定ミスとしてcollectorを失敗させます。
 
 ## 旧Trackerの扱い
 

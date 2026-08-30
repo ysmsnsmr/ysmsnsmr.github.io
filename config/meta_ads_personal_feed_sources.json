@@ -1,9 +1,15 @@
 {
-  "schemaVersion": "meta-ads-personal-feed-sources/v1",
+  "schemaVersion": "meta-ads-personal-feed-sources/v2",
   "policies": {
     "persistRawResponseBody": false,
     "historyRetentionDays": 180,
-    "maxPublishedItems": 100
+    "maxPublishedItems": 100,
+    "japanesePresentation": {
+      "maxRequestsPerRun": 12,
+      "maxInputChars": 4000,
+      "shortHeadlineMaxChars": 80,
+      "summaryMaxChars": 360
+    }
   },
   "sources": [
     {
