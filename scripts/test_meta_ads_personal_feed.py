@@ -29,10 +29,6 @@ from meta_ads_personal_feed_presentation import PresentationError
 
 
 NOW = datetime(2026, 8, 29, 9, 0, tzinfo=timezone.utc)
-SEARCH_ENGINE_LAND = """<rss><channel>
-<item><title>Meta Ads campaign update</title><link>https://searchengineland.com/meta-ads-campaign-update/?utm_source=test</link><description>Campaign controls are changing for eligible Meta Ads accounts.</description><category>Meta</category><category>PPC</category><pubDate>Fri, 29 Aug 2026 02:00:00 +0000</pubDate></item>
-<item><title>Meta AI search update</title><link>https://searchengineland.com/meta-ai-search-update/</link><category>Meta</category><category>SEO</category></item>
-</channel></rss>"""
 JON = """<rss><channel>
 <item><title>How to review a new Meta Ads setting</title><link>https://www.jonloomer.com/meta-ads-manager-rollout/</link><description>Review the new setting before changing a campaign.</description><category>Meta Advertising</category><pubDate>Fri, 29 Aug 2026 02:00:00 +0000</pubDate></item>
 <item><title>General marketing notes</title><link>https://www.jonloomer.com/general-marketing-notes/</link><category>Marketing</category></item>
@@ -51,7 +47,6 @@ class PersonalFeedTest(unittest.TestCase):
         source_bodies = bodies or {
             "meta-product-news-rss": META,
             "meta-business-sdk-releases": SDK,
-            "search-engine-land-meta-rss": SEARCH_ENGINE_LAND,
             "jon-loomer-meta-ads": JON,
         }
 
@@ -63,11 +58,9 @@ class PersonalFeedTest(unittest.TestCase):
 
         return fetch
 
-    def test_config_adds_two_official_and_two_unofficial_public_sources(self) -> None:
+    def test_config_keeps_two_official_and_one_unofficial_public_sources(self) -> None:
         sources = {source["id"]: source for source in self.config["sources"]}
-        self.assertEqual(set(sources), {"meta-product-news-rss", "meta-business-sdk-releases", "search-engine-land-meta-rss", "jon-loomer-meta-ads"})
-        self.assertEqual(sources["search-engine-land-meta-rss"]["fetchUrl"], "https://searchengineland.com/library/platforms/meta/feed")
-        self.assertEqual(sources["search-engine-land-meta-rss"]["match"], {"kind": "rss_category", "categories": ["PPC"]})
+        self.assertEqual(set(sources), {"meta-product-news-rss", "meta-business-sdk-releases", "jon-loomer-meta-ads"})
         self.assertEqual(sources["jon-loomer-meta-ads"]["fetchUrl"], "https://www.jonloomer.com/feed/")
         self.assertEqual(sources["meta-business-sdk-releases"]["parser"], "github_releases")
         self.assertFalse(self.config["policies"]["persistRawResponseBody"])
@@ -101,24 +94,20 @@ class PersonalFeedTest(unittest.TestCase):
             with self.assertRaisesRegex(ContractError, "true, false"):
                 _presentation_from_environment(1)
 
-    def test_rss_category_filters_only_admit_relevant_unofficial_items(self) -> None:
+    def test_rss_category_filters_only_admit_relevant_jon_loomer_items(self) -> None:
         sources = {source["id"]: source for source in self.config["sources"]}
-        search_engine_land = extract_items(sources["search-engine-land-meta-rss"], SEARCH_ENGINE_LAND)
         jon = extract_items(sources["jon-loomer-meta-ads"], JON)
-        self.assertEqual([item["title"] for item in search_engine_land], ["Meta Ads campaign update"])
-        self.assertEqual(search_engine_land[0]["url"], "https://searchengineland.com/meta-ads-campaign-update/")
-        self.assertEqual(search_engine_land[0]["matchEvidence"], ["category:PPC"])
         self.assertEqual([item["title"] for item in jon], ["How to review a new Meta Ads setting"])
         self.assertEqual(jon[0]["matchEvidence"], ["category:Meta Advertising"])
-        self.assertIn("Campaign controls", search_engine_land[0]["sourceContext"])
+        self.assertIn("Review the new setting", jon[0]["sourceContext"])
 
     def test_first_collection_publishes_provenance_labelled_baseline_without_human_decisions(self) -> None:
         state = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
         feed, next_state = collect(self.config, state, 1, NOW, self.fetcher())
-        self.assertEqual(len(feed["sources"]), 4)
-        self.assertEqual(len(feed["items"]), 4)
+        self.assertEqual(len(feed["sources"]), 3)
+        self.assertEqual(len(feed["items"]), 3)
         self.assertEqual(feed["schemaVersion"], FEED_SCHEMA_VERSION)
-        self.assertEqual({item["sourceId"] for item in feed["items"]}, {"meta-product-news-rss", "meta-business-sdk-releases", "search-engine-land-meta-rss", "jon-loomer-meta-ads"})
+        self.assertEqual({item["sourceId"] for item in feed["items"]}, {"meta-product-news-rss", "meta-business-sdk-releases", "jon-loomer-meta-ads"})
         sdk = next(item for item in feed["items"] if item["sourceId"] == "meta-business-sdk-releases")
         self.assertEqual(sdk["updatedDate"], "2026-08-29")
         self.assertTrue(all(item["firstObservedAt"] == "2026-08-29T09:00:00Z" for item in feed["items"]))
@@ -138,7 +127,7 @@ class PersonalFeedTest(unittest.TestCase):
 
         initial_state = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
         feed, seeded = collect(self.config, initial_state, 1, NOW, self.fetcher(), presenter)
-        self.assertEqual(len(calls), 4)
+        self.assertEqual(len(calls), 3)
         self.assertTrue(all(item["presentation"]["status"] == "generated" for item in feed["items"]))
         self.assertTrue(all(item["presentation"]["schemaVersion"] == PRESENTATION_SCHEMA_VERSION for item in feed["items"]))
         self.assertNotIn("sourceContext", json.dumps(seeded))
@@ -147,7 +136,7 @@ class PersonalFeedTest(unittest.TestCase):
         unchanged_feed, unchanged_state = collect(self.config, seeded, 1, NOW.replace(day=30), self.fetcher(), presenter)
         self.assertEqual(calls, [])
         self.assertEqual(
-            next(item for item in unchanged_feed["items"] if item["sourceId"] == "search-engine-land-meta-rss")["presentation"]["generatedAt"],
+            next(item for item in unchanged_feed["items"] if item["sourceId"] == "jon-loomer-meta-ads")["presentation"]["generatedAt"],
             "2026-08-29T09:00:00Z",
         )
 
@@ -155,12 +144,11 @@ class PersonalFeedTest(unittest.TestCase):
         changed_bodies = {
             "meta-product-news-rss": META,
             "meta-business-sdk-releases": SDK,
-            "search-engine-land-meta-rss": SEARCH_ENGINE_LAND.replace("controls are changing", "reporting fields are changing"),
-            "jon-loomer-meta-ads": JON,
+            "jon-loomer-meta-ads": JON.replace("review a new", "reassess a changed"),
         }
         changed_feed, changed_state = collect(self.config, unchanged_state, 1, NOW.replace(day=31), self.fetcher(bodies=changed_bodies), presenter)
         self.assertEqual(len(calls), 1)
-        changed = next(item for item in changed_feed["items"] if item["sourceId"] == "search-engine-land-meta-rss")
+        changed = next(item for item in changed_feed["items"] if item["sourceId"] == "jon-loomer-meta-ads")
         self.assertEqual(changed["presentation"]["generatedAt"], "2026-08-31T09:00:00Z")
         validate_state(changed_state, self.config)
 
@@ -170,7 +158,7 @@ class PersonalFeedTest(unittest.TestCase):
 
         state = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
         feed, next_state = collect(self.config, state, 1, NOW, self.fetcher(), failing_presenter)
-        self.assertEqual(len(feed["items"]), 4)
+        self.assertEqual(len(feed["items"]), 3)
         self.assertTrue(all(item["presentation"]["status"] == "pending" for item in feed["items"]))
         self.assertNotIn("intentionally not exposed", json.dumps(next_state))
         validate_feed(feed, self.config)
@@ -221,13 +209,13 @@ class PersonalFeedTest(unittest.TestCase):
     def test_changed_rss_item_updates_in_place_and_keeps_initial_observation(self) -> None:
         initial_state = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
         _feed, seeded = collect(self.config, initial_state, 1, NOW, self.fetcher())
-        changed_bodies = {"meta-product-news-rss": META, "meta-business-sdk-releases": SDK, "search-engine-land-meta-rss": SEARCH_ENGINE_LAND.replace("campaign update", "campaign update revised"), "jon-loomer-meta-ads": JON}
+        changed_bodies = {"meta-product-news-rss": META, "meta-business-sdk-releases": SDK, "jon-loomer-meta-ads": JON.replace("How to review", "How to reassess")}
         feed, state = collect(self.config, seeded, 1, NOW.replace(day=30), self.fetcher(bodies=changed_bodies))
-        search_engine_land = next(item for item in feed["items"] if item["sourceId"] == "search-engine-land-meta-rss")
-        self.assertEqual(search_engine_land["title"], "Meta Ads campaign update revised")
-        self.assertEqual(search_engine_land["firstObservedAt"], "2026-08-29T09:00:00Z")
-        self.assertEqual(search_engine_land["lastObservedAt"], "2026-08-30T09:00:00Z")
-        self.assertEqual(len(state["sources"]["search-engine-land-meta-rss"]["items"]), 1)
+        jon = next(item for item in feed["items"] if item["sourceId"] == "jon-loomer-meta-ads")
+        self.assertEqual(jon["title"], "How to reassess a new Meta Ads setting")
+        self.assertEqual(jon["firstObservedAt"], "2026-08-29T09:00:00Z")
+        self.assertEqual(jon["lastObservedAt"], "2026-08-30T09:00:00Z")
+        self.assertEqual(len(state["sources"]["jon-loomer-meta-ads"]["items"]), 1)
 
     def test_fetch_failure_preserves_existing_state_and_public_feed_bytes(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

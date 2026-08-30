@@ -22,15 +22,6 @@
       ]
     },
     {
-      "id": "search-engine-land-meta-rss",
-      "name": "Search Engine Land (Meta / PPC)",
-      "classification": "unofficial",
-      "sourceUrl": "https://searchengineland.com/library/platforms/meta",
-      "platforms": [
-        "Meta Ads"
-      ]
-    },
-    {
       "id": "jon-loomer-meta-ads",
       "name": "Jon Loomer Digital",
       "classification": "unofficial",
