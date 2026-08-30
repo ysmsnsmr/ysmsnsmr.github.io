@@ -114,7 +114,7 @@
     const response = await fetch(reportPath, { cache: "no-store" });
     if (!response.ok) throw new Error(`report HTTP ${response.status}`);
     const report = await response.json();
-    const personalMode = report.schemaVersion === "meta-ads-personal-feed/v1";
+    const personalMode = report.schemaVersion === "meta-ads-personal-feed/v1" || report.schemaVersion === "meta-ads-personal-feed/v2";
     elements.list.classList.toggle("update-list--personal", personalMode);
     const sourceMap = new Map((report.sources || []).map((source) => [source.id, source]));
     const delayedRecovery = !personalMode && report.publication?.mode === "delayed_recovery";

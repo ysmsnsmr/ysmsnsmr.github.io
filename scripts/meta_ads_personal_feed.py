@@ -12,6 +12,7 @@ import argparse
 import email.utils
 import hashlib
 import json
+import os
 import re
 import sys
 import urllib.error
@@ -27,11 +28,15 @@ from defusedxml.common import DefusedXmlException
 from meta_ads_tracker_collect import _request as bounded_request
 from meta_ads_tracker_contract import ContractError, _expect_hostname, _expect_https_url, _expect_identifier
 from meta_ads_tracker_publication import write_json
+from meta_ads_personal_feed_presentation import PresentationError, request_presentation
 
 
-SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v1"
-STATE_SCHEMA_VERSION = "meta-ads-personal-feed-state/v1"
-FEED_SCHEMA_VERSION = "meta-ads-personal-feed/v1"
+SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v2"
+STATE_SCHEMA_VERSION = "meta-ads-personal-feed-state/v2"
+LEGACY_STATE_SCHEMA_VERSION = "meta-ads-personal-feed-state/v1"
+FEED_SCHEMA_VERSION = "meta-ads-personal-feed/v2"
+LEGACY_FEED_SCHEMA_VERSION = "meta-ads-personal-feed/v1"
+PRESENTATION_SCHEMA_VERSION = "meta-ads-personal-feed-presentation/v1"
 DEFAULT_CONFIG = Path("config/meta_ads_personal_feed_sources.json")
 DEFAULT_STATE = Path("data/meta_ads_personal_feed_state.json")
 DEFAULT_OUTPUT = Path("meta-ads-updates/personal-feed.json")
@@ -41,6 +46,7 @@ CONTENT_TYPES = {
     "rss": ["application/rss+xml", "application/xml", "text/xml"],
     "github_releases": ["application/json"],
 }
+PRESENTATION_STATUSES = {"generated", "pending"}
 
 
 def _expect_keys(value: Any, expected: set[str], label: str) -> dict[str, Any]:
@@ -124,11 +130,20 @@ def validate_config(payload: Any) -> dict[str, Any]:
     config = _expect_keys(payload, {"schemaVersion", "policies", "sources"}, "personal feed config")
     if config["schemaVersion"] != SOURCE_SCHEMA_VERSION:
         raise ContractError(f"personal feed config schemaVersion must be {SOURCE_SCHEMA_VERSION}")
-    policies = _expect_keys(config["policies"], {"persistRawResponseBody", "historyRetentionDays", "maxPublishedItems"}, "personal feed policies")
+    policies = _expect_keys(config["policies"], {"persistRawResponseBody", "historyRetentionDays", "maxPublishedItems", "japanesePresentation"}, "personal feed policies")
     if policies["persistRawResponseBody"] is not False:
         raise ContractError("personal feed must not persist raw response bodies")
     _limit(policies["historyRetentionDays"], "personal feed policies.historyRetentionDays", 1, 730)
     _limit(policies["maxPublishedItems"], "personal feed policies.maxPublishedItems", 1, 500)
+    presentation = _expect_keys(
+        policies["japanesePresentation"],
+        {"maxRequestsPerRun", "maxInputChars", "shortHeadlineMaxChars", "summaryMaxChars"},
+        "personal feed policies.japanesePresentation",
+    )
+    _limit(presentation["maxRequestsPerRun"], "personal feed policies.japanesePresentation.maxRequestsPerRun", 1, 50)
+    _limit(presentation["maxInputChars"], "personal feed policies.japanesePresentation.maxInputChars", 100, 12_000)
+    _limit(presentation["shortHeadlineMaxChars"], "personal feed policies.japanesePresentation.shortHeadlineMaxChars", 10, 120)
+    _limit(presentation["summaryMaxChars"], "personal feed policies.japanesePresentation.summaryMaxChars", 40, 600)
     if not isinstance(config["sources"], list) or not config["sources"]:
         raise ContractError("personal feed sources must be a non-empty array")
     ids: set[str] = set()
@@ -258,7 +273,20 @@ def _rss_items(source: dict[str, Any], body: str) -> list[dict[str, Any]]:
         seen.add(url)
         published = _date_from_feed((fields.get("pubDate") or fields.get("published") or [None])[0])
         updated = _date_from_feed((fields.get("updated") or [None])[0])
-        items.append({"key": url, "url": url, "title": title[:280], "publishedDate": published, "updatedDate": updated, "matchEvidence": evidence, "fingerprint": _fingerprint(url, title, published or "", updated or "")})
+        source_context = _strip_html(
+            (fields.get("description") or fields.get("encoded") or fields.get("content") or [""])[0]
+        )
+        items.append({
+            "key": url,
+            "url": url,
+            "title": title[:280],
+            "publishedDate": published,
+            "updatedDate": updated,
+            "matchEvidence": evidence,
+            # This value is used only during this run.  It is deliberately not persisted.
+            "sourceContext": source_context,
+            "fingerprint": _fingerprint(url, title, published or "", updated or "", source_context),
+        })
         if len(items) > source["transport"]["maxItems"]:
             raise ContractError(f"personal feed source {source['id']} exceeds its item limit")
     return items
@@ -282,7 +310,18 @@ def _github_release_items(source: dict[str, Any], body: str) -> list[dict[str, A
             continue
         published = _date_from_feed(str(release.get("published_at") or release.get("created_at") or ""))
         updated = _date_from_feed(str(release.get("updated_at") or ""))
-        items.append({"key": str(release.get("tag_name") or url), "url": url, "title": tag[:280], "publishedDate": published, "updatedDate": updated, "matchEvidence": [], "fingerprint": _fingerprint(str(release.get("tag_name") or url), tag, published or "", updated or "")})
+        source_context = _normalise(str(release.get("body") or ""))
+        items.append({
+            "key": str(release.get("tag_name") or url),
+            "url": url,
+            "title": tag[:280],
+            "publishedDate": published,
+            "updatedDate": updated,
+            "matchEvidence": [],
+            # Release notes are used only as model input and are never stored in state or feed JSON.
+            "sourceContext": source_context,
+            "fingerprint": _fingerprint(str(release.get("tag_name") or url), tag, published or "", updated or "", source_context),
+        })
         if len(items) > source["transport"]["maxItems"]:
             raise ContractError(f"personal feed source {source['id']} exceeds its item limit")
     return items
@@ -296,10 +335,41 @@ def extract_items(source: dict[str, Any], body: str) -> list[dict[str, Any]]:
     raise ContractError(f"personal feed source {source['id']} has an unsupported parser")
 
 
+def _validate_presentation(value: Any, fingerprint: str | None, label: str, policy: dict[str, Any]) -> dict[str, Any]:
+    presentation = _expect_keys(
+        value,
+        {"schemaVersion", "status", "shortHeadlineJa", "summaryJa", "sourceFingerprint", "generatedAt"},
+        label,
+    )
+    if presentation["schemaVersion"] != PRESENTATION_SCHEMA_VERSION:
+        raise ContractError(f"{label}.schemaVersion must be {PRESENTATION_SCHEMA_VERSION}")
+    if presentation["status"] not in PRESENTATION_STATUSES:
+        raise ContractError(f"{label}.status is unsupported")
+    if not isinstance(presentation["sourceFingerprint"], str) or not re.fullmatch(r"[a-f0-9]{64}", presentation["sourceFingerprint"]):
+        raise ContractError(f"{label}.sourceFingerprint must be a SHA-256 hash")
+    if fingerprint is not None and presentation["sourceFingerprint"] != fingerprint:
+        raise ContractError(f"{label}.sourceFingerprint must match the item fingerprint")
+    generated = presentation["status"] == "generated"
+    for field in ("shortHeadlineJa", "summaryJa"):
+        value = presentation[field]
+        if generated:
+            maximum = policy["shortHeadlineMaxChars"] if field == "shortHeadlineJa" else policy["summaryMaxChars"]
+            if len(_text(value, f"{label}.{field}")) > maximum:
+                raise ContractError(f"{label}.{field} exceeds its configured length")
+        elif value is not None:
+            raise ContractError(f"{label}.{field} must be null while pending")
+    _timestamp(presentation["generatedAt"], f"{label}.generatedAt", nullable=not generated)
+    if generated and presentation["generatedAt"] is None:
+        raise ContractError(f"{label}.generatedAt is required when generated")
+    if not generated and presentation["generatedAt"] is not None:
+        raise ContractError(f"{label}.generatedAt must be null while pending")
+    return presentation
+
+
 def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
     state = _expect_keys(payload, {"schemaVersion", "updatedAt", "sources"}, "personal feed state")
-    if state["schemaVersion"] != STATE_SCHEMA_VERSION:
-        raise ContractError(f"personal feed state schemaVersion must be {STATE_SCHEMA_VERSION}")
+    if state["schemaVersion"] not in {LEGACY_STATE_SCHEMA_VERSION, STATE_SCHEMA_VERSION}:
+        raise ContractError(f"personal feed state schemaVersion must be {LEGACY_STATE_SCHEMA_VERSION} or {STATE_SCHEMA_VERSION}")
     _timestamp(state["updatedAt"], "personal feed state.updatedAt", nullable=True)
     if not isinstance(state["sources"], dict):
         raise ContractError("personal feed state.sources must be an object")
@@ -312,7 +382,10 @@ def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
             raise ContractError(f"personal feed state.sources.{source_id}.items must be an object")
         for key, item in source_payload["items"].items():
             _text(key, f"personal feed state.sources.{source_id} key")
-            entry = _expect_keys(item, {"url", "title", "publishedDate", "updatedDate", "matchEvidence", "fingerprint", "firstObservedAt", "lastObservedAt"}, f"personal feed state.sources.{source_id}.items.{key}")
+            expected = {"url", "title", "publishedDate", "updatedDate", "matchEvidence", "fingerprint", "firstObservedAt", "lastObservedAt"}
+            if state["schemaVersion"] == STATE_SCHEMA_VERSION:
+                expected.add("presentation")
+            entry = _expect_keys(item, expected, f"personal feed state.sources.{source_id}.items.{key}")
             _expect_https_url(entry["url"], "personal feed state item.url")
             _text(entry["title"], "personal feed state item.title")
             _date(entry["publishedDate"], "personal feed state item.publishedDate", nullable=True)
@@ -323,6 +396,13 @@ def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
                 raise ContractError("personal feed state item.fingerprint must be a SHA-256 hash")
             _timestamp(entry["firstObservedAt"], "personal feed state item.firstObservedAt")
             _timestamp(entry["lastObservedAt"], "personal feed state item.lastObservedAt")
+            if state["schemaVersion"] == STATE_SCHEMA_VERSION:
+                _validate_presentation(
+                    entry["presentation"],
+                    entry["fingerprint"],
+                    "personal feed state item.presentation",
+                    config["policies"]["japanesePresentation"],
+                )
     return state
 
 
@@ -355,6 +435,7 @@ def build_feed(state: dict[str, Any], config: dict[str, Any], generated_at: str)
                 "lastObservedAt": record["lastObservedAt"],
                 "platforms": source["platforms"],
                 "matchEvidence": record["matchEvidence"],
+                "presentation": record["presentation"],
             })
     items.sort(key=_sort_key, reverse=True)
     return {"schemaVersion": FEED_SCHEMA_VERSION, "generatedAt": generated_at, "sources": _source_descriptors(config), "items": items[:config["policies"]["maxPublishedItems"]]}
@@ -362,8 +443,8 @@ def build_feed(state: dict[str, Any], config: dict[str, Any], generated_at: str)
 
 def validate_feed(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
     feed = _expect_keys(payload, {"schemaVersion", "generatedAt", "sources", "items"}, "personal feed")
-    if feed["schemaVersion"] != FEED_SCHEMA_VERSION:
-        raise ContractError(f"personal feed schemaVersion must be {FEED_SCHEMA_VERSION}")
+    if feed["schemaVersion"] not in {LEGACY_FEED_SCHEMA_VERSION, FEED_SCHEMA_VERSION}:
+        raise ContractError(f"personal feed schemaVersion must be {LEGACY_FEED_SCHEMA_VERSION} or {FEED_SCHEMA_VERSION}")
     _timestamp(feed["generatedAt"], "personal feed.generatedAt", nullable=True)
     descriptors = _source_descriptors(config)
     if feed["sources"] != descriptors:
@@ -373,7 +454,10 @@ def validate_feed(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
     known_sources = {source["id"]: source for source in config["sources"]}
     ids: set[str] = set()
     for index, item in enumerate(feed["items"]):
-        entry = _expect_keys(item, {"id", "sourceId", "title", "url", "publishedDate", "updatedDate", "firstObservedAt", "lastObservedAt", "platforms", "matchEvidence"}, f"personal feed.items[{index}]")
+        expected = {"id", "sourceId", "title", "url", "publishedDate", "updatedDate", "firstObservedAt", "lastObservedAt", "platforms", "matchEvidence"}
+        if feed["schemaVersion"] == FEED_SCHEMA_VERSION:
+            expected.add("presentation")
+        entry = _expect_keys(item, expected, f"personal feed.items[{index}]")
         item_id = _expect_identifier(entry["id"], f"personal feed.items[{index}].id")
         if item_id in ids:
             raise ContractError("personal feed item IDs must be unique")
@@ -393,40 +477,157 @@ def validate_feed(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
             raise ContractError("personal feed item platforms must match its source")
         if not isinstance(entry["matchEvidence"], list) or not all(isinstance(value, str) for value in entry["matchEvidence"]):
             raise ContractError("personal feed item.matchEvidence must be a string array")
+        if feed["schemaVersion"] == FEED_SCHEMA_VERSION:
+            _validate_presentation(
+                entry["presentation"],
+                None,
+                f"personal feed.items[{index}].presentation",
+                config["policies"]["japanesePresentation"],
+            )
     return feed
 
 
-def collect(config: dict[str, Any], state: dict[str, Any], timeout: float, now: datetime, fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = bounded_request) -> tuple[dict[str, Any], dict[str, Any]]:
+def _pending_presentation(fingerprint: str) -> dict[str, Any]:
+    return {
+        "schemaVersion": PRESENTATION_SCHEMA_VERSION,
+        "status": "pending",
+        "shortHeadlineJa": None,
+        "summaryJa": None,
+        "sourceFingerprint": fingerprint,
+        "generatedAt": None,
+    }
+
+
+def _presentation_from_environment(timeout: float) -> Callable[[str, str, dict[str, Any]], dict[str, str]] | None:
+    setting = os.environ.get("META_ADS_PERSONAL_FEED_JA_ENABLED", "").strip().lower() or "true"
+    if setting not in {"true", "false"}:
+        raise ContractError("META_ADS_PERSONAL_FEED_JA_ENABLED must be true, false, or unset")
+    api_key = os.environ.get("GROQ_API_KEY", "").strip()
+    if setting == "false" or not api_key:
+        return None
+    model = os.environ.get("META_ADS_PERSONAL_FEED_GROQ_MODEL", "").strip() or "openai/gpt-oss-120b"
+
+    def present(title: str, source_context: str, policy: dict[str, Any]) -> dict[str, str]:
+        return request_presentation(
+            api_key=api_key,
+            model=model,
+            title=title,
+            source_context=source_context[:policy["maxInputChars"]],
+            short_headline_max_chars=policy["shortHeadlineMaxChars"],
+            summary_max_chars=policy["summaryMaxChars"],
+            timeout=timeout,
+        )
+
+    return present
+
+
+def collect(
+    config: dict[str, Any],
+    state: dict[str, Any],
+    timeout: float,
+    now: datetime,
+    fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = bounded_request,
+    present_item: Callable[[str, str, dict[str, Any]], dict[str, str]] | None = None,
+) -> tuple[dict[str, Any], dict[str, Any]]:
     validate_config(config)
     validate_state(state, config)
     generated_at = _now(now)
     cutoff = now.astimezone(timezone.utc) - timedelta(days=config["policies"]["historyRetentionDays"])
-    next_state: dict[str, Any] = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": generated_at, "sources": {}}
+
+    # Finish all external source collection before any optional model request. A source failure
+    # therefore cannot cause paid generation work for a run that will not be published.
+    raw_by_source: dict[str, list[dict[str, Any]]] = {}
     for source in config["sources"]:
         body, content_type = fetch_body(source, timeout)
         if not isinstance(body, str) or (content_type or "").split(";", 1)[0].strip().lower() not in source["expectedContentTypes"]:
             raise ContractError(f"personal feed source {source['id']} returned an unexpected response")
+        raw_by_source[source["id"]] = extract_items(source, body)
+
+    next_state: dict[str, Any] = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": generated_at, "sources": {}}
+    presentation_candidates: list[tuple[dict[str, Any], dict[str, Any]]] = []
+    for source in config["sources"]:
         prior = state["sources"].get(source["id"], {"items": {}})["items"]
-        current = dict(prior)
-        for raw in extract_items(source, body):
+        current: dict[str, Any] = {}
+        for key, record in prior.items():
+            current[key] = {
+                "url": record["url"],
+                "title": record["title"],
+                "publishedDate": record["publishedDate"],
+                "updatedDate": record["updatedDate"],
+                "matchEvidence": record["matchEvidence"],
+                "fingerprint": record["fingerprint"],
+                "firstObservedAt": record["firstObservedAt"],
+                "lastObservedAt": record["lastObservedAt"],
+                "presentation": record.get("presentation") or _pending_presentation(record["fingerprint"]),
+            }
+        for raw in raw_by_source[source["id"]]:
             existing = prior.get(raw["key"])
-            current[raw["key"]] = {"url": raw["url"], "title": raw["title"], "publishedDate": raw["publishedDate"], "updatedDate": raw["updatedDate"], "matchEvidence": raw["matchEvidence"], "fingerprint": raw["fingerprint"], "firstObservedAt": existing["firstObservedAt"] if existing else generated_at, "lastObservedAt": generated_at}
+            cached = existing.get("presentation") if existing and existing.get("fingerprint") == raw["fingerprint"] else None
+            record = {
+                "url": raw["url"],
+                "title": raw["title"],
+                "publishedDate": raw["publishedDate"],
+                "updatedDate": raw["updatedDate"],
+                "matchEvidence": raw["matchEvidence"],
+                "fingerprint": raw["fingerprint"],
+                "firstObservedAt": existing["firstObservedAt"] if existing else generated_at,
+                "lastObservedAt": generated_at,
+                "presentation": cached or _pending_presentation(raw["fingerprint"]),
+            }
+            current[raw["key"]] = record
+            if record["presentation"]["status"] != "generated":
+                presentation_candidates.append((record, raw))
         retained: dict[str, Any] = {}
         for key, record in current.items():
             observed = datetime.fromisoformat(record["lastObservedAt"].replace("Z", "+00:00"))
             if observed >= cutoff:
                 retained[key] = record
         next_state["sources"][source["id"]] = {"items": retained}
+
+    presentation_policy = config["policies"]["japanesePresentation"]
+    presentation_candidates.sort(
+        key=lambda pair: (
+            pair[0]["updatedDate"] or pair[0]["publishedDate"] or pair[0]["firstObservedAt"],
+            pair[0]["url"],
+        ),
+        reverse=True,
+    )
+    if present_item is not None:
+        for record, raw in presentation_candidates[:presentation_policy["maxRequestsPerRun"]]:
+            try:
+                generated = present_item(record["title"], raw["sourceContext"], presentation_policy)
+                record["presentation"] = {
+                    "schemaVersion": PRESENTATION_SCHEMA_VERSION,
+                    "status": "generated",
+                    "shortHeadlineJa": generated["shortHeadlineJa"],
+                    "summaryJa": generated["summaryJa"],
+                    "sourceFingerprint": record["fingerprint"],
+                    "generatedAt": generated_at,
+                }
+            except (KeyError, PresentationError, ValueError, OSError):
+                # Optional rendering must not block source collection or expose source bodies.
+                record["presentation"] = _pending_presentation(record["fingerprint"])
+
     feed = build_feed(next_state, config, generated_at)
     validate_state(next_state, config)
     validate_feed(feed, config)
     return feed, next_state
 
 
-def collect_and_write(config_path: Path, state_path: Path, output_path: Path, timeout: float, *, now: datetime | None = None, fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = bounded_request) -> dict[str, Any]:
+def collect_and_write(
+    config_path: Path,
+    state_path: Path,
+    output_path: Path,
+    timeout: float,
+    *,
+    now: datetime | None = None,
+    fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = bounded_request,
+    present_item: Callable[[str, str, dict[str, Any]], dict[str, str]] | None = None,
+) -> dict[str, Any]:
     config = load_config(config_path)
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
-    feed, next_state = collect(config, state, timeout, now or datetime.now(timezone.utc), fetch_body)
+    renderer = present_item if present_item is not None else _presentation_from_environment(timeout)
+    feed, next_state = collect(config, state, timeout, now or datetime.now(timezone.utc), fetch_body, renderer)
     # Both payloads are fully constructed and validated before either single-file atomic write.
     write_json(output_path, feed)
     write_json(state_path, next_state)
