@@ -6,9 +6,12 @@
 
 - Meta Newsroom Product News RSS — Meta公式
 - Meta Business SDK Releases（Node.js）— Meta公式GitHub公開API
+- Social Media Today RSS（Meta／Facebook／Instagramかつ広告関連の見出しのみ）— 非公式・未確認
 - Jon Loomer Digital RSS — 非公式・未確認
 
 Search Engine Land Meta RSSは、2026-08-30にGitHub ActionsでHTTP 403が繰り返し再現したため一時停止しています。安定した自動取得を確認できるまで再導入しません。
+
+Social Media Todayは一般ニュースRSSのため、Meta／Facebook／Instagramの語と広告関連語の両方を含む見出しだけを掲載候補にします。これは記事の正確性を保証するものではなく、フィードの対象範囲を絞るための機械的な条件です。
 
 非公式の文字付きラベルと画面上部の注意表示は削除しません。非公式ソースは早期検知の参考情報であり、Meta公式の見解を示すものではありません。公式情報で確認できない内容もあるため、重要な対応や判断には、複数の情報源や実環境で追加確認してください。
 
