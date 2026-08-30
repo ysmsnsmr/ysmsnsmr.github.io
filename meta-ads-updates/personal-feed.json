@@ -22,6 +22,15 @@
       ]
     },
     {
+      "id": "social-media-today-meta-ads",
+      "name": "Social Media Today (Meta Ads)",
+      "classification": "unofficial",
+      "sourceUrl": "https://www.socialmediatoday.com/",
+      "platforms": [
+        "Meta Ads"
+      ]
+    },
+    {
       "id": "jon-loomer-meta-ads",
       "name": "Jon Loomer Digital",
       "classification": "unofficial",

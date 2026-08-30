@@ -49,6 +49,30 @@
       "match": {"kind": "all"}
     },
     {
+      "id": "social-media-today-meta-ads",
+      "name": "Social Media Today (Meta Ads)",
+      "classification": "unofficial",
+      "sourceUrl": "https://www.socialmediatoday.com/",
+      "fetchUrl": "https://www.socialmediatoday.com/feeds/news/",
+      "parser": "rss",
+      "expectedContentTypes": ["application/rss+xml", "application/xml", "text/xml"],
+      "platforms": ["Meta Ads"],
+      "transport": {
+        "allowedFetchHosts": ["www.socialmediatoday.com"],
+        "allowedContentHosts": ["www.socialmediatoday.com"],
+        "maxResponseBytes": 1048576,
+        "maxRedirects": 3,
+        "maxItems": 50
+      },
+      "match": {
+        "kind": "all_groups",
+        "groups": [
+          ["meta", "facebook", "instagram"],
+          ["marketing api", "ads manager", "advertising", "advertiser", "campaign", "promotion", "ads", "ad"]
+        ]
+      }
+    },
+    {
       "id": "jon-loomer-meta-ads",
       "name": "Jon Loomer Digital",
       "classification": "unofficial",
