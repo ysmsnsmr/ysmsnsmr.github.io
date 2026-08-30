@@ -49,24 +49,6 @@
       "match": {"kind": "all"}
     },
     {
-      "id": "search-engine-land-meta-rss",
-      "name": "Search Engine Land (Meta / PPC)",
-      "classification": "unofficial",
-      "sourceUrl": "https://searchengineland.com/library/platforms/meta",
-      "fetchUrl": "https://searchengineland.com/library/platforms/meta/feed",
-      "parser": "rss",
-      "expectedContentTypes": ["application/rss+xml", "application/xml", "text/xml"],
-      "platforms": ["Meta Ads"],
-      "transport": {
-        "allowedFetchHosts": ["searchengineland.com"],
-        "allowedContentHosts": ["searchengineland.com"],
-        "maxResponseBytes": 1048576,
-        "maxRedirects": 3,
-        "maxItems": 50
-      },
-      "match": {"kind": "rss_category", "categories": ["PPC"]}
-    },
-    {
       "id": "jon-loomer-meta-ads",
       "name": "Jon Loomer Digital",
       "classification": "unofficial",
