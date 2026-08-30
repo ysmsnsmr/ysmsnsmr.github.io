@@ -169,7 +169,7 @@ async function assertTokens(page) {
 async function assertAccessibilityAndLayout(page, label) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   assert(overflow <= 1, `${label}: horizontal overflow ${overflow}px`);
-  const undersized = await page.locator("button, select, input, .source-link").evaluateAll((nodes) =>
+  const undersized = await page.locator("button, select, input, .source-link, .detail-link, .back-link").evaluateAll((nodes) =>
     nodes.map((node) => ({ text: node.textContent || node.getAttribute("placeholder"), rect: node.getBoundingClientRect() }))
       .filter(({ rect }) => rect.width > 0 && rect.height > 0 && (rect.height < 44 || rect.width < 44))
       .map(({ text, rect }) => `${text}:${rect.width}x${rect.height}`)
@@ -183,6 +183,28 @@ async function assertAccessibilityAndLayout(page, label) {
     return { id: active?.id, outline: style.outlineStyle, width: style.outlineWidth };
   });
   assert(focus.id === "source-filter" && focus.outline !== "none" && focus.width === "3px", `${label}: keyboard focus is not visibly styled`);
+  await page.addScriptTag({ content: axeSource });
+  const axe = await page.evaluate(async () => globalThis.axe.run(document, { runOnly: ["wcag2a", "wcag2aa"] }));
+  assert(axe.violations.length === 0, `${label}: axe violations: ${axe.violations.map((item) => item.id).join(", ")}`);
+}
+
+async function assertDetailAccessibilityAndLayout(page, label) {
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  assert(overflow <= 1, `${label}: horizontal overflow ${overflow}px`);
+  const undersized = await page.locator(".source-link, .back-link").evaluateAll((nodes) =>
+    nodes.map((node) => ({ text: node.textContent, rect: node.getBoundingClientRect() }))
+      .filter(({ rect }) => rect.width > 0 && rect.height > 0 && (rect.height < 44 || rect.width < 44))
+      .map(({ text, rect }) => `${text}:${rect.width}x${rect.height}`)
+  );
+  assert(undersized.length === 0, `${label}: controls below 44px: ${undersized.join(", ")}`);
+  await page.locator("body").click({ position: { x: 1, y: 1 } });
+  await page.keyboard.press("Tab");
+  const focus = await page.evaluate(() => {
+    const active = document.activeElement;
+    const style = getComputedStyle(active);
+    return { id: active?.id, outline: style.outlineStyle, width: style.outlineWidth };
+  });
+  assert(focus.id === "back-link" && focus.outline !== "none" && focus.width === "3px", `${label}: keyboard focus is not visibly styled`);
   await page.addScriptTag({ content: axeSource });
   const axe = await page.evaluate(async () => globalThis.axe.run(document, { runOnly: ["wcag2a", "wcag2aa"] }));
   assert(axe.violations.length === 0, `${label}: axe violations: ${axe.violations.map((item) => item.id).join(", ")}`);
@@ -219,8 +241,12 @@ try {
   }
 
   const productionPage = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  const productionConsoleErrors = [];
+  const productionPageErrors = [];
+  productionPage.on("console", (message) => { if (message.type() === "error") productionConsoleErrors.push(message.text()); });
+  productionPage.on("pageerror", (error) => productionPageErrors.push(error.message));
   await productionPage.goto(`${server.origin}/meta-ads-updates/index.html`, { waitUntil: "networkidle" });
-  assert(await productionPage.locator("#update-list .update-card").count() === personalFeedReport.items.length, "production route did not read personal-feed.json");
+  assert(await productionPage.locator("#update-list .update-card").count() === personalFeedReport.items.length, `production route did not read personal-feed.json: ${[...productionConsoleErrors, ...productionPageErrors].join("; ")}`);
   assert(!(await productionPage.locator("#demo-banner").isVisible()), "production route must not show the demo banner");
   assert(!(await productionPage.locator("#recovery-banner").isVisible()), "ordinary production route must not show the delayed-recovery banner");
   assert(await productionPage.locator("#unofficial-notice").isVisible(), "Personal Feed must show the non-official-source notice");
@@ -238,6 +264,9 @@ try {
     assert(await page.locator("#update-list .update-card").count() === 3, `${label}: personal feed cards are missing`);
     assert(await page.locator(".origin-label--official").count() === 1, `${label}: official badge is missing`);
     assert(await page.locator(".origin-label--unofficial").count() === 2, `${label}: non-official badge is missing`);
+    assert(await page.locator(".detail-link").count() === 3, `${label}: detail links are missing`);
+    assert(await page.locator(".source-link").count() === 0, `${label}: Personal Feed list must not expose article links directly`);
+    assert((await page.locator("#update-list h2").allTextContents()).includes("Meta Ads APIの観測"), `${label}: generated Japanese headline is missing from the list`);
     assert(await page.locator(".unofficial-copy").count() === 0, `${label}: per-card non-official warning must not be rendered`);
     assert((await page.locator(".fact-label").allTextContents()).filter((label) => label === "最終更新日").length === 3, `${label}: final update date label is missing`);
     assert(await page.locator(".masthead").textContent().then((text) => !text.includes("Personal information feed") && !text.includes("個人・同僚向けフィード")), `${label}: removed personal-feed copy is still visible`);
@@ -264,6 +293,63 @@ try {
     }
     await page.close();
   }
+
+  for (const viewport of [viewports[0], viewports[2]]) {
+    const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });
+    const consoleErrors = [];
+    const pageErrors = [];
+    page.on("console", (message) => { if (message.type() === "error") consoleErrors.push(message.text()); });
+    page.on("pageerror", (error) => pageErrors.push(error.message));
+    const label = `personal-detail/${viewport.name}`;
+    await page.goto(`${server.origin}/meta-ads-updates/index.html?personal-fixture=1`, { waitUntil: "networkidle" });
+    await page.selectOption("#source-filter", "search-engine-land-meta-rss");
+    await page.selectOption("#priority-filter", "unofficial");
+    await page.fill("#query-filter", "表示変更");
+    const href = await page.locator(".detail-link").getAttribute("href");
+    assert(href?.includes("personal-fixture=1") && href.includes("source=search-engine-land-meta-rss") && href.includes("type=unofficial") && href.includes("q=%E8%A1%A8%E7%A4%BA%E5%A4%89%E6%9B%B4"), `${label}: detail link did not preserve filters`);
+    await page.locator(".detail-link").click();
+    await page.waitForURL(/detail\.html\?/);
+    assert(await page.locator("#detail-card").isVisible(), `${label}: detail card is missing`);
+    assert((await page.locator("#detail-title").textContent()).includes("Meta Adsの表示変更"), `${label}: Japanese short headline is missing`);
+    assert((await page.locator("#detail-summary").textContent()).includes("日本語要約を準備中"), `${label}: pending-summary fallback is missing`);
+    assert((await page.locator("#detail-original-title").textContent()).includes("Meta Adsの表示変更"), `${label}: original title is missing`);
+    assert(await page.locator("#detail-unofficial-notice").isVisible(), `${label}: non-official notice is missing`);
+    assert(await page.locator("#detail-source-link").evaluate((link) => link.href.startsWith("https://") && link.target === "_blank" && link.rel.includes("noreferrer")), `${label}: source link is unsafe`);
+    assert((await page.locator("#back-link").getAttribute("href")).includes("source=search-engine-land-meta-rss"), `${label}: back link did not preserve filters`);
+    assert(consoleErrors.length === 0 && pageErrors.length === 0, `${label}: runtime errors: ${[...consoleErrors, ...pageErrors].join("; ")}`);
+    await assertDetailAccessibilityAndLayout(page, label);
+    if (artifactDirectory) {
+      await page.screenshot({ path: path.join(artifactDirectory, `personal-detail-${viewport.name}-viewport.png`) });
+      await page.screenshot({ path: path.join(artifactDirectory, `personal-detail-${viewport.name}-full-page.png`), fullPage: true });
+    }
+    await page.locator("#back-link").click();
+    await page.waitForURL(/index\.html\?/);
+    assert(await page.locator("#source-filter").inputValue() === "search-engine-land-meta-rss", `${label}: source filter was not restored`);
+    assert(await page.locator("#priority-filter").inputValue() === "unofficial", `${label}: classification filter was not restored`);
+    assert(await page.locator("#query-filter").inputValue() === "表示変更", `${label}: query filter was not restored`);
+    await page.close();
+  }
+
+  const missingDetail = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await missingDetail.goto(`${server.origin}/meta-ads-updates/detail.html?id=missing-item&personal-fixture=1`, { waitUntil: "networkidle" });
+  assert(await missingDetail.locator("#detail-error").isVisible(), "missing detail must show a safe error state");
+  assert(!(await missingDetail.locator("#detail-card").isVisible()), "missing detail must not show a card");
+  await missingDetail.close();
+
+  const generatedDetail = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await generatedDetail.goto(`${server.origin}/meta-ads-updates/detail.html?id=search-engine-land-meta-rss-bbbbbbbbbbbbbbbbbbbb&personal-fixture=1`, { waitUntil: "networkidle" });
+  assert((await generatedDetail.locator("#detail-title").textContent()) === "Meta Ads APIの観測", "generated detail must use the Japanese short headline");
+  assert((await generatedDetail.locator("#detail-summary").textContent()).includes("Meta Ads APIに関する観測記事です。"), "generated detail must display the Japanese summary");
+  assert(await generatedDetail.locator("#detail-unofficial-notice").isVisible(), "generated non-official detail must show the notice");
+  await generatedDetail.close();
+
+  const productionDetail = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  const legacyItem = personalFeedReport.items[0];
+  await productionDetail.goto(`${server.origin}/meta-ads-updates/detail.html?id=${encodeURIComponent(legacyItem.id)}`, { waitUntil: "networkidle" });
+  assert(await productionDetail.locator("#detail-card").isVisible(), "v1 production feed detail must render");
+  assert((await productionDetail.locator("#detail-title").textContent()) === legacyItem.title, "v1 production feed must fall back to the original title");
+  assert((await productionDetail.locator("#detail-summary").textContent()).includes("日本語要約を準備中"), "v1 production feed must show the pending-summary fallback");
+  await productionDetail.close();
 
   for (const viewport of [viewports[0], viewports[2]]) {
     const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });
@@ -341,7 +427,7 @@ try {
   await page.fill("#query-filter", "設定手順B");
   assert(await page.locator("#update-list .update-card").count() === 1, "query filter failed");
   await page.close();
-  console.log(`PASS: production UI ${caseCount}/15 fixture viewport cases plus production and demo E2E flows, overflow, targets, focus, axe, and approved tokens`);
+  console.log(`PASS: production UI ${caseCount}/15 fixture viewport cases plus Personal Feed detail, production, and demo E2E flows, overflow, targets, focus, axe, and approved tokens`);
 } finally {
   await browser.close();
   await server.close();
