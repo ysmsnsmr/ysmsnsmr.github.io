@@ -250,6 +250,9 @@ try {
   assert(!(await productionPage.locator("#demo-banner").isVisible()), "production route must not show the demo banner");
   assert(!(await productionPage.locator("#recovery-banner").isVisible()), "ordinary production route must not show the delayed-recovery banner");
   assert(await productionPage.locator("#unofficial-notice").isVisible(), "Personal Feed must show the non-official-source notice");
+  const unofficialNotice = await productionPage.locator("#unofficial-notice").textContent();
+  assert(unofficialNotice.includes("公式情報で確認できない内容もあるため") && unofficialNotice.includes("複数の情報源や実環境で追加確認"), "Personal Feed notice must explain that official confirmation may not exist");
+  assert(!unofficialNotice.includes("必ずMeta公式情報で確認してください"), "Personal Feed must not imply that every unofficial item has an official counterpart");
   await productionPage.close();
 
   for (const viewport of viewports) {
@@ -316,6 +319,8 @@ try {
     assert((await page.locator("#detail-original-title").textContent()).includes("Meta Adsの表示変更"), `${label}: original title is missing`);
     assert(!(await page.locator(".fact-label").allTextContents()).includes("最終確認"), `${label}: automated observation timestamp must not be shown on detail page`);
     assert(await page.locator("#detail-unofficial-notice").isVisible(), `${label}: non-official notice is missing`);
+    const detailNotice = await page.locator("#detail-unofficial-notice").textContent();
+    assert(detailNotice.includes("公式情報で確認できない内容もあるため") && detailNotice.includes("複数の情報源や実環境で追加確認"), `${label}: detail notice must explain that official confirmation may not exist`);
     assert(await page.locator("#detail-source-link").evaluate((link) => link.href.startsWith("https://") && link.target === "_blank" && link.rel.includes("noreferrer")), `${label}: source link is unsafe`);
     assert((await page.locator("#back-link").getAttribute("href")).includes("source=search-engine-land-meta-rss"), `${label}: back link did not preserve filters`);
     assert(consoleErrors.length === 0 && pageErrors.length === 0, `${label}: runtime errors: ${[...consoleErrors, ...pageErrors].join("; ")}`);
