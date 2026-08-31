@@ -1,6 +1,6 @@
 {
-  "schemaVersion": "meta-ads-personal-feed-state/v1",
-  "updatedAt": "2026-08-29T09:59:42Z",
+  "schemaVersion": "meta-ads-personal-feed-state/v2",
+  "updatedAt": "2026-08-31T05:38:08Z",
   "sources": {
     "meta-product-news-rss": {
       "items": {
@@ -10,9 +10,17 @@
           "publishedDate": "2026-08-25",
           "updatedDate": null,
           "matchEvidence": [],
-          "fingerprint": "e5c8e6e318c05227bb3acdb1fde3e7c59f1386dc8b6202b7d1b5c6aec458fdb4",
+          "fingerprint": "b0d410e493471eb30e297d4c98d2fcef0c3de359e62b7f1b26bd746a70bf5ec5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "generated",
+            "shortHeadlineJa": "WhatsAppに新しいアカウントセキュリティ機能を追加",
+            "summaryJa": "WhatsAppは、二段階認証を強化し、見知らぬ発信者からの通話に追加情報を表示するなど、新しいアカウントセキュリティ機能を導入します。",
+            "sourceFingerprint": "b0d410e493471eb30e297d4c98d2fcef0c3de359e62b7f1b26bd746a70bf5ec5",
+            "generatedAt": "2026-08-31T05:38:08Z"
+          }
         },
         "https://about.fb.com/news/2026/08/were-upgrading-your-whatsapp-group-chats/": {
           "url": "https://about.fb.com/news/2026/08/were-upgrading-your-whatsapp-group-chats/",
@@ -20,9 +28,17 @@
           "publishedDate": "2026-08-04",
           "updatedDate": null,
           "matchEvidence": [],
-          "fingerprint": "e2a1597bca3d8e1195b6833f9b989cde56b88e2a54d1a1ed2e1d6439ec058648",
+          "fingerprint": "4cff14b617cb83f03b89072d1f28cd91e60f12d74e3089082fbc9d9d9b6344e0",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "4cff14b617cb83f03b89072d1f28cd91e60f12d74e3089082fbc9d9d9b6344e0",
+            "generatedAt": null
+          }
         },
         "https://about.fb.com/news/2026/07/whatsapp-web-calling-new-features/": {
           "url": "https://about.fb.com/news/2026/07/whatsapp-web-calling-new-features/",
@@ -30,9 +46,17 @@
           "publishedDate": "2026-07-28",
           "updatedDate": null,
           "matchEvidence": [],
-          "fingerprint": "769f92e511260a7f47b3c83a650216a52b6c68277f58615fb081dfab5d229a30",
+          "fingerprint": "0e851589e9dc865278d0df59dbf223ea85da138e573e7877f7867ecca11c13e9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "0e851589e9dc865278d0df59dbf223ea85da138e573e7877f7867ecca11c13e9",
+            "generatedAt": null
+          }
         },
         "https://about.fb.com/news/2026/07/meta-ai-muse-spark-doesnt-just-think-it-acts/": {
           "url": "https://about.fb.com/news/2026/07/meta-ai-muse-spark-doesnt-just-think-it-acts/",
@@ -40,9 +64,17 @@
           "publishedDate": "2026-07-24",
           "updatedDate": null,
           "matchEvidence": [],
-          "fingerprint": "46963c14b98883a7192938c9eacafe9c02b208f71870d302d5effeb7c190e452",
+          "fingerprint": "09d2897ec2a22e6c024eb525bd8deb5769579a7b47455b43f16191e03220183a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "09d2897ec2a22e6c024eb525bd8deb5769579a7b47455b43f16191e03220183a",
+            "generatedAt": null
+          }
         },
         "https://about.fb.com/news/2026/07/introducing-seller-app-facebook-marketplace/": {
           "url": "https://about.fb.com/news/2026/07/introducing-seller-app-facebook-marketplace/",
@@ -50,9 +82,17 @@
           "publishedDate": "2026-07-24",
           "updatedDate": null,
           "matchEvidence": [],
-          "fingerprint": "03179afadc490cdc5723ad386d6a213b667e78fadd8907bfa20ebf9f5bea5d80",
+          "fingerprint": "62e1d5977b22eeffd03db8dfe9a43ce94b5116f2796afd1e58f634e7211bc610",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "62e1d5977b22eeffd03db8dfe9a43ce94b5116f2796afd1e58f634e7211bc610",
+            "generatedAt": null
+          }
         },
         "https://about.fb.com/news/2026/07/connecting-real-people-on-facebook/": {
           "url": "https://about.fb.com/news/2026/07/connecting-real-people-on-facebook/",
@@ -60,9 +100,17 @@
           "publishedDate": "2026-07-24",
           "updatedDate": null,
           "matchEvidence": [],
-          "fingerprint": "989b9ea74995b935c50e51c552e5b4cffca7b7f2abf219186b3b5ce56ea521e8",
+          "fingerprint": "4457e6eed6d3fd01b5abd8fd5217553160d5a7d9ec404f9c3378107ef3a14dac",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "4457e6eed6d3fd01b5abd8fd5217553160d5a7d9ec404f9c3378107ef3a14dac",
+            "generatedAt": null
+          }
         },
         "https://about.fb.com/news/2026/07/new-parental-supervision-tools-coming-threads/": {
           "url": "https://about.fb.com/news/2026/07/new-parental-supervision-tools-coming-threads/",
@@ -70,9 +118,17 @@
           "publishedDate": "2026-07-21",
           "updatedDate": null,
           "matchEvidence": [],
-          "fingerprint": "6222b463e1e4bb1a6ba858436ff1b74b405134cee8c69c2d7fb956e2820d1445",
+          "fingerprint": "82652c987b28d46fd0aa9f738c8fd7f7d73a7af8a7c8a82d35088bf5ce5f5e9a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "82652c987b28d46fd0aa9f738c8fd7f7d73a7af8a7c8a82d35088bf5ce5f5e9a",
+            "generatedAt": null
+          }
         },
         "https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/": {
           "url": "https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/",
@@ -80,9 +136,17 @@
           "publishedDate": "2026-07-07",
           "updatedDate": null,
           "matchEvidence": [],
-          "fingerprint": "95b9e7126c683b61d116c38d045f554ba7ef5677fba8f9ef6ad20fba24e0defe",
+          "fingerprint": "a475b02981a097c2ca82063a81eeb5dec73f0cf73de3a2fc1bb70b9a2e5761db",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "a475b02981a097c2ca82063a81eeb5dec73f0cf73de3a2fc1bb70b9a2e5761db",
+            "generatedAt": null
+          }
         },
         "https://about.fb.com/news/2026/06/its-time-to-reserve-your-whatsapp-username/": {
           "url": "https://about.fb.com/news/2026/06/its-time-to-reserve-your-whatsapp-username/",
@@ -90,9 +154,17 @@
           "publishedDate": "2026-06-29",
           "updatedDate": null,
           "matchEvidence": [],
-          "fingerprint": "f2887671295dba8f3081763f2d1a181800620b97f9971932858394ea14cf2fca",
+          "fingerprint": "1b16ba0962887e25cb8cb9ad06ffbd67235245591837191bbf373ce0ef528faa",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "1b16ba0962887e25cb8cb9ad06ffbd67235245591837191bbf373ce0ef528faa",
+            "generatedAt": null
+          }
         },
         "https://about.fb.com/news/2026/06/meta-essilorluxottica-partner-launch-meta-glasses/": {
           "url": "https://about.fb.com/news/2026/06/meta-essilorluxottica-partner-launch-meta-glasses/",
@@ -100,9 +172,17 @@
           "publishedDate": "2026-06-23",
           "updatedDate": null,
           "matchEvidence": [],
-          "fingerprint": "3c941c11190e6bcbba6647b609b9f88a8dce3154d5bf4062dc1d5b50f23d9c38",
+          "fingerprint": "2bfb9bcfcede05908874af75ae314a163e8641cab03702de9d61bae578f37220",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "2bfb9bcfcede05908874af75ae314a163e8641cab03702de9d61bae578f37220",
+            "generatedAt": null
+          }
         }
       }
     },
@@ -114,9 +194,17 @@
           "publishedDate": "2026-08-25",
           "updatedDate": "2026-08-25",
           "matchEvidence": [],
-          "fingerprint": "8d6ef09ff40fb8dc91773daf440225a7496d2144a2dcfcb11b23a88ef76c37b5",
+          "fingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "generated",
+            "shortHeadlineJa": "Facebook Node.js Business SDK バージョン v26.0.1 がリリース",
+            "summaryJa": "Facebook の Node.js 用 Business SDK がバージョン v26.0.1 に更新されました。",
+            "sourceFingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
+            "generatedAt": "2026-08-31T05:38:08Z"
+          }
         },
         "v26.0.0": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v26.0.0",
@@ -124,9 +212,17 @@
           "publishedDate": "2026-08-06",
           "updatedDate": "2026-08-06",
           "matchEvidence": [],
-          "fingerprint": "b3238ea0e1eab0c34919d56d6670a8e923d6060eddbadd1696a43c0e37a8600a",
+          "fingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
+            "generatedAt": null
+          }
         },
         "v25.0.3": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v25.0.3",
@@ -134,9 +230,17 @@
           "publishedDate": "2026-07-17",
           "updatedDate": "2026-07-17",
           "matchEvidence": [],
-          "fingerprint": "fbea544d91c8d8d6ada9ff618a0f718ea5992c6bf9f76edb35414799d41315d5",
+          "fingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
+            "generatedAt": null
+          }
         },
         "v25.0.2": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v25.0.2",
@@ -144,9 +248,17 @@
           "publishedDate": "2026-06-08",
           "updatedDate": "2026-07-06",
           "matchEvidence": [],
-          "fingerprint": "31629b80580465a0f2a9e5725c11e39c3cc03034df2cbfc4d82b611948908c54",
+          "fingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
+            "generatedAt": null
+          }
         },
         "v25.0.1": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v25.0.1",
@@ -154,9 +266,17 @@
           "publishedDate": "2026-03-30",
           "updatedDate": "2026-03-30",
           "matchEvidence": [],
-          "fingerprint": "d2d23ee6281081941d63463224bc91670e3ac5f154705f696403830230814ec9",
+          "fingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
+            "generatedAt": null
+          }
         },
         "v25.0.0": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v25.0.0",
@@ -164,9 +284,17 @@
           "publishedDate": "2026-03-10",
           "updatedDate": "2026-03-10",
           "matchEvidence": [],
-          "fingerprint": "b4d50c0b47495c69944722dbd49b9c2dbb6eda445d7319a6e6e497238bf8a9f5",
+          "fingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
+            "generatedAt": null
+          }
         },
         "v24.0.1": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v24.0.1",
@@ -174,9 +302,17 @@
           "publishedDate": "2025-11-21",
           "updatedDate": "2025-11-21",
           "matchEvidence": [],
-          "fingerprint": "1c993ae3bc02eca40a1e899c9beb31a9995410d95a25e05afb137bd10a575c9e",
+          "fingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
+            "generatedAt": null
+          }
         },
         "v24.0.0": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v24.0.0",
@@ -184,9 +320,17 @@
           "publishedDate": "2025-10-24",
           "updatedDate": "2025-10-24",
           "matchEvidence": [],
-          "fingerprint": "b6962ffaaca43d623d71e461ea91d376764a2375bc9f4a835893950497fbeca1",
+          "fingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
+            "generatedAt": null
+          }
         },
         "v23.0.3": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v23.0.3",
@@ -194,9 +338,17 @@
           "publishedDate": "2025-10-14",
           "updatedDate": "2025-10-14",
           "matchEvidence": [],
-          "fingerprint": "581bbc09669bc20a6557a47b0ecc893f99db5f62a997a07400fbae87675d8b6d",
+          "fingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
+            "generatedAt": null
+          }
         },
         "v23.0.2": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v23.0.2",
@@ -204,9 +356,17 @@
           "publishedDate": "2025-09-26",
           "updatedDate": "2025-09-26",
           "matchEvidence": [],
-          "fingerprint": "a37569d7c984bed4e81ad4e4c932cf54f635cec2200277782885230d4f0ab9eb",
+          "fingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
+            "generatedAt": null
+          }
         },
         "v23.0.1": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v23.0.1",
@@ -214,9 +374,17 @@
           "publishedDate": "2025-07-18",
           "updatedDate": "2025-07-18",
           "matchEvidence": [],
-          "fingerprint": "b4a1d1327fb9dcfb0e23386df2841fc2acf418719310125fb394bd6a59ee1c35",
+          "fingerprint": "7f898f0dee2d9dc4be046c54e8641cda51c5e98a39056253c9249df6b88cbf06",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "7f898f0dee2d9dc4be046c54e8641cda51c5e98a39056253c9249df6b88cbf06",
+            "generatedAt": null
+          }
         },
         "v23.0.0": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v23.0.0",
@@ -224,9 +392,17 @@
           "publishedDate": "2025-06-17",
           "updatedDate": "2025-06-17",
           "matchEvidence": [],
-          "fingerprint": "2bd56393e42b695b04d30bcccbe58c75b63403a75c31c0674373cc900a7971c2",
+          "fingerprint": "f4c117402d43a0b8b4d3cc2df768727d9327a515f0576c5d07dac7a59f193422",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "f4c117402d43a0b8b4d3cc2df768727d9327a515f0576c5d07dac7a59f193422",
+            "generatedAt": null
+          }
         },
         "v22.0.3": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v22.0.3",
@@ -234,9 +410,17 @@
           "publishedDate": "2025-05-14",
           "updatedDate": "2025-05-14",
           "matchEvidence": [],
-          "fingerprint": "1631658ea5dc42244158a4ba50865801e46a58e967495860d1734e8a61b952b3",
+          "fingerprint": "62cb8adaa0730059b19a5f018508d692e7fe8440012a122c32ca20c50ce4ab07",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "62cb8adaa0730059b19a5f018508d692e7fe8440012a122c32ca20c50ce4ab07",
+            "generatedAt": null
+          }
         },
         "v22.0.2": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v22.0.2",
@@ -244,9 +428,17 @@
           "publishedDate": "2025-05-06",
           "updatedDate": "2025-05-06",
           "matchEvidence": [],
-          "fingerprint": "839386cd10e0f28012da5396f516cc53ec17751cb9d0b67a674d422b3a48d440",
+          "fingerprint": "05be8dd57f0c4c654daf307547b3fd971ebe8b091c0965005801f313a1fbd2b6",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "05be8dd57f0c4c654daf307547b3fd971ebe8b091c0965005801f313a1fbd2b6",
+            "generatedAt": null
+          }
         },
         "v22.0.1": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v22.0.1",
@@ -254,9 +446,17 @@
           "publishedDate": "2025-04-01",
           "updatedDate": "2025-04-01",
           "matchEvidence": [],
-          "fingerprint": "795abe87930ec45e48325a8b6cf3349b077f91ad577a8403996a0c423fefb69e",
+          "fingerprint": "c1edd17516fa4254518892d9636ee826bc30f43de17fba217e5402889917c547",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "c1edd17516fa4254518892d9636ee826bc30f43de17fba217e5402889917c547",
+            "generatedAt": null
+          }
         },
         "v22.0.0": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v22.0.0",
@@ -264,9 +464,17 @@
           "publishedDate": "2025-02-13",
           "updatedDate": "2025-02-14",
           "matchEvidence": [],
-          "fingerprint": "562a8756bbf38f0ec24b6a14b596acef7fc1e963a49c6e2b72b0dab203823036",
+          "fingerprint": "6720a9af525b149c884d82afc3d1c53f553524e50d4f727912657df4ea90b7a1",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "6720a9af525b149c884d82afc3d1c53f553524e50d4f727912657df4ea90b7a1",
+            "generatedAt": null
+          }
         },
         "v21.0.0": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v21.0.0",
@@ -274,9 +482,17 @@
           "publishedDate": "2024-10-10",
           "updatedDate": "2024-10-10",
           "matchEvidence": [],
-          "fingerprint": "4ed3abd836a552aba940a1fc6d27f64150da3c2ef446acee8d0af23880acb069",
+          "fingerprint": "ccfc079ae19ad5e92340d8e1697bbe3ba78b4f5f2611471a5e1b60626e8b376b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "ccfc079ae19ad5e92340d8e1697bbe3ba78b4f5f2611471a5e1b60626e8b376b",
+            "generatedAt": null
+          }
         },
         "v20.0.0": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v20.0.0",
@@ -284,9 +500,17 @@
           "publishedDate": "2024-08-15",
           "updatedDate": "2024-08-15",
           "matchEvidence": [],
-          "fingerprint": "a29a58fc59fb698c0190ad8b3e053612c8e6e72a44e230272c5160fe67c5419e",
+          "fingerprint": "3c1882a8304e57869e9a7e40449de4dec4410752af47657825ae03f300f7a87b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "3c1882a8304e57869e9a7e40449de4dec4410752af47657825ae03f300f7a87b",
+            "generatedAt": null
+          }
         },
         "v19.0.2": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v19.0.2",
@@ -294,9 +518,17 @@
           "publishedDate": "2024-04-15",
           "updatedDate": "2024-04-15",
           "matchEvidence": [],
-          "fingerprint": "269e4b3003f7056d2b29d75e3d5a1c9223c1ded13d49bfb9ac8b7a3cbc326d9e",
+          "fingerprint": "276c8fd85185cec8c960bba0a9d26d391f4f5b0b299920a8917d0fc1b6a4ac32",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "276c8fd85185cec8c960bba0a9d26d391f4f5b0b299920a8917d0fc1b6a4ac32",
+            "generatedAt": null
+          }
         },
         "v19.0.1": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v19.0.1",
@@ -304,9 +536,17 @@
           "publishedDate": "2024-03-14",
           "updatedDate": "2024-03-14",
           "matchEvidence": [],
-          "fingerprint": "d5061ef9dfb1d18af55f986b924e87b3b28047cc3d2884d222495ba989a2383e",
+          "fingerprint": "591da1c95e4dea4d84dbcb82c0ba349688387e9916c442834adde75650ad6a94",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "591da1c95e4dea4d84dbcb82c0ba349688387e9916c442834adde75650ad6a94",
+            "generatedAt": null
+          }
         },
         "v19.0.0": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v19.0.0",
@@ -314,9 +554,17 @@
           "publishedDate": "2024-01-24",
           "updatedDate": "2024-01-24",
           "matchEvidence": [],
-          "fingerprint": "f2d35a0d6bcbbdb659ff352f6c167da19634e3119abedae07cae2f0bbaea6792",
+          "fingerprint": "371bc6bca0ca0ac904327d9dca8fcde948ec4b7317853eb3a9ed82383644a4da",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "371bc6bca0ca0ac904327d9dca8fcde948ec4b7317853eb3a9ed82383644a4da",
+            "generatedAt": null
+          }
         },
         "v18.0.4": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.4",
@@ -324,9 +572,17 @@
           "publishedDate": "2023-12-04",
           "updatedDate": "2023-12-04",
           "matchEvidence": [],
-          "fingerprint": "6f789ae84ec245c3079713c51c39aa21542b60bb6920b4adb75b7a6be1a48a2c",
+          "fingerprint": "fc02cfcbe79aed2dd7856e62134d104637a7b3b63bd523bc03b7687be0c134b9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "fc02cfcbe79aed2dd7856e62134d104637a7b3b63bd523bc03b7687be0c134b9",
+            "generatedAt": null
+          }
         },
         "v18.0.3": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.3",
@@ -334,9 +590,17 @@
           "publishedDate": "2023-11-06",
           "updatedDate": "2023-11-06",
           "matchEvidence": [],
-          "fingerprint": "a4fafd8bb8dc331d95c2d61f6de2a58390333899f1344f62c4d44d22b875108c",
+          "fingerprint": "052cfc425243ad83a8463bc4b3303300bfb6ed92f30e17a6ef9f5c1cea66ea5c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "052cfc425243ad83a8463bc4b3303300bfb6ed92f30e17a6ef9f5c1cea66ea5c",
+            "generatedAt": null
+          }
         },
         "v18.0.2": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.2",
@@ -344,9 +608,17 @@
           "publishedDate": "2023-10-15",
           "updatedDate": "2023-10-15",
           "matchEvidence": [],
-          "fingerprint": "c6f5e8047ba95fd1abce572cd95f732afb9691d0461a774c14d9f516b4bcbfe2",
+          "fingerprint": "546e994620971d4d9aa923c152e5d3e98121e33da1af533ea04f8e5da3894ac7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "546e994620971d4d9aa923c152e5d3e98121e33da1af533ea04f8e5da3894ac7",
+            "generatedAt": null
+          }
         },
         "v18.0.1": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.1",
@@ -354,9 +626,17 @@
           "publishedDate": "2023-09-26",
           "updatedDate": "2023-09-26",
           "matchEvidence": [],
-          "fingerprint": "178bd68cbd55c543381a1a43cf06dc301abbe6fb8a13df6b119508c870ec73ce",
+          "fingerprint": "c74fe4c196decfcf7e7958dfb1da6fdc04e4a4bd1c070890659746d1f228c879",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "c74fe4c196decfcf7e7958dfb1da6fdc04e4a4bd1c070890659746d1f228c879",
+            "generatedAt": null
+          }
         },
         "v18.0.0": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.0",
@@ -364,9 +644,17 @@
           "publishedDate": "2023-09-15",
           "updatedDate": "2023-09-15",
           "matchEvidence": [],
-          "fingerprint": "3fed04f32d8471e671c7f66651d430cf3d03a1094c913a3e9a95ae197f0143f0",
+          "fingerprint": "6d4d13334d625f8f9e888e9320987a3289cbb37aec7b3f92293db8f2ea088ec1",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "6d4d13334d625f8f9e888e9320987a3289cbb37aec7b3f92293db8f2ea088ec1",
+            "generatedAt": null
+          }
         },
         "v2.11.3": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v2.11.3",
@@ -374,9 +662,17 @@
           "publishedDate": "2018-01-09",
           "updatedDate": "2018-01-09",
           "matchEvidence": [],
-          "fingerprint": "72b6b45dad7d017343576fcfeb6872e225faed1871041abd8fa362b7982a6706",
+          "fingerprint": "a5994e01abbc9ac4862f6d394a5e682f84eebe45307fb2e006766d605068f15d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "a5994e01abbc9ac4862f6d394a5e682f84eebe45307fb2e006766d605068f15d",
+            "generatedAt": null
+          }
         },
         "v2.11.2": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v2.11.2",
@@ -384,9 +680,17 @@
           "publishedDate": "2018-01-06",
           "updatedDate": "2018-01-06",
           "matchEvidence": [],
-          "fingerprint": "32b48178bd353a86865daabfe3d5eb5dd5099eb888365f52042d5baef786ce7b",
+          "fingerprint": "d384cc2af2f39b7cd432664ca25aa171285896390896d47ce93966cef658d180",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "d384cc2af2f39b7cd432664ca25aa171285896390896d47ce93966cef658d180",
+            "generatedAt": null
+          }
         },
         "v2.10": {
           "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v2.10",
@@ -394,9 +698,17 @@
           "publishedDate": "2017-11-08",
           "updatedDate": "2017-11-08",
           "matchEvidence": [],
-          "fingerprint": "f85e8a21751d65149210f482e82b974181f85ec7cdb77ce2140d1a38bfb3d21c",
+          "fingerprint": "c6aebcafed82f8872babe81e78cf2b2a0eb616bddbd8e4fc2f88ab7bbde47152",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "c6aebcafed82f8872babe81e78cf2b2a0eb616bddbd8e4fc2f88ab7bbde47152",
+            "generatedAt": null
+          }
         }
       }
     },
@@ -413,9 +725,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "c4bf4e277a9f0027a3569f513caa62abdb6fcd7143a15a4be3eb656d03709375",
+          "fingerprint": "a97847964563099eee80b0bd06def638bcda879dc76de825e4fab9ed62f0d5f0",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "generated",
+            "shortHeadlineJa": "Meta、コメントのキーワードで自動DM送信機能「Reply to Keywords」をテスト",
+            "summaryJa": "Metaは、Instagramのコメントに特定のキーワードが含まれた場合に自動でダイレクトメッセージを送信する機能「Reply to Keywords」のテストを開始した。この機能は広告主がキーワードに応じたDMを自動配信できるようにするもので、情報はJon Loomer Digitalで最初に報じられた。",
+            "sourceFingerprint": "a97847964563099eee80b0bd06def638bcda879dc76de825e4fab9ed62f0d5f0",
+            "generatedAt": "2026-08-31T05:38:08Z"
+          }
         },
         "https://www.jonloomer.com/meta-removing-placement-controls-ad-sets/": {
           "url": "https://www.jonloomer.com/meta-removing-placement-controls-ad-sets/",
@@ -425,9 +745,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "933a7dd9942789a5571e4163950f0ecd1d3ed65f21e86c4cdddef5629af92afb",
+          "fingerprint": "1391e86427f9fffb2458da3e4b70574fb021985e55fdd1e51ec0173dd356e9db",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "generated",
+            "shortHeadlineJa": "Meta、広告セットの配置コントロールを廃止",
+            "summaryJa": "Metaは広告セットにおける配置に関する制御機能を削除することを発表しました。これにより、配置、プラットフォーム、デバイス、OS単位での除外設定が利用できなくなります。",
+            "sourceFingerprint": "1391e86427f9fffb2458da3e4b70574fb021985e55fdd1e51ec0173dd356e9db",
+            "generatedAt": "2026-08-31T05:38:08Z"
+          }
         },
         "https://www.jonloomer.com/chatgpt-ads-automated-bidding-placements-url-parameters/": {
           "url": "https://www.jonloomer.com/chatgpt-ads-automated-bidding-placements-url-parameters/",
@@ -437,9 +765,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "17878aaf26c067f9d9f1a0be078073a28166e9332b38b8aaf5d95925eb8eadf8",
+          "fingerprint": "2c07acb04728e12eab2d2b9fb446a96103feea6991fa8595ff218a2f78d85913",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "generated",
+            "shortHeadlineJa": "ChatGPT広告に自動入札・配置設定・URLパラメータを追加",
+            "summaryJa": "ChatGPT広告に自動入札機能と配置設定、サードパーティのトラッキング用新URLパラメータが導入されました。この変更はJon Loomer Digitalの投稿『ChatGPT Ads Get Automated Bidding, Placements, and URL Parameters』で最初に報じられています。",
+            "sourceFingerprint": "2c07acb04728e12eab2d2b9fb446a96103feea6991fa8595ff218a2f78d85913",
+            "generatedAt": "2026-08-31T05:38:08Z"
+          }
         },
         "https://www.jonloomer.com/meta-ads-ai-connectors-security-controls/": {
           "url": "https://www.jonloomer.com/meta-ads-ai-connectors-security-controls/",
@@ -449,9 +785,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "c44302392e350d6d2ccf032c7c782cd25ae66976a1296206b7da2501a3deb5ac",
+          "fingerprint": "34a3642c32aaf16bbc45ce76940361414332b6b27ad6e4d3122fe6e0ece4a18f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "generated",
+            "shortHeadlineJa": "Meta、AIコネクタ向けに広告アカウントのアクセス制御を強化",
+            "summaryJa": "MetaはAIコネクタに対し、広告アカウントや機密操作へのアクセスを制限できる新たなセキュリティコントロールを追加しました。これにより広告主は権限付与や操作の許可範囲を細かく設定でき、アカウントの安全性が向上します。",
+            "sourceFingerprint": "34a3642c32aaf16bbc45ce76940361414332b6b27ad6e4d3122fe6e0ece4a18f",
+            "generatedAt": "2026-08-31T05:38:08Z"
+          }
         },
         "https://www.jonloomer.com/meta-tests-sequenced-events-preferred-lead-answers/": {
           "url": "https://www.jonloomer.com/meta-tests-sequenced-events-preferred-lead-answers/",
@@ -461,9 +805,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "ab67b99f61591b6d17a970496cc7ba83b871f55de6b13775f5f1ae3ae07e5d00",
+          "fingerprint": "738c2298b1e76bc1b471cf1e410a2280eb1cdce1c62902907f1912e64adbe7a5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "738c2298b1e76bc1b471cf1e410a2280eb1cdce1c62902907f1912e64adbe7a5",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/exclusion-only-custom-audiences/": {
           "url": "https://www.jonloomer.com/exclusion-only-custom-audiences/",
@@ -473,9 +825,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "f05b3794cf271a4b11b242591f6fa44255adeb7693fdbd47b1594e6a2e159701",
+          "fingerprint": "80bd2219a6b994759e40a826a3234855fff049b78011e4dca81acdc7d193b55f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "80bd2219a6b994759e40a826a3234855fff049b78011e4dca81acdc7d193b55f",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/15-years-facebook-meta-advertising/": {
           "url": "https://www.jonloomer.com/15-years-facebook-meta-advertising/",
@@ -485,9 +845,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "82a82ca86bab81e33381f4beffc7fadbc20e3e590d9bb903bc685ade224bc29d",
+          "fingerprint": "84154f977811bc67c74bc7a840473ed214842d58db0b3bd69794b04329279344",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "84154f977811bc67c74bc7a840473ed214842d58db0b3bd69794b04329279344",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/meta-rewrite-text-ad-images/": {
           "url": "https://www.jonloomer.com/meta-rewrite-text-ad-images/",
@@ -497,9 +865,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "ac878b990a539d917011217fd068082385f213728e49599105690ae5c29a519c",
+          "fingerprint": "c3bfdfb7b3f212aafbd54e5f8ecf1599b0defe06bce7e9324a11838a0495fcdd",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "c3bfdfb7b3f212aafbd54e5f8ecf1599b0defe06bce7e9324a11838a0495fcdd",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/meta-ads-lead-generation/": {
           "url": "https://www.jonloomer.com/meta-ads-lead-generation/",
@@ -509,9 +885,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "42f71ae9952a02e401699b2d505a6d1c57a162cfd0b7866a22037dbcb4293e73",
+          "fingerprint": "67e3ae061b87b1689ce34770a96b131118b45bd304d5136b270961a95513868f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "67e3ae061b87b1689ce34770a96b131118b45bd304d5136b270961a95513868f",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/meta-redesigns-audiences-around-labels/": {
           "url": "https://www.jonloomer.com/meta-redesigns-audiences-around-labels/",
@@ -521,9 +905,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "cf316f911166253e8378cc81dc421c9f355648b2b873de8332b95e378bd6c46b",
+          "fingerprint": "5385431c74b3ab52c8010ba9e56c580353e36d9e6f8f5610557c8062ea6f2b41",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "5385431c74b3ab52c8010ba9e56c580353e36d9e6f8f5610557c8062ea6f2b41",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/meta-ads-strategy-principles/": {
           "url": "https://www.jonloomer.com/meta-ads-strategy-principles/",
@@ -533,9 +925,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "fd61667f967ca6d5c1f4dbb86547fd4728478e2e59c307dda158bd071b081dce",
+          "fingerprint": "d64f969b69f30348d0c5cddfc1fd1d5c65ce7a463cec0aff7a7c3d6a649d36aa",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "d64f969b69f30348d0c5cddfc1fd1d5c65ce7a463cec0aff7a7c3d6a649d36aa",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/lead-capture-ai-agent-instant-forms/": {
           "url": "https://www.jonloomer.com/lead-capture-ai-agent-instant-forms/",
@@ -545,9 +945,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "0edb1525a8cc8c7f1fd77fe6d1e9109e41ac73dc97eda23adac7474733ff6c7f",
+          "fingerprint": "547dc418d5565efd8d8aefb663a576fc0ce525d910fed1747b3636ca80082426",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "547dc418d5565efd8d8aefb663a576fc0ce525d910fed1747b3636ca80082426",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/chatgpt-ads-custom-audiences/": {
           "url": "https://www.jonloomer.com/chatgpt-ads-custom-audiences/",
@@ -557,9 +965,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "4493f6b28640e980b34849890dcbfa93aaab5891c6103fcc600fa502e80a4275",
+          "fingerprint": "97ddb661f75a38f4e09864184ac950de1bd71d516e6e1588604d8dcc6455d81d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "97ddb661f75a38f4e09864184ac950de1bd71d516e6e1588604d8dcc6455d81d",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/meta-ads-master-brief/": {
           "url": "https://www.jonloomer.com/meta-ads-master-brief/",
@@ -569,9 +985,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "758a423b566717844d3956005118ada98a944d788a05fe555d42dc45949ebcc8",
+          "fingerprint": "30a2fce168101c7065c206861e71e39492953f715c009d509fd117d414e59493",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "30a2fce168101c7065c206861e71e39492953f715c009d509fd117d414e59493",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/meta-ads-arent-converting/": {
           "url": "https://www.jonloomer.com/meta-ads-arent-converting/",
@@ -581,9 +1005,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "39bfceaeb58b08ae04e2a7717a1142691a6e32c283ee86cd519530a203da1439",
+          "fingerprint": "f21df6efa8f70bb4fd2f354f751dc50ed463e4d5ab0b52257b7d819a442e93d9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "f21df6efa8f70bb4fd2f354f751dc50ed463e4d5ab0b52257b7d819a442e93d9",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/instant-form-appointments-chatgpt-conversion-optimization/": {
           "url": "https://www.jonloomer.com/instant-form-appointments-chatgpt-conversion-optimization/",
@@ -593,9 +1025,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "124ec7992f423bfc1264fe94c5ffe8457553f58b65fb0e345ab80489001c2504",
+          "fingerprint": "a8ee8159fd9a77fcb67bf8ec103af71cb36039938a912ac7636d3dee43acb00c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "a8ee8159fd9a77fcb67bf8ec103af71cb36039938a912ac7636d3dee43acb00c",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/active-ad-sets-meta-ads-campaign/": {
           "url": "https://www.jonloomer.com/active-ad-sets-meta-ads-campaign/",
@@ -605,9 +1045,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "fba6ace2b8a7c2b2bb7925e4da0e9efc858d9fd5361ad4ec8b7ec1519808a0fa",
+          "fingerprint": "b418674ac95e8795177e68dc5555a4f69d7e8a0ded5b224462200d938f5bf784",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "b418674ac95e8795177e68dc5555a4f69d7e8a0ded5b224462200d938f5bf784",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/ai-disclosure-checkbox-chatgpt-attribution/": {
           "url": "https://www.jonloomer.com/ai-disclosure-checkbox-chatgpt-attribution/",
@@ -617,9 +1065,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "333ad9ec8c9dc384d7649bbfc66f456e5b74e826e2516c4c85cfba9f96102c55",
+          "fingerprint": "722ef0c52cc36d4ec656c67d36bd79f28772d73b0a3286e851611634a887222b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "722ef0c52cc36d4ec656c67d36bd79f28772d73b0a3286e851611634a887222b",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/how-many-meta-ads-campaigns/": {
           "url": "https://www.jonloomer.com/how-many-meta-ads-campaigns/",
@@ -629,9 +1085,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "994c911f8c3ba2766138273ec20a17075c23c054917f0c09f0d374dfa45c6443",
+          "fingerprint": "b665bfb3aed27d36b03829578b94471aab70843bd27e3d4befcfebd0dcff4934",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "b665bfb3aed27d36b03829578b94471aab70843bd27e3d4befcfebd0dcff4934",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/push-delivery-tests-chatgpt-ads-updates/": {
           "url": "https://www.jonloomer.com/push-delivery-tests-chatgpt-ads-updates/",
@@ -641,9 +1105,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "38807162bb1bf5359efb43083363a224d7589b6299fb753d6fe6058bf3affd71",
+          "fingerprint": "91c3ac037a1282ddc448ffbfaa73310bec1ec3383cb6d890c70dbab1cec0478a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "91c3ac037a1282ddc448ffbfaa73310bec1ec3383cb6d890c70dbab1cec0478a",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/hands-on-push-delivery-to-this-ad/": {
           "url": "https://www.jonloomer.com/hands-on-push-delivery-to-this-ad/",
@@ -653,9 +1125,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "b7265f2f1963615aa131f542bd72fb56b7fbc2effe2922bfd5c75376ee5f5cf4",
+          "fingerprint": "7fe9281082ee6c4e8a24e916b76ff86d9e44fa43d0e808515a1ccb0057f0384e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "7fe9281082ee6c4e8a24e916b76ff86d9e44fa43d0e808515a1ccb0057f0384e",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/customer-lifecycle-strategy-not-what-advertisers-thought/": {
           "url": "https://www.jonloomer.com/customer-lifecycle-strategy-not-what-advertisers-thought/",
@@ -665,9 +1145,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "efc9153e95a2d93db8b7eb3a382234edda25a2fb4ff0b51c7252a09a74a05b16",
+          "fingerprint": "60a80fa6e31f1ca7a73f91df611f9eeba81a8ff037f1baa5d5bb86f7c4b4a3f5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "60a80fa6e31f1ca7a73f91df611f9eeba81a8ff037f1baa5d5bb86f7c4b4a3f5",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/meta-ads-attribution-reporting/": {
           "url": "https://www.jonloomer.com/meta-ads-attribution-reporting/",
@@ -677,9 +1165,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "42cd6283b8ba04e200b57e870e395dcda54e51db4342303ef4a172c19e972163",
+          "fingerprint": "47e5ea5b91c7cf4555e258865b6e86d9c9ed018d059fa2710e84d7c114acca41",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "47e5ea5b91c7cf4555e258865b6e86d9c9ed018d059fa2710e84d7c114acca41",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/meta-ads-grouping-reports-chatgpt-conversions/": {
           "url": "https://www.jonloomer.com/meta-ads-grouping-reports-chatgpt-conversions/",
@@ -689,9 +1185,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "37b7d9a4bf924c8bad33d2c43053437d8ff2d19dec06cc1dbe8b893d27c159af",
+          "fingerprint": "6c985346b0c0900f1935a9e2b74c7e586feb96514e47240796cb57ce05706939",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "6c985346b0c0900f1935a9e2b74c7e586feb96514e47240796cb57ce05706939",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/meta-ads-mistakes-agencies/": {
           "url": "https://www.jonloomer.com/meta-ads-mistakes-agencies/",
@@ -701,9 +1205,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "e4fe07c017307d6465f1971e2a2fbda7146bad276b0f3f40274910a86c165507",
+          "fingerprint": "78bf4d2d779ac0201ee0619ecc77c8b93ecb2b0240cbef9fc6060ef492b3d4c1",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "78bf4d2d779ac0201ee0619ecc77c8b93ecb2b0240cbef9fc6060ef492b3d4c1",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/chatgpt-ads-limitations-ai-instant-forms/": {
           "url": "https://www.jonloomer.com/chatgpt-ads-limitations-ai-instant-forms/",
@@ -713,9 +1225,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "dca791caa13b275020e23bf17fb6e72d9209ac21ef518ee34d94207d6ec98241",
+          "fingerprint": "e46b74706c26cdd450cf6395329e486c31550b5e477707fe5856ca5b2ec29e43",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "e46b74706c26cdd450cf6395329e486c31550b5e477707fe5856ca5b2ec29e43",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/chatgpt-ads-initial-impressions/": {
           "url": "https://www.jonloomer.com/chatgpt-ads-initial-impressions/",
@@ -725,9 +1245,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "9b62812df8439b66c6ff60832584b69884a2a0448e3b5a5a6d9e814329f46055",
+          "fingerprint": "749cc2fdb0ca48cdf6f252ff8a21e65fd42196f5ce6d39aed53d763e37c7f5d3",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "749cc2fdb0ca48cdf6f252ff8a21e65fd42196f5ce6d39aed53d763e37c7f5d3",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/one-click-capi-activated-new-meta-ads-features/": {
           "url": "https://www.jonloomer.com/one-click-capi-activated-new-meta-ads-features/",
@@ -737,9 +1265,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "f7c6abcc2ed1fe8771a028135d9e83a3f141b254358c55562ab9eee6baf24644",
+          "fingerprint": "f4ec4488da94c0b82bf1510432361d47297c7ea46cf9ab413a928c5922108111",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "f4ec4488da94c0b82bf1510432361d47297c7ea46cf9ab413a928c5922108111",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/future-of-meta-advertiser/": {
           "url": "https://www.jonloomer.com/future-of-meta-advertiser/",
@@ -749,9 +1285,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "1248d3867d3af8790329c273ad6fd06c44f7ebbd0bc6a98adf319f74540037b6",
+          "fingerprint": "32de55466a397a8dacd85b2473e5af9df6ca38c89b77663fe5d55399719e92a6",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "32de55466a397a8dacd85b2473e5af9df6ca38c89b77663fe5d55399719e92a6",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/chatgpt-ads-self-serve/": {
           "url": "https://www.jonloomer.com/chatgpt-ads-self-serve/",
@@ -761,9 +1305,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "237fdce3311562af842688376263470c2ffd2ed8bfff91ecf35a6e1d75d579f4",
+          "fingerprint": "063c0ed935d2afc858e4d8c6ad9ec284402c3f9d74df65aab64a47920d2c6209",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "063c0ed935d2afc858e4d8c6ad9ec284402c3f9d74df65aab64a47920d2c6209",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/meta-ads-ai-connectors-claude/": {
           "url": "https://www.jonloomer.com/meta-ads-ai-connectors-claude/",
@@ -773,9 +1325,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "899e4f862cde6613b90e3abbbe66025b36f4f464b639c2e9e4908d1ba14261be",
+          "fingerprint": "81eee52bf53894b9178f0ae1933eb664cc9a621483ac7d560a9cfd075339a1ba",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "81eee52bf53894b9178f0ae1933eb664cc9a621483ac7d560a9cfd075339a1ba",
+            "generatedAt": null
+          }
         },
         "https://www.jonloomer.com/meta-ads-ai-connectors/": {
           "url": "https://www.jonloomer.com/meta-ads-ai-connectors/",
@@ -785,9 +1345,17 @@
           "matchEvidence": [
             "category:Meta Advertising"
           ],
-          "fingerprint": "ccf01526f549aa8d46caa41e841e58173955bc41615e17b63d010cefd9dec77a",
+          "fingerprint": "7f60756e94c88632403189ec62a0c230b15d37315c49deaa163e8eca7e20206a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-08-29T09:59:42Z"
+          "lastObservedAt": "2026-08-31T05:38:08Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": null,
+            "summaryJa": null,
+            "sourceFingerprint": "7f60756e94c88632403189ec62a0c230b15d37315c49deaa163e8eca7e20206a",
+            "generatedAt": null
+          }
         }
       }
     }
