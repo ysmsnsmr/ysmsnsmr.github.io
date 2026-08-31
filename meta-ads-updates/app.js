@@ -41,9 +41,9 @@
     return node;
   }
 
-  function appendFact(grid, label, value, fallback = "公式発表に記載なし") {
+  function appendFact(grid, label, value, fallback = "公式発表に記載なし", valueClass = "not-stated") {
     const wrapper = element("div");
-    wrapper.append(element("dt", "fact-label", label), element("dd", value ? "" : "not-stated", value || fallback));
+    wrapper.append(element("dt", "fact-label", label), element("dd", value ? "" : valueClass, value || fallback));
     grid.append(wrapper);
   }
 
@@ -105,8 +105,7 @@
     heading.append(badge, element("p", "source-name", source.name));
     const facts = element("dl", "fact-grid");
     appendFact(facts, "発表日", item.publishedDate);
-    appendFact(facts, "最終更新日", item.updatedDate, "確認できず");
-    appendFact(facts, "対象", item.platforms.join(" / "), "未分類");
+    appendFact(facts, "最終更新日", item.updatedDate, "確認できず", "not-stated not-stated--plain");
     card.append(heading, element("h2", "", personalHeadline(item)), facts);
     const detailLink = element("a", "detail-link", "詳細を見る");
     detailLink.href = personalDetailHref(item, state.filters);

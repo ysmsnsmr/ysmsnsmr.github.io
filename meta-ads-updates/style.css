@@ -422,6 +422,10 @@ h1 {
   font-style: italic;
 }
 
+.not-stated--plain {
+  font-style: normal;
+}
+
 .assessment-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

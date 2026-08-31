@@ -272,6 +272,11 @@ try {
     assert((await page.locator("#update-list h2").allTextContents()).includes("Meta Ads APIの観測"), `${label}: generated Japanese headline is missing from the list`);
     assert(await page.locator(".unofficial-copy").count() === 0, `${label}: per-card non-official warning must not be rendered`);
     assert((await page.locator(".fact-label").allTextContents()).filter((label) => label === "最終更新日").length === 3, `${label}: final update date label is missing`);
+    assert(!(await page.locator(".fact-label").allTextContents()).includes("対象"), `${label}: target platform must not be shown on the Personal Feed list`);
+    assert(await page.locator(".fact-grid > div").evaluateAll((nodes) => nodes
+      .filter((node) => node.querySelector(".fact-label")?.textContent === "最終更新日")
+      .filter((node) => node.querySelector("dd")?.textContent === "確認できず")
+      .every((node) => getComputedStyle(node.querySelector("dd")).fontStyle === "normal")), `${label}: unknown final update date must use normal typography`);
     assert(!(await page.locator(".fact-label").allTextContents()).includes("最終確認"), `${label}: automated observation timestamp must not be shown as human confirmation`);
     assert(await page.locator(".masthead").textContent().then((text) => !text.includes("Personal information feed") && !text.includes("個人・同僚向けフィード")), `${label}: removed personal-feed copy is still visible`);
     const personalColumns = await page.locator("#update-list").evaluate((node) => getComputedStyle(node).gridTemplateColumns.trim().split(/\s+/).length);
@@ -354,8 +359,14 @@ try {
   const legacyItem = personalFeedReport.items[0];
   await productionDetail.goto(`${server.origin}/meta-ads-updates/detail.html?id=${encodeURIComponent(legacyItem.id)}`, { waitUntil: "networkidle" });
   assert(await productionDetail.locator("#detail-card").isVisible(), "v1 production feed detail must render");
-  assert((await productionDetail.locator("#detail-title").textContent()) === legacyItem.title, "v1 production feed must fall back to the original title");
-  assert((await productionDetail.locator("#detail-summary").textContent()).includes("日本語要約を準備中"), "v1 production feed must show the pending-summary fallback");
+  const expectedProductionTitle = legacyItem.presentation?.status === "generated" && legacyItem.presentation.shortHeadlineJa
+    ? legacyItem.presentation.shortHeadlineJa
+    : legacyItem.title;
+  assert((await productionDetail.locator("#detail-title").textContent()) === expectedProductionTitle, "production feed detail must use the generated headline or original title");
+  const expectedProductionSummary = legacyItem.presentation?.status === "generated" && legacyItem.presentation.summaryJa
+    ? legacyItem.presentation.summaryJa
+    : "日本語要約を準備中";
+  assert((await productionDetail.locator("#detail-summary").textContent()).includes(expectedProductionSummary), "production feed detail must use the generated summary or pending fallback");
   await productionDetail.close();
 
   for (const viewport of [viewports[0], viewports[2]]) {
