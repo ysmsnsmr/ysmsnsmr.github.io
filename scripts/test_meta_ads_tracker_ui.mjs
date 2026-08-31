@@ -359,8 +359,14 @@ try {
   const legacyItem = personalFeedReport.items[0];
   await productionDetail.goto(`${server.origin}/meta-ads-updates/detail.html?id=${encodeURIComponent(legacyItem.id)}`, { waitUntil: "networkidle" });
   assert(await productionDetail.locator("#detail-card").isVisible(), "v1 production feed detail must render");
-  assert((await productionDetail.locator("#detail-title").textContent()) === legacyItem.title, "v1 production feed must fall back to the original title");
-  assert((await productionDetail.locator("#detail-summary").textContent()).includes("日本語要約を準備中"), "v1 production feed must show the pending-summary fallback");
+  const expectedProductionTitle = legacyItem.presentation?.status === "generated" && legacyItem.presentation.shortHeadlineJa
+    ? legacyItem.presentation.shortHeadlineJa
+    : legacyItem.title;
+  assert((await productionDetail.locator("#detail-title").textContent()) === expectedProductionTitle, "production feed detail must use the generated headline or original title");
+  const expectedProductionSummary = legacyItem.presentation?.status === "generated" && legacyItem.presentation.summaryJa
+    ? legacyItem.presentation.summaryJa
+    : "日本語要約を準備中";
+  assert((await productionDetail.locator("#detail-summary").textContent()).includes(expectedProductionSummary), "production feed detail must use the generated summary or pending fallback");
   await productionDetail.close();
 
   for (const viewport of [viewports[0], viewports[2]]) {
