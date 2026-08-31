@@ -521,6 +521,53 @@ def _presentation_from_environment(timeout: float) -> Callable[[str, str, dict[s
     return present
 
 
+def _presentation_request_limit(value: int | None, policy: dict[str, Any]) -> int:
+    maximum = policy["maxRequestsPerRun"]
+    if value is None:
+        return maximum
+    if isinstance(value, bool) or not isinstance(value, int) or not 1 <= value <= maximum:
+        raise ContractError(f"presentation request limit must be an integer from 1 to {maximum}")
+    return value
+
+
+def _presentation_stats(config: dict[str, Any], renderer_enabled: bool, request_limit: int) -> dict[str, Any]:
+    return {
+        "rendererEnabled": renderer_enabled,
+        "requestLimit": request_limit,
+        "eligible": 0,
+        "attempted": 0,
+        "generated": 0,
+        "failed": 0,
+        "deferred": 0,
+        "sources": {
+            source["id"]: {"eligible": 0, "attempted": 0, "generated": 0, "failed": 0}
+            for source in config["sources"]
+        },
+    }
+
+
+def _write_presentation_stats(target: dict[str, Any] | None, value: dict[str, Any]) -> None:
+    if target is not None:
+        target.clear()
+        target.update(value)
+
+
+def _print_presentation_stats(stats: dict[str, Any]) -> None:
+    enabled = "true" if stats["rendererEnabled"] else "false"
+    print(
+        "PRESENTATION: "
+        f"renderer_enabled={enabled} eligible={stats['eligible']} limit={stats['requestLimit']} "
+        f"attempted={stats['attempted']} generated={stats['generated']} failed={stats['failed']} "
+        f"deferred={stats['deferred']}"
+    )
+    for source_id, counts in stats["sources"].items():
+        print(
+            "PRESENTATION_SOURCE: "
+            f"id={source_id} eligible={counts['eligible']} attempted={counts['attempted']} "
+            f"generated={counts['generated']} failed={counts['failed']}"
+        )
+
+
 def collect(
     config: dict[str, Any],
     state: dict[str, Any],
@@ -528,11 +575,17 @@ def collect(
     now: datetime,
     fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = bounded_request,
     present_item: Callable[[str, str, dict[str, Any]], dict[str, str]] | None = None,
+    *,
+    presentation_limit: int | None = None,
+    presentation_stats: dict[str, Any] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     validate_config(config)
     validate_state(state, config)
     generated_at = _now(now)
     cutoff = now.astimezone(timezone.utc) - timedelta(days=config["policies"]["historyRetentionDays"])
+    presentation_policy = config["policies"]["japanesePresentation"]
+    request_limit = _presentation_request_limit(presentation_limit, presentation_policy)
+    stats = _presentation_stats(config, present_item is not None, request_limit)
 
     # Finish all external source collection before any optional model request. A source failure
     # therefore cannot cause paid generation work for a run that will not be published.
@@ -544,7 +597,7 @@ def collect(
         raw_by_source[source["id"]] = extract_items(source, body)
 
     next_state: dict[str, Any] = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": generated_at, "sources": {}}
-    presentation_candidates: list[tuple[dict[str, Any], dict[str, Any]]] = []
+    presentation_candidates: list[tuple[str, dict[str, Any], dict[str, Any]]] = []
     for source in config["sources"]:
         prior = state["sources"].get(source["id"], {"items": {}})["items"]
         current: dict[str, Any] = {}
@@ -576,7 +629,9 @@ def collect(
             }
             current[raw["key"]] = record
             if record["presentation"]["status"] != "generated":
-                presentation_candidates.append((record, raw))
+                presentation_candidates.append((source["id"], record, raw))
+                stats["eligible"] += 1
+                stats["sources"][source["id"]]["eligible"] += 1
         retained: dict[str, Any] = {}
         for key, record in current.items():
             observed = datetime.fromisoformat(record["lastObservedAt"].replace("Z", "+00:00"))
@@ -584,16 +639,17 @@ def collect(
                 retained[key] = record
         next_state["sources"][source["id"]] = {"items": retained}
 
-    presentation_policy = config["policies"]["japanesePresentation"]
     presentation_candidates.sort(
         key=lambda pair: (
-            pair[0]["updatedDate"] or pair[0]["publishedDate"] or pair[0]["firstObservedAt"],
-            pair[0]["url"],
+            pair[1]["updatedDate"] or pair[1]["publishedDate"] or pair[1]["firstObservedAt"],
+            pair[1]["url"],
         ),
         reverse=True,
     )
     if present_item is not None:
-        for record, raw in presentation_candidates[:presentation_policy["maxRequestsPerRun"]]:
+        for source_id, record, raw in presentation_candidates[:request_limit]:
+            stats["attempted"] += 1
+            stats["sources"][source_id]["attempted"] += 1
             try:
                 generated = present_item(record["title"], raw["sourceContext"], presentation_policy)
                 record["presentation"] = {
@@ -604,13 +660,19 @@ def collect(
                     "sourceFingerprint": record["fingerprint"],
                     "generatedAt": generated_at,
                 }
+                stats["generated"] += 1
+                stats["sources"][source_id]["generated"] += 1
             except (KeyError, PresentationError, ValueError, OSError):
                 # Optional rendering must not block source collection or expose source bodies.
                 record["presentation"] = _pending_presentation(record["fingerprint"])
+                stats["failed"] += 1
+                stats["sources"][source_id]["failed"] += 1
+    stats["deferred"] = max(0, stats["eligible"] - stats["attempted"])
 
     feed = build_feed(next_state, config, generated_at)
     validate_state(next_state, config)
     validate_feed(feed, config)
+    _write_presentation_stats(presentation_stats, stats)
     return feed, next_state
 
 
@@ -623,15 +685,32 @@ def collect_and_write(
     now: datetime | None = None,
     fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = bounded_request,
     present_item: Callable[[str, str, dict[str, Any]], dict[str, str]] | None = None,
+    presentation_limit: int | None = None,
+    presentation_stats: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     config = load_config(config_path)
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
     renderer = present_item if present_item is not None else _presentation_from_environment(timeout)
-    feed, next_state = collect(config, state, timeout, now or datetime.now(timezone.utc), fetch_body, renderer)
+    feed, next_state = collect(
+        config,
+        state,
+        timeout,
+        now or datetime.now(timezone.utc),
+        fetch_body,
+        renderer,
+        presentation_limit=presentation_limit,
+        presentation_stats=presentation_stats,
+    )
     # Both payloads are fully constructed and validated before either single-file atomic write.
     write_json(output_path, feed)
     write_json(state_path, next_state)
     return feed
+
+
+def _parse_presentation_limit(value: str) -> int:
+    if not re.fullmatch(r"[1-9][0-9]*", value):
+        raise argparse.ArgumentTypeError("presentation limit must be a positive integer")
+    return int(value)
 
 
 def main() -> int:
@@ -640,13 +719,23 @@ def main() -> int:
     parser.add_argument("--state", type=Path, default=DEFAULT_STATE)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--timeout", type=float, default=30.0)
+    parser.add_argument("--presentation-limit", type=_parse_presentation_limit, default=None)
     args = parser.parse_args()
     try:
-        feed = collect_and_write(args.config, args.state, args.output, args.timeout)
+        stats: dict[str, Any] = {}
+        feed = collect_and_write(
+            args.config,
+            args.state,
+            args.output,
+            args.timeout,
+            presentation_limit=args.presentation_limit,
+            presentation_stats=stats,
+        )
     except (ContractError, OSError, ValueError, urllib.error.URLError) as error:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1
     print(f"PASS: published {len(feed['items'])} personal feed item(s) from {len(feed['sources'])} source(s)")
+    _print_presentation_stats(stats)
     return 0
 
 

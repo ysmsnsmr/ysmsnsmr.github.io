@@ -163,15 +163,61 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(changed["presentation"]["generatedAt"], "2026-08-31T09:00:00Z")
         validate_state(changed_state, self.config)
 
+    def test_presentation_backfill_is_bounded_and_reports_safe_source_counts(self) -> None:
+        calls: list[tuple[str, str]] = []
+        stats: dict = {}
+
+        def presenter(title: str, source_context: str, _policy: dict) -> dict[str, str]:
+            calls.append((title, source_context))
+            return {"shortHeadlineJa": f"{title} の短見出し", "summaryJa": f"{title} の要約"}
+
+        feed, next_state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+            presenter,
+            presentation_limit=1,
+            presentation_stats=stats,
+        )
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(stats["requestLimit"], 1)
+        self.assertTrue(stats["rendererEnabled"])
+        self.assertEqual((stats["eligible"], stats["attempted"], stats["generated"], stats["failed"], stats["deferred"]), (4, 1, 1, 0, 3))
+        self.assertEqual(sum(source["eligible"] for source in stats["sources"].values()), 4)
+        self.assertEqual(sum(source["attempted"] for source in stats["sources"].values()), 1)
+        self.assertNotIn("campaign controls", json.dumps(stats))
+        self.assertNotIn("Meta expands Ads Manager", json.dumps(stats))
+        self.assertEqual(sum(item["presentation"]["status"] == "generated" for item in feed["items"]), 1)
+        validate_state(next_state, self.config)
+
+    def test_presentation_backfill_rejects_out_of_policy_limit_before_fetching(self) -> None:
+        def unexpected_fetch(_source: dict, _timeout: float) -> tuple[str, str]:
+            raise AssertionError("invalid backfill limit must not fetch a source")
+
+        with self.assertRaisesRegex(ContractError, "from 1 to 12"):
+            collect(
+                self.config,
+                {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+                1,
+                NOW,
+                unexpected_fetch,
+                presentation_limit=13,
+            )
+
     def test_presentation_failure_remains_pending_without_blocking_publication(self) -> None:
         def failing_presenter(_title: str, _source_context: str, _policy: dict) -> dict[str, str]:
             raise PresentationError("source content is intentionally not exposed")
 
         state = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
-        feed, next_state = collect(self.config, state, 1, NOW, self.fetcher(), failing_presenter)
+        stats: dict = {}
+        feed, next_state = collect(self.config, state, 1, NOW, self.fetcher(), failing_presenter, presentation_stats=stats)
         self.assertEqual(len(feed["items"]), 4)
         self.assertTrue(all(item["presentation"]["status"] == "pending" for item in feed["items"]))
         self.assertNotIn("intentionally not exposed", json.dumps(next_state))
+        self.assertEqual((stats["attempted"], stats["generated"], stats["failed"]), (4, 0, 4))
+        self.assertNotIn("intentionally not exposed", json.dumps(stats))
         validate_feed(feed, self.config)
 
     def test_presentation_contract_rejects_stale_fingerprint_and_overlong_text(self) -> None:
