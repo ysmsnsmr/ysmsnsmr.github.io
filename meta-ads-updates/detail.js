@@ -31,9 +31,9 @@
       : item.title;
   }
 
-  function appendFact(grid, label, value, fallback = "確認できず") {
+  function appendFact(grid, label, value, fallback = "確認できず", valueClass = "not-stated") {
     const wrapper = element("div");
-    wrapper.append(element("dt", "fact-label", label), element("dd", value ? "" : "not-stated", value || fallback));
+    wrapper.append(element("dt", "fact-label", label), element("dd", value ? "" : valueClass, value || fallback));
     grid.append(wrapper);
   }
 
@@ -93,7 +93,7 @@
       : "日本語要約を準備中です。原文タイトルと元の記事をご確認ください。";
     elements.originalTitle.textContent = item.title;
     appendFact(elements.facts, "発表日", item.publishedDate);
-    appendFact(elements.facts, "最終更新日", item.updatedDate);
+    appendFact(elements.facts, "最終更新日", item.updatedDate, "確認できず", "not-stated not-stated--plain");
     appendFact(elements.facts, "対象", Array.isArray(item.platforms) ? item.platforms.join(" / ") : null, "未分類");
     elements.sourceLink.href = sourceUrl;
     elements.sourceLink.textContent = isOfficial ? "公式ソースを開く" : "非公式ソースを開く";
