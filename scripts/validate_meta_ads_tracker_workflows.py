@@ -21,6 +21,7 @@ WORKFLOWS = {
     "friday_preflight": ROOT / ".github/workflows/meta-ads-tracker-friday-preflight.yml",
     "weekly_recovery": ROOT / ".github/workflows/meta-ads-tracker-weekly-recovery.yml",
     "recovery_promotion": ROOT / ".github/workflows/meta-ads-tracker-recovery-promote.yml",
+    "presentation_backfill": ROOT / ".github/workflows/meta-ads-personal-feed-presentation-backfill.yml",
 }
 PINNED_ACTIONS = {
     "actions/checkout": "3d3c42e5aac5ba805825da76410c181273ba90b1",
@@ -80,11 +81,11 @@ def main() -> int:
         for name in ("friday_preflight", "weekly_recovery", "recovery_promotion"):
             if r"\\n" in WORKFLOWS[name].read_text(encoding="utf-8"):
                 fail(f"{name} must write GitHub output values with real newlines")
-        for name in ("collect", "weekly", "publish", "friday_preflight", "weekly_recovery", "recovery_promotion"):
+        for name in ("collect", "weekly", "publish", "friday_preflight", "weekly_recovery", "recovery_promotion", "presentation_backfill"):
             group = parsed[name].get("concurrency", {}).get("group")
             if group != "meta-ads-tracker-repository-write":
                 fail(f"{name} must share repository-write concurrency")
-        for name in ("collect", "publish", "secondary_shadow", "friday_preflight", "weekly_recovery", "recovery_promotion"):
+        for name in ("collect", "publish", "secondary_shadow", "friday_preflight", "weekly_recovery", "recovery_promotion", "presentation_backfill"):
             require_pinned_actions(name, parsed[name])
         publish_runs = "\n".join(run_blocks(parsed["publish"]))
         if "meta_ads_tracker_groq.py" in publish_runs or "GROQ_API_KEY" in str(parsed["publish"]):
@@ -121,6 +122,45 @@ def main() -> int:
         artifact_with = artifact.get("with", {}) if isinstance(artifact, dict) else {}
         if artifact_with.get("if-no-files-found") != "error" or artifact_with.get("retention-days") != "30":
             fail("collect artifact must fail on absence and retain exactly 30 days")
+        backfill = parsed["presentation_backfill"]
+        if "workflow_dispatch" not in backfill.get("on", {}):
+            fail("Personal Feed presentation backfill must be manual only")
+        backfill_inputs = backfill["on"]["workflow_dispatch"].get("inputs", {})
+        limit_input = backfill_inputs.get("presentation_limit", {}) if isinstance(backfill_inputs, dict) else {}
+        if limit_input.get("options") != [str(value) for value in range(1, 13)]:
+            fail("Personal Feed presentation backfill must offer only limits 1 through 12")
+        backfill_steps = steps(backfill)
+        backfill_kill_switch = next((step for step in backfill_steps if step.get("id") == "kill_switch"), None)
+        if backfill_kill_switch is None or "META_ADS_TRACKER_COLLECT_ENABLED" not in str(backfill_kill_switch):
+            fail("Personal Feed presentation backfill must have the strict collector kill switch")
+        if any(
+            step is not backfill_kill_switch and "steps.kill_switch.outputs.enabled == 'true'" not in str(step.get("if", ""))
+            for step in backfill_steps
+        ):
+            fail("every Personal Feed presentation-backfill step after the kill switch must be gated")
+        backfill_runs = "\n".join(run_blocks(backfill))
+        if "meta_ads_personal_feed.py" not in backfill_runs or "validate_meta_ads_personal_feed.py" not in backfill_runs:
+            fail("Personal Feed presentation backfill must build and validate the Personal Feed")
+        if '--presentation-limit "${PRESENTATION_LIMIT}"' not in backfill_runs:
+            fail("Personal Feed presentation backfill must pass its bounded environment input to the collector")
+        if any(value in backfill_runs for value in ("meta_ads_tracker_collect.py", "meta_ads_tracker_weekly", "meta_ads_tracker_decisions", "meta_ads_tracker_groq.py")):
+            fail("Personal Feed presentation backfill must not depend on candidate, weekly, decision, or Groq stages")
+        backfill_collect = next((step for step in backfill_steps if step.get("name") == "Generate bounded Japanese presentation backfill"), None)
+        backfill_env = backfill_collect.get("env", {}) if isinstance(backfill_collect, dict) else {}
+        if not isinstance(backfill_env, dict) or backfill_env.get("GROQ_API_KEY") != "${{ secrets.GROQ_API_KEY }}":
+            fail("Personal Feed presentation backfill must provide the optional Japanese-presentation API key")
+        if backfill_env.get("PRESENTATION_LIMIT") != "${{ inputs.presentation_limit }}":
+            fail("Personal Feed presentation backfill must pass the input through an environment variable")
+        if "META_ADS_PERSONAL_FEED_JA_ENABLED" not in backfill_env or "META_ADS_PERSONAL_FEED_GROQ_MODEL" not in backfill_env:
+            fail("Personal Feed presentation backfill must expose Japanese-presentation controls")
+        if 'git add -- data/meta_ads_personal_feed_state.json meta-ads-updates/personal-feed.json' not in backfill_runs:
+            fail("Personal Feed presentation backfill must stage only its explicit state and public feed paths")
+        backfill_artifact = next((step for step in backfill_steps if step.get("name") == "Upload Personal Feed backfill artifact"), None)
+        if not isinstance(backfill_artifact, dict) or backfill_artifact.get("with", {}).get("path") != "meta-ads-updates/personal-feed.json":
+            fail("Personal Feed presentation backfill must upload only the current public feed")
+        backfill_artifact_with = backfill_artifact.get("with", {}) if isinstance(backfill_artifact, dict) else {}
+        if backfill_artifact_with.get("if-no-files-found") != "error" or backfill_artifact_with.get("retention-days") != "30":
+            fail("Personal Feed presentation-backfill artifact must fail on absence and retain exactly 30 days")
         preflight = parsed["friday_preflight"]
         preflight_steps = steps(preflight)
         preflight_kill_switch = next((step for step in preflight_steps if step.get("id") == "kill_switch"), None)

@@ -1,0 +1,85 @@
+name: Meta Ads Personal Feed Japanese presentation backfill
+
+on:
+  workflow_dispatch:
+    inputs:
+      presentation_limit:
+        description: "Generate this many currently available pending items (1-12)"
+        required: true
+        default: "1"
+        type: choice
+        options: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: meta-ads-tracker-repository-write
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check collector kill switch
+        id: kill_switch
+        env:
+          META_ADS_TRACKER_COLLECT_ENABLED: ${{ vars.META_ADS_TRACKER_COLLECT_ENABLED }}
+        run: |
+          setting="${META_ADS_TRACKER_COLLECT_ENABLED:-true}"
+          case "${setting}" in
+            true)
+              echo "enabled=true" >> "${GITHUB_OUTPUT}"
+              ;;
+            false)
+              echo "enabled=false" >> "${GITHUB_OUTPUT}"
+              echo "Meta Ads tracker collection is disabled by META_ADS_TRACKER_COLLECT_ENABLED=false."
+              ;;
+            *)
+              echo "::error::META_ADS_TRACKER_COLLECT_ENABLED must be true, false, or unset."
+              exit 1
+              ;;
+          esac
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        if: steps.kill_switch.outputs.enabled == 'true'
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        if: steps.kill_switch.outputs.enabled == 'true'
+        with:
+          python-version: "3.12"
+      - name: Install tracker validator dependency
+        if: steps.kill_switch.outputs.enabled == 'true'
+        run: python -m pip install -r requirements-meta-ads-tracker.txt
+      - name: Generate bounded Japanese presentation backfill
+        if: steps.kill_switch.outputs.enabled == 'true'
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          META_ADS_PERSONAL_FEED_JA_ENABLED: ${{ vars.META_ADS_PERSONAL_FEED_JA_ENABLED }}
+          META_ADS_PERSONAL_FEED_GROQ_MODEL: ${{ vars.META_ADS_PERSONAL_FEED_GROQ_MODEL }}
+          PRESENTATION_LIMIT: ${{ inputs.presentation_limit }}
+        run: |
+          python3 scripts/meta_ads_personal_feed.py \
+            --config config/meta_ads_personal_feed_sources.json \
+            --state data/meta_ads_personal_feed_state.json \
+            --output meta-ads-updates/personal-feed.json \
+            --presentation-limit "${PRESENTATION_LIMIT}"
+          python3 scripts/validate_meta_ads_personal_feed.py
+      - name: Commit Personal Feed and state
+        if: steps.kill_switch.outputs.enabled == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- data/meta_ads_personal_feed_state.json meta-ads-updates/personal-feed.json
+          if git diff --cached --quiet; then
+            echo "No Personal Feed state change."
+          else
+            git commit -m "chore: backfill Meta Ads Personal Feed presentation"
+            git push
+          fi
+      - name: Upload Personal Feed backfill artifact
+        if: steps.kill_switch.outputs.enabled == 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: meta-ads-personal-feed-presentation-backfill-${{ github.run_id }}
+          path: meta-ads-updates/personal-feed.json
+          if-no-files-found: error
+          retention-days: 30
