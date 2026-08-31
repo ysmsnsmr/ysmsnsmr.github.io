@@ -116,7 +116,9 @@ class GroqTransportTest(unittest.TestCase):
             ):
                 with self.assertRaises(ValueError) as raised:
                     self.request("qwen36")
-            self.assertEqual(error_diagnostic(raised.exception)["json_contract_status"], expected)
+                diagnostic = error_diagnostic(raised.exception)
+                self.assertEqual(diagnostic["transport_status"], "success")
+                self.assertEqual(diagnostic["json_contract_status"], expected)
 
     def test_strict_schema_rejects_shape_mismatch(self) -> None:
         payload = {
@@ -127,6 +129,7 @@ class GroqTransportTest(unittest.TestCase):
                 self.request("gpt-oss")
 
         diagnostic = error_diagnostic(raised.exception)
+        self.assertEqual(diagnostic["transport_status"], "success")
         self.assertEqual(diagnostic["json_contract_status"], "schema_invalid")
         self.assertEqual(diagnostic["json_contract_reason"], "editorial_entry_shape")
 
@@ -154,6 +157,7 @@ class GroqTransportTest(unittest.TestCase):
                 self.request("gpt-oss")
 
         diagnostic = error_diagnostic(raised.exception)
+        self.assertEqual(diagnostic["transport_status"], "success")
         self.assertEqual(diagnostic["json_contract_status"], "schema_invalid")
         self.assertEqual(diagnostic["json_contract_reason"], "editorial_entry_value")
 

@@ -505,6 +505,17 @@ def editorial_entry_counts(records: list[dict[str, Any]]) -> dict[str, int]:
     }
 
 
+def call_outcome_classification(call: Any) -> str:
+    """Classify the failing layer without changing render or retry policy."""
+    if not isinstance(call, dict):
+        return "not_recorded"
+    if clean_text(call.get("transport_status")) != "success":
+        return "transport_failure"
+    if clean_text(call.get("json_contract_status")) != "valid":
+        return "json_contract_failure"
+    return "transport_and_contract_valid"
+
+
 def transport_observation(records: list[dict[str, Any]]) -> dict[str, Any]:
     transport = Counter()
     contracts = Counter()
@@ -512,6 +523,8 @@ def transport_observation(records: list[dict[str, Any]]) -> dict[str, Any]:
     hard_safety = Counter()
     repair_transport = Counter()
     repair_contracts = Counter()
+    primary_outcomes = Counter()
+    repair_outcomes = Counter()
     for record in records:
         call = record.get("groq_call")
         if isinstance(call, dict):
@@ -520,6 +533,7 @@ def transport_observation(records: list[dict[str, Any]]) -> dict[str, Any]:
             contracts[contract_status] += 1
             if contract_status == "schema_invalid":
                 contract_reasons[clean_text(call.get("json_contract_reason")) or "not_recorded"] += 1
+            primary_outcomes[call_outcome_classification(call)] += 1
         reason = clean_text(record.get("hard_safety_rejection_reason"))
         if reason:
             hard_safety[reason] += 1
@@ -527,6 +541,7 @@ def transport_observation(records: list[dict[str, Any]]) -> dict[str, Any]:
         if isinstance(repair_call, dict):
             repair_transport[clean_text(repair_call.get("transport_status")) or "not_recorded"] += 1
             repair_contracts[clean_text(repair_call.get("json_contract_status")) or "not_evaluated"] += 1
+            repair_outcomes[call_outcome_classification(repair_call)] += 1
     return {
         "transport_status_counts": dict(sorted(transport.items())),
         "json_contract_status_counts": dict(sorted(contracts.items())),
@@ -536,6 +551,8 @@ def transport_observation(records: list[dict[str, Any]]) -> dict[str, Any]:
         "repair_accepted_count": sum(record.get("repair_accepted") is True for record in records),
         "repair_transport_status_counts": dict(sorted(repair_transport.items())),
         "repair_json_contract_status_counts": dict(sorted(repair_contracts.items())),
+        "primary_call_outcome_counts": dict(sorted(primary_outcomes.items())),
+        "repair_call_outcome_counts": dict(sorted(repair_outcomes.items())),
     }
 
 

@@ -429,14 +429,14 @@ class EditorialEntryV2Test(unittest.TestCase):
         records = [
             {
                 "groq_call": {
-                    "transport_status": "invalid_envelope",
+                    "transport_status": "success",
                     "json_contract_status": "schema_invalid",
                     "json_contract_reason": "editorial_entry_shape",
                 }
             },
             {
                 "groq_call": {
-                    "transport_status": "invalid_envelope",
+                    "transport_status": "success",
                     "json_contract_status": "schema_invalid",
                     "json_contract_reason": "editorial_entry_value",
                 }
@@ -449,6 +449,10 @@ class EditorialEntryV2Test(unittest.TestCase):
         self.assertEqual(
             observation["json_contract_reason_counts"],
             {"editorial_entry_shape": 1, "editorial_entry_value": 1},
+        )
+        self.assertEqual(
+            observation["primary_call_outcome_counts"],
+            {"json_contract_failure": 2, "transport_and_contract_valid": 1},
         )
 
     def test_provenance_is_per_entry_field(self) -> None:

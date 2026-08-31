@@ -93,6 +93,8 @@ def parse_observation_diagnostics(value: dict[str, Any]) -> dict[str, Any]:
         "repair_accepted_count": None,
         "repair_transport_status_counts": {},
         "repair_json_contract_status_counts": {},
+        "primary_call_outcome_counts": {},
+        "repair_call_outcome_counts": {},
         "entry_provenance_line_counts": {},
     }
     if not isinstance(diagnostics, dict):
@@ -120,7 +122,12 @@ def parse_observation_diagnostics(value: dict[str, Any]) -> dict[str, Any]:
             result[key] = raw
     for key in ("repair_attempted_count", "repair_accepted_count"):
         result[key] = optional_int(diagnostics.get(key))
-    for key in ("repair_transport_status_counts", "repair_json_contract_status_counts"):
+    for key in (
+        "repair_transport_status_counts",
+        "repair_json_contract_status_counts",
+        "primary_call_outcome_counts",
+        "repair_call_outcome_counts",
+    ):
         raw = diagnostics.get(key)
         if isinstance(raw, dict):
             result[key] = raw
@@ -285,6 +292,8 @@ def write_report(path: Path, result: dict[str, Any]) -> None:
         f"- repair_accepted_count: {observation['repair_accepted_count']}",
         f"- repair_transport_status_counts: {json.dumps(observation['repair_transport_status_counts'], ensure_ascii=False)}",
         f"- repair_json_contract_status_counts: {json.dumps(observation['repair_json_contract_status_counts'], ensure_ascii=False)}",
+        f"- primary_call_outcome_counts: {json.dumps(observation['primary_call_outcome_counts'], ensure_ascii=False)}",
+        f"- repair_call_outcome_counts: {json.dumps(observation['repair_call_outcome_counts'], ensure_ascii=False)}",
     ]
     if result["failures"]:
         lines.extend(["", "## Failures", "", *[f"- {failure}" for failure in result["failures"]]])

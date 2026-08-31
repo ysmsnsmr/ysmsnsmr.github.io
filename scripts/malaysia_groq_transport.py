@@ -244,6 +244,9 @@ def request_chat_completion(
         raise GroqTransportValueError("Groq response envelope is invalid", diagnostic) from error
     diagnostic["usage"] = _usage(payload.get("usage") if isinstance(payload, dict) else None)
     diagnostic["finish_reason"] = choice.get("finish_reason") if isinstance(choice, dict) and isinstance(choice.get("finish_reason"), str) else "other"
+    # The HTTP response and completion envelope have arrived. Any issue below
+    # is a generated-content/JSON-contract failure, not a transport failure.
+    diagnostic["transport_status"] = "success"
     if not isinstance(content, str) or not content.strip():
         diagnostic["json_contract_status"] = "empty"
         raise GroqTransportValueError("Groq response content is empty", diagnostic)
@@ -264,8 +267,6 @@ def request_chat_completion(
         diagnostic["json_contract_reason"] = _safe_contract_reason(schema_failure)
         if profile.response_mode == "json_schema_strict":
             raise GroqTransportValueError(f"Groq JSON schema mismatch: {schema_failure}", diagnostic)
-        diagnostic["transport_status"] = "success"
         return ChatCompletion(content, parsed, diagnostic)
-    diagnostic["transport_status"] = "success"
     diagnostic["json_contract_status"] = "valid"
     return ChatCompletion(content, parsed, diagnostic)
