@@ -42,6 +42,25 @@ class BusinessTodayShadowWindowTest(unittest.TestCase):
             self.assertEqual(second.status, "skipped_already_collected_today")
             self.assertEqual(len(calls), 1)
 
+    def test_forwards_candidate_feed_url_to_day_runner(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            output_root = Path(directory)
+            calls = []
+
+            def runner(root: Path, *, now: datetime, feed_url: str, **_: object) -> Path:
+                calls.append(feed_url)
+                return self.write_manifest(root, "news", now)
+
+            result = window.run_daily_window(
+                output_root,
+                now=self.now,
+                feed_url="https://example.test/category/news/feed/",
+                runner=runner,
+            )
+
+            self.assertEqual(result.status, "collected")
+            self.assertEqual(calls, ["https://example.test/category/news/feed/"])
+
     def test_stops_after_seven_distinct_dates(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             output_root = Path(directory)

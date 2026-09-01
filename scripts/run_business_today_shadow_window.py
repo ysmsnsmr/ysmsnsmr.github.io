@@ -17,6 +17,7 @@ try:
     from experiment_observe_rss_candidate_backlog import (
         DAY1_SCHEMA_VERSION,
         DAY1_SOURCE_ID,
+        DAY1_FEED_URL,
         MYT,
         run_business_today_day1,
     )
@@ -24,6 +25,7 @@ except ModuleNotFoundError:
     from scripts.experiment_observe_rss_candidate_backlog import (
         DAY1_SCHEMA_VERSION,
         DAY1_SOURCE_ID,
+        DAY1_FEED_URL,
         MYT,
         run_business_today_day1,
     )
@@ -49,6 +51,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-root", default=str(DEFAULT_OUTPUT_ROOT))
     parser.add_argument("--max-days", type=int, default=DEFAULT_MAX_DAYS)
     parser.add_argument("--baseline-ref")
+    parser.add_argument("--feed-url", default=DAY1_FEED_URL)
     return parser.parse_args()
 
 
@@ -122,6 +125,7 @@ def run_daily_window(
     output_root: Path,
     max_days: int = DEFAULT_MAX_DAYS,
     baseline_ref: str | None = None,
+    feed_url: str = DAY1_FEED_URL,
     now: datetime | None = None,
     runner: Callable[..., Path] = run_business_today_day1,
 ) -> WindowResult:
@@ -137,7 +141,12 @@ def run_daily_window(
         return WindowResult("skipped_already_collected_today", len(dates))
 
     try:
-        run_dir = runner(output_root, baseline_ref=baseline_ref, now=observed_at)
+        run_dir = runner(
+            output_root,
+            baseline_ref=baseline_ref,
+            feed_url=feed_url,
+            now=observed_at,
+        )
     except Exception as exc:
         receipt = write_failure_receipt(output_root, observed_at, exc)
         return WindowResult("failed", len(dates), receipt_path=receipt)
@@ -151,6 +160,7 @@ def main() -> int:
             Path(args.output_root),
             max_days=args.max_days,
             baseline_ref=args.baseline_ref,
+            feed_url=args.feed_url,
         )
     except (OSError, ValueError) as exc:
         print(f"BusinessToday 7-day shadow: FAIL\nreason: {exc}")
