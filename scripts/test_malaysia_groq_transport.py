@@ -133,7 +133,7 @@ class GroqTransportTest(unittest.TestCase):
         self.assertEqual(diagnostic["json_contract_status"], "schema_invalid")
         self.assertEqual(diagnostic["json_contract_reason"], "editorial_entry_shape")
 
-    def test_strict_schema_records_value_mismatch_reason(self) -> None:
+    def test_strict_schema_records_empty_headline_reason(self) -> None:
         payload = {
             "choices": [
                 {
@@ -159,7 +159,7 @@ class GroqTransportTest(unittest.TestCase):
         diagnostic = error_diagnostic(raised.exception)
         self.assertEqual(diagnostic["transport_status"], "success")
         self.assertEqual(diagnostic["json_contract_status"], "schema_invalid")
-        self.assertEqual(diagnostic["json_contract_reason"], "editorial_entry_value")
+        self.assertEqual(diagnostic["json_contract_reason"], "editorial_headline_empty")
 
 
 if __name__ == "__main__":

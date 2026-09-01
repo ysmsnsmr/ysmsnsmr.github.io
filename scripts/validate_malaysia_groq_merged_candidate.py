@@ -93,6 +93,7 @@ def parse_observation_diagnostics(value: dict[str, Any]) -> dict[str, Any]:
         "repair_accepted_count": None,
         "repair_transport_status_counts": {},
         "repair_json_contract_status_counts": {},
+        "repair_json_contract_reason_counts": {},
         "primary_call_outcome_counts": {},
         "repair_call_outcome_counts": {},
         "entry_provenance_line_counts": {},
@@ -125,6 +126,7 @@ def parse_observation_diagnostics(value: dict[str, Any]) -> dict[str, Any]:
     for key in (
         "repair_transport_status_counts",
         "repair_json_contract_status_counts",
+        "repair_json_contract_reason_counts",
         "primary_call_outcome_counts",
         "repair_call_outcome_counts",
     ):
@@ -292,6 +294,7 @@ def write_report(path: Path, result: dict[str, Any]) -> None:
         f"- repair_accepted_count: {observation['repair_accepted_count']}",
         f"- repair_transport_status_counts: {json.dumps(observation['repair_transport_status_counts'], ensure_ascii=False)}",
         f"- repair_json_contract_status_counts: {json.dumps(observation['repair_json_contract_status_counts'], ensure_ascii=False)}",
+        f"- repair_json_contract_reason_counts: {json.dumps(observation['repair_json_contract_reason_counts'], ensure_ascii=False)}",
         f"- primary_call_outcome_counts: {json.dumps(observation['primary_call_outcome_counts'], ensure_ascii=False)}",
         f"- repair_call_outcome_counts: {json.dumps(observation['repair_call_outcome_counts'], ensure_ascii=False)}",
     ]

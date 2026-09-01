@@ -3,7 +3,7 @@
 from typing import Any
 
 
-HEADLINE_MAX_DISPLAY_WIDTH = 15.5
+HEADLINE_MAX_LENGTH = 15
 
 
 # Final Markdown validation and per-item hard safety share this list. Keeping
@@ -110,10 +110,10 @@ def editorial_entry_schema() -> dict[str, Any]:
     return {
         "type": "object",
         "properties": {
-            # 15.5 display units is also checked in editorial_entry_schema_error.
-            # maxLength protects the strict JSON response from unbounded output;
-            # ASCII characters count as half a display unit in the UI.
-            "headline_ja": {"type": "string", "minLength": 1, "maxLength": 31},
+            # Keep the server-enforced schema and local validator on the same
+            # Unicode-character limit. JSON Schema cannot express the former
+            # half-width display calculation reliably.
+            "headline_ja": {"type": "string", "minLength": 1, "maxLength": HEADLINE_MAX_LENGTH},
             "entry_ja": {"type": "string", "minLength": 1},
             "supporting_points_ja": {
                 "type": "array",
@@ -145,7 +145,7 @@ EDITORIAL_ENTRY_REPAIR_SCHEMA = {
         "editorial_entry": {
             "type": "object",
             "properties": {
-                "headline_ja": {"type": "string", "minLength": 1, "maxLength": 31},
+                "headline_ja": {"type": "string", "minLength": 1, "maxLength": HEADLINE_MAX_LENGTH},
                 "entry_ja": {"type": "string", "minLength": 1},
             },
             "required": ["headline_ja", "entry_ja"],
@@ -192,16 +192,19 @@ def _is_string(value: Any) -> bool:
     return isinstance(value, str)
 
 
-def headline_display_width(value: str) -> float:
-    """Match the UI's full-width/half-width headline measurement."""
-    return sum(0.5 if ord(character) < 128 else 1.0 for character in value)
+def editorial_headline_error(value: Any) -> str:
+    if not _is_string(value):
+        return "editorial_headline_type"
+    headline = value.strip()
+    if not headline:
+        return "editorial_headline_empty"
+    if len(headline) > HEADLINE_MAX_LENGTH:
+        return "editorial_headline_too_long"
+    return ""
 
 
 def headline_is_valid(value: Any) -> bool:
-    if not _is_string(value):
-        return False
-    headline = value.strip()
-    return bool(headline) and headline_display_width(headline) <= HEADLINE_MAX_DISPLAY_WIDTH
+    return not editorial_headline_error(value)
 
 
 def _exact_keys(value: Any, keys: set[str]) -> bool:
@@ -276,16 +279,20 @@ def editorial_entry_schema_error(value: Any) -> str:
     entry = value["editorial_entry"]
     if not _exact_keys(entry, {"headline_ja", "entry_ja", "supporting_points_ja"}):
         return "editorial_entry_shape"
+    headline_error = editorial_headline_error(entry["headline_ja"])
+    if headline_error:
+        return headline_error
+    if not _is_string(entry["entry_ja"]):
+        return "editorial_entry_type"
+    if not entry["entry_ja"].strip():
+        return "editorial_entry_empty"
     points = entry["supporting_points_ja"]
-    if (
-        not headline_is_valid(entry["headline_ja"])
-        or not _is_string(entry["entry_ja"])
-        or not entry["entry_ja"].strip()
-        or not isinstance(points, list)
-        or not 0 <= len(points) <= 2
-        or any(not _is_string(point) for point in points)
-    ):
-        return "editorial_entry_value"
+    if not isinstance(points, list):
+        return "editorial_supporting_points_type"
+    if not 0 <= len(points) <= 2:
+        return "editorial_supporting_points_count"
+    if any(not _is_string(point) for point in points):
+        return "editorial_supporting_point_type"
     return ""
 
 
@@ -295,8 +302,13 @@ def editorial_entry_repair_schema_error(value: Any) -> str:
     entry = value["editorial_entry"]
     if not _exact_keys(entry, {"headline_ja", "entry_ja"}):
         return "editorial_entry_shape"
-    if not headline_is_valid(entry["headline_ja"]) or not _is_string(entry["entry_ja"]) or not entry["entry_ja"].strip():
-        return "editorial_entry_value"
+    headline_error = editorial_headline_error(entry["headline_ja"])
+    if headline_error:
+        return headline_error
+    if not _is_string(entry["entry_ja"]):
+        return "editorial_entry_type"
+    if not entry["entry_ja"].strip():
+        return "editorial_entry_empty"
     return ""
 
 

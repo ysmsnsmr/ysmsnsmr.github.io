@@ -62,7 +62,7 @@ SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュースダッ�
 入力はRSSのtitle、description、既存のRSS entry、必要に応じてbody_evidenceだけです。
 body_evidenceがない場合はRSSの情報だけを使ってください。入力にない事実を追加せず、カテゴリ、出典、URL、日付は変更しないでください。
 英語またはマレー語の文を、自然で短い日本語に整えてください。dateline、wire credit、広告、関連記事、body_evidence.forbiddenの要素は出力しません。
-返答はeditorial_entryだけを持つJSON objectです。headline_jaは一覧に載せる短見出しです。全角文字は1、半角英数字・記号は0.5として15.5文字幅以内にし、末尾に「…」を付けず、記事の主体と出来事または注意点が分かる自然な日本語にしてください。入力にない固有名詞・数値・断定は加えないでください。
+返答はeditorial_entryだけを持つJSON objectです。headline_jaは一覧に載せる短見出しです。Unicode文字数で15文字以内にし、末尾に「…」を付けず、記事の主体と出来事または注意点が分かる自然な日本語にしてください。入力にない固有名詞・数値・断定は加えないでください。
 entry_jaは、読者が出典リンクを開くか判断できる日本語の概要です。主体、発言者・帰属、計画・提案・予報・調査・疑惑・否定などの確定度を、自然文の中で落とさないでください。
 発言記事では発言者または当局を自然に残してください。計画・提案・予報・警報・調査・疑惑・否定を、完了・確定した事実として書き換えないでください。
 supporting_points_jaは0〜2件の補足事実です。生活影響や次アクションを独立項目として作らず、入力に明確な根拠がある場合だけ概要または補足に自然に含めてください。
@@ -75,7 +75,7 @@ EDITORIAL_ENTRY_V2_CONTRACT_INSTRUCTION = """返答は次の形のJSON objectだ
 REPAIR_SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュースダッシュボードの日本語編集者です。
 入力記事JSONのtitle、description、必要に応じてbody_evidenceだけを根拠にしてください。入力にない事実、数値、主体、因果関係、死亡、事故、被害、収入減を加えないでください。
 原文が発言、計画、予報、警報、調査、疑惑、否定を表す場合は、確定した事実に書き換えないでください。dateline、wire credit、広告、関連記事は出力しません。
-短見出しは全角文字を1、半角英数字・記号を0.5として15.5文字幅以内の自然な日本語にしてください。概要は読者が出典を開くか判断できる日本語にしてください。
+短見出しはUnicode文字数で15文字以内の自然な日本語にしてください。概要は読者が出典を開くか判断できる日本語にしてください。
 出力は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
 {"editorial_entry":{"headline_ja":"string","entry_ja":"string"}}"""
 
@@ -320,7 +320,7 @@ def validate_groq_editorial_entry(value: Any) -> dict[str, Any]:
     if not entry["headline_ja"]:
         raise ValueError("missing headline_ja")
     if not headline_is_valid(entry["headline_ja"]):
-        raise ValueError("headline_ja exceeds 15.5 display width")
+        raise ValueError("headline_ja exceeds 15 characters")
     if not entry["entry_ja"]:
         raise ValueError("missing entry_ja")
     raw = value.get("editorial_entry")
@@ -523,6 +523,7 @@ def transport_observation(records: list[dict[str, Any]]) -> dict[str, Any]:
     hard_safety = Counter()
     repair_transport = Counter()
     repair_contracts = Counter()
+    repair_contract_reasons = Counter()
     primary_outcomes = Counter()
     repair_outcomes = Counter()
     for record in records:
@@ -540,7 +541,10 @@ def transport_observation(records: list[dict[str, Any]]) -> dict[str, Any]:
         repair_call = record.get("groq_repair_call")
         if isinstance(repair_call, dict):
             repair_transport[clean_text(repair_call.get("transport_status")) or "not_recorded"] += 1
-            repair_contracts[clean_text(repair_call.get("json_contract_status")) or "not_evaluated"] += 1
+            repair_contract_status = clean_text(repair_call.get("json_contract_status")) or "not_evaluated"
+            repair_contracts[repair_contract_status] += 1
+            if repair_contract_status == "schema_invalid":
+                repair_contract_reasons[clean_text(repair_call.get("json_contract_reason")) or "not_recorded"] += 1
             repair_outcomes[call_outcome_classification(repair_call)] += 1
     return {
         "transport_status_counts": dict(sorted(transport.items())),
@@ -551,6 +555,7 @@ def transport_observation(records: list[dict[str, Any]]) -> dict[str, Any]:
         "repair_accepted_count": sum(record.get("repair_accepted") is True for record in records),
         "repair_transport_status_counts": dict(sorted(repair_transport.items())),
         "repair_json_contract_status_counts": dict(sorted(repair_contracts.items())),
+        "repair_json_contract_reason_counts": dict(sorted(repair_contract_reasons.items())),
         "primary_call_outcome_counts": dict(sorted(primary_outcomes.items())),
         "repair_call_outcome_counts": dict(sorted(repair_outcomes.items())),
     }

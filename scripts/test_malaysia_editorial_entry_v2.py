@@ -17,7 +17,6 @@ from malaysia_groq_output_contract import (
     EDITORIAL_ENTRY_REPAIR_SCHEMA,
     EDITORIAL_ENTRY_V2_SCHEMA,
     editorial_entry_repair_schema_error,
-    headline_display_width,
     editorial_entry_schema_error,
 )
 from malaysia_groq_force_all_policy import force_all_request_cap
@@ -113,8 +112,15 @@ class EditorialEntryV2Test(unittest.TestCase):
         )
         self.assertEqual(EDITORIAL_ENTRY_REPAIR_SCHEMA["required"], ["editorial_entry"])
 
-    def test_headline_is_required_and_limited_to_15_5_display_width(self) -> None:
-        self.assertEqual(headline_display_width("KLで雷雨・大雨に注意"), 10.0)
+    def test_headline_is_required_and_limited_to_15_unicode_characters(self) -> None:
+        self.assertEqual(
+            EDITORIAL_ENTRY_V2_SCHEMA["properties"]["editorial_entry"]["properties"]["headline_ja"]["maxLength"],
+            15,
+        )
+        self.assertEqual(
+            EDITORIAL_ENTRY_REPAIR_SCHEMA["properties"]["editorial_entry"]["properties"]["headline_ja"]["maxLength"],
+            15,
+        )
         self.assertEqual(
             editorial_entry_schema_error(
                 {
@@ -125,9 +131,9 @@ class EditorialEntryV2Test(unittest.TestCase):
                     }
                 }
             ),
-            "editorial_entry_value",
+            "editorial_headline_too_long",
         )
-        with self.assertRaisesRegex(ValueError, "headline_ja exceeds 15.5"):
+        with self.assertRaisesRegex(ValueError, "headline_ja exceeds 15 characters"):
             groq_renderer.validate_groq_editorial_entry(
                 {
                     "editorial_entry": {
@@ -137,6 +143,22 @@ class EditorialEntryV2Test(unittest.TestCase):
                     }
                 }
             )
+
+    def test_value_failure_reasons_identify_the_invalid_field(self) -> None:
+        valid = {"headline_ja": "短見出し", "entry_ja": "概要です。", "supporting_points_ja": []}
+        cases = (
+            ({**valid, "headline_ja": None}, "editorial_headline_type"),
+            ({**valid, "headline_ja": " "}, "editorial_headline_empty"),
+            ({**valid, "headline_ja": "あ" * 16}, "editorial_headline_too_long"),
+            ({**valid, "entry_ja": None}, "editorial_entry_type"),
+            ({**valid, "entry_ja": " "}, "editorial_entry_empty"),
+            ({**valid, "supporting_points_ja": "補足"}, "editorial_supporting_points_type"),
+            ({**valid, "supporting_points_ja": ["1", "2", "3"]}, "editorial_supporting_points_count"),
+            ({**valid, "supporting_points_ja": ["補足", 1]}, "editorial_supporting_point_type"),
+        )
+        for entry, expected in cases:
+            with self.subTest(expected=expected):
+                self.assertEqual(editorial_entry_schema_error({"editorial_entry": entry}), expected)
 
     def test_article_fallback_is_a_valid_v2_object(self) -> None:
         self.assertEqual(
@@ -244,7 +266,7 @@ class EditorialEntryV2Test(unittest.TestCase):
     def test_contract_failure_uses_one_repair_and_keeps_both_diagnostics(self) -> None:
         data = {"items": [item()]}
         primary = groq_renderer.GroqEditorialEntryContractError(
-            "headline_ja exceeds 15.5 display width",
+            "headline_ja exceeds 15 characters",
             {"transport_status": "success", "json_contract_status": "schema_invalid"},
         )
         repaired = groq_renderer.GroqEditorialEntryResult(
@@ -438,8 +460,13 @@ class EditorialEntryV2Test(unittest.TestCase):
                 "groq_call": {
                     "transport_status": "success",
                     "json_contract_status": "schema_invalid",
-                    "json_contract_reason": "editorial_entry_value",
-                }
+                    "json_contract_reason": "editorial_headline_too_long",
+                },
+                "groq_repair_call": {
+                    "transport_status": "success",
+                    "json_contract_status": "schema_invalid",
+                    "json_contract_reason": "editorial_entry_empty",
+                },
             },
             {"groq_call": {"transport_status": "success", "json_contract_status": "valid"}},
         ]
@@ -448,11 +475,15 @@ class EditorialEntryV2Test(unittest.TestCase):
 
         self.assertEqual(
             observation["json_contract_reason_counts"],
-            {"editorial_entry_shape": 1, "editorial_entry_value": 1},
+            {"editorial_entry_shape": 1, "editorial_headline_too_long": 1},
         )
         self.assertEqual(
             observation["primary_call_outcome_counts"],
             {"json_contract_failure": 2, "transport_and_contract_valid": 1},
+        )
+        self.assertEqual(
+            observation["repair_json_contract_reason_counts"],
+            {"editorial_entry_empty": 1},
         )
 
     def test_provenance_is_per_entry_field(self) -> None:
