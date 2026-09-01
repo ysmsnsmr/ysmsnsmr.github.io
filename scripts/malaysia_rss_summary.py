@@ -38,6 +38,9 @@ MYT = timezone(timedelta(hours=8))
 
 FLAG_WEATHER = "is_weather"
 FLAG_HEAT = "is_heat"
+FLAG_FUEL_POLICY = "is_fuel_policy"
+FLAG_HAZE_IMPACT = "is_haze_impact"
+FLAG_IDENTITY_DOCUMENT_SERVICE = "is_identity_document_service"
 FLAG_PUBLIC_TRANSPORT = "is_public_transport"
 FLAG_ROAD_ISSUE = "is_road_issue"
 FLAG_FLOOD_IMPACT = "is_flood_impact"
@@ -65,6 +68,9 @@ FLAG_POLITICAL_NOISE = "is_political_noise"
 ALL_FLAGS = [
     FLAG_WEATHER,
     FLAG_HEAT,
+    FLAG_FUEL_POLICY,
+    FLAG_HAZE_IMPACT,
+    FLAG_IDENTITY_DOCUMENT_SERVICE,
     FLAG_PUBLIC_TRANSPORT,
     FLAG_ROAD_ISSUE,
     FLAG_FLOOD_IMPACT,
@@ -114,6 +120,8 @@ PRACTICAL_LIFE_TAGS = {
     "jpj",
     "mykad",
     "mydigital",
+    "identity_documents",
+    "air_quality",
     "food_supply",
     "agriculture",
     "scam",
@@ -571,6 +579,111 @@ def has_weather_warning_context(text: str) -> bool:
     )
 
 
+def has_fuel_policy_context(text: str) -> bool:
+    has_consumer_fuel = has_any(text, ["ron95", "ron97", "budi95", "budi madani"]) or (
+        has_any(text, ["petrol", "diesel"])
+        and has_any(
+            text,
+            [
+                "retail",
+                "per litre",
+                "per liter",
+                "automatic pricing mechanism",
+                "subsidy",
+                "subsidised",
+                "subsidized",
+                "quota",
+                "litres",
+                "liters",
+            ],
+        )
+    )
+    return has_consumer_fuel and has_any(
+        text,
+        [
+            "price",
+            "prices",
+            "raised",
+            "raise",
+            "increase",
+            "increased",
+            "quota",
+            "limit",
+            "limits",
+            "litres",
+            "liters",
+            "subsidy",
+            "subsidised",
+            "subsidized",
+            "effective",
+            "automatic pricing mechanism",
+        ],
+    )
+
+
+def has_haze_impact_context(text: str) -> bool:
+    has_air_quality_subject = has_any(
+        text,
+        [
+            "haze",
+            "air pollutant index",
+            "air quality",
+            "unhealthy air",
+            "very unhealthy",
+            "hazardous",
+            "ipu",
+            "api",
+        ],
+    )
+    return has_air_quality_subject and has_any(
+        text,
+        [
+            "unhealthy",
+            "very unhealthy",
+            "hazardous",
+            "worsens",
+            "worsening",
+            "persists",
+            "emergency declaration",
+            "school",
+            "schools",
+            "school closure",
+            "close schools",
+            "reading",
+            "readings",
+            "air pollutant index",
+            "air quality",
+        ],
+    )
+
+
+def has_identity_document_service_context(text: str) -> bool:
+    has_identity_subject = has_any(
+        text,
+        ["mykad", "identity card", "national registration department", "jpn"],
+    )
+    return has_identity_subject and has_any(
+        text,
+        [
+            "issuance",
+            "issue",
+            "replacement",
+            "renewal",
+            "printing",
+            "service",
+            "services",
+            "delay",
+            "delays",
+            "delayed",
+            "disruption",
+            "disrupt",
+            "temporary",
+            "application",
+            "applications",
+        ],
+    )
+
+
 def has_ai_workers_context(text: str) -> bool:
     if not (has_phrase(text, "ai") or has_phrase(text, "artificial intelligence")):
         return False
@@ -846,6 +959,9 @@ def build_flags(item: Item) -> dict[str, bool]:
         text,
         ["cuaca panas", "strok haba", "heat stroke", "heat related", "hot weather"],
     ) or (has_phrase(text, "heat") and has_any(text, ["illness", "stroke", "weather", "related", "death", "deaths"]))
+    flags[FLAG_FUEL_POLICY] = has_fuel_policy_context(text)
+    flags[FLAG_HAZE_IMPACT] = has_haze_impact_context(text)
+    flags[FLAG_IDENTITY_DOCUMENT_SERVICE] = has_identity_document_service_context(text)
     flags[FLAG_PUBLIC_TRANSPORT] = has_any(
         text,
         [
@@ -986,6 +1102,9 @@ def key_for(item: Item) -> str:
         return "cloud-seeding-drought-rice-bowl"
     flag_groups = [
         ("heat", FLAG_HEAT),
+        ("fuel-policy", FLAG_FUEL_POLICY),
+        ("haze-impact", FLAG_HAZE_IMPACT),
+        ("identity-document-service", FLAG_IDENTITY_DOCUMENT_SERVICE),
         ("flood-impact", FLAG_FLOOD_IMPACT),
         ("weather", FLAG_WEATHER),
         ("myjpj", FLAG_MYDIGITAL_INTEGRATION),
@@ -1079,8 +1198,10 @@ def has_background_value(item: Item) -> bool:
         "road_closure",
         "flood",
         "weather",
+        "air_quality",
         "klang_valley",
         "fuel",
+        "identity_documents",
         "vehicle_safety",
     }
     if any(tag in tag_values for tag in item.tags):
@@ -1099,6 +1220,9 @@ def has_background_value(item: Item) -> bool:
         or flags[FLAG_PUBLIC_TRANSPORT]
         or flags[FLAG_ROAD_ISSUE]
         or flags[FLAG_FLOOD_IMPACT]
+        or flags[FLAG_FUEL_POLICY]
+        or flags[FLAG_HAZE_IMPACT]
+        or flags[FLAG_IDENTITY_DOCUMENT_SERVICE]
     ):
         return True
     if flags[FLAG_SCAM] and has_any(text, ["warning", "warns", "beware", "waspada", "alert", "do not share"]):
@@ -1162,6 +1286,9 @@ def has_practical_life_value(item: Item) -> bool:
     if (
         flags[FLAG_WEATHER]
         or flags[FLAG_HEAT]
+        or flags[FLAG_FUEL_POLICY]
+        or flags[FLAG_HAZE_IMPACT]
+        or flags[FLAG_IDENTITY_DOCUMENT_SERVICE]
         or flags[FLAG_PUBLIC_TRANSPORT]
         or flags[FLAG_ROAD_ISSUE]
         or flags[FLAG_FLOOD_IMPACT]
@@ -1297,7 +1424,14 @@ def is_low_value_fallback(item: Item) -> bool:
 def uses_generic_fallback(item: Item) -> bool:
     text = item_text(item)
     flags = ensure_flags(item)
-    if flags[FLAG_WEATHER] or flags[FLAG_HEAT] or flags[FLAG_MYDIGITAL_INTEGRATION]:
+    if (
+        flags[FLAG_WEATHER]
+        or flags[FLAG_HEAT]
+        or flags[FLAG_FUEL_POLICY]
+        or flags[FLAG_HAZE_IMPACT]
+        or flags[FLAG_IDENTITY_DOCUMENT_SERVICE]
+        or flags[FLAG_MYDIGITAL_INTEGRATION]
+    ):
         return False
     if flags[FLAG_PUBLIC_TRANSPORT] or flags[FLAG_ROAD_ISSUE] or flags[FLAG_FLOOD_IMPACT]:
         return False
@@ -1347,6 +1481,12 @@ def evaluate_item(item: Item) -> Item:
         else:
             add_unique(item.penalties, reason)
 
+    if flags[FLAG_FUEL_POLICY]:
+        add_score(7, ["fuel", "prices"], "燃料価格・給油上限の変更")
+    if flags[FLAG_HAZE_IMPACT]:
+        add_score(8, ["air_quality", "health"], "ヘイズ・大気汚染による生活影響")
+    if flags[FLAG_IDENTITY_DOCUMENT_SERVICE]:
+        add_score(7, ["identity_documents"], "身分証の発行・再発行サービスに影響")
     if flags[FLAG_WEATHER]:
         add_score(8, ["weather"], "公式警報・天候リスク")
     if flags[FLAG_HEAT]:
@@ -1452,6 +1592,12 @@ def should_exclude_item(item: Item) -> bool:
         or flags[FLAG_AI_ECONOMY]
     ):
         return True
+    if (
+        is_corporate_appointment_noise(item)
+        or is_corporate_earnings_noise(item)
+        or is_market_snapshot_or_forecast_noise(item)
+    ):
+        return True
 
     practical_exception = (
         flags[FLAG_WEATHER]
@@ -1492,6 +1638,9 @@ def category_for(item: Item) -> str:
         flags[FLAG_PUBLIC_TRANSPORT]
         or flags[FLAG_ROAD_ISSUE]
         or flags[FLAG_FLOOD_IMPACT]
+        or flags[FLAG_FUEL_POLICY]
+        or flags[FLAG_HAZE_IMPACT]
+        or flags[FLAG_IDENTITY_DOCUMENT_SERVICE]
         or flags[FLAG_JPJ]
         or flags[FLAG_UTILITY_BILL]
         or flags[FLAG_SABAH_ELECTRICITY]
@@ -1562,7 +1711,19 @@ def has_corporate_appointment_exception(text: str) -> bool:
 
 def is_corporate_appointment_noise(item: Item) -> bool:
     text = final_noise_text(item)
-    is_appointment = has_any(text, ["appoints", "appointed", "appointment", "names", "named"])
+    is_appointment = has_any(
+        text,
+        [
+            "appoints",
+            "appointed",
+            "appointment",
+            "names",
+            "named",
+            "new chairman",
+            "new chief executive",
+            "new ceo",
+        ],
+    )
     is_corporate_role = has_any(
         text,
         [
@@ -1579,9 +1740,79 @@ def is_corporate_appointment_noise(item: Item) -> bool:
     return is_appointment and is_corporate_role and not has_corporate_appointment_exception(text)
 
 
+def has_financial_reporting_period(text: str) -> bool:
+    return bool(re.search(r"(?<![a-z0-9])(?:fy|[1-4]q|q[1-4]|[12]h|h[12])\s?\d{2,4}(?![a-z0-9])", text)) or has_any(
+        text,
+        ["quarter", "quarterly", "financial year", "full year", "half year", "financial results"],
+    )
+
+
+def is_corporate_earnings_noise(item: Item) -> bool:
+    text = final_noise_text(item)
+    has_earnings = has_any(
+        text,
+        ["earnings", "net profit", "profit", "revenue", "loss", "pat", "patami", "patnci"],
+    )
+    return (
+        has_earnings
+        and has_financial_reporting_period(text)
+        and not has_corporate_appointment_exception(text)
+    )
+
+
+def is_market_snapshot_or_forecast_noise(item: Item) -> bool:
+    text = final_noise_text(item)
+    if has_fuel_policy_context(text):
+        return False
+    if has_any(text, ["foreign exchange rates", "exchange rates"]) and not has_any(
+        text,
+        ["bank negara", "monetary policy", "opr", "loan costs"],
+    ):
+        return True
+    has_financial_market_subject = has_any(
+        text,
+        [
+            "bursa malaysia",
+            "fbm klci",
+            "ringgit",
+            "rubber market",
+            "share market",
+            "stock market",
+            "commodity market",
+            "cpo",
+            "crude oil",
+            "gold prices",
+            "silver prices",
+        ],
+    )
+    has_snapshot_or_forecast = has_any(
+        text,
+        [
+            "forecast",
+            "expected",
+            "outlook",
+            "trading",
+            "trade in",
+            "range-bound",
+            "range bound",
+            "remains firm",
+            "remain firm",
+            "holds near",
+            "midday",
+            "closes",
+            "ends week",
+        ],
+    )
+    return has_financial_market_subject and has_snapshot_or_forecast
+
+
 def is_forced_final_noise(item: Item) -> bool:
     text = final_noise_text(item)
-    if is_corporate_appointment_noise(item):
+    if (
+        is_corporate_appointment_noise(item)
+        or is_corporate_earnings_noise(item)
+        or is_market_snapshot_or_forecast_noise(item)
+    ):
         return True
     has_practical_value = has_practical_life_value(item)
     noise_checks = [
@@ -1856,6 +2087,27 @@ def japanese_summary(item: Item) -> tuple[str, str, str, str]:
                 "対象車種の所有者は、点検・修理の対象か、販売店やメーカーの案内を確認する必要があります。",
                 "車台番号や対象モデルをメーカー公式情報で確認。",
             )
+    if flags[FLAG_FUEL_POLICY]:
+        return (
+            "燃料価格または給油上限が変わるため、対象者は条件の確認が必要です。",
+            "RON95・RON97・dieselなどの価格、補助、給油上限に関する変更が報じられています。\n開始日と対象となる燃料・利用者を確認してください。",
+            "車利用者の家計や給油計画に影響する可能性があります。",
+            "給油前に政府・燃料会社の公式案内で価格、上限、補助条件を確認。",
+        )
+    if flags[FLAG_HAZE_IMPACT]:
+        return (
+            "ヘイズ・大気汚染の悪化により、健康や通学・外出への影響に注意が必要です。",
+            "大気汚染指数と、学校対応など生活への影響が報じられています。\n対象地域の指数と自治体・学校の案内を確認してください。",
+            "子ども、高齢者、呼吸器に不安がある人の外出や通学判断に影響します。",
+            "大気汚染指数と学校・自治体の最新通知を確認。",
+        )
+    if flags[FLAG_IDENTITY_DOCUMENT_SERVICE]:
+        return (
+            "MyKadなど身分証の発行・再発行サービスに一時的な影響が出る可能性があります。",
+            "身分証の発行、再発行、申請窓口に関する遅延または運用変更が報じられています。\n必要な手続きがある場合は、受付状況を先に確認してください。",
+            "本人確認書類が必要な申請、旅行、口座・通信契約などの予定に影響する可能性があります。",
+            "JPNなど担当機関の公式案内で受付状況と必要書類を確認。",
+        )
     if flags[FLAG_FLOOD_IMPACT] and has_any(text, ["flood hotline", "mbpj"]):
         return (
             "洪水時の連絡先・対応窓口を確認しておく必要があります。",
@@ -2164,6 +2416,38 @@ def self_test() -> int:
     evaluate_item(heat_item)
     check("BM heat triggers heat", heat_item.flags[FLAG_HEAT])
 
+    fuel_policy_item = item(
+        "RON95 limit raised to 300 litres while diesel quota increases to 400 litres",
+        "The BUDI95 monthly quota is restored from Sept 1 for eligible motorists.",
+    )
+    evaluate_item(fuel_policy_item)
+    check("Fuel quota change triggers fuel policy", fuel_policy_item.flags[FLAG_FUEL_POLICY])
+    check("Fuel quota change is life impact", category_for(fuel_policy_item) == "【生活インパクト】")
+    check("Fuel quota change is selectable", not should_exclude_item(fuel_policy_item) and fuel_policy_item.score >= 7)
+    check("Fuel quota change uses fuel summary", "燃料価格または給油上限" in japanese_summary(fuel_policy_item)[0])
+
+    haze_school_item = item(
+        "Air quality reaches hazardous level; schools to close if API exceeds 200",
+        "Haze pushes the air pollutant index above 300, with education authorities issuing school closure guidance.",
+    )
+    evaluate_item(haze_school_item)
+    check("Haze school impact triggers haze flag", haze_school_item.flags[FLAG_HAZE_IMPACT])
+    check("Haze school impact is life impact", category_for(haze_school_item) == "【生活インパクト】")
+    check("Haze school impact is selectable", not should_exclude_item(haze_school_item) and haze_school_item.score >= 8)
+    check("Haze school impact uses haze summary", "ヘイズ・大気汚染" in japanese_summary(haze_school_item)[0])
+
+    mykad_delay_item = item(
+        "MyKad issuance to face delay as government transitions to new version",
+        "JPN says MyKad issuance and replacement services will be temporarily delayed during the transition.",
+    )
+    evaluate_item(mykad_delay_item)
+    check("MyKad delay triggers identity service flag", mykad_delay_item.flags[FLAG_IDENTITY_DOCUMENT_SERVICE])
+    check("MyKad delay is life impact", category_for(mykad_delay_item) == "【生活インパクト】")
+    check("MyKad delay is selectable", not should_exclude_item(mykad_delay_item) and mykad_delay_item.score >= 7)
+    check("MyKad delay uses identity service summary", "身分証の発行・再発行" in japanese_summary(mykad_delay_item)[0])
+    generic_life_items = select_items([fuel_policy_item, haze_school_item, mykad_delay_item], now)
+    check("Generic life-impact items survive end-to-end selection", len(generic_life_items) == 3)
+
     sabah_item = item("Sabah electricity bills rising?", "Tariff unchanged; aircon use is the likeliest reason.")
     evaluate_item(sabah_item)
     check("Sabah electricity triggers Sabah flag", sabah_item.flags[FLAG_SABAH_ELECTRICITY])
@@ -2269,6 +2553,25 @@ def self_test() -> int:
     evaluate_item(corporate_item)
     check("Corporate appointment has no background value", not corporate_item.background_value)
     check("Corporate appointment is excluded as fallback", should_exclude_item(corporate_item))
+
+    corporate_earnings = item("Company posts 2Q26 net profit gain after revenue rises")
+    evaluate_item(corporate_earnings)
+    check("Corporate earnings are excluded", should_exclude_item(corporate_earnings))
+    check("Corporate earnings are removed by final noise gate", not final_noise_gate([corporate_earnings]))
+
+    rubber_market_forecast = item(
+        "Rubber market expected to remain firm amid supply constraints",
+        "Adverse weather may limit supply, while traders expect the market to remain firm next week.",
+    )
+    evaluate_item(rubber_market_forecast)
+    check("Rubber market forecast is excluded", should_exclude_item(rubber_market_forecast))
+    check("Rubber market forecast is removed by final noise gate", not final_noise_gate([rubber_market_forecast]))
+
+    foreign_exchange_snapshot = item("Foreign exchange rates for Aug 26")
+    evaluate_item(foreign_exchange_snapshot)
+    check("Foreign exchange snapshot is excluded", should_exclude_item(foreign_exchange_snapshot))
+    generic_noise_items = select_items([corporate_earnings, rubber_market_forecast, foreign_exchange_snapshot], now)
+    check("Generic corporate and market noise does not survive end-to-end selection", not generic_noise_items)
 
     policy_speech = item("Minister says cash aid applications open for low-income households")
     evaluate_item(policy_speech)
