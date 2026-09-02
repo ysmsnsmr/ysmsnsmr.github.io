@@ -3,6 +3,13 @@
 
   const params = new URLSearchParams(window.location.search);
   const itemId = params.get("id");
+  const personalFeedVersions = new Set(["meta-ads-personal-feed/v1", "meta-ads-personal-feed/v2", "meta-ads-personal-feed/v3"]);
+  const japanesePlatformLabels = {
+    "meta-platforms": "Metaプラットフォーム全般",
+    "meta-business-sdk": "Meta Business SDK",
+    "marketing-api": "Marketing API",
+    "meta-ads": "Meta Ads"
+  };
   const elements = {
     back: document.querySelector("#back-link"),
     notice: document.querySelector("#detail-unofficial-notice"),
@@ -25,10 +32,33 @@
     return node;
   }
 
+  function japanesePresentation(item) {
+    const presentation = item.presentation;
+    if (presentation?.schemaVersion === "meta-ads-personal-feed-presentation/v2") {
+      const locale = presentation.locales?.ja;
+      return (locale?.status === "machine" || locale?.status === "reviewed") && locale.shortHeadline && locale.summary
+        ? locale
+        : null;
+    }
+    return presentation?.status === "generated" && presentation.shortHeadlineJa && presentation.summaryJa
+      ? { shortHeadline: presentation.shortHeadlineJa, summary: presentation.summaryJa }
+      : null;
+  }
+
   function personalHeadline(item) {
-    return item.presentation?.status === "generated" && item.presentation.shortHeadlineJa
-      ? item.presentation.shortHeadlineJa
-      : item.title;
+    return japanesePresentation(item)?.shortHeadline || item.title;
+  }
+
+  function personalSummary(item) {
+    return japanesePresentation(item)?.summary || "";
+  }
+
+  function personalPlatforms(item) {
+    if (Array.isArray(item.platforms)) return item.platforms.join(" / ");
+    if (Array.isArray(item.platformIds)) {
+      return item.platformIds.map((platformId) => japanesePlatformLabels[platformId] || platformId).join(" / ");
+    }
+    return null;
   }
 
   function appendFact(grid, label, value, fallback = "確認できず", valueClass = "not-stated") {
@@ -48,10 +78,12 @@
 
   function setBackLink() {
     const back = new URL("./index.html", window.location.href);
-    for (const name of ["source", "type", "q", "personal-fixture"]) {
+    for (const name of ["source", "type", "q"]) {
       const value = params.get(name);
       if (value) back.searchParams.set(name, value.slice(0, 160));
     }
+    const fixture = params.get("personal-fixture");
+    if (fixture === "1" || fixture === "v3") back.searchParams.set("personal-fixture", fixture);
     elements.back.href = `${back.pathname}${back.search}`;
   }
 
@@ -73,7 +105,7 @@
     const response = await fetch("./personal-feed.json", { cache: "no-store" });
     if (!response.ok) throw new Error(`report HTTP ${response.status}`);
     const report = await response.json();
-    if (report.schemaVersion !== "meta-ads-personal-feed/v1" && report.schemaVersion !== "meta-ads-personal-feed/v2") {
+    if (!personalFeedVersions.has(report.schemaVersion)) {
       throw new Error("unsupported report");
     }
     const item = Array.isArray(report.items) ? report.items.find((candidate) => candidate.id === itemId) : null;
@@ -88,13 +120,13 @@
     const badge = element("span", isOfficial ? "origin-label origin-label--official" : "origin-label origin-label--unofficial", isOfficial ? "Meta公式" : "非公式・未確認");
     elements.heading.append(badge, element("p", "source-name", source.name));
     elements.title.textContent = personalHeadline(item);
-    elements.summary.textContent = item.presentation?.status === "generated" && item.presentation.summaryJa
-      ? item.presentation.summaryJa
+    elements.summary.textContent = personalSummary(item)
+      ? personalSummary(item)
       : "日本語要約を準備中です。原文タイトルと元の記事をご確認ください。";
     elements.originalTitle.textContent = item.title;
     appendFact(elements.facts, "発表日", item.publishedDate);
     appendFact(elements.facts, "最終更新日", item.updatedDate, "確認できず", "not-stated not-stated--plain");
-    appendFact(elements.facts, "対象", Array.isArray(item.platforms) ? item.platforms.join(" / ") : null, "未分類");
+    appendFact(elements.facts, "対象", personalPlatforms(item), "未分類");
     elements.sourceLink.href = sourceUrl;
     elements.sourceLink.textContent = isOfficial ? "公式ソースを開く" : "非公式ソースを開く";
     elements.notice.hidden = isOfficial;

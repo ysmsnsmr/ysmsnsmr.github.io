@@ -34,12 +34,17 @@ from meta_ads_tracker_publication import write_json
 from meta_ads_personal_feed_presentation import PresentationError, request_presentation
 
 
-SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v3"
+SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v4"
 STATE_SCHEMA_VERSION = "meta-ads-personal-feed-state/v2"
 LEGACY_STATE_SCHEMA_VERSION = "meta-ads-personal-feed-state/v1"
+STATE_V3_SCHEMA_VERSION = "meta-ads-personal-feed-state/v3"
 FEED_SCHEMA_VERSION = "meta-ads-personal-feed/v2"
 LEGACY_FEED_SCHEMA_VERSION = "meta-ads-personal-feed/v1"
+FEED_V3_SCHEMA_VERSION = "meta-ads-personal-feed/v3"
 PRESENTATION_SCHEMA_VERSION = "meta-ads-personal-feed-presentation/v1"
+BILINGUAL_PRESENTATION_SCHEMA_VERSION = "meta-ads-personal-feed-presentation/v2"
+DEFAULT_PRESENTATION_GENERATOR_REVISION = "bilingual-v1"
+DEFAULT_V3_SCHEMA = Path(__file__).resolve().parent / "schemas/meta_ads_personal_feed_v3.schema.json"
 DEFAULT_CONFIG = Path("config/meta_ads_personal_feed_sources.json")
 DEFAULT_STATE = Path("data/meta_ads_personal_feed_state.json")
 DEFAULT_OUTPUT = Path("meta-ads-updates/personal-feed.json")
@@ -51,6 +56,9 @@ CONTENT_TYPES = {
     "meta_business_news_html": ["text/html"],
 }
 PRESENTATION_STATUSES = {"generated", "pending"}
+BILINGUAL_PRESENTATION_STATUSES = {"machine", "missing", "reviewed"}
+SUPPORTED_LOCALES = ("en", "ja")
+PLATFORM_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 PARSER_VERSION = "meta-ads-personal-feed-parser/v2"
 
 
@@ -139,6 +147,15 @@ def _validate_platforms(value: Any, label: str) -> list[str]:
     return value
 
 
+def _validate_platform_ids(value: Any, label: str) -> list[str]:
+    if not isinstance(value, list) or not value or len(value) != len(set(value)):
+        raise ContractError(f"{label} must be a unique non-empty array")
+    for platform_id in value:
+        if not isinstance(platform_id, str) or not PLATFORM_ID_RE.fullmatch(platform_id):
+            raise ContractError(f"{label} values must be lowercase hyphenated identifiers")
+    return value
+
+
 def _validate_transport(source: dict[str, Any], label: str, fetch_url: str | None = None) -> dict[str, Any]:
     transport = _expect_keys(
         source["transport"],
@@ -186,7 +203,7 @@ def validate_config(payload: Any) -> dict[str, Any]:
     ids: set[str] = set()
     for index, value in enumerate(config["sources"]):
         label = f"personal feed sources[{index}]"
-        source = _expect_keys(value, {"id", "name", "classification", "sourceUrl", "fetchUrl", "parser", "expectedContentTypes", "platforms", "transport", "match"}, label)
+        source = _expect_keys(value, {"id", "name", "classification", "sourceUrl", "fetchUrl", "parser", "expectedContentTypes", "contentLanguage", "platforms", "platformIds", "transport", "match"}, label)
         source_id = _expect_identifier(source["id"], f"{label}.id")
         if source_id in ids:
             raise ContractError(f"duplicate personal feed source id: {source_id}")
@@ -205,6 +222,9 @@ def validate_config(payload: Any) -> dict[str, Any]:
         if parsed.username or parsed.password or parsed.port not in {None, 443}:
             raise ContractError(f"{label}.fetchUrl must use credential-free standard HTTPS")
         _validate_platforms(source["platforms"], f"{label}.platforms")
+        if source["contentLanguage"] != "en":
+            raise ContractError(f"{label}.contentLanguage must be en")
+        _validate_platform_ids(source["platformIds"], f"{label}.platformIds")
         _validate_transport(source, label, fetch_url)
         _validate_match(source["match"], parser, f"{label}.match")
     if not isinstance(config["discoveredSources"], list) or not config["discoveredSources"]:
@@ -215,7 +235,7 @@ def validate_config(payload: Any) -> dict[str, Any]:
         label = f"personal feed discoveredSources[{index}]"
         source = _expect_keys(
             value,
-            {"id", "name", "classification", "sourceUrl", "parser", "expectedContentTypes", "platforms", "transport", "discovery"},
+            {"id", "name", "classification", "sourceUrl", "parser", "expectedContentTypes", "contentLanguage", "platforms", "platformIds", "transport", "discovery"},
             label,
         )
         source_id = _expect_identifier(source["id"], f"{label}.id")
@@ -231,6 +251,9 @@ def validate_config(payload: Any) -> dict[str, Any]:
             raise ContractError(f"{label}.expectedContentTypes must match parser")
         source_url = _expect_https_url(source["sourceUrl"], f"{label}.sourceUrl")
         _validate_platforms(source["platforms"], f"{label}.platforms")
+        if source["contentLanguage"] != "en":
+            raise ContractError(f"{label}.contentLanguage must be en")
+        _validate_platform_ids(source["platformIds"], f"{label}.platformIds")
         transport = _validate_transport(source, label)
         if urlsplit(source_url).hostname not in transport["allowedContentHosts"]:
             raise ContractError(f"{label}.sourceUrl host must be allowed")
@@ -576,10 +599,120 @@ def _validate_presentation(value: Any, fingerprint: str | None, label: str, poli
     return presentation
 
 
+def _sha256_text(*parts: str) -> str:
+    return hashlib.sha256("\n".join(parts).encode("utf-8")).hexdigest()
+
+
+def _missing_bilingual_presentation(fingerprint: str, generator_revision: str) -> dict[str, Any]:
+    english_input_hash = _sha256_text(fingerprint, generator_revision)
+    japanese_input_hash = _sha256_text("missing", "missing", generator_revision)
+    return {
+        "schemaVersion": BILINGUAL_PRESENTATION_SCHEMA_VERSION,
+        "sourceFingerprint": fingerprint,
+        "generatorRevision": generator_revision,
+        "locales": {
+            "en": {
+                "status": "missing",
+                "shortHeadline": None,
+                "summary": None,
+                "inputHash": english_input_hash,
+                "generatedAt": None,
+                "reviewedAt": None,
+            },
+            "ja": {
+                "status": "missing",
+                "shortHeadline": None,
+                "summary": None,
+                "inputHash": japanese_input_hash,
+                "generatedAt": None,
+                "reviewedAt": None,
+            },
+        },
+    }
+
+
+def _validate_bilingual_locale(
+    value: Any,
+    label: str,
+    *,
+    expected_input_hash: str | None = None,
+) -> dict[str, Any]:
+    locale = _expect_keys(
+        value,
+        {"status", "shortHeadline", "summary", "inputHash", "generatedAt", "reviewedAt"},
+        label,
+    )
+    if locale["status"] not in BILINGUAL_PRESENTATION_STATUSES:
+        raise ContractError(f"{label}.status is unsupported")
+    if not isinstance(locale["inputHash"], str) or not re.fullmatch(r"[a-f0-9]{64}", locale["inputHash"]):
+        raise ContractError(f"{label}.inputHash must be a SHA-256 hash")
+    if expected_input_hash is not None and locale["inputHash"] != expected_input_hash:
+        raise ContractError(f"{label}.inputHash does not match its immutable input")
+    status = locale["status"]
+    if status == "missing":
+        if locale["shortHeadline"] is not None or locale["summary"] is not None:
+            raise ContractError(f"{label} missing values must not contain generated text")
+        if locale["generatedAt"] is not None or locale["reviewedAt"] is not None:
+            raise ContractError(f"{label} missing values must not have timestamps")
+        return locale
+    for field, maximum in (("shortHeadline", 240), ("summary", 1600)):
+        if len(_text(locale[field], f"{label}.{field}")) > maximum:
+            raise ContractError(f"{label}.{field} exceeds its maximum length")
+    _timestamp(locale["generatedAt"], f"{label}.generatedAt")
+    if status == "machine":
+        if locale["reviewedAt"] is not None:
+            raise ContractError(f"{label}.reviewedAt must be null for machine output")
+    else:
+        _timestamp(locale["reviewedAt"], f"{label}.reviewedAt")
+    return locale
+
+
+def _validate_bilingual_presentation(value: Any, fingerprint: str | None, label: str) -> dict[str, Any]:
+    presentation = _expect_keys(
+        value,
+        {"schemaVersion", "sourceFingerprint", "generatorRevision", "locales"},
+        label,
+    )
+    if presentation["schemaVersion"] != BILINGUAL_PRESENTATION_SCHEMA_VERSION:
+        raise ContractError(f"{label}.schemaVersion must be {BILINGUAL_PRESENTATION_SCHEMA_VERSION}")
+    if not isinstance(presentation["sourceFingerprint"], str) or not re.fullmatch(r"[a-f0-9]{64}", presentation["sourceFingerprint"]):
+        raise ContractError(f"{label}.sourceFingerprint must be a SHA-256 hash")
+    if fingerprint is not None and presentation["sourceFingerprint"] != fingerprint:
+        raise ContractError(f"{label}.sourceFingerprint must match the item fingerprint")
+    generator_revision = _expect_identifier(presentation["generatorRevision"], f"{label}.generatorRevision")
+    locales = _expect_keys(presentation["locales"], set(SUPPORTED_LOCALES), f"{label}.locales")
+    english_expected = _sha256_text(presentation["sourceFingerprint"], generator_revision)
+    english = _validate_bilingual_locale(locales["en"], f"{label}.locales.en", expected_input_hash=english_expected)
+    japanese_expected = _sha256_text(
+        english["shortHeadline"] or "missing",
+        english["summary"] or "missing",
+        generator_revision,
+    )
+    _validate_bilingual_locale(locales["ja"], f"{label}.locales.ja", expected_input_hash=japanese_expected)
+    return presentation
+
+
+def validate_v3_json_schema(payload: Any, schema_path: Path = DEFAULT_V3_SCHEMA) -> None:
+    """Execute the versioned JSON Schema independently of Python shape checks."""
+    try:
+        from jsonschema import Draft202012Validator, FormatChecker
+    except ImportError as error:
+        raise ContractError("Personal Feed v3 JSON Schema validation requires jsonschema") from error
+    try:
+        schema = json.loads(schema_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise ContractError(f"unable to load Personal Feed v3 JSON Schema: {schema_path}") from error
+    errors = sorted(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(payload), key=lambda item: list(item.absolute_path))
+    if errors:
+        error = errors[0]
+        location = ".".join(str(part) for part in error.absolute_path) or "root"
+        raise ContractError(f"personal feed v3 violates JSON Schema at {location}: {error.message}")
+
+
 def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
     state = _expect_keys(payload, {"schemaVersion", "updatedAt", "sources"}, "personal feed state")
-    if state["schemaVersion"] not in {LEGACY_STATE_SCHEMA_VERSION, STATE_SCHEMA_VERSION}:
-        raise ContractError(f"personal feed state schemaVersion must be {LEGACY_STATE_SCHEMA_VERSION} or {STATE_SCHEMA_VERSION}")
+    if state["schemaVersion"] not in {LEGACY_STATE_SCHEMA_VERSION, STATE_SCHEMA_VERSION, STATE_V3_SCHEMA_VERSION}:
+        raise ContractError(f"personal feed state schemaVersion must be {LEGACY_STATE_SCHEMA_VERSION}, {STATE_SCHEMA_VERSION}, or {STATE_V3_SCHEMA_VERSION}")
     _timestamp(state["updatedAt"], "personal feed state.updatedAt", nullable=True)
     if not isinstance(state["sources"], dict):
         raise ContractError("personal feed state.sources must be an object")
@@ -593,7 +726,7 @@ def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
         for key, item in source_payload["items"].items():
             _text(key, f"personal feed state.sources.{source_id} key")
             expected = {"url", "title", "publishedDate", "updatedDate", "matchEvidence", "fingerprint", "firstObservedAt", "lastObservedAt"}
-            if state["schemaVersion"] == STATE_SCHEMA_VERSION:
+            if state["schemaVersion"] in {STATE_SCHEMA_VERSION, STATE_V3_SCHEMA_VERSION}:
                 expected.add("presentation")
             entry = _expect_keys(item, expected, f"personal feed state.sources.{source_id}.items.{key}")
             _expect_https_url(entry["url"], "personal feed state item.url")
@@ -613,6 +746,12 @@ def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
                     "personal feed state item.presentation",
                     config["policies"]["japanesePresentation"],
                 )
+            elif state["schemaVersion"] == STATE_V3_SCHEMA_VERSION:
+                _validate_bilingual_presentation(
+                    entry["presentation"],
+                    entry["fingerprint"],
+                    "personal feed state item.presentation",
+                )
     return state
 
 
@@ -626,11 +765,26 @@ def _source_descriptor(source: dict[str, Any]) -> dict[str, Any]:
     return {key: source[key] for key in ("id", "name", "classification", "sourceUrl", "platforms")}
 
 
+def _source_descriptor_v3(source: dict[str, Any]) -> dict[str, Any]:
+    return {key: source[key] for key in ("id", "name", "classification", "sourceUrl", "contentLanguage", "platformIds")}
+
+
 def _source_descriptors(config: dict[str, Any], active_discovered_ids: set[str] | None = None) -> list[dict[str, Any]]:
     descriptors = [_source_descriptor(source) for source in config["sources"]]
     if active_discovered_ids:
         descriptors.extend(
             _source_descriptor(source)
+            for source in config["discoveredSources"]
+            if source["id"] in active_discovered_ids
+        )
+    return descriptors
+
+
+def _source_descriptors_v3(config: dict[str, Any], active_discovered_ids: set[str] | None = None) -> list[dict[str, Any]]:
+    descriptors = [_source_descriptor_v3(source) for source in config["sources"]]
+    if active_discovered_ids:
+        descriptors.extend(
+            _source_descriptor_v3(source)
             for source in config["discoveredSources"]
             if source["id"] in active_discovered_ids
         )
@@ -672,7 +826,168 @@ def build_feed(state: dict[str, Any], config: dict[str, Any], generated_at: str)
     }
 
 
+def _legacy_feed_fingerprint(item: dict[str, Any]) -> str:
+    """Create a deterministic v3 migration fingerprint for a v1 feed item.
+
+    v1 public feeds predate presentation fingerprints.  This value marks the
+    exact legacy item that was migrated; it is not a claim that source text was
+    re-fetched or revalidated.
+    """
+    canonical = json.dumps(
+        {
+            key: item[key]
+            for key in ("title", "url", "publishedDate", "updatedDate", "firstObservedAt", "lastObservedAt", "matchEvidence")
+        },
+        ensure_ascii=False,
+        separators=(",", ":"),
+        sort_keys=True,
+    )
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
+def migrate_state_v2_to_v3(
+    state: dict[str, Any],
+    config: dict[str, Any],
+    *,
+    generator_revision: str = DEFAULT_PRESENTATION_GENERATOR_REVISION,
+) -> dict[str, Any]:
+    """Return a one-way v2/v1 state migration without inventing translations.
+
+    Existing Japanese v1 presentation text is deliberately discarded.  PR 2
+    will generate both locales from source-language inputs; carrying legacy
+    Japanese text into an English-canonical contract would reverse-translate
+    and silently change its provenance.
+    """
+    if state.get("schemaVersion") not in {LEGACY_STATE_SCHEMA_VERSION, STATE_SCHEMA_VERSION}:
+        raise ContractError("state migration accepts only Personal Feed state v1 or v2")
+    validate_state(state, config)
+    revision = _expect_identifier(generator_revision, "generator_revision")
+    sources: dict[str, dict[str, dict[str, Any]]] = {}
+    for source_id, source_state in state["sources"].items():
+        records: dict[str, dict[str, Any]] = {}
+        for key, record in source_state["items"].items():
+            records[key] = {
+                field: record[field]
+                for field in ("url", "title", "publishedDate", "updatedDate", "matchEvidence", "fingerprint", "firstObservedAt", "lastObservedAt")
+            }
+            records[key]["presentation"] = _missing_bilingual_presentation(record["fingerprint"], revision)
+        sources[source_id] = {"items": records}
+    migrated = {"schemaVersion": STATE_V3_SCHEMA_VERSION, "updatedAt": state["updatedAt"], "sources": sources}
+    validate_state(migrated, config)
+    return migrated
+
+
+def migrate_feed_v2_to_v3(
+    feed: dict[str, Any],
+    config: dict[str, Any],
+    *,
+    generator_revision: str = DEFAULT_PRESENTATION_GENERATOR_REVISION,
+) -> dict[str, Any]:
+    """Return a one-way v2/v1 public-feed migration with bilingual missing values."""
+    if feed.get("schemaVersion") not in {LEGACY_FEED_SCHEMA_VERSION, FEED_SCHEMA_VERSION}:
+        raise ContractError("feed migration accepts only Personal Feed feed v1 or v2")
+    validate_feed(feed, config)
+    revision = _expect_identifier(generator_revision, "generator_revision")
+    active_discovered_ids = {
+        item["sourceId"]
+        for item in feed["items"]
+        if item["sourceId"] in {source["id"] for source in config["discoveredSources"]}
+    }
+    sources_by_id = {source["id"]: source for source in _all_sources(config)}
+    migrated_items: list[dict[str, Any]] = []
+    for item in feed["items"]:
+        source = sources_by_id[item["sourceId"]]
+        legacy_presentation = item.get("presentation")
+        fingerprint = (
+            legacy_presentation["sourceFingerprint"]
+            if isinstance(legacy_presentation, dict) and isinstance(legacy_presentation.get("sourceFingerprint"), str)
+            else _legacy_feed_fingerprint(item)
+        )
+        migrated_items.append({
+            key: item[key]
+            for key in ("id", "sourceId", "title", "url", "publishedDate", "updatedDate", "firstObservedAt", "lastObservedAt", "matchEvidence")
+        } | {
+            "platformIds": source["platformIds"],
+            "presentation": _missing_bilingual_presentation(fingerprint, revision),
+        })
+    migrated = {
+        "schemaVersion": FEED_V3_SCHEMA_VERSION,
+        "defaultLocale": "en",
+        "availableLocales": list(SUPPORTED_LOCALES),
+        "generatedAt": feed["generatedAt"],
+        "sources": _source_descriptors_v3(config, active_discovered_ids),
+        "items": migrated_items,
+    }
+    validate_feed(migrated, config)
+    return migrated
+
+
+def _validate_v3_sources(feed: dict[str, Any], config: dict[str, Any]) -> set[str]:
+    if not isinstance(feed["sources"], list):
+        raise ContractError("personal feed sources must be an array")
+    direct_descriptors = _source_descriptors_v3(config)
+    optional_descriptors = [_source_descriptor_v3(source) for source in config["discoveredSources"]]
+    if feed["sources"][:len(direct_descriptors)] != direct_descriptors:
+        raise ContractError("personal feed v3 direct sources must exactly match configured descriptors")
+    configured_optional = {value["id"]: value for value in optional_descriptors}
+    seen_optional: list[str] = []
+    for descriptor in feed["sources"][len(direct_descriptors):]:
+        if not isinstance(descriptor, dict) or descriptor.get("id") not in configured_optional:
+            raise ContractError("personal feed v3 has an unknown discovered source descriptor")
+        if descriptor != configured_optional[descriptor["id"]] or descriptor["id"] in seen_optional:
+            raise ContractError("personal feed v3 discovered source descriptor must match its configuration")
+        seen_optional.append(descriptor["id"])
+    expected_optional_order = [source["id"] for source in config["discoveredSources"] if source["id"] in seen_optional]
+    if seen_optional != expected_optional_order:
+        raise ContractError("personal feed v3 discovered source descriptors must keep configured order")
+    return {descriptor["id"] for descriptor in feed["sources"]}
+
+
+def _validate_feed_v3(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
+    validate_v3_json_schema(payload)
+    feed = _expect_keys(payload, {"schemaVersion", "defaultLocale", "availableLocales", "generatedAt", "sources", "items"}, "personal feed v3")
+    if feed["schemaVersion"] != FEED_V3_SCHEMA_VERSION:
+        raise ContractError(f"personal feed v3 schemaVersion must be {FEED_V3_SCHEMA_VERSION}")
+    if feed["defaultLocale"] != "en" or feed["availableLocales"] != list(SUPPORTED_LOCALES):
+        raise ContractError("personal feed v3 locales must be default en with en and ja overlays")
+    _timestamp(feed["generatedAt"], "personal feed v3.generatedAt", nullable=True)
+    descriptor_ids = _validate_v3_sources(feed, config)
+    if not isinstance(feed["items"], list) or len(feed["items"]) > config["policies"]["maxPublishedItems"]:
+        raise ContractError("personal feed v3 items exceed configured limit")
+    known_sources = {source["id"]: source for source in _all_sources(config)}
+    ids: set[str] = set()
+    for index, item in enumerate(feed["items"]):
+        entry = _expect_keys(
+            item,
+            {"id", "sourceId", "title", "url", "publishedDate", "updatedDate", "firstObservedAt", "lastObservedAt", "platformIds", "matchEvidence", "presentation"},
+            f"personal feed v3.items[{index}]",
+        )
+        item_id = _expect_identifier(entry["id"], f"personal feed v3.items[{index}].id")
+        if item_id in ids:
+            raise ContractError("personal feed v3 item IDs must be unique")
+        ids.add(item_id)
+        source = known_sources.get(entry["sourceId"])
+        if source is None or entry["sourceId"] not in descriptor_ids:
+            raise ContractError("personal feed v3 item references an unavailable source")
+        _text(entry["title"], "personal feed v3 item.title")
+        url = _expect_https_url(entry["url"], "personal feed v3 item.url")
+        if urlsplit(url).hostname not in source["transport"]["allowedContentHosts"]:
+            raise ContractError("personal feed v3 item URL must stay on its configured content host")
+        _date(entry["publishedDate"], "personal feed v3 item.publishedDate", nullable=True)
+        _date(entry["updatedDate"], "personal feed v3 item.updatedDate", nullable=True)
+        _timestamp(entry["firstObservedAt"], "personal feed v3 item.firstObservedAt")
+        _timestamp(entry["lastObservedAt"], "personal feed v3 item.lastObservedAt")
+        if entry["platformIds"] != source["platformIds"]:
+            raise ContractError("personal feed v3 item platformIds must match its source")
+        if not isinstance(entry["matchEvidence"], list) or not all(isinstance(value, str) for value in entry["matchEvidence"]):
+            raise ContractError("personal feed v3 item.matchEvidence must be a string array")
+        _validate_bilingual_presentation(entry["presentation"], None, f"personal feed v3.items[{index}].presentation")
+    return feed
+
+
 def validate_feed(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
+    if isinstance(payload, dict) and payload.get("schemaVersion") == FEED_V3_SCHEMA_VERSION:
+        return _validate_feed_v3(payload, config)
     feed = _expect_keys(payload, {"schemaVersion", "generatedAt", "sources", "items"}, "personal feed")
     if feed["schemaVersion"] not in {LEGACY_FEED_SCHEMA_VERSION, FEED_SCHEMA_VERSION}:
         raise ContractError(f"personal feed schemaVersion must be {LEGACY_FEED_SCHEMA_VERSION} or {FEED_SCHEMA_VERSION}")

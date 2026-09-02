@@ -16,8 +16,10 @@ from meta_ads_tracker_contract import ContractError
 from meta_ads_personal_feed import (
     DEFAULT_CONFIG,
     FEED_SCHEMA_VERSION,
+    FEED_V3_SCHEMA_VERSION,
     PRESENTATION_SCHEMA_VERSION,
     STATE_SCHEMA_VERSION,
+    STATE_V3_SCHEMA_VERSION,
     _meta_business_news_date,
     _presentation_from_environment,
     _print_presentation_stats,
@@ -26,6 +28,8 @@ from meta_ads_personal_feed import (
     collect_and_write,
     extract_items,
     load_config,
+    migrate_feed_v2_to_v3,
+    migrate_state_v2_to_v3,
     validate_config,
     validate_feed,
     validate_state,
@@ -34,6 +38,7 @@ from meta_ads_personal_feed_presentation import PresentationError
 
 
 NOW = datetime(2026, 8, 29, 9, 0, tzinfo=timezone.utc)
+V3_FIXTURE = Path(__file__).resolve().parent / "fixtures" / "meta_ads_personal_feed_v3.json"
 SOCIAL_MEDIA_TODAY = """<rss><channel>
 <item><title>Meta expands Ads Manager campaign controls</title><link>https://www.socialmediatoday.com/news/meta-expands-ads-manager-campaign-controls/123456/</link><description>Meta announced new campaign controls for advertisers.</description><pubDate>Fri, 29 Aug 2026 02:00:00 -0400</pubDate></item>
 <item><title>Meta launches a new AI subscription</title><link>https://www.socialmediatoday.com/news/meta-ai-subscription/123457/</link><description>Meta announced a consumer subscription package.</description><pubDate>Fri, 29 Aug 2026 01:00:00 -0400</pubDate></item>
@@ -110,6 +115,8 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(discovered["meta-business-news-discovered"]["transport"]["allowedFetchHosts"], ["www.facebook.com"])
         self.assertFalse(self.config["policies"]["persistRawResponseBody"])
         self.assertEqual(self.config["policies"]["japanesePresentation"]["maxRequestsPerRun"], 12)
+        self.assertTrue(all(source["contentLanguage"] == "en" for source in [*sources.values(), *discovered.values()]))
+        self.assertTrue(all(source["platformIds"] for source in [*sources.values(), *discovered.values()]))
 
     def test_config_rejects_insecure_source_and_invalid_source_classification(self) -> None:
         invalid = copy.deepcopy(self.config)
@@ -129,6 +136,16 @@ class PersonalFeedTest(unittest.TestCase):
         invalid = copy.deepcopy(self.config)
         invalid["discoveredSources"][0]["discovery"]["allowedPathPrefix"] = "/business/"
         with self.assertRaisesRegex(ContractError, "allowedPathPrefix"):
+            validate_config(invalid)
+
+        invalid = copy.deepcopy(self.config)
+        invalid["sources"][0]["contentLanguage"] = "ja"
+        with self.assertRaisesRegex(ContractError, "contentLanguage"):
+            validate_config(invalid)
+
+        invalid = copy.deepcopy(self.config)
+        invalid["sources"][0]["platformIds"] = ["Meta Ads"]
+        with self.assertRaisesRegex(ContractError, "platformIds"):
             validate_config(invalid)
 
     def test_empty_workflow_variables_use_the_documented_presentation_defaults(self) -> None:
@@ -522,6 +539,60 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertTrue(all(item["presentation"]["status"] == "generated" for item in feed["items"]))
         self.assertNotIn("sourceContext", json.dumps(upgraded))
         validate_state(upgraded, self.config)
+
+    def test_v3_fixed_fixture_executes_json_schema_and_python_validation(self) -> None:
+        fixture = json.loads(V3_FIXTURE.read_text(encoding="utf-8"))
+        validated = validate_feed(fixture, self.config)
+        self.assertEqual(validated["schemaVersion"], FEED_V3_SCHEMA_VERSION)
+        self.assertEqual(validated["defaultLocale"], "en")
+        self.assertEqual(validated["availableLocales"], ["en", "ja"])
+        self.assertEqual(validated["items"][0]["presentation"]["locales"]["ja"]["status"], "machine")
+        self.assertEqual(validated["items"][1]["presentation"]["locales"]["en"]["status"], "missing")
+
+        schema_invalid = copy.deepcopy(fixture)
+        del schema_invalid["items"][0]["presentation"]["locales"]["en"]["summary"]
+        with self.assertRaisesRegex(ContractError, "JSON Schema"):
+            validate_feed(schema_invalid, self.config)
+
+        immutable_input_invalid = copy.deepcopy(fixture)
+        immutable_input_invalid["items"][0]["presentation"]["locales"]["ja"]["inputHash"] = "0" * 64
+        with self.assertRaisesRegex(ContractError, "immutable input"):
+            validate_feed(immutable_input_invalid, self.config)
+
+    def test_v2_state_and_feed_migrate_one_way_to_v3_with_missing_locales(self) -> None:
+        def presenter(title: str, _source_context: str, _policy: dict) -> dict[str, str]:
+            return {"shortHeadlineJa": f"{title} の短見出し", "summaryJa": f"{title} の要約"}
+
+        v2_feed, v2_state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+            presenter,
+        )
+        migrated_state = migrate_state_v2_to_v3(v2_state, self.config)
+        migrated_feed = migrate_feed_v2_to_v3(v2_feed, self.config)
+
+        self.assertEqual(migrated_state["schemaVersion"], STATE_V3_SCHEMA_VERSION)
+        self.assertEqual(migrated_feed["schemaVersion"], FEED_V3_SCHEMA_VERSION)
+        self.assertEqual(migrated_feed["defaultLocale"], "en")
+        self.assertEqual(migrated_feed["availableLocales"], ["en", "ja"])
+        self.assertEqual(
+            [item["id"] for item in migrated_feed["items"]],
+            [item["id"] for item in v2_feed["items"]],
+        )
+        self.assertTrue(all(item["presentation"]["locales"]["en"]["status"] == "missing" for item in migrated_feed["items"]))
+        self.assertTrue(all(item["presentation"]["locales"]["ja"]["status"] == "missing" for item in migrated_feed["items"]))
+        self.assertNotIn("短見出し", json.dumps(migrated_state, ensure_ascii=False))
+        self.assertNotIn("sourceContext", json.dumps(migrated_state))
+        validate_state(migrated_state, self.config)
+        validate_feed(migrated_feed, self.config)
+
+        with self.assertRaisesRegex(ContractError, "accepts only"):
+            migrate_state_v2_to_v3(migrated_state, self.config)
+        with self.assertRaisesRegex(ContractError, "accepts only"):
+            migrate_feed_v2_to_v3(migrated_feed, self.config)
 
     def test_changed_rss_item_updates_in_place_and_keeps_initial_observation(self) -> None:
         initial_state = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}

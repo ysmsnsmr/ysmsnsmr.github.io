@@ -30,6 +30,7 @@ const fixtures = new Map(
 );
 const demoReport = JSON.parse(await fs.readFile(path.join(repositoryRoot, "meta-ads-updates/demo-latest.json"), "utf8"));
 const personalFeedReport = JSON.parse(await fs.readFile(path.join(repositoryRoot, "meta-ads-updates/personal-feed.json"), "utf8"));
+const personalFeedV3Report = JSON.parse(await fs.readFile(path.join(repositoryRoot, "scripts/fixtures/meta_ads_personal_feed_v3.json"), "utf8"));
 const axeSource = await fs.readFile(require.resolve("axe-core/axe.min.js"), "utf8");
 const artifactDirectory = process.env.META_ADS_UI_ARTIFACT_DIR
   ? path.resolve(process.env.META_ADS_UI_ARTIFACT_DIR)
@@ -109,6 +110,10 @@ async function startServer() {
         if (referer.searchParams.get("personal-fixture") === "1") {
           response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
           return response.end(JSON.stringify(personalFeedFixture()));
+        }
+        if (referer.searchParams.get("personal-fixture") === "v3") {
+          response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
+          return response.end(JSON.stringify(personalFeedV3Report));
         }
       }
       let filePath = path.resolve(repositoryRoot, `.${decodeURIComponent(url.pathname)}`);
@@ -303,6 +308,21 @@ try {
     await page.close();
   }
 
+  const v3List = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  const v3ListConsoleErrors = [];
+  const v3ListPageErrors = [];
+  v3List.on("console", (message) => { if (message.type() === "error") v3ListConsoleErrors.push(message.text()); });
+  v3List.on("pageerror", (error) => v3ListPageErrors.push(error.message));
+  await v3List.goto(`${server.origin}/meta-ads-updates/index.html?personal-fixture=v3`, { waitUntil: "networkidle" });
+  assert(await v3List.locator("#update-list .update-card").count() === personalFeedV3Report.items.length, "v3 Personal Feed list did not render");
+  assert((await v3List.locator("#update-list h2").allTextContents()).includes("Meta広告の計測機能を更新"), "v3 list did not use its Japanese locale overlay");
+  assert(await v3List.locator(".detail-link").first().getAttribute("href").then((href) => href?.includes("personal-fixture=v3")), "v3 detail links did not retain the fixed fixture selector");
+  assert(await v3List.locator("#update-list").textContent().then((text) => !text.includes("machine") && !text.includes("missing")), "v3 list must not expose presentation status");
+  assert(v3ListConsoleErrors.length === 0 && v3ListPageErrors.length === 0, `v3 Personal Feed list runtime errors: ${[...v3ListConsoleErrors, ...v3ListPageErrors].join("; ")}`);
+  await assertTokens(v3List);
+  await assertAccessibilityAndLayout(v3List, "personal-feed-v3/desktop");
+  await v3List.close();
+
   for (const viewport of [viewports[0], viewports[2]]) {
     const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });
     const consoleErrors = [];
@@ -354,6 +374,21 @@ try {
   assert((await generatedDetail.locator("#detail-summary").textContent()).includes("Meta Ads APIに関する観測記事です。"), "generated detail must display the Japanese summary");
   assert(await generatedDetail.locator("#detail-unofficial-notice").isVisible(), "generated non-official detail must show the notice");
   await generatedDetail.close();
+
+  const v3MachineDetail = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await v3MachineDetail.goto(`${server.origin}/meta-ads-updates/detail.html?id=meta-product-news-rss-aaaaaaaaaaaaaaaaaaaa&personal-fixture=v3`, { waitUntil: "networkidle" });
+  assert((await v3MachineDetail.locator("#detail-title").textContent()) === "Meta広告の計測機能を更新", "v3 detail must use the Japanese locale headline");
+  assert((await v3MachineDetail.locator("#detail-summary").textContent()).includes("広告主向け計測機能の更新"), "v3 detail must use the Japanese locale summary");
+  assert((await v3MachineDetail.locator("#detail-facts").textContent()).includes("Metaプラットフォーム全般"), "v3 detail must translate platform IDs for the current Japanese UI");
+  assert(!(await v3MachineDetail.locator("#detail-unofficial-notice").isVisible()), "v3 official detail must not show an unofficial notice");
+  await v3MachineDetail.close();
+
+  const v3MissingDetail = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await v3MissingDetail.goto(`${server.origin}/meta-ads-updates/detail.html?id=social-media-today-meta-ads-bbbbbbbbbbbbbbbbbbbb&personal-fixture=v3`, { waitUntil: "networkidle" });
+  assert((await v3MissingDetail.locator("#detail-title").textContent()) === "Meta Ads source article", "v3 missing detail must fall back to the original title");
+  assert((await v3MissingDetail.locator("#detail-summary").textContent()).includes("日本語要約を準備中"), "v3 missing detail must show the Japanese fallback");
+  assert(await v3MissingDetail.locator("#detail-unofficial-notice").isVisible(), "v3 unofficial detail must show the notice");
+  await v3MissingDetail.close();
 
   const productionDetail = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   const legacyItem = personalFeedReport.items[0];
