@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import copy
+import io
 import json
 import os
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from unittest.mock import patch
 from datetime import datetime, timezone
 from pathlib import Path
@@ -17,6 +19,8 @@ from meta_ads_personal_feed import (
     PRESENTATION_SCHEMA_VERSION,
     STATE_SCHEMA_VERSION,
     _presentation_from_environment,
+    _print_presentation_stats,
+    _print_source_pipeline_stats,
     collect,
     collect_and_write,
     extract_items,
@@ -192,6 +196,36 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(sum(item["presentation"]["status"] == "generated" for item in feed["items"]), 1)
         validate_state(next_state, self.config)
 
+    def test_source_pipeline_reports_safe_match_counts_without_source_content(self) -> None:
+        pipeline: dict = {}
+        collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+            source_pipeline_stats=pipeline,
+        )
+        social = pipeline["sources"]["social-media-today-meta-ads"]
+        self.assertEqual(pipeline["parserVersion"], "meta-ads-personal-feed-parser/v1")
+        self.assertTrue(all(source["fetched"] for source in pipeline["sources"].values()))
+        self.assertEqual(
+            (social["parsedItems"], social["validItems"], social["matchedItems"], social["excludedItems"]),
+            (2, 2, 1, 1),
+        )
+        self.assertEqual(social["matchGroupMatches"], [2, 1])
+        self.assertEqual(social["retainedItems"], 1)
+        self.assertTrue(all(source["responseBytes"] > 0 for source in pipeline["sources"].values()))
+        output = io.StringIO()
+        with redirect_stdout(output):
+            _print_source_pipeline_stats(pipeline)
+        log = output.getvalue()
+        self.assertIn("SOURCE_PIPELINE: id=social-media-today-meta-ads", log)
+        self.assertIn("SOURCE_MATCH_GROUP: id=social-media-today-meta-ads group=1 matched=2", log)
+        self.assertIn("SOURCE_MATCH_GROUP: id=social-media-today-meta-ads group=2 matched=1", log)
+        self.assertNotIn("campaign controls", log)
+        self.assertNotIn("Meta expands Ads Manager", log)
+
     def test_presentation_backfill_rejects_out_of_policy_limit_before_fetching(self) -> None:
         def unexpected_fetch(_source: dict, _timeout: float) -> tuple[str, str]:
             raise AssertionError("invalid backfill limit must not fetch a source")
@@ -217,8 +251,35 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertTrue(all(item["presentation"]["status"] == "pending" for item in feed["items"]))
         self.assertNotIn("intentionally not exposed", json.dumps(next_state))
         self.assertEqual((stats["attempted"], stats["generated"], stats["failed"]), (4, 0, 4))
+        self.assertEqual(stats["failureReasons"], {"unknown": 4})
         self.assertNotIn("intentionally not exposed", json.dumps(stats))
         validate_feed(feed, self.config)
+
+    def test_presentation_failure_logs_only_reason_codes(self) -> None:
+        stats: dict = {}
+
+        def failing_presenter(_title: str, _source_context: str, _policy: dict) -> dict[str, str]:
+            raise PresentationError("response_invalid_json")
+
+        collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+            failing_presenter,
+            presentation_stats=stats,
+        )
+        self.assertEqual(stats["failureReasons"], {"response_invalid_json": 4})
+        self.assertEqual(
+            sum(source["failureReasons"].get("response_invalid_json", 0) for source in stats["sources"].values()),
+            4,
+        )
+        output = io.StringIO()
+        with redirect_stdout(output):
+            _print_presentation_stats(stats)
+        self.assertIn("PRESENTATION_FAILURE: code=response_invalid_json count=4", output.getvalue())
+        self.assertNotIn("campaign controls", output.getvalue())
 
     def test_presentation_contract_rejects_stale_fingerprint_and_overlong_text(self) -> None:
         def presenter(title: str, _source_context: str, _policy: dict) -> dict[str, str]:

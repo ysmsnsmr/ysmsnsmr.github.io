@@ -47,6 +47,7 @@ CONTENT_TYPES = {
     "github_releases": ["application/json"],
 }
 PRESENTATION_STATUSES = {"generated", "pending"}
+PARSER_VERSION = "meta-ads-personal-feed-parser/v1"
 
 
 def _expect_keys(value: Any, expected: set[str], label: str) -> dict[str, Any]:
@@ -231,24 +232,26 @@ def _contains_term(text: str, term: str) -> bool:
     return normalized in text
 
 
-def _match(source: dict[str, Any], title: str, categories: list[str]) -> list[str] | None:
+def _match(source: dict[str, Any], title: str, categories: list[str]) -> tuple[list[str] | None, list[bool]]:
     policy = source["match"]
     if policy["kind"] == "all":
-        return []
+        return [], []
     if policy["kind"] == "rss_category":
         category_set = {item.casefold() for item in categories}
         matched = [item for item in policy["categories"] if item.casefold() in category_set]
-        return [f"category:{item}" for item in matched] or None
+        return ([f"category:{item}" for item in matched] or None), []
+    terms = [next((candidate for candidate in group if _contains_term(title.casefold(), candidate)), None) for group in policy["groups"]]
+    group_matches = [term is not None for term in terms]
+    if not all(group_matches):
+        return None, group_matches
     evidence: list[str] = []
-    for group in policy["groups"]:
-        term = next((candidate for candidate in group if _contains_term(title.casefold(), candidate)), None)
-        if term is None:
-            return None
+    for term in terms:
+        assert term is not None
         evidence.append(f"keyword:{term}")
-    return evidence
+    return evidence, group_matches
 
 
-def _rss_items(source: dict[str, Any], body: str) -> list[dict[str, Any]]:
+def _rss_items(source: dict[str, Any], body: str, pipeline: dict[str, Any] | None = None) -> list[dict[str, Any]]:
     try:
         root = SafeElementTree.fromstring(body)
     except (DefusedXmlException, StandardElementTree.ParseError) as error:
@@ -258,6 +261,8 @@ def _rss_items(source: dict[str, Any], body: str) -> list[dict[str, Any]]:
     for node in root.iter():
         if node.tag.rsplit("}", 1)[-1] != "item":
             continue
+        if pipeline is not None:
+            pipeline["parsedItems"] += 1
         fields: dict[str, list[str]] = {}
         for child in node:
             name = child.tag.rsplit("}", 1)[-1]
@@ -267,9 +272,19 @@ def _rss_items(source: dict[str, Any], body: str) -> list[dict[str, Any]]:
         parsed = urlsplit(url)
         if not title or parsed.scheme != "https" or parsed.hostname not in source["transport"]["allowedContentHosts"] or url in seen:
             continue
-        evidence = _match(source, title, [item for item in fields.get("category", []) if item])
+        if pipeline is not None:
+            pipeline["validItems"] += 1
+        evidence, group_matches = _match(source, title, [item for item in fields.get("category", []) if item])
+        if pipeline is not None:
+            for index, matched in enumerate(group_matches):
+                if matched:
+                    pipeline["matchGroupMatches"][index] += 1
         if evidence is None:
+            if pipeline is not None:
+                pipeline["excludedItems"] += 1
             continue
+        if pipeline is not None:
+            pipeline["matchedItems"] += 1
         seen.add(url)
         published = _date_from_feed((fields.get("pubDate") or fields.get("published") or [None])[0])
         updated = _date_from_feed((fields.get("updated") or [None])[0])
@@ -292,7 +307,7 @@ def _rss_items(source: dict[str, Any], body: str) -> list[dict[str, Any]]:
     return items
 
 
-def _github_release_items(source: dict[str, Any], body: str) -> list[dict[str, Any]]:
+def _github_release_items(source: dict[str, Any], body: str, pipeline: dict[str, Any] | None = None) -> list[dict[str, Any]]:
     try:
         payload = json.loads(body)
     except json.JSONDecodeError as error:
@@ -301,6 +316,8 @@ def _github_release_items(source: dict[str, Any], body: str) -> list[dict[str, A
         raise ContractError(f"personal feed source {source['id']} release payload must be an array")
     items: list[dict[str, Any]] = []
     for release in payload:
+        if pipeline is not None:
+            pipeline["parsedItems"] += 1
         if not isinstance(release, dict) or release.get("draft") or release.get("prerelease"):
             continue
         tag = _strip_html(str(release.get("name") or release.get("tag_name") or ""))
@@ -308,6 +325,9 @@ def _github_release_items(source: dict[str, Any], body: str) -> list[dict[str, A
         parsed = urlsplit(url)
         if not tag or parsed.scheme != "https" or parsed.hostname not in source["transport"]["allowedContentHosts"]:
             continue
+        if pipeline is not None:
+            pipeline["validItems"] += 1
+            pipeline["matchedItems"] += 1
         published = _date_from_feed(str(release.get("published_at") or release.get("created_at") or ""))
         updated = _date_from_feed(str(release.get("updated_at") or ""))
         source_context = _normalise(str(release.get("body") or ""))
@@ -327,11 +347,11 @@ def _github_release_items(source: dict[str, Any], body: str) -> list[dict[str, A
     return items
 
 
-def extract_items(source: dict[str, Any], body: str) -> list[dict[str, Any]]:
+def extract_items(source: dict[str, Any], body: str, pipeline: dict[str, Any] | None = None) -> list[dict[str, Any]]:
     if source["parser"] == "rss":
-        return _rss_items(source, body)
+        return _rss_items(source, body, pipeline)
     if source["parser"] == "github_releases":
-        return _github_release_items(source, body)
+        return _github_release_items(source, body, pipeline)
     raise ContractError(f"personal feed source {source['id']} has an unsupported parser")
 
 
@@ -539,8 +559,34 @@ def _presentation_stats(config: dict[str, Any], renderer_enabled: bool, request_
         "generated": 0,
         "failed": 0,
         "deferred": 0,
+        "failureReasons": {},
         "sources": {
-            source["id"]: {"eligible": 0, "attempted": 0, "generated": 0, "failed": 0}
+            source["id"]: {
+                "eligible": 0,
+                "attempted": 0,
+                "generated": 0,
+                "failed": 0,
+                "failureReasons": {},
+            }
+            for source in config["sources"]
+        },
+    }
+
+
+def _source_pipeline_stats(config: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "parserVersion": PARSER_VERSION,
+        "sources": {
+            source["id"]: {
+                "fetched": False,
+                "responseBytes": 0,
+                "parsedItems": 0,
+                "validItems": 0,
+                "matchedItems": 0,
+                "excludedItems": 0,
+                "retainedItems": 0,
+                "matchGroupMatches": [0 for _group in source["match"].get("groups", [])],
+            }
             for source in config["sources"]
         },
     }
@@ -550,6 +596,30 @@ def _write_presentation_stats(target: dict[str, Any] | None, value: dict[str, An
     if target is not None:
         target.clear()
         target.update(value)
+
+
+def _write_source_pipeline_stats(target: dict[str, Any] | None, value: dict[str, Any]) -> None:
+    if target is not None:
+        target.clear()
+        target.update(value)
+
+
+def _presentation_failure_code(error: Exception) -> str:
+    if isinstance(error, PresentationError):
+        return error.code
+    if isinstance(error, KeyError):
+        return "response_invalid_shape"
+    if isinstance(error, OSError):
+        return "network_error"
+    if isinstance(error, ValueError):
+        return "response_invalid_shape"
+    return "unknown"
+
+
+def _record_presentation_failure(stats: dict[str, Any], source_id: str, code: str) -> None:
+    stats["failureReasons"][code] = stats["failureReasons"].get(code, 0) + 1
+    source_reasons = stats["sources"][source_id]["failureReasons"]
+    source_reasons[code] = source_reasons.get(code, 0) + 1
 
 
 def _print_presentation_stats(stats: dict[str, Any]) -> None:
@@ -566,6 +636,22 @@ def _print_presentation_stats(stats: dict[str, Any]) -> None:
             f"id={source_id} eligible={counts['eligible']} attempted={counts['attempted']} "
             f"generated={counts['generated']} failed={counts['failed']}"
         )
+        for code, count in sorted(counts["failureReasons"].items()):
+            print(f"PRESENTATION_SOURCE_FAILURE: id={source_id} code={code} count={count}")
+    for code, count in sorted(stats["failureReasons"].items()):
+        print(f"PRESENTATION_FAILURE: code={code} count={count}")
+
+
+def _print_source_pipeline_stats(stats: dict[str, Any]) -> None:
+    for source_id, counts in stats["sources"].items():
+        print(
+            "SOURCE_PIPELINE: "
+            f"id={source_id} parser_version={stats['parserVersion']} fetched={'true' if counts['fetched'] else 'false'} "
+            f"response_bytes={counts['responseBytes']} parsed={counts['parsedItems']} valid={counts['validItems']} "
+            f"matched={counts['matchedItems']} excluded={counts['excludedItems']} retained={counts['retainedItems']}"
+        )
+        for index, count in enumerate(counts["matchGroupMatches"], start=1):
+            print(f"SOURCE_MATCH_GROUP: id={source_id} group={index} matched={count}")
 
 
 def collect(
@@ -578,6 +664,7 @@ def collect(
     *,
     presentation_limit: int | None = None,
     presentation_stats: dict[str, Any] | None = None,
+    source_pipeline_stats: dict[str, Any] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     validate_config(config)
     validate_state(state, config)
@@ -586,6 +673,7 @@ def collect(
     presentation_policy = config["policies"]["japanesePresentation"]
     request_limit = _presentation_request_limit(presentation_limit, presentation_policy)
     stats = _presentation_stats(config, present_item is not None, request_limit)
+    pipeline = _source_pipeline_stats(config)
 
     # Finish all external source collection before any optional model request. A source failure
     # therefore cannot cause paid generation work for a run that will not be published.
@@ -594,7 +682,10 @@ def collect(
         body, content_type = fetch_body(source, timeout)
         if not isinstance(body, str) or (content_type or "").split(";", 1)[0].strip().lower() not in source["expectedContentTypes"]:
             raise ContractError(f"personal feed source {source['id']} returned an unexpected response")
-        raw_by_source[source["id"]] = extract_items(source, body)
+        source_pipeline = pipeline["sources"][source["id"]]
+        source_pipeline["fetched"] = True
+        source_pipeline["responseBytes"] = len(body.encode("utf-8"))
+        raw_by_source[source["id"]] = extract_items(source, body, source_pipeline)
 
     next_state: dict[str, Any] = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": generated_at, "sources": {}}
     presentation_candidates: list[tuple[str, dict[str, Any], dict[str, Any]]] = []
@@ -638,6 +729,7 @@ def collect(
             if observed >= cutoff:
                 retained[key] = record
         next_state["sources"][source["id"]] = {"items": retained}
+        pipeline["sources"][source["id"]]["retainedItems"] = len(retained)
 
     presentation_candidates.sort(
         key=lambda pair: (
@@ -662,17 +754,19 @@ def collect(
                 }
                 stats["generated"] += 1
                 stats["sources"][source_id]["generated"] += 1
-            except (KeyError, PresentationError, ValueError, OSError):
+            except (KeyError, PresentationError, ValueError, OSError) as error:
                 # Optional rendering must not block source collection or expose source bodies.
                 record["presentation"] = _pending_presentation(record["fingerprint"])
                 stats["failed"] += 1
                 stats["sources"][source_id]["failed"] += 1
+                _record_presentation_failure(stats, source_id, _presentation_failure_code(error))
     stats["deferred"] = max(0, stats["eligible"] - stats["attempted"])
 
     feed = build_feed(next_state, config, generated_at)
     validate_state(next_state, config)
     validate_feed(feed, config)
     _write_presentation_stats(presentation_stats, stats)
+    _write_source_pipeline_stats(source_pipeline_stats, pipeline)
     return feed, next_state
 
 
@@ -687,6 +781,7 @@ def collect_and_write(
     present_item: Callable[[str, str, dict[str, Any]], dict[str, str]] | None = None,
     presentation_limit: int | None = None,
     presentation_stats: dict[str, Any] | None = None,
+    source_pipeline_stats: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     config = load_config(config_path)
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
@@ -700,6 +795,7 @@ def collect_and_write(
         renderer,
         presentation_limit=presentation_limit,
         presentation_stats=presentation_stats,
+        source_pipeline_stats=source_pipeline_stats,
     )
     # Both payloads are fully constructed and validated before either single-file atomic write.
     write_json(output_path, feed)
@@ -723,6 +819,7 @@ def main() -> int:
     args = parser.parse_args()
     try:
         stats: dict[str, Any] = {}
+        pipeline: dict[str, Any] = {}
         feed = collect_and_write(
             args.config,
             args.state,
@@ -730,12 +827,14 @@ def main() -> int:
             args.timeout,
             presentation_limit=args.presentation_limit,
             presentation_stats=stats,
+            source_pipeline_stats=pipeline,
         )
     except (ContractError, OSError, ValueError, urllib.error.URLError) as error:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1
     print(f"PASS: published {len(feed['items'])} personal feed item(s) from {len(feed['sources'])} source(s)")
     _print_presentation_stats(stats)
+    _print_source_pipeline_stats(pipeline)
     return 0
 
 
