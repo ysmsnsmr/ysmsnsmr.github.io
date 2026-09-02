@@ -141,7 +141,7 @@ def _request(source: dict[str, Any], timeout: float) -> tuple[str, str]:
     _validate_transport_url(source["fetchUrl"], source)
     request = urllib.request.Request(
         source["fetchUrl"],
-        headers={"User-Agent": USER_AGENT, "Accept": "application/rss+xml, application/xml, application/json"},
+        headers={"User-Agent": USER_AGENT, "Accept": ", ".join(source["expectedContentTypes"])},
     )
     redirect_handler = _RestrictedRedirectHandler(source, socket.getaddrinfo)
     opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), redirect_handler)

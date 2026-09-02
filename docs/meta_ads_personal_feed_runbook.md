@@ -8,18 +8,23 @@
 - Meta Business SDK Releases（Node.js）— Meta公式GitHub公開API
 - Social Media Today RSS（Meta／Facebook／Instagramかつ広告関連の見出しのみ）— 非公式・未確認
 - Jon Loomer Digital RSS — 非公式・未確認
+- Meta for Business News — Jon Loomer RSS本文から見つかったMeta公式記事だけを追加取得
 
 Search Engine Land Meta RSSは、2026-08-30にGitHub ActionsでHTTP 403が繰り返し再現したため一時停止しています。安定した自動取得を確認できるまで再導入しません。
 
 Social Media Todayは一般ニュースRSSのため、Meta／Facebook／Instagramの語と広告関連語の両方を含む見出しだけを掲載候補にします。これは記事の正確性を保証するものではなく、フィードの対象範囲を絞るための機械的な条件です。
 
-各収集runはソースごとに `SOURCE_PIPELINE` を出力します。`parsed` はRSS itemまたはAPI releaseとして読めた件数、`valid` は安全なURLとタイトルを持つ一意の候補数、`matched` は掲載条件を満たした件数、`excluded` は有効候補のうち掲載条件で除外した件数、`retained` は保存期間内に残った件数です。`all_groups` 条件のソースには `SOURCE_MATCH_GROUP` も出力し、各キーワード群を満たした候補数を確認できます。たとえば `valid > 0` かつ `matched = 0` は、取得失敗ではなく現在の掲載条件に合う記事がなかったことを示します。
+Jon Loomerの `Meta Advertising` カテゴリ記事に `https://www.facebook.com/business/news/<slug>` 形式のリンクがある場合は、リンク先をMeta公式記事の候補として扱います。完全一致するHTTPSホストとパスだけを許可し、Meta公式ページ自身からcanonical URL、記事種別、タイトル、説明、発表日を検証できた候補だけを「Meta公式」として掲載します。Jon Loomer側の見出しや説明をMeta公式情報として転用しません。
+
+Meta公式ページはRSSや公開APIではなくHTMLから限定的なmetadataを読むため、アクセス制限や構造変更の影響を受けます。この追加取得だけが失敗した場合は該当候補を掲載せず、他のPersonal Feed収集は継続します。本文・失敗URL・例外本文は保存またはログ出力せず、許可ホスト、最大3回のredirect、1 MiBの応答上限、1 run最大20件を維持します。
+
+各収集runはソースごとに `SOURCE_PIPELINE` を出力します。`mode=direct` は通常のRSS/API、`mode=discovered_official` は別ソース内の公式リンクから追加取得する経路です。`parsed` はRSS item、API releaseまたは公式HTML候補として読めた件数、`valid` は安全なURLと必要情報を持つ候補数、`matched` は掲載条件を満たした件数、`excluded` は直接ソースの有効候補のうち掲載条件で除外した件数、`retained` は保存期間内に残った件数です。発見経路では `discovered_links`、`attempted_links`、`rejected_links`、`deferred_links` も件数だけ出力します。`all_groups` 条件のソースには `SOURCE_MATCH_GROUP` も出力し、各キーワード群を満たした候補数を確認できます。たとえば直接ソースの `valid > 0` かつ `matched = 0` は、取得失敗ではなく現在の掲載条件に合う記事がなかったことを示します。
 
 これらは件数・ソースID・パーサー版・レスポンスサイズだけの安全な運用ログです。タイトル、記事本文、RSS説明文、URL、認証情報、Cookieは出力しません。
 
 非公式の文字付きラベルと画面上部の注意表示は削除しません。非公式ソースは早期検知の参考情報であり、Meta公式の見解を示すものではありません。公式情報で確認できない内容もあるため、重要な対応や判断には、複数の情報源や実環境で追加確認してください。
 
-この一覧にない候補は、HTTPSで公開され、RSSまたは安定した公開APIがあり、タイトル・URL・日付を安全に抽出できる場合だけ追加します。HTMLスクレイピング、ログインが必要なページ、429やアクセス制限が確認されているページは自動収集へ追加しません。Python/PHP/Java版SDK Releases APIは取得可能ですが、同じversionを重複表示するため、横断dedupeを実装するまで追加しません。
+この一覧にない通常ソースは、HTTPSで公開され、RSSまたは安定した公開APIがあり、タイトル・URL・日付を安全に抽出できる場合だけ追加します。ログインが必要なページ、429やアクセス制限が確認されているページは通常ソースへ追加しません。HTML取得は上記のMeta for Business News発見経路だけの限定例外であり、失敗時にフィード全体を止めない境界を維持します。Python/PHP/Java版SDK Releases APIは取得可能ですが、同じversionを重複表示するため、横断dedupeを実装するまで追加しません。
 
 ## 通常運用
 

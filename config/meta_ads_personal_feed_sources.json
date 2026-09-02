@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "meta-ads-personal-feed-sources/v2",
+  "schemaVersion": "meta-ads-personal-feed-sources/v3",
   "policies": {
     "persistRawResponseBody": false,
     "historyRetentionDays": 180,
@@ -89,6 +89,29 @@
         "maxItems": 50
       },
       "match": {"kind": "rss_category", "categories": ["Meta Advertising"]}
+    }
+  ],
+  "discoveredSources": [
+    {
+      "id": "meta-business-news-discovered",
+      "name": "Meta for Business News",
+      "classification": "official",
+      "sourceUrl": "https://www.facebook.com/business/news/",
+      "parser": "meta_business_news_html",
+      "expectedContentTypes": ["text/html"],
+      "platforms": ["Meta Ads"],
+      "transport": {
+        "allowedFetchHosts": ["www.facebook.com"],
+        "allowedContentHosts": ["www.facebook.com"],
+        "maxResponseBytes": 1048576,
+        "maxRedirects": 3,
+        "maxItems": 20
+      },
+      "discovery": {
+        "fromSourceId": "jon-loomer-meta-ads",
+        "allowedPathPrefix": "/business/news/",
+        "maxLinksPerSourceItem": 10
+      }
     }
   ]
 }

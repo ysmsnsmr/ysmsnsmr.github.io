@@ -25,7 +25,8 @@ def main() -> int:
     except (ContractError, OSError, ValueError, json.JSONDecodeError) as error:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1
-    print(f"PASS: validated Personal Feed with {len(config['sources'])} sources, {sum(len(item['items']) for item in state['sources'].values())} retained records, and {len(feed['items'])} public items")
+    configured_sources = len(config["sources"]) + len(config["discoveredSources"])
+    print(f"PASS: validated Personal Feed with {configured_sources} sources, {sum(len(item['items']) for item in state['sources'].values())} retained records, and {len(feed['items'])} public items")
     return 0
 
 

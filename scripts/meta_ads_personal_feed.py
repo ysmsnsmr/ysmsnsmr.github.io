@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Build the personal Meta Ads feed from configured public RSS and API sources.
+"""Build the personal Meta Ads feed from configured public sources.
 
 The feed intentionally records source provenance rather than trying to decide
-whether a reader should act.  All configured sources must fetch, parse, and
-validate before either the state or public feed file is replaced.
+whether a reader should act. Direct RSS/API sources must all fetch, parse, and
+validate before either the state or public feed file is replaced. Optional
+official pages discovered inside a direct source are rejected independently.
 """
 
 from __future__ import annotations
@@ -11,6 +12,7 @@ from __future__ import annotations
 import argparse
 import email.utils
 import hashlib
+import html
 import json
 import os
 import re
@@ -18,6 +20,7 @@ import sys
 import urllib.error
 import xml.etree.ElementTree as StandardElementTree
 from datetime import datetime, timedelta, timezone
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Callable
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
@@ -31,7 +34,7 @@ from meta_ads_tracker_publication import write_json
 from meta_ads_personal_feed_presentation import PresentationError, request_presentation
 
 
-SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v2"
+SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v3"
 STATE_SCHEMA_VERSION = "meta-ads-personal-feed-state/v2"
 LEGACY_STATE_SCHEMA_VERSION = "meta-ads-personal-feed-state/v1"
 FEED_SCHEMA_VERSION = "meta-ads-personal-feed/v2"
@@ -45,9 +48,10 @@ PARSER_TYPES = {"rss", "github_releases"}
 CONTENT_TYPES = {
     "rss": ["application/rss+xml", "application/xml", "text/xml"],
     "github_releases": ["application/json"],
+    "meta_business_news_html": ["text/html"],
 }
 PRESENTATION_STATUSES = {"generated", "pending"}
-PARSER_VERSION = "meta-ads-personal-feed-parser/v1"
+PARSER_VERSION = "meta-ads-personal-feed-parser/v2"
 
 
 def _expect_keys(value: Any, expected: set[str], label: str) -> dict[str, Any]:
@@ -127,8 +131,40 @@ def _validate_match(value: Any, parser: str, label: str) -> dict[str, Any]:
     raise ContractError(f"{label}.kind is unsupported")
 
 
+def _validate_platforms(value: Any, label: str) -> list[str]:
+    if not isinstance(value, list) or not value or len(value) != len(set(value)):
+        raise ContractError(f"{label} must be a unique non-empty array")
+    for platform in value:
+        _text(platform, f"{label} value")
+    return value
+
+
+def _validate_transport(source: dict[str, Any], label: str, fetch_url: str | None = None) -> dict[str, Any]:
+    transport = _expect_keys(
+        source["transport"],
+        {"allowedFetchHosts", "allowedContentHosts", "maxResponseBytes", "maxRedirects", "maxItems"},
+        f"{label}.transport",
+    )
+    for field in ("allowedFetchHosts", "allowedContentHosts"):
+        hosts = transport[field]
+        if not isinstance(hosts, list) or not hosts or len(hosts) != len(set(hosts)):
+            raise ContractError(f"{label}.transport.{field} must be a unique non-empty array")
+        for host in hosts:
+            _expect_hostname(host, f"{label}.transport.{field} host")
+    if fetch_url is not None and urlsplit(fetch_url).hostname not in transport["allowedFetchHosts"]:
+        raise ContractError(f"{label}.fetchUrl host must be allowed")
+    _limit(transport["maxResponseBytes"], f"{label}.transport.maxResponseBytes", 1, 16 * 1024 * 1024)
+    _limit(transport["maxRedirects"], f"{label}.transport.maxRedirects", 0, 5)
+    _limit(transport["maxItems"], f"{label}.transport.maxItems", 1, 100)
+    return transport
+
+
+def _all_sources(config: dict[str, Any]) -> list[dict[str, Any]]:
+    return [*config["sources"], *config["discoveredSources"]]
+
+
 def validate_config(payload: Any) -> dict[str, Any]:
-    config = _expect_keys(payload, {"schemaVersion", "policies", "sources"}, "personal feed config")
+    config = _expect_keys(payload, {"schemaVersion", "policies", "sources", "discoveredSources"}, "personal feed config")
     if config["schemaVersion"] != SOURCE_SCHEMA_VERSION:
         raise ContractError(f"personal feed config schemaVersion must be {SOURCE_SCHEMA_VERSION}")
     policies = _expect_keys(config["policies"], {"persistRawResponseBody", "historyRetentionDays", "maxPublishedItems", "japanesePresentation"}, "personal feed policies")
@@ -168,24 +204,52 @@ def validate_config(payload: Any) -> dict[str, Any]:
         parsed = urlsplit(fetch_url)
         if parsed.username or parsed.password or parsed.port not in {None, 443}:
             raise ContractError(f"{label}.fetchUrl must use credential-free standard HTTPS")
-        platforms = source["platforms"]
-        if not isinstance(platforms, list) or not platforms or len(platforms) != len(set(platforms)):
-            raise ContractError(f"{label}.platforms must be a unique non-empty array")
-        for platform in platforms:
-            _text(platform, f"{label}.platforms value")
-        transport = _expect_keys(source["transport"], {"allowedFetchHosts", "allowedContentHosts", "maxResponseBytes", "maxRedirects", "maxItems"}, f"{label}.transport")
-        for field in ("allowedFetchHosts", "allowedContentHosts"):
-            hosts = transport[field]
-            if not isinstance(hosts, list) or not hosts or len(hosts) != len(set(hosts)):
-                raise ContractError(f"{label}.transport.{field} must be a unique non-empty array")
-            for host in hosts:
-                _expect_hostname(host, f"{label}.transport.{field} host")
-        if parsed.hostname not in transport["allowedFetchHosts"]:
-            raise ContractError(f"{label}.fetchUrl host must be allowed")
-        _limit(transport["maxResponseBytes"], f"{label}.transport.maxResponseBytes", 1, 16 * 1024 * 1024)
-        _limit(transport["maxRedirects"], f"{label}.transport.maxRedirects", 0, 5)
-        _limit(transport["maxItems"], f"{label}.transport.maxItems", 1, 100)
+        _validate_platforms(source["platforms"], f"{label}.platforms")
+        _validate_transport(source, label, fetch_url)
         _validate_match(source["match"], parser, f"{label}.match")
+    if not isinstance(config["discoveredSources"], list) or not config["discoveredSources"]:
+        raise ContractError("personal feed discoveredSources must be a non-empty array")
+    direct_ids = set(ids)
+    discovery_origins: set[str] = set()
+    for index, value in enumerate(config["discoveredSources"]):
+        label = f"personal feed discoveredSources[{index}]"
+        source = _expect_keys(
+            value,
+            {"id", "name", "classification", "sourceUrl", "parser", "expectedContentTypes", "platforms", "transport", "discovery"},
+            label,
+        )
+        source_id = _expect_identifier(source["id"], f"{label}.id")
+        if source_id in ids:
+            raise ContractError(f"duplicate personal feed source id: {source_id}")
+        ids.add(source_id)
+        _text(source["name"], f"{label}.name")
+        if source["classification"] != "official":
+            raise ContractError(f"{label}.classification must be official")
+        if source["parser"] != "meta_business_news_html":
+            raise ContractError(f"{label}.parser is unsupported")
+        if source["expectedContentTypes"] != CONTENT_TYPES[source["parser"]]:
+            raise ContractError(f"{label}.expectedContentTypes must match parser")
+        source_url = _expect_https_url(source["sourceUrl"], f"{label}.sourceUrl")
+        _validate_platforms(source["platforms"], f"{label}.platforms")
+        transport = _validate_transport(source, label)
+        if urlsplit(source_url).hostname not in transport["allowedContentHosts"]:
+            raise ContractError(f"{label}.sourceUrl host must be allowed")
+        discovery = _expect_keys(
+            source["discovery"],
+            {"fromSourceId", "allowedPathPrefix", "maxLinksPerSourceItem"},
+            f"{label}.discovery",
+        )
+        if discovery["fromSourceId"] not in direct_ids:
+            raise ContractError(f"{label}.discovery.fromSourceId must reference a direct source")
+        if discovery["fromSourceId"] in discovery_origins:
+            raise ContractError(f"{label}.discovery.fromSourceId must be unique")
+        discovery_origins.add(discovery["fromSourceId"])
+        origin = next(item for item in config["sources"] if item["id"] == discovery["fromSourceId"])
+        if origin["parser"] != "rss" or origin["classification"] != "unofficial":
+            raise ContractError(f"{label}.discovery.fromSourceId must reference an unofficial RSS source")
+        if discovery["allowedPathPrefix"] != "/business/news/":
+            raise ContractError(f"{label}.discovery.allowedPathPrefix is unsupported")
+        _limit(discovery["maxLinksPerSourceItem"], f"{label}.discovery.maxLinksPerSourceItem", 1, 25)
     return config
 
 
@@ -210,6 +274,120 @@ def _canonical_url(value: str) -> str:
     parsed = urlsplit(value)
     pairs = [(key, item) for key, item in parse_qsl(parsed.query, keep_blank_values=True) if not key.lower().startswith("utm_") and key.lower() not in TRACKING_QUERY_KEYS]
     return urlunsplit((parsed.scheme.lower(), parsed.netloc.lower(), parsed.path or "/", urlencode(pairs), ""))
+
+
+class _LinkExtractor(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.links: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag.casefold() != "a":
+            return
+        href = next((value for name, value in attrs if name.casefold() == "href"), None)
+        if href:
+            self.links.append(html.unescape(href).strip())
+
+
+class _MetaBusinessNewsParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.metadata: dict[str, str] = {}
+        self.text: list[str] = []
+        self._skip_depth = 0
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        normalized = tag.casefold()
+        if normalized in {"script", "style", "noscript"}:
+            self._skip_depth += 1
+            return
+        if normalized != "meta":
+            return
+        values = {name.casefold(): value for name, value in attrs if value is not None}
+        key = (values.get("property") or values.get("name") or "").casefold()
+        content = values.get("content")
+        if key and content:
+            self.metadata.setdefault(key, _normalise(content))
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.casefold() in {"script", "style", "noscript"} and self._skip_depth:
+            self._skip_depth -= 1
+
+    def handle_data(self, data: str) -> None:
+        if not self._skip_depth and data.strip():
+            self.text.append(data)
+
+
+def _canonical_official_news_url(value: str, source: dict[str, Any]) -> str | None:
+    canonical = _canonical_url(value)
+    parsed = urlsplit(canonical)
+    if parsed.scheme != "https" or parsed.username or parsed.password:
+        return None
+    try:
+        port = parsed.port
+    except ValueError:
+        return None
+    if port not in {None, 443} or parsed.hostname not in source["transport"]["allowedFetchHosts"] or parsed.query:
+        return None
+    prefix = source["discovery"]["allowedPathPrefix"]
+    if not parsed.path.startswith(prefix):
+        return None
+    slug = parsed.path[len(prefix):].strip("/")
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]*", slug):
+        return None
+    return urlunsplit(("https", parsed.netloc.lower(), f"{prefix}{slug}", "", ""))
+
+
+def _official_news_links(markup: str, source: dict[str, Any]) -> tuple[list[str], int]:
+    parser = _LinkExtractor()
+    parser.feed(markup)
+    links: list[str] = []
+    seen: set[str] = set()
+    for href in parser.links:
+        candidate = _canonical_official_news_url(href, source)
+        if candidate is None or candidate in seen:
+            continue
+        seen.add(candidate)
+        links.append(candidate)
+    maximum = source["discovery"]["maxLinksPerSourceItem"]
+    return links[:maximum], max(0, len(links) - maximum)
+
+
+def _meta_business_news_date(text: str) -> str:
+    months = "January|February|March|April|May|June|July|August|September|October|November|December"
+    match = re.search(
+        rf"\[?Announcements?\]?\s*(?:·\s*)?\[?(({months})\s+\d{{1,2}},\s+\d{{4}})\]?",
+        text,
+        flags=re.IGNORECASE,
+    )
+    if match is None:
+        raise ContractError("Meta for Business News article is missing its announcement date")
+    try:
+        return datetime.strptime(match.group(1), "%B %d, %Y").date().isoformat()
+    except ValueError as error:
+        raise ContractError("Meta for Business News article has an invalid announcement date") from error
+
+
+def _meta_business_news_item(source: dict[str, Any], url: str, body: str) -> dict[str, Any]:
+    parser = _MetaBusinessNewsParser()
+    parser.feed(body)
+    canonical = _canonical_official_news_url(parser.metadata.get("og:url", ""), source)
+    if canonical != url or parser.metadata.get("og:type", "").casefold() != "article":
+        raise ContractError("Meta for Business News article metadata does not match its discovered URL")
+    title = _text(parser.metadata.get("og:title"), "Meta for Business News article title")[:280]
+    description = _text(parser.metadata.get("og:description"), "Meta for Business News article description")[:3500]
+    published = _meta_business_news_date(_normalise(" ".join(parser.text)))
+    origin_id = source["discovery"]["fromSourceId"]
+    return {
+        "key": url,
+        "url": url,
+        "title": title,
+        "publishedDate": published,
+        "updatedDate": None,
+        "matchEvidence": [f"discovered-via:{origin_id}"],
+        "sourceContext": description,
+        "fingerprint": _fingerprint(url, title, published, description),
+    }
 
 
 def _fingerprint(*parts: str) -> str:
@@ -251,7 +429,12 @@ def _match(source: dict[str, Any], title: str, categories: list[str]) -> tuple[l
     return evidence, group_matches
 
 
-def _rss_items(source: dict[str, Any], body: str, pipeline: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+def _rss_items(
+    source: dict[str, Any],
+    body: str,
+    pipeline: dict[str, Any] | None = None,
+    discovery_source: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
     try:
         root = SafeElementTree.fromstring(body)
     except (DefusedXmlException, StandardElementTree.ParseError) as error:
@@ -288,9 +471,9 @@ def _rss_items(source: dict[str, Any], body: str, pipeline: dict[str, Any] | Non
         seen.add(url)
         published = _date_from_feed((fields.get("pubDate") or fields.get("published") or [None])[0])
         updated = _date_from_feed((fields.get("updated") or [None])[0])
-        source_context = _strip_html(
-            (fields.get("description") or fields.get("encoded") or fields.get("content") or [""])[0]
-        )
+        source_context_markup = (fields.get("encoded") or fields.get("description") or fields.get("content") or [""])[0]
+        source_context = _strip_html(source_context_markup)
+        discovered_links, deferred_links = _official_news_links(source_context_markup, discovery_source) if discovery_source else ([], 0)
         items.append({
             "key": url,
             "url": url,
@@ -300,6 +483,8 @@ def _rss_items(source: dict[str, Any], body: str, pipeline: dict[str, Any] | Non
             "matchEvidence": evidence,
             # This value is used only during this run.  It is deliberately not persisted.
             "sourceContext": source_context,
+            "discoveredLinks": discovered_links,
+            "deferredDiscoveredLinks": deferred_links,
             "fingerprint": _fingerprint(url, title, published or "", updated or "", source_context),
         })
         if len(items) > source["transport"]["maxItems"]:
@@ -347,9 +532,14 @@ def _github_release_items(source: dict[str, Any], body: str, pipeline: dict[str,
     return items
 
 
-def extract_items(source: dict[str, Any], body: str, pipeline: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+def extract_items(
+    source: dict[str, Any],
+    body: str,
+    pipeline: dict[str, Any] | None = None,
+    discovery_source: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
     if source["parser"] == "rss":
-        return _rss_items(source, body, pipeline)
+        return _rss_items(source, body, pipeline, discovery_source)
     if source["parser"] == "github_releases":
         return _github_release_items(source, body, pipeline)
     raise ContractError(f"personal feed source {source['id']} has an unsupported parser")
@@ -393,7 +583,7 @@ def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
     _timestamp(state["updatedAt"], "personal feed state.updatedAt", nullable=True)
     if not isinstance(state["sources"], dict):
         raise ContractError("personal feed state.sources must be an object")
-    valid_ids = {source["id"] for source in config["sources"]}
+    valid_ids = {source["id"] for source in _all_sources(config)}
     if set(state["sources"]) - valid_ids:
         raise ContractError("personal feed state has an unknown source")
     for source_id, source_state in state["sources"].items():
@@ -432,8 +622,19 @@ def _now(now: datetime) -> str:
     return now.astimezone(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
 
-def _source_descriptors(config: dict[str, Any]) -> list[dict[str, Any]]:
-    return [{key: source[key] for key in ("id", "name", "classification", "sourceUrl", "platforms")} for source in config["sources"]]
+def _source_descriptor(source: dict[str, Any]) -> dict[str, Any]:
+    return {key: source[key] for key in ("id", "name", "classification", "sourceUrl", "platforms")}
+
+
+def _source_descriptors(config: dict[str, Any], active_discovered_ids: set[str] | None = None) -> list[dict[str, Any]]:
+    descriptors = [_source_descriptor(source) for source in config["sources"]]
+    if active_discovered_ids:
+        descriptors.extend(
+            _source_descriptor(source)
+            for source in config["discoveredSources"]
+            if source["id"] in active_discovered_ids
+        )
+    return descriptors
 
 
 def _sort_key(item: dict[str, Any]) -> tuple[str, str]:
@@ -442,7 +643,12 @@ def _sort_key(item: dict[str, Any]) -> tuple[str, str]:
 
 def build_feed(state: dict[str, Any], config: dict[str, Any], generated_at: str) -> dict[str, Any]:
     items: list[dict[str, Any]] = []
-    for source in config["sources"]:
+    active_discovered_ids = {
+        source["id"]
+        for source in config["discoveredSources"]
+        if state["sources"].get(source["id"], {"items": {}})["items"]
+    }
+    for source in _all_sources(config):
         for key, record in state["sources"].get(source["id"], {"items": {}})["items"].items():
             items.append({
                 "id": f"{source['id']}-{record['fingerprint'][:20]}",
@@ -458,7 +664,12 @@ def build_feed(state: dict[str, Any], config: dict[str, Any], generated_at: str)
                 "presentation": record["presentation"],
             })
     items.sort(key=_sort_key, reverse=True)
-    return {"schemaVersion": FEED_SCHEMA_VERSION, "generatedAt": generated_at, "sources": _source_descriptors(config), "items": items[:config["policies"]["maxPublishedItems"]]}
+    return {
+        "schemaVersion": FEED_SCHEMA_VERSION,
+        "generatedAt": generated_at,
+        "sources": _source_descriptors(config, active_discovered_ids),
+        "items": items[:config["policies"]["maxPublishedItems"]],
+    }
 
 
 def validate_feed(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
@@ -466,12 +677,27 @@ def validate_feed(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
     if feed["schemaVersion"] not in {LEGACY_FEED_SCHEMA_VERSION, FEED_SCHEMA_VERSION}:
         raise ContractError(f"personal feed schemaVersion must be {LEGACY_FEED_SCHEMA_VERSION} or {FEED_SCHEMA_VERSION}")
     _timestamp(feed["generatedAt"], "personal feed.generatedAt", nullable=True)
-    descriptors = _source_descriptors(config)
-    if feed["sources"] != descriptors:
-        raise ContractError("personal feed sources must exactly match configured descriptors")
+    if not isinstance(feed["sources"], list):
+        raise ContractError("personal feed sources must be an array")
+    direct_descriptors = _source_descriptors(config)
+    optional_descriptors = [_source_descriptor(source) for source in config["discoveredSources"]]
+    if feed["sources"][:len(direct_descriptors)] != direct_descriptors:
+        raise ContractError("personal feed direct sources must exactly match configured descriptors")
+    configured_optional = {value["id"]: value for value in optional_descriptors}
+    seen_optional: list[str] = []
+    for descriptor in feed["sources"][len(direct_descriptors):]:
+        if not isinstance(descriptor, dict) or descriptor.get("id") not in configured_optional:
+            raise ContractError("personal feed has an unknown discovered source descriptor")
+        if descriptor != configured_optional[descriptor["id"]] or descriptor["id"] in seen_optional:
+            raise ContractError("personal feed discovered source descriptor must match its configuration")
+        seen_optional.append(descriptor["id"])
+    expected_optional_order = [source["id"] for source in config["discoveredSources"] if source["id"] in seen_optional]
+    if seen_optional != expected_optional_order:
+        raise ContractError("personal feed discovered source descriptors must keep configured order")
     if not isinstance(feed["items"], list) or len(feed["items"]) > config["policies"]["maxPublishedItems"]:
         raise ContractError("personal feed items exceed configured limit")
-    known_sources = {source["id"]: source for source in config["sources"]}
+    known_sources = {source["id"]: source for source in _all_sources(config)}
+    descriptor_ids = {descriptor["id"] for descriptor in feed["sources"]}
     ids: set[str] = set()
     for index, item in enumerate(feed["items"]):
         expected = {"id", "sourceId", "title", "url", "publishedDate", "updatedDate", "firstObservedAt", "lastObservedAt", "platforms", "matchEvidence"}
@@ -485,6 +711,8 @@ def validate_feed(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
         source = known_sources.get(entry["sourceId"])
         if source is None:
             raise ContractError("personal feed item references an unknown source")
+        if entry["sourceId"] not in descriptor_ids:
+            raise ContractError("personal feed item source must have a descriptor")
         _text(entry["title"], "personal feed item.title")
         url = _expect_https_url(entry["url"], "personal feed item.url")
         if urlsplit(url).hostname not in source["transport"]["allowedContentHosts"]:
@@ -568,16 +796,18 @@ def _presentation_stats(config: dict[str, Any], renderer_enabled: bool, request_
                 "failed": 0,
                 "failureReasons": {},
             }
-            for source in config["sources"]
+            for source in _all_sources(config)
         },
     }
 
 
 def _source_pipeline_stats(config: dict[str, Any]) -> dict[str, Any]:
+    direct_ids = {source["id"] for source in config["sources"]}
     return {
         "parserVersion": PARSER_VERSION,
         "sources": {
             source["id"]: {
+                "mode": "direct" if source["id"] in direct_ids else "discovered_official",
                 "fetched": False,
                 "responseBytes": 0,
                 "parsedItems": 0,
@@ -585,9 +815,13 @@ def _source_pipeline_stats(config: dict[str, Any]) -> dict[str, Any]:
                 "matchedItems": 0,
                 "excludedItems": 0,
                 "retainedItems": 0,
-                "matchGroupMatches": [0 for _group in source["match"].get("groups", [])],
+                "matchGroupMatches": [0 for _group in source.get("match", {}).get("groups", [])],
+                "discoveredLinks": 0,
+                "attemptedLinks": 0,
+                "rejectedLinks": 0,
+                "deferredLinks": 0,
             }
-            for source in config["sources"]
+            for source in _all_sources(config)
         },
     }
 
@@ -646,9 +880,12 @@ def _print_source_pipeline_stats(stats: dict[str, Any]) -> None:
     for source_id, counts in stats["sources"].items():
         print(
             "SOURCE_PIPELINE: "
-            f"id={source_id} parser_version={stats['parserVersion']} fetched={'true' if counts['fetched'] else 'false'} "
+            f"id={source_id} mode={counts['mode']} parser_version={stats['parserVersion']} "
+            f"fetched={'true' if counts['fetched'] else 'false'} "
             f"response_bytes={counts['responseBytes']} parsed={counts['parsedItems']} valid={counts['validItems']} "
-            f"matched={counts['matchedItems']} excluded={counts['excludedItems']} retained={counts['retainedItems']}"
+            f"matched={counts['matchedItems']} excluded={counts['excludedItems']} retained={counts['retainedItems']} "
+            f"discovered_links={counts['discoveredLinks']} attempted_links={counts['attemptedLinks']} "
+            f"rejected_links={counts['rejectedLinks']} deferred_links={counts['deferredLinks']}"
         )
         for index, count in enumerate(counts["matchGroupMatches"], start=1):
             print(f"SOURCE_MATCH_GROUP: id={source_id} group={index} matched={count}")
@@ -678,6 +915,10 @@ def collect(
     # Finish all external source collection before any optional model request. A source failure
     # therefore cannot cause paid generation work for a run that will not be published.
     raw_by_source: dict[str, list[dict[str, Any]]] = {}
+    discovery_by_origin = {
+        source["discovery"]["fromSourceId"]: source
+        for source in config["discoveredSources"]
+    }
     for source in config["sources"]:
         body, content_type = fetch_body(source, timeout)
         if not isinstance(body, str) or (content_type or "").split(";", 1)[0].strip().lower() not in source["expectedContentTypes"]:
@@ -685,11 +926,52 @@ def collect(
         source_pipeline = pipeline["sources"][source["id"]]
         source_pipeline["fetched"] = True
         source_pipeline["responseBytes"] = len(body.encode("utf-8"))
-        raw_by_source[source["id"]] = extract_items(source, body, source_pipeline)
+        raw_by_source[source["id"]] = extract_items(
+            source,
+            body,
+            source_pipeline,
+            discovery_by_origin.get(source["id"]),
+        )
+
+    for source in config["discoveredSources"]:
+        source_pipeline = pipeline["sources"][source["id"]]
+        origin_items = raw_by_source[source["discovery"]["fromSourceId"]]
+        candidates: list[str] = []
+        seen: set[str] = set()
+        per_item_deferred = 0
+        for item in origin_items:
+            per_item_deferred += item.get("deferredDiscoveredLinks", 0)
+            for url in item.get("discoveredLinks", []):
+                if url not in seen:
+                    seen.add(url)
+                    candidates.append(url)
+        source_pipeline["discoveredLinks"] = len(candidates) + per_item_deferred
+        maximum = source["transport"]["maxItems"]
+        source_pipeline["deferredLinks"] = per_item_deferred + max(0, len(candidates) - maximum)
+        promoted: list[dict[str, Any]] = []
+        for url in candidates[:maximum]:
+            source_pipeline["attemptedLinks"] += 1
+            request_source = {**source, "fetchUrl": url}
+            try:
+                body, content_type = fetch_body(request_source, timeout)
+                source_pipeline["fetched"] = True
+                source_pipeline["responseBytes"] += len(body.encode("utf-8")) if isinstance(body, str) else 0
+                normalized_content_type = (content_type or "").split(";", 1)[0].strip().lower()
+                if not isinstance(body, str) or normalized_content_type not in source["expectedContentTypes"]:
+                    raise ContractError("Meta for Business News article returned an unexpected response")
+                source_pipeline["parsedItems"] += 1
+                promoted.append(_meta_business_news_item(source, url, body))
+                source_pipeline["validItems"] += 1
+                source_pipeline["matchedItems"] += 1
+            except (ContractError, OSError, ValueError, urllib.error.URLError):
+                # Discovery is optional. Reject only this candidate without logging its URL,
+                # response, or exception text, and keep the direct-source collection usable.
+                source_pipeline["rejectedLinks"] += 1
+        raw_by_source[source["id"]] = promoted
 
     next_state: dict[str, Any] = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": generated_at, "sources": {}}
     presentation_candidates: list[tuple[str, dict[str, Any], dict[str, Any]]] = []
-    for source in config["sources"]:
+    for source in _all_sources(config):
         prior = state["sources"].get(source["id"], {"items": {}})["items"]
         current: dict[str, Any] = {}
         for key, record in prior.items():
