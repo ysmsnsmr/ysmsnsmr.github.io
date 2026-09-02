@@ -17,6 +17,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.error
 import xml.etree.ElementTree as StandardElementTree
 from datetime import datetime, timedelta, timezone
@@ -28,7 +29,7 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from defusedxml import ElementTree as SafeElementTree
 from defusedxml.common import DefusedXmlException
 
-from meta_ads_tracker_collect import _request as bounded_request
+from meta_ads_tracker_collect import SourceFetchError, _request as bounded_request
 from meta_ads_tracker_contract import ContractError, _expect_hostname, _expect_https_url, _expect_identifier
 from meta_ads_tracker_publication import write_json
 from meta_ads_personal_feed_presentation import PresentationError, request_bilingual_presentation, request_presentation
@@ -206,13 +207,24 @@ def validate_config(payload: Any) -> dict[str, Any]:
     _limit(freshness["maxItemAgeDays"], "personal feed policies.freshness.maxItemAgeDays", 1, 3650)
     presentation = _expect_keys(
         policies["bilingualPresentation"],
-        {"maxRequestsPerRun", "maxInputChars", "shortHeadlineMaxChars", "summaryMaxChars"},
+        {
+            "maxRequestsPerRun",
+            "maxInputChars",
+            "shortHeadlineMaxChars",
+            "summaryMaxChars",
+            "minRequestIntervalSeconds",
+            "maxAttempts",
+            "maxRetryDelaySeconds",
+        },
         "personal feed policies.bilingualPresentation",
     )
     _limit(presentation["maxRequestsPerRun"], "personal feed policies.bilingualPresentation.maxRequestsPerRun", 1, 50)
     _limit(presentation["maxInputChars"], "personal feed policies.bilingualPresentation.maxInputChars", 100, 12_000)
     _limit(presentation["shortHeadlineMaxChars"], "personal feed policies.bilingualPresentation.shortHeadlineMaxChars", 10, 240)
     _limit(presentation["summaryMaxChars"], "personal feed policies.bilingualPresentation.summaryMaxChars", 40, 1600)
+    _limit(presentation["minRequestIntervalSeconds"], "personal feed policies.bilingualPresentation.minRequestIntervalSeconds", 1, 120)
+    _limit(presentation["maxAttempts"], "personal feed policies.bilingualPresentation.maxAttempts", 1, 5)
+    _limit(presentation["maxRetryDelaySeconds"], "personal feed policies.bilingualPresentation.maxRetryDelaySeconds", 1, 120)
     if not isinstance(config["sources"], list) or not config["sources"]:
         raise ContractError("personal feed sources must be a non-empty array")
     ids: set[str] = set()
@@ -1183,17 +1195,29 @@ def _bilingual_presentation_from_environment(timeout: float) -> Callable[[str, s
     if setting == "false" or not api_key:
         return None
     model = os.environ.get("META_ADS_PERSONAL_FEED_GROQ_MODEL", "").strip() or "openai/gpt-oss-120b"
+    next_request_at = 0.0
 
     def present(title: str, source_context: str, policy: dict[str, Any]) -> dict[str, str]:
-        return request_bilingual_presentation(
-            api_key=api_key,
-            model=model,
-            title=title,
-            source_context=source_context[:policy["maxInputChars"]],
-            short_headline_max_chars=policy["shortHeadlineMaxChars"],
-            summary_max_chars=policy["summaryMaxChars"],
-            timeout=timeout,
-        )
+        nonlocal next_request_at
+        delay = max(0.0, next_request_at - time.monotonic())
+        if delay:
+            time.sleep(delay)
+        try:
+            return request_bilingual_presentation(
+                api_key=api_key,
+                model=model,
+                title=title,
+                source_context=source_context[:policy["maxInputChars"]],
+                short_headline_max_chars=policy["shortHeadlineMaxChars"],
+                summary_max_chars=policy["summaryMaxChars"],
+                timeout=timeout,
+                max_attempts=policy["maxAttempts"],
+                max_retry_delay_seconds=policy["maxRetryDelaySeconds"],
+            )
+        finally:
+            # This is deliberately applied after both success and failure so a
+            # bad batch cannot turn into a tight retry loop across items.
+            next_request_at = time.monotonic() + policy["minRequestIntervalSeconds"]
 
     return present
 
@@ -1207,10 +1231,17 @@ def _presentation_request_limit(value: int | None, policy: dict[str, Any]) -> in
     return value
 
 
-def _presentation_stats(config: dict[str, Any], renderer_enabled: bool, request_limit: int) -> dict[str, Any]:
+def _presentation_stats(
+    config: dict[str, Any],
+    renderer_enabled: bool,
+    request_limit: int,
+    policy: dict[str, Any],
+) -> dict[str, Any]:
     return {
         "rendererEnabled": renderer_enabled,
         "requestLimit": request_limit,
+        "minRequestIntervalSeconds": policy["minRequestIntervalSeconds"],
+        "maxAttempts": policy["maxAttempts"],
         "eligible": 0,
         "attempted": 0,
         "generated": 0,
@@ -1292,6 +1323,7 @@ def _print_presentation_stats(stats: dict[str, Any]) -> None:
     print(
         "PRESENTATION: "
         f"renderer_enabled={enabled} eligible={stats['eligible']} limit={stats['requestLimit']} "
+        f"min_interval_seconds={stats['minRequestIntervalSeconds']} max_attempts={stats['maxAttempts']} "
         f"attempted={stats['attempted']} generated={stats['generated']} failed={stats['failed']} "
         f"deferred={stats['deferred']}"
     )
@@ -1413,7 +1445,7 @@ def collect(
     history_cutoff = now.astimezone(timezone.utc) - timedelta(days=config["policies"]["historyRetentionDays"])
     presentation_policy = config["policies"]["bilingualPresentation"]
     request_limit = _presentation_request_limit(presentation_limit, presentation_policy)
-    stats = _presentation_stats(config, present_item is not None, request_limit)
+    stats = _presentation_stats(config, present_item is not None, request_limit, presentation_policy)
     pipeline = _source_pipeline_stats(config)
 
     # First complete safe fetch, format validation and parsing for every direct
@@ -1650,6 +1682,13 @@ def main() -> int:
             source_pipeline_stats=pipeline,
             reseed_source_id=args.reseed_source,
         )
+    except SourceFetchError as error:
+        print(
+            f"SOURCE_FETCH_FAILURE: id={error.source_id} code={error.reason} attempts={error.attempts}",
+            file=sys.stderr,
+        )
+        print(f"FAIL: {error}", file=sys.stderr)
+        return 1
     except (ContractError, OSError, ValueError, urllib.error.URLError) as error:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1

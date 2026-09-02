@@ -12,6 +12,7 @@ import json
 import re
 import socket
 import sys
+import time
 import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -45,6 +46,19 @@ USER_AGENT = "ysmsnsmr-meta-ads-tracker/1.0 (+https://ysmsnsmr.github.io/meta-ad
 MAX_SOURCE_CONTEXT = 3500
 STATE_SCHEMA_VERSION = "meta-ads-tracker-state/v3"
 READ_CHUNK_SIZE = 64 * 1024
+MAX_FETCH_ATTEMPTS = 2
+RETRYABLE_HTTP_STATUSES = frozenset({408, 415, 429, 500, 502, 503, 504})
+MAX_RETRY_DELAY_SECONDS = 30
+
+
+class SourceFetchError(ContractError):
+    """Safe direct-source failure metadata; never retain a response body."""
+
+    def __init__(self, source_id: str, reason: str, attempts: int) -> None:
+        self.source_id = source_id
+        self.reason = reason
+        self.attempts = attempts
+        super().__init__(f"source {source_id} fetch failed ({reason}; attempts={attempts})")
 
 
 class _RestrictedRedirectHandler(urllib.request.HTTPRedirectHandler):
@@ -136,22 +150,47 @@ def _read_limited(response: Any, maximum_bytes: int, source_id: str) -> bytes:
         body.extend(chunk)
 
 
-def _request(source: dict[str, Any], timeout: float) -> tuple[str, str]:
+def _retry_delay(headers: Any, attempt: int) -> float:
+    """Return a bounded retry delay without exposing response content."""
+    value = headers.get("Retry-After") if headers is not None else None
+    if isinstance(value, str) and value.strip().isdigit():
+        return min(float(value.strip()), MAX_RETRY_DELAY_SECONDS)
+    return min(float(2 ** (attempt - 1)), MAX_RETRY_DELAY_SECONDS)
+
+
+def _request(
+    source: dict[str, Any],
+    timeout: float,
+    *,
+    sleep: Callable[[float], None] = time.sleep,
+) -> tuple[str, str]:
     """Fetch an enabled source without proxies, raw persistence, or unbounded reads."""
     _validate_transport_url(source["fetchUrl"], source)
     request = urllib.request.Request(
         source["fetchUrl"],
         headers={"User-Agent": USER_AGENT, "Accept": ", ".join(source["expectedContentTypes"])},
     )
-    redirect_handler = _RestrictedRedirectHandler(source, socket.getaddrinfo)
-    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), redirect_handler)
-    with opener.open(request, timeout=timeout) as response:
-        _validate_transport_url(response.geturl(), source)
-        content_type = _normalise_content_type(response.headers.get("Content-Type"))
-        if content_type not in source["expectedContentTypes"]:
-            raise ContractError(f"source {source['id']} returned an unexpected Content-Type")
-        body = _read_limited(response, source["transport"]["maxResponseBytes"], source["id"])
-        return body.decode("utf-8", errors="replace"), content_type
+    for attempt in range(1, MAX_FETCH_ATTEMPTS + 1):
+        redirect_handler = _RestrictedRedirectHandler(source, socket.getaddrinfo)
+        opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), redirect_handler)
+        try:
+            with opener.open(request, timeout=timeout) as response:
+                _validate_transport_url(response.geturl(), source)
+                content_type = _normalise_content_type(response.headers.get("Content-Type"))
+                if content_type not in source["expectedContentTypes"]:
+                    raise ContractError(f"source {source['id']} returned an unexpected Content-Type")
+                body = _read_limited(response, source["transport"]["maxResponseBytes"], source["id"])
+                return body.decode("utf-8", errors="replace"), content_type
+        except urllib.error.HTTPError as error:
+            reason = f"http_status={error.code}"
+            if error.code not in RETRYABLE_HTTP_STATUSES or attempt == MAX_FETCH_ATTEMPTS:
+                raise SourceFetchError(source["id"], reason, attempt) from error
+            sleep(_retry_delay(error.headers, attempt))
+        except urllib.error.URLError as error:
+            if attempt == MAX_FETCH_ATTEMPTS:
+                raise SourceFetchError(source["id"], "network_error", attempt) from error
+            sleep(_retry_delay(None, attempt))
+    raise AssertionError("bounded source request exhausted without a result")
 
 
 def _strip_html(value: str) -> str:

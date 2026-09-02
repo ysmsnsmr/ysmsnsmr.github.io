@@ -66,7 +66,11 @@ class PersonalFeedPresentationTest(unittest.TestCase):
         )
         request_body = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
         self.assertEqual(request_body["temperature"], 0)
-        self.assertEqual(request_body["response_format"], {"type": "json_object"})
+        response_format = request_body["response_format"]
+        self.assertEqual(response_format["type"], "json_schema")
+        self.assertTrue(response_format["json_schema"]["strict"])
+        self.assertEqual(response_format["json_schema"]["schema"]["required"], ["shortHeadlineJa", "summaryJa"])
+        self.assertFalse(response_format["json_schema"]["schema"]["additionalProperties"])
 
     @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
     def test_rejects_extra_fields_and_overlong_output(self, urlopen) -> None:
@@ -98,9 +102,41 @@ class PersonalFeedPresentationTest(unittest.TestCase):
     def test_classifies_http_failures_without_exposing_the_response(self, urlopen) -> None:
         urlopen.side_effect = HTTPError("https://api.groq.com/openai/v1/chat/completions", 429, "rate limited", {}, None)
         with self.assertRaises(PresentationError) as error:
-            self.request()
-        self.assertEqual(error.exception.code, "http_client_error")
+            request_presentation(
+                api_key="test-key",
+                model="test-model",
+                title="Meta Ads update",
+                source_context="Context",
+                short_headline_max_chars=80,
+                summary_max_chars=360,
+                timeout=1,
+                max_attempts=1,
+            )
+        self.assertEqual(error.exception.code, "rate_limited_429")
         self.assertNotIn("rate limited", str(error.exception))
+
+    @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
+    def test_retries_only_transient_groq_failures_with_bounded_backoff(self, urlopen) -> None:
+        urlopen.side_effect = [
+            HTTPError("https://api.groq.com/openai/v1/chat/completions", 429, "retry later", {"Retry-After": "7"}, None),
+            _Response(
+                {"choices": [{"message": {"content": json.dumps({"shortHeadlineJa": "見出し", "summaryJa": "要約"})}}]}
+            ),
+        ]
+        delays: list[float] = []
+        result = request_presentation(
+            api_key="test-key",
+            model="test-model",
+            title="Title",
+            source_context="Context",
+            short_headline_max_chars=80,
+            summary_max_chars=360,
+            timeout=1,
+            sleep=delays.append,
+        )
+        self.assertEqual(result["shortHeadlineJa"], "見出し")
+        self.assertEqual(urlopen.call_count, 2)
+        self.assertEqual(delays, [7.0])
 
     def test_bilingual_prompt_treats_input_as_data_and_forbids_inference_or_advice(self) -> None:
         messages = _bilingual_messages(
@@ -152,6 +188,11 @@ class PersonalFeedPresentationTest(unittest.TestCase):
         self.assertEqual(result["summaryJa"], "Metaは計測機能の更新を案内しました。")
         self.assertEqual(urlopen.call_count, 1)
         self.assertNotIn("Untrusted source text.", str(result))
+        request_body = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
+        schema = request_body["response_format"]["json_schema"]
+        self.assertTrue(schema["strict"])
+        self.assertEqual(set(schema["schema"]["required"]), {"shortHeadlineEn", "summaryEn", "shortHeadlineJa", "summaryJa"})
+        self.assertFalse(schema["schema"]["additionalProperties"])
 
     @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
     def test_bilingual_request_rejects_partial_output(self, urlopen) -> None:
