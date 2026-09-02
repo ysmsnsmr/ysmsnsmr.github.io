@@ -642,8 +642,55 @@ class PersonalFeedTest(unittest.TestCase):
             validate_feed(immutable_input_invalid, self.config)
 
     def test_v2_state_and_feed_migrate_one_way_to_v3_with_missing_locales(self) -> None:
-        v2_state = json.loads(Path("data/meta_ads_personal_feed_state.json").read_text(encoding="utf-8"))
-        v2_feed = json.loads(Path("meta-ads-updates/personal-feed.json").read_text(encoding="utf-8"))
+        # This fixture is intentionally embedded rather than read from the live
+        # state/feed.  A successful production migration changes those files to
+        # v3, but must never remove coverage for the v2 migration boundary.
+        source = self.config["sources"][0]
+        fingerprint = "a" * 64
+        record = {
+            "url": "https://about.fb.com/news/2026/08/product-update/",
+            "title": "Meta Ads product update",
+            "publishedDate": "2026-08-29",
+            "updatedDate": None,
+            "matchEvidence": [],
+            "fingerprint": fingerprint,
+            "firstObservedAt": "2026-08-29T09:00:00Z",
+            "lastObservedAt": "2026-08-29T09:00:00Z",
+            "presentation": {
+                "schemaVersion": PRESENTATION_SCHEMA_VERSION,
+                "status": "generated",
+                "shortHeadlineJa": "Meta広告の製品更新",
+                "summaryJa": "Metaが広告製品の更新を発表しました。",
+                "sourceFingerprint": fingerprint,
+                "generatedAt": "2026-08-29T09:00:00Z",
+            },
+        }
+        v2_state = {
+            "schemaVersion": STATE_SCHEMA_VERSION,
+            "updatedAt": "2026-08-29T09:00:00Z",
+            "sources": {source["id"]: {"items": {record["url"]: record}}},
+        }
+        v2_feed = {
+            "schemaVersion": FEED_SCHEMA_VERSION,
+            "generatedAt": "2026-08-29T09:00:00Z",
+            "sources": [
+                {key: configured[key] for key in ("id", "name", "classification", "sourceUrl", "platforms")}
+                for configured in self.config["sources"]
+            ],
+            "items": [{
+                "id": f"{source['id']}-{fingerprint[:20]}",
+                "sourceId": source["id"],
+                "title": record["title"],
+                "url": record["url"],
+                "publishedDate": record["publishedDate"],
+                "updatedDate": record["updatedDate"],
+                "firstObservedAt": record["firstObservedAt"],
+                "lastObservedAt": record["lastObservedAt"],
+                "platforms": source["platforms"],
+                "matchEvidence": record["matchEvidence"],
+                "presentation": record["presentation"],
+            }],
+        }
         migrated_state = migrate_state_v2_to_v3(v2_state, self.config)
         migrated_feed = migrate_feed_v2_to_v3(v2_feed, self.config)
 
