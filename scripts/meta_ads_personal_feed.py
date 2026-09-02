@@ -31,10 +31,10 @@ from defusedxml.common import DefusedXmlException
 from meta_ads_tracker_collect import _request as bounded_request
 from meta_ads_tracker_contract import ContractError, _expect_hostname, _expect_https_url, _expect_identifier
 from meta_ads_tracker_publication import write_json
-from meta_ads_personal_feed_presentation import PresentationError, request_presentation
+from meta_ads_personal_feed_presentation import PresentationError, request_bilingual_presentation, request_presentation
 
 
-SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v4"
+SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v5"
 STATE_SCHEMA_VERSION = "meta-ads-personal-feed-state/v2"
 LEGACY_STATE_SCHEMA_VERSION = "meta-ads-personal-feed-state/v1"
 STATE_V3_SCHEMA_VERSION = "meta-ads-personal-feed-state/v3"
@@ -44,6 +44,7 @@ FEED_V3_SCHEMA_VERSION = "meta-ads-personal-feed/v3"
 PRESENTATION_SCHEMA_VERSION = "meta-ads-personal-feed-presentation/v1"
 BILINGUAL_PRESENTATION_SCHEMA_VERSION = "meta-ads-personal-feed-presentation/v2"
 DEFAULT_PRESENTATION_GENERATOR_REVISION = "bilingual-v1"
+LEGACY_RELEVANCE_REVISION = "legacy-v2"
 DEFAULT_V3_SCHEMA = Path(__file__).resolve().parent / "schemas/meta_ads_personal_feed_v3.schema.json"
 DEFAULT_CONFIG = Path("config/meta_ads_personal_feed_sources.json")
 DEFAULT_STATE = Path("data/meta_ads_personal_feed_state.json")
@@ -126,6 +127,14 @@ def _validate_match(value: Any, parser: str, label: str) -> dict[str, Any]:
             for term in group:
                 _text(term, f"{label}.groups[{index}] term")
         return payload
+    if kind == "any_terms":
+        payload = _expect_keys(value, {"kind", "terms"}, label)
+        terms = payload["terms"]
+        if not isinstance(terms, list) or not terms or len(terms) != len(set(terms)):
+            raise ContractError(f"{label}.terms must be a unique non-empty array")
+        for term in terms:
+            _text(term, f"{label}.terms value")
+        return payload
     if kind == "rss_category":
         if parser != "rss":
             raise ContractError(f"{label}.kind rss_category requires an rss parser")
@@ -184,31 +193,38 @@ def validate_config(payload: Any) -> dict[str, Any]:
     config = _expect_keys(payload, {"schemaVersion", "policies", "sources", "discoveredSources"}, "personal feed config")
     if config["schemaVersion"] != SOURCE_SCHEMA_VERSION:
         raise ContractError(f"personal feed config schemaVersion must be {SOURCE_SCHEMA_VERSION}")
-    policies = _expect_keys(config["policies"], {"persistRawResponseBody", "historyRetentionDays", "maxPublishedItems", "japanesePresentation"}, "personal feed policies")
+    policies = _expect_keys(
+        config["policies"],
+        {"persistRawResponseBody", "historyRetentionDays", "maxPublishedItems", "freshness", "bilingualPresentation"},
+        "personal feed policies",
+    )
     if policies["persistRawResponseBody"] is not False:
         raise ContractError("personal feed must not persist raw response bodies")
     _limit(policies["historyRetentionDays"], "personal feed policies.historyRetentionDays", 1, 730)
     _limit(policies["maxPublishedItems"], "personal feed policies.maxPublishedItems", 1, 500)
+    freshness = _expect_keys(policies["freshness"], {"maxItemAgeDays"}, "personal feed policies.freshness")
+    _limit(freshness["maxItemAgeDays"], "personal feed policies.freshness.maxItemAgeDays", 1, 3650)
     presentation = _expect_keys(
-        policies["japanesePresentation"],
+        policies["bilingualPresentation"],
         {"maxRequestsPerRun", "maxInputChars", "shortHeadlineMaxChars", "summaryMaxChars"},
-        "personal feed policies.japanesePresentation",
+        "personal feed policies.bilingualPresentation",
     )
-    _limit(presentation["maxRequestsPerRun"], "personal feed policies.japanesePresentation.maxRequestsPerRun", 1, 50)
-    _limit(presentation["maxInputChars"], "personal feed policies.japanesePresentation.maxInputChars", 100, 12_000)
-    _limit(presentation["shortHeadlineMaxChars"], "personal feed policies.japanesePresentation.shortHeadlineMaxChars", 10, 120)
-    _limit(presentation["summaryMaxChars"], "personal feed policies.japanesePresentation.summaryMaxChars", 40, 600)
+    _limit(presentation["maxRequestsPerRun"], "personal feed policies.bilingualPresentation.maxRequestsPerRun", 1, 50)
+    _limit(presentation["maxInputChars"], "personal feed policies.bilingualPresentation.maxInputChars", 100, 12_000)
+    _limit(presentation["shortHeadlineMaxChars"], "personal feed policies.bilingualPresentation.shortHeadlineMaxChars", 10, 240)
+    _limit(presentation["summaryMaxChars"], "personal feed policies.bilingualPresentation.summaryMaxChars", 40, 1600)
     if not isinstance(config["sources"], list) or not config["sources"]:
         raise ContractError("personal feed sources must be a non-empty array")
     ids: set[str] = set()
     for index, value in enumerate(config["sources"]):
         label = f"personal feed sources[{index}]"
-        source = _expect_keys(value, {"id", "name", "classification", "sourceUrl", "fetchUrl", "parser", "expectedContentTypes", "contentLanguage", "platforms", "platformIds", "transport", "match"}, label)
+        source = _expect_keys(value, {"id", "name", "classification", "sourceUrl", "fetchUrl", "parser", "expectedContentTypes", "contentLanguage", "platforms", "platformIds", "transport", "relevanceRevision", "match"}, label)
         source_id = _expect_identifier(source["id"], f"{label}.id")
         if source_id in ids:
             raise ContractError(f"duplicate personal feed source id: {source_id}")
         ids.add(source_id)
         _text(source["name"], f"{label}.name")
+        _expect_identifier(source["relevanceRevision"], f"{label}.relevanceRevision")
         if source["classification"] not in {"official", "unofficial"}:
             raise ContractError(f"{label}.classification must be official or unofficial")
         parser = source["parser"]
@@ -235,7 +251,7 @@ def validate_config(payload: Any) -> dict[str, Any]:
         label = f"personal feed discoveredSources[{index}]"
         source = _expect_keys(
             value,
-            {"id", "name", "classification", "sourceUrl", "parser", "expectedContentTypes", "contentLanguage", "platforms", "platformIds", "transport", "discovery"},
+            {"id", "name", "classification", "sourceUrl", "parser", "expectedContentTypes", "contentLanguage", "platforms", "platformIds", "transport", "relevanceRevision", "discovery"},
             label,
         )
         source_id = _expect_identifier(source["id"], f"{label}.id")
@@ -243,6 +259,7 @@ def validate_config(payload: Any) -> dict[str, Any]:
             raise ContractError(f"duplicate personal feed source id: {source_id}")
         ids.add(source_id)
         _text(source["name"], f"{label}.name")
+        _expect_identifier(source["relevanceRevision"], f"{label}.relevanceRevision")
         if source["classification"] != "official":
             raise ContractError(f"{label}.classification must be official")
         if source["parser"] != "meta_business_news_html":
@@ -433,14 +450,26 @@ def _contains_term(text: str, term: str) -> bool:
     return normalized in text
 
 
-def _match(source: dict[str, Any], title: str, categories: list[str]) -> tuple[list[str] | None, list[bool]]:
+def _match(
+    source: dict[str, Any],
+    title: str,
+    source_context: str,
+    categories: list[str],
+) -> tuple[list[str] | None, list[bool]]:
     policy = source["match"]
     if policy["kind"] == "all":
         return [], []
+    if policy["kind"] == "any_terms":
+        searchable = "\n".join([title, source_context, *categories]).casefold()
+        matched = next((term for term in policy["terms"] if _contains_term(searchable, term)), None)
+        return ([f"keyword:{matched}"] if matched else None), []
     if policy["kind"] == "rss_category":
         category_set = {item.casefold() for item in categories}
         matched = [item for item in policy["categories"] if item.casefold() in category_set]
         return ([f"category:{item}" for item in matched] or None), []
+    # Existing two-group sources keep their title-only contract.  Product News
+    # uses any_terms, which intentionally also considers RSS descriptions and
+    # categories under its separately versioned relevance rule.
     terms = [next((candidate for candidate in group if _contains_term(title.casefold(), candidate)), None) for group in policy["groups"]]
     group_matches = [term is not None for term in terms]
     if not all(group_matches):
@@ -480,34 +509,22 @@ def _rss_items(
             continue
         if pipeline is not None:
             pipeline["validItems"] += 1
-        evidence, group_matches = _match(source, title, [item for item in fields.get("category", []) if item])
-        if pipeline is not None:
-            for index, matched in enumerate(group_matches):
-                if matched:
-                    pipeline["matchGroupMatches"][index] += 1
-        if evidence is None:
-            if pipeline is not None:
-                pipeline["excludedItems"] += 1
-            continue
-        if pipeline is not None:
-            pipeline["matchedItems"] += 1
         seen.add(url)
         published = _date_from_feed((fields.get("pubDate") or fields.get("published") or [None])[0])
         updated = _date_from_feed((fields.get("updated") or [None])[0])
         source_context_markup = (fields.get("encoded") or fields.get("description") or fields.get("content") or [""])[0]
         source_context = _strip_html(source_context_markup)
-        discovered_links, deferred_links = _official_news_links(source_context_markup, discovery_source) if discovery_source else ([], 0)
         items.append({
             "key": url,
             "url": url,
             "title": title[:280],
             "publishedDate": published,
             "updatedDate": updated,
-            "matchEvidence": evidence,
+            "matchEvidence": [],
             # This value is used only during this run.  It is deliberately not persisted.
             "sourceContext": source_context,
-            "discoveredLinks": discovered_links,
-            "deferredDiscoveredLinks": deferred_links,
+            "categories": [item for item in fields.get("category", []) if item],
+            "sourceContextMarkup": source_context_markup if discovery_source else "",
             "fingerprint": _fingerprint(url, title, published or "", updated or "", source_context),
         })
         if len(items) > source["transport"]["maxItems"]:
@@ -548,6 +565,7 @@ def _github_release_items(source: dict[str, Any], body: str, pipeline: dict[str,
             "matchEvidence": [],
             # Release notes are used only as model input and are never stored in state or feed JSON.
             "sourceContext": source_context,
+            "categories": [],
             "fingerprint": _fingerprint(str(release.get("tag_name") or url), tag, published or "", updated or "", source_context),
         })
         if len(items) > source["transport"]["maxItems"]:
@@ -566,6 +584,68 @@ def extract_items(
     if source["parser"] == "github_releases":
         return _github_release_items(source, body, pipeline)
     raise ContractError(f"personal feed source {source['id']} has an unsupported parser")
+
+
+def _freshness_date(raw: dict[str, Any], first_observed_at: str) -> str:
+    """Return the source's newest known date, falling back only to observation.
+
+    lastObservedAt intentionally does not participate: repeatedly seeing an old
+    article must not keep it in the public feed forever.
+    """
+    dates = [value for value in (raw.get("publishedDate"), raw.get("updatedDate")) if value is not None]
+    if dates:
+        return max(dates)
+    return datetime.fromisoformat(first_observed_at.replace("Z", "+00:00")).date().isoformat()
+
+
+def _is_fresh(raw: dict[str, Any], first_observed_at: str, now: datetime, policy: dict[str, Any]) -> bool:
+    cutoff = now.astimezone(timezone.utc).date() - timedelta(days=policy["maxItemAgeDays"])
+    return _freshness_date(raw, first_observed_at) >= cutoff.isoformat()
+
+
+def _filter_items(
+    source: dict[str, Any],
+    raw_items: list[dict[str, Any]],
+    prior: dict[str, Any],
+    generated_at: str,
+    now: datetime,
+    freshness_policy: dict[str, Any],
+    pipeline: dict[str, Any],
+    discovery_source: dict[str, Any] | None = None,
+) -> tuple[list[dict[str, Any]], set[str]]:
+    """Apply freshness then source relevance without retaining source bodies."""
+    accepted: list[dict[str, Any]] = []
+    rejected_keys: set[str] = set()
+    for raw in raw_items:
+        existing = prior.get(raw["key"])
+        first_observed_at = existing["firstObservedAt"] if existing else generated_at
+        if not _is_fresh(raw, first_observed_at, now, freshness_policy):
+            pipeline["freshnessExcludedItems"] += 1
+            pipeline["excludedItems"] += 1
+            rejected_keys.add(raw["key"])
+            continue
+        if "match" in source:
+            evidence, group_matches = _match(source, raw["title"], raw["sourceContext"], raw["categories"])
+        else:
+            evidence, group_matches = raw["matchEvidence"], []
+        for index, matched in enumerate(group_matches):
+            if matched:
+                pipeline["matchGroupMatches"][index] += 1
+        if evidence is None:
+            pipeline["relevanceExcludedItems"] += 1
+            pipeline["excludedItems"] += 1
+            rejected_keys.add(raw["key"])
+            continue
+        raw["matchEvidence"] = evidence
+        if discovery_source is not None:
+            links, deferred = _official_news_links(raw.pop("sourceContextMarkup", ""), discovery_source)
+            raw["discoveredLinks"] = links
+            raw["deferredDiscoveredLinks"] = deferred
+        else:
+            raw.pop("sourceContextMarkup", None)
+        pipeline["matchedItems"] += 1
+        accepted.append(raw)
+    return accepted, rejected_keys
 
 
 def _validate_presentation(value: Any, fingerprint: str | None, label: str, policy: dict[str, Any]) -> dict[str, Any]:
@@ -720,7 +800,12 @@ def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
     if set(state["sources"]) - valid_ids:
         raise ContractError("personal feed state has an unknown source")
     for source_id, source_state in state["sources"].items():
-        source_payload = _expect_keys(source_state, {"items"}, f"personal feed state.sources.{source_id}")
+        expected_source_keys = {"items"}
+        if state["schemaVersion"] == STATE_V3_SCHEMA_VERSION:
+            expected_source_keys.add("relevanceRevision")
+        source_payload = _expect_keys(source_state, expected_source_keys, f"personal feed state.sources.{source_id}")
+        if state["schemaVersion"] == STATE_V3_SCHEMA_VERSION:
+            _expect_identifier(source_payload["relevanceRevision"], f"personal feed state.sources.{source_id}.relevanceRevision")
         if not isinstance(source_payload["items"], dict):
             raise ContractError(f"personal feed state.sources.{source_id}.items must be an object")
         for key, item in source_payload["items"].items():
@@ -744,7 +829,7 @@ def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
                     entry["presentation"],
                     entry["fingerprint"],
                     "personal feed state item.presentation",
-                    config["policies"]["japanesePresentation"],
+                    config["policies"]["bilingualPresentation"],
                 )
             elif state["schemaVersion"] == STATE_V3_SCHEMA_VERSION:
                 _validate_bilingual_presentation(
@@ -813,15 +898,17 @@ def build_feed(state: dict[str, Any], config: dict[str, Any], generated_at: str)
                 "updatedDate": record["updatedDate"],
                 "firstObservedAt": record["firstObservedAt"],
                 "lastObservedAt": record["lastObservedAt"],
-                "platforms": source["platforms"],
+                "platformIds": source["platformIds"],
                 "matchEvidence": record["matchEvidence"],
                 "presentation": record["presentation"],
             })
     items.sort(key=_sort_key, reverse=True)
     return {
-        "schemaVersion": FEED_SCHEMA_VERSION,
+        "schemaVersion": FEED_V3_SCHEMA_VERSION,
+        "defaultLocale": "en",
+        "availableLocales": list(SUPPORTED_LOCALES),
         "generatedAt": generated_at,
-        "sources": _source_descriptors(config, active_discovered_ids),
+        "sources": _source_descriptors_v3(config, active_discovered_ids),
         "items": items[:config["policies"]["maxPublishedItems"]],
     }
 
@@ -862,7 +949,7 @@ def migrate_state_v2_to_v3(
         raise ContractError("state migration accepts only Personal Feed state v1 or v2")
     validate_state(state, config)
     revision = _expect_identifier(generator_revision, "generator_revision")
-    sources: dict[str, dict[str, dict[str, Any]]] = {}
+    sources: dict[str, dict[str, Any]] = {}
     for source_id, source_state in state["sources"].items():
         records: dict[str, dict[str, Any]] = {}
         for key, record in source_state["items"].items():
@@ -871,7 +958,10 @@ def migrate_state_v2_to_v3(
                 for field in ("url", "title", "publishedDate", "updatedDate", "matchEvidence", "fingerprint", "firstObservedAt", "lastObservedAt")
             }
             records[key]["presentation"] = _missing_bilingual_presentation(record["fingerprint"], revision)
-        sources[source_id] = {"items": records}
+        # v1/v2 stored no relevance revision.  Preserve that fact rather than
+        # pretending its entries were evaluated with a newer rule.  A source
+        # whose config revision changed is therefore required to be reseeded.
+        sources[source_id] = {"relevanceRevision": LEGACY_RELEVANCE_REVISION, "items": records}
     migrated = {"schemaVersion": STATE_V3_SCHEMA_VERSION, "updatedAt": state["updatedAt"], "sources": sources}
     validate_state(migrated, config)
     return migrated
@@ -1045,7 +1135,7 @@ def validate_feed(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
                 entry["presentation"],
                 None,
                 f"personal feed.items[{index}].presentation",
-                config["policies"]["japanesePresentation"],
+                config["policies"]["bilingualPresentation"],
             )
     return feed
 
@@ -1072,6 +1162,30 @@ def _presentation_from_environment(timeout: float) -> Callable[[str, str, dict[s
 
     def present(title: str, source_context: str, policy: dict[str, Any]) -> dict[str, str]:
         return request_presentation(
+            api_key=api_key,
+            model=model,
+            title=title,
+            source_context=source_context[:policy["maxInputChars"]],
+            short_headline_max_chars=policy["shortHeadlineMaxChars"],
+            summary_max_chars=policy["summaryMaxChars"],
+            timeout=timeout,
+        )
+
+    return present
+
+
+def _bilingual_presentation_from_environment(timeout: float) -> Callable[[str, str, dict[str, Any]], dict[str, str]] | None:
+    """Return the one-request English-plus-Japanese presenter when enabled."""
+    setting = os.environ.get("META_ADS_PERSONAL_FEED_JA_ENABLED", "").strip().lower() or "true"
+    if setting not in {"true", "false"}:
+        raise ContractError("META_ADS_PERSONAL_FEED_JA_ENABLED must be true, false, or unset")
+    api_key = os.environ.get("GROQ_API_KEY", "").strip()
+    if setting == "false" or not api_key:
+        return None
+    model = os.environ.get("META_ADS_PERSONAL_FEED_GROQ_MODEL", "").strip() or "openai/gpt-oss-120b"
+
+    def present(title: str, source_context: str, policy: dict[str, Any]) -> dict[str, str]:
+        return request_bilingual_presentation(
             api_key=api_key,
             model=model,
             title=title,
@@ -1129,6 +1243,8 @@ def _source_pipeline_stats(config: dict[str, Any]) -> dict[str, Any]:
                 "validItems": 0,
                 "matchedItems": 0,
                 "excludedItems": 0,
+                "freshnessExcludedItems": 0,
+                "relevanceExcludedItems": 0,
                 "retainedItems": 0,
                 "matchGroupMatches": [0 for _group in source.get("match", {}).get("groups", [])],
                 "discoveredLinks": 0,
@@ -1198,12 +1314,80 @@ def _print_source_pipeline_stats(stats: dict[str, Any]) -> None:
             f"id={source_id} mode={counts['mode']} parser_version={stats['parserVersion']} "
             f"fetched={'true' if counts['fetched'] else 'false'} "
             f"response_bytes={counts['responseBytes']} parsed={counts['parsedItems']} valid={counts['validItems']} "
-            f"matched={counts['matchedItems']} excluded={counts['excludedItems']} retained={counts['retainedItems']} "
+            f"matched={counts['matchedItems']} expired={counts['freshnessExcludedItems']} "
+            f"relevance_excluded={counts['relevanceExcludedItems']} excluded={counts['excludedItems']} "
+            f"retained={counts['retainedItems']} "
             f"discovered_links={counts['discoveredLinks']} attempted_links={counts['attemptedLinks']} "
             f"rejected_links={counts['rejectedLinks']} deferred_links={counts['deferredLinks']}"
         )
         for index, count in enumerate(counts["matchGroupMatches"], start=1):
             print(f"SOURCE_MATCH_GROUP: id={source_id} group={index} matched={count}")
+
+
+def _machine_bilingual_presentation(
+    fingerprint: str,
+    generated: dict[str, Any],
+    generated_at: str,
+    generator_revision: str = DEFAULT_PRESENTATION_GENERATOR_REVISION,
+) -> dict[str, Any]:
+    """Build one validated bilingual cache entry from one model response."""
+    try:
+        revision = _expect_identifier(generator_revision, "generator_revision")
+        english_headline = _text(generated["shortHeadlineEn"], "english short headline")
+        english_summary = _text(generated["summaryEn"], "english summary")
+        japanese_headline = _text(generated["shortHeadlineJa"], "Japanese short headline")
+        japanese_summary = _text(generated["summaryJa"], "Japanese summary")
+    except (ContractError, KeyError) as error:
+        raise PresentationError("response_invalid_shape") from error
+    if len(english_headline) > 240 or len(japanese_headline) > 240:
+        raise PresentationError("short_headline_invalid")
+    if len(english_summary) > 1600 or len(japanese_summary) > 1600:
+        raise PresentationError("summary_invalid")
+    english_input_hash = _sha256_text(fingerprint, revision)
+    japanese_input_hash = _sha256_text(english_headline, english_summary, revision)
+    return {
+        "schemaVersion": BILINGUAL_PRESENTATION_SCHEMA_VERSION,
+        "sourceFingerprint": fingerprint,
+        "generatorRevision": revision,
+        "locales": {
+            "en": {
+                "status": "machine",
+                "shortHeadline": english_headline,
+                "summary": english_summary,
+                "inputHash": english_input_hash,
+                "generatedAt": generated_at,
+                "reviewedAt": None,
+            },
+            "ja": {
+                "status": "machine",
+                "shortHeadline": japanese_headline,
+                "summary": japanese_summary,
+                "inputHash": japanese_input_hash,
+                "generatedAt": generated_at,
+                "reviewedAt": None,
+            },
+        },
+    }
+
+
+def _reseed_source(config: dict[str, Any], value: str | None) -> str | None:
+    if value is None or not value.strip():
+        return None
+    source_id = _expect_identifier(value.strip(), "reseed source ID")
+    if source_id not in {source["id"] for source in _all_sources(config)}:
+        raise ContractError("reseed source ID must name a configured source")
+    return source_id
+
+
+def _assert_relevance_reseed(state: dict[str, Any], config: dict[str, Any], reseed_source_id: str | None) -> None:
+    for source in _all_sources(config):
+        source_state = state["sources"].get(source["id"])
+        if source_state is None:
+            continue
+        if source_state["relevanceRevision"] != source["relevanceRevision"] and reseed_source_id != source["id"]:
+            raise ContractError(
+                f"personal feed source {source['id']} relevance revision changed; rerun with --reseed-source {source['id']}"
+            )
 
 
 def collect(
@@ -1217,19 +1401,27 @@ def collect(
     presentation_limit: int | None = None,
     presentation_stats: dict[str, Any] | None = None,
     source_pipeline_stats: dict[str, Any] | None = None,
+    reseed_source_id: str | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     validate_config(config)
     validate_state(state, config)
+    if state["schemaVersion"] != STATE_V3_SCHEMA_VERSION:
+        state = migrate_state_v2_to_v3(state, config)
+    reseed_source_id = _reseed_source(config, reseed_source_id)
+    _assert_relevance_reseed(state, config, reseed_source_id)
     generated_at = _now(now)
-    cutoff = now.astimezone(timezone.utc) - timedelta(days=config["policies"]["historyRetentionDays"])
-    presentation_policy = config["policies"]["japanesePresentation"]
+    history_cutoff = now.astimezone(timezone.utc) - timedelta(days=config["policies"]["historyRetentionDays"])
+    presentation_policy = config["policies"]["bilingualPresentation"]
     request_limit = _presentation_request_limit(presentation_limit, presentation_policy)
     stats = _presentation_stats(config, present_item is not None, request_limit)
     pipeline = _source_pipeline_stats(config)
 
-    # Finish all external source collection before any optional model request. A source failure
-    # therefore cannot cause paid generation work for a run that will not be published.
+    # First complete safe fetch, format validation and parsing for every direct
+    # source.  No model request or persistent output is produced before all of
+    # those fail-closed boundaries have passed.
+    parsed_by_source: dict[str, list[dict[str, Any]]] = {}
     raw_by_source: dict[str, list[dict[str, Any]]] = {}
+    rejected_by_source: dict[str, set[str]] = {}
     discovery_by_origin = {
         source["discovery"]["fromSourceId"]: source
         for source in config["discoveredSources"]
@@ -1241,13 +1433,32 @@ def collect(
         source_pipeline = pipeline["sources"][source["id"]]
         source_pipeline["fetched"] = True
         source_pipeline["responseBytes"] = len(body.encode("utf-8"))
-        raw_by_source[source["id"]] = extract_items(
+        parsed_by_source[source["id"]] = extract_items(
             source,
             body,
             source_pipeline,
             discovery_by_origin.get(source["id"]),
         )
 
+    # Freshness and relevance use only successfully parsed candidates.  This
+    # phase remains before state construction and before every model request.
+    for source in config["sources"]:
+        source_pipeline = pipeline["sources"][source["id"]]
+        prior = state["sources"].get(source["id"], {"items": {}})["items"]
+        raw_by_source[source["id"]], rejected_by_source[source["id"]] = _filter_items(
+            source,
+            parsed_by_source[source["id"]],
+            prior,
+            generated_at,
+            now,
+            config["policies"]["freshness"],
+            source_pipeline,
+            discovery_by_origin.get(source["id"]),
+        )
+
+    # A discovered official source is deliberately independent: an inaccessible
+    # article rejects that article only, never a successfully collected direct
+    # source.  It still passes freshness before becoming state or model input.
     for source in config["discoveredSources"]:
         source_pipeline = pipeline["sources"][source["id"]]
         origin_items = raw_by_source[source["discovery"]["fromSourceId"]]
@@ -1277,30 +1488,45 @@ def collect(
                 source_pipeline["parsedItems"] += 1
                 promoted.append(_meta_business_news_item(source, url, body))
                 source_pipeline["validItems"] += 1
-                source_pipeline["matchedItems"] += 1
             except (ContractError, OSError, ValueError, urllib.error.URLError):
                 # Discovery is optional. Reject only this candidate without logging its URL,
                 # response, or exception text, and keep the direct-source collection usable.
                 source_pipeline["rejectedLinks"] += 1
-        raw_by_source[source["id"]] = promoted
+        prior = state["sources"].get(source["id"], {"items": {}})["items"]
+        raw_by_source[source["id"]], rejected_by_source[source["id"]] = _filter_items(
+            source,
+            promoted,
+            prior,
+            generated_at,
+            now,
+            config["policies"]["freshness"],
+            source_pipeline,
+        )
 
-    next_state: dict[str, Any] = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": generated_at, "sources": {}}
+    # Build state only after every candidate has been parsed and screened.
+    # sourceContext, release notes, markup, and any model response remain local
+    # variables and are deliberately excluded from this structure.
+    next_state: dict[str, Any] = {"schemaVersion": STATE_V3_SCHEMA_VERSION, "updatedAt": generated_at, "sources": {}}
     presentation_candidates: list[tuple[str, dict[str, Any], dict[str, Any]]] = []
     for source in _all_sources(config):
         prior = state["sources"].get(source["id"], {"items": {}})["items"]
         current: dict[str, Any] = {}
-        for key, record in prior.items():
-            current[key] = {
-                "url": record["url"],
-                "title": record["title"],
-                "publishedDate": record["publishedDate"],
-                "updatedDate": record["updatedDate"],
-                "matchEvidence": record["matchEvidence"],
-                "fingerprint": record["fingerprint"],
-                "firstObservedAt": record["firstObservedAt"],
-                "lastObservedAt": record["lastObservedAt"],
-                "presentation": record.get("presentation") or _pending_presentation(record["fingerprint"]),
-            }
+        if source["id"] != reseed_source_id:
+            for key, record in prior.items():
+                if _is_fresh(record, record["firstObservedAt"], now, config["policies"]["freshness"]):
+                    current[key] = {
+                        "url": record["url"],
+                        "title": record["title"],
+                        "publishedDate": record["publishedDate"],
+                        "updatedDate": record["updatedDate"],
+                        "matchEvidence": record["matchEvidence"],
+                        "fingerprint": record["fingerprint"],
+                        "firstObservedAt": record["firstObservedAt"],
+                        "lastObservedAt": record["lastObservedAt"],
+                        "presentation": record["presentation"],
+                    }
+        for key in rejected_by_source[source["id"]]:
+            current.pop(key, None)
         for raw in raw_by_source[source["id"]]:
             existing = prior.get(raw["key"])
             cached = existing.get("presentation") if existing and existing.get("fingerprint") == raw["fingerprint"] else None
@@ -1313,19 +1539,19 @@ def collect(
                 "fingerprint": raw["fingerprint"],
                 "firstObservedAt": existing["firstObservedAt"] if existing else generated_at,
                 "lastObservedAt": generated_at,
-                "presentation": cached or _pending_presentation(raw["fingerprint"]),
+                "presentation": cached or _missing_bilingual_presentation(raw["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION),
             }
             current[raw["key"]] = record
-            if record["presentation"]["status"] != "generated":
+            if record["presentation"]["locales"]["en"]["status"] != "machine":
                 presentation_candidates.append((source["id"], record, raw))
                 stats["eligible"] += 1
                 stats["sources"][source["id"]]["eligible"] += 1
         retained: dict[str, Any] = {}
         for key, record in current.items():
             observed = datetime.fromisoformat(record["lastObservedAt"].replace("Z", "+00:00"))
-            if observed >= cutoff:
+            if observed >= history_cutoff:
                 retained[key] = record
-        next_state["sources"][source["id"]] = {"items": retained}
+        next_state["sources"][source["id"]] = {"relevanceRevision": source["relevanceRevision"], "items": retained}
         pipeline["sources"][source["id"]]["retainedItems"] = len(retained)
 
     presentation_candidates.sort(
@@ -1341,19 +1567,13 @@ def collect(
             stats["sources"][source_id]["attempted"] += 1
             try:
                 generated = present_item(record["title"], raw["sourceContext"], presentation_policy)
-                record["presentation"] = {
-                    "schemaVersion": PRESENTATION_SCHEMA_VERSION,
-                    "status": "generated",
-                    "shortHeadlineJa": generated["shortHeadlineJa"],
-                    "summaryJa": generated["summaryJa"],
-                    "sourceFingerprint": record["fingerprint"],
-                    "generatedAt": generated_at,
-                }
+                record["presentation"] = _machine_bilingual_presentation(record["fingerprint"], generated, generated_at)
                 stats["generated"] += 1
                 stats["sources"][source_id]["generated"] += 1
             except (KeyError, PresentationError, ValueError, OSError) as error:
-                # Optional rendering must not block source collection or expose source bodies.
-                record["presentation"] = _pending_presentation(record["fingerprint"])
+                # Model errors must not block publication or leave one locale
+                # partially populated.  The source's original title remains.
+                record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION)
                 stats["failed"] += 1
                 stats["sources"][source_id]["failed"] += 1
                 _record_presentation_failure(stats, source_id, _presentation_failure_code(error))
@@ -1379,10 +1599,11 @@ def collect_and_write(
     presentation_limit: int | None = None,
     presentation_stats: dict[str, Any] | None = None,
     source_pipeline_stats: dict[str, Any] | None = None,
+    reseed_source_id: str | None = None,
 ) -> dict[str, Any]:
     config = load_config(config_path)
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
-    renderer = present_item if present_item is not None else _presentation_from_environment(timeout)
+    renderer = present_item if present_item is not None else _bilingual_presentation_from_environment(timeout)
     feed, next_state = collect(
         config,
         state,
@@ -1393,6 +1614,7 @@ def collect_and_write(
         presentation_limit=presentation_limit,
         presentation_stats=presentation_stats,
         source_pipeline_stats=source_pipeline_stats,
+        reseed_source_id=reseed_source_id,
     )
     # Both payloads are fully constructed and validated before either single-file atomic write.
     write_json(output_path, feed)
@@ -1413,6 +1635,7 @@ def main() -> int:
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--timeout", type=float, default=30.0)
     parser.add_argument("--presentation-limit", type=_parse_presentation_limit, default=None)
+    parser.add_argument("--reseed-source", default=None, help="re-evaluate one configured source under its current relevance revision")
     args = parser.parse_args()
     try:
         stats: dict[str, Any] = {}
@@ -1425,6 +1648,7 @@ def main() -> int:
             presentation_limit=args.presentation_limit,
             presentation_stats=stats,
             source_pipeline_stats=pipeline,
+            reseed_source_id=args.reseed_source,
         )
     except (ContractError, OSError, ValueError, urllib.error.URLError) as error:
         print(f"FAIL: {error}", file=sys.stderr)

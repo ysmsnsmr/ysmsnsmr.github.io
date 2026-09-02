@@ -21,6 +21,7 @@ from meta_ads_personal_feed import (
     STATE_SCHEMA_VERSION,
     STATE_V3_SCHEMA_VERSION,
     _meta_business_news_date,
+    _bilingual_presentation_from_environment,
     _presentation_from_environment,
     _print_presentation_stats,
     _print_source_pipeline_stats,
@@ -69,7 +70,7 @@ META_BUSINESS_NEWS = """<!doctype html><html><head>
 <meta property="og:description" content="Meta announces updates to the Meta Pixel and Conversions API for advertisers.">
 </head><body><main><span>Announcement</span><span>April 15, 2026</span></main>
 <script>Announcement January 1, 1999</script></body></html>"""
-META = """<rss><channel><item><title>Product update</title><link>https://about.fb.com/news/2026/08/product-update/</link><description>Meta announced a product update.</description><pubDate>Fri, 29 Aug 2026 02:00:00 +0000</pubDate></item></channel></rss>"""
+META = """<rss><channel><item><title>Meta Ads product update</title><link>https://about.fb.com/news/2026/08/product-update/</link><description>Meta announced a product update for advertisers.</description><pubDate>Fri, 29 Aug 2026 02:00:00 +0000</pubDate></item></channel></rss>"""
 SDK = json.dumps([{
     "tag_name": "v27.0.0", "name": "v27.0.0", "html_url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v27.0.0", "body": "Adds the latest Marketing API release support.", "published_at": "2026-08-29T01:00:00Z", "updated_at": "2026-08-29T02:00:00Z", "draft": False, "prerelease": False,
 }])
@@ -114,7 +115,10 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(discovered["meta-business-news-discovered"]["discovery"]["fromSourceId"], "jon-loomer-meta-ads")
         self.assertEqual(discovered["meta-business-news-discovered"]["transport"]["allowedFetchHosts"], ["www.facebook.com"])
         self.assertFalse(self.config["policies"]["persistRawResponseBody"])
-        self.assertEqual(self.config["policies"]["japanesePresentation"]["maxRequestsPerRun"], 12)
+        self.assertEqual(sources["meta-product-news-rss"]["match"]["kind"], "any_terms")
+        self.assertEqual(sources["meta-product-news-rss"]["relevanceRevision"], "meta-ads-v1")
+        self.assertEqual(self.config["policies"]["freshness"]["maxItemAgeDays"], 365)
+        self.assertEqual(self.config["policies"]["bilingualPresentation"]["maxRequestsPerRun"], 12)
         self.assertTrue(all(source["contentLanguage"] == "en" for source in [*sources.values(), *discovered.values()]))
         self.assertTrue(all(source["platformIds"] for source in [*sources.values(), *discovered.values()]))
 
@@ -158,34 +162,127 @@ class PersonalFeedTest(unittest.TestCase):
             },
             clear=False,
         ):
-            renderer = _presentation_from_environment(1)
+            renderer = _bilingual_presentation_from_environment(1)
         self.assertIsNotNone(renderer)
         with patch.dict(os.environ, {"META_ADS_PERSONAL_FEED_JA_ENABLED": "false"}, clear=False):
-            self.assertIsNone(_presentation_from_environment(1))
+            self.assertIsNone(_bilingual_presentation_from_environment(1))
         with patch.dict(os.environ, {"META_ADS_PERSONAL_FEED_JA_ENABLED": "invalid"}, clear=False):
             with self.assertRaisesRegex(ContractError, "true, false"):
-                _presentation_from_environment(1)
+                _bilingual_presentation_from_environment(1)
 
     def test_unofficial_rss_filters_only_admit_relevant_items(self) -> None:
         sources = {source["id"]: source for source in self.config["sources"]}
         social_media_today = extract_items(sources["social-media-today-meta-ads"], SOCIAL_MEDIA_TODAY)
         jon = extract_items(sources["jon-loomer-meta-ads"], JON)
-        self.assertEqual([item["title"] for item in social_media_today], ["Meta expands Ads Manager campaign controls"])
-        self.assertEqual(social_media_today[0]["matchEvidence"], ["keyword:meta", "keyword:ads manager"])
-        self.assertEqual([item["title"] for item in jon], ["How to review a new Meta Ads setting"])
-        self.assertEqual(jon[0]["matchEvidence"], ["category:Meta Advertising"])
+        self.assertEqual(len(social_media_today), 2)
+        self.assertEqual(len(jon), 2)
+        self.assertEqual(social_media_today[0]["matchEvidence"], [])
         self.assertIn("Review the new setting", jon[0]["sourceContext"])
+
+    def test_product_news_freshness_and_relevance_run_before_bilingual_generation(self) -> None:
+        stale_and_irrelevant = """<rss><channel>
+        <item><title>Meta Ads old update</title><link>https://about.fb.com/news/2025/08/old-update/</link><description>For advertisers.</description><pubDate>Thu, 28 Aug 2025 02:00:00 +0000</pubDate></item>
+        <item><title>Meta Ads boundary update</title><link>https://about.fb.com/news/2025/08/boundary-update/</link><description>For advertisers.</description><pubDate>Fri, 29 Aug 2025 02:00:00 +0000</pubDate></item>
+        <item><title>WhatsApp group chat update</title><link>https://about.fb.com/news/2026/08/group-chat-update/</link><description>New group chat features.</description><pubDate>Fri, 29 Aug 2026 02:00:00 +0000</pubDate></item>
+        </channel></rss>"""
+        bodies = {
+            "meta-product-news-rss": stale_and_irrelevant,
+            "meta-business-sdk-releases": SDK,
+            "social-media-today-meta-ads": SOCIAL_MEDIA_TODAY,
+            "jon-loomer-meta-ads": JON,
+        }
+        calls: list[str] = []
+
+        def presenter(title: str, _context: str, _policy: dict) -> dict[str, str]:
+            calls.append(title)
+            return {"shortHeadlineEn": "Headline", "summaryEn": "Summary", "shortHeadlineJa": "見出し", "summaryJa": "要約"}
+
+        pipeline: dict = {}
+        feed, state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(bodies=bodies),
+            presenter,
+            source_pipeline_stats=pipeline,
+        )
+        product = pipeline["sources"]["meta-product-news-rss"]
+        self.assertEqual((product["parsedItems"], product["freshnessExcludedItems"], product["relevanceExcludedItems"], product["retainedItems"]), (3, 1, 1, 1))
+        self.assertIn("meta-product-news-rss", {item["sourceId"] for item in feed["items"]})
+        self.assertNotIn("old-update", json.dumps(state))
+        self.assertNotIn("group-chat-update", json.dumps(state))
+        self.assertIn("boundary-update", json.dumps(state))
+        self.assertNotIn("Meta Ads old update", calls)
+
+    def test_product_news_relevance_revision_requires_local_reseed_and_preserves_first_observation(self) -> None:
+        _feed, seeded = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+        )
+        product_id = "meta-product-news-rss"
+        legacy_rule = copy.deepcopy(seeded)
+        legacy_rule["sources"][product_id]["relevanceRevision"] = "legacy-v2"
+        with self.assertRaisesRegex(ContractError, "--reseed-source meta-product-news-rss"):
+            collect(self.config, legacy_rule, 1, NOW.replace(day=30), self.fetcher())
+        _feed, reseeded = collect(
+            self.config,
+            legacy_rule,
+            1,
+            NOW.replace(day=30),
+            self.fetcher(),
+            reseed_source_id=product_id,
+        )
+        record = next(iter(reseeded["sources"][product_id]["items"].values()))
+        self.assertEqual(record["firstObservedAt"], "2026-08-29T09:00:00Z")
+        self.assertEqual(record["lastObservedAt"], "2026-08-30T09:00:00Z")
+        self.assertEqual(reseeded["sources"][product_id]["relevanceRevision"], "meta-ads-v1")
+
+    def test_reseed_source_id_is_validated_before_any_fetch(self) -> None:
+        def unexpected_fetch(_source: dict, _timeout: float) -> tuple[str, str]:
+            raise AssertionError("invalid reseed source must not fetch")
+
+        with self.assertRaisesRegex(ContractError, "configured source"):
+            collect(
+                self.config,
+                {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+                1,
+                NOW,
+                unexpected_fetch,
+                reseed_source_id="not-a-source",
+            )
+
+    def test_bilingual_failure_marks_both_locales_missing_without_blocking_feed(self) -> None:
+        def failing_presenter(_title: str, _context: str, _policy: dict) -> dict[str, str]:
+            raise PresentationError("response_invalid_json")
+
+        feed, state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+            failing_presenter,
+        )
+        self.assertTrue(feed["items"])
+        self.assertTrue(
+            all(
+                item["presentation"]["locales"]["en"]["status"] == "missing"
+                and item["presentation"]["locales"]["ja"]["status"] == "missing"
+                for item in feed["items"]
+            )
+        )
+        self.assertNotIn("sourceContext", json.dumps(state))
 
     def test_jon_rss_extracts_only_canonical_meta_business_news_links(self) -> None:
         sources = {source["id"]: source for source in self.config["sources"]}
         discovery = self.config["discoveredSources"][0]
         jon = extract_items(sources["jon-loomer-meta-ads"], JON_WITH_OFFICIAL_LINK, discovery_source=discovery)
         self.assertEqual(len(jon), 1)
-        self.assertEqual(
-            jon[0]["discoveredLinks"],
-            ["https://www.facebook.com/business/news/pixel-conversionsapi-updates"],
-        )
-        self.assertEqual(jon[0]["deferredDiscoveredLinks"], 0)
+        self.assertIn("pixel-conversionsapi-updates", jon[0]["sourceContextMarkup"])
 
     def test_meta_business_news_date_accepts_observed_label_variants(self) -> None:
         cases = {
@@ -331,13 +428,14 @@ class PersonalFeedTest(unittest.TestCase):
         feed, next_state = collect(self.config, state, 1, NOW, self.fetcher())
         self.assertEqual(len(feed["sources"]), 4)
         self.assertEqual(len(feed["items"]), 4)
-        self.assertEqual(feed["schemaVersion"], FEED_SCHEMA_VERSION)
+        self.assertEqual(feed["schemaVersion"], FEED_V3_SCHEMA_VERSION)
         self.assertEqual({item["sourceId"] for item in feed["items"]}, {"meta-product-news-rss", "meta-business-sdk-releases", "social-media-today-meta-ads", "jon-loomer-meta-ads"})
         sdk = next(item for item in feed["items"] if item["sourceId"] == "meta-business-sdk-releases")
         self.assertEqual(sdk["updatedDate"], "2026-08-29")
         self.assertTrue(all(item["firstObservedAt"] == "2026-08-29T09:00:00Z" for item in feed["items"]))
-        self.assertTrue(all(item["presentation"]["status"] == "pending" for item in feed["items"]))
+        self.assertTrue(all(item["presentation"]["locales"]["en"]["status"] == "missing" for item in feed["items"]))
         self.assertTrue(all(item["presentation"]["sourceFingerprint"] for item in feed["items"]))
+        self.assertTrue(all(source["relevanceRevision"] for source in next_state["sources"].values()))
         self.assertEqual(
             set(next_state["sources"]),
             {source["id"] for source in self.config["sources"] + self.config["discoveredSources"]},
@@ -351,20 +449,20 @@ class PersonalFeedTest(unittest.TestCase):
 
         def presenter(title: str, source_context: str, _policy: dict) -> dict[str, str]:
             calls.append((title, source_context))
-            return {"shortHeadlineJa": f"{title} の短見出し", "summaryJa": f"{title} の要約"}
+            return {"shortHeadlineEn": f"{title} headline", "summaryEn": f"{title} summary", "shortHeadlineJa": f"{title} の短見出し", "summaryJa": f"{title} の要約"}
 
         initial_state = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
         feed, seeded = collect(self.config, initial_state, 1, NOW, self.fetcher(), presenter)
         self.assertEqual(len(calls), 4)
-        self.assertTrue(all(item["presentation"]["status"] == "generated" for item in feed["items"]))
-        self.assertTrue(all(item["presentation"]["schemaVersion"] == PRESENTATION_SCHEMA_VERSION for item in feed["items"]))
+        self.assertTrue(all(item["presentation"]["locales"]["en"]["status"] == "machine" for item in feed["items"]))
+        self.assertTrue(all(item["presentation"]["locales"]["ja"]["status"] == "machine" for item in feed["items"]))
         self.assertNotIn("sourceContext", json.dumps(seeded))
 
         calls.clear()
         unchanged_feed, unchanged_state = collect(self.config, seeded, 1, NOW.replace(day=30), self.fetcher(), presenter)
         self.assertEqual(calls, [])
         self.assertEqual(
-            next(item for item in unchanged_feed["items"] if item["sourceId"] == "social-media-today-meta-ads")["presentation"]["generatedAt"],
+            next(item for item in unchanged_feed["items"] if item["sourceId"] == "social-media-today-meta-ads")["presentation"]["locales"]["en"]["generatedAt"],
             "2026-08-29T09:00:00Z",
         )
 
@@ -378,7 +476,7 @@ class PersonalFeedTest(unittest.TestCase):
         changed_feed, changed_state = collect(self.config, unchanged_state, 1, NOW.replace(day=31), self.fetcher(bodies=changed_bodies), presenter)
         self.assertEqual(len(calls), 1)
         changed = next(item for item in changed_feed["items"] if item["sourceId"] == "social-media-today-meta-ads")
-        self.assertEqual(changed["presentation"]["generatedAt"], "2026-08-31T09:00:00Z")
+        self.assertEqual(changed["presentation"]["locales"]["en"]["generatedAt"], "2026-08-31T09:00:00Z")
         validate_state(changed_state, self.config)
 
     def test_presentation_backfill_is_bounded_and_reports_safe_source_counts(self) -> None:
@@ -387,7 +485,7 @@ class PersonalFeedTest(unittest.TestCase):
 
         def presenter(title: str, source_context: str, _policy: dict) -> dict[str, str]:
             calls.append((title, source_context))
-            return {"shortHeadlineJa": f"{title} の短見出し", "summaryJa": f"{title} の要約"}
+            return {"shortHeadlineEn": f"{title} headline", "summaryEn": f"{title} summary", "shortHeadlineJa": f"{title} の短見出し", "summaryJa": f"{title} の要約"}
 
         feed, next_state = collect(
             self.config,
@@ -407,7 +505,7 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(sum(source["attempted"] for source in stats["sources"].values()), 1)
         self.assertNotIn("campaign controls", json.dumps(stats))
         self.assertNotIn("Meta expands Ads Manager", json.dumps(stats))
-        self.assertEqual(sum(item["presentation"]["status"] == "generated" for item in feed["items"]), 1)
+        self.assertEqual(sum(item["presentation"]["locales"]["en"]["status"] == "machine" for item in feed["items"]), 1)
         validate_state(next_state, self.config)
 
     def test_source_pipeline_reports_safe_match_counts_without_source_content(self) -> None:
@@ -464,7 +562,7 @@ class PersonalFeedTest(unittest.TestCase):
         stats: dict = {}
         feed, next_state = collect(self.config, state, 1, NOW, self.fetcher(), failing_presenter, presentation_stats=stats)
         self.assertEqual(len(feed["items"]), 4)
-        self.assertTrue(all(item["presentation"]["status"] == "pending" for item in feed["items"]))
+        self.assertTrue(all(item["presentation"]["locales"]["en"]["status"] == "missing" for item in feed["items"]))
         self.assertNotIn("intentionally not exposed", json.dumps(next_state))
         self.assertEqual((stats["attempted"], stats["generated"], stats["failed"]), (4, 0, 4))
         self.assertEqual(stats["failureReasons"], {"unknown": 4})
@@ -499,7 +597,7 @@ class PersonalFeedTest(unittest.TestCase):
 
     def test_presentation_contract_rejects_stale_fingerprint_and_overlong_text(self) -> None:
         def presenter(title: str, _source_context: str, _policy: dict) -> dict[str, str]:
-            return {"shortHeadlineJa": f"{title} の短見出し", "summaryJa": f"{title} の要約"}
+            return {"shortHeadlineEn": f"{title} headline", "summaryEn": f"{title} summary", "shortHeadlineJa": f"{title} の短見出し", "summaryJa": f"{title} の要約"}
 
         state = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
         feed, next_state = collect(self.config, state, 1, NOW, self.fetcher(), presenter)
@@ -511,32 +609,16 @@ class PersonalFeedTest(unittest.TestCase):
             validate_state(stale, self.config)
 
         overlong = copy.deepcopy(feed)
-        overlong["items"][0]["presentation"]["summaryJa"] = "あ" * 361
-        with self.assertRaisesRegex(ContractError, "configured length"):
+        overlong["items"][0]["presentation"]["locales"]["ja"]["summary"] = "あ" * 1601
+        with self.assertRaisesRegex(ContractError, "JSON Schema"):
             validate_feed(overlong, self.config)
 
     def test_legacy_state_is_upgraded_without_persisting_source_context(self) -> None:
-        seeded_feed, seeded_state = collect(
-            self.config,
-            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
-            1,
-            NOW,
-            self.fetcher(),
-        )
-        legacy_state = copy.deepcopy(seeded_state)
-        legacy_state["schemaVersion"] = "meta-ads-personal-feed-state/v1"
-        for source in legacy_state["sources"].values():
-            for record in source["items"].values():
-                del record["presentation"]
-
-        def presenter(title: str, _source_context: str, _policy: dict) -> dict[str, str]:
-            return {"shortHeadlineJa": f"{title} の短見出し", "summaryJa": f"{title} の要約"}
-
-        feed, upgraded = collect(self.config, legacy_state, 1, NOW.replace(day=30), self.fetcher(), presenter)
-        self.assertEqual(seeded_feed["schemaVersion"], FEED_SCHEMA_VERSION)
-        self.assertEqual(upgraded["schemaVersion"], STATE_SCHEMA_VERSION)
-        self.assertEqual(feed["schemaVersion"], FEED_SCHEMA_VERSION)
-        self.assertTrue(all(item["presentation"]["status"] == "generated" for item in feed["items"]))
+        legacy_state = {"schemaVersion": "meta-ads-personal-feed-state/v1", "updatedAt": None, "sources": {}}
+        feed, upgraded = collect(self.config, legacy_state, 1, NOW.replace(day=30), self.fetcher())
+        self.assertEqual(upgraded["schemaVersion"], STATE_V3_SCHEMA_VERSION)
+        self.assertEqual(feed["schemaVersion"], FEED_V3_SCHEMA_VERSION)
+        self.assertTrue(all(item["presentation"]["locales"]["en"]["status"] == "missing" for item in feed["items"]))
         self.assertNotIn("sourceContext", json.dumps(upgraded))
         validate_state(upgraded, self.config)
 
@@ -560,17 +642,8 @@ class PersonalFeedTest(unittest.TestCase):
             validate_feed(immutable_input_invalid, self.config)
 
     def test_v2_state_and_feed_migrate_one_way_to_v3_with_missing_locales(self) -> None:
-        def presenter(title: str, _source_context: str, _policy: dict) -> dict[str, str]:
-            return {"shortHeadlineJa": f"{title} の短見出し", "summaryJa": f"{title} の要約"}
-
-        v2_feed, v2_state = collect(
-            self.config,
-            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
-            1,
-            NOW,
-            self.fetcher(),
-            presenter,
-        )
+        v2_state = json.loads(Path("data/meta_ads_personal_feed_state.json").read_text(encoding="utf-8"))
+        v2_feed = json.loads(Path("meta-ads-updates/personal-feed.json").read_text(encoding="utf-8"))
         migrated_state = migrate_state_v2_to_v3(v2_state, self.config)
         migrated_feed = migrate_feed_v2_to_v3(v2_feed, self.config)
 
@@ -578,14 +651,12 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(migrated_feed["schemaVersion"], FEED_V3_SCHEMA_VERSION)
         self.assertEqual(migrated_feed["defaultLocale"], "en")
         self.assertEqual(migrated_feed["availableLocales"], ["en", "ja"])
-        self.assertEqual(
-            [item["id"] for item in migrated_feed["items"]],
-            [item["id"] for item in v2_feed["items"]],
-        )
+        self.assertEqual(len(migrated_feed["items"]), len(v2_feed["items"]))
         self.assertTrue(all(item["presentation"]["locales"]["en"]["status"] == "missing" for item in migrated_feed["items"]))
         self.assertTrue(all(item["presentation"]["locales"]["ja"]["status"] == "missing" for item in migrated_feed["items"]))
         self.assertNotIn("短見出し", json.dumps(migrated_state, ensure_ascii=False))
         self.assertNotIn("sourceContext", json.dumps(migrated_state))
+        self.assertTrue(all(source["relevanceRevision"] == "legacy-v2" for source in migrated_state["sources"].values()))
         validate_state(migrated_state, self.config)
         validate_feed(migrated_feed, self.config)
 

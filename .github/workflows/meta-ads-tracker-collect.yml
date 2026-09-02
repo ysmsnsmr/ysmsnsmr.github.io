@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "15 0 * * *"
   workflow_dispatch:
+    inputs:
+      reseed_source_id:
+        description: "Optional configured source ID to re-evaluate under its current relevance rule"
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -51,11 +56,17 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           META_ADS_PERSONAL_FEED_JA_ENABLED: ${{ vars.META_ADS_PERSONAL_FEED_JA_ENABLED }}
           META_ADS_PERSONAL_FEED_GROQ_MODEL: ${{ vars.META_ADS_PERSONAL_FEED_GROQ_MODEL }}
+          META_ADS_PERSONAL_FEED_RESEED_SOURCE_ID: ${{ inputs.reseed_source_id }}
         run: |
-          python3 scripts/meta_ads_personal_feed.py \
-            --config config/meta_ads_personal_feed_sources.json \
-            --state data/meta_ads_personal_feed_state.json \
+          args=(
+            --config config/meta_ads_personal_feed_sources.json
+            --state data/meta_ads_personal_feed_state.json
             --output meta-ads-updates/personal-feed.json
+          )
+          if [ -n "${META_ADS_PERSONAL_FEED_RESEED_SOURCE_ID}" ]; then
+            args+=(--reseed-source "${META_ADS_PERSONAL_FEED_RESEED_SOURCE_ID}")
+          fi
+          python3 scripts/meta_ads_personal_feed.py "${args[@]}"
           python3 scripts/validate_meta_ads_personal_feed.py
       - name: Commit Personal Feed and state
         if: steps.kill_switch.outputs.enabled == 'true'
