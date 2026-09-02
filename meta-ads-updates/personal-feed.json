@@ -1,6 +1,6 @@
 {
   "schemaVersion": "meta-ads-personal-feed/v2",
-  "generatedAt": "2026-09-01T05:11:52Z",
+  "generatedAt": "2026-09-02T04:36:59Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -42,6 +42,30 @@
   ],
   "items": [
     {
+      "id": "jon-loomer-meta-ads-9aefab3308e36d7d6275",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Meta Introduces a New Automatic Events Feature",
+      "url": "https://www.jonloomer.com/meta-automatic-events-feature/",
+      "publishedDate": "2026-09-01",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-02T04:36:59Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
+      "platforms": [
+        "Meta Ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+        "status": "generated",
+        "shortHeadlineJa": "MetaがAI活用の新自動イベント機能を発表",
+        "summaryJa": "MetaはAIを用いてウェブサイト上のイベントを自動的に検出・作成する「Automatic Events」機能を新たに導入した。従来版と比較して検出精度や設定の自動化が向上し、広告主が手動でイベントを設定する手間が削減される。詳細はJon Loomer Digitalの投稿で紹介されている。",
+        "sourceFingerprint": "9aefab3308e36d7d62755243b1190a2942c8190f1eddb59fa759cc807d1fd7e2",
+        "generatedAt": "2026-09-02T04:36:59Z"
+      }
+    },
+    {
       "id": "meta-product-news-rss-b0d410e493471eb30e29",
       "sourceId": "meta-product-news-rss",
       "title": "New Account Security Features for WhatsApp",
@@ -49,7 +73,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Metaプラットフォーム全般"
       ],
@@ -71,7 +95,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -94,7 +118,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -118,7 +142,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -142,7 +166,7 @@
       "publishedDate": "2026-08-13",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -166,7 +190,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -190,7 +214,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -199,11 +223,11 @@
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
+        "status": "generated",
+        "shortHeadlineJa": "Meta広告の除外専用カスタムオーディエンスの作成と利用方法",
+        "summaryJa": "Meta広告で除外専用カスタムオーディエンスを作成し、利用する方法を解説します。対象外にする条件や制限、ターゲティングの制約、具体的な活用例について説明しています。",
         "sourceFingerprint": "80bd2219a6b994759e40a826a3234855fff049b78011e4dca81acdc7d193b55f",
-        "generatedAt": null
+        "generatedAt": "2026-09-02T04:36:59Z"
       }
     },
     {
@@ -214,7 +238,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -238,7 +262,7 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -261,7 +285,7 @@
       "publishedDate": "2026-08-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -285,7 +309,7 @@
       "publishedDate": "2026-08-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Metaプラットフォーム全般"
       ],
@@ -307,18 +331,18 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Metaプラットフォーム全般"
       ],
       "matchEvidence": [],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
+        "status": "generated",
+        "shortHeadlineJa": "WhatsApp Webで通話開始、その他新機能を導入",
+        "summaryJa": "WhatsAppはWeb版に通話機能を追加し、ユーザーはブラウザ上で音声通話ができるようになりました。併せて、通話転送や背景ノイズ抑制といった機能も導入され、通話品質や利便性が向上します。",
         "sourceFingerprint": "0e851589e9dc865278d0df59dbf223ea85da138e573e7877f7867ecca11c13e9",
-        "generatedAt": null
+        "generatedAt": "2026-09-02T04:36:59Z"
       }
     },
     {
@@ -329,7 +353,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -353,18 +377,18 @@
       "publishedDate": "2026-07-24",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Metaプラットフォーム全般"
       ],
       "matchEvidence": [],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
+        "status": "generated",
+        "shortHeadlineJa": "Facebook Marketplace向け新アプリ「Seller」登場",
+        "summaryJa": "Metaは、Facebook Marketplaceの出品者向けに新しいアプリ「Seller」を発表しました。このアプリは、出品リストの管理や購入者へのアプローチ、事業の拡大を支援する機能を提供します。詳細はMeta Newsroomで最初に公開されています。",
         "sourceFingerprint": "62e1d5977b22eeffd03db8dfe9a43ce94b5116f2796afd1e58f634e7211bc610",
-        "generatedAt": null
+        "generatedAt": "2026-09-02T04:36:59Z"
       }
     },
     {
@@ -375,7 +399,7 @@
       "publishedDate": "2026-07-24",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Metaプラットフォーム全般"
       ],
@@ -397,18 +421,18 @@
       "publishedDate": "2026-07-24",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Metaプラットフォーム全般"
       ],
       "matchEvidence": [],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
+        "status": "generated",
+        "shortHeadlineJa": "Meta AI、Muse Spark 1.1で構築・計画・実行が可能に",
+        "summaryJa": "Meta AIはMuse Spark 1.1により、構想から実装、完了まで一連のプロセスを自ら行えるようになった。タイトル「Meta AI Doesn’t Just Think, It Acts」の記事はMeta Newsroomで最初に公開された。",
         "sourceFingerprint": "09d2897ec2a22e6c024eb525bd8deb5769579a7b47455b43f16191e03220183a",
-        "generatedAt": null
+        "generatedAt": "2026-09-02T04:36:59Z"
       }
     },
     {
@@ -419,7 +443,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Metaプラットフォーム全般"
       ],
@@ -441,7 +465,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -465,7 +489,7 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -488,7 +512,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -512,7 +536,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -536,7 +560,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -560,7 +584,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Metaプラットフォーム全般"
       ],
@@ -582,7 +606,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -606,7 +630,7 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -629,7 +653,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -653,7 +677,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -677,7 +701,7 @@
       "publishedDate": "2026-06-29",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Metaプラットフォーム全般"
       ],
@@ -699,7 +723,7 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -723,7 +747,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Metaプラットフォーム全般"
       ],
@@ -745,7 +769,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -769,7 +793,7 @@
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -793,7 +817,7 @@
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -817,7 +841,7 @@
       "publishedDate": "2026-06-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -841,7 +865,7 @@
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -865,7 +889,7 @@
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -889,7 +913,7 @@
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -913,7 +937,7 @@
       "publishedDate": "2026-05-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -937,7 +961,7 @@
       "publishedDate": "2026-05-26",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -961,7 +985,7 @@
       "publishedDate": "2026-05-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -985,7 +1009,7 @@
       "publishedDate": "2026-05-19",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -1009,7 +1033,7 @@
       "publishedDate": "2026-05-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -1033,7 +1057,7 @@
       "publishedDate": "2026-05-12",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -1057,7 +1081,7 @@
       "publishedDate": "2026-05-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -1081,7 +1105,7 @@
       "publishedDate": "2026-05-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Ads"
       ],
@@ -1129,7 +1153,7 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1152,7 +1176,7 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1175,7 +1199,7 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1198,7 +1222,7 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1221,7 +1245,7 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1244,7 +1268,7 @@
       "publishedDate": "2025-09-26",
       "updatedDate": "2025-09-26",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1267,7 +1291,7 @@
       "publishedDate": "2025-07-18",
       "updatedDate": "2025-07-18",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1290,7 +1314,7 @@
       "publishedDate": "2025-06-17",
       "updatedDate": "2025-06-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1313,7 +1337,7 @@
       "publishedDate": "2025-05-14",
       "updatedDate": "2025-05-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1336,7 +1360,7 @@
       "publishedDate": "2025-05-06",
       "updatedDate": "2025-05-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1359,7 +1383,7 @@
       "publishedDate": "2025-04-01",
       "updatedDate": "2025-04-01",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1382,7 +1406,7 @@
       "publishedDate": "2025-02-13",
       "updatedDate": "2025-02-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1405,7 +1429,7 @@
       "publishedDate": "2024-10-10",
       "updatedDate": "2024-10-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1428,7 +1452,7 @@
       "publishedDate": "2024-08-15",
       "updatedDate": "2024-08-15",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1451,7 +1475,7 @@
       "publishedDate": "2024-04-15",
       "updatedDate": "2024-04-15",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1474,7 +1498,7 @@
       "publishedDate": "2024-03-14",
       "updatedDate": "2024-03-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1497,7 +1521,7 @@
       "publishedDate": "2024-01-24",
       "updatedDate": "2024-01-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1520,7 +1544,7 @@
       "publishedDate": "2023-12-04",
       "updatedDate": "2023-12-04",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1543,7 +1567,7 @@
       "publishedDate": "2023-11-06",
       "updatedDate": "2023-11-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1566,7 +1590,7 @@
       "publishedDate": "2023-10-15",
       "updatedDate": "2023-10-15",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1589,7 +1613,7 @@
       "publishedDate": "2023-09-26",
       "updatedDate": "2023-09-26",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1612,7 +1636,7 @@
       "publishedDate": "2023-09-15",
       "updatedDate": "2023-09-15",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1635,7 +1659,7 @@
       "publishedDate": "2018-01-09",
       "updatedDate": "2018-01-09",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1658,7 +1682,7 @@
       "publishedDate": "2018-01-06",
       "updatedDate": "2018-01-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"
@@ -1681,7 +1705,7 @@
       "publishedDate": "2017-11-08",
       "updatedDate": "2017-11-08",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-01T05:11:52Z",
+      "lastObservedAt": "2026-09-02T04:36:59Z",
       "platforms": [
         "Meta Business SDK",
         "Marketing API"

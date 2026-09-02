@@ -1,6 +1,6 @@
 {
   "schemaVersion": "meta-ads-personal-feed-state/v2",
-  "updatedAt": "2026-09-01T05:11:52Z",
+  "updatedAt": "2026-09-02T04:36:59Z",
   "sources": {
     "meta-product-news-rss": {
       "items": {
@@ -12,7 +12,7 @@
           "matchEvidence": [],
           "fingerprint": "b0d410e493471eb30e297d4c98d2fcef0c3de359e62b7f1b26bd746a70bf5ec5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "generated",
@@ -30,7 +30,7 @@
           "matchEvidence": [],
           "fingerprint": "4cff14b617cb83f03b89072d1f28cd91e60f12d74e3089082fbc9d9d9b6344e0",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "generated",
@@ -48,14 +48,14 @@
           "matchEvidence": [],
           "fingerprint": "0e851589e9dc865278d0df59dbf223ea85da138e573e7877f7867ecca11c13e9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-            "status": "pending",
-            "shortHeadlineJa": null,
-            "summaryJa": null,
+            "status": "generated",
+            "shortHeadlineJa": "WhatsApp Webで通話開始、その他新機能を導入",
+            "summaryJa": "WhatsAppはWeb版に通話機能を追加し、ユーザーはブラウザ上で音声通話ができるようになりました。併せて、通話転送や背景ノイズ抑制といった機能も導入され、通話品質や利便性が向上します。",
             "sourceFingerprint": "0e851589e9dc865278d0df59dbf223ea85da138e573e7877f7867ecca11c13e9",
-            "generatedAt": null
+            "generatedAt": "2026-09-02T04:36:59Z"
           }
         },
         "https://about.fb.com/news/2026/07/meta-ai-muse-spark-doesnt-just-think-it-acts/": {
@@ -66,14 +66,14 @@
           "matchEvidence": [],
           "fingerprint": "09d2897ec2a22e6c024eb525bd8deb5769579a7b47455b43f16191e03220183a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-            "status": "pending",
-            "shortHeadlineJa": null,
-            "summaryJa": null,
+            "status": "generated",
+            "shortHeadlineJa": "Meta AI、Muse Spark 1.1で構築・計画・実行が可能に",
+            "summaryJa": "Meta AIはMuse Spark 1.1により、構想から実装、完了まで一連のプロセスを自ら行えるようになった。タイトル「Meta AI Doesn’t Just Think, It Acts」の記事はMeta Newsroomで最初に公開された。",
             "sourceFingerprint": "09d2897ec2a22e6c024eb525bd8deb5769579a7b47455b43f16191e03220183a",
-            "generatedAt": null
+            "generatedAt": "2026-09-02T04:36:59Z"
           }
         },
         "https://about.fb.com/news/2026/07/introducing-seller-app-facebook-marketplace/": {
@@ -84,14 +84,14 @@
           "matchEvidence": [],
           "fingerprint": "62e1d5977b22eeffd03db8dfe9a43ce94b5116f2796afd1e58f634e7211bc610",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-            "status": "pending",
-            "shortHeadlineJa": null,
-            "summaryJa": null,
+            "status": "generated",
+            "shortHeadlineJa": "Facebook Marketplace向け新アプリ「Seller」登場",
+            "summaryJa": "Metaは、Facebook Marketplaceの出品者向けに新しいアプリ「Seller」を発表しました。このアプリは、出品リストの管理や購入者へのアプローチ、事業の拡大を支援する機能を提供します。詳細はMeta Newsroomで最初に公開されています。",
             "sourceFingerprint": "62e1d5977b22eeffd03db8dfe9a43ce94b5116f2796afd1e58f634e7211bc610",
-            "generatedAt": null
+            "generatedAt": "2026-09-02T04:36:59Z"
           }
         },
         "https://about.fb.com/news/2026/07/connecting-real-people-on-facebook/": {
@@ -102,7 +102,7 @@
           "matchEvidence": [],
           "fingerprint": "4457e6eed6d3fd01b5abd8fd5217553160d5a7d9ec404f9c3378107ef3a14dac",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -120,7 +120,7 @@
           "matchEvidence": [],
           "fingerprint": "82652c987b28d46fd0aa9f738c8fd7f7d73a7af8a7c8a82d35088bf5ce5f5e9a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -138,7 +138,7 @@
           "matchEvidence": [],
           "fingerprint": "a475b02981a097c2ca82063a81eeb5dec73f0cf73de3a2fc1bb70b9a2e5761db",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -156,7 +156,7 @@
           "matchEvidence": [],
           "fingerprint": "1b16ba0962887e25cb8cb9ad06ffbd67235245591837191bbf373ce0ef528faa",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -174,7 +174,7 @@
           "matchEvidence": [],
           "fingerprint": "2bfb9bcfcede05908874af75ae314a163e8641cab03702de9d61bae578f37220",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -196,7 +196,7 @@
           "matchEvidence": [],
           "fingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "generated",
@@ -214,7 +214,7 @@
           "matchEvidence": [],
           "fingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -232,7 +232,7 @@
           "matchEvidence": [],
           "fingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -250,7 +250,7 @@
           "matchEvidence": [],
           "fingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -268,7 +268,7 @@
           "matchEvidence": [],
           "fingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -286,7 +286,7 @@
           "matchEvidence": [],
           "fingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -304,7 +304,7 @@
           "matchEvidence": [],
           "fingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -322,7 +322,7 @@
           "matchEvidence": [],
           "fingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -340,7 +340,7 @@
           "matchEvidence": [],
           "fingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -358,7 +358,7 @@
           "matchEvidence": [],
           "fingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -376,7 +376,7 @@
           "matchEvidence": [],
           "fingerprint": "7f898f0dee2d9dc4be046c54e8641cda51c5e98a39056253c9249df6b88cbf06",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -394,7 +394,7 @@
           "matchEvidence": [],
           "fingerprint": "f4c117402d43a0b8b4d3cc2df768727d9327a515f0576c5d07dac7a59f193422",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -412,7 +412,7 @@
           "matchEvidence": [],
           "fingerprint": "62cb8adaa0730059b19a5f018508d692e7fe8440012a122c32ca20c50ce4ab07",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -430,7 +430,7 @@
           "matchEvidence": [],
           "fingerprint": "05be8dd57f0c4c654daf307547b3fd971ebe8b091c0965005801f313a1fbd2b6",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -448,7 +448,7 @@
           "matchEvidence": [],
           "fingerprint": "c1edd17516fa4254518892d9636ee826bc30f43de17fba217e5402889917c547",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -466,7 +466,7 @@
           "matchEvidence": [],
           "fingerprint": "6720a9af525b149c884d82afc3d1c53f553524e50d4f727912657df4ea90b7a1",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -484,7 +484,7 @@
           "matchEvidence": [],
           "fingerprint": "ccfc079ae19ad5e92340d8e1697bbe3ba78b4f5f2611471a5e1b60626e8b376b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -502,7 +502,7 @@
           "matchEvidence": [],
           "fingerprint": "3c1882a8304e57869e9a7e40449de4dec4410752af47657825ae03f300f7a87b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -520,7 +520,7 @@
           "matchEvidence": [],
           "fingerprint": "276c8fd85185cec8c960bba0a9d26d391f4f5b0b299920a8917d0fc1b6a4ac32",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -538,7 +538,7 @@
           "matchEvidence": [],
           "fingerprint": "591da1c95e4dea4d84dbcb82c0ba349688387e9916c442834adde75650ad6a94",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -556,7 +556,7 @@
           "matchEvidence": [],
           "fingerprint": "371bc6bca0ca0ac904327d9dca8fcde948ec4b7317853eb3a9ed82383644a4da",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -574,7 +574,7 @@
           "matchEvidence": [],
           "fingerprint": "fc02cfcbe79aed2dd7856e62134d104637a7b3b63bd523bc03b7687be0c134b9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -592,7 +592,7 @@
           "matchEvidence": [],
           "fingerprint": "052cfc425243ad83a8463bc4b3303300bfb6ed92f30e17a6ef9f5c1cea66ea5c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -610,7 +610,7 @@
           "matchEvidence": [],
           "fingerprint": "546e994620971d4d9aa923c152e5d3e98121e33da1af533ea04f8e5da3894ac7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -628,7 +628,7 @@
           "matchEvidence": [],
           "fingerprint": "c74fe4c196decfcf7e7958dfb1da6fdc04e4a4bd1c070890659746d1f228c879",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -646,7 +646,7 @@
           "matchEvidence": [],
           "fingerprint": "6d4d13334d625f8f9e888e9320987a3289cbb37aec7b3f92293db8f2ea088ec1",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -664,7 +664,7 @@
           "matchEvidence": [],
           "fingerprint": "a5994e01abbc9ac4862f6d394a5e682f84eebe45307fb2e006766d605068f15d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -682,7 +682,7 @@
           "matchEvidence": [],
           "fingerprint": "d384cc2af2f39b7cd432664ca25aa171285896390896d47ce93966cef658d180",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -700,7 +700,7 @@
           "matchEvidence": [],
           "fingerprint": "c6aebcafed82f8872babe81e78cf2b2a0eb616bddbd8e4fc2f88ab7bbde47152",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -727,7 +727,7 @@
           ],
           "fingerprint": "a97847964563099eee80b0bd06def638bcda879dc76de825e4fab9ed62f0d5f0",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "generated",
@@ -747,7 +747,7 @@
           ],
           "fingerprint": "1391e86427f9fffb2458da3e4b70574fb021985e55fdd1e51ec0173dd356e9db",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "generated",
@@ -767,7 +767,7 @@
           ],
           "fingerprint": "2c07acb04728e12eab2d2b9fb446a96103feea6991fa8595ff218a2f78d85913",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "generated",
@@ -787,7 +787,7 @@
           ],
           "fingerprint": "34a3642c32aaf16bbc45ce76940361414332b6b27ad6e4d3122fe6e0ece4a18f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "generated",
@@ -807,7 +807,7 @@
           ],
           "fingerprint": "738c2298b1e76bc1b471cf1e410a2280eb1cdce1c62902907f1912e64adbe7a5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "generated",
@@ -827,14 +827,14 @@
           ],
           "fingerprint": "80bd2219a6b994759e40a826a3234855fff049b78011e4dca81acdc7d193b55f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-            "status": "pending",
-            "shortHeadlineJa": null,
-            "summaryJa": null,
+            "status": "generated",
+            "shortHeadlineJa": "Meta広告の除外専用カスタムオーディエンスの作成と利用方法",
+            "summaryJa": "Meta広告で除外専用カスタムオーディエンスを作成し、利用する方法を解説します。対象外にする条件や制限、ターゲティングの制約、具体的な活用例について説明しています。",
             "sourceFingerprint": "80bd2219a6b994759e40a826a3234855fff049b78011e4dca81acdc7d193b55f",
-            "generatedAt": null
+            "generatedAt": "2026-09-02T04:36:59Z"
           }
         },
         "https://www.jonloomer.com/15-years-facebook-meta-advertising/": {
@@ -847,7 +847,7 @@
           ],
           "fingerprint": "84154f977811bc67c74bc7a840473ed214842d58db0b3bd69794b04329279344",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "generated",
@@ -867,7 +867,7 @@
           ],
           "fingerprint": "c3bfdfb7b3f212aafbd54e5f8ecf1599b0defe06bce7e9324a11838a0495fcdd",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "generated",
@@ -887,7 +887,7 @@
           ],
           "fingerprint": "67e3ae061b87b1689ce34770a96b131118b45bd304d5136b270961a95513868f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -907,7 +907,7 @@
           ],
           "fingerprint": "5385431c74b3ab52c8010ba9e56c580353e36d9e6f8f5610557c8062ea6f2b41",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -927,7 +927,7 @@
           ],
           "fingerprint": "d64f969b69f30348d0c5cddfc1fd1d5c65ce7a463cec0aff7a7c3d6a649d36aa",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -947,7 +947,7 @@
           ],
           "fingerprint": "547dc418d5565efd8d8aefb663a576fc0ce525d910fed1747b3636ca80082426",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -967,7 +967,7 @@
           ],
           "fingerprint": "97ddb661f75a38f4e09864184ac950de1bd71d516e6e1588604d8dcc6455d81d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -987,7 +987,7 @@
           ],
           "fingerprint": "30a2fce168101c7065c206861e71e39492953f715c009d509fd117d414e59493",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1007,7 +1007,7 @@
           ],
           "fingerprint": "f21df6efa8f70bb4fd2f354f751dc50ed463e4d5ab0b52257b7d819a442e93d9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1027,7 +1027,7 @@
           ],
           "fingerprint": "a8ee8159fd9a77fcb67bf8ec103af71cb36039938a912ac7636d3dee43acb00c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1047,7 +1047,7 @@
           ],
           "fingerprint": "b418674ac95e8795177e68dc5555a4f69d7e8a0ded5b224462200d938f5bf784",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1067,7 +1067,7 @@
           ],
           "fingerprint": "722ef0c52cc36d4ec656c67d36bd79f28772d73b0a3286e851611634a887222b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1087,7 +1087,7 @@
           ],
           "fingerprint": "b665bfb3aed27d36b03829578b94471aab70843bd27e3d4befcfebd0dcff4934",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1107,7 +1107,7 @@
           ],
           "fingerprint": "91c3ac037a1282ddc448ffbfaa73310bec1ec3383cb6d890c70dbab1cec0478a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1127,7 +1127,7 @@
           ],
           "fingerprint": "7fe9281082ee6c4e8a24e916b76ff86d9e44fa43d0e808515a1ccb0057f0384e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1147,7 +1147,7 @@
           ],
           "fingerprint": "60a80fa6e31f1ca7a73f91df611f9eeba81a8ff037f1baa5d5bb86f7c4b4a3f5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1167,7 +1167,7 @@
           ],
           "fingerprint": "47e5ea5b91c7cf4555e258865b6e86d9c9ed018d059fa2710e84d7c114acca41",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1187,7 +1187,7 @@
           ],
           "fingerprint": "6c985346b0c0900f1935a9e2b74c7e586feb96514e47240796cb57ce05706939",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1207,7 +1207,7 @@
           ],
           "fingerprint": "78bf4d2d779ac0201ee0619ecc77c8b93ecb2b0240cbef9fc6060ef492b3d4c1",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1227,7 +1227,7 @@
           ],
           "fingerprint": "e46b74706c26cdd450cf6395329e486c31550b5e477707fe5856ca5b2ec29e43",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1247,7 +1247,7 @@
           ],
           "fingerprint": "749cc2fdb0ca48cdf6f252ff8a21e65fd42196f5ce6d39aed53d763e37c7f5d3",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1267,7 +1267,7 @@
           ],
           "fingerprint": "f4ec4488da94c0b82bf1510432361d47297c7ea46cf9ab413a928c5922108111",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1287,7 +1287,7 @@
           ],
           "fingerprint": "32de55466a397a8dacd85b2473e5af9df6ca38c89b77663fe5d55399719e92a6",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1307,7 +1307,7 @@
           ],
           "fingerprint": "063c0ed935d2afc858e4d8c6ad9ec284402c3f9d74df65aab64a47920d2c6209",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1327,7 +1327,7 @@
           ],
           "fingerprint": "81eee52bf53894b9178f0ae1933eb664cc9a621483ac7d560a9cfd075339a1ba",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-01T05:11:52Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v1",
             "status": "pending",
@@ -1355,6 +1355,26 @@
             "summaryJa": null,
             "sourceFingerprint": "7f60756e94c88632403189ec62a0c230b15d37315c49deaa163e8eca7e20206a",
             "generatedAt": null
+          }
+        },
+        "https://www.jonloomer.com/meta-automatic-events-feature/": {
+          "url": "https://www.jonloomer.com/meta-automatic-events-feature/",
+          "title": "Meta Introduces a New Automatic Events Feature",
+          "publishedDate": "2026-09-01",
+          "updatedDate": null,
+          "matchEvidence": [
+            "category:Meta Advertising"
+          ],
+          "fingerprint": "9aefab3308e36d7d62755243b1190a2942c8190f1eddb59fa759cc807d1fd7e2",
+          "firstObservedAt": "2026-09-02T04:36:59Z",
+          "lastObservedAt": "2026-09-02T04:36:59Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "generated",
+            "shortHeadlineJa": "MetaがAI活用の新自動イベント機能を発表",
+            "summaryJa": "MetaはAIを用いてウェブサイト上のイベントを自動的に検出・作成する「Automatic Events」機能を新たに導入した。従来版と比較して検出精度や設定の自動化が向上し、広告主が手動でイベントを設定する手間が削減される。詳細はJon Loomer Digitalの投稿で紹介されている。",
+            "sourceFingerprint": "9aefab3308e36d7d62755243b1190a2942c8190f1eddb59fa759cc807d1fd7e2",
+            "generatedAt": "2026-09-02T04:36:59Z"
           }
         }
       }
