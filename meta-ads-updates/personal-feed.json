@@ -1,14 +1,20 @@
 {
-  "schemaVersion": "meta-ads-personal-feed/v2",
-  "generatedAt": "2026-09-02T04:36:59Z",
+  "schemaVersion": "meta-ads-personal-feed/v3",
+  "defaultLocale": "en",
+  "availableLocales": [
+    "en",
+    "ja"
+  ],
+  "generatedAt": "2026-09-02T11:59:49Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
       "name": "Meta Newsroom Product News",
       "classification": "official",
       "sourceUrl": "https://about.fb.com/news/category/product-news/",
-      "platforms": [
-        "Metaプラットフォーム全般"
+      "contentLanguage": "en",
+      "platformIds": [
+        "meta-platforms"
       ]
     },
     {
@@ -16,9 +22,10 @@
       "name": "Meta Business SDK Releases",
       "classification": "official",
       "sourceUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
+      "contentLanguage": "en",
+      "platformIds": [
+        "meta-business-sdk",
+        "marketing-api"
       ]
     },
     {
@@ -26,8 +33,9 @@
       "name": "Social Media Today (Meta Ads)",
       "classification": "unofficial",
       "sourceUrl": "https://www.socialmediatoday.com/",
-      "platforms": [
-        "Meta Ads"
+      "contentLanguage": "en",
+      "platformIds": [
+        "meta-ads"
       ]
     },
     {
@@ -35,56 +43,60 @@
       "name": "Jon Loomer Digital",
       "classification": "unofficial",
       "sourceUrl": "https://www.jonloomer.com/",
-      "platforms": [
-        "Meta Ads"
+      "contentLanguage": "en",
+      "platformIds": [
+        "meta-ads"
+      ]
+    },
+    {
+      "id": "meta-business-news-discovered",
+      "name": "Meta for Business News",
+      "classification": "official",
+      "sourceUrl": "https://www.facebook.com/business/news/",
+      "contentLanguage": "en",
+      "platformIds": [
+        "meta-ads"
       ]
     }
   ],
   "items": [
     {
-      "id": "jon-loomer-meta-ads-9aefab3308e36d7d6275",
+      "id": "jon-loomer-meta-ads-1d7817ec1f2ea9cdd05e",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta Introduces a New Automatic Events Feature",
       "url": "https://www.jonloomer.com/meta-automatic-events-feature/",
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "generated",
-        "shortHeadlineJa": "MetaがAI活用の新自動イベント機能を発表",
-        "summaryJa": "MetaはAIを用いてウェブサイト上のイベントを自動的に検出・作成する「Automatic Events」機能を新たに導入した。従来版と比較して検出精度や設定の自動化が向上し、広告主が手動でイベントを設定する手間が削減される。詳細はJon Loomer Digitalの投稿で紹介されている。",
-        "sourceFingerprint": "9aefab3308e36d7d62755243b1190a2942c8190f1eddb59fa759cc807d1fd7e2",
-        "generatedAt": "2026-09-02T04:36:59Z"
-      }
-    },
-    {
-      "id": "meta-product-news-rss-b0d410e493471eb30e29",
-      "sourceId": "meta-product-news-rss",
-      "title": "New Account Security Features for WhatsApp",
-      "url": "https://about.fb.com/news/2026/08/new-account-security-features-for-whatsapp/",
-      "publishedDate": "2026-08-25",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Metaプラットフォーム全般"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "generated",
-        "shortHeadlineJa": "WhatsAppに新しいアカウントセキュリティ機能を追加",
-        "summaryJa": "WhatsAppは、二段階認証を強化し、見知らぬ発信者からの通話に追加情報を表示するなど、新しいアカウントセキュリティ機能を導入します。",
-        "sourceFingerprint": "b0d410e493471eb30e297d4c98d2fcef0c3de359e62b7f1b26bd746a70bf5ec5",
-        "generatedAt": "2026-08-31T05:38:08Z"
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "05642d48534c8f714f04678a41db5b9a2ee045b43b40ef04a4b1805f816ba460",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
@@ -95,163 +107,268 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-business-sdk",
+        "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "generated",
-        "shortHeadlineJa": "Facebook Node.js Business SDK バージョン v26.0.1 がリリース",
-        "summaryJa": "Facebook の Node.js 用 Business SDK がバージョン v26.0.1 に更新されました。",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
         "sourceFingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
-        "generatedAt": "2026-08-31T05:38:08Z"
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Version v26.0.1 released",
+            "summary": "The Facebook Node.js Business SDK has been updated to version v26.0.1.",
+            "inputHash": "6048a24b2f27a322478bd36981f16817d22c47fc6a2a11705024cb17ccbfe367",
+            "generatedAt": "2026-09-02T11:59:49Z",
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "バージョン v26.0.1 がリリースされました",
+            "summary": "Facebook の Node.js Business SDK がバージョン v26.0.1 に更新されました。",
+            "inputHash": "4dd947980137e05819079425ac0d59ce5ed951cd467bfd0439292b4395e9a835",
+            "generatedAt": "2026-09-02T11:59:49Z",
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-a97847964563099eee80",
+      "id": "jon-loomer-meta-ads-3ce7456cf5a0fb23730c",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Reply to Keywords Meta Ads Feature",
       "url": "https://www.jonloomer.com/reply-to-keywords-meta-ads-feature/",
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "generated",
-        "shortHeadlineJa": "Meta、コメントのキーワードで自動DM送信機能「Reply to Keywords」をテスト",
-        "summaryJa": "Metaは、Instagramのコメントに特定のキーワードが含まれた場合に自動でダイレクトメッセージを送信する機能「Reply to Keywords」のテストを開始した。この機能は広告主がキーワードに応じたDMを自動配信できるようにするもので、情報はJon Loomer Digitalで最初に報じられた。",
-        "sourceFingerprint": "a97847964563099eee80b0bd06def638bcda879dc76de825e4fab9ed62f0d5f0",
-        "generatedAt": "2026-08-31T05:38:08Z"
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta's Reply to Keywords automates Instagram comment DMs",
+            "summary": "Meta introduced a feature for Instagram ads that lets advertisers define up to five keywords; when a comment contains one, an automated private message (DM) is sent, which can include a link, phone number, or email. It shows previews and is aimed at high comment volume or comment‑to‑DM strategies. Currently Instagram‑only, may expand later.",
+            "inputHash": "ef1ec47afa854c922dceb1c565f598ff2ce7e5647bb4464564ffa0a98234d0b0",
+            "generatedAt": "2026-09-02T11:59:49Z",
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Metaの「キーワード返信」機能でInstagramコメントを自動DM",
+            "summary": "MetaはInstagram広告向けに「Reply to Keywords」機能を提供し、最大5つのキーワードを設定できる。コメントにキーワードが含まれると自動でプライベートメッセージ（DM）が送信され、リンクや電話番号、メールを含められる。プレビューが表示され、コメントが多い場合やコメント→DMマーケティングに利用できるが、現時点ではInstagramのみで、将来的に他プラットフォームへ拡大する可能性がある。",
+            "inputHash": "1d38a8645e13c0bd0816a17da16d99c5a0add7e576bb336718a919046834b85b",
+            "generatedAt": "2026-09-02T11:59:49Z",
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-1391e86427f9fffb2458",
+      "id": "jon-loomer-meta-ads-d244cc3298bed37cd7fb",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta Is Removing Placement Controls From Ad Sets",
       "url": "https://www.jonloomer.com/meta-removing-placement-controls-ad-sets/",
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "generated",
-        "shortHeadlineJa": "Meta、広告セットの配置コントロールを廃止",
-        "summaryJa": "Metaは広告セットにおける配置に関する制御機能を削除することを発表しました。これにより、配置、プラットフォーム、デバイス、OS単位での除外設定が利用できなくなります。",
-        "sourceFingerprint": "1391e86427f9fffb2458da3e4b70574fb021985e55fdd1e51ec0173dd356e9db",
-        "generatedAt": "2026-08-31T05:38:08Z"
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "b91c8d5f960b9ffc9a1dd755e96072b8184dae5526af62c5f1d69d321183ec07",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-2c07acb04728e12eab2d",
+      "id": "jon-loomer-meta-ads-31a647f219704abc5612",
       "sourceId": "jon-loomer-meta-ads",
       "title": "ChatGPT Ads Get Automated Bidding, Placements, and URL Parameters",
       "url": "https://www.jonloomer.com/chatgpt-ads-automated-bidding-placements-url-parameters/",
       "publishedDate": "2026-08-13",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "generated",
-        "shortHeadlineJa": "ChatGPT広告に自動入札・配置設定・URLパラメータを追加",
-        "summaryJa": "ChatGPT広告に自動入札機能と配置設定、サードパーティのトラッキング用新URLパラメータが導入されました。この変更はJon Loomer Digitalの投稿『ChatGPT Ads Get Automated Bidding, Placements, and URL Parameters』で最初に報じられています。",
-        "sourceFingerprint": "2c07acb04728e12eab2d2b9fb446a96103feea6991fa8595ff218a2f78d85913",
-        "generatedAt": "2026-08-31T05:38:08Z"
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "bae818e9c6a1294225aebbcf3fe2ec19a7698f8a07f7f05c4bb3bbe9b45d5dca",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-34a3642c32aaf16bbc45",
+      "id": "jon-loomer-meta-ads-43e38784bd796ab19923",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta Ads AI Connectors Get More Security Controls",
       "url": "https://www.jonloomer.com/meta-ads-ai-connectors-security-controls/",
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "generated",
-        "shortHeadlineJa": "Meta、AIコネクタ向けに広告アカウントのアクセス制御を強化",
-        "summaryJa": "MetaはAIコネクタに対し、広告アカウントや機密操作へのアクセスを制限できる新たなセキュリティコントロールを追加しました。これにより広告主は権限付与や操作の許可範囲を細かく設定でき、アカウントの安全性が向上します。",
-        "sourceFingerprint": "34a3642c32aaf16bbc45ce76940361414332b6b27ad6e4d3122fe6e0ece4a18f",
-        "generatedAt": "2026-08-31T05:38:08Z"
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "79930db4677b46dede194ad4ef175a458f29ffb036f65262db2ec837dedce7f2",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-80bd2219a6b994759e40",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "Exclusion-Only Custom Audiences",
-      "url": "https://www.jonloomer.com/exclusion-only-custom-audiences/",
-      "publishedDate": "2026-08-07",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
-      ],
-      "matchEvidence": [
-        "category:Meta Advertising"
-      ],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "generated",
-        "shortHeadlineJa": "Meta広告の除外専用カスタムオーディエンスの作成と利用方法",
-        "summaryJa": "Meta広告で除外専用カスタムオーディエンスを作成し、利用する方法を解説します。対象外にする条件や制限、ターゲティングの制約、具体的な活用例について説明しています。",
-        "sourceFingerprint": "80bd2219a6b994759e40a826a3234855fff049b78011e4dca81acdc7d193b55f",
-        "generatedAt": "2026-09-02T04:36:59Z"
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-738c2298b1e76bc1b471",
+      "id": "jon-loomer-meta-ads-57b0bdaec5991d066111",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta Tests Sequenced Events and Preferred Lead Answers for Lead Quality",
       "url": "https://www.jonloomer.com/meta-tests-sequenced-events-preferred-lead-answers/",
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "generated",
-        "shortHeadlineJa": "Meta、シーケンスイベントと優先リード回答でリード品質向上をテスト",
-        "summaryJa": "Metaは広告主がインスタントフォームから得られるリードの品質を向上させるため、シーケンスイベントと優先リード回答の機能をテストしています。この取り組みはリード獲得プロセスの改善を目的としており、詳細はJon Loomer Digitalの投稿で紹介されています。",
-        "sourceFingerprint": "738c2298b1e76bc1b471cf1e410a2280eb1cdce1c62902907f1912e64adbe7a5",
-        "generatedAt": "2026-09-01T05:11:52Z"
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "a3d661ab5e1aae643f710df50fc01e81841b8a672366882285bdb96c53b35dbf",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
+      }
+    },
+    {
+      "id": "jon-loomer-meta-ads-41445e57f0d4463c3b0f",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Exclusion-Only Custom Audiences",
+      "url": "https://www.jonloomer.com/exclusion-only-custom-audiences/",
+      "publishedDate": "2026-08-07",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "category:Meta Advertising"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "9f1c2f1a19155e5685243c8dfc3083688b2aacbf49bc0c0161767b40576d5476",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
@@ -262,223 +379,151 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-business-sdk",
+        "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
         "sourceFingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
-        "generatedAt": null
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "fc170ad2e5a3c061b7522a52c2035a643e87564774e1b06b5a6796e9c478cae5",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-84154f977811bc67c74b",
+      "id": "jon-loomer-meta-ads-36ef70aa6065feea7586",
       "sourceId": "jon-loomer-meta-ads",
       "title": "15 Years of Facebook and Meta Advertising",
       "url": "https://www.jonloomer.com/15-years-facebook-meta-advertising/",
       "publishedDate": "2026-08-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "generated",
-        "shortHeadlineJa": "FacebookとMeta広告の15年変遷",
-        "summaryJa": "本記事は、2011年から2026年までの15年間にわたるFacebookおよびMetaの広告の変遷を、1年ごとに振り返る内容です。15年にわたる一次取材に基づき、広告手法やプラットフォームの変化を解説しています。記事はJon Loomer Digitalに初掲載されました。",
-        "sourceFingerprint": "84154f977811bc67c74bc7a840473ed214842d58db0b3bd69794b04329279344",
-        "generatedAt": "2026-09-01T05:11:52Z"
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "e90bfd94079c6aed409427537c2166636018533319e78de56257b0ddc7b232c0",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "meta-product-news-rss-4cff14b617cb83f03b89",
-      "sourceId": "meta-product-news-rss",
-      "title": "We’re Upgrading Your WhatsApp Group Chats",
-      "url": "https://about.fb.com/news/2026/08/were-upgrading-your-whatsapp-group-chats/",
-      "publishedDate": "2026-08-04",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Metaプラットフォーム全般"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "generated",
-        "shortHeadlineJa": "WhatsAppグループチャットをアップグレードします",
-        "summaryJa": "WhatsAppは、利用者が関心のあるグループとより簡単につながれるよう、グループチャットに新機能を導入します。",
-        "sourceFingerprint": "4cff14b617cb83f03b89072d1f28cd91e60f12d74e3089082fbc9d9d9b6344e0",
-        "generatedAt": "2026-09-01T05:11:52Z"
-      }
-    },
-    {
-      "id": "meta-product-news-rss-0e851589e9dc865278d0",
-      "sourceId": "meta-product-news-rss",
-      "title": "Introducing WhatsApp Web Calling, Plus More New Features",
-      "url": "https://about.fb.com/news/2026/07/whatsapp-web-calling-new-features/",
-      "publishedDate": "2026-07-28",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Metaプラットフォーム全般"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "generated",
-        "shortHeadlineJa": "WhatsApp Webで通話開始、その他新機能を導入",
-        "summaryJa": "WhatsAppはWeb版に通話機能を追加し、ユーザーはブラウザ上で音声通話ができるようになりました。併せて、通話転送や背景ノイズ抑制といった機能も導入され、通話品質や利便性が向上します。",
-        "sourceFingerprint": "0e851589e9dc865278d0df59dbf223ea85da138e573e7877f7867ecca11c13e9",
-        "generatedAt": "2026-09-02T04:36:59Z"
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-c3bfdfb7b3f212aafbd5",
+      "id": "jon-loomer-meta-ads-152caae0169d70f7130e",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta Can Now Rewrite the Text on Your Ad Images",
       "url": "https://www.jonloomer.com/meta-rewrite-text-ad-images/",
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "generated",
-        "shortHeadlineJa": "Meta、広告画像のテキストをデザイン保持のまま書き換え可能に",
-        "summaryJa": "MetaはAdvantage+ Creative機能を通じて、広告画像上のテキストを元のデザインを損なわずに自動で書き換えることができるようになった。この機能により、画像のレイアウトやビジュアルはそのままに、テキスト内容だけを変更できる。",
-        "sourceFingerprint": "c3bfdfb7b3f212aafbd54e5f8ecf1599b0defe06bce7e9324a11838a0495fcdd",
-        "generatedAt": "2026-09-01T05:11:52Z"
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "bb3dd7e9191df14f7252d1fa66d626072dfc968bda422d4192ec86a2e1ebd54b",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "meta-product-news-rss-62e1d5977b22eeffd03d",
-      "sourceId": "meta-product-news-rss",
-      "title": "Introducing Seller, an App for Facebook Marketplace Sellers",
-      "url": "https://about.fb.com/news/2026/07/introducing-seller-app-facebook-marketplace/",
-      "publishedDate": "2026-07-24",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Metaプラットフォーム全般"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "generated",
-        "shortHeadlineJa": "Facebook Marketplace向け新アプリ「Seller」登場",
-        "summaryJa": "Metaは、Facebook Marketplaceの出品者向けに新しいアプリ「Seller」を発表しました。このアプリは、出品リストの管理や購入者へのアプローチ、事業の拡大を支援する機能を提供します。詳細はMeta Newsroomで最初に公開されています。",
-        "sourceFingerprint": "62e1d5977b22eeffd03db8dfe9a43ce94b5116f2796afd1e58f634e7211bc610",
-        "generatedAt": "2026-09-02T04:36:59Z"
-      }
-    },
-    {
-      "id": "meta-product-news-rss-4457e6eed6d3fd01b5ab",
-      "sourceId": "meta-product-news-rss",
-      "title": "Connecting Real People on Facebook",
-      "url": "https://about.fb.com/news/2026/07/connecting-real-people-on-facebook/",
-      "publishedDate": "2026-07-24",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Metaプラットフォーム全般"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "4457e6eed6d3fd01b5abd8fd5217553160d5a7d9ec404f9c3378107ef3a14dac",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-product-news-rss-09d2897ec2a22e6c024e",
-      "sourceId": "meta-product-news-rss",
-      "title": "Meta AI Doesn’t Just Think, It Acts",
-      "url": "https://about.fb.com/news/2026/07/meta-ai-muse-spark-doesnt-just-think-it-acts/",
-      "publishedDate": "2026-07-24",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Metaプラットフォーム全般"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "generated",
-        "shortHeadlineJa": "Meta AI、Muse Spark 1.1で構築・計画・実行が可能に",
-        "summaryJa": "Meta AIはMuse Spark 1.1により、構想から実装、完了まで一連のプロセスを自ら行えるようになった。タイトル「Meta AI Doesn’t Just Think, It Acts」の記事はMeta Newsroomで最初に公開された。",
-        "sourceFingerprint": "09d2897ec2a22e6c024eb525bd8deb5769579a7b47455b43f16191e03220183a",
-        "generatedAt": "2026-09-02T04:36:59Z"
-      }
-    },
-    {
-      "id": "meta-product-news-rss-82652c987b28d46fd0aa",
-      "sourceId": "meta-product-news-rss",
-      "title": "New Parental Supervision Tools Coming To Threads",
-      "url": "https://about.fb.com/news/2026/07/new-parental-supervision-tools-coming-threads/",
-      "publishedDate": "2026-07-21",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Metaプラットフォーム全般"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "82652c987b28d46fd0aa9f738c8fd7f7d73a7af8a7c8a82d35088bf5ce5f5e9a",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-67e3ae061b87b1689ce3",
+      "id": "jon-loomer-meta-ads-d72c544077adb9a78d96",
       "sourceId": "jon-loomer-meta-ads",
       "title": "How to Use Meta Ads for Lead Generation",
       "url": "https://www.jonloomer.com/meta-ads-lead-generation/",
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "67e3ae061b87b1689ce34770a96b131118b45bd304d5136b270961a95513868f",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "d8c5a5547baaf91873d6822b52a17a957986b96471124c7b8aecfa16f3d2497b",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
@@ -489,137 +534,268 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-business-sdk",
+        "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
         "sourceFingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
-        "generatedAt": null
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "aaf497da0486bd968aa3f979f5ff12b8118982212d34ed279f8d705c5270a3d8",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-5385431c74b3ab52c801",
+      "id": "jon-loomer-meta-ads-e09a122675845e3c27ec",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta Redesigns Audiences Around Labels",
       "url": "https://www.jonloomer.com/meta-redesigns-audiences-around-labels/",
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "5385431c74b3ab52c8010ba9e56c580353e36d9e6f8f5610557c8062ea6f2b41",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "c5e9be7f91d3ee8234790b766fa21558162d2bcb2ce53759734d13749386801d",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-d64f969b69f30348d0c5",
+      "id": "jon-loomer-meta-ads-fb3d929dd60ff6ac44fa",
       "sourceId": "jon-loomer-meta-ads",
       "title": "The Principles Behind My Meta Ads Strategy",
       "url": "https://www.jonloomer.com/meta-ads-strategy-principles/",
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "d64f969b69f30348d0c5cddfc1fd1d5c65ce7a463cec0aff7a7c3d6a649d36aa",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "4ee45b82d611a4f8c3d300d43ab9760eab84bde63580257cb6812b61f115f951",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-547dc418d5565efd8d8a",
+      "id": "jon-loomer-meta-ads-3dd34ba2e6710fc9879b",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Lead Capture AI Agent for Instant Forms and More",
       "url": "https://www.jonloomer.com/lead-capture-ai-agent-instant-forms/",
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "547dc418d5565efd8d8aefb663a576fc0ce525d910fed1747b3636ca80082426",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "ea1c9f60b9f08496fa5351741aa756e507c43ff6afbcacda16060927ca8c13d7",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "meta-product-news-rss-a475b02981a097c2ca82",
+      "id": "meta-product-news-rss-87932d2acdd42983aa7d",
       "sourceId": "meta-product-news-rss",
       "title": "Introducing Muse Image: Image Generation Built for Your World",
       "url": "https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/",
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Metaプラットフォーム全般"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-platforms"
       ],
-      "matchEvidence": [],
+      "matchEvidence": [
+        "keyword:advantage+"
+      ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "a475b02981a097c2ca82063a81eeb5dec73f0cf73de3a2fc1bb70b9a2e5761db",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "87932d2acdd42983aa7d5e1d5d805f68da0efe998c8ea58dce18665d343aa3a1",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "817c3672499378c0ffe09dd6075147d327800b21bc58fe3e32645e573e45141a",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-97ddb661f75a38f4e098",
+      "id": "meta-business-news-discovered-d68562a558cf5800029b",
+      "sourceId": "meta-business-news-discovered",
+      "title": "8M+ Advertisers Use Meta's AI Creative Tools. They Just Got a Major Upgrade.",
+      "url": "https://www.facebook.com/business/news/muse-image-for-businesses",
+      "publishedDate": "2026-07-07",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "discovered-via:jon-loomer-meta-ads"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "0cdcbf18960a5c05b1b73db8217385abdf5e163c76d0a7a9e66abd3213355a7a",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
+      }
+    },
+    {
+      "id": "jon-loomer-meta-ads-fd97dd57f31971b4b7be",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Custom Audiences Come to ChatGPT Ads",
       "url": "https://www.jonloomer.com/chatgpt-ads-custom-audiences/",
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "97ddb661f75a38f4e09864184ac950de1bd71d516e6e1588604d8dcc6455d81d",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "7a6585e58790f1666dfad506ab8663d5cec661c625cb7397bff0699d5df83f9e",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
@@ -630,495 +806,814 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-business-sdk",
+        "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
         "sourceFingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
-        "generatedAt": null
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "46236d8686f80cc75347eca8d3fd175a2def47cd23489a222d1d8d5e998ab9f4",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-30a2fce168101c7065c2",
+      "id": "jon-loomer-meta-ads-b2ef048b0c23833baaff",
       "sourceId": "jon-loomer-meta-ads",
       "title": "The Master Brief: My Complete Approach to Meta Ads",
       "url": "https://www.jonloomer.com/meta-ads-master-brief/",
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "30a2fce168101c7065c206861e71e39492953f715c009d509fd117d414e59493",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "5786dd554f4b3d350139b6b46e88e1464d3697ad01b3e0ec889f40c6ea3ce93a",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-f21df6efa8f70bb4fd2f",
+      "id": "jon-loomer-meta-ads-ec1e46cc06a4c6e1d03d",
       "sourceId": "jon-loomer-meta-ads",
       "title": "What to Check When Meta Ads Aren’t Converting",
       "url": "https://www.jonloomer.com/meta-ads-arent-converting/",
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "f21df6efa8f70bb4fd2f354f751dc50ed463e4d5ab0b52257b7d819a442e93d9",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "4d68d0129897bdd76253b454873c69b42279e1c84141199ef95ca86b334e4c51",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "meta-product-news-rss-1b16ba0962887e25cb8c",
-      "sourceId": "meta-product-news-rss",
-      "title": "It’s Time to Reserve Your WhatsApp Username",
-      "url": "https://about.fb.com/news/2026/06/its-time-to-reserve-your-whatsapp-username/",
-      "publishedDate": "2026-06-29",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Metaプラットフォーム全般"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "1b16ba0962887e25cb8cb9ad06ffbd67235245591837191bbf373ce0ef528faa",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-a8ee8159fd9a77fcb67b",
+      "id": "jon-loomer-meta-ads-0694839d999624448496",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Book Appointments from Instant Forms, ChatGPT Conversion Optimization, and More",
       "url": "https://www.jonloomer.com/instant-form-appointments-chatgpt-conversion-optimization/",
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "a8ee8159fd9a77fcb67bf8ec103af71cb36039938a912ac7636d3dee43acb00c",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "dd93a62093ac2286ff3020021b447cabf279eb6f6d5bb84b260c8d43b5601e51",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "meta-product-news-rss-2bfb9bcfcede05908874",
-      "sourceId": "meta-product-news-rss",
-      "title": "We’re Partnering With EssilorLuxottica to Launch Meta Glasses",
-      "url": "https://about.fb.com/news/2026/06/meta-essilorluxottica-partner-launch-meta-glasses/",
+      "id": "meta-business-news-discovered-b11f17611d54e3e828d3",
+      "sourceId": "meta-business-news-discovered",
+      "title": "Cannes Lions 2026: New Creative and Creator Tools for Every Marketer to Cross the AI Threshold",
+      "url": "https://www.facebook.com/business/news/cannes-2026-cross-ai-threshold",
       "publishedDate": "2026-06-23",
       "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Metaプラットフォーム全般"
+      "firstObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
-      "matchEvidence": [],
+      "matchEvidence": [
+        "discovered-via:jon-loomer-meta-ads"
+      ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "2bfb9bcfcede05908874af75ae314a163e8641cab03702de9d61bae578f37220",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "3ccea9eee351c57bf9bd57fa42ebdf1d95eff9d43549f6a557272417ba4e4db1",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-b418674ac95e8795177e",
+      "id": "meta-business-news-discovered-0580a7992cbcdab917cc",
+      "sourceId": "meta-business-news-discovered",
+      "title": "Book appointments directly from your Lead Ads",
+      "url": "https://www.facebook.com/business/news/book-appointments-directly-from-your-lead-ads",
+      "publishedDate": "2026-06-23",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "discovered-via:jon-loomer-meta-ads"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "f2552f293ee01d58d188409e2c7eb674ab1f7cac75057fabd4ac868e2a2a4753",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
+      }
+    },
+    {
+      "id": "jon-loomer-meta-ads-25fc6458616225977766",
       "sourceId": "jon-loomer-meta-ads",
       "title": "How Many Active Ad Sets Should You Have in a Meta Ads Campaign?",
       "url": "https://www.jonloomer.com/active-ad-sets-meta-ads-campaign/",
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "b418674ac95e8795177e68dc5555a4f69d7e8a0ded5b224462200d938f5bf784",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "7a5757a3ee8399c3783de50bff677c09192a18409486f30845625bcff83d467a",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-722ef0c52cc36d4ec656",
+      "id": "jon-loomer-meta-ads-f1344ee1988c130e2d4a",
       "sourceId": "jon-loomer-meta-ads",
       "title": "AI Disclosure Checkbox, ChatGPT Attribution, and More",
       "url": "https://www.jonloomer.com/ai-disclosure-checkbox-chatgpt-attribution/",
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "722ef0c52cc36d4ec656c67d36bd79f28772d73b0a3286e851611634a887222b",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "f8864dd5eb9a155c2c0172ede5e884006c2d858453f5d9912d22d33d036ec0cf",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-b665bfb3aed27d36b038",
+      "id": "jon-loomer-meta-ads-b732201a5b57b7651d18",
       "sourceId": "jon-loomer-meta-ads",
       "title": "How Many Meta Ads Campaigns Should You Have at Once?",
       "url": "https://www.jonloomer.com/how-many-meta-ads-campaigns/",
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "b665bfb3aed27d36b03829578b94471aab70843bd27e3d4befcfebd0dcff4934",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "fb728d991cda08f20f8ad33819fb29cb56702be77d94eabdac43de44abf0778d",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-91c3ac037a1282ddc448",
+      "id": "jon-loomer-meta-ads-cc283c612e938a72e728",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Push Delivery Tests, ChatGPT Ads Updates, and More",
       "url": "https://www.jonloomer.com/push-delivery-tests-chatgpt-ads-updates/",
       "publishedDate": "2026-06-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "91c3ac037a1282ddc448ffbfaa73310bec1ec3383cb6d890c70dbab1cec0478a",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "174b6ecfdcadbf341c4ffcb20de17b7c840e01395de3b1b55270a95e5b5ea4e8",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-7fe9281082ee6c4e8a24",
+      "id": "jon-loomer-meta-ads-91d5e5eb74f466eaf0c9",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Hands-On With Push Delivery to This Ad",
       "url": "https://www.jonloomer.com/hands-on-push-delivery-to-this-ad/",
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "7fe9281082ee6c4e8a24e916b76ff86d9e44fa43d0e808515a1ccb0057f0384e",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "339ff94e77500b0a604849e30fc0769bc554efd252fbaeb890763196e7bce5f9",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-60a80fa6e31f1ca7a73f",
+      "id": "jon-loomer-meta-ads-f9469b3198937ef22545",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Customer Lifecycle Strategy Is Not What Advertisers Thought",
       "url": "https://www.jonloomer.com/customer-lifecycle-strategy-not-what-advertisers-thought/",
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "60a80fa6e31f1ca7a73f91df611f9eeba81a8ff037f1baa5d5bb86f7c4b4a3f5",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "87eecd7da912f32427c1ce01ffb6e4e711c1dd259a93c291caa9376a1bd41efb",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-47e5ea5b91c7cf4555e2",
+      "id": "jon-loomer-meta-ads-92f06d7b808cb842157c",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta Ads Attribution Reporting: What Your Results Really Mean",
       "url": "https://www.jonloomer.com/meta-ads-attribution-reporting/",
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "47e5ea5b91c7cf4555e258865b6e86d9c9ed018d059fa2710e84d7c114acca41",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "77e9fd0e97035f1b3b7d749a734b17cf2de01d26357d4c82a3509ff8a6c74285",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-6c985346b0c0900f1935",
+      "id": "jon-loomer-meta-ads-a6a2618496969332f72c",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta Ads Grouping Reports, ChatGPT Conversions, and More",
       "url": "https://www.jonloomer.com/meta-ads-grouping-reports-chatgpt-conversions/",
       "publishedDate": "2026-05-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "6c985346b0c0900f1935a9e2b74c7e586feb96514e47240796cb57ce05706939",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "f29dd06b691c574f5081b6cb45a9634d1f21998f49f183da66b83c853170bf28",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-78bf4d2d779ac0201ee0",
+      "id": "jon-loomer-meta-ads-27e2577b6c95fff7df80",
       "sourceId": "jon-loomer-meta-ads",
       "title": "7 Common Meta Ads Mistakes Agencies Make",
       "url": "https://www.jonloomer.com/meta-ads-mistakes-agencies/",
       "publishedDate": "2026-05-26",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "78bf4d2d779ac0201ee0619ecc77c8b93ecb2b0240cbef9fc6060ef492b3d4c1",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "7bd325b701c641aeaa08ad65484e50b54103a4e3b4dc7e71baf6be3dc967811f",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-e46b74706c26cdd450cf",
+      "id": "jon-loomer-meta-ads-a73a68dbe49b5381baf7",
       "sourceId": "jon-loomer-meta-ads",
       "title": "ChatGPT Ads Limitations, AI Instant Forms, and More",
       "url": "https://www.jonloomer.com/chatgpt-ads-limitations-ai-instant-forms/",
       "publishedDate": "2026-05-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "e46b74706c26cdd450cf6395329e486c31550b5e477707fe5856ca5b2ec29e43",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "77175d8e66c4975dd563f9c3af0b60c825393660c5e5ab93c4bb0f569ad0bee8",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-749cc2fdb0ca48cdf6f2",
+      "id": "jon-loomer-meta-ads-c8f05db68c7f03424711",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Hands-On With ChatGPT Ads: Initial Impressions",
       "url": "https://www.jonloomer.com/chatgpt-ads-initial-impressions/",
       "publishedDate": "2026-05-19",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "749cc2fdb0ca48cdf6f252ff8a21e65fd42196f5ce6d39aed53d763e37c7f5d3",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "993572afd5319820934898a7d5e2051361fc735de2ada2832f43e565e6582e12",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-f4ec4488da94c0b82bf1",
+      "id": "jon-loomer-meta-ads-df19403656263ac9e00d",
       "sourceId": "jon-loomer-meta-ads",
       "title": "One-Click CAPI Activated, New Meta Ads Features, and More",
       "url": "https://www.jonloomer.com/one-click-capi-activated-new-meta-ads-features/",
       "publishedDate": "2026-05-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "f4ec4488da94c0b82bf1510432361d47297c7ea46cf9ab413a928c5922108111",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "df19403656263ac9e00d4d6b0ba326faf03ae83fadc7c0ce7bfc212072f92d5d",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "3f2afe9b6518c1f5385a7f6260600675a6331e7ed56919675a29a6408b23b086",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-32de55466a397a8dacd8",
+      "id": "jon-loomer-meta-ads-506108f10b4c1d594d43",
       "sourceId": "jon-loomer-meta-ads",
       "title": "The Future of the Meta Advertiser",
       "url": "https://www.jonloomer.com/future-of-meta-advertiser/",
       "publishedDate": "2026-05-12",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "32de55466a397a8dacd85b2473e5af9df6ca38c89b77663fe5d55399719e92a6",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "506108f10b4c1d594d43e31993c5e9e0d98a75fdf46ae71f9884e802efed039d",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "14895787676ce43507ec2ea5ef5ce4c8a96759820a36a5452f831b3177ebb003",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-063c0ed935d2afc858e4",
+      "id": "jon-loomer-meta-ads-ece9be71bc29c0a7fc7a",
       "sourceId": "jon-loomer-meta-ads",
       "title": "ChatGPT Ads Go Self-Serve, Purchase Retention Expands, and More",
       "url": "https://www.jonloomer.com/chatgpt-ads-self-serve/",
       "publishedDate": "2026-05-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "063c0ed935d2afc858e4d8c6ad9ec284402c3f9d74df65aab64a47920d2c6209",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "ece9be71bc29c0a7fc7a46e089756141e99db290a908309ecfd2719f9e8c686e",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "de0b47bc0ec818060b29f89a40d8000854dd6f1b87278fe5e928d28366974618",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
-      "id": "jon-loomer-meta-ads-81eee52bf53894b9178f",
+      "id": "jon-loomer-meta-ads-4bda6e29ffa378f20da5",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta Ads AI Connectors and Claude: Setup, Uses, and Risks",
       "url": "https://www.jonloomer.com/meta-ads-ai-connectors-claude/",
       "publishedDate": "2026-05-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Ads"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "81eee52bf53894b9178f0ae1933eb664cc9a621483ac7d560a9cfd075339a1ba",
-        "generatedAt": null
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "4bda6e29ffa378f20da5718e67adb16b2431a61aa6e3f8a8191b17f7ce7d9590",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "617699b925a43784a93ef763ce24fe4837e6930da2b9be3209a947019e183603",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
@@ -1130,19 +1625,73 @@
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
       "lastObservedAt": "2026-08-31T05:38:08Z",
-      "platforms": [
-        "Meta Ads"
+      "platformIds": [
+        "meta-ads"
       ],
       "matchEvidence": [
         "category:Meta Advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
         "sourceFingerprint": "7f60756e94c88632403189ec62a0c230b15d37315c49deaa163e8eca7e20206a",
-        "generatedAt": null
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "cecbcf33d10f022c19f2f0047e7b8b8acdeb935829c6f177cdbdee9a8ece444b",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
+      }
+    },
+    {
+      "id": "meta-business-news-discovered-d2dc0dc1c4efc057c1c0",
+      "sourceId": "meta-business-news-discovered",
+      "title": "Removing Technical Barriers to Help Businesses of All Sizes Get More From Their Ads",
+      "url": "https://www.facebook.com/business/news/pixel-conversionsapi-updates",
+      "publishedDate": "2026-04-15",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "discovered-via:jon-loomer-meta-ads"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "d2dc0dc1c4efc057c1c0191e0388749eee34a824f326f4644babbc1469695685",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "4a00dd5090d52c6096d32429a24bb6b31830b6339857ed7086119b5680d0b85b",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
@@ -1153,19 +1702,34 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-business-sdk",
+        "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
         "sourceFingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
-        "generatedAt": null
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "adf3c9e950136c5f407ca6da23f547b59f45324c6af83e2552cb15b04aad8a3e",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
@@ -1176,19 +1740,34 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-business-sdk",
+        "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
         "sourceFingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
-        "generatedAt": null
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "dd84baa7296305d1959166d3e0e0469311d6194357998fb1299b9dd85fc1c2b3",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
@@ -1199,19 +1778,34 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-business-sdk",
+        "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
         "sourceFingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
-        "generatedAt": null
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "732b6e6d7cbddfd0ae03762883d825c659b1c26702eb0c56d607847756953184",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
@@ -1222,19 +1816,34 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-business-sdk",
+        "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
         "sourceFingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
-        "generatedAt": null
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "58cc789f5f30480083cc2f0fbccd97abd5e1b1648d2fe8abfd6c409758a8598f",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
@@ -1245,19 +1854,34 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-business-sdk",
+        "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
         "sourceFingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
-        "generatedAt": null
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "1bb8b316f1349084bcdb7fe7d8b73638de1265deb53ae5c2e3ae97917114c9b9",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     },
     {
@@ -1268,456 +1892,34 @@
       "publishedDate": "2025-09-26",
       "updatedDate": "2025-09-26",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
+      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "platformIds": [
+        "meta-business-sdk",
+        "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
         "sourceFingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-7f898f0dee2d9dc4be04",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "v23.0.1",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v23.0.1",
-      "publishedDate": "2025-07-18",
-      "updatedDate": "2025-07-18",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "7f898f0dee2d9dc4be046c54e8641cda51c5e98a39056253c9249df6b88cbf06",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-f4c117402d43a0b8b4d3",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "Meta Business SDK v23.0.0",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v23.0.0",
-      "publishedDate": "2025-06-17",
-      "updatedDate": "2025-06-17",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "f4c117402d43a0b8b4d3cc2df768727d9327a515f0576c5d07dac7a59f193422",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-62cb8adaa0730059b19a",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "v22.0.3",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v22.0.3",
-      "publishedDate": "2025-05-14",
-      "updatedDate": "2025-05-14",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "62cb8adaa0730059b19a5f018508d692e7fe8440012a122c32ca20c50ce4ab07",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-05be8dd57f0c4c654daf",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "v22.0.2",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v22.0.2",
-      "publishedDate": "2025-05-06",
-      "updatedDate": "2025-05-06",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "05be8dd57f0c4c654daf307547b3fd971ebe8b091c0965005801f313a1fbd2b6",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-c1edd17516fa42545188",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "Meta Business SDK v22.0.1",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v22.0.1",
-      "publishedDate": "2025-04-01",
-      "updatedDate": "2025-04-01",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "c1edd17516fa4254518892d9636ee826bc30f43de17fba217e5402889917c547",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-6720a9af525b149c884d",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "Meta Business SDK v22.0.0",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v22.0.0",
-      "publishedDate": "2025-02-13",
-      "updatedDate": "2025-02-14",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "6720a9af525b149c884d82afc3d1c53f553524e50d4f727912657df4ea90b7a1",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-ccfc079ae19ad5e92340",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "v21.0.0",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v21.0.0",
-      "publishedDate": "2024-10-10",
-      "updatedDate": "2024-10-10",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "ccfc079ae19ad5e92340d8e1697bbe3ba78b4f5f2611471a5e1b60626e8b376b",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-3c1882a8304e57869e9a",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "Meta Business SDK v20.0.0",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v20.0.0",
-      "publishedDate": "2024-08-15",
-      "updatedDate": "2024-08-15",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "3c1882a8304e57869e9a7e40449de4dec4410752af47657825ae03f300f7a87b",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-276c8fd85185cec8c960",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "Meta Business SDK v19.0.2",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v19.0.2",
-      "publishedDate": "2024-04-15",
-      "updatedDate": "2024-04-15",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "276c8fd85185cec8c960bba0a9d26d391f4f5b0b299920a8917d0fc1b6a4ac32",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-591da1c95e4dea4d84db",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "Meta Business SDK v19.0.1",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v19.0.1",
-      "publishedDate": "2024-03-14",
-      "updatedDate": "2024-03-14",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "591da1c95e4dea4d84dbcb82c0ba349688387e9916c442834adde75650ad6a94",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-371bc6bca0ca0ac90432",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "Meta Business SDK v19.0.0",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v19.0.0",
-      "publishedDate": "2024-01-24",
-      "updatedDate": "2024-01-24",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "371bc6bca0ca0ac904327d9dca8fcde948ec4b7317853eb3a9ed82383644a4da",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-fc02cfcbe79aed2dd785",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "Meta Business SDK v18.0.4",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.4",
-      "publishedDate": "2023-12-04",
-      "updatedDate": "2023-12-04",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "fc02cfcbe79aed2dd7856e62134d104637a7b3b63bd523bc03b7687be0c134b9",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-052cfc425243ad83a846",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "Meta Business SDK v18.0.3",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.3",
-      "publishedDate": "2023-11-06",
-      "updatedDate": "2023-11-06",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "052cfc425243ad83a8463bc4b3303300bfb6ed92f30e17a6ef9f5c1cea66ea5c",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-546e994620971d4d9aa9",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "Meta Business SDK v18.0.2",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.2",
-      "publishedDate": "2023-10-15",
-      "updatedDate": "2023-10-15",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "546e994620971d4d9aa923c152e5d3e98121e33da1af533ea04f8e5da3894ac7",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-c74fe4c196decfcf7e79",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "Meta Business SDK v18.0.1",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.1",
-      "publishedDate": "2023-09-26",
-      "updatedDate": "2023-09-26",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "c74fe4c196decfcf7e7958dfb1da6fdc04e4a4bd1c070890659746d1f228c879",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-6d4d13334d625f8f9e88",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "Meta Business SDK v18.0",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v18.0.0",
-      "publishedDate": "2023-09-15",
-      "updatedDate": "2023-09-15",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "6d4d13334d625f8f9e888e9320987a3289cbb37aec7b3f92293db8f2ea088ec1",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-a5994e01abbc9ac4862f",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "Releasing the Facebook Ads Node JS SDK for v2.11.3 of Marketing APIs",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v2.11.3",
-      "publishedDate": "2018-01-09",
-      "updatedDate": "2018-01-09",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "a5994e01abbc9ac4862f6d394a5e682f84eebe45307fb2e006766d605068f15d",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-d384cc2af2f39b7cd432",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "Releasing the Facebook Ads Node JS SDK for v2.11.2 of Marketing APIs",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v2.11.2",
-      "publishedDate": "2018-01-06",
-      "updatedDate": "2018-01-06",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "d384cc2af2f39b7cd432664ca25aa171285896390896d47ce93966cef658d180",
-        "generatedAt": null
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-c6aebcafed82f8872bab",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "Releasing the Facebook Ads Node JS SDK for v2.10 of Marketing APIs",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v2.10",
-      "publishedDate": "2017-11-08",
-      "updatedDate": "2017-11-08",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T04:36:59Z",
-      "platforms": [
-        "Meta Business SDK",
-        "Marketing API"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v1",
-        "status": "pending",
-        "shortHeadlineJa": null,
-        "summaryJa": null,
-        "sourceFingerprint": "c6aebcafed82f8872babe81e78cf2b2a0eb616bddbd8e4fc2f88ab7bbde47152",
-        "generatedAt": null
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "26f18ae7679a2a508c3b738be6197f8735106558a0902a261ab255631a526040",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
       }
     }
   ]
