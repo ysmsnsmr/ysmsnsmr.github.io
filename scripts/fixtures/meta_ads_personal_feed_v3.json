@@ -1,0 +1,112 @@
+{
+  "schemaVersion": "meta-ads-personal-feed/v3",
+  "defaultLocale": "en",
+  "availableLocales": ["en", "ja"],
+  "generatedAt": "2026-09-02T00:00:00Z",
+  "sources": [
+    {
+      "id": "meta-product-news-rss",
+      "name": "Meta Newsroom Product News",
+      "classification": "official",
+      "sourceUrl": "https://about.fb.com/news/category/product-news/",
+      "contentLanguage": "en",
+      "platformIds": ["meta-platforms"]
+    },
+    {
+      "id": "meta-business-sdk-releases",
+      "name": "Meta Business SDK Releases",
+      "classification": "official",
+      "sourceUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases",
+      "contentLanguage": "en",
+      "platformIds": ["meta-business-sdk", "marketing-api"]
+    },
+    {
+      "id": "social-media-today-meta-ads",
+      "name": "Social Media Today (Meta Ads)",
+      "classification": "unofficial",
+      "sourceUrl": "https://www.socialmediatoday.com/",
+      "contentLanguage": "en",
+      "platformIds": ["meta-ads"]
+    },
+    {
+      "id": "jon-loomer-meta-ads",
+      "name": "Jon Loomer Digital",
+      "classification": "unofficial",
+      "sourceUrl": "https://www.jonloomer.com/",
+      "contentLanguage": "en",
+      "platformIds": ["meta-ads"]
+    }
+  ],
+  "items": [
+    {
+      "id": "meta-product-news-rss-aaaaaaaaaaaaaaaaaaaa",
+      "sourceId": "meta-product-news-rss",
+      "title": "Meta Ads measurement update",
+      "url": "https://about.fb.com/news/2026/09/meta-ads-measurement-update/",
+      "publishedDate": "2026-09-01",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-02T00:00:00Z",
+      "lastObservedAt": "2026-09-02T00:00:00Z",
+      "platformIds": ["meta-platforms"],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta Ads measurement update",
+            "summary": "Meta announced an update for advertisers using measurement tools.",
+            "inputHash": "2503f9e18c04f5e1429e620dd152ac6d6b9512593dd82e2d62251483530d0a1a",
+            "generatedAt": "2026-09-02T00:00:00Z",
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta広告の計測機能を更新",
+            "summary": "Metaは広告主向け計測機能の更新を発表しました。",
+            "inputHash": "1aed1f78b75973b889c53bc091641ed8fb2df3e9dc795a04c78170848e95d022",
+            "generatedAt": "2026-09-02T00:00:00Z",
+            "reviewedAt": null
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-bbbbbbbbbbbbbbbbbbbb",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta Ads source article",
+      "url": "https://www.socialmediatoday.com/news/meta-ads-source-article/123456/",
+      "publishedDate": null,
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-02T00:00:00Z",
+      "lastObservedAt": "2026-09-02T00:00:00Z",
+      "platformIds": ["meta-ads"],
+      "matchEvidence": ["meta", "ads"],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "633bce434ef57a4b36c9e4cdd3564ba3942bcf8155b78c034c3d854f8b388d20",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
+      }
+    }
+  ]
+}

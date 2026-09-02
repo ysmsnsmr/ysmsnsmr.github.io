@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "meta-ads-personal-feed-sources/v3",
+  "schemaVersion": "meta-ads-personal-feed-sources/v4",
   "policies": {
     "persistRawResponseBody": false,
     "historyRetentionDays": 180,
@@ -20,7 +20,9 @@
       "fetchUrl": "https://about.fb.com/news/category/product-news/feed/",
       "parser": "rss",
       "expectedContentTypes": ["application/rss+xml", "application/xml", "text/xml"],
+      "contentLanguage": "en",
       "platforms": ["Metaプラットフォーム全般"],
+      "platformIds": ["meta-platforms"],
       "transport": {
         "allowedFetchHosts": ["about.fb.com"],
         "allowedContentHosts": ["about.fb.com"],
@@ -38,7 +40,9 @@
       "fetchUrl": "https://api.github.com/repos/facebook/facebook-nodejs-business-sdk/releases",
       "parser": "github_releases",
       "expectedContentTypes": ["application/json"],
+      "contentLanguage": "en",
       "platforms": ["Meta Business SDK", "Marketing API"],
+      "platformIds": ["meta-business-sdk", "marketing-api"],
       "transport": {
         "allowedFetchHosts": ["api.github.com"],
         "allowedContentHosts": ["github.com"],
@@ -56,7 +60,9 @@
       "fetchUrl": "https://www.socialmediatoday.com/feeds/news/",
       "parser": "rss",
       "expectedContentTypes": ["application/rss+xml", "application/xml", "text/xml"],
+      "contentLanguage": "en",
       "platforms": ["Meta Ads"],
+      "platformIds": ["meta-ads"],
       "transport": {
         "allowedFetchHosts": ["www.socialmediatoday.com"],
         "allowedContentHosts": ["www.socialmediatoday.com"],
@@ -80,7 +86,9 @@
       "fetchUrl": "https://www.jonloomer.com/feed/",
       "parser": "rss",
       "expectedContentTypes": ["application/rss+xml", "application/xml", "text/xml"],
+      "contentLanguage": "en",
       "platforms": ["Meta Ads"],
+      "platformIds": ["meta-ads"],
       "transport": {
         "allowedFetchHosts": ["www.jonloomer.com"],
         "allowedContentHosts": ["www.jonloomer.com"],
@@ -99,7 +107,9 @@
       "sourceUrl": "https://www.facebook.com/business/news/",
       "parser": "meta_business_news_html",
       "expectedContentTypes": ["text/html"],
+      "contentLanguage": "en",
       "platforms": ["Meta Ads"],
+      "platformIds": ["meta-ads"],
       "transport": {
         "allowedFetchHosts": ["www.facebook.com"],
         "allowedContentHosts": ["www.facebook.com"],

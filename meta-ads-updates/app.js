@@ -10,6 +10,7 @@
     "ppc-land-meta-ads": "PPC Land",
     "jon-loomer-meta-ads": "Jon Loomer Digital"
   };
+  const personalFeedVersions = new Set(["meta-ads-personal-feed/v1", "meta-ads-personal-feed/v2", "meta-ads-personal-feed/v3"]);
   const changeTypeLabels = { new_url: "新規記事", content_changed: "本文更新", sdk_release: "SDK release" };
   const priorityLabels = { high: "高優先度", standard: "標準", low: "低優先度" };
   const actionLabels = { action_required: "対応が必要", review_required: "確認が必要", not_required: "現時点の対応不要" };
@@ -78,10 +79,25 @@
     return listItem;
   }
 
+  function japanesePresentation(item) {
+    const presentation = item.presentation;
+    if (presentation?.schemaVersion === "meta-ads-personal-feed-presentation/v2") {
+      const locale = presentation.locales?.ja;
+      return (locale?.status === "machine" || locale?.status === "reviewed") && locale.shortHeadline && locale.summary
+        ? locale
+        : null;
+    }
+    return presentation?.status === "generated" && presentation.shortHeadlineJa && presentation.summaryJa
+      ? { shortHeadline: presentation.shortHeadlineJa, summary: presentation.summaryJa }
+      : null;
+  }
+
   function personalHeadline(item) {
-    return item.presentation?.status === "generated" && item.presentation.shortHeadlineJa
-      ? item.presentation.shortHeadlineJa
-      : item.title;
+    return japanesePresentation(item)?.shortHeadline || item.title;
+  }
+
+  function personalSummary(item) {
+    return japanesePresentation(item)?.summary || "";
   }
 
   function personalDetailHref(item, filters) {
@@ -89,8 +105,9 @@
     if (filters.sourceId !== "all") params.set("source", filters.sourceId);
     if (filters.type !== "all") params.set("type", filters.type);
     if (filters.query.trim()) params.set("q", filters.query.trim());
-    if (new URLSearchParams(window.location.search).has("personal-fixture")) {
-      params.set("personal-fixture", "1");
+    const fixture = new URLSearchParams(window.location.search).get("personal-fixture");
+    if (fixture === "1" || fixture === "v3") {
+      params.set("personal-fixture", fixture);
     }
     return `./detail.html?${params.toString()}`;
   }
@@ -129,7 +146,7 @@
     const response = await fetch(reportPath, { cache: "no-store" });
     if (!response.ok) throw new Error(`report HTTP ${response.status}`);
     const report = await response.json();
-    const personalMode = report.schemaVersion === "meta-ads-personal-feed/v1" || report.schemaVersion === "meta-ads-personal-feed/v2";
+    const personalMode = personalFeedVersions.has(report.schemaVersion);
     elements.list.classList.toggle("update-list--personal", personalMode);
     const sourceMap = new Map((report.sources || []).map((source) => [source.id, source]));
     const delayedRecovery = !personalMode && report.publication?.mode === "delayed_recovery";
@@ -172,7 +189,7 @@
         const source = sourceMap.get(item.sourceId);
         const type = personalMode ? source?.classification : item.priority;
         const searchable = personalMode
-          ? [item.title, personalHeadline(item), item.presentation?.summaryJa || ""].join(" ")
+          ? [item.title, personalHeadline(item), personalSummary(item)].join(" ")
           : item.title;
         return (state.filters.sourceId === "all" || item.sourceId === state.filters.sourceId) && (state.filters.type === "all" || type === state.filters.type) && (!query || searchable.toLocaleLowerCase("ja-JP").includes(query));
       });
@@ -183,8 +200,9 @@
       if (state.filters.sourceId !== "all") params.set("source", state.filters.sourceId);
       if (state.filters.type !== "all") params.set("type", state.filters.type);
       if (state.filters.query.trim()) params.set("q", state.filters.query.trim());
-      if (new URLSearchParams(window.location.search).has("personal-fixture")) {
-        params.set("personal-fixture", "1");
+      const fixture = new URLSearchParams(window.location.search).get("personal-fixture");
+      if (fixture === "1" || fixture === "v3") {
+        params.set("personal-fixture", fixture);
       }
       const suffix = params.size ? `?${params.toString()}` : "";
       window.history.replaceState(null, "", `${window.location.pathname}${suffix}`);
