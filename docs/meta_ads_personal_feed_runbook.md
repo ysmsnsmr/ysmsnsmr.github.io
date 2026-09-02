@@ -28,20 +28,33 @@ Meta公式ページはRSSや公開APIではなくHTMLから限定的なmetadata�
 
 ## 通常運用
 
-`Meta Ads Personal Feed daily collect` は毎日 `00:15 UTC`（通常08:15 MYT）に実行されます。すべてのソースの取得・形式検査・解析・契約検証が成功した場合にだけ、次の2ファイルを更新します。
+`Meta Ads Personal Feed daily collect` は毎日 `00:15 UTC`（通常08:15 MYT）に実行されます。すべてのソースの取得・形式検査・解析・契約検証が成功した場合にだけ、次の順序で2ファイルを更新します。
 
-- `data/meta_ads_personal_feed_state.json` — URL、タイトル、日付、fingerprint、取得日時と、日本語表示データのキャッシュを保持する状態
+```text
+安全な取得 → 形式検査・解析 → 鮮度判定 → 関連性判定
+→ state構築 → 英日表示データ生成 → feed検証 → 原子的公開
+```
+
+- `data/meta_ads_personal_feed_state.json` — URL、タイトル、日付、fingerprint、取得日時と、英語正本・日本語overlayの表示データキャッシュを保持する状態
 - `meta-ads-updates/personal-feed.json` — GitHub Pagesで表示する公開フィード
 
 生HTML、記事本文、画像、認証情報、Cookieは保存しません。いずれかのソースで失敗したrunは既存の公開フィードを更新しません。
 
-## 日本語短見出し・要約
+## 鮮度・関連性
 
-収集時には、RSSの説明文またはSDK release notesを**そのrunの一時入力だけ**として、短見出しと要約の日本語表示データを生成します。元の本文・説明文・release notesはstate、公開JSON、artifact、ログへ保存しません。
+発表日または最終更新日の新しい方が365日より前の記事は、表示データ生成の前に除外します。どちらの日付もない記事だけは初回観測日を使います。再観測日時で期限を延長することはありません。期限切れの記事はstate、公開feed、artifactに残しません。
+
+Meta Newsroom Product News RSSは、広告関連語がタイトル、RSS説明、カテゴリのいずれかにある記事だけを採用します。Business SDKは全release、Jon Loomerは`Meta Advertising`カテゴリ、Social Media Todayは既存のMeta系語と広告系語の二群条件を維持します。ソースごとに`relevanceRevision`を持ち、意味のある条件変更時には当該ソースだけをreseedします。
+
+`workflow_dispatch`で`reseed_source_id`に設定済みのソースIDを指定すると、そのソースだけを現行の鮮度・関連性条件で再構築します。初回のProduct News移行では`meta-product-news-rss`を指定します。同じURLが引き続き採用される場合、`firstObservedAt`は維持されます。未登録IDはcollectorが失敗して既存公開物を保持します。
+
+## 英語・日本語の短見出し・要約
+
+収集時には、RSSの説明文またはSDK release notesを**そのrunの一時入力だけ**として、英語の短見出し・要約と、その日本語訳を**1記事につきGroqへ1回だけ**要求します。元の本文・説明文・release notes、Groq応答はstate、公開JSON、artifact、ログへ保存しません。
 
 生成済みの表示データは記事内容のfingerprintに結び付けて再利用します。同じ内容には再課金しません。内容が変わった記事、または未生成の記事だけを新しい順に1 runあたり最大12件処理します。
 
-GroqのAPIキーがない、生成に失敗する、または出力契約に合わない場合でも、収集と公開は継続します。その記事は `pending` として記録され、原文タイトルのまま表示できます。日本語表示データは事実確認や運用判断を代替しません。
+GroqのAPIキーがない、生成に失敗する、または4項目の出力契約に合わない場合でも、収集と公開は継続します。その記事は英語・日本語をともに`missing`として記録し、原文タイトルのまま表示できます。一方の言語だけを公開することはありません。表示データは事実確認や運用判断を代替しません。
 
 各runは本文を出さずに `PRESENTATION` と `PRESENTATION_SOURCE` の行を出力します。ここでは生成候補数、試行数、成功数、失敗数、次回以降へ繰り越した数だけを確認します。失敗がある場合は、全体の `PRESENTATION_FAILURE` とソース別の `PRESENTATION_SOURCE_FAILURE` に安全な理由コードと件数を出します。
 
@@ -55,7 +68,7 @@ GroqのAPIキーがない、生成に失敗する、または出力契約に合�
 
 理由コードは調査の入口であり、記事本文やGroqの応答内容を出すものではありません。タイトル、RSS説明文、release notes、Groqの応答や例外本文はログに出しません。
 
-既存のpendingを確認する場合は、手動workflow `Meta Ads Personal Feed Japanese presentation backfill` を使います。最初は `presentation_limit=1` で実行し、`generated=1` と `failed=0` を確認してから、必要に応じて最大12件まで増やします。このworkflowも現在のRSS/APIを取得して一時文脈を作るため、すでにRSS/APIから消えた古い記事の要約は生成しません。stateには本文を保存しない設計のため、そのような記事を要約するには個別取得の別設計が必要です。
+既存の`missing`を確認する場合は、手動workflow `Meta Ads Personal Feed Japanese presentation backfill` を使います。最初は `presentation_limit=1` で実行し、`generated=1` と `failed=0` を確認してから、必要に応じて最大12件まで増やします。このworkflowも現在のRSS/APIを取得して一時文脈を作るため、すでにRSS/APIから消えた古い記事の要約は生成しません。stateには本文を保存しない設計のため、そのような記事を要約するには個別取得の別設計が必要です。
 
 ## 画面の使い方
 

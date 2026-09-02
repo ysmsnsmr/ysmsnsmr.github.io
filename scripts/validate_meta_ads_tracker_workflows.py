@@ -114,6 +114,13 @@ def main() -> int:
             fail("Personal Feed collection must provide the optional Japanese-presentation API key")
         if "META_ADS_PERSONAL_FEED_JA_ENABLED" not in personal_env or "META_ADS_PERSONAL_FEED_GROQ_MODEL" not in personal_env:
             fail("Personal Feed collection must expose Japanese-presentation controls")
+        reseed_input = parsed["collect"].get("on", {}).get("workflow_dispatch", {}).get("inputs", {}).get("reseed_source_id", {})
+        if not isinstance(reseed_input, dict) or reseed_input.get("type") != "string":
+            fail("Personal Feed collection must expose a string-only source-local reseed input")
+        if personal_env.get("META_ADS_PERSONAL_FEED_RESEED_SOURCE_ID") != "${{ inputs.reseed_source_id }}":
+            fail("Personal Feed reseed input must pass through an environment variable")
+        if '--reseed-source "${META_ADS_PERSONAL_FEED_RESEED_SOURCE_ID}"' not in collect_runs:
+            fail("Personal Feed collection must pass the reseed environment value to Python")
         if 'git add -- data/meta_ads_personal_feed_state.json meta-ads-updates/personal-feed.json' not in collect_runs:
             fail("Personal Feed collection must stage only its explicit state and public feed paths")
         artifact = next((step for step in collect_steps if step.get("name") == "Upload Personal Feed artifact"), None)

@@ -1,10 +1,13 @@
 {
-  "schemaVersion": "meta-ads-personal-feed-sources/v4",
+  "schemaVersion": "meta-ads-personal-feed-sources/v5",
   "policies": {
     "persistRawResponseBody": false,
     "historyRetentionDays": 180,
     "maxPublishedItems": 100,
-    "japanesePresentation": {
+    "freshness": {
+      "maxItemAgeDays": 365
+    },
+    "bilingualPresentation": {
       "maxRequestsPerRun": 12,
       "maxInputChars": 4000,
       "shortHeadlineMaxChars": 80,
@@ -23,6 +26,7 @@
       "contentLanguage": "en",
       "platforms": ["Metaプラットフォーム全般"],
       "platformIds": ["meta-platforms"],
+      "relevanceRevision": "meta-ads-v1",
       "transport": {
         "allowedFetchHosts": ["about.fb.com"],
         "allowedContentHosts": ["about.fb.com"],
@@ -30,7 +34,26 @@
         "maxRedirects": 3,
         "maxItems": 50
       },
-      "match": {"kind": "all"}
+      "match": {
+        "kind": "any_terms",
+        "terms": [
+          "meta ads",
+          "facebook ads",
+          "instagram ads",
+          "advertising",
+          "advertiser",
+          "ads manager",
+          "ad set",
+          "marketing api",
+          "business sdk",
+          "conversion api",
+          "conversions api",
+          "meta pixel",
+          "facebook pixel",
+          "audience network",
+          "advantage+"
+        ]
+      }
     },
     {
       "id": "meta-business-sdk-releases",
@@ -43,6 +66,7 @@
       "contentLanguage": "en",
       "platforms": ["Meta Business SDK", "Marketing API"],
       "platformIds": ["meta-business-sdk", "marketing-api"],
+      "relevanceRevision": "legacy-v2",
       "transport": {
         "allowedFetchHosts": ["api.github.com"],
         "allowedContentHosts": ["github.com"],
@@ -63,6 +87,7 @@
       "contentLanguage": "en",
       "platforms": ["Meta Ads"],
       "platformIds": ["meta-ads"],
+      "relevanceRevision": "legacy-v2",
       "transport": {
         "allowedFetchHosts": ["www.socialmediatoday.com"],
         "allowedContentHosts": ["www.socialmediatoday.com"],
@@ -89,6 +114,7 @@
       "contentLanguage": "en",
       "platforms": ["Meta Ads"],
       "platformIds": ["meta-ads"],
+      "relevanceRevision": "legacy-v2",
       "transport": {
         "allowedFetchHosts": ["www.jonloomer.com"],
         "allowedContentHosts": ["www.jonloomer.com"],
@@ -110,6 +136,7 @@
       "contentLanguage": "en",
       "platforms": ["Meta Ads"],
       "platformIds": ["meta-ads"],
+      "relevanceRevision": "legacy-v2",
       "transport": {
         "allowedFetchHosts": ["www.facebook.com"],
         "allowedContentHosts": ["www.facebook.com"],
