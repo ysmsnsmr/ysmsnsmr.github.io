@@ -13,6 +13,10 @@ Search Engine Land Meta RSSは、2026-08-30にGitHub ActionsでHTTP 403が繰り
 
 Social Media Todayは一般ニュースRSSのため、Meta／Facebook／Instagramの語と広告関連語の両方を含む見出しだけを掲載候補にします。これは記事の正確性を保証するものではなく、フィードの対象範囲を絞るための機械的な条件です。
 
+各収集runはソースごとに `SOURCE_PIPELINE` を出力します。`parsed` はRSS itemまたはAPI releaseとして読めた件数、`valid` は安全なURLとタイトルを持つ一意の候補数、`matched` は掲載条件を満たした件数、`excluded` は有効候補のうち掲載条件で除外した件数、`retained` は保存期間内に残った件数です。`all_groups` 条件のソースには `SOURCE_MATCH_GROUP` も出力し、各キーワード群を満たした候補数を確認できます。たとえば `valid > 0` かつ `matched = 0` は、取得失敗ではなく現在の掲載条件に合う記事がなかったことを示します。
+
+これらは件数・ソースID・パーサー版・レスポンスサイズだけの安全な運用ログです。タイトル、記事本文、RSS説明文、URL、認証情報、Cookieは出力しません。
+
 非公式の文字付きラベルと画面上部の注意表示は削除しません。非公式ソースは早期検知の参考情報であり、Meta公式の見解を示すものではありません。公式情報で確認できない内容もあるため、重要な対応や判断には、複数の情報源や実環境で追加確認してください。
 
 この一覧にない候補は、HTTPSで公開され、RSSまたは安定した公開APIがあり、タイトル・URL・日付を安全に抽出できる場合だけ追加します。HTMLスクレイピング、ログインが必要なページ、429やアクセス制限が確認されているページは自動収集へ追加しません。Python/PHP/Java版SDK Releases APIは取得可能ですが、同じversionを重複表示するため、横断dedupeを実装するまで追加しません。
@@ -34,7 +38,17 @@ Social Media Todayは一般ニュースRSSのため、Meta／Facebook／Instagra
 
 GroqのAPIキーがない、生成に失敗する、または出力契約に合わない場合でも、収集と公開は継続します。その記事は `pending` として記録され、原文タイトルのまま表示できます。日本語表示データは事実確認や運用判断を代替しません。
 
-各runは本文を出さずに `PRESENTATION` と `PRESENTATION_SOURCE` の行を出力します。ここでは生成候補数、試行数、成功数、失敗数、次回以降へ繰り越した数だけを確認します。タイトル、RSS説明文、release notes、Groqの応答や例外本文はログに出しません。
+各runは本文を出さずに `PRESENTATION` と `PRESENTATION_SOURCE` の行を出力します。ここでは生成候補数、試行数、成功数、失敗数、次回以降へ繰り越した数だけを確認します。失敗がある場合は、全体の `PRESENTATION_FAILURE` とソース別の `PRESENTATION_SOURCE_FAILURE` に安全な理由コードと件数を出します。
+
+- `api_key_unavailable` — APIキーが未設定
+- `http_client_error` / `http_server_error` — Groq側のHTTP 4xx / 5xx 応答
+- `network_error` — 接続・タイムアウトなどの通信失敗
+- `response_decode_error` / `response_invalid_json` — 応答を文字列またはJSONとして読めない
+- `response_missing_content` / `response_invalid_shape` — 応答に必要な生成データがない、または契約外
+- `short_headline_invalid` / `summary_invalid` — 生成文が空、文字列でない、または長さ上限を超過
+- `unknown` — 上記に安全に分類できない失敗
+
+理由コードは調査の入口であり、記事本文やGroqの応答内容を出すものではありません。タイトル、RSS説明文、release notes、Groqの応答や例外本文はログに出しません。
 
 既存のpendingを確認する場合は、手動workflow `Meta Ads Personal Feed Japanese presentation backfill` を使います。最初は `presentation_limit=1` で実行し、`generated=1` と `failed=0` を確認してから、必要に応じて最大12件まで増やします。このworkflowも現在のRSS/APIを取得して一時文脈を作るため、すでにRSS/APIから消えた古い記事の要約は生成しません。stateには本文を保存しない設計のため、そのような記事を要約するには個別取得の別設計が必要です。
 

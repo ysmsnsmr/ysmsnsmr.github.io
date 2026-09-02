@@ -9,25 +9,45 @@ written by this module.
 from __future__ import annotations
 
 import json
+import urllib.error
 import urllib.request
 from typing import Any
 
 
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
+FAILURE_CODES = frozenset(
+    {
+        "api_key_unavailable",
+        "http_client_error",
+        "http_server_error",
+        "network_error",
+        "response_decode_error",
+        "response_invalid_json",
+        "response_missing_content",
+        "response_invalid_shape",
+        "short_headline_invalid",
+        "summary_invalid",
+        "unknown",
+    }
+)
 
 
 class PresentationError(ValueError):
     """A safe, source-body-free presentation generation failure."""
 
+    def __init__(self, code: str = "unknown") -> None:
+        self.code = code if code in FAILURE_CODES else "unknown"
+        super().__init__(self.code)
 
-def _text(value: Any, label: str, maximum: int) -> str:
+
+def _text(value: Any, failure_code: str, maximum: int) -> str:
     if not isinstance(value, str):
-        raise PresentationError(f"{label} must be a string")
+        raise PresentationError(failure_code)
     text = " ".join(value.split())
     if not text:
-        raise PresentationError(f"{label} must not be empty")
+        raise PresentationError(failure_code)
     if len(text) > maximum:
-        raise PresentationError(f"{label} exceeds its configured length")
+        raise PresentationError(failure_code)
     return text
 
 
@@ -72,7 +92,7 @@ def request_presentation(
 ) -> dict[str, str]:
     """Request and validate one presentation object without exposing source text."""
     if not api_key.strip():
-        raise PresentationError("Groq API key is unavailable")
+        raise PresentationError("api_key_unavailable")
     payload = {
         "model": model,
         "messages": _messages(title, source_context, short_headline_max_chars, summary_max_chars),
@@ -89,14 +109,31 @@ def request_presentation(
     )
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
-            response_payload = json.loads(response.read(50_000).decode("utf-8", errors="replace"))
-        content = response_payload.get("choices", [{}])[0].get("message", {}).get("content")
-        value = json.loads(content) if isinstance(content, str) else None
-    except (OSError, ValueError, json.JSONDecodeError) as error:
-        raise PresentationError("Groq presentation request failed") from error
+            response_bytes = response.read(50_000)
+    except urllib.error.HTTPError as error:
+        code = "http_client_error" if 400 <= error.code < 500 else "http_server_error"
+        raise PresentationError(code) from error
+    except OSError as error:
+        raise PresentationError("network_error") from error
+    try:
+        response_payload = json.loads(response_bytes.decode("utf-8"))
+    except UnicodeDecodeError as error:
+        raise PresentationError("response_decode_error") from error
+    except json.JSONDecodeError as error:
+        raise PresentationError("response_invalid_json") from error
+    try:
+        content = response_payload["choices"][0]["message"]["content"]
+    except (KeyError, IndexError, TypeError) as error:
+        raise PresentationError("response_missing_content") from error
+    if not isinstance(content, str):
+        raise PresentationError("response_missing_content")
+    try:
+        value = json.loads(content)
+    except json.JSONDecodeError as error:
+        raise PresentationError("response_invalid_json") from error
     if not isinstance(value, dict) or set(value) != {"shortHeadlineJa", "summaryJa"}:
-        raise PresentationError("Groq presentation response has an invalid shape")
+        raise PresentationError("response_invalid_shape")
     return {
-        "shortHeadlineJa": _text(value["shortHeadlineJa"], "shortHeadlineJa", short_headline_max_chars),
-        "summaryJa": _text(value["summaryJa"], "summaryJa", summary_max_chars),
+        "shortHeadlineJa": _text(value["shortHeadlineJa"], "short_headline_invalid", short_headline_max_chars),
+        "summaryJa": _text(value["summaryJa"], "summary_invalid", summary_max_chars),
     }
