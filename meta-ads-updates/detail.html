@@ -1,20 +1,31 @@
 <!doctype html>
-<html lang="ja">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0d3b78">
-    <meta name="description" content="Meta Ads Update Feedの記事詳細">
-    <title>記事詳細 | Meta Ads Update Feed</title>
+    <meta name="description" content="Meta Ads Update Feed item detail">
+    <meta name="robots" content="noindex,follow">
+    <link id="canonical-link" rel="canonical" href="https://ysmsnsmr.github.io/meta-ads-updates/detail.html">
+    <link id="alternate-en" rel="alternate" hreflang="en" href="https://ysmsnsmr.github.io/meta-ads-updates/detail.html">
+    <link id="alternate-ja" rel="alternate" hreflang="ja" href="https://ysmsnsmr.github.io/meta-ads-updates/ja/detail.html">
+    <link id="alternate-default" rel="alternate" hreflang="x-default" href="https://ysmsnsmr.github.io/meta-ads-updates/detail.html">
+    <title>Item details | Meta Ads Update Feed</title>
     <link rel="stylesheet" href="./style.css">
-    <script src="./detail.js" defer></script>
+    <script src="./localized-detail.js" defer></script>
   </head>
   <body>
     <main class="tracker-shell detail-shell">
-      <a id="back-link" class="back-link" href="./index.html">← 一覧へ戻る</a>
-      <section id="detail-unofficial-notice" class="unofficial-notice" aria-label="非公式情報の注意" hidden>
-        <strong>非公式情報の取り扱い</strong>
-        <span>非公式ソースは早期検知の参考情報であり、Meta公式の見解を示すものではありません。公式情報で確認できない内容もあるため、重要な対応や判断には、複数の情報源や実環境で追加確認してください。</span>
+      <div class="detail-topline">
+        <a id="back-link" class="back-link" href="./">← Back to feed</a>
+        <nav class="locale-switch" aria-label="Language">
+          <a id="locale-en" aria-current="page">English</a>
+          <a id="locale-ja">日本語</a>
+        </nav>
+      </div>
+      <section id="detail-unofficial-notice" class="unofficial-notice" aria-label="About unofficial information" hidden>
+        <strong>About unofficial information</strong>
+        <span>Unofficial sources are early signals and do not represent Meta’s official position. For important decisions, cross-check with additional sources and your own environment.</span>
       </section>
       <article id="detail-card" class="detail-card" hidden>
         <header class="detail-header">
@@ -22,11 +33,12 @@
           <h1 id="detail-title"></h1>
         </header>
         <section class="detail-section" aria-labelledby="detail-summary-heading">
-          <p id="detail-summary-heading" class="section-kicker">要約</p>
+          <p id="detail-summary-heading" class="section-kicker">Summary</p>
           <p id="detail-summary" class="detail-summary"></p>
+          <p id="detail-presentation-status" class="presentation-status" aria-live="polite"></p>
         </section>
         <section class="detail-section" aria-labelledby="detail-original-heading">
-          <p id="detail-original-heading" class="section-kicker">原文タイトル</p>
+          <p id="detail-original-heading" class="section-kicker">Original title</p>
           <p id="detail-original-title" class="detail-original-title"></p>
         </section>
         <dl id="detail-facts" class="fact-grid detail-facts"></dl>
@@ -36,7 +48,7 @@
         <h1 id="detail-error-title"></h1>
         <p id="detail-error-copy"></p>
       </section>
-      <p class="tracker-footer">Meta公式・非公式の情報を区別して表示しています。</p>
+      <p class="tracker-footer">Official and unofficial information are clearly separated.</p>
     </main>
   </body>
 </html>
