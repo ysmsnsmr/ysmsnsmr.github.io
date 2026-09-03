@@ -13,13 +13,14 @@ MYT = timezone(timedelta(hours=8))
 NEWS_DIR = Path("news/malaysia")
 OUTPUT_PATH = NEWS_DIR / "index.html"
 CATEGORIES = ("【速報】", "【生活インパクト】", "【知っておくと得】")
-PICKUP_HEADLINE_MAX_WIDTH = 15.5
+LEGACY_PICKUP_HEADLINE_MAX_WIDTH = 15.5
 
 
 @dataclass
 class NewsItem:
     category: str
     conclusion: str = ""
+    headline: str = ""
     short_headline: str = ""
     summary_points: list[str] = field(default_factory=list)
     what_happened: str = ""
@@ -57,6 +58,7 @@ def parse_markdown(path: Path) -> NewsDay:
     items: list[NewsItem] = []
     current_category = ""
     current_item: NewsItem | None = None
+    pending_headline = ""
     pending_short_headline = ""
 
     def flush_item() -> None:
@@ -80,7 +82,12 @@ def parse_markdown(path: Path) -> NewsDay:
         if line in CATEGORIES:
             flush_item()
             current_category = line
+            pending_headline = ""
             pending_short_headline = ""
+            continue
+
+        if line.startswith("- 見出し："):
+            pending_headline = line[len("- 見出し：") :].strip()
             continue
 
         if line.startswith("- 短見出し："):
@@ -99,8 +106,10 @@ def parse_markdown(path: Path) -> NewsDay:
                 current_item = NewsItem(
                     category=current_category,
                     conclusion=conclusion,
-                    short_headline=pending_short_headline,
+                    headline=pending_headline or pending_short_headline,
+                    short_headline=pending_short_headline or pending_headline,
                 )
+            pending_headline = ""
             pending_short_headline = ""
             continue
 
@@ -172,7 +181,7 @@ def semantic_headline(text: str) -> str:
     return first_sentence.strip()
 
 
-def shorten_pickup_headline(text: str, limit: float = PICKUP_HEADLINE_MAX_WIDTH) -> str:
+def shorten_pickup_headline(text: str, limit: float = LEGACY_PICKUP_HEADLINE_MAX_WIDTH) -> str:
     compact = semantic_headline(text)
     if headline_width(compact) <= limit:
         return compact
@@ -180,11 +189,27 @@ def shorten_pickup_headline(text: str, limit: float = PICKUP_HEADLINE_MAX_WIDTH)
     return f"{truncated}…"
 
 
-def display_headline(item: NewsItem) -> str:
-    """Use the model's semantic label when it passes the display-width rule."""
-    if item.short_headline and headline_width(item.short_headline) <= PICKUP_HEADLINE_MAX_WIDTH:
+def legacy_display_headline(item: NewsItem) -> str:
+    """Keep compact historical Markdown readable without changing new entries."""
+    if item.short_headline and headline_width(item.short_headline) <= LEGACY_PICKUP_HEADLINE_MAX_WIDTH:
         return item.short_headline
     return shorten_pickup_headline(item.conclusion)
+
+
+def display_short_headline(item: NewsItem) -> str:
+    if item.short_headline:
+        return item.short_headline
+    if item.headline:
+        return item.headline
+    return legacy_display_headline(item)
+
+
+def display_full_headline(item: NewsItem) -> str:
+    if item.headline:
+        return item.headline
+    if item.short_headline:
+        return item.short_headline
+    return legacy_display_headline(item)
 
 
 def item_summary_body(item: NewsItem) -> str:
@@ -282,7 +307,8 @@ def render_status_chips(day: NewsDay, generated: str) -> str:
 
 
 def render_item_card(item: NewsItem) -> str:
-    headline = display_headline(item)
+    headline = display_full_headline(item)
+    dek = f'<p class="focus-dek">{esc(item.conclusion)}</p>' if item.conclusion else ""
     source = ""
     if item.source_url:
         source_label = item.source or "出典"
@@ -293,7 +319,8 @@ def render_item_card(item: NewsItem) -> str:
     return f"""
         <article class="focus-card">
           <p class="item-category">{esc(category_label(item.category))}</p>
-          <h3 title="{esc(item.conclusion)}">{esc(headline)}</h3>
+          <h3>{esc(headline)}</h3>
+          {dek}
           {source}
         </article>
     """
@@ -335,7 +362,7 @@ def render_latest_summary(day: NewsDay) -> str:
 
 
 def render_recent_day(day: NewsDay) -> str:
-    headlines = [display_headline(item) for item in ordered_items(day)[:5]]
+    headlines = [display_short_headline(item) for item in ordered_items(day)[:5]]
     if not headlines:
         headlines = [shorten_pickup_headline(point) for point in day.conclusions[:5]]
     if headlines:
@@ -419,7 +446,7 @@ def render_daily_item(item: NewsItem, position: int) -> str:
           <span class="item-number">{position}</span>
           <p class="item-category">{esc(category_label(item.category))}</p>
         </div>
-        <h3>{esc(display_headline(item))}</h3>
+        <h3>{esc(display_full_headline(item))}</h3>
         <p class="daily-summary">{esc(item_summary_body(item))}</p>
         {source}
       </article>
@@ -694,13 +721,22 @@ def render_html(days: list[NewsDay]) -> str:
       padding: 16px;
     }}
     .focus-card h3 {{
+      min-width: 0;
       font-size: 1.04rem;
       line-height: 1.45;
+      white-space: normal;
+      word-break: normal;
       overflow-wrap: anywhere;
+    }}
+    .focus-dek {{
       display: -webkit-box;
+      margin: 0;
       overflow: hidden;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 1;
     }}
     .item-category {{
       align-self: flex-start;
@@ -885,7 +921,7 @@ def render_html(days: list[NewsDay]) -> str:
         justify-content: stretch;
         width: 100%;
       }}
-      .header-actions a {{ flex: 1 1 11rem; }}
+      .header-actions a {{ flex: 1 1 100%; min-width: 0; }}
       .status-strip {{ margin-bottom: 24px; }}
       .status-chip {{
         min-height: 34px;
@@ -905,6 +941,7 @@ def render_html(days: list[NewsDay]) -> str:
         grid-template-columns: 1fr;
         gap: 12px;
       }}
+      .focus-card h3 {{ white-space: normal; }}
       .section-head {{
         display: grid;
         gap: 2px;

@@ -406,6 +406,7 @@ def editorial_entry_from_legacy_summary(item: dict[str, Any]) -> dict[str, Any]:
     }
     return {
         "headline_ja": "記事詳細は出典へ",
+        "short_headline_ja": "記事詳細は出典へ",
         "entry_ja": summary["conclusion"],
         "supporting_points_ja": [
             line
@@ -420,6 +421,7 @@ def normalize_editorial_entry(item: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(raw, dict):
         raw = editorial_entry_from_legacy_summary(item)
     headline_ja = clean_display_text(raw.get("headline_ja")) or "記事詳細は出典へ"
+    short_headline_ja = clean_display_text(raw.get("short_headline_ja")) or headline_ja
     entry_ja = clean_display_text(raw.get("entry_ja"))
     points = [
         clean_display_text(point)
@@ -430,6 +432,7 @@ def normalize_editorial_entry(item: dict[str, Any]) -> dict[str, Any]:
         entry_ja = clean_display_text(item.get("title"))
     return {
         "headline_ja": headline_ja,
+        "short_headline_ja": short_headline_ja,
         "entry_ja": entry_ja,
         "supporting_points_ja": points[:2],
     }
@@ -440,7 +443,11 @@ def render_editorial_entry_item(item: dict[str, Any]) -> list[str]:
     source = text_value(item.get("source")).strip()
     published_date = text_value(item.get("published_date")).strip()
     link = text_value(item.get("link")).strip()
-    lines = [f"- 短見出し：{entry['headline_ja']}", f"- 概要：{entry['entry_ja']}"]
+    lines = [
+        f"- 見出し：{entry['headline_ja']}",
+        f"- 短見出し：{entry['short_headline_ja']}",
+        f"- 概要：{entry['entry_ja']}",
+    ]
     lines.extend(f"- 補足：{point}" for point in entry["supporting_points_ja"])
     lines.extend(
         [
@@ -532,7 +539,7 @@ def render_prepared(data: dict[str, Any]) -> str:
 
 
 def render_editorial_entries(data: dict[str, Any]) -> str:
-    """Render final v2 entries without topic inference or display rewriting."""
+    """Render final v3 entries without topic inference or display rewriting."""
     return render_with_item_renderer(data, render_editorial_entry_item)
 
 

@@ -11,7 +11,7 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from malaysia_groq_model_profiles import load_model_profile_registry, resolve_model_profile
-from malaysia_groq_output_contract import EDITORIAL_ENTRY_V2_SCHEMA, editorial_entry_schema_error
+from malaysia_groq_output_contract import EDITORIAL_ENTRY_V3_SCHEMA, editorial_entry_schema_error
 from malaysia_groq_transport import build_chat_request_body, error_diagnostic, request_chat_completion
 
 
@@ -36,6 +36,7 @@ class FakeResponse:
 VALID = {
     "editorial_entry": {
         "headline_ja": "窓口を来月開設",
+        "short_headline_ja": "窓口を来月開設",
         "entry_ja": "省庁は来月の窓口開設を計画していると発表しました。",
         "supporting_points_ja": ["開始時期は来月とされています。"],
     }
@@ -54,8 +55,8 @@ class GroqTransportTest(unittest.TestCase):
             max_tokens=500,
             timeout_seconds=1,
             max_response_chars=4000,
-            json_schema_name="editorial_entry_v2",
-            json_schema=EDITORIAL_ENTRY_V2_SCHEMA,
+            json_schema_name="editorial_entry_v3",
+            json_schema=EDITORIAL_ENTRY_V3_SCHEMA,
             schema_error=editorial_entry_schema_error,
             api_key="test-key",
         )
@@ -68,8 +69,8 @@ class GroqTransportTest(unittest.TestCase):
             messages,
             0.2,
             500,
-            "editorial_entry_v2",
-            EDITORIAL_ENTRY_V2_SCHEMA,
+            "editorial_entry_v3",
+            EDITORIAL_ENTRY_V3_SCHEMA,
         )
         qwen = build_chat_request_body(resolve_model_profile("qwen36", self.registry), messages, 0.2, 500)
 
@@ -142,7 +143,8 @@ class GroqTransportTest(unittest.TestCase):
                         "content": json.dumps(
                             {
                                 "editorial_entry": {
-                                    "headline_ja": "",
+                                "headline_ja": "",
+                                "short_headline_ja": "短見出し",
                                     "entry_ja": "概要",
                                     "supporting_points_ja": [],
                                 }

@@ -1,4 +1,4 @@
-"""Editorial Entry v2 request-cap configuration.
+"""Editorial Entry v3 request-cap configuration.
 
 The former force-all priority and lexical gate policy is intentionally gone.
 The renderer accepts the legacy CLI flag but always requests selected items in

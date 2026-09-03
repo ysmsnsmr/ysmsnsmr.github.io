@@ -3,7 +3,8 @@
 from typing import Any
 
 
-HEADLINE_MAX_LENGTH = 15
+HEADLINE_MAX_LENGTH = 60
+SHORT_HEADLINE_MAX_LENGTH = 26
 
 
 # Final Markdown validation and per-item hard safety share this list. Keeping
@@ -110,10 +111,13 @@ def editorial_entry_schema() -> dict[str, Any]:
     return {
         "type": "object",
         "properties": {
-            # Keep the server-enforced schema and local validator on the same
-            # Unicode-character limit. JSON Schema cannot express the former
-            # half-width display calculation reliably.
+            # Keep server-enforced and local Unicode character limits aligned.
             "headline_ja": {"type": "string", "minLength": 1, "maxLength": HEADLINE_MAX_LENGTH},
+            "short_headline_ja": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": SHORT_HEADLINE_MAX_LENGTH,
+            },
             "entry_ja": {"type": "string", "minLength": 1},
             "supporting_points_ja": {
                 "type": "array",
@@ -122,12 +126,12 @@ def editorial_entry_schema() -> dict[str, Any]:
                 "maxItems": 2,
             },
         },
-        "required": ["headline_ja", "entry_ja", "supporting_points_ja"],
+        "required": ["headline_ja", "short_headline_ja", "entry_ja", "supporting_points_ja"],
         "additionalProperties": False,
     }
 
 
-EDITORIAL_ENTRY_V2_SCHEMA = {
+EDITORIAL_ENTRY_V3_SCHEMA = {
     "type": "object",
     "properties": {"editorial_entry": editorial_entry_schema()},
     "required": ["editorial_entry"],
@@ -135,20 +139,24 @@ EDITORIAL_ENTRY_V2_SCHEMA = {
 }
 
 
-# The repair request intentionally has a smaller surface than the production
-# entry contract. It is only used once after a transport or JSON-contract
-# failure, so a short headline and a single source-grounded overview are
-# enough to recover a usable entry without recreating the full response.
-EDITORIAL_ENTRY_REPAIR_SCHEMA = {
+# The repair request omits optional supporting points but preserves both
+# presentation roles. It is only used once after a transport or JSON-contract
+# failure.
+EDITORIAL_ENTRY_V3_REPAIR_SCHEMA = {
     "type": "object",
     "properties": {
         "editorial_entry": {
             "type": "object",
             "properties": {
                 "headline_ja": {"type": "string", "minLength": 1, "maxLength": HEADLINE_MAX_LENGTH},
+                "short_headline_ja": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": SHORT_HEADLINE_MAX_LENGTH,
+                },
                 "entry_ja": {"type": "string", "minLength": 1},
             },
-            "required": ["headline_ja", "entry_ja"],
+            "required": ["headline_ja", "short_headline_ja", "entry_ja"],
             "additionalProperties": False,
         }
     },
@@ -203,8 +211,23 @@ def editorial_headline_error(value: Any) -> str:
     return ""
 
 
+def editorial_short_headline_error(value: Any) -> str:
+    if not _is_string(value):
+        return "editorial_short_headline_type"
+    headline = value.strip()
+    if not headline:
+        return "editorial_short_headline_empty"
+    if len(headline) > SHORT_HEADLINE_MAX_LENGTH:
+        return "editorial_short_headline_too_long"
+    return ""
+
+
 def headline_is_valid(value: Any) -> bool:
     return not editorial_headline_error(value)
+
+
+def short_headline_is_valid(value: Any) -> bool:
+    return not editorial_short_headline_error(value)
 
 
 def _exact_keys(value: Any, keys: set[str]) -> bool:
@@ -277,11 +300,14 @@ def editorial_entry_schema_error(value: Any) -> str:
     if not _exact_keys(value, {"editorial_entry"}):
         return "root_shape"
     entry = value["editorial_entry"]
-    if not _exact_keys(entry, {"headline_ja", "entry_ja", "supporting_points_ja"}):
+    if not _exact_keys(entry, {"headline_ja", "short_headline_ja", "entry_ja", "supporting_points_ja"}):
         return "editorial_entry_shape"
     headline_error = editorial_headline_error(entry["headline_ja"])
     if headline_error:
         return headline_error
+    short_headline_error = editorial_short_headline_error(entry["short_headline_ja"])
+    if short_headline_error:
+        return short_headline_error
     if not _is_string(entry["entry_ja"]):
         return "editorial_entry_type"
     if not entry["entry_ja"].strip():
@@ -300,11 +326,14 @@ def editorial_entry_repair_schema_error(value: Any) -> str:
     if not _exact_keys(value, {"editorial_entry"}):
         return "root_shape"
     entry = value["editorial_entry"]
-    if not _exact_keys(entry, {"headline_ja", "entry_ja"}):
+    if not _exact_keys(entry, {"headline_ja", "short_headline_ja", "entry_ja"}):
         return "editorial_entry_shape"
     headline_error = editorial_headline_error(entry["headline_ja"])
     if headline_error:
         return headline_error
+    short_headline_error = editorial_short_headline_error(entry["short_headline_ja"])
+    if short_headline_error:
+        return short_headline_error
     if not _is_string(entry["entry_ja"]):
         return "editorial_entry_type"
     if not entry["entry_ja"].strip():
@@ -313,7 +342,7 @@ def editorial_entry_repair_schema_error(value: Any) -> str:
 
 
 def editorial_entry_forbidden_patterns(value: str) -> list[str]:
-    """Return display tokens that remain forbidden in Editorial Entry v2."""
+    """Return display tokens that remain forbidden in Editorial Entry v3."""
     return [pattern for pattern in EDITORIAL_ENTRY_FORBIDDEN_PATTERNS if pattern in value]
 
 

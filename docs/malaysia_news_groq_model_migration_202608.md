@@ -30,7 +30,7 @@ Before the cutover:
 The production profile uses the already observed GPT-OSS 120B request configuration:
 
 - prompt layout: `user_only`;
-- JSON contract: `editorial_entry_v2`;
+- JSON contract: `editorial_entry_v3`;
 - completion budget: `800` tokens;
 - rate-reset wait maximum: `60` seconds.
 

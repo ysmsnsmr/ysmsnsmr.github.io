@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the single Editorial Entry v2 production candidate."""
+"""Validate the single Editorial Entry v3 production candidate."""
 
 import argparse
 import json
@@ -12,7 +12,7 @@ from typing import Any
 from malaysia_groq_output_contract import EDITORIAL_ENTRY_FORBIDDEN_PATTERNS
 
 
-SCHEMA_VERSION = "malaysia-groq-editorial-entry-validator/v2"
+SCHEMA_VERSION = "malaysia-groq-editorial-entry-validator/v3"
 CATEGORY_HEADERS = ["【速報】", "【生活インパクト】", "【知っておくと得】"]
 REQUIRED_LINES = {
     "has_processed_count": "処理対象件数：",
@@ -273,7 +273,7 @@ def validate_candidate(
 def write_report(path: Path, result: dict[str, Any]) -> None:
     observation = result["observation"]
     lines = [
-        "# Groq Editorial Entry v2 validator",
+        "# Groq Editorial Entry v3 validator",
         "",
         f"- status: {'pass' if result['passed'] else 'fail'}",
         f"- selected_urls: {result['counts']['selected_urls']}",

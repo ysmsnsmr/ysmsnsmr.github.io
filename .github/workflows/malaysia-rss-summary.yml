@@ -27,7 +27,7 @@ on:
         default: false
         type: boolean
       groq_production_candidate:
-        description: "Retained for dispatch compatibility; Editorial Entry v2 always uses json-render"
+        description: "Retained for dispatch compatibility; Editorial Entry v3 always uses json-render"
         required: false
         default: "json-render"
         type: choice
@@ -42,7 +42,7 @@ on:
           - gpt-oss-120b
           - llama33-70b
       force_all_groq:
-        description: "Retained for dispatch compatibility; Editorial Entry v2 uses the configured cap in source order"
+        description: "Retained for dispatch compatibility; Editorial Entry v3 uses the configured cap in source order"
         required: false
         default: false
         type: boolean

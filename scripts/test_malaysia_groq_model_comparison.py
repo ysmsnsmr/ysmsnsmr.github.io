@@ -27,6 +27,16 @@ class ModelComparisonTest(unittest.TestCase):
         self.assertIn("kelecuran tahap satu", item["item"]["description"])
         self.assertIn("失神", item["observed_output"]["entry_ja"])
 
+    def test_semantic_quality_fixture_preserves_ringgit_direction_error(self) -> None:
+        fixture_path = Path(__file__).resolve().parent / "fixtures/malaysia_groq_model_migration_failures.json"
+        payload = json.loads(fixture_path.read_text(encoding="utf-8"))
+        item = next(
+            row for row in payload["items"]
+            if row.get("link") == "https://www.malaymail.com/news/money/2026/06/18/ringgit-closes-softer-against-us-dollar-and-asean-currencies-as-fed-outlook-weighs-on-markets/224323"
+        )
+        self.assertIn("softer", item["item"]["title"])
+        self.assertIn("上昇", item["observed_output"]["headline_ja"])
+
     def test_force_all_policy_has_no_source_priority_override(self) -> None:
         self.assertFalse(hasattr(malaysia_groq_force_all_policy, "force_all_request_priority"))
 
