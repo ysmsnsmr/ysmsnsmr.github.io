@@ -119,6 +119,9 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(sources["meta-product-news-rss"]["relevanceRevision"], "meta-ads-v1")
         self.assertEqual(self.config["policies"]["freshness"]["maxItemAgeDays"], 365)
         self.assertEqual(self.config["policies"]["bilingualPresentation"]["maxRequestsPerRun"], 12)
+        self.assertEqual(self.config["policies"]["bilingualPresentation"]["minRequestIntervalSeconds"], 12)
+        self.assertEqual(self.config["policies"]["bilingualPresentation"]["maxAttempts"], 3)
+        self.assertEqual(self.config["policies"]["bilingualPresentation"]["maxRetryDelaySeconds"], 60)
         self.assertTrue(all(source["contentLanguage"] == "en" for source in [*sources.values(), *discovered.values()]))
         self.assertTrue(all(source["platformIds"] for source in [*sources.values(), *discovered.values()]))
 
@@ -148,9 +151,29 @@ class PersonalFeedTest(unittest.TestCase):
             validate_config(invalid)
 
         invalid = copy.deepcopy(self.config)
+        invalid["policies"]["bilingualPresentation"]["minRequestIntervalSeconds"] = 0
+        with self.assertRaisesRegex(ContractError, "minRequestIntervalSeconds"):
+            validate_config(invalid)
+
+        invalid = copy.deepcopy(self.config)
         invalid["sources"][0]["platformIds"] = ["Meta Ads"]
         with self.assertRaisesRegex(ContractError, "platformIds"):
             validate_config(invalid)
+
+    def test_bilingual_presenter_spaces_requests_using_the_configured_rate_limit(self) -> None:
+        policy = self.config["policies"]["bilingualPresentation"]
+        with patch.dict(os.environ, {"GROQ_API_KEY": "test-key", "META_ADS_PERSONAL_FEED_JA_ENABLED": "true"}, clear=True), patch(
+            "meta_ads_personal_feed.request_bilingual_presentation",
+            return_value={"shortHeadlineEn": "One", "summaryEn": "Two", "shortHeadlineJa": "一", "summaryJa": "二"},
+        ) as request, patch("meta_ads_personal_feed.time.monotonic", side_effect=[100.0, 100.0, 100.0, 112.0]), patch(
+            "meta_ads_personal_feed.time.sleep"
+        ) as sleep:
+            presenter = _bilingual_presentation_from_environment(1)
+            assert presenter is not None
+            presenter("First", "Context", policy)
+            presenter("Second", "Context", policy)
+        self.assertEqual(request.call_count, 2)
+        sleep.assert_called_once_with(12.0)
 
     def test_empty_workflow_variables_use_the_documented_presentation_defaults(self) -> None:
         with patch.dict(
@@ -642,8 +665,58 @@ class PersonalFeedTest(unittest.TestCase):
             validate_feed(immutable_input_invalid, self.config)
 
     def test_v2_state_and_feed_migrate_one_way_to_v3_with_missing_locales(self) -> None:
-        v2_state = json.loads(Path("data/meta_ads_personal_feed_state.json").read_text(encoding="utf-8"))
-        v2_feed = json.loads(Path("meta-ads-updates/personal-feed.json").read_text(encoding="utf-8"))
+        # Production files are intentionally updated by scheduled collection.
+        # Keep this migration test on a fixed v2 input instead of making its
+        # meaning depend on the latest production schema version.
+        source = self.config["sources"][1]
+        fingerprint = "a" * 64
+        presentation = {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": None,
+            "summaryJa": None,
+            "sourceFingerprint": fingerprint,
+            "generatedAt": None,
+        }
+        record = {
+            "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v27.0.0",
+            "title": "v27.0.0",
+            "publishedDate": "2026-08-29",
+            "updatedDate": None,
+            "matchEvidence": ["all"],
+            "fingerprint": fingerprint,
+            "firstObservedAt": "2026-08-29T09:00:00Z",
+            "lastObservedAt": "2026-08-29T09:00:00Z",
+            "presentation": presentation,
+        }
+        v2_state = {
+            "schemaVersion": STATE_SCHEMA_VERSION,
+            "updatedAt": "2026-08-29T09:00:00Z",
+            "sources": {source["id"]: {"items": {"v27.0.0": record}}},
+        }
+        v2_feed = {
+            "schemaVersion": FEED_SCHEMA_VERSION,
+            "generatedAt": "2026-08-29T09:00:00Z",
+            "sources": [
+                {key: configured[key] for key in ("id", "name", "classification", "sourceUrl", "platforms")}
+                for configured in self.config["sources"]
+            ],
+            "items": [
+                {
+                    "id": "meta-business-sdk-releases-aaaaaaaaaaaaaaaaaaaa",
+                    "sourceId": source["id"],
+                    "title": record["title"],
+                    "url": record["url"],
+                    "publishedDate": record["publishedDate"],
+                    "updatedDate": record["updatedDate"],
+                    "firstObservedAt": record["firstObservedAt"],
+                    "lastObservedAt": record["lastObservedAt"],
+                    "platforms": source["platforms"],
+                    "matchEvidence": record["matchEvidence"],
+                    "presentation": presentation,
+                }
+            ],
+        }
         migrated_state = migrate_state_v2_to_v3(v2_state, self.config)
         migrated_feed = migrate_feed_v2_to_v3(v2_feed, self.config)
 

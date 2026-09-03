@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from email.message import Message
 from pathlib import Path
 from unittest.mock import patch
-from urllib.error import URLError
+from urllib.error import HTTPError, URLError
 from urllib.request import Request
 
 from defusedxml.common import DefusedXmlException
@@ -20,6 +20,7 @@ from meta_ads_tracker_collect import (
     _parse_sdk,
     _request,
     _validate_transport_url,
+    SourceFetchError,
     collect_and_write,
 )
 from meta_ads_tracker_contract import (
@@ -60,11 +61,13 @@ class FakeResponse:
 
 
 class FakeOpener:
-    def __init__(self, response: FakeResponse) -> None:
+    def __init__(self, response: FakeResponse | Exception) -> None:
         self.response = response
 
     def open(self, _request: Request, timeout: float) -> FakeResponse:
         self.timeout = timeout
+        if isinstance(self.response, Exception):
+            raise self.response
         return self.response
 
 
@@ -160,6 +163,34 @@ class MetaAdsTransportHardeningTest(unittest.TestCase):
                 "meta_ads_tracker_collect.urllib.request.build_opener", return_value=FakeOpener(response)
             ), self.assertRaises(ContractError):
                 _request(source, 1)
+
+    def test_request_retries_only_safe_transient_statuses_and_logs_no_response_content(self) -> None:
+        first = FakeOpener(
+            HTTPError(self.rss_source["fetchUrl"], 415, "unsupported", {"Retry-After": "4"}, None)
+        )
+        second = FakeOpener(
+            FakeResponse(b"<rss><channel /></rss>", "application/rss+xml", url=self.rss_source["fetchUrl"])
+        )
+        delays: list[float] = []
+        with patch("meta_ads_tracker_collect.socket.getaddrinfo", global_resolver), patch(
+            "meta_ads_tracker_collect.urllib.request.build_opener", side_effect=[first, second]
+        ) as build_opener:
+            body, content_type = _request(self.rss_source, 1, sleep=delays.append)
+        self.assertEqual((body, content_type), ("<rss><channel /></rss>", "application/rss+xml"))
+        self.assertEqual(delays, [4.0])
+        self.assertEqual(build_opener.call_count, 2)
+
+    def test_request_does_not_retry_permanent_status_or_expose_error_body(self) -> None:
+        blocked = FakeOpener(HTTPError(self.rss_source["fetchUrl"], 403, "secret response body", {}, None))
+        with patch("meta_ads_tracker_collect.socket.getaddrinfo", global_resolver), patch(
+            "meta_ads_tracker_collect.urllib.request.build_opener", return_value=blocked
+        ) as build_opener, self.assertRaises(SourceFetchError) as error:
+            _request(self.rss_source, 1, sleep=lambda _delay: None)
+        self.assertEqual(error.exception.source_id, self.rss_source["id"])
+        self.assertEqual(error.exception.reason, "http_status=403")
+        self.assertEqual(error.exception.attempts, 1)
+        self.assertNotIn("secret response body", str(error.exception))
+        self.assertEqual(build_opener.call_count, 1)
 
     def test_safe_parsers_reject_dtd_and_item_overflow(self) -> None:
         with self.assertRaises(DefusedXmlException):

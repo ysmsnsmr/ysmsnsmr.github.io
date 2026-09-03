@@ -11,7 +11,10 @@
       "maxRequestsPerRun": 12,
       "maxInputChars": 4000,
       "shortHeadlineMaxChars": 80,
-      "summaryMaxChars": 360
+      "summaryMaxChars": 360,
+      "minRequestIntervalSeconds": 12,
+      "maxAttempts": 3,
+      "maxRetryDelaySeconds": 60
     }
   },
   "sources": [
