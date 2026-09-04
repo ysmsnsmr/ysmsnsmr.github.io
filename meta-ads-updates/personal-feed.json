@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-09-04T04:36:33Z",
+  "generatedAt": "2026-09-04T22:53:07Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -68,7 +68,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -107,7 +107,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -145,7 +145,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -184,7 +184,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -223,7 +223,7 @@
       "publishedDate": "2026-08-13",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -262,7 +262,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -301,7 +301,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -340,7 +340,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -379,7 +379,7 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -417,7 +417,7 @@
       "publishedDate": "2026-08-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -456,7 +456,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -495,7 +495,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -534,7 +534,7 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -572,7 +572,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -611,7 +611,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -650,7 +650,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -689,7 +689,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -728,7 +728,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -767,7 +767,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -806,7 +806,7 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -844,7 +844,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -883,7 +883,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -922,7 +922,7 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -961,7 +961,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1000,7 +1000,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1039,7 +1039,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1078,7 +1078,7 @@
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1117,7 +1117,7 @@
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1156,7 +1156,7 @@
       "publishedDate": "2026-06-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1195,7 +1195,7 @@
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1234,7 +1234,7 @@
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1273,7 +1273,7 @@
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1312,7 +1312,7 @@
       "publishedDate": "2026-05-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1351,7 +1351,7 @@
       "publishedDate": "2026-05-26",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1390,7 +1390,7 @@
       "publishedDate": "2026-05-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1429,7 +1429,7 @@
       "publishedDate": "2026-05-19",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1468,7 +1468,7 @@
       "publishedDate": "2026-05-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1507,7 +1507,7 @@
       "publishedDate": "2026-05-12",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1546,7 +1546,7 @@
       "publishedDate": "2026-05-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1585,7 +1585,7 @@
       "publishedDate": "2026-05-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1663,7 +1663,7 @@
       "publishedDate": "2026-04-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1702,7 +1702,7 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1740,7 +1740,7 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1778,7 +1778,7 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1816,7 +1816,7 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1854,7 +1854,7 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1892,7 +1892,7 @@
       "publishedDate": "2025-09-26",
       "updatedDate": "2025-09-26",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-04T04:36:33Z",
+      "lastObservedAt": "2026-09-04T22:53:07Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
