@@ -4,11 +4,17 @@ on:
   workflow_dispatch:
     inputs:
       field_count:
-        description: "Strict response fields to probe (one request only)"
+        description: "Strict response field count (one request only)"
         required: true
         default: "1"
         type: choice
-        options: ["1", "2"]
+        options: ["1", "2", "4"]
+      locale:
+        description: "Diagnostic output language (2-ja probes Japanese fields; 4-en keeps production keys)"
+        required: true
+        default: "en"
+        type: choice
+        options: ["en", "ja"]
 
 permissions:
   contents: read
@@ -31,4 +37,5 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           META_ADS_PERSONAL_FEED_GROQ_MODEL: ${{ vars.META_ADS_PERSONAL_FEED_GROQ_MODEL }}
           FIELD_COUNT: ${{ inputs.field_count }}
-        run: python3 scripts/meta_ads_groq_schema_probe.py --field-count "${FIELD_COUNT}"
+          PROBE_LOCALE: ${{ inputs.locale }}
+        run: python3 scripts/meta_ads_groq_schema_probe.py --field-count "${FIELD_COUNT}" --locale "${PROBE_LOCALE}"

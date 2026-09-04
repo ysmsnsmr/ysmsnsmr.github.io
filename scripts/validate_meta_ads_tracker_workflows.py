@@ -92,8 +92,11 @@ def main() -> int:
         schema_probe = parsed["schema_probe"]
         probe_dispatch = schema_probe.get("on", {}).get("workflow_dispatch", {})
         probe_input = probe_dispatch.get("inputs", {}).get("field_count", {}) if isinstance(probe_dispatch, dict) else {}
-        if not isinstance(probe_input, dict) or probe_input.get("type") != "choice" or probe_input.get("options") != ["1", "2"]:
-            fail("Groq schema probe must offer exactly one- or two-field choices")
+        if not isinstance(probe_input, dict) or probe_input.get("type") != "choice" or probe_input.get("options") != ["1", "2", "4"]:
+            fail("Groq schema probe must offer exactly one-, two-, or four-field choices")
+        locale_input = probe_dispatch.get("inputs", {}).get("locale", {}) if isinstance(probe_dispatch, dict) else {}
+        if not isinstance(locale_input, dict) or locale_input.get("type") != "choice" or locale_input.get("options") != ["en", "ja"]:
+            fail("Groq schema probe must offer English and Japanese diagnostic choices")
         if schema_probe.get("permissions", {}).get("contents") != "read":
             fail("Groq schema probe must be read-only")
         probe_runs = "\n".join(run_blocks(schema_probe))
@@ -107,6 +110,8 @@ def main() -> int:
             fail("Groq schema probe must provide the API key through the environment")
         if probe_env.get("FIELD_COUNT") != "${{ inputs.field_count }}":
             fail("Groq schema probe must pass field count through an environment variable")
+        if probe_env.get("PROBE_LOCALE") != "${{ inputs.locale }}":
+            fail("Groq schema probe must pass locale through an environment variable")
         publish_runs = "\n".join(run_blocks(parsed["publish"]))
         if "meta_ads_tracker_groq.py" in publish_runs or "GROQ_API_KEY" in str(parsed["publish"]):
             fail("publish workflow must not run Groq")

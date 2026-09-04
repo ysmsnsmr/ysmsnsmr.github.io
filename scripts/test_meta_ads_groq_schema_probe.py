@@ -28,7 +28,7 @@ class GroqSchemaProbeTest(unittest.TestCase):
     def test_one_field_probe_sends_exact_strict_contract(self, urlopen) -> None:
         urlopen.return_value = _Response({"shortHeadlineEn": "Schema probe passed"})
         result = request_schema_probe(api_key="test-key", model="test-model", field_count=1)
-        self.assertEqual(result, {"fieldCount": 1, "fields": ["shortHeadlineEn"]})
+        self.assertEqual(result, {"fieldCount": 1, "locale": "en", "fields": ["shortHeadlineEn"]})
         payload = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
         schema = payload["response_format"]["json_schema"]
         self.assertTrue(schema["strict"])
@@ -41,6 +41,34 @@ class GroqSchemaProbeTest(unittest.TestCase):
         urlopen.return_value = _Response({"shortHeadlineEn": "Headline", "summaryEn": "Summary"})
         result = request_schema_probe(api_key="test-key", model="test-model", field_count=2)
         self.assertEqual(result["fields"], ["shortHeadlineEn", "summaryEn"])
+
+    @patch("meta_ads_groq_schema_probe.urllib.request.urlopen")
+    def test_two_japanese_fields_use_japanese_keys(self, urlopen) -> None:
+        urlopen.return_value = _Response({"shortHeadlineJa": "診断見出し", "summaryJa": "診断要約"})
+        result = request_schema_probe(api_key="test-key", model="test-model", field_count=2, locale="ja")
+        self.assertEqual(result, {"fieldCount": 2, "locale": "ja", "fields": ["shortHeadlineJa", "summaryJa"]})
+        payload = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
+        self.assertIn("Japanese", payload["messages"][0]["content"])
+
+    @patch("meta_ads_groq_schema_probe.urllib.request.urlopen")
+    def test_four_field_probe_keeps_production_shape(self, urlopen) -> None:
+        value = {
+            "shortHeadlineEn": "Headline",
+            "summaryEn": "Summary",
+            "shortHeadlineJa": "Headline",
+            "summaryJa": "Summary",
+        }
+        urlopen.return_value = _Response(value)
+        result = request_schema_probe(api_key="test-key", model="test-model", field_count=4)
+        self.assertEqual(result["fields"], list(value))
+        payload = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
+        schema = payload["response_format"]["json_schema"]["schema"]
+        self.assertEqual(set(schema["properties"]), set(value))
+        self.assertEqual(schema["required"], list(value))
+
+    def test_unsupported_locale_and_field_count_combination_is_rejected(self) -> None:
+        with self.assertRaisesRegex(ValueError, "unsupported"):
+            request_schema_probe(api_key="test-key", model="test-model", field_count=4, locale="ja")
 
     @patch("meta_ads_groq_schema_probe.urllib.request.urlopen")
     def test_probe_exposes_only_safe_provider_labels_on_failure(self, urlopen) -> None:
