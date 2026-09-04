@@ -15,6 +15,7 @@ SOURCE_DISPLAY = "source_display"
 RSS_FALLBACK = "rss_fallback"
 RSS_FALLBACK_ENTRY_KIND = "source_link_only"
 SOURCE_DISPLAY_ENTRY_KIND = "source_title_and_description"
+RENDER_SOURCE_KIND_FIELD = "_editorial_entry_render_source_kind"
 PROVENANCE_ORIGINS = (
     "rss_derived",
     "groq_replaced",
@@ -163,6 +164,9 @@ def apply_render_decisions(data: dict[str, Any], decisions: list[RenderDecision]
         if decision is None or decision.link != clean_text(item.get("link")):
             continue
         item["editorial_entry"] = copy.deepcopy(decision.editorial_entry)
+        # The single Markdown renderer uses this internal marker to put the
+        # code-owned safety fallback in the source-only appendix.
+        item[RENDER_SOURCE_KIND_FIELD] = decision.source_kind
     return rendered
 
 

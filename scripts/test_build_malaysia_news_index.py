@@ -81,6 +81,15 @@ V3_MARKDOWN = """【速報】
 """
 
 
+SOURCE_ONLY_MARKDOWN = V3_MARKDOWN + """
+【原文のみ】
+
+- 原題：Bursa Malaysia ends higher after BNM holds OPR
+- 出典：Malay Mail（2026年9月4日）
+- 出典元URL：https://example.test/bursa
+"""
+
+
 class MalaysiaNewsIndexTests(unittest.TestCase):
     def parse_sample(self) -> builder.NewsDay:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -200,6 +209,22 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertIn(first.conclusion, builder.render_item_card(first))
         self.assertIn(first.short_headline, builder.render_recent_day(day))
         self.assertIn(first.headline, builder.render_daily_page(day))
+
+    def test_source_only_entries_are_not_cards_but_remain_on_daily_page(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "2026-09-04.md"
+            path.write_text(SOURCE_ONLY_MARKDOWN, encoding="utf-8")
+            day = builder.parse_markdown(path)
+
+        self.assertEqual(len(day.items), 2)
+        self.assertEqual(len(day.source_only_items), 1)
+        self.assertEqual(day.source_only_items[0].title, "Bursa Malaysia ends higher after BNM holds OPR")
+        daily = builder.render_daily_page(day)
+        index = builder.render_html([day])
+        self.assertIn("原文のみ", daily)
+        self.assertIn("Bursa Malaysia ends higher after BNM holds OPR", daily)
+        self.assertIn("https://example.test/bursa", daily)
+        self.assertNotIn("Bursa Malaysia ends higher after BNM holds OPR", index)
 
 
 if __name__ == "__main__":

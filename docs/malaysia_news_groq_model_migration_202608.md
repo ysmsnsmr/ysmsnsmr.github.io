@@ -34,7 +34,7 @@ The production profile uses the already observed GPT-OSS 120B request configurat
 - completion budget: `800` tokens;
 - rate-reset wait maximum: `60` seconds.
 
-The production response has one required Japanese `entry_ja` and zero to two `supporting_points_ja`. Subject, attribution, state, and certainty remain in this prose; life impact and next action are not independent required fields. Groq failures, request-cap skips, malformed JSON, and hard-safety rejections render the RSS Editorial Entry instead.
+The production response has one required Japanese `entry_ja` and zero to two `supporting_points_ja`. Subject, attribution, state, and certainty remain in this prose; life impact and next action are not independent required fields. API未実行やrequest-cap skipは原題・説明のsource displayとして通常表示し、hard-safety rejectionなどのcode-owned safety fallbackは日別ページ末尾の「原文のみ」一覧へ降格する。
 
 The single profile registry is `scripts/malaysia_groq_model_profiles.json`. Workflow YAML must not contain a model-ID selection branch.
 

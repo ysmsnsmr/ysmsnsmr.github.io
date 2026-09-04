@@ -305,6 +305,7 @@ class EditorialEntryV3Test(unittest.TestCase):
                 "KUALA LUMPUR, Aug 21 — The Ministry of Health issued a warning.",
             ],
         }
+        data["items"][1]["title"] = "KUALA LUMPUR, Aug 21 — Dengue cases surge"
         rejection = groq_renderer.GroqEditorialEntryRejected(
             "unsupported death claim",
             {"transport_status": "success", "json_contract_status": "valid"},
@@ -321,9 +322,10 @@ class EditorialEntryV3Test(unittest.TestCase):
             accepted, "test-model", stats, groq_renderer.datetime.now(), records
         )
         markdown = markdown_renderer.render_editorial_entries(final)
-        self.assertNotIn("KUALA LUMPUR,", markdown)
-        self.assertNotIn("Dengue cases surge", markdown)
-        self.assertIn("この記事の詳細は出典リンクで確認できます。", markdown)
+        self.assertNotIn("The Ministry of Health issued a warning.", markdown)
+        self.assertNotIn("この記事の詳細は出典リンクで確認できます。", markdown)
+        self.assertIn("【原文のみ】", markdown)
+        self.assertIn("- 原題：KUALA LUMPUR, Aug 21 — Dengue cases surge", markdown)
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             selected_path = root / "selected.json"
@@ -340,6 +342,7 @@ class EditorialEntryV3Test(unittest.TestCase):
             result["observation"]["rss_fallback_source_link_only_count"],
             1,
         )
+        self.assertEqual(result["markdown_validation"]["source_only_links"], [item(2)["link"]])
 
     def test_validator_allows_forbidden_source_text_only_in_source_display(self) -> None:
         data = {

@@ -8,6 +8,8 @@ from typing import Any, Callable
 
 
 CATEGORIES = ["【速報】", "【生活インパクト】", "【知っておくと得】"]
+SOURCE_ONLY_HEADER = "【原文のみ】"
+RENDER_SOURCE_KIND_FIELD = "_editorial_entry_render_source_kind"
 TOPIC_ORDER = [
     "flood",
     "storm_weather",
@@ -459,6 +461,33 @@ def render_editorial_entry_item(item: dict[str, Any]) -> list[str]:
     return lines
 
 
+def is_source_only_fallback(item: dict[str, Any]) -> bool:
+    return clean_display_text(item.get(RENDER_SOURCE_KIND_FIELD)) == "rss_fallback"
+
+
+def render_source_only_item(item: dict[str, Any]) -> list[str]:
+    title = clean_display_text(item.get("title")) or clean_display_text(item.get("link"))
+    source = text_value(item.get("source")).strip()
+    published_date = text_value(item.get("published_date")).strip()
+    link = text_value(item.get("link")).strip()
+    return [
+        f"- 原題：{title}",
+        f"- 出典：{source}（{published_date}）",
+        f"- 出典元URL：{link}",
+        "",
+    ]
+
+
+def render_source_only_appendix(items: list[dict[str, Any]]) -> list[str]:
+    source_only_items = [item for item in items if is_source_only_fallback(item)]
+    if not source_only_items:
+        return []
+    lines = [SOURCE_ONLY_HEADER, ""]
+    for item in source_only_items:
+        lines.extend(render_source_only_item(item))
+    return lines
+
+
 def selected_items_from_data(data: dict[str, Any]) -> list[dict[str, Any]]:
     raw_items = data.get("items", [])
     return [item for item in raw_items if isinstance(item, dict)] if isinstance(raw_items, list) else []
@@ -502,6 +531,8 @@ def print_diagnostics(data: dict[str, Any]) -> None:
 def render_with_item_renderer(
     data: dict[str, Any],
     item_renderer: Callable[[dict[str, Any]], list[str]],
+    item_filter: Callable[[dict[str, Any]], bool] | None = None,
+    appendix_renderer: Callable[[list[dict[str, Any]]], list[str]] | None = None,
 ) -> str:
     items = selected_items_from_data(data)
     counts = data.get("counts", {})
@@ -516,8 +547,13 @@ def render_with_item_renderer(
         lines.append(category)
         lines.append("")
         for item in items:
-            if item.get("category") == category:
+            if item.get("category") == category and (item_filter is None or item_filter(item)):
                 lines.extend(item_renderer(item))
+
+    if appendix_renderer:
+        appendix = appendix_renderer(items)
+        if appendix:
+            lines.extend(appendix)
 
     processed = counts.get("processed", 0)
     selected = counts.get("selected", len(items))
@@ -539,8 +575,13 @@ def render_prepared(data: dict[str, Any]) -> str:
 
 
 def render_editorial_entries(data: dict[str, Any]) -> str:
-    """Render final v3 entries without topic inference or display rewriting."""
-    return render_with_item_renderer(data, render_editorial_entry_item)
+    """Render v3 entries and retain safety fallbacks as source-only links."""
+    return render_with_item_renderer(
+        data,
+        render_editorial_entry_item,
+        item_filter=lambda item: not is_source_only_fallback(item),
+        appendix_renderer=render_source_only_appendix,
+    )
 
 
 def main() -> int:
