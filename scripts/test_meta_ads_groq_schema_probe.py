@@ -7,6 +7,7 @@ from unittest.mock import patch
 from urllib.error import HTTPError
 
 from meta_ads_groq_schema_probe import request_schema_probe
+from meta_ads_personal_feed_presentation import _bilingual_messages
 
 
 class _Response:
@@ -65,6 +66,30 @@ class GroqSchemaProbeTest(unittest.TestCase):
         schema = payload["response_format"]["json_schema"]["schema"]
         self.assertEqual(set(schema["properties"]), set(value))
         self.assertEqual(schema["required"], list(value))
+
+    @patch("meta_ads_groq_schema_probe.urllib.request.urlopen")
+    def test_bilingual_probe_reuses_production_prompt_and_request_limits(self, urlopen) -> None:
+        value = {
+            "shortHeadlineEn": "Headline",
+            "summaryEn": "Summary",
+            "shortHeadlineJa": "見出し",
+            "summaryJa": "要約",
+        }
+        urlopen.return_value = _Response(value)
+        result = request_schema_probe(api_key="test-key", model="test-model", field_count=4, locale="bilingual")
+        self.assertEqual(result["fields"], list(value))
+        payload = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
+        self.assertEqual(
+            payload["messages"],
+            _bilingual_messages(
+                "Meta Ads schema compatibility probe",
+                "A diagnostic request with no production source content.",
+                80,
+                360,
+            ),
+        )
+        self.assertEqual(payload["max_tokens"], 1400)
+        self.assertEqual(payload["response_format"]["json_schema"]["name"], "meta_ads_bilingual_presentation")
 
     def test_unsupported_locale_and_field_count_combination_is_rejected(self) -> None:
         with self.assertRaisesRegex(ValueError, "unsupported"):

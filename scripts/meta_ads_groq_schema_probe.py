@@ -16,7 +16,13 @@ import sys
 import urllib.request
 from typing import Any
 
-from meta_ads_personal_feed_presentation import PresentationError, _completion_content, _strict_schema, _text
+from meta_ads_personal_feed_presentation import (
+    PresentationError,
+    _bilingual_messages,
+    _completion_content,
+    _strict_schema,
+    _text,
+)
 
 
 PROBE_CASES = {
@@ -31,10 +37,23 @@ PROBE_CASES = {
         "shortHeadlineJa": 80,
         "summaryJa": 360,
     },
+    (4, "bilingual"): {
+        "shortHeadlineEn": 80,
+        "summaryEn": 360,
+        "shortHeadlineJa": 80,
+        "summaryJa": 360,
+    },
 }
 
 
 def _messages(fields: dict[str, int], locale: str) -> list[dict[str, str]]:
+    if locale == "bilingual":
+        return _bilingual_messages(
+            "Meta Ads schema compatibility probe",
+            "A diagnostic request with no production source content.",
+            fields["shortHeadlineEn"],
+            fields["summaryEn"],
+        )
     output = ", ".join(fields)
     language = "Japanese" if locale == "ja" else "English"
     return [
@@ -69,13 +88,14 @@ def request_schema_probe(
         raise ValueError("unsupported diagnostic field/locale combination")
     if not api_key.strip():
         raise PresentationError("api_key_unavailable")
+    bilingual = locale == "bilingual"
     payload = {
         "model": model,
         "messages": _messages(fields, locale),
         "temperature": 0,
-        "max_tokens": 700,
+        "max_tokens": 1400 if bilingual else 700,
         "stream": False,
-        "response_format": _strict_schema("meta_ads_schema_probe", fields),
+        "response_format": _strict_schema("meta_ads_bilingual_presentation" if bilingual else "meta_ads_schema_probe", fields),
     }
     request = urllib.request.Request(
         "https://api.groq.com/openai/v1/chat/completions",
@@ -87,7 +107,7 @@ def request_schema_probe(
         },
         method="POST",
     )
-    content = _completion_content(request, timeout=timeout, response_limit=50_000, max_attempts=1)
+    content = _completion_content(request, timeout=timeout, response_limit=75_000 if bilingual else 50_000, max_attempts=1)
     try:
         value = json.loads(content)
     except json.JSONDecodeError:
@@ -110,8 +130,8 @@ def _parse_field_count(value: str) -> int:
 
 
 def _parse_locale(value: str) -> str:
-    if value not in {"en", "ja"}:
-        raise argparse.ArgumentTypeError("locale must be en or ja")
+    if value not in {"en", "ja", "bilingual"}:
+        raise argparse.ArgumentTypeError("locale must be en, ja, or bilingual")
     return value
 
 

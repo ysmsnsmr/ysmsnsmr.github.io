@@ -95,8 +95,8 @@ def main() -> int:
         if not isinstance(probe_input, dict) or probe_input.get("type") != "choice" or probe_input.get("options") != ["1", "2", "4"]:
             fail("Groq schema probe must offer exactly one-, two-, or four-field choices")
         locale_input = probe_dispatch.get("inputs", {}).get("locale", {}) if isinstance(probe_dispatch, dict) else {}
-        if not isinstance(locale_input, dict) or locale_input.get("type") != "choice" or locale_input.get("options") != ["en", "ja"]:
-            fail("Groq schema probe must offer English and Japanese diagnostic choices")
+        if not isinstance(locale_input, dict) or locale_input.get("type") != "choice" or locale_input.get("options") != ["en", "ja", "bilingual"]:
+            fail("Groq schema probe must offer English, Japanese, and bilingual diagnostic choices")
         if schema_probe.get("permissions", {}).get("contents") != "read":
             fail("Groq schema probe must be read-only")
         probe_runs = "\n".join(run_blocks(schema_probe))

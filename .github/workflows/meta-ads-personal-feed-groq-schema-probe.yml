@@ -10,11 +10,11 @@ on:
         type: choice
         options: ["1", "2", "4"]
       locale:
-        description: "Diagnostic output language (2-ja probes Japanese fields; 4-en keeps production keys)"
+        description: "Diagnostic mode (2-ja probes Japanese fields; 4-en isolates field count; 4-bilingual matches production prompt)"
         required: true
         default: "en"
         type: choice
-        options: ["en", "ja"]
+        options: ["en", "ja", "bilingual"]
 
 permissions:
   contents: read
