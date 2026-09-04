@@ -23,6 +23,7 @@ WORKFLOWS = {
     "recovery_promotion": ROOT / ".github/workflows/meta-ads-tracker-recovery-promote.yml",
     "presentation_backfill": ROOT / ".github/workflows/meta-ads-personal-feed-presentation-backfill.yml",
     "schema_probe": ROOT / ".github/workflows/meta-ads-personal-feed-groq-schema-probe.yml",
+    "real_candidate_probe": ROOT / ".github/workflows/meta-ads-personal-feed-groq-real-candidate-probe.yml",
 }
 PINNED_ACTIONS = {
     "actions/checkout": "3d3c42e5aac5ba805825da76410c181273ba90b1",
@@ -89,6 +90,7 @@ def main() -> int:
         for name in ("collect", "publish", "secondary_shadow", "friday_preflight", "weekly_recovery", "recovery_promotion", "presentation_backfill"):
             require_pinned_actions(name, parsed[name])
         require_pinned_actions("schema_probe", parsed["schema_probe"])
+        require_pinned_actions("real_candidate_probe", parsed["real_candidate_probe"])
         schema_probe = parsed["schema_probe"]
         probe_dispatch = schema_probe.get("on", {}).get("workflow_dispatch", {})
         probe_input = probe_dispatch.get("inputs", {}).get("field_count", {}) if isinstance(probe_dispatch, dict) else {}
@@ -112,6 +114,23 @@ def main() -> int:
             fail("Groq schema probe must pass field count through an environment variable")
         if probe_env.get("PROBE_LOCALE") != "${{ inputs.locale }}":
             fail("Groq schema probe must pass locale through an environment variable")
+        real_probe = parsed["real_candidate_probe"]
+        if real_probe.get("permissions", {}).get("contents") != "read":
+            fail("Groq real-candidate probe must be read-only")
+        real_runs = "\n".join(run_blocks(real_probe))
+        if "meta_ads_groq_real_candidate_probe.py" not in real_runs:
+            fail("Groq real-candidate probe must run the dedicated diagnostic script")
+        if any(value in real_runs for value in ("git add", "git commit", "write_json", "upload-artifact")):
+            fail("Groq real-candidate probe must not write repository files or artifacts")
+        real_step = next(
+            (step for step in steps(real_probe) if step.get("name") == "Probe one real candidate with the production bilingual prompt"),
+            None,
+        )
+        real_env = real_step.get("env", {}) if isinstance(real_step, dict) else {}
+        if not isinstance(real_env, dict) or real_env.get("GROQ_API_KEY") != "${{ secrets.GROQ_API_KEY }}":
+            fail("Groq real-candidate probe must provide the API key through the environment")
+        if real_env.get("PROBE_SOURCE_ID") != "${{ inputs.source_id }}":
+            fail("Groq real-candidate probe must pass source ID through an environment variable")
         publish_runs = "\n".join(run_blocks(parsed["publish"]))
         if "meta_ads_tracker_groq.py" in publish_runs or "GROQ_API_KEY" in str(parsed["publish"]):
             fail("publish workflow must not run Groq")

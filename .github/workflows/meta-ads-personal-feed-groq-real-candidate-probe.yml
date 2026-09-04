@@ -1,0 +1,35 @@
+name: Meta Ads Personal Feed Groq real candidate probe
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_id:
+        description: "Configured Personal Feed source to probe"
+        required: true
+        default: "jon-loomer-meta-ads"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: meta-ads-groq-real-candidate-probe
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: "3.12"
+      - name: Install tracker dependencies
+        run: python3 -m pip install -r requirements-meta-ads-tracker.txt
+      - name: Probe one real candidate with the production bilingual prompt
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          META_ADS_PERSONAL_FEED_GROQ_MODEL: ${{ vars.META_ADS_PERSONAL_FEED_GROQ_MODEL }}
+          PROBE_SOURCE_ID: ${{ inputs.source_id }}
+        run: python3 scripts/meta_ads_groq_real_candidate_probe.py --source-id "${PROBE_SOURCE_ID}"
