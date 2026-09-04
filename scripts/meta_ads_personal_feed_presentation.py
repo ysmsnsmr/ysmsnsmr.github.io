@@ -9,6 +9,7 @@ or written by this module.
 from __future__ import annotations
 
 import json
+import re
 import time
 import urllib.error
 import urllib.request
@@ -43,15 +44,57 @@ FAILURE_CODES = frozenset(
 class PresentationError(ValueError):
     """A safe, source-body-free presentation generation failure."""
 
-    def __init__(self, code: str = "unknown", *, attempts: int = 1) -> None:
+    def __init__(
+        self,
+        code: str = "unknown",
+        *,
+        attempts: int = 1,
+        provider_error_type: str | None = None,
+        provider_error_code: str | None = None,
+    ) -> None:
         self.code = code if code in FAILURE_CODES else "unknown"
         self.attempts = attempts
+        self.provider_error_type = _safe_error_label(provider_error_type)
+        self.provider_error_code = _safe_error_label(provider_error_code)
         super().__init__(self.code)
 
 
 MAX_GROQ_ATTEMPTS = 3
 MAX_GROQ_RETRY_DELAY_SECONDS = 60
 RETRYABLE_GROQ_CODES = frozenset({"rate_limited_429", "capacity_498", "http_server_error", "network_error"})
+MAX_ERROR_BODY_BYTES = 16_384
+_SAFE_ERROR_LABEL = re.compile(r"^[a-z0-9][a-z0-9_.:-]{0,63}$")
+
+
+def _safe_error_label(value: Any) -> str | None:
+    """Return only a bounded, log-safe provider label; never retain messages."""
+    if not isinstance(value, str):
+        return None
+    label = value.strip().lower()
+    return label if _SAFE_ERROR_LABEL.fullmatch(label) else None
+
+
+def _provider_error_labels(error: urllib.error.HTTPError) -> tuple[str | None, str | None]:
+    """Read a bounded error response and retain only error.type/error.code.
+
+    Groq error messages and response bytes are intentionally discarded. The
+    labels are restricted to short, single-line identifiers before they can
+    reach a ``PresentationError`` or workflow log.
+    """
+    try:
+        body = error.read(MAX_ERROR_BODY_BYTES + 1)
+    except (AttributeError, KeyError, OSError, ValueError):
+        return None, None
+    if not isinstance(body, bytes) or len(body) > MAX_ERROR_BODY_BYTES:
+        return None, None
+    try:
+        payload = json.loads(body.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return None, None
+    details = payload.get("error") if isinstance(payload, dict) else None
+    if not isinstance(details, dict):
+        return None, None
+    return _safe_error_label(details.get("type")), _safe_error_label(details.get("code"))
 
 
 def _http_failure_code(status: int) -> str:
@@ -85,8 +128,12 @@ def _strict_schema(name: str, fields: dict[str, int]) -> dict[str, Any]:
             "schema": {
                 "type": "object",
                 "properties": {
-                    field: {"type": "string", "minLength": 1, "maxLength": maximum}
-                    for field, maximum in fields.items()
+                    # Groq Structured Outputs currently rejects some JSON
+                    # Schema constraints. Keep the provider contract to the
+                    # supported primitive type; _text() remains the single
+                    # source of truth for persisted length validation.
+                    field: {"type": "string"}
+                    for field in fields
                 },
                 "required": list(fields),
                 "additionalProperties": False,
@@ -111,8 +158,14 @@ def _completion_content(
                 response_bytes = response.read(response_limit + 1)
         except urllib.error.HTTPError as error:
             code = _http_failure_code(error.code)
+            provider_error_type, provider_error_code = _provider_error_labels(error)
             if code not in RETRYABLE_GROQ_CODES or attempt == max_attempts:
-                raise PresentationError(code, attempts=attempt) from error
+                raise PresentationError(
+                    code,
+                    attempts=attempt,
+                    provider_error_type=provider_error_type,
+                    provider_error_code=provider_error_code,
+                ) from None
             sleep(_retry_delay(error.headers, attempt, max_retry_delay_seconds))
             continue
         except OSError as error:

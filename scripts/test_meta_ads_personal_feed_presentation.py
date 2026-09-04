@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import io
 import unittest
 from unittest.mock import patch
 from urllib.error import HTTPError
@@ -71,6 +72,8 @@ class PersonalFeedPresentationTest(unittest.TestCase):
         self.assertTrue(response_format["json_schema"]["strict"])
         self.assertEqual(response_format["json_schema"]["schema"]["required"], ["shortHeadlineJa", "summaryJa"])
         self.assertFalse(response_format["json_schema"]["schema"]["additionalProperties"])
+        self.assertNotIn("minLength", response_format["json_schema"]["schema"]["properties"]["shortHeadlineJa"])
+        self.assertNotIn("maxLength", response_format["json_schema"]["schema"]["properties"]["summaryJa"])
 
     @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
     def test_rejects_extra_fields_and_overlong_output(self, urlopen) -> None:
@@ -114,6 +117,48 @@ class PersonalFeedPresentationTest(unittest.TestCase):
             )
         self.assertEqual(error.exception.code, "rate_limited_429")
         self.assertNotIn("rate limited", str(error.exception))
+
+    @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
+    def test_retains_only_safe_provider_error_type_and_code(self, urlopen) -> None:
+        body = json.dumps(
+            {
+                "error": {
+                    "message": "do not expose this response body",
+                    "type": "invalid_request_error",
+                    "code": "blocked_api_access",
+                }
+            }
+        ).encode("utf-8")
+        urlopen.side_effect = HTTPError(
+            "https://api.groq.com/openai/v1/chat/completions",
+            400,
+            "bad request",
+            {},
+            io.BytesIO(body),
+        )
+        with self.assertRaises(PresentationError) as raised:
+            self.request()
+        error = raised.exception
+        self.assertEqual(error.code, "http_400")
+        self.assertEqual(error.provider_error_type, "invalid_request_error")
+        self.assertEqual(error.provider_error_code, "blocked_api_access")
+        self.assertNotIn("do not expose", str(error))
+        self.assertIsNone(error.__cause__)
+
+    @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
+    def test_discards_untrusted_provider_labels(self, urlopen) -> None:
+        body = b'{"error":{"type":"invalid_request_error\\nsecret","code":"../../secret"}}'
+        urlopen.side_effect = HTTPError(
+            "https://api.groq.com/openai/v1/chat/completions",
+            400,
+            "bad request",
+            {},
+            io.BytesIO(body),
+        )
+        with self.assertRaises(PresentationError) as raised:
+            self.request()
+        self.assertIsNone(raised.exception.provider_error_type)
+        self.assertIsNone(raised.exception.provider_error_code)
 
     @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
     def test_retries_only_transient_groq_failures_with_bounded_backoff(self, urlopen) -> None:
@@ -193,6 +238,7 @@ class PersonalFeedPresentationTest(unittest.TestCase):
         self.assertTrue(schema["strict"])
         self.assertEqual(set(schema["schema"]["required"]), {"shortHeadlineEn", "summaryEn", "shortHeadlineJa", "summaryJa"})
         self.assertFalse(schema["schema"]["additionalProperties"])
+        self.assertTrue(all("minLength" not in field and "maxLength" not in field for field in schema["schema"]["properties"].values()))
 
     @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
     def test_bilingual_request_rejects_partial_output(self, urlopen) -> None:

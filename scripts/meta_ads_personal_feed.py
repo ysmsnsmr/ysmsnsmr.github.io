@@ -1248,6 +1248,8 @@ def _presentation_stats(
         "failed": 0,
         "deferred": 0,
         "failureReasons": {},
+        "providerErrorTypes": {},
+        "providerErrorCodes": {},
         "sources": {
             source["id"]: {
                 "eligible": 0,
@@ -1255,6 +1257,8 @@ def _presentation_stats(
                 "generated": 0,
                 "failed": 0,
                 "failureReasons": {},
+                "providerErrorTypes": {},
+                "providerErrorCodes": {},
             }
             for source in _all_sources(config)
         },
@@ -1312,10 +1316,25 @@ def _presentation_failure_code(error: Exception) -> str:
     return "unknown"
 
 
-def _record_presentation_failure(stats: dict[str, Any], source_id: str, code: str) -> None:
+def _record_presentation_failure(
+    stats: dict[str, Any],
+    source_id: str,
+    code: str,
+    error: Exception | None = None,
+) -> None:
     stats["failureReasons"][code] = stats["failureReasons"].get(code, 0) + 1
     source_reasons = stats["sources"][source_id]["failureReasons"]
     source_reasons[code] = source_reasons.get(code, 0) + 1
+    provider_error_type = getattr(error, "provider_error_type", None)
+    provider_error_code = getattr(error, "provider_error_code", None)
+    if provider_error_type:
+        stats["providerErrorTypes"][provider_error_type] = stats["providerErrorTypes"].get(provider_error_type, 0) + 1
+        source_types = stats["sources"][source_id]["providerErrorTypes"]
+        source_types[provider_error_type] = source_types.get(provider_error_type, 0) + 1
+    if provider_error_code:
+        stats["providerErrorCodes"][provider_error_code] = stats["providerErrorCodes"].get(provider_error_code, 0) + 1
+        source_codes = stats["sources"][source_id]["providerErrorCodes"]
+        source_codes[provider_error_code] = source_codes.get(provider_error_code, 0) + 1
 
 
 def _print_presentation_stats(stats: dict[str, Any]) -> None:
@@ -1335,8 +1354,16 @@ def _print_presentation_stats(stats: dict[str, Any]) -> None:
         )
         for code, count in sorted(counts["failureReasons"].items()):
             print(f"PRESENTATION_SOURCE_FAILURE: id={source_id} code={code} count={count}")
+        for error_type, count in sorted(counts["providerErrorTypes"].items()):
+            print(f"PRESENTATION_SOURCE_ERROR_TYPE: id={source_id} error_type={error_type} count={count}")
+        for error_code, count in sorted(counts["providerErrorCodes"].items()):
+            print(f"PRESENTATION_SOURCE_ERROR_CODE: id={source_id} error_code={error_code} count={count}")
     for code, count in sorted(stats["failureReasons"].items()):
         print(f"PRESENTATION_FAILURE: code={code} count={count}")
+    for error_type, count in sorted(stats["providerErrorTypes"].items()):
+        print(f"PRESENTATION_ERROR_TYPE: error_type={error_type} count={count}")
+    for error_code, count in sorted(stats["providerErrorCodes"].items()):
+        print(f"PRESENTATION_ERROR_CODE: error_code={error_code} count={count}")
 
 
 def _print_source_pipeline_stats(stats: dict[str, Any]) -> None:
@@ -1608,7 +1635,7 @@ def collect(
                 record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION)
                 stats["failed"] += 1
                 stats["sources"][source_id]["failed"] += 1
-                _record_presentation_failure(stats, source_id, _presentation_failure_code(error))
+                _record_presentation_failure(stats, source_id, _presentation_failure_code(error), error)
     stats["deferred"] = max(0, stats["eligible"] - stats["attempted"])
 
     feed = build_feed(next_state, config, generated_at)
