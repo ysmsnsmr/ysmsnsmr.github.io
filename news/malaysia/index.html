@@ -157,13 +157,22 @@
       padding: 16px;
     }
     .focus-card h3 {
+      min-width: 0;
       font-size: 1.04rem;
       line-height: 1.45;
+      white-space: normal;
+      word-break: normal;
       overflow-wrap: anywhere;
+    }
+    .focus-dek {
       display: -webkit-box;
+      margin: 0;
       overflow: hidden;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 1;
     }
     .item-category {
       align-self: flex-start;
@@ -348,7 +357,7 @@
         justify-content: stretch;
         width: 100%;
       }
-      .header-actions a { flex: 1 1 11rem; }
+      .header-actions a { flex: 1 1 100%; min-width: 0; }
       .status-strip { margin-bottom: 24px; }
       .status-chip {
         min-height: 34px;
@@ -368,6 +377,7 @@
         grid-template-columns: 1fr;
         gap: 12px;
       }
+      .focus-card h3 { white-space: normal; }
       .section-head {
         display: grid;
         gap: 2px;
@@ -401,19 +411,19 @@
         <p class="subhead">生活に関わるマレーシアニュースをRSSから日次で収集・要約しています。</p>
       </div>
       <div class="header-actions">
-        <a class="primary-link" href="./2026-09-03.html">今日のまとめを読む</a>
+        <a class="primary-link" href="./2026-09-04.html">今日のまとめを読む</a>
         <a class="secondary-link" href="#archive-heading">過去分を見る</a>
       </div>
     </header>
     <div class="status-strip" aria-label="更新状況と集計">
-      <span class="status-chip"><span>更新</span><strong>2026年9月3日 09:23 MYT</strong></span>
-<span class="status-chip"><span>処理対象</span><strong>104件</strong></span>
-<span class="status-chip"><span>要約対象</span><strong>6件</strong></span>
+      <span class="status-chip"><span>更新</span><strong>2026年9月4日 09:16 MYT</strong></span>
+<span class="status-chip"><span>処理対象</span><strong>97件</strong></span>
+<span class="status-chip"><span>要約対象</span><strong>10件</strong></span>
 <span class="status-chip"><span>失敗ソース</span><strong>なし</strong></span>
       <span class="count-pill"><span>速報</span><strong>1</strong></span>
-<span class="count-pill"><span>生活インパクト</span><strong>1</strong></span>
-<span class="count-pill"><span>知っておくと得</span><strong>4</strong></span>
-      <a class="markdown-link" href="./2026-09-03.md">Markdown版</a>
+<span class="count-pill"><span>生活インパクト</span><strong>2</strong></span>
+<span class="count-pill"><span>知っておくと得</span><strong>7</strong></span>
+      <a class="markdown-link" href="./2026-09-04.md">Markdown版</a>
     </div>
 
     <section aria-labelledby="today-heading">
@@ -425,31 +435,34 @@
         <div class="today-head">
           <div>
             <p class="eyebrow">Latest</p>
-            <h2>2026年9月3日</h2>
+            <h2>2026年9月4日</h2>
             <p class="muted">カテゴリ順に、生活への影響を確認できます。</p>
           </div>
-          <a class="primary-link" href="./2026-09-03.html">10件すべて読む</a>
+          <a class="primary-link" href="./2026-09-04.html">10件すべて読む</a>
         </div>
         <div class="focus-grid">
 
         <article class="focus-card">
           <p class="item-category">速報</p>
-          <h3 title="マレーシア気象局は、クアラルンプールを含む13地域で本日7時まで雷雨・大雨・強風が続くと警報を出しました。">KL他で雷雨注意</h3>
-          <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/02/thunderstorms-heavy-rain-to-hit-kl-and-12-states-until-7pm-says-metmalaysia/233692">出典: Malay Mail（2026年9月2日）</a>
+          <h3>エルニーニョで乾燥と煙が来年5月まで続く見通し―専門家</h3>
+          <p class="focus-dek">専門家は、エルニーニョ現象により暑く乾燥した天候が続き、火災リスクと煙（ジレブ）の発生が来年5月まで段階的に拡大すると指摘しています。</p>
+          <a class="source-link" href="https://www.astroawani.com/berita-malaysia/el-nino-keadaan-kering-jerebu-dijangka-berterusan-secara-berperingkat-sehingga-mei-tahun-depan-pakar">出典: Astro Awani（2026年9月3日）</a>
         </article>
 
 
         <article class="focus-card">
           <p class="item-category">生活インパクト</p>
-          <h3 title="4PAMは、公共交通を電気・水道と同等の基本インフラと位置付け、新住宅プロジェクトの計画段階でバス事業者の参加が必要だと主張しています。住民が車に依存し続けるリスクを指摘しています。">バス事業者も新住宅計画へ</h3>
-          <a class="source-link" href="https://paultan.org/2026/09/02/bus-operators-need-to-be-included-in-discussions-when-planning-for-new-housing-projects-says-4pam/">出典: Paul Tan（2026年9月2日）</a>
+          <h3>PJハーフマラソン開催に伴う道路閉鎖、9月6日（日）に実施</h3>
+          <p class="focus-dek">PJ Half Marathonが9月6日（日）に開催されるため、MBPJはJalan Yong Shook Lin前などで道路を封鎖し、レースビレッジの設置を行います。通勤・通学や車の利用者は事前に通行ルートや料金所の状況を確認してください。</p>
+          <a class="source-link" href="https://paultan.org/2026/09/03/pj-half-marathon-2026-road-closures-this-weekend/">出典: Paul Tan（2026年9月3日）</a>
         </article>
 
 
         <article class="focus-card">
-          <p class="item-category">知っておくと得</p>
-          <h3 title="リンギットは水曜日、米ドルに対し下落が続き、6時のレートは4.0435/0475となった。一方、ポンドとユーロに対しては上昇した。ムアマラット銀行のモハメド・アフザニザム首席エコノミストは、世界的な長期国債利回り上昇と政府債務の高止まりが為替の主な懸念材料だと指摘した。">リンギット、米ドル安が続く</h3>
-          <a class="source-link" href="https://www.malaymail.com/news/money/2026/09/02/ringgit-weakens-against-us-dollar-mixed-against-other-major-currencies/233700">出典: Malay Mail（2026年9月2日）</a>
+          <p class="item-category">生活インパクト</p>
+          <h3>リム・グアン・エン、ペナンの料金値上げを延期するよう要請</h3>
+          <p class="focus-dek">DAPのエア・プティ議員リム・グアン・エン氏は、ペナン州政府に対し、料金・地代・水道料金の値上げを延期するよう求めました。</p>
+          <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/04/lim-guan-eng-calls-for-penang-fee-land-tax-and-water-tariff-hikes-to-be-deferred/233827">出典: Malay Mail（2026年9月4日）</a>
         </article>
 
         </div>
@@ -463,6 +476,26 @@
         <p>今日を除く直近日を比較</p>
       </div>
       <div class="recent-list">
+        <article class="recent-card">
+          <p class="eyebrow">Daily</p>
+          <h3>2026年9月3日</h3>
+          <div class="counts compact-counts" aria-label="カテゴリ別件数">
+            <span class="count-pill"><span>速報</span><strong>1</strong></span>
+<span class="count-pill"><span>生活インパクト</span><strong>1</strong></span>
+<span class="count-pill"><span>知っておくと得</span><strong>4</strong></span>
+          </div>
+          <div class="recent-body">
+            <ol class="recent-headline-list"><li>KL他で雷雨注意</li>
+<li>バス事業者も新住宅計画へ</li>
+<li>リンギット、米ドル安が続く</li>
+<li>記事詳細は出典へ</li>
+<li>台湾でAI株に借金投資</li></ol>
+          </div>
+          <p class="recent-meta">6件 / 失敗なし</p>
+          <a class="open-link" href="./2026-09-03.html">その日のまとめ</a>
+        </article>
+
+
         <article class="recent-card">
           <p class="eyebrow">Daily</p>
           <h3>2026年9月2日</h3>
@@ -559,26 +592,6 @@
           <p class="recent-meta">8件 / 失敗なし</p>
           <a class="open-link" href="./2026-08-29.html">その日のまとめ</a>
         </article>
-
-
-        <article class="recent-card">
-          <p class="eyebrow">Daily</p>
-          <h3>2026年8月28日</h3>
-          <div class="counts compact-counts" aria-label="カテゴリ別件数">
-            <span class="count-pill"><span>速報</span><strong>1</strong></span>
-<span class="count-pill"><span>生活インパクト</span><strong>1</strong></span>
-<span class="count-pill"><span>知っておくと得</span><strong>6</strong></span>
-          </div>
-          <div class="recent-body">
-            <ol class="recent-headline-list"><li>ジョホール等で大雨と強風</li>
-<li>国慶と休暇でWCE渋滞予想</li>
-<li>バンダル高速計画が閣議承認</li>
-<li>記事詳細は出典へ</li>
-<li>Setel、規制上の課題を是正</li></ol>
-          </div>
-          <p class="recent-meta">8件 / 失敗なし</p>
-          <a class="open-link" href="./2026-08-28.html">その日のまとめ</a>
-        </article>
       </div>
     </section>
 
@@ -591,9 +604,16 @@
             <details class="archive-month" open>
               <summary>
                 <span>2026年8月</span>
-                <span>27日分</span>
+                <span>28日分</span>
               </summary>
               <ul class="archive-list">
+
+            <li>
+              <a href="./2026-08-28.html">2026年8月28日</a>
+              <span>8件</span>
+              <span>なし</span>
+            </li>
+
 
             <li>
               <a href="./2026-08-27.html">2026年8月27日</a>
