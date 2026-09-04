@@ -618,6 +618,35 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertIn("PRESENTATION_FAILURE: code=response_invalid_json count=4", output.getvalue())
         self.assertNotIn("campaign controls", output.getvalue())
 
+    def test_presentation_failure_logs_only_provider_type_and_code(self) -> None:
+        stats: dict = {}
+
+        def failing_presenter(_title: str, _source_context: str, _policy: dict) -> dict[str, str]:
+            raise PresentationError(
+                "http_400",
+                provider_error_type="invalid_request_error",
+                provider_error_code="blocked_api_access",
+            )
+
+        feed, _next_state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+            failing_presenter,
+            presentation_stats=stats,
+        )
+        self.assertEqual(len(feed["items"]), 4)
+        output = io.StringIO()
+        with redirect_stdout(output):
+            _print_presentation_stats(stats)
+        log = output.getvalue()
+        self.assertIn("PRESENTATION_ERROR_TYPE: error_type=invalid_request_error count=4", log)
+        self.assertIn("PRESENTATION_ERROR_CODE: error_code=blocked_api_access count=4", log)
+        self.assertNotIn("blocked_api_access", json.dumps(feed))
+        self.assertNotIn("blocked_api_access", json.dumps(stats["failureReasons"]))
+
     def test_presentation_contract_rejects_stale_fingerprint_and_overlong_text(self) -> None:
         def presenter(title: str, _source_context: str, _policy: dict) -> dict[str, str]:
             return {"shortHeadlineEn": f"{title} headline", "summaryEn": f"{title} summary", "shortHeadlineJa": f"{title} の短見出し", "summaryJa": f"{title} の要約"}
