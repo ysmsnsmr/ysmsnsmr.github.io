@@ -22,6 +22,7 @@ WORKFLOWS = {
     "weekly_recovery": ROOT / ".github/workflows/meta-ads-tracker-weekly-recovery.yml",
     "recovery_promotion": ROOT / ".github/workflows/meta-ads-tracker-recovery-promote.yml",
     "presentation_backfill": ROOT / ".github/workflows/meta-ads-personal-feed-presentation-backfill.yml",
+    "schema_probe": ROOT / ".github/workflows/meta-ads-personal-feed-groq-schema-probe.yml",
 }
 PINNED_ACTIONS = {
     "actions/checkout": "3d3c42e5aac5ba805825da76410c181273ba90b1",
@@ -87,6 +88,25 @@ def main() -> int:
                 fail(f"{name} must share repository-write concurrency")
         for name in ("collect", "publish", "secondary_shadow", "friday_preflight", "weekly_recovery", "recovery_promotion", "presentation_backfill"):
             require_pinned_actions(name, parsed[name])
+        require_pinned_actions("schema_probe", parsed["schema_probe"])
+        schema_probe = parsed["schema_probe"]
+        probe_dispatch = schema_probe.get("on", {}).get("workflow_dispatch", {})
+        probe_input = probe_dispatch.get("inputs", {}).get("field_count", {}) if isinstance(probe_dispatch, dict) else {}
+        if not isinstance(probe_input, dict) or probe_input.get("type") != "choice" or probe_input.get("options") != ["1", "2"]:
+            fail("Groq schema probe must offer exactly one- or two-field choices")
+        if schema_probe.get("permissions", {}).get("contents") != "read":
+            fail("Groq schema probe must be read-only")
+        probe_runs = "\n".join(run_blocks(schema_probe))
+        if "meta_ads_groq_schema_probe.py" not in probe_runs:
+            fail("Groq schema probe must run the dedicated diagnostic script")
+        if any(value in probe_runs for value in ("meta_ads_personal_feed.py", "personal-feed.json", "meta_ads_personal_feed_state.json")):
+            fail("Groq schema probe must not run the collector or write feed/state")
+        probe_step = next((step for step in steps(schema_probe) if step.get("name") == "Probe one strict Groq schema request"), None)
+        probe_env = probe_step.get("env", {}) if isinstance(probe_step, dict) else {}
+        if not isinstance(probe_env, dict) or probe_env.get("GROQ_API_KEY") != "${{ secrets.GROQ_API_KEY }}":
+            fail("Groq schema probe must provide the API key through the environment")
+        if probe_env.get("FIELD_COUNT") != "${{ inputs.field_count }}":
+            fail("Groq schema probe must pass field count through an environment variable")
         publish_runs = "\n".join(run_blocks(parsed["publish"]))
         if "meta_ads_tracker_groq.py" in publish_runs or "GROQ_API_KEY" in str(parsed["publish"]):
             fail("publish workflow must not run Groq")
