@@ -6,8 +6,19 @@ on:
       source_id:
         description: "Configured Personal Feed source to probe"
         required: true
-        default: "jon-loomer-meta-ads"
+        default: "meta-product-news-rss"
         type: string
+      candidate_id:
+        description: "Exact current feed item ID to probe"
+        required: true
+        default: "meta-product-news-rss-87932d2acdd42983aa7d"
+        type: string
+      context_limit:
+        description: "Source context characters (0 means title only)"
+        required: true
+        default: "4000"
+        type: choice
+        options: ["4000", "2000", "1000", "0"]
 
 permissions:
   contents: read
@@ -32,4 +43,11 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           META_ADS_PERSONAL_FEED_GROQ_MODEL: ${{ vars.META_ADS_PERSONAL_FEED_GROQ_MODEL }}
           PROBE_SOURCE_ID: ${{ inputs.source_id }}
-        run: python3 scripts/meta_ads_groq_real_candidate_probe.py --source-id "${PROBE_SOURCE_ID}"
+          PROBE_CANDIDATE_ID: ${{ inputs.candidate_id }}
+          PROBE_CONTEXT_LIMIT: ${{ inputs.context_limit }}
+        run: |
+          python3 scripts/meta_ads_groq_real_candidate_probe.py \
+            --source-id "${PROBE_SOURCE_ID}" \
+            --candidate-id "${PROBE_CANDIDATE_ID}" \
+            --max-input-chars "${PROBE_CONTEXT_LIMIT}" \
+            --require-missing
