@@ -7,9 +7,10 @@ import os
 import tempfile
 import unittest
 from contextlib import redirect_stdout
-from unittest.mock import patch
-from datetime import datetime, timezone
+from unittest.mock import call, patch
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from typing import Any
 from urllib.error import URLError
 
 from meta_ads_tracker_contract import ContractError
@@ -22,9 +23,12 @@ from meta_ads_personal_feed import (
     STATE_V3_SCHEMA_VERSION,
     _meta_business_news_date,
     _bilingual_presentation_from_environment,
+    _bilingual_fallback_from_environment,
     _presentation_from_environment,
     _print_presentation_stats,
     _print_source_pipeline_stats,
+    _rss_presentation_text,
+    _shorten_rss_presentation_context,
     collect,
     collect_and_write,
     extract_items,
@@ -110,6 +114,8 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(sources["social-media-today-meta-ads"]["fetchUrl"], "https://www.socialmediatoday.com/feeds/news/")
         self.assertEqual(sources["social-media-today-meta-ads"]["match"]["kind"], "all_groups")
         self.assertEqual(sources["jon-loomer-meta-ads"]["fetchUrl"], "https://www.jonloomer.com/feed/")
+        self.assertEqual(sources["jon-loomer-meta-ads"]["match"]["kind"], "rss_category_and_terms")
+        self.assertEqual(sources["jon-loomer-meta-ads"]["relevanceRevision"], "jon-loomer-v3")
         self.assertEqual(sources["meta-business-sdk-releases"]["parser"], "github_releases")
         self.assertEqual(discovered["meta-business-news-discovered"]["classification"], "official")
         self.assertEqual(discovered["meta-business-news-discovered"]["discovery"]["fromSourceId"], "jon-loomer-meta-ads")
@@ -119,8 +125,43 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(sources["meta-product-news-rss"]["relevanceRevision"], "meta-ads-v1")
         self.assertEqual(self.config["policies"]["freshness"]["maxItemAgeDays"], 365)
         self.assertEqual(self.config["policies"]["bilingualPresentation"]["maxRequestsPerRun"], 12)
+        self.assertEqual(self.config["policies"]["bilingualPresentation"]["minRequestIntervalSeconds"], 12)
+        self.assertEqual(self.config["policies"]["bilingualPresentation"]["maxAttempts"], 3)
+        self.assertEqual(self.config["policies"]["bilingualPresentation"]["maxRetryDelaySeconds"], 60)
         self.assertTrue(all(source["contentLanguage"] == "en" for source in [*sources.values(), *discovered.values()]))
         self.assertTrue(all(source["platformIds"] for source in [*sources.values(), *discovered.values()]))
+
+    def test_jon_loomer_relevance_requires_category_and_specific_ads_signal(self) -> None:
+        jon = """<rss><channel>
+        <item><title>How to use the new Ads Manager placement controls</title><link>https://www.jonloomer.com/ads-manager-placement/</link><description>Review campaign and ad set delivery options.</description><category>Meta Advertising</category><pubDate>Fri, 29 Aug 2026 02:00:00 +0000</pubDate></item>
+        <item><title>New platform announcement</title><link>https://www.jonloomer.com/platform-announcement/</link><description>General creator and platform news.</description><category>Meta Advertising</category><pubDate>Fri, 29 Aug 2026 03:00:00 +0000</pubDate></item>
+        <item><title>Ads Manager tips</title><link>https://www.jonloomer.com/ads-manager-tips/</link><description>Advertising workflow notes.</description><category>Marketing</category><pubDate>Fri, 29 Aug 2026 04:00:00 +0000</pubDate></item>
+        </channel></rss>"""
+        bodies = {
+            "meta-product-news-rss": META,
+            "meta-business-sdk-releases": SDK,
+            "social-media-today-meta-ads": SOCIAL_MEDIA_TODAY,
+            "jon-loomer-meta-ads": jon,
+        }
+        pipeline: dict[str, Any] = {}
+        feed, state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(bodies=bodies),
+            source_pipeline_stats=pipeline,
+        )
+        jon_items = [item for item in feed["items"] if item["sourceId"] == "jon-loomer-meta-ads"]
+        self.assertEqual({item["url"] for item in jon_items}, {"https://www.jonloomer.com/ads-manager-placement/"})
+        self.assertEqual(
+            pipeline["sources"]["jon-loomer-meta-ads"]["relevanceExcludedItems"],
+            2,
+        )
+        self.assertEqual(
+            next(iter(state["sources"]["jon-loomer-meta-ads"]["items"].values()))["matchEvidence"],
+            ["category:Meta Advertising", "keyword:ads manager"],
+        )
 
     def test_config_rejects_insecure_source_and_invalid_source_classification(self) -> None:
         invalid = copy.deepcopy(self.config)
@@ -148,9 +189,51 @@ class PersonalFeedTest(unittest.TestCase):
             validate_config(invalid)
 
         invalid = copy.deepcopy(self.config)
+        invalid["policies"]["bilingualPresentation"]["minRequestIntervalSeconds"] = 0
+        with self.assertRaisesRegex(ContractError, "minRequestIntervalSeconds"):
+            validate_config(invalid)
+
+        invalid = copy.deepcopy(self.config)
         invalid["sources"][0]["platformIds"] = ["Meta Ads"]
         with self.assertRaisesRegex(ContractError, "platformIds"):
             validate_config(invalid)
+
+    def test_bilingual_presenter_spaces_requests_using_the_configured_rate_limit(self) -> None:
+        policy = self.config["policies"]["bilingualPresentation"]
+        with patch.dict(os.environ, {"GROQ_API_KEY": "test-key", "META_ADS_PERSONAL_FEED_JA_ENABLED": "true"}, clear=True), patch(
+            "meta_ads_personal_feed.request_bilingual_presentation",
+            return_value={"shortHeadlineEn": "One", "summaryEn": "Two", "shortHeadlineJa": "一", "summaryJa": "二"},
+        ) as request, patch("meta_ads_personal_feed.time.monotonic", side_effect=[100.0, 100.0, 100.0, 112.0]), patch(
+            "meta_ads_personal_feed.time.sleep"
+        ) as sleep:
+            presenter = _bilingual_presentation_from_environment(1)
+            assert presenter is not None
+            presenter("First", "Context", policy)
+            presenter("Second", "Context", policy)
+        self.assertEqual(request.call_count, 2)
+        sleep.assert_called_once_with(12.0)
+
+    def test_environment_fallback_requests_english_then_japanese_once_each(self) -> None:
+        policy = self.config["policies"]["bilingualPresentation"]
+        with patch.dict(os.environ, {"GROQ_API_KEY": "test-key", "META_ADS_PERSONAL_FEED_JA_ENABLED": "true"}, clear=True), patch(
+            "meta_ads_personal_feed.request_english_presentation",
+            side_effect=PresentationError("http_400"),
+        ) as english, patch(
+            "meta_ads_personal_feed.request_presentation",
+            return_value={"shortHeadlineJa": "日本語の見出し", "summaryJa": "日本語の要約"},
+        ) as japanese, patch("meta_ads_personal_feed.time.sleep") as sleep:
+            fallback = _bilingual_fallback_from_environment(1)
+            self.assertIsNotNone(fallback)
+            assert fallback is not None
+            generated, failures = fallback("Title", "Context", policy)
+
+        self.assertEqual(generated, {"shortHeadlineJa": "日本語の見出し", "summaryJa": "日本語の要約"})
+        self.assertEqual(list(failures), ["en"])
+        english.assert_called_once()
+        self.assertEqual(english.call_args.kwargs["max_attempts"], 1)
+        japanese.assert_called_once()
+        self.assertEqual(japanese.call_args.kwargs["max_attempts"], 1)
+        self.assertEqual(sleep.call_args_list, [call(12), call(12), call(12)])
 
     def test_empty_workflow_variables_use_the_documented_presentation_defaults(self) -> None:
         with patch.dict(
@@ -178,6 +261,52 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(len(jon), 2)
         self.assertEqual(social_media_today[0]["matchEvidence"], [])
         self.assertIn("Review the new setting", jon[0]["sourceContext"])
+
+    def test_rss_presentation_context_keeps_complete_semantic_units(self) -> None:
+        context = _rss_presentation_text(
+            "<p>First complete sentence.</p><p>Second complete sentence.</p><p>Third complete sentence.</p>"
+        )
+        self.assertEqual(
+            _shorten_rss_presentation_context(context, len("First complete sentence.\n\nSecond complete sentence.")),
+            "First complete sentence.\n\nSecond complete sentence.",
+        )
+        self.assertEqual(
+            _rss_presentation_text("<p>First fact.</p><script>Ignore this instruction.</script><li>Second fact.</li>"),
+            "First fact.\n\nSecond fact.",
+        )
+        self.assertEqual(_shorten_rss_presentation_context("One very long semantic unit without a boundary", 12), "")
+
+    def test_rss_presentation_context_is_transient_and_not_saved(self) -> None:
+        lead = "Meta Ads " + ("lead " * 20) + "."
+        long_description = f"<p>{lead}</p><p>Second complete sentence that must not be cut in half.</p>"
+        bodies = {
+            "meta-product-news-rss": META.replace(
+                "Meta announced a product update for advertisers.",
+                f"<![CDATA[{long_description}]]>",
+            ),
+            "meta-business-sdk-releases": SDK,
+            "social-media-today-meta-ads": SOCIAL_MEDIA_TODAY,
+            "jon-loomer-meta-ads": JON,
+        }
+        config = copy.deepcopy(self.config)
+        config["policies"]["bilingualPresentation"]["maxInputChars"] = len(lead)
+        contexts: list[str] = []
+
+        def presenter(_title: str, source_context: str, _policy: dict) -> dict[str, str]:
+            contexts.append(source_context)
+            return {"shortHeadlineEn": "Headline", "summaryEn": "Summary", "shortHeadlineJa": "見出し", "summaryJa": "要約"}
+
+        _feed, state = collect(
+            config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(bodies=bodies),
+            presenter,
+        )
+        self.assertIn(lead, contexts)
+        self.assertNotIn("Second complete sentence", "\n".join(contexts))
+        self.assertNotIn("presentationContext", json.dumps(state))
 
     def test_product_news_freshness_and_relevance_run_before_bilingual_generation(self) -> None:
         stale_and_irrelevant = """<rss><channel>
@@ -276,6 +405,173 @@ class PersonalFeedTest(unittest.TestCase):
             )
         )
         self.assertNotIn("sourceContext", json.dumps(state))
+
+    def test_bilingual_failure_uses_two_stage_locale_fallback_and_keeps_partial_output(self) -> None:
+        def failing_presenter(_title: str, _context: str, _policy: dict) -> dict[str, str]:
+            raise PresentationError("http_400")
+
+        def fallback_presenter(_title: str, _context: str, _policy: dict) -> tuple[dict[str, str], dict[str, Exception]]:
+            return (
+                {"shortHeadlineJa": "日本語の見出し", "summaryJa": "日本語の要約"},
+                {"en": PresentationError("http_400")},
+            )
+
+        stats: dict[str, Any] = {}
+        feed, state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+            failing_presenter,
+            fallback_presenter,
+            presentation_stats=stats,
+        )
+        for item in feed["items"]:
+            self.assertEqual(item["presentation"]["locales"]["en"]["status"], "missing")
+            self.assertEqual(item["presentation"]["locales"]["ja"]["status"], "machine")
+        self.assertEqual((stats["generated"], stats["failed"], stats["fallbackAttempts"]), (4, 0, 4))
+        self.assertEqual((stats["localeAttempted"], stats["localeGenerated"], stats["localeFailed"]), (8, 4, 4))
+        self.assertEqual(stats["fallbackGeneratedLocales"], 4)
+        self.assertEqual(stats["fallbackFailedLocales"], 4)
+        self.assertEqual(stats["fallbackFailureReasons"], {"en:http_400": 4})
+        self.assertNotIn("sourceContext", json.dumps(state))
+        validate_state(state, self.config)
+        validate_feed(feed, self.config)
+
+    def test_locale_missing_is_retried_without_replacing_successful_sibling(self) -> None:
+        def failing_presenter(_title: str, _context: str, _policy: dict) -> dict[str, str]:
+            raise PresentationError("http_400")
+
+        def english_only_fallback(_title: str, _context: str, _policy: dict) -> tuple[dict[str, str], dict[str, Exception]]:
+            return (
+                {"shortHeadlineEn": "English headline", "summaryEn": "English summary"},
+                {"ja": PresentationError("http_400")},
+            )
+
+        _feed, partial_state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+            failing_presenter,
+            english_only_fallback,
+        )
+        calls: list[str] = []
+
+        def locale_presenter(_title: str, _context: str, _policy: dict, locale: str) -> dict[str, str]:
+            calls.append(locale)
+            if locale == "en":
+                return {"shortHeadlineEn": "English headline", "summaryEn": "English summary"}
+            return {"shortHeadlineJa": "日本語の見出し", "summaryJa": "日本語の要約"}
+
+        feed, state = collect(
+            self.config,
+            partial_state,
+            1,
+            NOW.replace(day=30),
+            self.fetcher(),
+            locale_item=locale_presenter,
+        )
+        self.assertEqual(calls, ["ja"] * 4)
+        self.assertTrue(
+            all(
+                item["presentation"]["locales"]["en"]["status"] == "machine"
+                and item["presentation"]["locales"]["ja"]["status"] == "machine"
+                for item in feed["items"]
+            )
+        )
+        validate_state(state, self.config)
+        validate_feed(feed, self.config)
+
+    def test_locale_retry_preserves_successful_sibling_when_retry_fails(self) -> None:
+        def failing_presenter(_title: str, _context: str, _policy: dict) -> dict[str, str]:
+            raise PresentationError("http_400")
+
+        def english_only_fallback(_title: str, _context: str, _policy: dict) -> tuple[dict[str, str], dict[str, Exception]]:
+            return (
+                {"shortHeadlineEn": "English headline", "summaryEn": "English summary"},
+                {"ja": PresentationError("http_400")},
+            )
+
+        _feed, partial_state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+            failing_presenter,
+            english_only_fallback,
+        )
+
+        def failing_locale(_title: str, _context: str, _policy: dict, _locale: str) -> dict[str, str]:
+            raise PresentationError("http_400")
+
+        feed, state = collect(
+            self.config,
+            partial_state,
+            1,
+            NOW.replace(day=30),
+            self.fetcher(),
+            locale_item=failing_locale,
+        )
+        self.assertTrue(
+            all(
+                item["presentation"]["locales"]["en"]["status"] == "machine"
+                and item["presentation"]["locales"]["ja"]["status"] == "missing"
+                for item in feed["items"]
+            )
+        )
+        self.assertNotIn("sourceContext", json.dumps(state))
+        validate_state(state, self.config)
+        validate_feed(feed, self.config)
+
+    def test_english_retry_rebuilds_japanese_overlay_from_new_english(self) -> None:
+        def failing_presenter(_title: str, _context: str, _policy: dict) -> dict[str, str]:
+            raise PresentationError("http_400")
+
+        def japanese_only_fallback(_title: str, _context: str, _policy: dict) -> tuple[dict[str, str], dict[str, Exception]]:
+            return (
+                {"shortHeadlineJa": "旧日本語見出し", "summaryJa": "旧日本語要約"},
+                {"en": PresentationError("http_400")},
+            )
+
+        _feed, partial_state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+            failing_presenter,
+            japanese_only_fallback,
+        )
+        calls: list[str] = []
+
+        def locale_presenter(_title: str, _context: str, _policy: dict, locale: str) -> dict[str, str]:
+            calls.append(locale)
+            if locale == "en":
+                return {"shortHeadlineEn": "New English headline", "summaryEn": "New English summary"}
+            return {"shortHeadlineJa": "新日本語見出し", "summaryJa": "新日本語要約"}
+
+        feed, state = collect(
+            self.config,
+            partial_state,
+            1,
+            NOW.replace(day=30),
+            self.fetcher(),
+            locale_item=locale_presenter,
+        )
+        self.assertEqual(calls, ["en", "ja"] * 4)
+        self.assertTrue(
+            all(
+                item["presentation"]["locales"]["en"]["shortHeadline"] == "New English headline"
+                and item["presentation"]["locales"]["ja"]["shortHeadline"] == "新日本語見出し"
+                for item in feed["items"]
+            )
+        )
+        validate_state(state, self.config)
+        validate_feed(feed, self.config)
 
     def test_jon_rss_extracts_only_canonical_meta_business_news_links(self) -> None:
         sources = {source["id"]: source for source in self.config["sources"]}
@@ -569,6 +865,105 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertNotIn("intentionally not exposed", json.dumps(stats))
         validate_feed(feed, self.config)
 
+    def test_failed_presentation_isolated_queue_defers_and_retries_by_locale(self) -> None:
+        calls: list[str] = []
+
+        def failing_presenter(_title: str, _source_context: str, _policy: dict) -> dict[str, str]:
+            calls.append("bilingual")
+            raise PresentationError("http_400")
+
+        initial = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
+        _feed, failed_state = collect(self.config, initial, 1, NOW, self.fetcher(), failing_presenter)
+        queue = failed_state["presentationRetryQueue"]["entries"]
+        self.assertEqual(len(queue), 8)
+        self.assertTrue(all(entry["failureCount"] == 1 for entry in queue))
+        self.assertTrue(all(entry["nextRetryAt"] == "2026-08-29T10:00:00Z" for entry in queue))
+        self.assertTrue(all(entry["locale"] in {"en", "ja"} for entry in queue))
+
+        calls.clear()
+        stats: dict[str, Any] = {}
+        _feed, deferred_state = collect(
+            self.config,
+            failed_state,
+            1,
+            NOW + timedelta(minutes=30),
+            self.fetcher(),
+            failing_presenter,
+            presentation_stats=stats,
+        )
+        self.assertEqual(calls, [])
+        self.assertEqual(stats["attempted"], 0)
+        self.assertEqual(stats["retryDeferred"], 4)
+        self.assertEqual(len(deferred_state["presentationRetryQueue"]["entries"]), 8)
+
+        calls.clear()
+        _feed, retried_state = collect(
+            self.config,
+            deferred_state,
+            1,
+            NOW + timedelta(hours=1),
+            self.fetcher(),
+            failing_presenter,
+        )
+        self.assertEqual(len(calls), 4)
+        retried_queue = retried_state["presentationRetryQueue"]["entries"]
+        self.assertTrue(all(entry["failureCount"] == 2 for entry in retried_queue))
+        self.assertTrue(all(entry["nextRetryAt"] == "2026-08-29T12:00:00Z" for entry in retried_queue))
+        validate_state(retried_state, self.config)
+
+    def test_retry_queue_quarantines_after_max_failures_and_manual_retry_releases_it(self) -> None:
+        def failing_presenter(_title: str, _source_context: str, _policy: dict) -> dict[str, str]:
+            raise PresentationError("http_400")
+
+        state: dict[str, Any] = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
+        _feed, state = collect(
+            self.config,
+            state,
+            1,
+            NOW,
+            self.fetcher(),
+            failing_presenter,
+            presentation_limit=1,
+        )
+        for _attempt in range(4):
+            first_entry = state["presentationRetryQueue"]["entries"][0]
+            retry_at = datetime.fromisoformat(first_entry["nextRetryAt"].replace("Z", "+00:00"))
+            _feed, state = collect(
+                self.config,
+                state,
+                1,
+                retry_at,
+                self.fetcher(),
+                failing_presenter,
+                presentation_limit=1,
+            )
+        queue = state["presentationRetryQueue"]["entries"]
+        self.assertEqual(len(queue), 2)
+        self.assertTrue(all(entry["failureCount"] == 5 for entry in queue))
+        self.assertTrue(all(entry["quarantined"] and entry["nextRetryAt"] is None for entry in queue))
+
+        def locale_presenter(_title: str, _context: str, _policy: dict, locale: str) -> dict[str, str]:
+            if locale == "en":
+                return {"shortHeadlineEn": "Recovered headline", "summaryEn": "Recovered summary"}
+            return {"shortHeadlineJa": "復旧見出し", "summaryJa": "復旧要約"}
+
+        feed, recovered_state = collect(
+            self.config,
+            state,
+            1,
+            NOW + timedelta(days=30),
+            self.fetcher(),
+            locale_item=locale_presenter,
+            presentation_limit=1,
+            retry_failed=True,
+        )
+        self.assertEqual(recovered_state["presentationRetryQueue"]["entries"], [])
+        recovered = feed["items"][0]["presentation"]["locales"]
+        self.assertEqual(recovered["en"]["status"], "machine")
+        self.assertEqual(recovered["ja"]["status"], "machine")
+        validate_state(recovered_state, self.config)
+        validate_feed(feed, self.config)
+
     def test_presentation_failure_logs_only_reason_codes(self) -> None:
         stats: dict = {}
 
@@ -594,6 +989,35 @@ class PersonalFeedTest(unittest.TestCase):
             _print_presentation_stats(stats)
         self.assertIn("PRESENTATION_FAILURE: code=response_invalid_json count=4", output.getvalue())
         self.assertNotIn("campaign controls", output.getvalue())
+
+    def test_presentation_failure_logs_only_provider_type_and_code(self) -> None:
+        stats: dict = {}
+
+        def failing_presenter(_title: str, _source_context: str, _policy: dict) -> dict[str, str]:
+            raise PresentationError(
+                "http_400",
+                provider_error_type="invalid_request_error",
+                provider_error_code="blocked_api_access",
+            )
+
+        feed, _next_state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+            failing_presenter,
+            presentation_stats=stats,
+        )
+        self.assertEqual(len(feed["items"]), 4)
+        output = io.StringIO()
+        with redirect_stdout(output):
+            _print_presentation_stats(stats)
+        log = output.getvalue()
+        self.assertIn("PRESENTATION_ERROR_TYPE: error_type=invalid_request_error count=4", log)
+        self.assertIn("PRESENTATION_ERROR_CODE: error_code=blocked_api_access count=4", log)
+        self.assertNotIn("blocked_api_access", json.dumps(feed))
+        self.assertNotIn("blocked_api_access", json.dumps(stats["failureReasons"]))
 
     def test_presentation_contract_rejects_stale_fingerprint_and_overlong_text(self) -> None:
         def presenter(title: str, _source_context: str, _policy: dict) -> dict[str, str]:
@@ -642,33 +1066,34 @@ class PersonalFeedTest(unittest.TestCase):
             validate_feed(immutable_input_invalid, self.config)
 
     def test_v2_state_and_feed_migrate_one_way_to_v3_with_missing_locales(self) -> None:
-        # This fixture is intentionally embedded rather than read from the live
-        # state/feed.  A successful production migration changes those files to
-        # v3, but must never remove coverage for the v2 migration boundary.
-        source = self.config["sources"][0]
+        # Production files are intentionally updated by scheduled collection.
+        # Keep this migration test on a fixed v2 input instead of making its
+        # meaning depend on the latest production schema version.
+        source = self.config["sources"][1]
         fingerprint = "a" * 64
+        presentation = {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v1",
+            "status": "pending",
+            "shortHeadlineJa": None,
+            "summaryJa": None,
+            "sourceFingerprint": fingerprint,
+            "generatedAt": None,
+        }
         record = {
-            "url": "https://about.fb.com/news/2026/08/product-update/",
-            "title": "Meta Ads product update",
+            "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v27.0.0",
+            "title": "v27.0.0",
             "publishedDate": "2026-08-29",
             "updatedDate": None,
-            "matchEvidence": [],
+            "matchEvidence": ["all"],
             "fingerprint": fingerprint,
             "firstObservedAt": "2026-08-29T09:00:00Z",
             "lastObservedAt": "2026-08-29T09:00:00Z",
-            "presentation": {
-                "schemaVersion": PRESENTATION_SCHEMA_VERSION,
-                "status": "generated",
-                "shortHeadlineJa": "Meta広告の製品更新",
-                "summaryJa": "Metaが広告製品の更新を発表しました。",
-                "sourceFingerprint": fingerprint,
-                "generatedAt": "2026-08-29T09:00:00Z",
-            },
+            "presentation": presentation,
         }
         v2_state = {
             "schemaVersion": STATE_SCHEMA_VERSION,
             "updatedAt": "2026-08-29T09:00:00Z",
-            "sources": {source["id"]: {"items": {record["url"]: record}}},
+            "sources": {source["id"]: {"items": {"v27.0.0": record}}},
         }
         v2_feed = {
             "schemaVersion": FEED_SCHEMA_VERSION,
@@ -677,19 +1102,21 @@ class PersonalFeedTest(unittest.TestCase):
                 {key: configured[key] for key in ("id", "name", "classification", "sourceUrl", "platforms")}
                 for configured in self.config["sources"]
             ],
-            "items": [{
-                "id": f"{source['id']}-{fingerprint[:20]}",
-                "sourceId": source["id"],
-                "title": record["title"],
-                "url": record["url"],
-                "publishedDate": record["publishedDate"],
-                "updatedDate": record["updatedDate"],
-                "firstObservedAt": record["firstObservedAt"],
-                "lastObservedAt": record["lastObservedAt"],
-                "platforms": source["platforms"],
-                "matchEvidence": record["matchEvidence"],
-                "presentation": record["presentation"],
-            }],
+            "items": [
+                {
+                    "id": "meta-business-sdk-releases-aaaaaaaaaaaaaaaaaaaa",
+                    "sourceId": source["id"],
+                    "title": record["title"],
+                    "url": record["url"],
+                    "publishedDate": record["publishedDate"],
+                    "updatedDate": record["updatedDate"],
+                    "firstObservedAt": record["firstObservedAt"],
+                    "lastObservedAt": record["lastObservedAt"],
+                    "platforms": source["platforms"],
+                    "matchEvidence": record["matchEvidence"],
+                    "presentation": presentation,
+                }
+            ],
         }
         migrated_state = migrate_state_v2_to_v3(v2_state, self.config)
         migrated_feed = migrate_feed_v2_to_v3(v2_feed, self.config)

@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-09-02T11:59:49Z",
+  "generatedAt": "2026-09-05T08:40:34Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -68,12 +68,13 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:pixel"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -81,19 +82,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta launches new Automatic Events feature in Events Manager",
+            "summary": "Meta has added a new Automatic Events option in the Settings tab of Events Manager. The feature automatically creates standard events when related actions are detected, similar to the older “Track Events Automatically Without Code” tool, but is described as using AI and includes a dashboard for managing the generated events.",
             "inputHash": "05642d48534c8f714f04678a41db5b9a2ee045b43b40ef04a4b1805f816ba460",
-            "generatedAt": null,
+            "generatedAt": "2026-09-03T04:35:39Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "MetaがEvents Managerに新しい自動イベント機能を導入",
+            "summary": "MetaはEvents Managerの設定タブに新しい自動イベントオプションを追加しました。この機能は関連するアクションを検出すると標準イベントを自動的に作成し、以前の「コードなしでイベントを自動的に追跡」ツールと同様ですが、AIを使用すると説明され、生成されたイベントを管理するダッシュボードが含まれています。",
+            "inputHash": "9477a7f84224c7b3326fbbfc5167c2a8cb7b877cd4b23fc92cbd3950003c8928",
+            "generatedAt": "2026-09-03T04:35:39Z",
             "reviewedAt": null
           }
         }
@@ -107,7 +108,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -145,12 +146,13 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -184,12 +186,13 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:ad set"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -197,19 +200,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta eliminates placement removal options for ad sets",
+            "summary": "Meta is removing the ability to exclude individual placements, platforms, devices, and operating systems from ad sets. The change is currently a test, applies only to Sales and Leads objectives, and excludes sensitive verticals. Advertisers can instead use placement value rules or account‑wide placement controls.",
             "inputHash": "b91c8d5f960b9ffc9a1dd755e96072b8184dae5526af62c5f1d69d321183ec07",
-            "generatedAt": null,
+            "generatedAt": "2026-09-04T04:36:33Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "Meta、広告セットの配置除外機能を廃止",
+            "summary": "Metaは広告セットから個別の配置、プラットフォーム、デバイス、OSを除外する機能を廃止します。この変更は現在テスト段階で、Sales と Leads の目的にのみ適用され、機密性の高い業種は除外されています。広告主は代わりに配置価値ルールやアカウント全体の配置コントロールを使用できます。",
+            "inputHash": "01d8e222dd1930a40932852193a2a632a1bd226633fa366040b22533d7acd9f3",
+            "generatedAt": "2026-09-04T04:36:33Z",
             "reviewedAt": null
           }
         }
@@ -223,12 +226,13 @@
       "publishedDate": "2026-08-13",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:facebook ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -244,11 +248,11 @@
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "ChatGPT広告に自動入札・配置選択・URLパラメータ機能が追加",
+            "summary": "OpenAIはChatGPT広告のベータ版開始以降、3つの機能を追加した。クリックやコンバージョンを目的とした場合のデフォルト入札戦略を「結果最大化」に変更し、予算に応じて自動的に入札額を調整する。キャンペーン設定に「対象プラットフォーム」ドロップダウンを導入し、iOSアプリ、Androidアプリ、Webの表示先を個別に選択できるようにした。さらに、キャンペーン・広告セット・広告単位でランディングページのクエリパラメータを設定でき、{campaign_id} などのテンプレート変数が利用可能となった。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-09-05T08:40:34Z",
             "reviewedAt": null
           }
         }
@@ -262,12 +266,13 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -283,11 +288,11 @@
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta Ads AIコネクタに新たなセキュリティ制御を追加",
+            "summary": "MetaはAIコネクタ（Claude、ChatGPT、Perplexity）向けに、広告ポートフォリオへのアクセス制御を強化した。初期設定時に、すべてのFacebookページ・Instagramアカウントやビジネスポートフォリオを自動的に連携するか、現在のものだけを選択でき、個別ページやアカウントを指定できるようになった。また、約100種のツールについて「常に許可」「ブロック」「承認要請」のいずれかを設定可能。ビジネスポートフォリオ側でも、広告アカウントやカタログのAIコネクタ露出状況を確認し、デフォルトで許可されていた予算変更やキャンペーン作成などの操作を個別に制御できる。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-09-05T08:40:34Z",
             "reviewedAt": null
           }
         }
@@ -301,12 +306,13 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:campaign"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -322,11 +328,11 @@
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta、リード品質向上のためのシーケンスイベントと優先回答機能をテスト",
+            "summary": "Metaはインスタントフォームのリード品質向上を目的に、シーケンスイベント機能と優先リード回答機能の2つをテスト中です。シーケンスイベントでは、リード取得後に発生する高価値アクションを順序付けて設定し、両方が発生した場合にのみ広告が成果としてカウントされます。優先リード回答では、複数選択質問の回答にスライダーで優先度を設定し、Metaがその回答を学習してリードの質を評価します。いずれも公式ドキュメントは未公開で、利用可能かは未定です。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-09-05T08:40:34Z",
             "reviewedAt": null
           }
         }
@@ -340,12 +346,13 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:ad set"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -353,19 +360,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Exclusion-Only Custom Audiences Restrict Use to Exclusions",
+            "summary": "Advertisers can create custom audiences from a customer list that are set to “Only exclusions”. These audiences can be added in the “Legal and operational custom audience exclusions” section of an ad set, cannot be used for inclusion, lookalike creation, or value‑rule bidding, and can be labeled for organization.",
             "inputHash": "9f1c2f1a19155e5685243c8dfc3083688b2aacbf49bc0c0161767b40576d5476",
-            "generatedAt": null,
+            "generatedAt": "2026-09-03T04:35:39Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "除外専用カスタムオーディエンスは除外のみ使用可能",
+            "summary": "広告主は顧客リストから「除外のみ」設定のカスタムオーディエンスを作成でき、広告セットの「法的・運用上のカスタムオーディエンス除外」セクションで追加します。このオーディエンスはインクルージョン、類似オーディエンス作成、バリュー規則による入札調整には使用できず、組織目的でラベル付けが可能です。",
+            "inputHash": "8fad80393aaf515537f7b0de31876e27a812bcc68b8cc70b22871035df9a4b86",
+            "generatedAt": "2026-09-03T04:35:39Z",
             "reviewedAt": null
           }
         }
@@ -379,7 +386,7 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -417,12 +424,13 @@
       "publishedDate": "2026-08-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -430,19 +438,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "15 Years of Meta Advertising – Jon Loomer’s Perspective",
+            "summary": "Jon Loomer Digital marks its 15‑year anniversary on August 29, 2026, reflecting on the evolution of Meta advertising. Since the site launched in 2011, Loomer has published over 1,400 blog posts, 1,000 videos, 750 podcast episodes and 632 weekly webinars, documenting feature updates and best practices from an advertiser’s view.",
             "inputHash": "e90bfd94079c6aed409427537c2166636018533319e78de56257b0ddc7b232c0",
-            "generatedAt": null,
+            "generatedAt": "2026-09-03T04:35:39Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "15年のMeta広告 – Jon Loomerの視点",
+            "summary": "Jon Loomer Digitalは2026年8月29日に15周年を迎え、Meta広告の変遷を振り返ります。サイトは2011年に開始され、これまでに1,400件以上のブログ記事、1,000本以上の動画、750エピソードのポッドキャスト、632回の週次ウェビナーを公開し、広告主の視点から機能更新やベストプラクティスを記録してきました。",
+            "inputHash": "4dcd89c08e0053440decb0da3f7cd0d315e9903e4367c708ff28cecc925cb102",
+            "generatedAt": "2026-09-03T04:35:39Z",
             "reviewedAt": null
           }
         }
@@ -456,12 +464,13 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -469,19 +478,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta adds AI headline swap for ad images",
+            "summary": "Meta's Advantage+ Creative Text Generation now creates alternate ad image options that keep the original image as a template and replace only the main headline text, preserving colors, fonts, and other elements. Multiple headline and image variations are offered, and AI‑generated text quality has improved, though it can still be edited or removed if needed.",
             "inputHash": "bb3dd7e9191df14f7252d1fa66d626072dfc968bda422d4192ec86a2e1ebd54b",
-            "generatedAt": null,
+            "generatedAt": "2026-09-03T04:35:39Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "Meta、広告画像の見出しをAIで置き換え",
+            "summary": "Meta の Advantage+ Creative Text Generation が、元画像をテンプレートにしてメイン見出しだけを AI が生成したテキストに差し替える機能を追加しました。色やフォントなど他の要素は変更されず、複数の画像と見出しのバリエーションが提供されます。AI 生成テキストの品質は向上していますが、完全ではなく、必要に応じて編集や除外が可能です。",
+            "inputHash": "1a1f5bdcbb3e26375511989e507031b21f7ef22b1e7ace5e695f662d199550a0",
+            "generatedAt": "2026-09-03T04:35:39Z",
             "reviewedAt": null
           }
         }
@@ -495,12 +504,13 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -508,19 +518,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta Ads Lead Generation: Instant Forms vs Website Leads",
+            "summary": "Meta ads can be used for lead generation. Instant forms let you create ads without a website, pull user info from profiles, and keep users within Meta apps, but require third‑party syncing to your CRM. Website forms give more control and allow custom post‑submission steps, but depend on a well‑optimized landing page and should stay simple.",
             "inputHash": "d8c5a5547baaf91873d6822b52a17a957986b96471124c7b8aecfa16f3d2497b",
-            "generatedAt": null,
+            "generatedAt": "2026-09-03T04:35:39Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "Meta広告のリード獲得：インスタントフォームとウェブリードの比較",
+            "summary": "Meta広告はリード獲得に利用できる。インスタントフォームはウェブサイト不要で、ユーザー情報をプロフィールから取得し、Metaアプリ内に留められるが、CRMへの自動同期にサードパーティー連携が必要。ウェブフォームは制御が高く、送信後のカスタムステップが設定できるが、最適化されたランディングページが必要で、シンプルに保つべきである。",
+            "inputHash": "8338ddc503b57db40befcfee986f999c09515f57df28b96172f26d0daf56b0d8",
+            "generatedAt": "2026-09-03T04:35:39Z",
             "reviewedAt": null
           }
         }
@@ -534,7 +544,7 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -546,19 +556,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Release v25.0.3 of Facebook Node.js Business SDK",
+            "summary": "The Facebook Node.js Business SDK has been updated to version 25.0.3, introducing changes listed in the changelog.",
             "inputHash": "aaf497da0486bd968aa3f979f5ff12b8118982212d34ed279f8d705c5270a3d8",
-            "generatedAt": null,
+            "generatedAt": "2026-09-03T04:35:39Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "Facebook Node.js Business SDK バージョン v25.0.3 のリリース",
+            "summary": "Facebook Node.js Business SDK がバージョン 25.0.3 に更新され、変更点は changelog に記載されています。",
+            "inputHash": "182e0895cb01a711ab4db1ff47b09e8134b41b18ec2e9cc684bb719329ae3489",
+            "generatedAt": "2026-09-03T04:35:39Z",
             "reviewedAt": null
           }
         }
@@ -572,12 +582,13 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:custom audience"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -585,19 +596,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta revamps Audiences UI with label‑focused organization",
+            "summary": "Meta has introduced a major redesign of the Audiences section, grouping custom, lookalike and saved audiences by label categories such as Customers, Engaged, Unlabeled, Lookalikes and Saved. Labels are now required for value‑rule bidding, can be added or changed via dropdowns, and only one label per custom audience is allowed.",
             "inputHash": "c5e9be7f91d3ee8234790b766fa21558162d2bcb2ce53759734d13749386801d",
-            "generatedAt": null,
+            "generatedAt": "2026-09-03T04:35:39Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "Meta、ラベル重視の新Audiences UIに刷新",
+            "summary": "MetaはAudiencesセクションを大幅に再設計し、カスタム、類似、保存済みオーディエンスを「顧客」「エンゲージド」「未ラベル」「類似」「保存済み」などのラベルカテゴリでグループ化しました。ラベルは価値ルールによる入札に必須となり、ドロップダウンで追加・変更でき、カスタムオーディエンスにつき1つのラベルしか付けられません。",
+            "inputHash": "bec4171778d89c31f26049d9a9cbd26bc6049062b38d3f897be2cd3c38221fdf",
+            "generatedAt": "2026-09-03T04:35:39Z",
             "reviewedAt": null
           }
         }
@@ -611,12 +622,13 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -624,19 +636,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Key Principles for Effective Meta Ads Strategy",
+            "summary": "The post outlines core Meta ads principles: no magical strategies exist, always ask what problem you’re solving, prioritize simple campaign structures, let the algorithm run literally, avoid illusion of control, start and finish with your ads, evaluate performance in aggregate, and let meaningful results guide decisions.",
             "inputHash": "4ee45b82d611a4f8c3d300d43ab9760eab84bde63580257cb6812b61f115f951",
-            "generatedAt": null,
+            "generatedAt": "2026-09-04T04:36:33Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "効果的なMeta広告戦略の主要原則",
+            "summary": "この投稿では、Meta広告の基本原則を示しています。魔法のような戦略は存在せず、常に解決すべき課題を問うこと、シンプルなキャンペーン構造を優先すること、アルゴリズムを文字通りに任せること、コントロールの幻想を捨てること、広告の作成から完了までを徹底すること、パフォーマンスを総合的に評価すること、そして有意義な結果を指針とすることが強調されています。",
+            "inputHash": "32de430d0d44f712742d9ab00328082fc4c9ea0f417da41d743d14848c4b4072",
+            "generatedAt": "2026-09-04T04:36:33Z",
             "reviewedAt": null
           }
         }
@@ -650,12 +662,13 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -689,7 +702,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -710,11 +723,11 @@
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta AI、画像生成モデル「Muse Image」を提供開始 ― 簡単プロンプトで高品質画像を生成",
+            "summary": "MetaはMeta AIに新たな画像生成モデル「Muse Image」を導入した。ユーザーは会話形式の簡単な指示で高品質な画像を作成でき、InstagramストーリーやWhatsAppのチャットなど複数のアプリで利用可能。30以上のAIエフェクトやプリセットが用意され、写真の修正や部屋のリデザイン、テキスト入りインフォグラフィックの生成もできる。現在は限定的な国で提供され、今後はFacebookやMessengerなど他のサービスへ拡大予定。また、以前のInstagramアカウントへのメンション機能は廃止された。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-09-05T08:40:34Z",
             "reviewedAt": null
           }
         }
@@ -728,7 +741,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -741,19 +754,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta AI Creative Tools Reach 8M+ Advertisers with Major Upgrade",
+            "summary": "Over 8 million advertisers are using Meta's AI creative tools, which have just received a major upgrade. The Muse Image from Meta Superintelligence Labs adds agentic reasoning to ad creative and introduces AI-powered room restyling, allowing shoppers to visualize products in their own spaces.",
             "inputHash": "0cdcbf18960a5c05b1b73db8217385abdf5e163c76d0a7a9e66abd3213355a7a",
-            "generatedAt": null,
+            "generatedAt": "2026-09-05T08:40:34Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "Meta AIクリエイティブツール、800万人以上の広告主が利用、主要アップグレード実施",
+            "summary": "800万人以上の広告主がMetaのAIクリエイティブツールを使用しており、ツールは最近大幅にアップグレードされました。Meta Superintelligence LabsのMuse Imageは広告クリエイティブにエージェント推論を導入し、AI搭載の部屋リスタイリング機能で、購入者が自分の空間で製品を視覚化できるようにします。",
+            "inputHash": "92efbb65819dc5baf2c9abefce32f9f19dea422193e5b93fff7cd1fedf1281d9",
+            "generatedAt": "2026-09-05T08:40:34Z",
             "reviewedAt": null
           }
         }
@@ -767,12 +780,13 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -780,19 +794,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "ChatGPT Ads introduces custom audiences, requires 100,000 IDs",
+            "summary": "Advertisers in the ChatGPT ads beta can now create custom audiences by uploading raw or hashed email addresses or phone numbers. The UI shows a tooltip that an audience must contain at least 100,000 identifiers before it can be used for targeting or exclusion. No official documentation exists, and many advertisers may find the threshold too high to meet.",
             "inputHash": "7a6585e58790f1666dfad506ab8663d5cec661c625cb7397bff0699d5df83f9e",
-            "generatedAt": null,
+            "generatedAt": "2026-09-05T08:40:34Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "ChatGPT広告がカスタムオーディエンスを導入、10万IDが必要",
+            "summary": "ChatGPT広告ベータの広告主は、メールアドレスや電話番号（生データまたはハッシュ）をアップロードしてカスタムオーディエンスを作成できる。UI のツールチップによれば、対象または除外に使用できるにはオーディエンスに最低10万件の識別子が必要とされる。公式ドキュメントはなく、多くの広告主にとってこのハードルは高すぎる可能性がある。",
+            "inputHash": "ec0c0dbb94ed5ec12a36a8f97bb84e702d10c52fda368b686103852f11cdd807",
+            "generatedAt": "2026-09-05T08:40:34Z",
             "reviewedAt": null
           }
         }
@@ -806,7 +820,7 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -818,18 +832,18 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "v25.0.2 adds Conversions API Parameter Builder integration",
+            "summary": "Version 25.0.2 introduces a Conversions API Parameter Builder integration. Server‑side Event objects can auto‑fill empty fbc, fbp, event_source_url, referrer_url, client_ip_address and apply automatic PII normalization/hashing on PHP and NodeJS when setRequestContext is called, respecting Preference allowlists and never overwriting existing values.",
             "inputHash": "46236d8686f80cc75347eca8d3fd175a2def47cd23489a222d1d8d5e998ab9f4",
-            "generatedAt": null,
+            "generatedAt": "2026-09-05T08:40:34Z",
             "reviewedAt": null
           },
           "ja": {
             "status": "missing",
             "shortHeadline": null,
             "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "inputHash": "5c831d182724a95616f262e352d92b68fb47223a32ba92c063a7e3ef7d45b779",
             "generatedAt": null,
             "reviewedAt": null
           }
@@ -844,12 +858,13 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -883,12 +898,13 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -896,19 +912,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Checklist for Troubleshooting Non-Converting Meta Ads",
+            "summary": "The article offers a working checklist to troubleshoot Meta ads that aren’t converting, covering reasons people may not click (budget, CPM, ad creative, ad copy, offer) and why clicks may not convert (performance goal).",
             "inputHash": "4d68d0129897bdd76253b454873c69b42279e1c84141199ef95ca86b334e4c51",
-            "generatedAt": null,
+            "generatedAt": "2026-09-05T08:40:34Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "Meta広告がコンバートしない時のチェックリスト",
+            "summary": "この記事は、コンバートしないMeta広告をトラブルシュートするための実用的なチェックリストを提供し、クリックされない理由（予算、CPM、広告クリエイティブ、広告文、オファー）と、クリックしてもコンバートしない理由（パフォーマンス目標）をカバーしています。",
+            "inputHash": "26c78317aa6c82db093f077525b6c13250d05a70bdb7d2977788152eff7f89d9",
+            "generatedAt": "2026-09-05T08:40:34Z",
             "reviewedAt": null
           }
         }
@@ -922,12 +938,13 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -961,7 +978,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1000,7 +1017,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1039,12 +1056,13 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -1078,12 +1096,13 @@
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -1117,12 +1136,13 @@
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -1156,12 +1176,13 @@
       "publishedDate": "2026-06-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -1195,12 +1216,13 @@
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:campaign"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -1234,12 +1256,13 @@
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -1273,12 +1296,13 @@
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -1312,12 +1336,13 @@
       "publishedDate": "2026-05-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -1351,12 +1376,13 @@
       "publishedDate": "2026-05-26",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -1390,12 +1416,13 @@
       "publishedDate": "2026-05-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -1429,12 +1456,13 @@
       "publishedDate": "2026-05-19",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -1468,12 +1496,13 @@
       "publishedDate": "2026-05-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -1507,12 +1536,13 @@
       "publishedDate": "2026-05-12",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -1546,12 +1576,13 @@
       "publishedDate": "2026-05-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -1585,12 +1616,13 @@
       "publishedDate": "2026-05-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "category:Meta Advertising"
+        "category:Meta Advertising",
+        "keyword:meta ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v2",
@@ -1617,45 +1649,6 @@
       }
     },
     {
-      "id": "jon-loomer-meta-ads-7f60756e94c886324031",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "Meta Ads AI Connectors, App Usage Drops, and More",
-      "url": "https://www.jonloomer.com/meta-ads-ai-connectors/",
-      "publishedDate": "2026-04-30",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-08-31T05:38:08Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [
-        "category:Meta Advertising"
-      ],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
-        "sourceFingerprint": "7f60756e94c88632403189ec62a0c230b15d37315c49deaa163e8eca7e20206a",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "cecbcf33d10f022c19f2f0047e7b8b8acdeb935829c6f177cdbdee9a8ece444b",
-            "generatedAt": null,
-            "reviewedAt": null
-          },
-          "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
-            "reviewedAt": null
-          }
-        }
-      }
-    },
-    {
       "id": "meta-business-news-discovered-d2dc0dc1c4efc057c1c0",
       "sourceId": "meta-business-news-discovered",
       "title": "Removing Technical Barriers to Help Businesses of All Sizes Get More From Their Ads",
@@ -1663,7 +1656,7 @@
       "publishedDate": "2026-04-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1702,7 +1695,7 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1740,7 +1733,7 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1778,7 +1771,7 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1816,7 +1809,7 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1854,7 +1847,7 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1892,7 +1885,7 @@
       "publishedDate": "2025-09-26",
       "updatedDate": "2025-09-26",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-09-05T08:40:34Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"

@@ -11,7 +11,10 @@
       "maxRequestsPerRun": 12,
       "maxInputChars": 4000,
       "shortHeadlineMaxChars": 80,
-      "summaryMaxChars": 360
+      "summaryMaxChars": 360,
+      "minRequestIntervalSeconds": 12,
+      "maxAttempts": 3,
+      "maxRetryDelaySeconds": 60
     }
   },
   "sources": [
@@ -114,7 +117,7 @@
       "contentLanguage": "en",
       "platforms": ["Meta Ads"],
       "platformIds": ["meta-ads"],
-      "relevanceRevision": "legacy-v2",
+      "relevanceRevision": "jon-loomer-v3",
       "transport": {
         "allowedFetchHosts": ["www.jonloomer.com"],
         "allowedContentHosts": ["www.jonloomer.com"],
@@ -122,7 +125,30 @@
         "maxRedirects": 3,
         "maxItems": 50
       },
-      "match": {"kind": "rss_category", "categories": ["Meta Advertising"]}
+      "match": {
+        "kind": "rss_category_and_terms",
+        "categories": ["Meta Advertising"],
+        "terms": [
+          "meta ads",
+          "facebook ads",
+          "instagram ads",
+          "ads manager",
+          "business manager",
+          "campaign",
+          "ad set",
+          "placement",
+          "pixel",
+          "conversions api",
+          "custom audience",
+          "lookalike",
+          "retargeting",
+          "lead ads",
+          "catalog",
+          "commerce manager",
+          "ad account",
+          "events manager"
+        ]
+      }
     }
   ],
   "discoveredSources": [

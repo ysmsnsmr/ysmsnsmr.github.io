@@ -9,6 +9,11 @@ on:
         description: "Optional configured source ID to re-evaluate under its current relevance rule"
         required: false
         type: string
+      retry_failed:
+        description: "Release the isolated presentation retry queue for this manual run"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -57,6 +62,7 @@ jobs:
           META_ADS_PERSONAL_FEED_JA_ENABLED: ${{ vars.META_ADS_PERSONAL_FEED_JA_ENABLED }}
           META_ADS_PERSONAL_FEED_GROQ_MODEL: ${{ vars.META_ADS_PERSONAL_FEED_GROQ_MODEL }}
           META_ADS_PERSONAL_FEED_RESEED_SOURCE_ID: ${{ inputs.reseed_source_id }}
+          META_ADS_PERSONAL_FEED_RETRY_FAILED: ${{ inputs.retry_failed }}
         run: |
           args=(
             --config config/meta_ads_personal_feed_sources.json
@@ -65,6 +71,9 @@ jobs:
           )
           if [ -n "${META_ADS_PERSONAL_FEED_RESEED_SOURCE_ID}" ]; then
             args+=(--reseed-source "${META_ADS_PERSONAL_FEED_RESEED_SOURCE_ID}")
+          fi
+          if [ "${META_ADS_PERSONAL_FEED_RETRY_FAILED}" = "true" ]; then
+            args+=(--retry-failed)
           fi
           python3 scripts/meta_ads_personal_feed.py "${args[@]}"
           python3 scripts/validate_meta_ads_personal_feed.py

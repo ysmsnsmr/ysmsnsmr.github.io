@@ -10,6 +10,7 @@ official pages discovered inside a direct source are rejected independently.
 from __future__ import annotations
 
 import argparse
+import copy
 import email.utils
 import hashlib
 import html
@@ -17,6 +18,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.error
 import xml.etree.ElementTree as StandardElementTree
 from datetime import datetime, timedelta, timezone
@@ -28,10 +30,10 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from defusedxml import ElementTree as SafeElementTree
 from defusedxml.common import DefusedXmlException
 
-from meta_ads_tracker_collect import _request as bounded_request
+from meta_ads_tracker_collect import SourceFetchError, _request as bounded_request
 from meta_ads_tracker_contract import ContractError, _expect_hostname, _expect_https_url, _expect_identifier
 from meta_ads_tracker_publication import write_json
-from meta_ads_personal_feed_presentation import PresentationError, request_bilingual_presentation, request_presentation
+from meta_ads_personal_feed_presentation import PresentationError, request_bilingual_presentation, request_english_presentation, request_presentation
 
 
 SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v5"
@@ -50,6 +52,10 @@ DEFAULT_CONFIG = Path("config/meta_ads_personal_feed_sources.json")
 DEFAULT_STATE = Path("data/meta_ads_personal_feed_state.json")
 DEFAULT_OUTPUT = Path("meta-ads-updates/personal-feed.json")
 TRACKING_QUERY_KEYS = {"fbclid", "gclid", "mc_cid", "mc_eid"}
+RSS_BLOCK_TAG = re.compile(r"</?(?:article|blockquote|br|div|h[1-6]|li|ol|p|section|ul)\b[^>]*>", flags=re.IGNORECASE)
+RSS_TAG = re.compile(r"<[^>]+>")
+RSS_NONCONTENT_TAG = re.compile(r"<(?:noscript|script|style)\b[^>]*>.*?</(?:noscript|script|style)\s*>", flags=re.IGNORECASE | re.DOTALL)
+SENTENCE_BOUNDARY = re.compile(r"(?<=[.!?])\s+|(?<=[。！？])")
 PARSER_TYPES = {"rss", "github_releases"}
 CONTENT_TYPES = {
     "rss": ["application/rss+xml", "application/xml", "text/xml"],
@@ -59,6 +65,10 @@ CONTENT_TYPES = {
 PRESENTATION_STATUSES = {"generated", "pending"}
 BILINGUAL_PRESENTATION_STATUSES = {"machine", "missing", "reviewed"}
 SUPPORTED_LOCALES = ("en", "ja")
+PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION = "meta-ads-personal-feed-presentation-retry/v1"
+PRESENTATION_RETRY_MAX_FAILURES = 5
+PRESENTATION_RETRY_BASE_DELAY_SECONDS = 3600
+PRESENTATION_RETRY_MAX_DELAY_SECONDS = 7 * 24 * 3600
 PLATFORM_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 PARSER_VERSION = "meta-ads-personal-feed-parser/v2"
 
@@ -145,6 +155,21 @@ def _validate_match(value: Any, parser: str, label: str) -> dict[str, Any]:
         for category in categories:
             _text(category, f"{label}.categories value")
         return payload
+    if kind == "rss_category_and_terms":
+        if parser != "rss":
+            raise ContractError(f"{label}.kind rss_category_and_terms requires an rss parser")
+        payload = _expect_keys(value, {"kind", "categories", "terms"}, label)
+        categories = payload["categories"]
+        terms = payload["terms"]
+        if not isinstance(categories, list) or not categories or len(categories) != len(set(categories)):
+            raise ContractError(f"{label}.categories must be a unique non-empty array")
+        if not isinstance(terms, list) or not terms or len(terms) != len(set(terms)):
+            raise ContractError(f"{label}.terms must be a unique non-empty array")
+        for category in categories:
+            _text(category, f"{label}.categories value")
+        for term in terms:
+            _text(term, f"{label}.terms value")
+        return payload
     raise ContractError(f"{label}.kind is unsupported")
 
 
@@ -206,13 +231,24 @@ def validate_config(payload: Any) -> dict[str, Any]:
     _limit(freshness["maxItemAgeDays"], "personal feed policies.freshness.maxItemAgeDays", 1, 3650)
     presentation = _expect_keys(
         policies["bilingualPresentation"],
-        {"maxRequestsPerRun", "maxInputChars", "shortHeadlineMaxChars", "summaryMaxChars"},
+        {
+            "maxRequestsPerRun",
+            "maxInputChars",
+            "shortHeadlineMaxChars",
+            "summaryMaxChars",
+            "minRequestIntervalSeconds",
+            "maxAttempts",
+            "maxRetryDelaySeconds",
+        },
         "personal feed policies.bilingualPresentation",
     )
     _limit(presentation["maxRequestsPerRun"], "personal feed policies.bilingualPresentation.maxRequestsPerRun", 1, 50)
     _limit(presentation["maxInputChars"], "personal feed policies.bilingualPresentation.maxInputChars", 100, 12_000)
     _limit(presentation["shortHeadlineMaxChars"], "personal feed policies.bilingualPresentation.shortHeadlineMaxChars", 10, 240)
     _limit(presentation["summaryMaxChars"], "personal feed policies.bilingualPresentation.summaryMaxChars", 40, 1600)
+    _limit(presentation["minRequestIntervalSeconds"], "personal feed policies.bilingualPresentation.minRequestIntervalSeconds", 1, 120)
+    _limit(presentation["maxAttempts"], "personal feed policies.bilingualPresentation.maxAttempts", 1, 5)
+    _limit(presentation["maxRetryDelaySeconds"], "personal feed policies.bilingualPresentation.maxRetryDelaySeconds", 1, 120)
     if not isinstance(config["sources"], list) or not config["sources"]:
         raise ContractError("personal feed sources must be a non-empty array")
     ids: set[str] = set()
@@ -308,6 +344,41 @@ def _normalise(value: str) -> str:
 
 def _strip_html(value: str) -> str:
     return _normalise(re.sub(r"<[^>]+>", " ", value or ""))
+
+
+def _rss_presentation_text(value: str) -> str:
+    """Keep RSS block and sentence boundaries for transient model input only."""
+    decoded = html.unescape(value or "")
+    marked = RSS_BLOCK_TAG.sub("\n", RSS_NONCONTENT_TAG.sub(" ", decoded))
+    text = RSS_TAG.sub(" ", marked)
+    return "\n\n".join(_normalise(paragraph) for paragraph in text.splitlines() if _normalise(paragraph))
+
+
+def _shorten_rss_presentation_context(value: str, maximum: int) -> str:
+    """Fit complete RSS paragraphs or sentences within ``maximum`` characters.
+
+    The input is never persisted.  The function deliberately never cuts a
+    sentence mid-way: if the leading semantic unit cannot fit, the title alone
+    remains available to the presentation request.
+    """
+    if len(value) <= maximum:
+        return value
+    selected: list[str] = []
+    for paragraph in value.split("\n\n"):
+        units = [unit.strip() for unit in SENTENCE_BOUNDARY.split(paragraph) if unit.strip()]
+        for unit in units:
+            candidate = "\n\n".join([*selected, unit])
+            if len(candidate) > maximum:
+                return "\n\n".join(selected)
+            selected.append(unit)
+    return "\n\n".join(selected)
+
+
+def _presentation_context_for_model(raw: dict[str, Any], policy: dict[str, Any]) -> str:
+    context = raw.get("presentationContext", raw["sourceContext"])
+    if raw.get("presentationContextKind") == "rss":
+        return _shorten_rss_presentation_context(context, policy["maxInputChars"])
+    return context[: policy["maxInputChars"]]
 
 
 def _canonical_url(value: str) -> str:
@@ -426,6 +497,8 @@ def _meta_business_news_item(source: dict[str, Any], url: str, body: str) -> dic
         "updatedDate": None,
         "matchEvidence": [f"discovered-via:{origin_id}"],
         "sourceContext": description,
+        "presentationContext": description,
+        "presentationContextKind": "plain",
         "fingerprint": _fingerprint(url, title, published, description),
     }
 
@@ -467,6 +540,19 @@ def _match(
         category_set = {item.casefold() for item in categories}
         matched = [item for item in policy["categories"] if item.casefold() in category_set]
         return ([f"category:{item}" for item in matched] or None), []
+    if policy["kind"] == "rss_category_and_terms":
+        category_set = {item.casefold() for item in categories}
+        matched_categories = [item for item in policy["categories"] if item.casefold() in category_set]
+        if not matched_categories:
+            return None, []
+        searchable = "\n".join([title, source_context]).casefold()
+        matched_term = next((term for term in policy["terms"] if _contains_term(searchable, term)), None)
+        if matched_term is None:
+            return None, []
+        return (
+            [f"category:{item}" for item in matched_categories] + [f"keyword:{matched_term}"],
+            [],
+        )
     # Existing two-group sources keep their title-only contract.  Product News
     # uses any_terms, which intentionally also considers RSS descriptions and
     # categories under its separately versioned relevance rule.
@@ -523,6 +609,8 @@ def _rss_items(
             "matchEvidence": [],
             # This value is used only during this run.  It is deliberately not persisted.
             "sourceContext": source_context,
+            "presentationContext": _rss_presentation_text(source_context_markup),
+            "presentationContextKind": "rss",
             "categories": [item for item in fields.get("category", []) if item],
             "sourceContextMarkup": source_context_markup if discovery_source else "",
             "fingerprint": _fingerprint(url, title, published or "", updated or "", source_context),
@@ -565,6 +653,8 @@ def _github_release_items(source: dict[str, Any], body: str, pipeline: dict[str,
             "matchEvidence": [],
             # Release notes are used only as model input and are never stored in state or feed JSON.
             "sourceContext": source_context,
+            "presentationContext": source_context,
+            "presentationContextKind": "plain",
             "categories": [],
             "fingerprint": _fingerprint(str(release.get("tag_name") or url), tag, published or "", updated or "", source_context),
         })
@@ -789,10 +879,137 @@ def validate_v3_json_schema(payload: Any, schema_path: Path = DEFAULT_V3_SCHEMA)
         raise ContractError(f"personal feed v3 violates JSON Schema at {location}: {error.message}")
 
 
+def _empty_presentation_retry_queue() -> dict[str, Any]:
+    return {"schemaVersion": PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION, "entries": []}
+
+
+def _retry_queue_key(source_id: str, item_key: str, locale: str) -> tuple[str, str, str]:
+    return source_id, item_key, locale
+
+
+def _retry_queue_map(queue: dict[str, Any] | None) -> dict[tuple[str, str, str], dict[str, Any]]:
+    if not queue:
+        return {}
+    return {
+        _retry_queue_key(entry["sourceId"], entry["itemKey"], entry["locale"]): entry
+        for entry in queue["entries"]
+    }
+
+
+def _retry_queue_payload(entries: dict[tuple[str, str, str], dict[str, Any]]) -> dict[str, Any]:
+    return {
+        "schemaVersion": PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION,
+        "entries": [entries[key] for key in sorted(entries)],
+    }
+
+
+def _validate_presentation_retry_queue(
+    value: Any,
+    config: dict[str, Any],
+    sources: dict[str, Any],
+) -> dict[str, Any]:
+    queue = _expect_keys(value, {"schemaVersion", "entries"}, "personal feed presentationRetryQueue")
+    if queue["schemaVersion"] != PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION:
+        raise ContractError("personal feed presentationRetryQueue schemaVersion is unsupported")
+    if not isinstance(queue["entries"], list):
+        raise ContractError("personal feed presentationRetryQueue.entries must be an array")
+    seen: set[tuple[str, str, str]] = set()
+    for index, entry in enumerate(queue["entries"]):
+        label = f"personal feed presentationRetryQueue.entries[{index}]"
+        entry = _expect_keys(
+            entry,
+            {"sourceId", "itemKey", "fingerprint", "locale", "failureCount", "lastFailureAt", "nextRetryAt", "lastFailureCode", "quarantined"},
+            label,
+        )
+        source_id = _expect_identifier(entry["sourceId"], f"{label}.sourceId")
+        if source_id not in sources:
+            raise ContractError(f"{label}.sourceId is unknown")
+        item_key = _text(entry["itemKey"], f"{label}.itemKey")
+        locale = entry["locale"]
+        if locale not in SUPPORTED_LOCALES:
+            raise ContractError(f"{label}.locale is unsupported")
+        key = _retry_queue_key(source_id, item_key, locale)
+        if key in seen:
+            raise ContractError(f"{label} duplicates another queue entry")
+        seen.add(key)
+        if not isinstance(entry["fingerprint"], str) or not re.fullmatch(r"[a-f0-9]{64}", entry["fingerprint"]):
+            raise ContractError(f"{label}.fingerprint must be a SHA-256 hash")
+        _limit(entry["failureCount"], f"{label}.failureCount", 1, PRESENTATION_RETRY_MAX_FAILURES)
+        _timestamp(entry["lastFailureAt"], f"{label}.lastFailureAt")
+        _timestamp(entry["nextRetryAt"], f"{label}.nextRetryAt", nullable=True)
+        if not isinstance(entry["lastFailureCode"], str) or not re.fullmatch(r"[a-z0-9][a-z0-9_.:-]{0,63}", entry["lastFailureCode"]):
+            raise ContractError(f"{label}.lastFailureCode must be a safe reason code")
+        if not isinstance(entry["quarantined"], bool):
+            raise ContractError(f"{label}.quarantined must be a boolean")
+        if entry["quarantined"] and entry["nextRetryAt"] is not None:
+            raise ContractError(f"{label}.nextRetryAt must be null while quarantined")
+        if not entry["quarantined"] and entry["nextRetryAt"] is None:
+            raise ContractError(f"{label}.nextRetryAt is required before quarantine")
+        item = sources[source_id]["items"].get(item_key)
+        if item is None:
+            raise ContractError(f"{label}.itemKey does not reference a retained item")
+        if item["fingerprint"] != entry["fingerprint"]:
+            raise ContractError(f"{label}.fingerprint must match the retained item")
+        if item["presentation"]["locales"][locale]["status"] in {"machine", "reviewed"}:
+            raise ContractError(f"{label} cannot queue a completed locale")
+    return queue
+
+
+def _retry_is_due(entry: dict[str, Any] | None, now: datetime) -> bool:
+    if entry is None:
+        return True
+    if entry["quarantined"] or entry["nextRetryAt"] is None:
+        return False
+    retry_at = datetime.fromisoformat(entry["nextRetryAt"].replace("Z", "+00:00"))
+    return retry_at <= now.astimezone(timezone.utc)
+
+
+def _record_retry_failure(
+    queue: dict[tuple[str, str, str], dict[str, Any]],
+    source_id: str,
+    item_key: str,
+    fingerprint: str,
+    locale: str,
+    code: str,
+    now: str,
+) -> None:
+    key = _retry_queue_key(source_id, item_key, locale)
+    previous = queue.get(key)
+    failure_count = (previous["failureCount"] if previous else 0) + 1
+    failure_count = min(failure_count, PRESENTATION_RETRY_MAX_FAILURES)
+    quarantined = failure_count >= PRESENTATION_RETRY_MAX_FAILURES
+    next_retry_at = None
+    if not quarantined:
+        delay = min(
+            PRESENTATION_RETRY_BASE_DELAY_SECONDS * (2 ** (failure_count - 1)),
+            PRESENTATION_RETRY_MAX_DELAY_SECONDS,
+        )
+        retry_at = datetime.fromisoformat(now.replace("Z", "+00:00")) + timedelta(seconds=delay)
+        next_retry_at = _now(retry_at)
+    queue[key] = {
+        "sourceId": source_id,
+        "itemKey": item_key,
+        "fingerprint": fingerprint,
+        "locale": locale,
+        "failureCount": failure_count,
+        "lastFailureAt": now,
+        "nextRetryAt": next_retry_at,
+        "lastFailureCode": code,
+        "quarantined": quarantined,
+    }
+
+
 def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
-    state = _expect_keys(payload, {"schemaVersion", "updatedAt", "sources"}, "personal feed state")
+    if not isinstance(payload, dict):
+        raise ContractError("personal feed state must be an object")
+    expected_state_keys = {"schemaVersion", "updatedAt", "sources"}
+    if "presentationRetryQueue" in payload:
+        expected_state_keys.add("presentationRetryQueue")
+    state = _expect_keys(payload, expected_state_keys, "personal feed state")
     if state["schemaVersion"] not in {LEGACY_STATE_SCHEMA_VERSION, STATE_SCHEMA_VERSION, STATE_V3_SCHEMA_VERSION}:
         raise ContractError(f"personal feed state schemaVersion must be {LEGACY_STATE_SCHEMA_VERSION}, {STATE_SCHEMA_VERSION}, or {STATE_V3_SCHEMA_VERSION}")
+    if "presentationRetryQueue" in payload and state["schemaVersion"] != STATE_V3_SCHEMA_VERSION:
+        raise ContractError("personal feed presentationRetryQueue requires the v3 state schema")
     _timestamp(state["updatedAt"], "personal feed state.updatedAt", nullable=True)
     if not isinstance(state["sources"], dict):
         raise ContractError("personal feed state.sources must be an object")
@@ -837,6 +1054,8 @@ def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
                     entry["fingerprint"],
                     "personal feed state item.presentation",
                 )
+    queue = state.get("presentationRetryQueue", _empty_presentation_retry_queue())
+    _validate_presentation_retry_queue(queue, config, state["sources"])
     return state
 
 
@@ -1183,19 +1402,145 @@ def _bilingual_presentation_from_environment(timeout: float) -> Callable[[str, s
     if setting == "false" or not api_key:
         return None
     model = os.environ.get("META_ADS_PERSONAL_FEED_GROQ_MODEL", "").strip() or "openai/gpt-oss-120b"
+    next_request_at = 0.0
 
     def present(title: str, source_context: str, policy: dict[str, Any]) -> dict[str, str]:
-        return request_bilingual_presentation(
-            api_key=api_key,
-            model=model,
-            title=title,
-            source_context=source_context[:policy["maxInputChars"]],
-            short_headline_max_chars=policy["shortHeadlineMaxChars"],
-            summary_max_chars=policy["summaryMaxChars"],
-            timeout=timeout,
-        )
+        nonlocal next_request_at
+        delay = max(0.0, next_request_at - time.monotonic())
+        if delay:
+            time.sleep(delay)
+        try:
+            return request_bilingual_presentation(
+                api_key=api_key,
+                model=model,
+                title=title,
+                source_context=source_context[:policy["maxInputChars"]],
+                short_headline_max_chars=policy["shortHeadlineMaxChars"],
+                summary_max_chars=policy["summaryMaxChars"],
+                timeout=timeout,
+                max_attempts=policy["maxAttempts"],
+                max_retry_delay_seconds=policy["maxRetryDelaySeconds"],
+            )
+        finally:
+            # This is deliberately applied after both success and failure so a
+            # bad batch cannot turn into a tight retry loop across items.
+            next_request_at = time.monotonic() + policy["minRequestIntervalSeconds"]
 
     return present
+
+
+def _locale_presentation_from_environment(
+    timeout: float,
+) -> Callable[[str, str, dict[str, Any], str], dict[str, str]] | None:
+    """Return an independent two-field presenter for one locale."""
+    setting = os.environ.get("META_ADS_PERSONAL_FEED_JA_ENABLED", "").strip().lower() or "true"
+    if setting not in {"true", "false"}:
+        raise ContractError("META_ADS_PERSONAL_FEED_JA_ENABLED must be true, false, or unset")
+    api_key = os.environ.get("GROQ_API_KEY", "").strip()
+    if setting == "false" or not api_key:
+        return None
+    model = os.environ.get("META_ADS_PERSONAL_FEED_GROQ_MODEL", "").strip() or "openai/gpt-oss-120b"
+    next_request_at = 0.0
+
+    def present(title: str, source_context: str, policy: dict[str, Any], locale: str) -> dict[str, str]:
+        nonlocal next_request_at
+        if locale not in SUPPORTED_LOCALES:
+            raise PresentationError("response_invalid_shape")
+        delay = max(0.0, next_request_at - time.monotonic())
+        if delay:
+            time.sleep(delay)
+        try:
+            if locale == "en":
+                return request_english_presentation(
+                    api_key=api_key,
+                    model=model,
+                    title=title,
+                    source_context=source_context[:policy["maxInputChars"]],
+                    short_headline_max_chars=policy["shortHeadlineMaxChars"],
+                    summary_max_chars=policy["summaryMaxChars"],
+                    timeout=timeout,
+                    max_attempts=policy["maxAttempts"],
+                    max_retry_delay_seconds=policy["maxRetryDelaySeconds"],
+                )
+            return request_presentation(
+                api_key=api_key,
+                model=model,
+                title=title,
+                source_context=source_context[:policy["maxInputChars"]],
+                short_headline_max_chars=policy["shortHeadlineMaxChars"],
+                summary_max_chars=policy["summaryMaxChars"],
+                timeout=timeout,
+                max_attempts=policy["maxAttempts"],
+                max_retry_delay_seconds=policy["maxRetryDelaySeconds"],
+            )
+        finally:
+            next_request_at = time.monotonic() + policy["minRequestIntervalSeconds"]
+
+    return present
+
+
+def _bilingual_fallback_from_environment(
+    timeout: float,
+) -> Callable[[str, str, dict[str, Any]], tuple[dict[str, str], dict[str, Exception]]] | None:
+    """Return bounded English-then-Japanese fallback requests.
+
+    Each locale gets at most one request after the four-field request fails.
+    The returned error map contains exception objects only in memory so the
+    collector can record safe reason codes without exposing response content.
+    """
+    setting = os.environ.get("META_ADS_PERSONAL_FEED_JA_ENABLED", "").strip().lower() or "true"
+    if setting not in {"true", "false"}:
+        raise ContractError("META_ADS_PERSONAL_FEED_JA_ENABLED must be true, false, or unset")
+    api_key = os.environ.get("GROQ_API_KEY", "").strip()
+    if setting == "false" or not api_key:
+        return None
+    model = os.environ.get("META_ADS_PERSONAL_FEED_GROQ_MODEL", "").strip() or "openai/gpt-oss-120b"
+
+    def fallback(title: str, source_context: str, policy: dict[str, Any]) -> tuple[dict[str, str], dict[str, Exception]]:
+        generated: dict[str, str] = {}
+        failures: dict[str, Exception] = {}
+        try:
+            for locale in ("en", "ja"):
+                # Keep a full policy interval between the primary request and
+                # each fallback request, and between the two locale requests.
+                time.sleep(policy["minRequestIntervalSeconds"])
+                try:
+                    if locale == "en":
+                        generated.update(
+                            request_english_presentation(
+                                api_key=api_key,
+                                model=model,
+                                title=title,
+                                source_context=source_context[:policy["maxInputChars"]],
+                                short_headline_max_chars=policy["shortHeadlineMaxChars"],
+                                summary_max_chars=policy["summaryMaxChars"],
+                                timeout=timeout,
+                                max_attempts=1,
+                            )
+                        )
+                    else:
+                        generated.update(
+                            request_presentation(
+                                api_key=api_key,
+                                model=model,
+                                title=title,
+                                source_context=source_context[:policy["maxInputChars"]],
+                                short_headline_max_chars=policy["shortHeadlineMaxChars"],
+                                summary_max_chars=policy["summaryMaxChars"],
+                                timeout=timeout,
+                                max_attempts=1,
+                            )
+                        )
+                except (PresentationError, OSError, ValueError) as error:
+                    failures[locale] = error
+        finally:
+            # The primary presenter owns its own rate gate. Leave one full
+            # interval after the last fallback request before the next item can
+            # start, so the two independent callbacks cannot make a tight loop.
+            time.sleep(policy["minRequestIntervalSeconds"])
+        return generated, failures
+
+    return fallback
 
 
 def _presentation_request_limit(value: int | None, policy: dict[str, Any]) -> int:
@@ -1207,23 +1552,52 @@ def _presentation_request_limit(value: int | None, policy: dict[str, Any]) -> in
     return value
 
 
-def _presentation_stats(config: dict[str, Any], renderer_enabled: bool, request_limit: int) -> dict[str, Any]:
+def _presentation_stats(
+    config: dict[str, Any],
+    renderer_enabled: bool,
+    request_limit: int,
+    policy: dict[str, Any],
+) -> dict[str, Any]:
     return {
         "rendererEnabled": renderer_enabled,
         "requestLimit": request_limit,
+        "minRequestIntervalSeconds": policy["minRequestIntervalSeconds"],
+        "maxAttempts": policy["maxAttempts"],
         "eligible": 0,
         "attempted": 0,
+        "localeAttempted": 0,
         "generated": 0,
+        "localeGenerated": 0,
         "failed": 0,
+        "localeFailed": 0,
+        "fallbackAttempts": 0,
+        "fallbackGeneratedLocales": 0,
+        "fallbackFailedLocales": 0,
         "deferred": 0,
+        "retryDeferred": 0,
+        "retryQuarantined": 0,
         "failureReasons": {},
+        "fallbackFailureReasons": {},
+        "providerErrorTypes": {},
+        "providerErrorCodes": {},
         "sources": {
             source["id"]: {
                 "eligible": 0,
                 "attempted": 0,
+                "localeAttempted": 0,
                 "generated": 0,
+                "localeGenerated": 0,
                 "failed": 0,
+                "localeFailed": 0,
+                "fallbackAttempts": 0,
+                "fallbackGeneratedLocales": 0,
+                "fallbackFailedLocales": 0,
+                "retryDeferred": 0,
+                "retryQuarantined": 0,
                 "failureReasons": {},
+                "fallbackFailureReasons": {},
+                "providerErrorTypes": {},
+                "providerErrorCodes": {},
             }
             for source in _all_sources(config)
         },
@@ -1281,10 +1655,37 @@ def _presentation_failure_code(error: Exception) -> str:
     return "unknown"
 
 
-def _record_presentation_failure(stats: dict[str, Any], source_id: str, code: str) -> None:
+def _record_presentation_failure(
+    stats: dict[str, Any],
+    source_id: str,
+    code: str,
+    error: Exception | None = None,
+) -> None:
     stats["failureReasons"][code] = stats["failureReasons"].get(code, 0) + 1
     source_reasons = stats["sources"][source_id]["failureReasons"]
     source_reasons[code] = source_reasons.get(code, 0) + 1
+    provider_error_type = getattr(error, "provider_error_type", None)
+    provider_error_code = getattr(error, "provider_error_code", None)
+    if provider_error_type:
+        stats["providerErrorTypes"][provider_error_type] = stats["providerErrorTypes"].get(provider_error_type, 0) + 1
+        source_types = stats["sources"][source_id]["providerErrorTypes"]
+        source_types[provider_error_type] = source_types.get(provider_error_type, 0) + 1
+    if provider_error_code:
+        stats["providerErrorCodes"][provider_error_code] = stats["providerErrorCodes"].get(provider_error_code, 0) + 1
+        source_codes = stats["sources"][source_id]["providerErrorCodes"]
+        source_codes[provider_error_code] = source_codes.get(provider_error_code, 0) + 1
+
+
+def _record_fallback_failure(
+    stats: dict[str, Any],
+    source_id: str,
+    locale: str,
+    code: str,
+) -> None:
+    key = f"{locale}:{code}"
+    stats["fallbackFailureReasons"][key] = stats["fallbackFailureReasons"].get(key, 0) + 1
+    source_reasons = stats["sources"][source_id]["fallbackFailureReasons"]
+    source_reasons[key] = source_reasons.get(key, 0) + 1
 
 
 def _print_presentation_stats(stats: dict[str, Any]) -> None:
@@ -1292,19 +1693,45 @@ def _print_presentation_stats(stats: dict[str, Any]) -> None:
     print(
         "PRESENTATION: "
         f"renderer_enabled={enabled} eligible={stats['eligible']} limit={stats['requestLimit']} "
-        f"attempted={stats['attempted']} generated={stats['generated']} failed={stats['failed']} "
-        f"deferred={stats['deferred']}"
+        f"min_interval_seconds={stats['minRequestIntervalSeconds']} max_attempts={stats['maxAttempts']} "
+        f"attempted={stats['attempted']} locale_attempted={stats['localeAttempted']} "
+        f"generated={stats['generated']} locale_generated={stats['localeGenerated']} "
+        f"failed={stats['failed']} locale_failed={stats['localeFailed']} "
+        f"deferred={stats['deferred']} fallback_attempts={stats['fallbackAttempts']} "
+        f"fallback_generated_locales={stats['fallbackGeneratedLocales']} "
+        f"fallback_failed_locales={stats['fallbackFailedLocales']} "
+        f"retry_deferred={stats['retryDeferred']} retry_quarantined={stats['retryQuarantined']}"
     )
     for source_id, counts in stats["sources"].items():
         print(
             "PRESENTATION_SOURCE: "
             f"id={source_id} eligible={counts['eligible']} attempted={counts['attempted']} "
-            f"generated={counts['generated']} failed={counts['failed']}"
+            f"locale_attempted={counts['localeAttempted']} generated={counts['generated']} "
+            f"locale_generated={counts['localeGenerated']} failed={counts['failed']} "
+            f"locale_failed={counts['localeFailed']} "
+            f"fallback_attempts={counts['fallbackAttempts']} "
+            f"fallback_generated_locales={counts['fallbackGeneratedLocales']} "
+            f"fallback_failed_locales={counts['fallbackFailedLocales']}"
+            f" retry_deferred={counts['retryDeferred']} retry_quarantined={counts['retryQuarantined']}"
         )
         for code, count in sorted(counts["failureReasons"].items()):
             print(f"PRESENTATION_SOURCE_FAILURE: id={source_id} code={code} count={count}")
+        for key, count in sorted(counts["fallbackFailureReasons"].items()):
+            locale, code = key.split(":", 1)
+            print(f"PRESENTATION_SOURCE_FALLBACK_FAILURE: id={source_id} locale={locale} code={code} count={count}")
+        for error_type, count in sorted(counts["providerErrorTypes"].items()):
+            print(f"PRESENTATION_SOURCE_ERROR_TYPE: id={source_id} error_type={error_type} count={count}")
+        for error_code, count in sorted(counts["providerErrorCodes"].items()):
+            print(f"PRESENTATION_SOURCE_ERROR_CODE: id={source_id} error_code={error_code} count={count}")
     for code, count in sorted(stats["failureReasons"].items()):
         print(f"PRESENTATION_FAILURE: code={code} count={count}")
+    for key, count in sorted(stats["fallbackFailureReasons"].items()):
+        locale, code = key.split(":", 1)
+        print(f"PRESENTATION_FALLBACK_FAILURE: locale={locale} code={code} count={count}")
+    for error_type, count in sorted(stats["providerErrorTypes"].items()):
+        print(f"PRESENTATION_ERROR_TYPE: error_type={error_type} count={count}")
+    for error_code, count in sorted(stats["providerErrorCodes"].items()):
+        print(f"PRESENTATION_ERROR_CODE: error_code={error_code} count={count}")
 
 
 def _print_source_pipeline_stats(stats: dict[str, Any]) -> None:
@@ -1370,6 +1797,146 @@ def _machine_bilingual_presentation(
     }
 
 
+def _partial_bilingual_presentation(
+    fingerprint: str,
+    generated: dict[str, Any],
+    generated_at: str,
+    generator_revision: str = DEFAULT_PRESENTATION_GENERATOR_REVISION,
+) -> dict[str, Any]:
+    """Build a valid bilingual entry when fallback generated one locale only."""
+    revision = _expect_identifier(generator_revision, "generator_revision")
+    locale_values: dict[str, tuple[str, str]] = {
+        "en": ("shortHeadlineEn", "summaryEn"),
+        "ja": ("shortHeadlineJa", "summaryJa"),
+    }
+    locales: dict[str, dict[str, Any]] = {}
+    for locale, (headline_key, summary_key) in locale_values.items():
+        headline = generated.get(headline_key)
+        summary = generated.get(summary_key)
+        if headline is None and summary is None:
+            japanese_input = (
+                generated.get("shortHeadlineEn") or "missing",
+                generated.get("summaryEn") or "missing",
+            )
+            locales[locale] = {
+                "status": "missing",
+                "shortHeadline": None,
+                "summary": None,
+                "inputHash": _sha256_text(*japanese_input, revision) if locale == "ja" else _sha256_text(fingerprint, revision),
+                "generatedAt": None,
+                "reviewedAt": None,
+            }
+            continue
+        if not isinstance(headline, str) or not isinstance(summary, str):
+            raise PresentationError("response_invalid_shape")
+        headline = _text(headline, f"{locale} short headline")
+        summary = _text(summary, f"{locale} summary")
+        if len(headline) > 240:
+            raise PresentationError("short_headline_invalid")
+        if len(summary) > 1600:
+            raise PresentationError("summary_invalid")
+        locales[locale] = {
+            "status": "machine",
+            "shortHeadline": headline,
+            "summary": summary,
+            "inputHash": _sha256_text(fingerprint, revision)
+            if locale == "en"
+            else _sha256_text(
+                generated.get("shortHeadlineEn") or "missing",
+                generated.get("summaryEn") or "missing",
+                revision,
+            ),
+            "generatedAt": generated_at,
+            "reviewedAt": None,
+        }
+    return {
+        "schemaVersion": BILINGUAL_PRESENTATION_SCHEMA_VERSION,
+        "sourceFingerprint": fingerprint,
+        "generatorRevision": revision,
+        "locales": locales,
+    }
+
+
+def _pending_presentation_locales(presentation: dict[str, Any]) -> list[str]:
+    """Return locales that still need display text, preserving locale independence."""
+    return [
+        locale
+        for locale in SUPPORTED_LOCALES
+        if presentation["locales"][locale]["status"] not in {"machine", "reviewed"}
+    ]
+
+
+def _merge_locale_presentation(
+    existing: dict[str, Any],
+    fingerprint: str,
+    locale: str,
+    generated: dict[str, Any],
+    generated_at: str,
+    generator_revision: str = DEFAULT_PRESENTATION_GENERATOR_REVISION,
+) -> dict[str, Any]:
+    """Persist one locale without incorrectly claiming the other is generated.
+
+    Japanese text is derived from the English fields.  Therefore a newly
+    generated English locale invalidates any older Japanese locale and leaves
+    it explicitly ``missing`` until it is regenerated from the new English.
+    """
+    if locale not in SUPPORTED_LOCALES:
+        raise PresentationError("response_invalid_shape")
+    revision = _expect_identifier(generator_revision, "generator_revision")
+    headline_key = "shortHeadlineEn" if locale == "en" else "shortHeadlineJa"
+    summary_key = "summaryEn" if locale == "en" else "summaryJa"
+    try:
+        headline = _text(generated[headline_key], f"{locale} short headline")
+        summary = _text(generated[summary_key], f"{locale} summary")
+    except (ContractError, KeyError) as error:
+        raise PresentationError("response_invalid_shape") from error
+    if len(headline) > 240:
+        raise PresentationError("short_headline_invalid")
+    if len(summary) > 1600:
+        raise PresentationError("summary_invalid")
+
+    presentation = copy.deepcopy(existing)
+    presentation["schemaVersion"] = BILINGUAL_PRESENTATION_SCHEMA_VERSION
+    presentation["sourceFingerprint"] = fingerprint
+    presentation["generatorRevision"] = revision
+    english = presentation["locales"]["en"]
+    japanese = presentation["locales"]["ja"]
+    if locale == "en":
+        english = {
+            "status": "machine",
+            "shortHeadline": headline,
+            "summary": summary,
+            "inputHash": _sha256_text(fingerprint, revision),
+            "generatedAt": generated_at,
+            "reviewedAt": None,
+        }
+        # The Japanese input hash is tied to the English text.  Do not retain
+        # a translation that was produced from an earlier/missing English value.
+        japanese = {
+            "status": "missing",
+            "shortHeadline": None,
+            "summary": None,
+            "inputHash": _sha256_text(headline, summary, revision),
+            "generatedAt": None,
+            "reviewedAt": None,
+        }
+    else:
+        english_values = (
+            english.get("shortHeadline") or "missing",
+            english.get("summary") or "missing",
+        )
+        japanese = {
+            "status": "machine",
+            "shortHeadline": headline,
+            "summary": summary,
+            "inputHash": _sha256_text(*english_values, revision),
+            "generatedAt": generated_at,
+            "reviewedAt": None,
+        }
+    presentation["locales"] = {"en": english, "ja": japanese}
+    return presentation
+
+
 def _reseed_source(config: dict[str, Any], value: str | None) -> str | None:
     if value is None or not value.strip():
         return None
@@ -1397,23 +1964,29 @@ def collect(
     now: datetime,
     fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = bounded_request,
     present_item: Callable[[str, str, dict[str, Any]], dict[str, str]] | None = None,
+    fallback_item: Callable[[str, str, dict[str, Any]], tuple[dict[str, str], dict[str, Exception]]] | None = None,
     *,
+    locale_item: Callable[[str, str, dict[str, Any], str], dict[str, str]] | None = None,
     presentation_limit: int | None = None,
     presentation_stats: dict[str, Any] | None = None,
     source_pipeline_stats: dict[str, Any] | None = None,
     reseed_source_id: str | None = None,
+    retry_failed: bool = False,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     validate_config(config)
     validate_state(state, config)
     if state["schemaVersion"] != STATE_V3_SCHEMA_VERSION:
         state = migrate_state_v2_to_v3(state, config)
+    retry_queue = _retry_queue_map(state.get("presentationRetryQueue"))
+    if retry_failed:
+        retry_queue.clear()
     reseed_source_id = _reseed_source(config, reseed_source_id)
     _assert_relevance_reseed(state, config, reseed_source_id)
     generated_at = _now(now)
     history_cutoff = now.astimezone(timezone.utc) - timedelta(days=config["policies"]["historyRetentionDays"])
     presentation_policy = config["policies"]["bilingualPresentation"]
     request_limit = _presentation_request_limit(presentation_limit, presentation_policy)
-    stats = _presentation_stats(config, present_item is not None, request_limit)
+    stats = _presentation_stats(config, present_item is not None or locale_item is not None, request_limit, presentation_policy)
     pipeline = _source_pipeline_stats(config)
 
     # First complete safe fetch, format validation and parsing for every direct
@@ -1507,7 +2080,7 @@ def collect(
     # sourceContext, release notes, markup, and any model response remain local
     # variables and are deliberately excluded from this structure.
     next_state: dict[str, Any] = {"schemaVersion": STATE_V3_SCHEMA_VERSION, "updatedAt": generated_at, "sources": {}}
-    presentation_candidates: list[tuple[str, dict[str, Any], dict[str, Any]]] = []
+    presentation_candidates: list[tuple[str, dict[str, Any], dict[str, Any], list[str]]] = []
     for source in _all_sources(config):
         prior = state["sources"].get(source["id"], {"items": {}})["items"]
         current: dict[str, Any] = {}
@@ -1542,10 +2115,25 @@ def collect(
                 "presentation": cached or _missing_bilingual_presentation(raw["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION),
             }
             current[raw["key"]] = record
-            if record["presentation"]["locales"]["en"]["status"] != "machine":
-                presentation_candidates.append((source["id"], record, raw))
+            pending_locales = _pending_presentation_locales(record["presentation"])
+            due_locales = [
+                locale
+                for locale in pending_locales
+                if _retry_is_due(retry_queue.get(_retry_queue_key(source["id"], raw["key"], locale)), now)
+            ]
+            if due_locales:
+                presentation_candidates.append((source["id"], record, raw, due_locales))
                 stats["eligible"] += 1
                 stats["sources"][source["id"]]["eligible"] += 1
+            elif pending_locales:
+                stats["retryDeferred"] += 1
+                stats["sources"][source["id"]]["retryDeferred"] += 1
+                if any(
+                    retry_queue.get(_retry_queue_key(source["id"], raw["key"], locale), {}).get("quarantined", False)
+                    for locale in pending_locales
+                ):
+                    stats["retryQuarantined"] += 1
+                    stats["sources"][source["id"]]["retryQuarantined"] += 1
         retained: dict[str, Any] = {}
         for key, record in current.items():
             observed = datetime.fromisoformat(record["lastObservedAt"].replace("Z", "+00:00"))
@@ -1554,6 +2142,14 @@ def collect(
         next_state["sources"][source["id"]] = {"relevanceRevision": source["relevanceRevision"], "items": retained}
         pipeline["sources"][source["id"]]["retainedItems"] = len(retained)
 
+    # Remove queue entries for expired, replaced, or successfully completed
+    # records before the next state is validated and persisted.
+    for queue_key, entry in list(retry_queue.items()):
+        source_id, item_key, locale = queue_key
+        record = next_state["sources"].get(source_id, {"items": {}})["items"].get(item_key)
+        if record is None or record["fingerprint"] != entry["fingerprint"] or record["presentation"]["locales"][locale]["status"] in {"machine", "reviewed"}:
+            del retry_queue[queue_key]
+
     presentation_candidates.sort(
         key=lambda pair: (
             pair[1]["updatedDate"] or pair[1]["publishedDate"] or pair[1]["firstObservedAt"],
@@ -1561,22 +2157,152 @@ def collect(
         ),
         reverse=True,
     )
-    if present_item is not None:
-        for source_id, record, raw in presentation_candidates[:request_limit]:
+    if present_item is not None or locale_item is not None:
+        for source_id, record, raw, due_locales in presentation_candidates[:request_limit]:
             stats["attempted"] += 1
             stats["sources"][source_id]["attempted"] += 1
-            try:
-                generated = present_item(record["title"], raw["sourceContext"], presentation_policy)
-                record["presentation"] = _machine_bilingual_presentation(record["fingerprint"], generated, generated_at)
+            pending = _pending_presentation_locales(record["presentation"])
+            initial_statuses = {
+                locale: record["presentation"]["locales"][locale]["status"]
+                for locale in SUPPORTED_LOCALES
+            }
+            full_attempt = (
+                present_item is not None
+                and len(pending) == len(SUPPORTED_LOCALES)
+                and set(due_locales) == set(SUPPORTED_LOCALES)
+            )
+            if full_attempt:
+                stats["localeAttempted"] += len(SUPPORTED_LOCALES)
+                stats["sources"][source_id]["localeAttempted"] += len(SUPPORTED_LOCALES)
+                try:
+                    generated = present_item(record["title"], _presentation_context_for_model(raw, presentation_policy), presentation_policy)
+                    record["presentation"] = _machine_bilingual_presentation(record["fingerprint"], generated, generated_at)
+                    for locale in SUPPORTED_LOCALES:
+                        retry_queue.pop(_retry_queue_key(source_id, raw["key"], locale), None)
+                    stats["localeGenerated"] += len(SUPPORTED_LOCALES)
+                    stats["sources"][source_id]["localeGenerated"] += len(SUPPORTED_LOCALES)
+                except (KeyError, PresentationError, ValueError, OSError) as error:
+                    failure_code = _presentation_failure_code(error)
+                    _record_presentation_failure(stats, source_id, failure_code, error)
+                    fallback_generated: dict[str, str] = {}
+                    fallback_failures: dict[str, Exception] = {}
+                    if fallback_item is not None:
+                        stats["fallbackAttempts"] += 1
+                        stats["sources"][source_id]["fallbackAttempts"] += 1
+                        try:
+                            fallback_generated, fallback_failures = fallback_item(
+                                record["title"],
+                                _presentation_context_for_model(raw, presentation_policy),
+                                presentation_policy,
+                            )
+                        except (KeyError, PresentationError, ValueError, OSError) as fallback_error:
+                            fallback_failures = {"unknown": fallback_error}
+                        for locale, fallback_error in fallback_failures.items():
+                            code = _presentation_failure_code(fallback_error)
+                            _record_fallback_failure(stats, source_id, locale, code)
+
+                    complete_locales = {
+                        locale
+                        for locale, (headline_key, summary_key) in {
+                            "en": ("shortHeadlineEn", "summaryEn"),
+                            "ja": ("shortHeadlineJa", "summaryJa"),
+                        }.items()
+                        if isinstance(fallback_generated.get(headline_key), str)
+                        and isinstance(fallback_generated.get(summary_key), str)
+                    }
+                    if fallback_generated:
+                        try:
+                            record["presentation"] = _partial_bilingual_presentation(
+                                record["fingerprint"], fallback_generated, generated_at
+                            )
+                        except (KeyError, PresentationError, ValueError) as fallback_error:
+                            _record_fallback_failure(stats, source_id, "presentation", _presentation_failure_code(fallback_error))
+                            complete_locales = set()
+                            record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION)
+                    else:
+                        # Model errors must not block publication. The source title
+                        # remains available while both generated locales stay missing.
+                        record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION)
+
+                    generated_locales = len(complete_locales)
+                    fallback_failed_locales = len(set(SUPPORTED_LOCALES) - complete_locales)
+                    if fallback_item is not None:
+                        stats["fallbackGeneratedLocales"] += generated_locales
+                        stats["fallbackFailedLocales"] += fallback_failed_locales
+                        stats["localeGenerated"] += generated_locales
+                        stats["localeFailed"] += fallback_failed_locales
+                        stats["sources"][source_id]["fallbackGeneratedLocales"] += generated_locales
+                        stats["sources"][source_id]["fallbackFailedLocales"] += fallback_failed_locales
+                        stats["sources"][source_id]["localeGenerated"] += generated_locales
+                        stats["sources"][source_id]["localeFailed"] += fallback_failed_locales
+                    for locale in due_locales:
+                        if locale in complete_locales:
+                            retry_queue.pop(_retry_queue_key(source_id, raw["key"], locale), None)
+                        else:
+                            code = _presentation_failure_code(fallback_failures.get(locale, error))
+                            _record_retry_failure(
+                                retry_queue,
+                                source_id,
+                                raw["key"],
+                                record["fingerprint"],
+                                locale,
+                                code,
+                                generated_at,
+                            )
+            elif locale_item is not None:
+                # A previously successful locale is never regenerated merely
+                # because its sibling is missing. Each locale has its own
+                # lifecycle and can recover on a later run independently.
+                locales_to_attempt = list(due_locales)
+                # If English was pending and regenerating it invalidates a
+                # previously successful Japanese overlay, refresh that overlay
+                # immediately. A Japanese locale already deferred by the queue
+                # remains deferred and is not silently retried.
+                if (
+                    "en" in locales_to_attempt
+                    and initial_statuses.get("ja") in {"machine", "reviewed"}
+                    and "ja" not in locales_to_attempt
+                ):
+                    locales_to_attempt.append("ja")
+                for locale in locales_to_attempt:
+                    if locale not in _pending_presentation_locales(record["presentation"]):
+                        continue
+                    stats["localeAttempted"] += 1
+                    stats["sources"][source_id]["localeAttempted"] += 1
+                    try:
+                        generated = locale_item(
+                            record["title"],
+                            _presentation_context_for_model(raw, presentation_policy),
+                            presentation_policy,
+                            locale,
+                        )
+                        record["presentation"] = _merge_locale_presentation(
+                            record["presentation"], record["fingerprint"], locale, generated, generated_at
+                        )
+                        retry_queue.pop(_retry_queue_key(source_id, raw["key"], locale), None)
+                        stats["localeGenerated"] += 1
+                        stats["sources"][source_id]["localeGenerated"] += 1
+                    except (KeyError, PresentationError, ValueError, OSError) as error:
+                        code = _presentation_failure_code(error)
+                        _record_presentation_failure(stats, source_id, code, error)
+                        _record_retry_failure(
+                            retry_queue,
+                            source_id,
+                            raw["key"],
+                            record["fingerprint"],
+                            locale,
+                            code,
+                            generated_at,
+                        )
+                        stats["localeFailed"] += 1
+                        stats["sources"][source_id]["localeFailed"] += 1
+            if any(locale["status"] in {"machine", "reviewed"} for locale in record["presentation"]["locales"].values()):
                 stats["generated"] += 1
                 stats["sources"][source_id]["generated"] += 1
-            except (KeyError, PresentationError, ValueError, OSError) as error:
-                # Model errors must not block publication or leave one locale
-                # partially populated.  The source's original title remains.
-                record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION)
+            else:
                 stats["failed"] += 1
                 stats["sources"][source_id]["failed"] += 1
-                _record_presentation_failure(stats, source_id, _presentation_failure_code(error))
+    next_state["presentationRetryQueue"] = _retry_queue_payload(retry_queue)
     stats["deferred"] = max(0, stats["eligible"] - stats["attempted"])
 
     feed = build_feed(next_state, config, generated_at)
@@ -1596,14 +2322,19 @@ def collect_and_write(
     now: datetime | None = None,
     fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = bounded_request,
     present_item: Callable[[str, str, dict[str, Any]], dict[str, str]] | None = None,
+    fallback_item: Callable[[str, str, dict[str, Any]], tuple[dict[str, str], dict[str, Exception]]] | None = None,
+    locale_item: Callable[[str, str, dict[str, Any], str], dict[str, str]] | None = None,
     presentation_limit: int | None = None,
     presentation_stats: dict[str, Any] | None = None,
     source_pipeline_stats: dict[str, Any] | None = None,
     reseed_source_id: str | None = None,
+    retry_failed: bool = False,
 ) -> dict[str, Any]:
     config = load_config(config_path)
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
     renderer = present_item if present_item is not None else _bilingual_presentation_from_environment(timeout)
+    fallback_renderer = fallback_item if fallback_item is not None else _bilingual_fallback_from_environment(timeout)
+    locale_renderer = locale_item if locale_item is not None else _locale_presentation_from_environment(timeout)
     feed, next_state = collect(
         config,
         state,
@@ -1611,10 +2342,13 @@ def collect_and_write(
         now or datetime.now(timezone.utc),
         fetch_body,
         renderer,
+        fallback_renderer,
+        locale_item=locale_renderer,
         presentation_limit=presentation_limit,
         presentation_stats=presentation_stats,
         source_pipeline_stats=source_pipeline_stats,
         reseed_source_id=reseed_source_id,
+        retry_failed=retry_failed,
     )
     # Both payloads are fully constructed and validated before either single-file atomic write.
     write_json(output_path, feed)
@@ -1636,6 +2370,11 @@ def main() -> int:
     parser.add_argument("--timeout", type=float, default=30.0)
     parser.add_argument("--presentation-limit", type=_parse_presentation_limit, default=None)
     parser.add_argument("--reseed-source", default=None, help="re-evaluate one configured source under its current relevance revision")
+    parser.add_argument(
+        "--retry-failed",
+        action="store_true",
+        help="clear the isolated presentation retry queue before this run",
+    )
     args = parser.parse_args()
     try:
         stats: dict[str, Any] = {}
@@ -1649,7 +2388,15 @@ def main() -> int:
             presentation_stats=stats,
             source_pipeline_stats=pipeline,
             reseed_source_id=args.reseed_source,
+            retry_failed=args.retry_failed,
         )
+    except SourceFetchError as error:
+        print(
+            f"SOURCE_FETCH_FAILURE: id={error.source_id} code={error.reason} attempts={error.attempts}",
+            file=sys.stderr,
+        )
+        print(f"FAIL: {error}", file=sys.stderr)
+        return 1
     except (ContractError, OSError, ValueError, urllib.error.URLError) as error:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1

@@ -15,7 +15,7 @@ SAFE_ARTIFACT_KEY = re.compile(r"[a-z0-9][a-z0-9-]*\Z")
 RESPONSE_MODES = {"json_object", "json_schema_strict"}
 REASONING_MODES = {"default", "low_hidden", "hidden"}
 COMPARISON_PROMPT_LAYOUTS = {"production", "user_only", "user_only_explicit_contract"}
-COMPARISON_CONTRACTS = {"editorial_entry_v2"}
+COMPARISON_CONTRACTS = {"editorial_entry_v3"}
 DEFAULT_COMPARISON_MAX_TOKENS = 500
 MAX_COMPARISON_MAX_TOKENS = 1200
 DEFAULT_PRODUCTION_MAX_TOKENS = 500
@@ -37,10 +37,10 @@ class ModelProfile:
     reasoning_mode: str = "default"
     comparison_prompt_layout: str = "production"
     comparison_max_tokens: int = DEFAULT_COMPARISON_MAX_TOKENS
-    comparison_contract: str = "editorial_entry_v2"
+    comparison_contract: str = "editorial_entry_v3"
     production_prompt_layout: str = "production"
     production_max_tokens: int = DEFAULT_PRODUCTION_MAX_TOKENS
-    production_contract: str = "editorial_entry_v2"
+    production_contract: str = "editorial_entry_v3"
     production_rate_reset_wait_max_seconds: int = DEFAULT_PRODUCTION_RATE_RESET_WAIT_MAX_SECONDS
 
 
@@ -79,10 +79,10 @@ def load_model_profile_registry(path: Path = DEFAULT_CONFIG_PATH) -> ModelProfil
         reasoning_mode = clean_text(raw_profile.get("reasoning_mode"))
         comparison_prompt_layout = clean_text(raw_profile.get("comparison_prompt_layout")) or "production"
         comparison_max_tokens = raw_profile.get("comparison_max_tokens", DEFAULT_COMPARISON_MAX_TOKENS)
-        comparison_contract = clean_text(raw_profile.get("comparison_contract")) or "editorial_entry_v2"
+        comparison_contract = clean_text(raw_profile.get("comparison_contract")) or "editorial_entry_v3"
         production_prompt_layout = clean_text(raw_profile.get("production_prompt_layout")) or "production"
         production_max_tokens = raw_profile.get("production_max_tokens", DEFAULT_PRODUCTION_MAX_TOKENS)
-        production_contract = clean_text(raw_profile.get("production_contract")) or "editorial_entry_v2"
+        production_contract = clean_text(raw_profile.get("production_contract")) or "editorial_entry_v3"
         production_rate_reset_wait_max_seconds = raw_profile.get(
             "production_rate_reset_wait_max_seconds",
             DEFAULT_PRODUCTION_RATE_RESET_WAIT_MAX_SECONDS,

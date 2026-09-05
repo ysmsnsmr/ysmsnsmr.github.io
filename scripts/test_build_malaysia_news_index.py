@@ -63,6 +63,33 @@ SHIFT_MARKDOWN = """【速報】
 """
 
 
+V3_MARKDOWN = """【速報】
+
+- 見出し：気象局、複数地域に雷雨と大雨を警戒
+- 短見出し：複数地域で雷雨に警戒
+- 概要：気象局は複数地域で雷雨と大雨が予想されるとして警戒を呼びかけました。
+- 出典：Example News（2026年9月3日）
+- 出典元URL：https://example.test/weather
+
+【生活インパクト】
+
+- 見出し：当局、MyKad印刷を一時中断へ
+- 短見出し：MyKad印刷を一時中断
+- 概要：カード移行作業のため、印刷サービスが一時的に中断されます。
+- 出典：Example News（2026年9月3日）
+- 出典元URL：https://example.test/mykad
+"""
+
+
+SOURCE_ONLY_MARKDOWN = V3_MARKDOWN + """
+【原文のみ】
+
+- 原題：Bursa Malaysia ends higher after BNM holds OPR
+- 出典：Malay Mail（2026年9月4日）
+- 出典元URL：https://example.test/bursa
+"""
+
+
 class MalaysiaNewsIndexTests(unittest.TestCase):
     def parse_sample(self) -> builder.NewsDay:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -100,7 +127,10 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertIn("recent-headline-list", page)
         self.assertIn("font-size: clamp(1.75rem, 3vw, 2.625rem)", page)
         self.assertIn("font-size: clamp(1.4rem, 2.4vw, 1.875rem)", page)
-        self.assertIn("-webkit-line-clamp: 3", page)
+        self.assertIn(".focus-card h3", page)
+        self.assertIn("white-space: normal", page)
+        self.assertIn(".focus-dek", page)
+        self.assertIn("-webkit-line-clamp: 1", page)
 
     def test_daily_page_has_short_headline_and_summary_body(self) -> None:
         page = builder.render_daily_page(self.parse_sample())
@@ -117,7 +147,7 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
     def test_editorial_short_headline_is_used_without_heuristic_rewrite(self) -> None:
         day = self.parse_sample()
         self.assertEqual(day.items[0].short_headline, "雷雨・大雨に注意")
-        self.assertEqual(builder.display_headline(day.items[0]), "雷雨・大雨に注意")
+        self.assertEqual(builder.display_short_headline(day.items[0]), "雷雨・大雨に注意")
 
     def test_recent_day_lists_at_most_five_short_headlines(self) -> None:
         items = [
@@ -163,6 +193,38 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertLess(fallback, market)
         self.assertIn("https://example.test/fallback", html[fallback:market])
         self.assertNotIn("https://example.test/market", html[fallback:market])
+
+    def test_v3_routes_full_headline_to_pickup_and_daily_but_short_to_recent(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "2026-09-03.md"
+            path.write_text(V3_MARKDOWN, encoding="utf-8")
+            day = builder.parse_markdown(path)
+
+        first = day.items[0]
+        self.assertEqual(first.headline, "気象局、複数地域に雷雨と大雨を警戒")
+        self.assertEqual(first.short_headline, "複数地域で雷雨に警戒")
+        self.assertEqual(builder.display_full_headline(first), first.headline)
+        self.assertEqual(builder.display_short_headline(first), first.short_headline)
+        self.assertIn(first.headline, builder.render_item_card(first))
+        self.assertIn(first.conclusion, builder.render_item_card(first))
+        self.assertIn(first.short_headline, builder.render_recent_day(day))
+        self.assertIn(first.headline, builder.render_daily_page(day))
+
+    def test_source_only_entries_are_not_cards_but_remain_on_daily_page(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "2026-09-04.md"
+            path.write_text(SOURCE_ONLY_MARKDOWN, encoding="utf-8")
+            day = builder.parse_markdown(path)
+
+        self.assertEqual(len(day.items), 2)
+        self.assertEqual(len(day.source_only_items), 1)
+        self.assertEqual(day.source_only_items[0].title, "Bursa Malaysia ends higher after BNM holds OPR")
+        daily = builder.render_daily_page(day)
+        index = builder.render_html([day])
+        self.assertIn("原文のみ", daily)
+        self.assertIn("Bursa Malaysia ends higher after BNM holds OPR", daily)
+        self.assertIn("https://example.test/bursa", daily)
+        self.assertNotIn("Bursa Malaysia ends higher after BNM holds OPR", index)
 
 
 if __name__ == "__main__":

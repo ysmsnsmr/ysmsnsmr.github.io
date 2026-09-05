@@ -14,7 +14,7 @@ Search Engine Land Meta RSSは、2026-08-30にGitHub ActionsでHTTP 403が繰り
 
 Social Media Todayは一般ニュースRSSのため、Meta／Facebook／Instagramの語と広告関連語の両方を含む見出しだけを掲載候補にします。これは記事の正確性を保証するものではなく、フィードの対象範囲を絞るための機械的な条件です。
 
-Jon Loomerの `Meta Advertising` カテゴリ記事に `https://www.facebook.com/business/news/<slug>` 形式のリンクがある場合は、リンク先をMeta公式記事の候補として扱います。完全一致するHTTPSホストとパスだけを許可し、Meta公式ページ自身からcanonical URL、記事種別、タイトル、説明、発表日を検証できた候補だけを「Meta公式」として掲載します。Jon Loomer側の見出しや説明をMeta公式情報として転用しません。
+Jon Loomerは `Meta Advertising` カテゴリだけでなく、タイトルまたはRSS説明に広告運用を示す具体的な語（Ads Manager、campaign、pixel、Conversions API、audienceなど）がある記事だけを掲載候補にします。カテゴリだけの周辺記事は除外します。この判定はsource-localの`relevanceRevision`で管理します。カテゴリ記事に `https://www.facebook.com/business/news/<slug>` 形式のリンクがある場合は、リンク先をMeta公式記事の候補として扱います。完全一致するHTTPSホストとパスだけを許可し、Meta公式ページ自身からcanonical URL、記事種別、タイトル、説明、発表日を検証できた候補だけを「Meta公式」として掲載します。Jon Loomer側の見出しや説明をMeta公式情報として転用しません。
 
 Meta公式ページはRSSや公開APIではなくHTMLから限定的なmetadataを読むため、アクセス制限や構造変更の影響を受けます。この追加取得だけが失敗した場合は該当候補を掲載せず、他のPersonal Feed収集は継続します。本文・失敗URL・例外本文は保存またはログ出力せず、許可ホスト、最大3回のredirect、1 MiBの応答上限、1 run最大20件を維持します。
 
@@ -44,19 +44,21 @@ Meta公式ページはRSSや公開APIではなくHTMLから限定的なmetadata�
 
 発表日または最終更新日の新しい方が365日より前の記事は、表示データ生成の前に除外します。どちらの日付もない記事だけは初回観測日を使います。再観測日時で期限を延長することはありません。期限切れの記事はstate、公開feed、artifactに残しません。
 
-Meta Newsroom Product News RSSは、広告関連語がタイトル、RSS説明、カテゴリのいずれかにある記事だけを採用します。Business SDKは全release、Jon Loomerは`Meta Advertising`カテゴリ、Social Media Todayは既存のMeta系語と広告系語の二群条件を維持します。ソースごとに`relevanceRevision`を持ち、意味のある条件変更時には当該ソースだけをreseedします。
+Meta Newsroom Product News RSSは、広告関連語がタイトル、RSS説明、カテゴリのいずれかにある記事だけを採用します。Business SDKは全release、Jon Loomerは`Meta Advertising`カテゴリと具体的な広告運用語、Social Media Todayは既存のMeta系語と広告系語の二群条件を維持します。ソースごとに`relevanceRevision`を持ち、意味のある条件変更時には当該ソースだけをreseedします。
 
-`workflow_dispatch`で`reseed_source_id`に設定済みのソースIDを指定すると、そのソースだけを現行の鮮度・関連性条件で再構築します。初回のProduct News移行では`meta-product-news-rss`を指定します。同じURLが引き続き採用される場合、`firstObservedAt`は維持されます。未登録IDはcollectorが失敗して既存公開物を保持します。
+`workflow_dispatch`で`reseed_source_id`に設定済みのソースIDを指定すると、そのソースだけを現行の鮮度・関連性条件で再構築します。関連性契約を変更した場合は、次回scheduled runの前に対象ソースを手動reseedしてください。Jon Loomerのv3契約へ移行するときは`jon-loomer-meta-ads`を指定します。初回のProduct News移行では`meta-product-news-rss`を指定します。同じURLが引き続き採用される場合、`firstObservedAt`は維持されます。未登録IDはcollectorが失敗して既存公開物を保持します。
 
 ## 英語・日本語の短見出し・要約
 
-収集時には、RSSの説明文またはSDK release notesを**そのrunの一時入力だけ**として、英語の短見出し・要約と、その日本語訳を**1記事につきGroqへ1回だけ**要求します。元の本文・説明文・release notes、Groq応答はstate、公開JSON、artifact、ログへ保存しません。
+収集時には、RSSの説明文またはSDK release notesを**そのrunの一時入力だけ**として、英語の短見出し・要約と、その日本語訳を**1記事につきGroqへ1回**要求します。4項目の応答が失敗した場合は、英語2項目、続いて日本語2項目を各1回だけ再試行します。元の本文・説明文・release notes、Groq応答はstate、公開JSON、artifact、ログへ保存しません。
 
-生成済みの表示データは記事内容のfingerprintに結び付けて再利用します。同じ内容には再課金しません。内容が変わった記事、または未生成の記事だけを新しい順に1 runあたり最大12件処理します。
+生成済みの表示データは記事内容のfingerprintに結び付けて再利用します。同じ内容には再課金しません。英語と日本語はlocaleごとに`machine`または`missing`を保持し、片方の生成失敗で成功済みのもう片方を消しません。内容が変わった記事、または未生成localeのある記事だけを新しい順に1 runあたり最大12件処理します。英語を再生成した場合、日本語は新しい英語に基づくoverlayとして再生成対象になります。
 
-GroqのAPIキーがない、生成に失敗する、または4項目の出力契約に合わない場合でも、収集と公開は継続します。その記事は英語・日本語をともに`missing`として記録し、原文タイトルのまま表示できます。一方の言語だけを公開することはありません。表示データは事実確認や運用判断を代替しません。
+GroqのAPIキーがない、生成に失敗する、または出力契約に合わない場合でも、収集と公開は継続します。失敗したlocaleだけを`missing`として記録し、原文タイトルのまま表示できます。両localeが失敗した場合も同様です。表示データは事実確認や運用判断を代替しません。
 
-各runは本文を出さずに `PRESENTATION` と `PRESENTATION_SOURCE` の行を出力します。ここでは生成候補数、試行数、成功数、失敗数、次回以降へ繰り越した数だけを確認します。失敗がある場合は、全体の `PRESENTATION_FAILURE` とソース別の `PRESENTATION_SOURCE_FAILURE` に安全な理由コードと件数を出します。
+各runは本文を出さずに `PRESENTATION` と `PRESENTATION_SOURCE` の行を出力します。ここでは記事候補数、記事単位の試行数、locale単位の試行・成功・失敗数、次回以降へ繰り越した数を確認します。失敗がある場合は、全体の `PRESENTATION_FAILURE` / `PRESENTATION_FALLBACK_FAILURE` とソース別の同名ログに安全な理由コードと件数を出します。
+
+表示生成の失敗は、公開feedとは分離したstate内の `presentationRetryQueue` にlocale単位で隔離します。各エントリはsource、item fingerprint、locale、`failureCount`、`lastFailureAt`、`nextRetryAt`、安全な失敗コード、`quarantined`だけを持ち、本文やGroq応答は保存しません。再試行間隔は1時間、2時間、4時間…と指数バックオフし、5回目の失敗で隔離して自動再試行を止めます。再試行時刻前のrunは外部モデルを呼ばず、公開feedはそのまま更新できます。手動で原因を確認して再試行を許可する場合だけ、daily collectのworkflow_dispatchで `retry_failed=true` を指定します。これはキューを空にしてそのrunで再評価する操作であり、失敗中の候補を無制限に繰り返すものではありません。
 
 - `api_key_unavailable` — APIキーが未設定
 - `http_client_error` / `http_server_error` — Groq側のHTTP 4xx / 5xx 応答

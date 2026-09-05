@@ -157,13 +157,22 @@
       padding: 16px;
     }
     .focus-card h3 {
+      min-width: 0;
       font-size: 1.04rem;
       line-height: 1.45;
+      white-space: normal;
+      word-break: normal;
       overflow-wrap: anywhere;
+    }
+    .focus-dek {
       display: -webkit-box;
+      margin: 0;
       overflow: hidden;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 1;
     }
     .item-category {
       align-self: flex-start;
@@ -348,7 +357,7 @@
         justify-content: stretch;
         width: 100%;
       }
-      .header-actions a { flex: 1 1 11rem; }
+      .header-actions a { flex: 1 1 100%; min-width: 0; }
       .status-strip { margin-bottom: 24px; }
       .status-chip {
         min-height: 34px;
@@ -368,6 +377,7 @@
         grid-template-columns: 1fr;
         gap: 12px;
       }
+      .focus-card h3 { white-space: normal; }
       .section-head {
         display: grid;
         gap: 2px;
@@ -401,19 +411,19 @@
         <p class="subhead">生活に関わるマレーシアニュースをRSSから日次で収集・要約しています。</p>
       </div>
       <div class="header-actions">
-        <a class="primary-link" href="./2026-09-02.html">今日のまとめを読む</a>
+        <a class="primary-link" href="./2026-09-05.html">今日のまとめを読む</a>
         <a class="secondary-link" href="#archive-heading">過去分を見る</a>
       </div>
     </header>
     <div class="status-strip" aria-label="更新状況と集計">
-      <span class="status-chip"><span>更新</span><strong>2026年9月2日 09:18 MYT</strong></span>
-<span class="status-chip"><span>処理対象</span><strong>92件</strong></span>
-<span class="status-chip"><span>要約対象</span><strong>5件</strong></span>
+      <span class="status-chip"><span>更新</span><strong>2026年9月5日 09:20 MYT</strong></span>
+<span class="status-chip"><span>処理対象</span><strong>94件</strong></span>
+<span class="status-chip"><span>要約対象</span><strong>8件</strong></span>
 <span class="status-chip"><span>失敗ソース</span><strong>なし</strong></span>
       <span class="count-pill"><span>速報</span><strong>0</strong></span>
-<span class="count-pill"><span>生活インパクト</span><strong>1</strong></span>
+<span class="count-pill"><span>生活インパクト</span><strong>2</strong></span>
 <span class="count-pill"><span>知っておくと得</span><strong>4</strong></span>
-      <a class="markdown-link" href="./2026-09-02.md">Markdown版</a>
+      <a class="markdown-link" href="./2026-09-05.md">Markdown版</a>
     </div>
 
     <section aria-labelledby="today-heading">
@@ -425,31 +435,34 @@
         <div class="today-head">
           <div>
             <p class="eyebrow">Latest</p>
-            <h2>2026年9月2日</h2>
+            <h2>2026年9月5日</h2>
             <p class="muted">カテゴリ順に、生活への影響を確認できます。</p>
           </div>
-          <a class="primary-link" href="./2026-09-02.html">10件すべて読む</a>
+          <a class="primary-link" href="./2026-09-05.html">10件すべて読む</a>
         </div>
         <div class="focus-grid">
 
         <article class="focus-card">
           <p class="item-category">生活インパクト</p>
-          <h3 title="MBPJは独立記念日連休と学校休暇中、Jalan Gasing・Jalan Templer・NPE高速の平日逆走を9月4日まで中止すると発表しました。利用者は通常通りのルート確認が必要です。">Gasing等逆走停止</h3>
-          <a class="source-link" href="https://paultan.org/2026/09/01/jln-gasing-templer-npe-contraflow-stopped-till-sept-4/">出典: Paul Tan（2026年9月1日）</a>
+          <h3>MATTAフェアがMITECで開催、KLセンタル発無料Rapid KLシャトルで来場者は時間節約・景品獲得</h3>
+          <p class="focus-dek">9月4日から6日までMITECで開催されるMATTAフェアでは、KLセンタルから無料のRapid KLシャトルバスが運行され、来場者は移動時間を短縮できるほか、参加者向けに景品が用意されています。</p>
+          <a class="source-link" href="https://paultan.org/2026/09/04/matta-fair-sept-4-6-at-mitec-take-the-free-rapid-kl-shuttle-bus-from-kl-sentral-save-time-and-win-prizes/">出典: Paul Tan（2026年9月4日）</a>
+        </article>
+
+
+        <article class="focus-card">
+          <p class="item-category">生活インパクト</p>
+          <h3>アンワル首相、タブン・ハジへの証券委員会または中央銀行監督提案を支持</h3>
+          <p class="focus-dek">首相兼財務大臣のアンワル・イブラヒム氏は、タブン・ハジ（TH）の投資業務をマレーシア証券委員会（SC）または中央銀行（BNM）の監督下に置く提案を支持した。これは同基金のガバナンス強化と権限乱用防止を目的としており、タブン・ハジ法1995の改正も含まれる。</p>
+          <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/04/anwar-endorses-proposal-for-sc-or-bnm-oversight-of-tabung-haji-investments/233931">出典: Malay Mail（2026年9月4日）</a>
         </article>
 
 
         <article class="focus-card">
           <p class="item-category">知っておくと得</p>
-          <h3 title="水曜日、ブレント原油価格の上昇と米連邦準備制度の利上げ予想が高まる中、リンギットは米ドルに対して下落して取引を開始しました。">リンギット下落 原油高と利上げ</h3>
-          <a class="source-link" href="https://www.malaymail.com/news/money/2026/09/02/ringgit-slips-against-us-dollar-as-oil-prices-fed-rate-hike-bets-rise/233589">出典: Malay Mail（2026年9月2日）</a>
-        </article>
-
-
-        <article class="focus-card">
-          <p class="item-category">知っておくと得</p>
-          <h3 title="Bursa Malaysiaは火曜日、米株式市場の弱さを受けて高値で取引開始したものの、すぐに上昇幅を縮小しました。">バルサ・マレーシア、上昇後下落</h3>
-          <a class="source-link" href="https://www.malaymail.com/news/money/2026/09/01/bursa-malaysia-pares-gains-after-opening-higher-on-wall-street-weakness/233469">出典: Malay Mail（2026年9月1日）</a>
+          <h3>セリアンで濃霧緊急事態宣言、JASが監視と取締りを強化</h3>
+          <p class="focus-dek">JASは、健康と安全を脅かすレベルに達した濃霧のため、セリアン全域での緊急事態宣言を受けて監視体制と取締りを強化すると発表しました。</p>
+          <a class="source-link" href="https://www.astroawani.com/berita-malaysia/darurat-jerebu-di-serian-jas-tingkat-pemantauan-penguatkuasaan">出典: Astro Awani（2026年9月5日）</a>
         </article>
 
         </div>
@@ -463,6 +476,66 @@
         <p>今日を除く直近日を比較</p>
       </div>
       <div class="recent-list">
+        <article class="recent-card">
+          <p class="eyebrow">Daily</p>
+          <h3>2026年9月4日</h3>
+          <div class="counts compact-counts" aria-label="カテゴリ別件数">
+            <span class="count-pill"><span>速報</span><strong>1</strong></span>
+<span class="count-pill"><span>生活インパクト</span><strong>2</strong></span>
+<span class="count-pill"><span>知っておくと得</span><strong>7</strong></span>
+          </div>
+          <div class="recent-body">
+            <ol class="recent-headline-list"><li>エルニーニョで乾燥と煙が続く</li>
+<li>PJハーフマラソンで道路閉鎖</li>
+<li>リム・グアン・エン、料金値上げ延期要請</li>
+<li>BNM金利据え置きでリンギット上昇</li>
+<li>記事詳細は出典へ</li></ol>
+          </div>
+          <p class="recent-meta">10件 / 失敗なし</p>
+          <a class="open-link" href="./2026-09-04.html">その日のまとめ</a>
+        </article>
+
+
+        <article class="recent-card">
+          <p class="eyebrow">Daily</p>
+          <h3>2026年9月3日</h3>
+          <div class="counts compact-counts" aria-label="カテゴリ別件数">
+            <span class="count-pill"><span>速報</span><strong>1</strong></span>
+<span class="count-pill"><span>生活インパクト</span><strong>1</strong></span>
+<span class="count-pill"><span>知っておくと得</span><strong>4</strong></span>
+          </div>
+          <div class="recent-body">
+            <ol class="recent-headline-list"><li>KL他で雷雨注意</li>
+<li>バス事業者も新住宅計画へ</li>
+<li>リンギット、米ドル安が続く</li>
+<li>記事詳細は出典へ</li>
+<li>台湾でAI株に借金投資</li></ol>
+          </div>
+          <p class="recent-meta">6件 / 失敗なし</p>
+          <a class="open-link" href="./2026-09-03.html">その日のまとめ</a>
+        </article>
+
+
+        <article class="recent-card">
+          <p class="eyebrow">Daily</p>
+          <h3>2026年9月2日</h3>
+          <div class="counts compact-counts" aria-label="カテゴリ別件数">
+            <span class="count-pill"><span>速報</span><strong>0</strong></span>
+<span class="count-pill"><span>生活インパクト</span><strong>1</strong></span>
+<span class="count-pill"><span>知っておくと得</span><strong>4</strong></span>
+          </div>
+          <div class="recent-body">
+            <ol class="recent-headline-list"><li>Gasing等逆走停止</li>
+<li>リンギット下落 原油高と利上げ</li>
+<li>バルサ・マレーシア、上昇後下落</li>
+<li>ペンガラング投資、成果要請</li>
+<li>MyKad印刷停止7日</li></ol>
+          </div>
+          <p class="recent-meta">5件 / 失敗なし</p>
+          <a class="open-link" href="./2026-09-02.html">その日のまとめ</a>
+        </article>
+
+
         <article class="recent-card">
           <p class="eyebrow">Daily</p>
           <h3>2026年9月1日</h3>
@@ -519,66 +592,6 @@
           <p class="recent-meta">3件 / 失敗: Malay Mail Malaysia: parse failed: ParseError: syntax error: line 1, column 0</p>
           <a class="open-link" href="./2026-08-30.html">その日のまとめ</a>
         </article>
-
-
-        <article class="recent-card">
-          <p class="eyebrow">Daily</p>
-          <h3>2026年8月29日</h3>
-          <div class="counts compact-counts" aria-label="カテゴリ別件数">
-            <span class="count-pill"><span>速報</span><strong>0</strong></span>
-<span class="count-pill"><span>生活インパクト</span><strong>2</strong></span>
-<span class="count-pill"><span>知っておくと得</span><strong>6</strong></span>
-          </div>
-          <div class="recent-body">
-            <ol class="recent-headline-list"><li>MAHAで無料シャトルバス運行</li>
-<li>記事詳細は出典へ</li>
-<li>長週末前に株安</li>
-<li>火災消火中に工場主が倒れる</li>
-<li>AI活用で教育と医療を重視</li></ol>
-          </div>
-          <p class="recent-meta">8件 / 失敗なし</p>
-          <a class="open-link" href="./2026-08-29.html">その日のまとめ</a>
-        </article>
-
-
-        <article class="recent-card">
-          <p class="eyebrow">Daily</p>
-          <h3>2026年8月28日</h3>
-          <div class="counts compact-counts" aria-label="カテゴリ別件数">
-            <span class="count-pill"><span>速報</span><strong>1</strong></span>
-<span class="count-pill"><span>生活インパクト</span><strong>1</strong></span>
-<span class="count-pill"><span>知っておくと得</span><strong>6</strong></span>
-          </div>
-          <div class="recent-body">
-            <ol class="recent-headline-list"><li>ジョホール等で大雨と強風</li>
-<li>国慶と休暇でWCE渋滞予想</li>
-<li>バンダル高速計画が閣議承認</li>
-<li>記事詳細は出典へ</li>
-<li>Setel、規制上の課題を是正</li></ol>
-          </div>
-          <p class="recent-meta">8件 / 失敗なし</p>
-          <a class="open-link" href="./2026-08-28.html">その日のまとめ</a>
-        </article>
-
-
-        <article class="recent-card">
-          <p class="eyebrow">Daily</p>
-          <h3>2026年8月27日</h3>
-          <div class="counts compact-counts" aria-label="カテゴリ別件数">
-            <span class="count-pill"><span>速報</span><strong>1</strong></span>
-<span class="count-pill"><span>生活インパクト</span><strong>1</strong></span>
-<span class="count-pill"><span>知っておくと得</span><strong>8</strong></span>
-          </div>
-          <div class="recent-body">
-            <ol class="recent-headline-list"><li>今夜KL含む10州で雷雨注意</li>
-<li>国慶連休で交通増加見込み</li>
-<li>記事詳細は出典へ</li>
-<li>株式市場、独立記念日前に上昇</li>
-<li>リンギット、米指標受けやや上昇</li></ol>
-          </div>
-          <p class="recent-meta">10件 / 失敗なし</p>
-          <a class="open-link" href="./2026-08-27.html">その日のまとめ</a>
-        </article>
       </div>
     </section>
 
@@ -591,9 +604,30 @@
             <details class="archive-month" open>
               <summary>
                 <span>2026年8月</span>
-                <span>26日分</span>
+                <span>29日分</span>
               </summary>
               <ul class="archive-list">
+
+            <li>
+              <a href="./2026-08-29.html">2026年8月29日</a>
+              <span>8件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-08-28.html">2026年8月28日</a>
+              <span>8件</span>
+              <span>なし</span>
+            </li>
+
+
+            <li>
+              <a href="./2026-08-27.html">2026年8月27日</a>
+              <span>10件</span>
+              <span>なし</span>
+            </li>
+
 
             <li>
               <a href="./2026-08-26.html">2026年8月26日</a>

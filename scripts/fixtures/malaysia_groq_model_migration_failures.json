@@ -2279,6 +2279,28 @@
           "洪姓彭さんは倒れた時点で失神レベルが1と判定された。"
         ]
       }
+    },
+    {
+      "link": "https://www.malaymail.com/news/money/2026/06/18/ringgit-closes-softer-against-us-dollar-and-asean-currencies-as-fed-outlook-weighs-on-markets/224323",
+      "first_observed_on": "2026-09-03",
+      "production_profile": "gpt-oss-120b",
+      "failure_reasons": [
+        "Semantic quality observation: a softer ringgit against the US dollar was rendered as a stronger ringgit"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Malay Mail",
+        "published_date": "2026年6月18日",
+        "title": "Ringgit closes softer against US dollar and Asean currencies as Fed outlook weighs on markets",
+        "description": "The ringgit closed lower against the US dollar as the Federal Reserve outlook weighed on markets.",
+        "link": "https://www.malaymail.com/news/money/2026/06/18/ringgit-closes-softer-against-us-dollar-and-asean-currencies-as-fed-outlook-weighs-on-markets/224323"
+      },
+      "observed_output": {
+        "headline_ja": "米ドル安でリンギット上昇",
+        "short_headline_ja": "リンギット対ドル上昇",
+        "entry_ja": "米ドル安を背景に、リンギットが対米ドルで上昇した。",
+        "supporting_points_ja": []
+      }
     }
   ]
 }

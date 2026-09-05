@@ -1970,7 +1970,7 @@ def selected_summary_json(item: Item) -> dict[str, object]:
 
 
 def editorial_entry_json(item: Item) -> dict[str, object]:
-    """Adapt the existing RSS summary to the v2 renderer contract.
+    """Adapt the existing RSS summary to the v3 renderer contract.
 
     This remains deterministic RSS fallback data.  Generic impact and action
     text is intentionally not promoted into supporting points.
@@ -1986,6 +1986,7 @@ def editorial_entry_json(item: Item) -> dict[str, object]:
     ][:2]
     return {
         "headline_ja": "記事詳細は出典へ",
+        "short_headline_ja": "記事詳細は出典へ",
         "entry_ja": entry_ja,
         "supporting_points_ja": points,
     }
@@ -2622,8 +2623,13 @@ def self_test() -> int:
     check("JSON item keeps internal metadata", "score" in json_item and "flags" in json_item)
     check("JSON selected summary has next_action key", "next_action" in selected_summary)
     check("JSON selected summary splits what_happened like render", len(selected_summary["what_happened"]) <= 2)
-    check("JSON item carries Editorial Entry v2 fallback", bool(editorial_entry["headline_ja"]) and bool(editorial_entry["entry_ja"]))
-    check("Editorial Entry v2 has at most two supporting points", len(editorial_entry["supporting_points_ja"]) <= 2)
+    check(
+        "JSON item carries Editorial Entry v3 fallback",
+        bool(editorial_entry["headline_ja"])
+        and bool(editorial_entry["short_headline_ja"])
+        and bool(editorial_entry["entry_ja"]),
+    )
+    check("Editorial Entry v3 has at most two supporting points", len(editorial_entry["supporting_points_ja"]) <= 2)
 
     if failures:
         print("self-test failed:")

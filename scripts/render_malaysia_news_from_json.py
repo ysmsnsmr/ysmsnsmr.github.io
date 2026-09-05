@@ -8,6 +8,8 @@ from typing import Any, Callable
 
 
 CATEGORIES = ["【速報】", "【生活インパクト】", "【知っておくと得】"]
+SOURCE_ONLY_HEADER = "【原文のみ】"
+RENDER_SOURCE_KIND_FIELD = "_editorial_entry_render_source_kind"
 TOPIC_ORDER = [
     "flood",
     "storm_weather",
@@ -406,6 +408,7 @@ def editorial_entry_from_legacy_summary(item: dict[str, Any]) -> dict[str, Any]:
     }
     return {
         "headline_ja": "記事詳細は出典へ",
+        "short_headline_ja": "記事詳細は出典へ",
         "entry_ja": summary["conclusion"],
         "supporting_points_ja": [
             line
@@ -420,6 +423,7 @@ def normalize_editorial_entry(item: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(raw, dict):
         raw = editorial_entry_from_legacy_summary(item)
     headline_ja = clean_display_text(raw.get("headline_ja")) or "記事詳細は出典へ"
+    short_headline_ja = clean_display_text(raw.get("short_headline_ja")) or headline_ja
     entry_ja = clean_display_text(raw.get("entry_ja"))
     points = [
         clean_display_text(point)
@@ -430,6 +434,7 @@ def normalize_editorial_entry(item: dict[str, Any]) -> dict[str, Any]:
         entry_ja = clean_display_text(item.get("title"))
     return {
         "headline_ja": headline_ja,
+        "short_headline_ja": short_headline_ja,
         "entry_ja": entry_ja,
         "supporting_points_ja": points[:2],
     }
@@ -440,7 +445,11 @@ def render_editorial_entry_item(item: dict[str, Any]) -> list[str]:
     source = text_value(item.get("source")).strip()
     published_date = text_value(item.get("published_date")).strip()
     link = text_value(item.get("link")).strip()
-    lines = [f"- 短見出し：{entry['headline_ja']}", f"- 概要：{entry['entry_ja']}"]
+    lines = [
+        f"- 見出し：{entry['headline_ja']}",
+        f"- 短見出し：{entry['short_headline_ja']}",
+        f"- 概要：{entry['entry_ja']}",
+    ]
     lines.extend(f"- 補足：{point}" for point in entry["supporting_points_ja"])
     lines.extend(
         [
@@ -449,6 +458,33 @@ def render_editorial_entry_item(item: dict[str, Any]) -> list[str]:
             "",
         ]
     )
+    return lines
+
+
+def is_source_only_fallback(item: dict[str, Any]) -> bool:
+    return clean_display_text(item.get(RENDER_SOURCE_KIND_FIELD)) == "rss_fallback"
+
+
+def render_source_only_item(item: dict[str, Any]) -> list[str]:
+    title = clean_display_text(item.get("title")) or clean_display_text(item.get("link"))
+    source = text_value(item.get("source")).strip()
+    published_date = text_value(item.get("published_date")).strip()
+    link = text_value(item.get("link")).strip()
+    return [
+        f"- 原題：{title}",
+        f"- 出典：{source}（{published_date}）",
+        f"- 出典元URL：{link}",
+        "",
+    ]
+
+
+def render_source_only_appendix(items: list[dict[str, Any]]) -> list[str]:
+    source_only_items = [item for item in items if is_source_only_fallback(item)]
+    if not source_only_items:
+        return []
+    lines = [SOURCE_ONLY_HEADER, ""]
+    for item in source_only_items:
+        lines.extend(render_source_only_item(item))
     return lines
 
 
@@ -495,6 +531,8 @@ def print_diagnostics(data: dict[str, Any]) -> None:
 def render_with_item_renderer(
     data: dict[str, Any],
     item_renderer: Callable[[dict[str, Any]], list[str]],
+    item_filter: Callable[[dict[str, Any]], bool] | None = None,
+    appendix_renderer: Callable[[list[dict[str, Any]]], list[str]] | None = None,
 ) -> str:
     items = selected_items_from_data(data)
     counts = data.get("counts", {})
@@ -509,8 +547,13 @@ def render_with_item_renderer(
         lines.append(category)
         lines.append("")
         for item in items:
-            if item.get("category") == category:
+            if item.get("category") == category and (item_filter is None or item_filter(item)):
                 lines.extend(item_renderer(item))
+
+    if appendix_renderer:
+        appendix = appendix_renderer(items)
+        if appendix:
+            lines.extend(appendix)
 
     processed = counts.get("processed", 0)
     selected = counts.get("selected", len(items))
@@ -532,8 +575,13 @@ def render_prepared(data: dict[str, Any]) -> str:
 
 
 def render_editorial_entries(data: dict[str, Any]) -> str:
-    """Render final v2 entries without topic inference or display rewriting."""
-    return render_with_item_renderer(data, render_editorial_entry_item)
+    """Render v3 entries and retain safety fallbacks as source-only links."""
+    return render_with_item_renderer(
+        data,
+        render_editorial_entry_item,
+        item_filter=lambda item: not is_source_only_fallback(item),
+        appendix_renderer=render_source_only_appendix,
+    )
 
 
 def main() -> int:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the single Editorial Entry v2 production candidate."""
+"""Validate the single Editorial Entry v3 production candidate."""
 
 import argparse
 import json
@@ -12,7 +12,7 @@ from typing import Any
 from malaysia_groq_output_contract import EDITORIAL_ENTRY_FORBIDDEN_PATTERNS
 
 
-SCHEMA_VERSION = "malaysia-groq-editorial-entry-validator/v2"
+SCHEMA_VERSION = "malaysia-groq-editorial-entry-validator/v3"
 CATEGORY_HEADERS = ["【速報】", "【生活インパクト】", "【知っておくと得】"]
 REQUIRED_LINES = {
     "has_processed_count": "処理対象件数：",
@@ -153,7 +153,7 @@ def candidate_blocks_by_url(candidate: str) -> dict[str, str]:
     return blocks
 
 
-def source_display_links(improved: dict[str, Any]) -> set[str]:
+def links_for_render_source_kind(improved: dict[str, Any], source_kind: str) -> set[str]:
     diagnostics = improved.get("diagnostics")
     records = diagnostics.get("decision_records") if isinstance(diagnostics, dict) else []
     if not isinstance(records, list):
@@ -161,12 +161,20 @@ def source_display_links(improved: dict[str, Any]) -> set[str]:
     return {
         record["link"]
         for record in records if isinstance(record, dict)
-        and record.get("render_source_kind") == "source_display"
+        and record.get("render_source_kind") == source_kind
         and isinstance(record.get("link"), str) and record["link"]
     }
 
 
-def forbidden_matches_by_provenance(candidate: str, improved: dict[str, Any]) -> tuple[list[str], list[str]]:
+def source_display_links(improved: dict[str, Any]) -> set[str]:
+    return links_for_render_source_kind(improved, "source_display")
+
+
+def source_only_links(improved: dict[str, Any]) -> set[str]:
+    return links_for_render_source_kind(improved, "rss_fallback")
+
+
+def forbidden_matches_by_provenance(candidate: str, improved: dict[str, Any]) -> tuple[list[str], list[str], list[str]]:
     """Apply generated-text leakage checks only to model-generated item blocks.
 
     A source display intentionally preserves the publisher's title and
@@ -175,14 +183,16 @@ def forbidden_matches_by_provenance(candidate: str, improved: dict[str, Any]) ->
     """
     blocks = candidate_blocks_by_url(candidate)
     source_links = source_display_links(improved)
+    source_only = source_only_links(improved)
+    non_generated_source_links = source_links | source_only
     remainder = candidate
     for block in blocks.values():
         remainder = remainder.replace(block, "", 1)
     matches = {pattern for pattern in FORBIDDEN_PATTERNS if pattern in remainder}
     for link, block in blocks.items():
-        if link not in source_links:
+        if link not in non_generated_source_links:
             matches.update(pattern for pattern in FORBIDDEN_PATTERNS if pattern in block)
-    return sorted(matches), sorted(source_links)
+    return sorted(matches), sorted(source_links), sorted(source_only)
 
 
 def validate_candidate(
@@ -228,7 +238,7 @@ def validate_candidate(
     for key, marker in REQUIRED_LINES.items():
         if marker not in candidate:
             failures.append(f"candidate Markdown is missing {key}")
-    forbidden, source_display = forbidden_matches_by_provenance(candidate, improved)
+    forbidden, source_display, source_only = forbidden_matches_by_provenance(candidate, improved)
     if forbidden:
         failures.append("candidate Markdown contains forbidden leakage strings")
     if counts["accepted"] and candidate == rss_fallback:
@@ -264,6 +274,7 @@ def validate_candidate(
             "required_lines": {key: marker in candidate for key, marker in REQUIRED_LINES.items()},
             "forbidden_matches": forbidden,
             "source_display_links": source_display,
+            "source_only_links": source_only,
             "matches_rss_fallback": candidate == rss_fallback,
         },
         "observation": diagnostics,
@@ -273,7 +284,7 @@ def validate_candidate(
 def write_report(path: Path, result: dict[str, Any]) -> None:
     observation = result["observation"]
     lines = [
-        "# Groq Editorial Entry v2 validator",
+        "# Groq Editorial Entry v3 validator",
         "",
         f"- status: {'pass' if result['passed'] else 'fail'}",
         f"- selected_urls: {result['counts']['selected_urls']}",
@@ -285,6 +296,7 @@ def write_report(path: Path, result: dict[str, Any]) -> None:
         f"- source_display_count: {observation['source_display_count']}",
         f"- rss_fallback_count: {observation['rss_fallback_count']}",
         f"- rss_fallback_source_link_only_count: {observation['rss_fallback_source_link_only_count']}",
+        f"- source_only_rendered_count: {len(result['markdown_validation']['source_only_links'])}",
         f"- request_cap_skipped_count: {observation['request_cap_skipped_count']}",
         f"- hard_safety_rejection_reason_counts: {json.dumps(observation['hard_safety_rejection_reason_counts'], ensure_ascii=False)}",
         f"- transport_status_counts: {json.dumps(observation['transport_status_counts'], ensure_ascii=False)}",

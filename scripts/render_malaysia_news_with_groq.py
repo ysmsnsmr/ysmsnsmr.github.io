@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render selected Malaysia news through the Editorial Entry v2 contract.
+"""Render selected Malaysia news through the Editorial Entry v3 contract.
 
 The production path has one display object. A failed primary call gets one
 small-contract repair attempt; items never sent to Groq retain their original
@@ -35,12 +35,13 @@ from malaysia_groq_model_profiles import (
     production_model_profile,
 )
 from malaysia_groq_output_contract import (
-    EDITORIAL_ENTRY_REPAIR_SCHEMA,
-    EDITORIAL_ENTRY_V2_SCHEMA,
+    EDITORIAL_ENTRY_V3_REPAIR_SCHEMA,
+    EDITORIAL_ENTRY_V3_SCHEMA,
     editorial_entry_forbidden_patterns,
     editorial_entry_repair_schema_error,
     editorial_entry_schema_error,
     headline_is_valid,
+    short_headline_is_valid,
 )
 from malaysia_groq_render_decision import (
     apply_render_decisions,
@@ -62,26 +63,25 @@ SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュースダッ�
 入力はRSSのtitle、description、既存のRSS entry、必要に応じてbody_evidenceだけです。
 body_evidenceがない場合はRSSの情報だけを使ってください。入力にない事実を追加せず、カテゴリ、出典、URL、日付は変更しないでください。
 英語またはマレー語の文を、自然で短い日本語に整えてください。dateline、wire credit、広告、関連記事、body_evidence.forbiddenの要素は出力しません。
-返答はeditorial_entryだけを持つJSON objectです。headline_jaは一覧に載せる短見出しです。Unicode文字数で15文字以内にし、末尾に「…」を付けず、記事の主体と出来事または注意点が分かる自然な日本語にしてください。入力にない固有名詞・数値・断定は加えないでください。
+返答はeditorial_entryだけを持つJSON objectです。まずheadline_jaに、詳細ページとピックアップで使う通常見出しを作ってください。Unicode文字数で60文字以内にし、末尾に「…」を付けず、記事の主体、出来事、必要な方向・対象・確定度が分かる自然な日本語にしてください。次にshort_headline_jaに、一覧用の短見出しを作ってください。18〜22文字を目安に最大26文字とし、通常見出しを無理に縮めて意味を壊さないでください。すでに短い通常見出しは同じ文を使って構いません。入力にない固有名詞・数値・断定は加えないでください。
 entry_jaは、読者が出典リンクを開くか判断できる日本語の概要です。主体、発言者・帰属、計画・提案・予報・調査・疑惑・否定などの確定度を、自然文の中で落とさないでください。
 発言記事では発言者または当局を自然に残してください。計画・提案・予報・警報・調査・疑惑・否定を、完了・確定した事実として書き換えないでください。
 supporting_points_jaは0〜2件の補足事実です。生活影響や次アクションを独立項目として作らず、入力に明確な根拠がある場合だけ概要または補足に自然に含めてください。
 RSSにない数値、対象者、死亡、事故、被害、収入減、因果関係を足さないでください。“lost students”, “losing students” は死亡を意味すると明確でない限り、利用者・生徒の減少として訳してください。
 出力はJSONのみです。"""
 
-EDITORIAL_ENTRY_V2_CONTRACT_INSTRUCTION = """返答は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
-{"editorial_entry":{"headline_ja":"string","entry_ja":"string","supporting_points_ja":["string"]}}"""
+EDITORIAL_ENTRY_V3_CONTRACT_INSTRUCTION = """返答は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
+{"editorial_entry":{"headline_ja":"string","short_headline_ja":"string","entry_ja":"string","supporting_points_ja":["string"]}}"""
 
 REPAIR_SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュースダッシュボードの日本語編集者です。
 入力記事JSONのtitle、description、必要に応じてbody_evidenceだけを根拠にしてください。入力にない事実、数値、主体、因果関係、死亡、事故、被害、収入減を加えないでください。
 原文が発言、計画、予報、警報、調査、疑惑、否定を表す場合は、確定した事実に書き換えないでください。dateline、wire credit、広告、関連記事は出力しません。
-短見出しはUnicode文字数で15文字以内の自然な日本語にしてください。概要は読者が出典を開くか判断できる日本語にしてください。
+通常見出しはUnicode文字数で60文字以内、短見出しは最大26文字の自然な日本語にしてください。短見出しで意味が落ちる場合は通常見出しと同じ文を使って構いません。概要は読者が出典を開くか判断できる日本語にしてください。
 出力は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
-{"editorial_entry":{"headline_ja":"string","entry_ja":"string"}}"""
+{"editorial_entry":{"headline_ja":"string","short_headline_ja":"string","entry_ja":"string"}}"""
 
-# Kept as an import-compatible alias for the comparison runner while profiles
-# move to the sole v2 contract.
-USER_MESSAGE_JSON_CONTRACT = EDITORIAL_ENTRY_V2_CONTRACT_INSTRUCTION
+# Kept as an import-compatible alias for the comparison runner.
+USER_MESSAGE_JSON_CONTRACT = EDITORIAL_ENTRY_V3_CONTRACT_INSTRUCTION
 
 
 @dataclass
@@ -115,6 +115,7 @@ def normalize_editorial_entry(value: Any) -> dict[str, Any]:
     points = entry.get("supporting_points_ja")
     return {
         "headline_ja": clean_text(entry.get("headline_ja")),
+        "short_headline_ja": clean_text(entry.get("short_headline_ja")),
         "entry_ja": clean_text(entry.get("entry_ja")),
         "supporting_points_ja": [
             clean_text(point) for point in points if clean_text(point)
@@ -126,7 +127,12 @@ def normalize_editorial_entry(value: Any) -> dict[str, Any]:
 
 def editorial_entry_text(entry: dict[str, Any]) -> str:
     return " ".join(
-        [clean_text(entry.get("headline_ja")), clean_text(entry.get("entry_ja")), *entry.get("supporting_points_ja", [])]
+        [
+            clean_text(entry.get("headline_ja")),
+            clean_text(entry.get("short_headline_ja")),
+            clean_text(entry.get("entry_ja")),
+            *entry.get("supporting_points_ja", []),
+        ]
     ).strip()
 
 
@@ -172,7 +178,7 @@ def repair_source_payload_for_item(item: dict[str, Any]) -> dict[str, Any]:
 def summary_request_messages(
     item: dict[str, Any],
     prompt_layout: str = "production",
-    summary_contract: str = "editorial_entry_v2",
+    summary_contract: str = "editorial_entry_v3",
 ) -> list[dict[str, str]]:
     if prompt_layout not in COMPARISON_PROMPT_LAYOUTS:
         raise ValueError(f"unsupported summary prompt layout: {prompt_layout}")
@@ -181,11 +187,11 @@ def summary_request_messages(
     article_json = json.dumps(groq_payload_for_item(item), ensure_ascii=False)
     if prompt_layout == "production":
         return [
-            {"role": "system", "content": f"{SYSTEM_PROMPT}\n\n{EDITORIAL_ENTRY_V2_CONTRACT_INSTRUCTION}"},
+            {"role": "system", "content": f"{SYSTEM_PROMPT}\n\n{EDITORIAL_ENTRY_V3_CONTRACT_INSTRUCTION}"},
             {"role": "user", "content": article_json},
         ]
     content = (
-        f"{SYSTEM_PROMPT}\n\n{EDITORIAL_ENTRY_V2_CONTRACT_INSTRUCTION}\n\n"
+        f"{SYSTEM_PROMPT}\n\n{EDITORIAL_ENTRY_V3_CONTRACT_INSTRUCTION}\n\n"
         f"入力記事JSON:\n{article_json}"
     )
     return [{"role": "user", "content": content}]
@@ -320,13 +326,18 @@ def validate_groq_editorial_entry(value: Any) -> dict[str, Any]:
     if not entry["headline_ja"]:
         raise ValueError("missing headline_ja")
     if not headline_is_valid(entry["headline_ja"]):
-        raise ValueError("headline_ja exceeds 15 characters")
+        raise ValueError("headline_ja exceeds 60 characters")
+    if not entry["short_headline_ja"]:
+        raise ValueError("missing short_headline_ja")
+    if not short_headline_is_valid(entry["short_headline_ja"]):
+        raise ValueError("short_headline_ja exceeds 26 characters")
     if not entry["entry_ja"]:
         raise ValueError("missing entry_ja")
     raw = value.get("editorial_entry")
     if (
         not isinstance(raw, dict)
         or not isinstance(raw.get("headline_ja"), str)
+        or not isinstance(raw.get("short_headline_ja"), str)
         or not isinstance(raw.get("supporting_points_ja"), list)
     ):
         raise ValueError("editorial_entry fields are invalid")
@@ -339,7 +350,11 @@ def validate_groq_repair_entry(value: Any) -> dict[str, Any]:
     raw = value.get("editorial_entry")
     entry = normalize_editorial_entry(raw)
     entry["supporting_points_ja"] = []
-    if not headline_is_valid(entry["headline_ja"]) or not entry["entry_ja"]:
+    if (
+        not headline_is_valid(entry["headline_ja"])
+        or not short_headline_is_valid(entry["short_headline_ja"])
+        or not entry["entry_ja"]
+    ):
         raise ValueError("repair editorial entry fields are invalid")
     return entry
 
@@ -361,11 +376,11 @@ def request_groq_summary(
     model_profile: ModelProfile | None = None,
     summary_prompt_layout: str = "production",
     summary_max_tokens: int = DEFAULT_COMPARISON_MAX_TOKENS,
-    summary_contract: str = "editorial_entry_v2",
+    summary_contract: str = "editorial_entry_v3",
 ) -> GroqEditorialEntryResult:
     if not isinstance(summary_max_tokens, int) or isinstance(summary_max_tokens, bool) or summary_max_tokens < 1:
         raise ValueError("summary max_tokens must be a positive integer")
-    if summary_contract != "editorial_entry_v2":
+    if summary_contract != "editorial_entry_v3":
         raise ValueError(f"unsupported summary contract: {summary_contract}")
     completion = request_chat_completion(
         profile=model_profile or profile_for_model_id(model),
@@ -374,8 +389,8 @@ def request_groq_summary(
         max_tokens=summary_max_tokens,
         timeout_seconds=TIMEOUT_SECONDS,
         max_response_chars=MAX_RESPONSE_CHARS,
-        json_schema_name="malaysia_news_editorial_entry_v2",
-        json_schema=EDITORIAL_ENTRY_V2_SCHEMA,
+        json_schema_name="malaysia_news_editorial_entry_v3",
+        json_schema=EDITORIAL_ENTRY_V3_SCHEMA,
         schema_error=editorial_entry_schema_error,
         api_key=api_key,
     )
@@ -407,8 +422,8 @@ def request_groq_repair_entry(
         max_tokens=min(summary_max_tokens, REPAIR_MAX_TOKENS),
         timeout_seconds=TIMEOUT_SECONDS,
         max_response_chars=MAX_RESPONSE_CHARS,
-        json_schema_name="malaysia_news_editorial_entry_repair",
-        json_schema=EDITORIAL_ENTRY_REPAIR_SCHEMA,
+        json_schema_name="malaysia_news_editorial_entry_v3_repair",
+        json_schema=EDITORIAL_ENTRY_V3_REPAIR_SCHEMA,
         schema_error=editorial_entry_repair_schema_error,
         api_key=api_key,
     )
@@ -433,7 +448,7 @@ def request_groq_summary_with_retry(
     max_retry_after_seconds: int = MAX_429_RETRY_AFTER_SECONDS,
     summary_prompt_layout: str = "production",
     summary_max_tokens: int = DEFAULT_COMPARISON_MAX_TOKENS,
-    summary_contract: str = "editorial_entry_v2",
+    summary_contract: str = "editorial_entry_v3",
 ) -> GroqEditorialEntryResult:
     profile = model_profile or profile_for_model_id(model)
     try:
@@ -569,7 +584,7 @@ def build_improved_items_payload(
     decision_records: list[dict[str, Any]],
 ) -> dict[str, Any]:
     return {
-        "schema_version": "malaysia-groq-improved-items/v2",
+        "schema_version": "malaysia-groq-improved-items/v3",
         "generated_at": now.astimezone().isoformat(timespec="seconds"),
         "model": model,
         "counts": {
@@ -664,7 +679,7 @@ def render_with_groq(
     max_retry_after_seconds: int = MAX_429_RETRY_AFTER_SECONDS,
     summary_prompt_layout: str = "production",
     summary_max_tokens: int = DEFAULT_COMPARISON_MAX_TOKENS,
-    summary_contract: str = "editorial_entry_v2",
+    summary_contract: str = "editorial_entry_v3",
 ) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str, int], list[dict[str, Any]]]:
     """Call the first cap-selected items in source order; force_all is ignored."""
     rendered = copy.deepcopy(data)
@@ -784,11 +799,11 @@ def main() -> int:
     parser.add_argument("--json-input", required=True)
     parser.add_argument("--output")
     parser.add_argument("--model", help=f"Defaults to GROQ_MODEL or {DEFAULT_MODEL}.")
-    parser.add_argument("--force-all", action="store_true", help="Accepted for compatibility and ignored by Editorial Entry v2.")
+    parser.add_argument("--force-all", action="store_true", help="Accepted for compatibility and ignored by Editorial Entry v3.")
     parser.add_argument("--debug-groq", action="store_true")
     parser.add_argument("--summary-prompt-layout", choices=sorted(COMPARISON_PROMPT_LAYOUTS), default="production")
     parser.add_argument("--summary-max-tokens", type=int, default=DEFAULT_COMPARISON_MAX_TOKENS)
-    parser.add_argument("--summary-contract", choices=sorted(COMPARISON_CONTRACTS), default="editorial_entry_v2")
+    parser.add_argument("--summary-contract", choices=sorted(COMPARISON_CONTRACTS), default="editorial_entry_v3")
     parser.add_argument("--request-link-allowlist")
     parser.add_argument("--rate-reset-wait-max-seconds", type=int, default=0)
     parser.add_argument("--max-429-retry-after-seconds", type=int, default=MAX_429_RETRY_AFTER_SECONDS)

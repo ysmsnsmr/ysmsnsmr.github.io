@@ -13,13 +13,15 @@ MYT = timezone(timedelta(hours=8))
 NEWS_DIR = Path("news/malaysia")
 OUTPUT_PATH = NEWS_DIR / "index.html"
 CATEGORIES = ("【速報】", "【生活インパクト】", "【知っておくと得】")
-PICKUP_HEADLINE_MAX_WIDTH = 15.5
+SOURCE_ONLY_HEADER = "【原文のみ】"
+LEGACY_PICKUP_HEADLINE_MAX_WIDTH = 15.5
 
 
 @dataclass
 class NewsItem:
     category: str
     conclusion: str = ""
+    headline: str = ""
     short_headline: str = ""
     summary_points: list[str] = field(default_factory=list)
     what_happened: str = ""
@@ -34,6 +36,13 @@ class NewsItem:
 
 
 @dataclass
+class SourceOnlyItem:
+    title: str
+    source: str
+    source_url: str
+
+
+@dataclass
 class NewsDay:
     date: str
     path: Path
@@ -43,6 +52,7 @@ class NewsDay:
     processed_count: str
     summarized_count: str
     failed_sources: str
+    source_only_items: list[SourceOnlyItem] = field(default_factory=list)
 
 
 def extract_label(text: str, label: str) -> str:
@@ -57,13 +67,33 @@ def parse_markdown(path: Path) -> NewsDay:
     items: list[NewsItem] = []
     current_category = ""
     current_item: NewsItem | None = None
+    pending_headline = ""
     pending_short_headline = ""
+    source_only_items: list[SourceOnlyItem] = []
+    source_only_title = ""
+    source_only_source = ""
+    source_only_url = ""
+    in_source_only = False
 
     def flush_item() -> None:
         nonlocal current_item
         if current_item and current_item.is_display_ready:
             items.append(current_item)
         current_item = None
+
+    def flush_source_only_item() -> None:
+        nonlocal source_only_title, source_only_source, source_only_url
+        if source_only_title or source_only_url:
+            source_only_items.append(
+                SourceOnlyItem(
+                    title=source_only_title or source_only_url,
+                    source=source_only_source,
+                    source_url=source_only_url,
+                )
+            )
+        source_only_title = ""
+        source_only_source = ""
+        source_only_url = ""
 
     optional_labels = {
         "- 短見出し：": "short_headline",
@@ -80,7 +110,32 @@ def parse_markdown(path: Path) -> NewsDay:
         if line in CATEGORIES:
             flush_item()
             current_category = line
+            pending_headline = ""
             pending_short_headline = ""
+            in_source_only = False
+            continue
+
+        if line == SOURCE_ONLY_HEADER:
+            flush_item()
+            current_category = ""
+            pending_headline = ""
+            pending_short_headline = ""
+            in_source_only = True
+            continue
+
+        if in_source_only:
+            if line.startswith("- 原題："):
+                flush_source_only_item()
+                source_only_title = line[len("- 原題：") :].strip()
+            elif line.startswith("- 出典："):
+                source_only_source = line[len("- 出典：") :].strip()
+            elif line.startswith("- 出典元URL："):
+                source_only_url = line[len("- 出典元URL：") :].strip()
+                flush_source_only_item()
+            continue
+
+        if line.startswith("- 見出し："):
+            pending_headline = line[len("- 見出し：") :].strip()
             continue
 
         if line.startswith("- 短見出し："):
@@ -99,8 +154,10 @@ def parse_markdown(path: Path) -> NewsDay:
                 current_item = NewsItem(
                     category=current_category,
                     conclusion=conclusion,
-                    short_headline=pending_short_headline,
+                    headline=pending_headline or pending_short_headline,
+                    short_headline=pending_short_headline or pending_headline,
                 )
+            pending_headline = ""
             pending_short_headline = ""
             continue
 
@@ -116,6 +173,7 @@ def parse_markdown(path: Path) -> NewsDay:
                     break
 
     flush_item()
+    flush_source_only_item()
 
     return NewsDay(
         date=path.stem,
@@ -126,6 +184,7 @@ def parse_markdown(path: Path) -> NewsDay:
         processed_count=extract_label(text, "処理対象件数"),
         summarized_count=extract_label(text, "要約対象件数"),
         failed_sources=extract_label(text, "失敗したソース一覧"),
+        source_only_items=source_only_items,
     )
 
 
@@ -172,7 +231,7 @@ def semantic_headline(text: str) -> str:
     return first_sentence.strip()
 
 
-def shorten_pickup_headline(text: str, limit: float = PICKUP_HEADLINE_MAX_WIDTH) -> str:
+def shorten_pickup_headline(text: str, limit: float = LEGACY_PICKUP_HEADLINE_MAX_WIDTH) -> str:
     compact = semantic_headline(text)
     if headline_width(compact) <= limit:
         return compact
@@ -180,11 +239,27 @@ def shorten_pickup_headline(text: str, limit: float = PICKUP_HEADLINE_MAX_WIDTH)
     return f"{truncated}…"
 
 
-def display_headline(item: NewsItem) -> str:
-    """Use the model's semantic label when it passes the display-width rule."""
-    if item.short_headline and headline_width(item.short_headline) <= PICKUP_HEADLINE_MAX_WIDTH:
+def legacy_display_headline(item: NewsItem) -> str:
+    """Keep compact historical Markdown readable without changing new entries."""
+    if item.short_headline and headline_width(item.short_headline) <= LEGACY_PICKUP_HEADLINE_MAX_WIDTH:
         return item.short_headline
     return shorten_pickup_headline(item.conclusion)
+
+
+def display_short_headline(item: NewsItem) -> str:
+    if item.short_headline:
+        return item.short_headline
+    if item.headline:
+        return item.headline
+    return legacy_display_headline(item)
+
+
+def display_full_headline(item: NewsItem) -> str:
+    if item.headline:
+        return item.headline
+    if item.short_headline:
+        return item.short_headline
+    return legacy_display_headline(item)
 
 
 def item_summary_body(item: NewsItem) -> str:
@@ -282,7 +357,8 @@ def render_status_chips(day: NewsDay, generated: str) -> str:
 
 
 def render_item_card(item: NewsItem) -> str:
-    headline = display_headline(item)
+    headline = display_full_headline(item)
+    dek = f'<p class="focus-dek">{esc(item.conclusion)}</p>' if item.conclusion else ""
     source = ""
     if item.source_url:
         source_label = item.source or "出典"
@@ -293,7 +369,8 @@ def render_item_card(item: NewsItem) -> str:
     return f"""
         <article class="focus-card">
           <p class="item-category">{esc(category_label(item.category))}</p>
-          <h3 title="{esc(item.conclusion)}">{esc(headline)}</h3>
+          <h3>{esc(headline)}</h3>
+          {dek}
           {source}
         </article>
     """
@@ -335,7 +412,7 @@ def render_latest_summary(day: NewsDay) -> str:
 
 
 def render_recent_day(day: NewsDay) -> str:
-    headlines = [display_headline(item) for item in ordered_items(day)[:5]]
+    headlines = [display_short_headline(item) for item in ordered_items(day)[:5]]
     if not headlines:
         headlines = [shorten_pickup_headline(point) for point in day.conclusions[:5]]
     if headlines:
@@ -419,7 +496,7 @@ def render_daily_item(item: NewsItem, position: int) -> str:
           <span class="item-number">{position}</span>
           <p class="item-category">{esc(category_label(item.category))}</p>
         </div>
-        <h3>{esc(display_headline(item))}</h3>
+        <h3>{esc(display_full_headline(item))}</h3>
         <p class="daily-summary">{esc(item_summary_body(item))}</p>
         {source}
       </article>
@@ -454,6 +531,30 @@ def render_daily_sections(day: NewsDay) -> str:
             """
         )
     return "\n".join(sections)
+
+
+def render_source_only_section(day: NewsDay) -> str:
+    if not day.source_only_items:
+        return ""
+    rows = "\n".join(
+        f'''<li>
+          <span class="source-only-title">原題：{esc(item.title)}</span>
+          <span class="source-only-meta">出典：{esc(item.source or "不明")}</span>
+          <a href="{esc(item.source_url)}">原文URL</a>
+        </li>'''
+        for item in day.source_only_items
+    )
+    return f'''
+            <section class="source-only" aria-labelledby="source-only-heading">
+              <div class="daily-category-head">
+                <h2 id="source-only-heading">原文のみ</h2>
+                <span>{len(day.source_only_items)}件</span>
+              </div>
+              <ul class="source-only-list">
+                {rows}
+              </ul>
+            </section>
+            '''
 
 
 def render_daily_page(day: NewsDay) -> str:
@@ -502,6 +603,11 @@ def render_daily_page(day: NewsDay) -> str:
     .daily-summary {{ margin: 16px 0 0; overflow-wrap: anywhere; }}
     .source-link, .source-note {{ display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }}
     .source-note {{ color: var(--muted); }}
+    .source-only {{ margin-top: 32px; }}
+    .source-only-list {{ width: 100%; max-width: 100%; margin: 12px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }}
+    .source-only-list li {{ display: block; width: 100%; min-width: 0; max-width: 100%; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: .88rem; overflow-wrap: anywhere; }}
+    .source-only-title {{ display: block; width: 100%; min-width: 0; max-width: 100%; color: var(--ink); white-space: normal; overflow-wrap: anywhere; word-break: break-all; }}
+    .source-only-meta {{ color: var(--muted); font-size: .82rem; }}
     .muted {{ color: var(--muted); }}
     @media (max-width: 600px) {{
       main {{ width: min(100% - 20px, 880px); padding-top: 20px; }}
@@ -528,6 +634,7 @@ def render_daily_page(day: NewsDay) -> str:
       {''.join(f'<a href="#category-{index + 1}">{esc(category_label(category))} {day.category_counts.get(category, 0)}件</a>' for index, category in enumerate(CATEGORIES))}
     </nav>
     {render_daily_sections(day)}
+    {render_source_only_section(day)}
   </main>
 </body>
 </html>
@@ -694,13 +801,22 @@ def render_html(days: list[NewsDay]) -> str:
       padding: 16px;
     }}
     .focus-card h3 {{
+      min-width: 0;
       font-size: 1.04rem;
       line-height: 1.45;
+      white-space: normal;
+      word-break: normal;
       overflow-wrap: anywhere;
+    }}
+    .focus-dek {{
       display: -webkit-box;
+      margin: 0;
       overflow: hidden;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 1;
     }}
     .item-category {{
       align-self: flex-start;
@@ -885,7 +1001,7 @@ def render_html(days: list[NewsDay]) -> str:
         justify-content: stretch;
         width: 100%;
       }}
-      .header-actions a {{ flex: 1 1 11rem; }}
+      .header-actions a {{ flex: 1 1 100%; min-width: 0; }}
       .status-strip {{ margin-bottom: 24px; }}
       .status-chip {{
         min-height: 34px;
@@ -905,6 +1021,7 @@ def render_html(days: list[NewsDay]) -> str:
         grid-template-columns: 1fr;
         gap: 12px;
       }}
+      .focus-card h3 {{ white-space: normal; }}
       .section-head {{
         display: grid;
         gap: 2px;

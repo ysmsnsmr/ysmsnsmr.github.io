@@ -394,8 +394,17 @@ try {
   const legacyItem = personalFeedReport.items[0];
   await productionDetail.goto(`${server.origin}/meta-ads-updates/detail.html?id=${encodeURIComponent(legacyItem.id)}`, { waitUntil: "networkidle" });
   assert(await productionDetail.locator("#detail-card").isVisible(), "v1 production feed detail must render");
-  assert((await productionDetail.locator("#detail-title").textContent()) === legacyItem.title, "English root must fall back to the original title for a v2 Japanese-only presentation");
-  assert((await productionDetail.locator("#detail-summary").textContent()) === "Summary not available. Review the original source.", "English root must not translate a Japanese-only v2 presentation back into English");
+  const productionEnglish = legacyItem.presentation?.schemaVersion === "meta-ads-personal-feed-presentation/v2"
+    ? legacyItem.presentation.locales?.en
+    : null;
+  const expectedProductionTitle = (productionEnglish?.status === "machine" || productionEnglish?.status === "reviewed") && productionEnglish.shortHeadline
+    ? productionEnglish.shortHeadline
+    : legacyItem.title;
+  assert((await productionDetail.locator("#detail-title").textContent()) === expectedProductionTitle, "English production detail must use the English headline or original title");
+  const expectedProductionSummary = (productionEnglish?.status === "machine" || productionEnglish?.status === "reviewed") && productionEnglish.summary
+    ? productionEnglish.summary
+    : "Summary not available. Review the original source.";
+  assert((await productionDetail.locator("#detail-summary").textContent()).includes(expectedProductionSummary), "English production detail must use the English summary or fallback");
   await productionDetail.close();
 
   for (const viewport of [viewports[0], viewports[2]]) {
