@@ -10,6 +10,7 @@ official pages discovered inside a direct source are rejected independently.
 from __future__ import annotations
 
 import argparse
+import copy
 import email.utils
 import hashlib
 import html
@@ -1267,6 +1268,56 @@ def _bilingual_presentation_from_environment(timeout: float) -> Callable[[str, s
     return present
 
 
+def _locale_presentation_from_environment(
+    timeout: float,
+) -> Callable[[str, str, dict[str, Any], str], dict[str, str]] | None:
+    """Return an independent two-field presenter for one locale."""
+    setting = os.environ.get("META_ADS_PERSONAL_FEED_JA_ENABLED", "").strip().lower() or "true"
+    if setting not in {"true", "false"}:
+        raise ContractError("META_ADS_PERSONAL_FEED_JA_ENABLED must be true, false, or unset")
+    api_key = os.environ.get("GROQ_API_KEY", "").strip()
+    if setting == "false" or not api_key:
+        return None
+    model = os.environ.get("META_ADS_PERSONAL_FEED_GROQ_MODEL", "").strip() or "openai/gpt-oss-120b"
+    next_request_at = 0.0
+
+    def present(title: str, source_context: str, policy: dict[str, Any], locale: str) -> dict[str, str]:
+        nonlocal next_request_at
+        if locale not in SUPPORTED_LOCALES:
+            raise PresentationError("response_invalid_shape")
+        delay = max(0.0, next_request_at - time.monotonic())
+        if delay:
+            time.sleep(delay)
+        try:
+            if locale == "en":
+                return request_english_presentation(
+                    api_key=api_key,
+                    model=model,
+                    title=title,
+                    source_context=source_context[:policy["maxInputChars"]],
+                    short_headline_max_chars=policy["shortHeadlineMaxChars"],
+                    summary_max_chars=policy["summaryMaxChars"],
+                    timeout=timeout,
+                    max_attempts=policy["maxAttempts"],
+                    max_retry_delay_seconds=policy["maxRetryDelaySeconds"],
+                )
+            return request_presentation(
+                api_key=api_key,
+                model=model,
+                title=title,
+                source_context=source_context[:policy["maxInputChars"]],
+                short_headline_max_chars=policy["shortHeadlineMaxChars"],
+                summary_max_chars=policy["summaryMaxChars"],
+                timeout=timeout,
+                max_attempts=policy["maxAttempts"],
+                max_retry_delay_seconds=policy["maxRetryDelaySeconds"],
+            )
+        finally:
+            next_request_at = time.monotonic() + policy["minRequestIntervalSeconds"]
+
+    return present
+
+
 def _bilingual_fallback_from_environment(
     timeout: float,
 ) -> Callable[[str, str, dict[str, Any]], tuple[dict[str, str], dict[str, Exception]]] | None:
@@ -1353,8 +1404,11 @@ def _presentation_stats(
         "maxAttempts": policy["maxAttempts"],
         "eligible": 0,
         "attempted": 0,
+        "localeAttempted": 0,
         "generated": 0,
+        "localeGenerated": 0,
         "failed": 0,
+        "localeFailed": 0,
         "fallbackAttempts": 0,
         "fallbackGeneratedLocales": 0,
         "fallbackFailedLocales": 0,
@@ -1367,8 +1421,11 @@ def _presentation_stats(
             source["id"]: {
                 "eligible": 0,
                 "attempted": 0,
+                "localeAttempted": 0,
                 "generated": 0,
+                "localeGenerated": 0,
                 "failed": 0,
+                "localeFailed": 0,
                 "fallbackAttempts": 0,
                 "fallbackGeneratedLocales": 0,
                 "fallbackFailedLocales": 0,
@@ -1472,7 +1529,9 @@ def _print_presentation_stats(stats: dict[str, Any]) -> None:
         "PRESENTATION: "
         f"renderer_enabled={enabled} eligible={stats['eligible']} limit={stats['requestLimit']} "
         f"min_interval_seconds={stats['minRequestIntervalSeconds']} max_attempts={stats['maxAttempts']} "
-        f"attempted={stats['attempted']} generated={stats['generated']} failed={stats['failed']} "
+        f"attempted={stats['attempted']} locale_attempted={stats['localeAttempted']} "
+        f"generated={stats['generated']} locale_generated={stats['localeGenerated']} "
+        f"failed={stats['failed']} locale_failed={stats['localeFailed']} "
         f"deferred={stats['deferred']} fallback_attempts={stats['fallbackAttempts']} "
         f"fallback_generated_locales={stats['fallbackGeneratedLocales']} "
         f"fallback_failed_locales={stats['fallbackFailedLocales']}"
@@ -1481,7 +1540,9 @@ def _print_presentation_stats(stats: dict[str, Any]) -> None:
         print(
             "PRESENTATION_SOURCE: "
             f"id={source_id} eligible={counts['eligible']} attempted={counts['attempted']} "
-            f"generated={counts['generated']} failed={counts['failed']} "
+            f"locale_attempted={counts['localeAttempted']} generated={counts['generated']} "
+            f"locale_generated={counts['localeGenerated']} failed={counts['failed']} "
+            f"locale_failed={counts['localeFailed']} "
             f"fallback_attempts={counts['fallbackAttempts']} "
             f"fallback_generated_locales={counts['fallbackGeneratedLocales']} "
             f"fallback_failed_locales={counts['fallbackFailedLocales']}"
@@ -1586,13 +1647,15 @@ def _partial_bilingual_presentation(
         headline = generated.get(headline_key)
         summary = generated.get(summary_key)
         if headline is None and summary is None:
+            japanese_input = (
+                generated.get("shortHeadlineEn") or "missing",
+                generated.get("summaryEn") or "missing",
+            )
             locales[locale] = {
                 "status": "missing",
                 "shortHeadline": None,
                 "summary": None,
-                "inputHash": _sha256_text("missing", "missing", revision)
-                if locale == "ja"
-                else _sha256_text(fingerprint, revision),
+                "inputHash": _sha256_text(*japanese_input, revision) if locale == "ja" else _sha256_text(fingerprint, revision),
                 "generatedAt": None,
                 "reviewedAt": None,
             }
@@ -1627,6 +1690,86 @@ def _partial_bilingual_presentation(
     }
 
 
+def _pending_presentation_locales(presentation: dict[str, Any]) -> list[str]:
+    """Return locales that still need display text, preserving locale independence."""
+    return [
+        locale
+        for locale in SUPPORTED_LOCALES
+        if presentation["locales"][locale]["status"] not in {"machine", "reviewed"}
+    ]
+
+
+def _merge_locale_presentation(
+    existing: dict[str, Any],
+    fingerprint: str,
+    locale: str,
+    generated: dict[str, Any],
+    generated_at: str,
+    generator_revision: str = DEFAULT_PRESENTATION_GENERATOR_REVISION,
+) -> dict[str, Any]:
+    """Persist one locale without incorrectly claiming the other is generated.
+
+    Japanese text is derived from the English fields.  Therefore a newly
+    generated English locale invalidates any older Japanese locale and leaves
+    it explicitly ``missing`` until it is regenerated from the new English.
+    """
+    if locale not in SUPPORTED_LOCALES:
+        raise PresentationError("response_invalid_shape")
+    revision = _expect_identifier(generator_revision, "generator_revision")
+    headline_key = "shortHeadlineEn" if locale == "en" else "shortHeadlineJa"
+    summary_key = "summaryEn" if locale == "en" else "summaryJa"
+    try:
+        headline = _text(generated[headline_key], f"{locale} short headline")
+        summary = _text(generated[summary_key], f"{locale} summary")
+    except (ContractError, KeyError) as error:
+        raise PresentationError("response_invalid_shape") from error
+    if len(headline) > 240:
+        raise PresentationError("short_headline_invalid")
+    if len(summary) > 1600:
+        raise PresentationError("summary_invalid")
+
+    presentation = copy.deepcopy(existing)
+    presentation["schemaVersion"] = BILINGUAL_PRESENTATION_SCHEMA_VERSION
+    presentation["sourceFingerprint"] = fingerprint
+    presentation["generatorRevision"] = revision
+    english = presentation["locales"]["en"]
+    japanese = presentation["locales"]["ja"]
+    if locale == "en":
+        english = {
+            "status": "machine",
+            "shortHeadline": headline,
+            "summary": summary,
+            "inputHash": _sha256_text(fingerprint, revision),
+            "generatedAt": generated_at,
+            "reviewedAt": None,
+        }
+        # The Japanese input hash is tied to the English text.  Do not retain
+        # a translation that was produced from an earlier/missing English value.
+        japanese = {
+            "status": "missing",
+            "shortHeadline": None,
+            "summary": None,
+            "inputHash": _sha256_text(headline, summary, revision),
+            "generatedAt": None,
+            "reviewedAt": None,
+        }
+    else:
+        english_values = (
+            english.get("shortHeadline") or "missing",
+            english.get("summary") or "missing",
+        )
+        japanese = {
+            "status": "machine",
+            "shortHeadline": headline,
+            "summary": summary,
+            "inputHash": _sha256_text(*english_values, revision),
+            "generatedAt": generated_at,
+            "reviewedAt": None,
+        }
+    presentation["locales"] = {"en": english, "ja": japanese}
+    return presentation
+
+
 def _reseed_source(config: dict[str, Any], value: str | None) -> str | None:
     if value is None or not value.strip():
         return None
@@ -1656,6 +1799,7 @@ def collect(
     present_item: Callable[[str, str, dict[str, Any]], dict[str, str]] | None = None,
     fallback_item: Callable[[str, str, dict[str, Any]], tuple[dict[str, str], dict[str, Exception]]] | None = None,
     *,
+    locale_item: Callable[[str, str, dict[str, Any], str], dict[str, str]] | None = None,
     presentation_limit: int | None = None,
     presentation_stats: dict[str, Any] | None = None,
     source_pipeline_stats: dict[str, Any] | None = None,
@@ -1671,7 +1815,7 @@ def collect(
     history_cutoff = now.astimezone(timezone.utc) - timedelta(days=config["policies"]["historyRetentionDays"])
     presentation_policy = config["policies"]["bilingualPresentation"]
     request_limit = _presentation_request_limit(presentation_limit, presentation_policy)
-    stats = _presentation_stats(config, present_item is not None, request_limit, presentation_policy)
+    stats = _presentation_stats(config, present_item is not None or locale_item is not None, request_limit, presentation_policy)
     pipeline = _source_pipeline_stats(config)
 
     # First complete safe fetch, format validation and parsing for every direct
@@ -1800,7 +1944,7 @@ def collect(
                 "presentation": cached or _missing_bilingual_presentation(raw["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION),
             }
             current[raw["key"]] = record
-            if record["presentation"]["locales"]["en"]["status"] != "machine":
+            if _pending_presentation_locales(record["presentation"]):
                 presentation_candidates.append((source["id"], record, raw))
                 stats["eligible"] += 1
                 stats["sources"][source["id"]]["eligible"] += 1
@@ -1819,61 +1963,92 @@ def collect(
         ),
         reverse=True,
     )
-    if present_item is not None:
+    if present_item is not None or locale_item is not None:
         for source_id, record, raw in presentation_candidates[:request_limit]:
             stats["attempted"] += 1
             stats["sources"][source_id]["attempted"] += 1
-            try:
-                generated = present_item(record["title"], _presentation_context_for_model(raw, presentation_policy), presentation_policy)
-                record["presentation"] = _machine_bilingual_presentation(record["fingerprint"], generated, generated_at)
-                stats["generated"] += 1
-                stats["sources"][source_id]["generated"] += 1
-            except (KeyError, PresentationError, ValueError, OSError) as error:
-                _record_presentation_failure(stats, source_id, _presentation_failure_code(error), error)
-                fallback_generated: dict[str, str] = {}
-                fallback_failures: dict[str, Exception] = {}
-                if fallback_item is not None:
-                    stats["fallbackAttempts"] += 1
-                    stats["sources"][source_id]["fallbackAttempts"] += 1
+            pending = _pending_presentation_locales(record["presentation"])
+            if len(pending) == len(SUPPORTED_LOCALES) and present_item is not None:
+                stats["localeAttempted"] += len(SUPPORTED_LOCALES)
+                stats["sources"][source_id]["localeAttempted"] += len(SUPPORTED_LOCALES)
+                try:
+                    generated = present_item(record["title"], _presentation_context_for_model(raw, presentation_policy), presentation_policy)
+                    record["presentation"] = _machine_bilingual_presentation(record["fingerprint"], generated, generated_at)
+                    stats["localeGenerated"] += len(SUPPORTED_LOCALES)
+                    stats["sources"][source_id]["localeGenerated"] += len(SUPPORTED_LOCALES)
+                except (KeyError, PresentationError, ValueError, OSError) as error:
+                    _record_presentation_failure(stats, source_id, _presentation_failure_code(error), error)
+                    fallback_generated: dict[str, str] = {}
+                    fallback_failures: dict[str, Exception] = {}
+                    if fallback_item is not None:
+                        stats["fallbackAttempts"] += 1
+                        stats["sources"][source_id]["fallbackAttempts"] += 1
+                        try:
+                            fallback_generated, fallback_failures = fallback_item(
+                                record["title"],
+                                _presentation_context_for_model(raw, presentation_policy),
+                                presentation_policy,
+                            )
+                        except (KeyError, PresentationError, ValueError, OSError) as fallback_error:
+                            fallback_failures = {"unknown": fallback_error}
+                        for locale, fallback_error in fallback_failures.items():
+                            code = _presentation_failure_code(fallback_error)
+                            _record_fallback_failure(stats, source_id, locale, code)
+                        generated_locales = sum(
+                            int(field in fallback_generated)
+                            for field in ("shortHeadlineEn", "summaryEn", "shortHeadlineJa", "summaryJa")
+                        ) // 2
+                        stats["fallbackGeneratedLocales"] += generated_locales
+                        stats["fallbackFailedLocales"] += len(fallback_failures)
+                        stats["localeGenerated"] += generated_locales
+                        stats["localeFailed"] += len(fallback_failures)
+                        stats["sources"][source_id]["fallbackGeneratedLocales"] += generated_locales
+                        stats["sources"][source_id]["fallbackFailedLocales"] += len(fallback_failures)
+                        stats["sources"][source_id]["localeGenerated"] += generated_locales
+                        stats["sources"][source_id]["localeFailed"] += len(fallback_failures)
+                    if fallback_generated:
+                        try:
+                            record["presentation"] = _partial_bilingual_presentation(
+                                record["fingerprint"], fallback_generated, generated_at
+                            )
+                        except (KeyError, PresentationError, ValueError) as fallback_error:
+                            _record_fallback_failure(stats, source_id, "presentation", _presentation_failure_code(fallback_error))
+                            record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION)
+                    else:
+                        # Model errors must not block publication. The source title
+                        # remains available while both generated locales stay missing.
+                        record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION)
+            elif locale_item is not None:
+                # A previously successful locale is never regenerated merely
+                # because its sibling is missing. Each locale has its own
+                # lifecycle and can recover on a later run independently.
+                for locale in SUPPORTED_LOCALES:
+                    if locale not in _pending_presentation_locales(record["presentation"]):
+                        continue
+                    stats["localeAttempted"] += 1
+                    stats["sources"][source_id]["localeAttempted"] += 1
                     try:
-                        fallback_generated, fallback_failures = fallback_item(
+                        generated = locale_item(
                             record["title"],
                             _presentation_context_for_model(raw, presentation_policy),
                             presentation_policy,
+                            locale,
                         )
-                    except (KeyError, PresentationError, ValueError, OSError) as fallback_error:
-                        fallback_failures = {"unknown": fallback_error}
-                    for locale, fallback_error in fallback_failures.items():
-                        code = _presentation_failure_code(fallback_error)
-                        _record_fallback_failure(stats, source_id, locale, code)
-                    stats["fallbackGeneratedLocales"] += sum(
-                        int(field in fallback_generated)
-                        for field in ("shortHeadlineEn", "summaryEn", "shortHeadlineJa", "summaryJa")
-                    ) // 2
-                    stats["fallbackFailedLocales"] += len(fallback_failures)
-                    stats["sources"][source_id]["fallbackGeneratedLocales"] += sum(
-                        int(field in fallback_generated)
-                        for field in ("shortHeadlineEn", "summaryEn", "shortHeadlineJa", "summaryJa")
-                    ) // 2
-                    stats["sources"][source_id]["fallbackFailedLocales"] += len(fallback_failures)
-                if fallback_generated:
-                    try:
-                        record["presentation"] = _partial_bilingual_presentation(
-                            record["fingerprint"], fallback_generated, generated_at
+                        record["presentation"] = _merge_locale_presentation(
+                            record["presentation"], record["fingerprint"], locale, generated, generated_at
                         )
-                    except (KeyError, PresentationError, ValueError) as fallback_error:
-                        _record_fallback_failure(stats, source_id, "presentation", _presentation_failure_code(fallback_error))
-                        record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION)
-                else:
-                    # Model errors must not block publication. The source title
-                    # remains available while both generated locales stay missing.
-                    record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION)
-                if any(locale["status"] == "machine" for locale in record["presentation"]["locales"].values()):
-                    stats["generated"] += 1
-                    stats["sources"][source_id]["generated"] += 1
-                else:
-                    stats["failed"] += 1
-                    stats["sources"][source_id]["failed"] += 1
+                        stats["localeGenerated"] += 1
+                        stats["sources"][source_id]["localeGenerated"] += 1
+                    except (KeyError, PresentationError, ValueError, OSError) as error:
+                        _record_presentation_failure(stats, source_id, _presentation_failure_code(error), error)
+                        stats["localeFailed"] += 1
+                        stats["sources"][source_id]["localeFailed"] += 1
+            if any(locale["status"] in {"machine", "reviewed"} for locale in record["presentation"]["locales"].values()):
+                stats["generated"] += 1
+                stats["sources"][source_id]["generated"] += 1
+            else:
+                stats["failed"] += 1
+                stats["sources"][source_id]["failed"] += 1
     stats["deferred"] = max(0, stats["eligible"] - stats["attempted"])
 
     feed = build_feed(next_state, config, generated_at)
@@ -1894,6 +2069,7 @@ def collect_and_write(
     fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = bounded_request,
     present_item: Callable[[str, str, dict[str, Any]], dict[str, str]] | None = None,
     fallback_item: Callable[[str, str, dict[str, Any]], tuple[dict[str, str], dict[str, Exception]]] | None = None,
+    locale_item: Callable[[str, str, dict[str, Any], str], dict[str, str]] | None = None,
     presentation_limit: int | None = None,
     presentation_stats: dict[str, Any] | None = None,
     source_pipeline_stats: dict[str, Any] | None = None,
@@ -1903,6 +2079,7 @@ def collect_and_write(
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
     renderer = present_item if present_item is not None else _bilingual_presentation_from_environment(timeout)
     fallback_renderer = fallback_item if fallback_item is not None else _bilingual_fallback_from_environment(timeout)
+    locale_renderer = locale_item if locale_item is not None else _locale_presentation_from_environment(timeout)
     feed, next_state = collect(
         config,
         state,
@@ -1911,6 +2088,7 @@ def collect_and_write(
         fetch_body,
         renderer,
         fallback_renderer,
+        locale_item=locale_renderer,
         presentation_limit=presentation_limit,
         presentation_stats=presentation_stats,
         source_pipeline_stats=source_pipeline_stats,

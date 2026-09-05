@@ -397,10 +397,145 @@ class PersonalFeedTest(unittest.TestCase):
             self.assertEqual(item["presentation"]["locales"]["en"]["status"], "missing")
             self.assertEqual(item["presentation"]["locales"]["ja"]["status"], "machine")
         self.assertEqual((stats["generated"], stats["failed"], stats["fallbackAttempts"]), (4, 0, 4))
+        self.assertEqual((stats["localeAttempted"], stats["localeGenerated"], stats["localeFailed"]), (8, 4, 4))
         self.assertEqual(stats["fallbackGeneratedLocales"], 4)
         self.assertEqual(stats["fallbackFailedLocales"], 4)
         self.assertEqual(stats["fallbackFailureReasons"], {"en:http_400": 4})
         self.assertNotIn("sourceContext", json.dumps(state))
+        validate_state(state, self.config)
+        validate_feed(feed, self.config)
+
+    def test_locale_missing_is_retried_without_replacing_successful_sibling(self) -> None:
+        def failing_presenter(_title: str, _context: str, _policy: dict) -> dict[str, str]:
+            raise PresentationError("http_400")
+
+        def english_only_fallback(_title: str, _context: str, _policy: dict) -> tuple[dict[str, str], dict[str, Exception]]:
+            return (
+                {"shortHeadlineEn": "English headline", "summaryEn": "English summary"},
+                {"ja": PresentationError("http_400")},
+            )
+
+        _feed, partial_state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+            failing_presenter,
+            english_only_fallback,
+        )
+        calls: list[str] = []
+
+        def locale_presenter(_title: str, _context: str, _policy: dict, locale: str) -> dict[str, str]:
+            calls.append(locale)
+            if locale == "en":
+                return {"shortHeadlineEn": "English headline", "summaryEn": "English summary"}
+            return {"shortHeadlineJa": "日本語の見出し", "summaryJa": "日本語の要約"}
+
+        feed, state = collect(
+            self.config,
+            partial_state,
+            1,
+            NOW.replace(day=30),
+            self.fetcher(),
+            locale_item=locale_presenter,
+        )
+        self.assertEqual(calls, ["ja"] * 4)
+        self.assertTrue(
+            all(
+                item["presentation"]["locales"]["en"]["status"] == "machine"
+                and item["presentation"]["locales"]["ja"]["status"] == "machine"
+                for item in feed["items"]
+            )
+        )
+        validate_state(state, self.config)
+        validate_feed(feed, self.config)
+
+    def test_locale_retry_preserves_successful_sibling_when_retry_fails(self) -> None:
+        def failing_presenter(_title: str, _context: str, _policy: dict) -> dict[str, str]:
+            raise PresentationError("http_400")
+
+        def english_only_fallback(_title: str, _context: str, _policy: dict) -> tuple[dict[str, str], dict[str, Exception]]:
+            return (
+                {"shortHeadlineEn": "English headline", "summaryEn": "English summary"},
+                {"ja": PresentationError("http_400")},
+            )
+
+        _feed, partial_state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+            failing_presenter,
+            english_only_fallback,
+        )
+
+        def failing_locale(_title: str, _context: str, _policy: dict, _locale: str) -> dict[str, str]:
+            raise PresentationError("http_400")
+
+        feed, state = collect(
+            self.config,
+            partial_state,
+            1,
+            NOW.replace(day=30),
+            self.fetcher(),
+            locale_item=failing_locale,
+        )
+        self.assertTrue(
+            all(
+                item["presentation"]["locales"]["en"]["status"] == "machine"
+                and item["presentation"]["locales"]["ja"]["status"] == "missing"
+                for item in feed["items"]
+            )
+        )
+        self.assertNotIn("sourceContext", json.dumps(state))
+        validate_state(state, self.config)
+        validate_feed(feed, self.config)
+
+    def test_english_retry_rebuilds_japanese_overlay_from_new_english(self) -> None:
+        def failing_presenter(_title: str, _context: str, _policy: dict) -> dict[str, str]:
+            raise PresentationError("http_400")
+
+        def japanese_only_fallback(_title: str, _context: str, _policy: dict) -> tuple[dict[str, str], dict[str, Exception]]:
+            return (
+                {"shortHeadlineJa": "旧日本語見出し", "summaryJa": "旧日本語要約"},
+                {"en": PresentationError("http_400")},
+            )
+
+        _feed, partial_state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+            failing_presenter,
+            japanese_only_fallback,
+        )
+        calls: list[str] = []
+
+        def locale_presenter(_title: str, _context: str, _policy: dict, locale: str) -> dict[str, str]:
+            calls.append(locale)
+            if locale == "en":
+                return {"shortHeadlineEn": "New English headline", "summaryEn": "New English summary"}
+            return {"shortHeadlineJa": "新日本語見出し", "summaryJa": "新日本語要約"}
+
+        feed, state = collect(
+            self.config,
+            partial_state,
+            1,
+            NOW.replace(day=30),
+            self.fetcher(),
+            locale_item=locale_presenter,
+        )
+        self.assertEqual(calls, ["en", "ja"] * 4)
+        self.assertTrue(
+            all(
+                item["presentation"]["locales"]["en"]["shortHeadline"] == "New English headline"
+                and item["presentation"]["locales"]["ja"]["shortHeadline"] == "新日本語見出し"
+                for item in feed["items"]
+            )
+        )
         validate_state(state, self.config)
         validate_feed(feed, self.config)
 
