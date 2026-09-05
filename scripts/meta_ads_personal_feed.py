@@ -32,7 +32,7 @@ from defusedxml.common import DefusedXmlException
 from meta_ads_tracker_collect import SourceFetchError, _request as bounded_request
 from meta_ads_tracker_contract import ContractError, _expect_hostname, _expect_https_url, _expect_identifier
 from meta_ads_tracker_publication import write_json
-from meta_ads_personal_feed_presentation import PresentationError, request_bilingual_presentation, request_presentation
+from meta_ads_personal_feed_presentation import PresentationError, request_bilingual_presentation, request_english_presentation, request_presentation
 
 
 SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v5"
@@ -1267,6 +1267,70 @@ def _bilingual_presentation_from_environment(timeout: float) -> Callable[[str, s
     return present
 
 
+def _bilingual_fallback_from_environment(
+    timeout: float,
+) -> Callable[[str, str, dict[str, Any]], tuple[dict[str, str], dict[str, Exception]]] | None:
+    """Return bounded English-then-Japanese fallback requests.
+
+    Each locale gets at most one request after the four-field request fails.
+    The returned error map contains exception objects only in memory so the
+    collector can record safe reason codes without exposing response content.
+    """
+    setting = os.environ.get("META_ADS_PERSONAL_FEED_JA_ENABLED", "").strip().lower() or "true"
+    if setting not in {"true", "false"}:
+        raise ContractError("META_ADS_PERSONAL_FEED_JA_ENABLED must be true, false, or unset")
+    api_key = os.environ.get("GROQ_API_KEY", "").strip()
+    if setting == "false" or not api_key:
+        return None
+    model = os.environ.get("META_ADS_PERSONAL_FEED_GROQ_MODEL", "").strip() or "openai/gpt-oss-120b"
+
+    def fallback(title: str, source_context: str, policy: dict[str, Any]) -> tuple[dict[str, str], dict[str, Exception]]:
+        generated: dict[str, str] = {}
+        failures: dict[str, Exception] = {}
+        try:
+            for locale in ("en", "ja"):
+                # Keep a full policy interval between the primary request and
+                # each fallback request, and between the two locale requests.
+                time.sleep(policy["minRequestIntervalSeconds"])
+                try:
+                    if locale == "en":
+                        generated.update(
+                            request_english_presentation(
+                                api_key=api_key,
+                                model=model,
+                                title=title,
+                                source_context=source_context[:policy["maxInputChars"]],
+                                short_headline_max_chars=policy["shortHeadlineMaxChars"],
+                                summary_max_chars=policy["summaryMaxChars"],
+                                timeout=timeout,
+                                max_attempts=1,
+                            )
+                        )
+                    else:
+                        generated.update(
+                            request_presentation(
+                                api_key=api_key,
+                                model=model,
+                                title=title,
+                                source_context=source_context[:policy["maxInputChars"]],
+                                short_headline_max_chars=policy["shortHeadlineMaxChars"],
+                                summary_max_chars=policy["summaryMaxChars"],
+                                timeout=timeout,
+                                max_attempts=1,
+                            )
+                        )
+                except (PresentationError, OSError, ValueError) as error:
+                    failures[locale] = error
+        finally:
+            # The primary presenter owns its own rate gate. Leave one full
+            # interval after the last fallback request before the next item can
+            # start, so the two independent callbacks cannot make a tight loop.
+            time.sleep(policy["minRequestIntervalSeconds"])
+        return generated, failures
+
+    return fallback
+
+
 def _presentation_request_limit(value: int | None, policy: dict[str, Any]) -> int:
     maximum = policy["maxRequestsPerRun"]
     if value is None:
@@ -1291,8 +1355,12 @@ def _presentation_stats(
         "attempted": 0,
         "generated": 0,
         "failed": 0,
+        "fallbackAttempts": 0,
+        "fallbackGeneratedLocales": 0,
+        "fallbackFailedLocales": 0,
         "deferred": 0,
         "failureReasons": {},
+        "fallbackFailureReasons": {},
         "providerErrorTypes": {},
         "providerErrorCodes": {},
         "sources": {
@@ -1301,7 +1369,11 @@ def _presentation_stats(
                 "attempted": 0,
                 "generated": 0,
                 "failed": 0,
+                "fallbackAttempts": 0,
+                "fallbackGeneratedLocales": 0,
+                "fallbackFailedLocales": 0,
                 "failureReasons": {},
+                "fallbackFailureReasons": {},
                 "providerErrorTypes": {},
                 "providerErrorCodes": {},
             }
@@ -1382,6 +1454,18 @@ def _record_presentation_failure(
         source_codes[provider_error_code] = source_codes.get(provider_error_code, 0) + 1
 
 
+def _record_fallback_failure(
+    stats: dict[str, Any],
+    source_id: str,
+    locale: str,
+    code: str,
+) -> None:
+    key = f"{locale}:{code}"
+    stats["fallbackFailureReasons"][key] = stats["fallbackFailureReasons"].get(key, 0) + 1
+    source_reasons = stats["sources"][source_id]["fallbackFailureReasons"]
+    source_reasons[key] = source_reasons.get(key, 0) + 1
+
+
 def _print_presentation_stats(stats: dict[str, Any]) -> None:
     enabled = "true" if stats["rendererEnabled"] else "false"
     print(
@@ -1389,22 +1473,33 @@ def _print_presentation_stats(stats: dict[str, Any]) -> None:
         f"renderer_enabled={enabled} eligible={stats['eligible']} limit={stats['requestLimit']} "
         f"min_interval_seconds={stats['minRequestIntervalSeconds']} max_attempts={stats['maxAttempts']} "
         f"attempted={stats['attempted']} generated={stats['generated']} failed={stats['failed']} "
-        f"deferred={stats['deferred']}"
+        f"deferred={stats['deferred']} fallback_attempts={stats['fallbackAttempts']} "
+        f"fallback_generated_locales={stats['fallbackGeneratedLocales']} "
+        f"fallback_failed_locales={stats['fallbackFailedLocales']}"
     )
     for source_id, counts in stats["sources"].items():
         print(
             "PRESENTATION_SOURCE: "
             f"id={source_id} eligible={counts['eligible']} attempted={counts['attempted']} "
-            f"generated={counts['generated']} failed={counts['failed']}"
+            f"generated={counts['generated']} failed={counts['failed']} "
+            f"fallback_attempts={counts['fallbackAttempts']} "
+            f"fallback_generated_locales={counts['fallbackGeneratedLocales']} "
+            f"fallback_failed_locales={counts['fallbackFailedLocales']}"
         )
         for code, count in sorted(counts["failureReasons"].items()):
             print(f"PRESENTATION_SOURCE_FAILURE: id={source_id} code={code} count={count}")
+        for key, count in sorted(counts["fallbackFailureReasons"].items()):
+            locale, code = key.split(":", 1)
+            print(f"PRESENTATION_SOURCE_FALLBACK_FAILURE: id={source_id} locale={locale} code={code} count={count}")
         for error_type, count in sorted(counts["providerErrorTypes"].items()):
             print(f"PRESENTATION_SOURCE_ERROR_TYPE: id={source_id} error_type={error_type} count={count}")
         for error_code, count in sorted(counts["providerErrorCodes"].items()):
             print(f"PRESENTATION_SOURCE_ERROR_CODE: id={source_id} error_code={error_code} count={count}")
     for code, count in sorted(stats["failureReasons"].items()):
         print(f"PRESENTATION_FAILURE: code={code} count={count}")
+    for key, count in sorted(stats["fallbackFailureReasons"].items()):
+        locale, code = key.split(":", 1)
+        print(f"PRESENTATION_FALLBACK_FAILURE: locale={locale} code={code} count={count}")
     for error_type, count in sorted(stats["providerErrorTypes"].items()):
         print(f"PRESENTATION_ERROR_TYPE: error_type={error_type} count={count}")
     for error_code, count in sorted(stats["providerErrorCodes"].items()):
@@ -1474,6 +1569,64 @@ def _machine_bilingual_presentation(
     }
 
 
+def _partial_bilingual_presentation(
+    fingerprint: str,
+    generated: dict[str, Any],
+    generated_at: str,
+    generator_revision: str = DEFAULT_PRESENTATION_GENERATOR_REVISION,
+) -> dict[str, Any]:
+    """Build a valid bilingual entry when fallback generated one locale only."""
+    revision = _expect_identifier(generator_revision, "generator_revision")
+    locale_values: dict[str, tuple[str, str]] = {
+        "en": ("shortHeadlineEn", "summaryEn"),
+        "ja": ("shortHeadlineJa", "summaryJa"),
+    }
+    locales: dict[str, dict[str, Any]] = {}
+    for locale, (headline_key, summary_key) in locale_values.items():
+        headline = generated.get(headline_key)
+        summary = generated.get(summary_key)
+        if headline is None and summary is None:
+            locales[locale] = {
+                "status": "missing",
+                "shortHeadline": None,
+                "summary": None,
+                "inputHash": _sha256_text("missing", "missing", revision)
+                if locale == "ja"
+                else _sha256_text(fingerprint, revision),
+                "generatedAt": None,
+                "reviewedAt": None,
+            }
+            continue
+        if not isinstance(headline, str) or not isinstance(summary, str):
+            raise PresentationError("response_invalid_shape")
+        headline = _text(headline, f"{locale} short headline")
+        summary = _text(summary, f"{locale} summary")
+        if len(headline) > 240:
+            raise PresentationError("short_headline_invalid")
+        if len(summary) > 1600:
+            raise PresentationError("summary_invalid")
+        locales[locale] = {
+            "status": "machine",
+            "shortHeadline": headline,
+            "summary": summary,
+            "inputHash": _sha256_text(fingerprint, revision)
+            if locale == "en"
+            else _sha256_text(
+                generated.get("shortHeadlineEn") or "missing",
+                generated.get("summaryEn") or "missing",
+                revision,
+            ),
+            "generatedAt": generated_at,
+            "reviewedAt": None,
+        }
+    return {
+        "schemaVersion": BILINGUAL_PRESENTATION_SCHEMA_VERSION,
+        "sourceFingerprint": fingerprint,
+        "generatorRevision": revision,
+        "locales": locales,
+    }
+
+
 def _reseed_source(config: dict[str, Any], value: str | None) -> str | None:
     if value is None or not value.strip():
         return None
@@ -1501,6 +1654,7 @@ def collect(
     now: datetime,
     fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = bounded_request,
     present_item: Callable[[str, str, dict[str, Any]], dict[str, str]] | None = None,
+    fallback_item: Callable[[str, str, dict[str, Any]], tuple[dict[str, str], dict[str, Exception]]] | None = None,
     *,
     presentation_limit: int | None = None,
     presentation_stats: dict[str, Any] | None = None,
@@ -1675,12 +1829,51 @@ def collect(
                 stats["generated"] += 1
                 stats["sources"][source_id]["generated"] += 1
             except (KeyError, PresentationError, ValueError, OSError) as error:
-                # Model errors must not block publication or leave one locale
-                # partially populated.  The source's original title remains.
-                record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION)
-                stats["failed"] += 1
-                stats["sources"][source_id]["failed"] += 1
                 _record_presentation_failure(stats, source_id, _presentation_failure_code(error), error)
+                fallback_generated: dict[str, str] = {}
+                fallback_failures: dict[str, Exception] = {}
+                if fallback_item is not None:
+                    stats["fallbackAttempts"] += 1
+                    stats["sources"][source_id]["fallbackAttempts"] += 1
+                    try:
+                        fallback_generated, fallback_failures = fallback_item(
+                            record["title"],
+                            _presentation_context_for_model(raw, presentation_policy),
+                            presentation_policy,
+                        )
+                    except (KeyError, PresentationError, ValueError, OSError) as fallback_error:
+                        fallback_failures = {"unknown": fallback_error}
+                    for locale, fallback_error in fallback_failures.items():
+                        code = _presentation_failure_code(fallback_error)
+                        _record_fallback_failure(stats, source_id, locale, code)
+                    stats["fallbackGeneratedLocales"] += sum(
+                        int(field in fallback_generated)
+                        for field in ("shortHeadlineEn", "summaryEn", "shortHeadlineJa", "summaryJa")
+                    ) // 2
+                    stats["fallbackFailedLocales"] += len(fallback_failures)
+                    stats["sources"][source_id]["fallbackGeneratedLocales"] += sum(
+                        int(field in fallback_generated)
+                        for field in ("shortHeadlineEn", "summaryEn", "shortHeadlineJa", "summaryJa")
+                    ) // 2
+                    stats["sources"][source_id]["fallbackFailedLocales"] += len(fallback_failures)
+                if fallback_generated:
+                    try:
+                        record["presentation"] = _partial_bilingual_presentation(
+                            record["fingerprint"], fallback_generated, generated_at
+                        )
+                    except (KeyError, PresentationError, ValueError) as fallback_error:
+                        _record_fallback_failure(stats, source_id, "presentation", _presentation_failure_code(fallback_error))
+                        record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION)
+                else:
+                    # Model errors must not block publication. The source title
+                    # remains available while both generated locales stay missing.
+                    record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION)
+                if any(locale["status"] == "machine" for locale in record["presentation"]["locales"].values()):
+                    stats["generated"] += 1
+                    stats["sources"][source_id]["generated"] += 1
+                else:
+                    stats["failed"] += 1
+                    stats["sources"][source_id]["failed"] += 1
     stats["deferred"] = max(0, stats["eligible"] - stats["attempted"])
 
     feed = build_feed(next_state, config, generated_at)
@@ -1700,6 +1893,7 @@ def collect_and_write(
     now: datetime | None = None,
     fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = bounded_request,
     present_item: Callable[[str, str, dict[str, Any]], dict[str, str]] | None = None,
+    fallback_item: Callable[[str, str, dict[str, Any]], tuple[dict[str, str], dict[str, Exception]]] | None = None,
     presentation_limit: int | None = None,
     presentation_stats: dict[str, Any] | None = None,
     source_pipeline_stats: dict[str, Any] | None = None,
@@ -1708,6 +1902,7 @@ def collect_and_write(
     config = load_config(config_path)
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
     renderer = present_item if present_item is not None else _bilingual_presentation_from_environment(timeout)
+    fallback_renderer = fallback_item if fallback_item is not None else _bilingual_fallback_from_environment(timeout)
     feed, next_state = collect(
         config,
         state,
@@ -1715,6 +1910,7 @@ def collect_and_write(
         now or datetime.now(timezone.utc),
         fetch_body,
         renderer,
+        fallback_renderer,
         presentation_limit=presentation_limit,
         presentation_stats=presentation_stats,
         source_pipeline_stats=source_pipeline_stats,

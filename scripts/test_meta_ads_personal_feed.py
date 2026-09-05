@@ -7,9 +7,10 @@ import os
 import tempfile
 import unittest
 from contextlib import redirect_stdout
-from unittest.mock import patch
+from unittest.mock import call, patch
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
 from urllib.error import URLError
 
 from meta_ads_tracker_contract import ContractError
@@ -22,6 +23,7 @@ from meta_ads_personal_feed import (
     STATE_V3_SCHEMA_VERSION,
     _meta_business_news_date,
     _bilingual_presentation_from_environment,
+    _bilingual_fallback_from_environment,
     _presentation_from_environment,
     _print_presentation_stats,
     _print_source_pipeline_stats,
@@ -176,6 +178,28 @@ class PersonalFeedTest(unittest.TestCase):
             presenter("Second", "Context", policy)
         self.assertEqual(request.call_count, 2)
         sleep.assert_called_once_with(12.0)
+
+    def test_environment_fallback_requests_english_then_japanese_once_each(self) -> None:
+        policy = self.config["policies"]["bilingualPresentation"]
+        with patch.dict(os.environ, {"GROQ_API_KEY": "test-key", "META_ADS_PERSONAL_FEED_JA_ENABLED": "true"}, clear=True), patch(
+            "meta_ads_personal_feed.request_english_presentation",
+            side_effect=PresentationError("http_400"),
+        ) as english, patch(
+            "meta_ads_personal_feed.request_presentation",
+            return_value={"shortHeadlineJa": "日本語の見出し", "summaryJa": "日本語の要約"},
+        ) as japanese, patch("meta_ads_personal_feed.time.sleep") as sleep:
+            fallback = _bilingual_fallback_from_environment(1)
+            self.assertIsNotNone(fallback)
+            assert fallback is not None
+            generated, failures = fallback("Title", "Context", policy)
+
+        self.assertEqual(generated, {"shortHeadlineJa": "日本語の見出し", "summaryJa": "日本語の要約"})
+        self.assertEqual(list(failures), ["en"])
+        english.assert_called_once()
+        self.assertEqual(english.call_args.kwargs["max_attempts"], 1)
+        japanese.assert_called_once()
+        self.assertEqual(japanese.call_args.kwargs["max_attempts"], 1)
+        self.assertEqual(sleep.call_args_list, [call(12), call(12), call(12)])
 
     def test_empty_workflow_variables_use_the_documented_presentation_defaults(self) -> None:
         with patch.dict(
@@ -347,6 +371,38 @@ class PersonalFeedTest(unittest.TestCase):
             )
         )
         self.assertNotIn("sourceContext", json.dumps(state))
+
+    def test_bilingual_failure_uses_two_stage_locale_fallback_and_keeps_partial_output(self) -> None:
+        def failing_presenter(_title: str, _context: str, _policy: dict) -> dict[str, str]:
+            raise PresentationError("http_400")
+
+        def fallback_presenter(_title: str, _context: str, _policy: dict) -> tuple[dict[str, str], dict[str, Exception]]:
+            return (
+                {"shortHeadlineJa": "日本語の見出し", "summaryJa": "日本語の要約"},
+                {"en": PresentationError("http_400")},
+            )
+
+        stats: dict[str, Any] = {}
+        feed, state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+            failing_presenter,
+            fallback_presenter,
+            presentation_stats=stats,
+        )
+        for item in feed["items"]:
+            self.assertEqual(item["presentation"]["locales"]["en"]["status"], "missing")
+            self.assertEqual(item["presentation"]["locales"]["ja"]["status"], "machine")
+        self.assertEqual((stats["generated"], stats["failed"], stats["fallbackAttempts"]), (4, 0, 4))
+        self.assertEqual(stats["fallbackGeneratedLocales"], 4)
+        self.assertEqual(stats["fallbackFailedLocales"], 4)
+        self.assertEqual(stats["fallbackFailureReasons"], {"en:http_400": 4})
+        self.assertNotIn("sourceContext", json.dumps(state))
+        validate_state(state, self.config)
+        validate_feed(feed, self.config)
 
     def test_jon_rss_extracts_only_canonical_meta_business_news_links(self) -> None:
         sources = {source["id"]: source for source in self.config["sources"]}

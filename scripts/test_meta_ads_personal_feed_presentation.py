@@ -10,6 +10,7 @@ from meta_ads_personal_feed_presentation import (
     PresentationError,
     _bilingual_messages,
     _messages,
+    request_english_presentation,
     request_bilingual_presentation,
     request_presentation,
 )
@@ -100,6 +101,24 @@ class PersonalFeedPresentationTest(unittest.TestCase):
                 summary_max_chars=360,
                 timeout=1,
             )
+
+    @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
+    def test_accepts_only_the_bounded_english_two_field_contract(self, urlopen) -> None:
+        urlopen.return_value = _Response(
+            {"choices": [{"message": {"content": json.dumps({"shortHeadlineEn": "Meta Ads update", "summaryEn": "A Meta Ads update was announced."})}}]}
+        )
+        result = request_english_presentation(
+            api_key="test-key",
+            model="test-model",
+            title="Meta Ads update",
+            source_context="Context",
+            short_headline_max_chars=80,
+            summary_max_chars=360,
+            timeout=1,
+        )
+        self.assertEqual(result["shortHeadlineEn"], "Meta Ads update")
+        request_body = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
+        self.assertEqual(request_body["response_format"]["json_schema"]["schema"]["required"], ["shortHeadlineEn", "summaryEn"])
 
     @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
     def test_classifies_http_failures_without_exposing_the_response(self, urlopen) -> None:
