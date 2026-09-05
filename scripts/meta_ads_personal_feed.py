@@ -51,6 +51,10 @@ DEFAULT_CONFIG = Path("config/meta_ads_personal_feed_sources.json")
 DEFAULT_STATE = Path("data/meta_ads_personal_feed_state.json")
 DEFAULT_OUTPUT = Path("meta-ads-updates/personal-feed.json")
 TRACKING_QUERY_KEYS = {"fbclid", "gclid", "mc_cid", "mc_eid"}
+RSS_BLOCK_TAG = re.compile(r"</?(?:article|blockquote|br|div|h[1-6]|li|ol|p|section|ul)\b[^>]*>", flags=re.IGNORECASE)
+RSS_TAG = re.compile(r"<[^>]+>")
+RSS_NONCONTENT_TAG = re.compile(r"<(?:noscript|script|style)\b[^>]*>.*?</(?:noscript|script|style)\s*>", flags=re.IGNORECASE | re.DOTALL)
+SENTENCE_BOUNDARY = re.compile(r"(?<=[.!?])\s+|(?<=[。！？])")
 PARSER_TYPES = {"rss", "github_releases"}
 CONTENT_TYPES = {
     "rss": ["application/rss+xml", "application/xml", "text/xml"],
@@ -322,6 +326,41 @@ def _strip_html(value: str) -> str:
     return _normalise(re.sub(r"<[^>]+>", " ", value or ""))
 
 
+def _rss_presentation_text(value: str) -> str:
+    """Keep RSS block and sentence boundaries for transient model input only."""
+    decoded = html.unescape(value or "")
+    marked = RSS_BLOCK_TAG.sub("\n", RSS_NONCONTENT_TAG.sub(" ", decoded))
+    text = RSS_TAG.sub(" ", marked)
+    return "\n\n".join(_normalise(paragraph) for paragraph in text.splitlines() if _normalise(paragraph))
+
+
+def _shorten_rss_presentation_context(value: str, maximum: int) -> str:
+    """Fit complete RSS paragraphs or sentences within ``maximum`` characters.
+
+    The input is never persisted.  The function deliberately never cuts a
+    sentence mid-way: if the leading semantic unit cannot fit, the title alone
+    remains available to the presentation request.
+    """
+    if len(value) <= maximum:
+        return value
+    selected: list[str] = []
+    for paragraph in value.split("\n\n"):
+        units = [unit.strip() for unit in SENTENCE_BOUNDARY.split(paragraph) if unit.strip()]
+        for unit in units:
+            candidate = "\n\n".join([*selected, unit])
+            if len(candidate) > maximum:
+                return "\n\n".join(selected)
+            selected.append(unit)
+    return "\n\n".join(selected)
+
+
+def _presentation_context_for_model(raw: dict[str, Any], policy: dict[str, Any]) -> str:
+    context = raw.get("presentationContext", raw["sourceContext"])
+    if raw.get("presentationContextKind") == "rss":
+        return _shorten_rss_presentation_context(context, policy["maxInputChars"])
+    return context[: policy["maxInputChars"]]
+
+
 def _canonical_url(value: str) -> str:
     parsed = urlsplit(value)
     pairs = [(key, item) for key, item in parse_qsl(parsed.query, keep_blank_values=True) if not key.lower().startswith("utm_") and key.lower() not in TRACKING_QUERY_KEYS]
@@ -438,6 +477,8 @@ def _meta_business_news_item(source: dict[str, Any], url: str, body: str) -> dic
         "updatedDate": None,
         "matchEvidence": [f"discovered-via:{origin_id}"],
         "sourceContext": description,
+        "presentationContext": description,
+        "presentationContextKind": "plain",
         "fingerprint": _fingerprint(url, title, published, description),
     }
 
@@ -535,6 +576,8 @@ def _rss_items(
             "matchEvidence": [],
             # This value is used only during this run.  It is deliberately not persisted.
             "sourceContext": source_context,
+            "presentationContext": _rss_presentation_text(source_context_markup),
+            "presentationContextKind": "rss",
             "categories": [item for item in fields.get("category", []) if item],
             "sourceContextMarkup": source_context_markup if discovery_source else "",
             "fingerprint": _fingerprint(url, title, published or "", updated or "", source_context),
@@ -577,6 +620,8 @@ def _github_release_items(source: dict[str, Any], body: str, pipeline: dict[str,
             "matchEvidence": [],
             # Release notes are used only as model input and are never stored in state or feed JSON.
             "sourceContext": source_context,
+            "presentationContext": source_context,
+            "presentationContextKind": "plain",
             "categories": [],
             "fingerprint": _fingerprint(str(release.get("tag_name") or url), tag, published or "", updated or "", source_context),
         })
@@ -1625,7 +1670,7 @@ def collect(
             stats["attempted"] += 1
             stats["sources"][source_id]["attempted"] += 1
             try:
-                generated = present_item(record["title"], raw["sourceContext"], presentation_policy)
+                generated = present_item(record["title"], _presentation_context_for_model(raw, presentation_policy), presentation_policy)
                 record["presentation"] = _machine_bilingual_presentation(record["fingerprint"], generated, generated_at)
                 stats["generated"] += 1
                 stats["sources"][source_id]["generated"] += 1

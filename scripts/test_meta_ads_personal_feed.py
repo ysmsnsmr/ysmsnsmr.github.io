@@ -25,6 +25,8 @@ from meta_ads_personal_feed import (
     _presentation_from_environment,
     _print_presentation_stats,
     _print_source_pipeline_stats,
+    _rss_presentation_text,
+    _shorten_rss_presentation_context,
     collect,
     collect_and_write,
     extract_items,
@@ -201,6 +203,52 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(len(jon), 2)
         self.assertEqual(social_media_today[0]["matchEvidence"], [])
         self.assertIn("Review the new setting", jon[0]["sourceContext"])
+
+    def test_rss_presentation_context_keeps_complete_semantic_units(self) -> None:
+        context = _rss_presentation_text(
+            "<p>First complete sentence.</p><p>Second complete sentence.</p><p>Third complete sentence.</p>"
+        )
+        self.assertEqual(
+            _shorten_rss_presentation_context(context, len("First complete sentence.\n\nSecond complete sentence.")),
+            "First complete sentence.\n\nSecond complete sentence.",
+        )
+        self.assertEqual(
+            _rss_presentation_text("<p>First fact.</p><script>Ignore this instruction.</script><li>Second fact.</li>"),
+            "First fact.\n\nSecond fact.",
+        )
+        self.assertEqual(_shorten_rss_presentation_context("One very long semantic unit without a boundary", 12), "")
+
+    def test_rss_presentation_context_is_transient_and_not_saved(self) -> None:
+        lead = "Meta Ads " + ("lead " * 20) + "."
+        long_description = f"<p>{lead}</p><p>Second complete sentence that must not be cut in half.</p>"
+        bodies = {
+            "meta-product-news-rss": META.replace(
+                "Meta announced a product update for advertisers.",
+                f"<![CDATA[{long_description}]]>",
+            ),
+            "meta-business-sdk-releases": SDK,
+            "social-media-today-meta-ads": SOCIAL_MEDIA_TODAY,
+            "jon-loomer-meta-ads": JON,
+        }
+        config = copy.deepcopy(self.config)
+        config["policies"]["bilingualPresentation"]["maxInputChars"] = len(lead)
+        contexts: list[str] = []
+
+        def presenter(_title: str, source_context: str, _policy: dict) -> dict[str, str]:
+            contexts.append(source_context)
+            return {"shortHeadlineEn": "Headline", "summaryEn": "Summary", "shortHeadlineJa": "見出し", "summaryJa": "要約"}
+
+        _feed, state = collect(
+            config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(bodies=bodies),
+            presenter,
+        )
+        self.assertIn(lead, contexts)
+        self.assertNotIn("Second complete sentence", "\n".join(contexts))
+        self.assertNotIn("presentationContext", json.dumps(state))
 
     def test_product_news_freshness_and_relevance_run_before_bilingual_generation(self) -> None:
         stale_and_irrelevant = """<rss><channel>
