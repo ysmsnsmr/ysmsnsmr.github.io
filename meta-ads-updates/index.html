@@ -1,60 +1,70 @@
 <!doctype html>
-<html lang="ja">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0d3b78">
-    <meta name="description" content="Meta Adsの公式・非公式情報を区別して表示する更新フィード">
-    <title>Meta Ads Personal Feed</title>
+    <meta name="description" content="A Meta Ads update feed that keeps official and unofficial sources clearly separated.">
+    <title>Meta Ads Update Feed</title>
+    <link id="canonical-link" rel="canonical" href="https://ysmsnsmr.github.io/meta-ads-updates/">
+    <link id="alternate-en" rel="alternate" hreflang="en" href="https://ysmsnsmr.github.io/meta-ads-updates/">
+    <link id="alternate-ja" rel="alternate" hreflang="ja" href="https://ysmsnsmr.github.io/meta-ads-updates/ja/">
+    <link id="alternate-default" rel="alternate" hreflang="x-default" href="https://ysmsnsmr.github.io/meta-ads-updates/">
     <link rel="stylesheet" href="./style.css">
-    <script src="./app.js" defer></script>
+    <script src="./localized-feed.js" defer></script>
   </head>
   <body>
     <main class="tracker-shell">
-      <section id="demo-banner" class="demo-banner" aria-label="デモ環境" hidden>
-        <strong>デモ環境</strong>
-        <span>架空データを表示しています。実運用の承認・判断には使用しないでください。</span>
+      <section id="demo-banner" class="demo-banner" aria-label="Demo environment" hidden>
+        <strong>Demo environment</strong>
+        <span>This screen contains fictional data and must not be used for operational decisions.</span>
       </section>
       <section id="recovery-banner" class="recovery-banner" aria-label="遅延回復データ" hidden>
         <strong>遅延回復データ</strong>
         <span id="recovery-banner-copy"></span>
       </section>
-      <section id="unofficial-notice" class="unofficial-notice" aria-label="非公式情報の注意" hidden>
-        <strong>非公式情報の取り扱い</strong>
-        <span>非公式ソースは早期検知の参考情報であり、Meta公式の見解を示すものではありません。公式情報で確認できない内容もあるため、重要な対応や判断には、複数の情報源や実環境で追加確認してください。</span>
+      <section id="unofficial-notice" class="unofficial-notice" aria-label="About unofficial information" hidden>
+        <strong>About unofficial information</strong>
+        <span>Unofficial sources are early signals and do not represent Meta’s official position. For important decisions, cross-check with additional sources and your own environment.</span>
       </section>
       <header class="masthead">
         <div>
           <h1>Meta Ads Update Feed</h1>
-          <p class="masthead-copy">Meta公式と非公式の情報を区別し、発表日・最終更新日を確認できます。</p>
+          <p class="masthead-copy">Track announcement and update dates while keeping official and unofficial sources clearly separated.</p>
         </div>
-        <p id="week-stamp" class="week-stamp"></p>
+        <div class="masthead-actions">
+          <nav class="locale-switch" aria-label="Language">
+            <a id="locale-en" aria-current="page">English</a>
+            <a id="locale-ja">日本語</a>
+          </nav>
+          <p id="week-stamp" class="week-stamp"></p>
+        </div>
       </header>
 
       <section class="control-panel" aria-labelledby="filter-heading">
-        <p id="filter-heading" class="section-kicker">表示条件</p>
+        <p id="filter-heading" class="section-kicker">Filters</p>
         <form id="filter-form" class="filter-form">
           <div class="filter-field">
-            <label for="source-filter">ソース</label>
+            <label for="source-filter">Source</label>
             <select id="source-filter" name="source">
-              <option value="all">すべてのソース</option>
+              <option value="all">All sources</option>
               <option value="meta-product-news-rss">Product News</option>
               <option value="meta-business-sdk-releases">Business SDK Releases</option>
             </select>
           </div>
           <div class="filter-field">
-            <label id="priority-filter-label" for="priority-filter">ソース区分</label>
+            <label id="priority-filter-label" for="priority-filter">Source type</label>
             <select id="priority-filter" name="priority">
-              <option value="all">すべて</option>
-              <option value="official">Meta公式</option>
-              <option value="unofficial">非公式・未確認</option>
+              <option value="all">All</option>
+              <option value="official">Official</option>
+              <option value="unofficial">Unofficial</option>
             </select>
           </div>
           <div class="filter-field">
-            <label for="query-filter">キーワード</label>
-            <input id="query-filter" name="query" type="search" placeholder="更新名を絞り込む" autocomplete="off">
+            <label for="query-filter">Keyword</label>
+            <input id="query-filter" name="query" type="search" placeholder="Search updates" autocomplete="off">
           </div>
-          <button id="reset-button" class="reset-button" type="button">条件をリセット</button>
+          <button id="reset-button" class="reset-button" type="button">Reset filters</button>
         </form>
         <p id="result-summary" class="result-summary" aria-live="polite"></p>
       </section>
@@ -66,7 +76,7 @@
         <p id="empty-copy"></p>
       </section>
 
-      <p id="tracker-footer" class="tracker-footer">Meta公式・非公式の情報を区別して表示しています。</p>
+      <p id="tracker-footer" class="tracker-footer">Official and unofficial information are clearly separated.</p>
     </main>
   </body>
 </html>

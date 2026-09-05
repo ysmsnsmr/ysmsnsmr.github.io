@@ -174,7 +174,7 @@ async function assertTokens(page) {
 async function assertAccessibilityAndLayout(page, label) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   assert(overflow <= 1, `${label}: horizontal overflow ${overflow}px`);
-  const undersized = await page.locator("button, select, input, .source-link, .detail-link, .back-link").evaluateAll((nodes) =>
+  const undersized = await page.locator("button, select, input, .source-link, .detail-link, .back-link, .locale-switch a").evaluateAll((nodes) =>
     nodes.map((node) => ({ text: node.textContent || node.getAttribute("placeholder"), rect: node.getBoundingClientRect() }))
       .filter(({ rect }) => rect.width > 0 && rect.height > 0 && (rect.height < 44 || rect.width < 44))
       .map(({ text, rect }) => `${text}:${rect.width}x${rect.height}`)
@@ -187,7 +187,7 @@ async function assertAccessibilityAndLayout(page, label) {
     const style = getComputedStyle(active);
     return { id: active?.id, outline: style.outlineStyle, width: style.outlineWidth };
   });
-  assert(focus.id === "source-filter" && focus.outline !== "none" && focus.width === "3px", `${label}: keyboard focus is not visibly styled`);
+  assert(["locale-en", "source-filter"].includes(focus.id) && focus.outline !== "none" && focus.width === "3px", `${label}: keyboard focus is not visibly styled`);
   await page.addScriptTag({ content: axeSource });
   const axe = await page.evaluate(async () => globalThis.axe.run(document, { runOnly: ["wcag2a", "wcag2aa"] }));
   assert(axe.violations.length === 0, `${label}: axe violations: ${axe.violations.map((item) => item.id).join(", ")}`);
@@ -196,7 +196,7 @@ async function assertAccessibilityAndLayout(page, label) {
 async function assertDetailAccessibilityAndLayout(page, label) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   assert(overflow <= 1, `${label}: horizontal overflow ${overflow}px`);
-  const undersized = await page.locator(".source-link, .back-link").evaluateAll((nodes) =>
+  const undersized = await page.locator(".source-link, .back-link, .locale-switch a").evaluateAll((nodes) =>
     nodes.map((node) => ({ text: node.textContent, rect: node.getBoundingClientRect() }))
       .filter(({ rect }) => rect.width > 0 && rect.height > 0 && (rect.height < 44 || rect.width < 44))
       .map(({ text, rect }) => `${text}:${rect.width}x${rect.height}`)
@@ -256,8 +256,8 @@ try {
   assert(!(await productionPage.locator("#recovery-banner").isVisible()), "ordinary production route must not show the delayed-recovery banner");
   assert(await productionPage.locator("#unofficial-notice").isVisible(), "Personal Feed must show the non-official-source notice");
   const unofficialNotice = await productionPage.locator("#unofficial-notice").textContent();
-  assert(unofficialNotice.includes("公式情報で確認できない内容もあるため") && unofficialNotice.includes("複数の情報源や実環境で追加確認"), "Personal Feed notice must explain that official confirmation may not exist");
-  assert(!unofficialNotice.includes("必ずMeta公式情報で確認してください"), "Personal Feed must not imply that every unofficial item has an official counterpart");
+  assert(unofficialNotice.includes("do not represent Meta’s official position") && unofficialNotice.includes("cross-check with additional sources"), "English Personal Feed notice must explain how unofficial information is handled");
+  assert(!unofficialNotice.includes("must be confirmed by Meta"), "Personal Feed must not imply that every unofficial item has an official counterpart");
   await productionPage.close();
 
   for (const viewport of viewports) {
@@ -267,7 +267,7 @@ try {
     page.on("console", (message) => { if (message.type() === "error") consoleErrors.push(message.text()); });
     page.on("pageerror", (error) => pageErrors.push(error.message));
     const label = `personal-feed/${viewport.name}`;
-    await page.goto(`${server.origin}/meta-ads-updates/index.html?personal-fixture=1`, { waitUntil: "networkidle" });
+    await page.goto(`${server.origin}/meta-ads-updates/ja/?personal-fixture=1`, { waitUntil: "networkidle" });
     assert(await page.locator("#unofficial-notice").isVisible(), `${label}: non-official notice is missing`);
     assert(await page.locator("#update-list .update-card").count() === 3, `${label}: personal feed cards are missing`);
     assert(await page.locator(".origin-label--official").count() === 1, `${label}: official badge is missing`);
@@ -313,7 +313,7 @@ try {
   const v3ListPageErrors = [];
   v3List.on("console", (message) => { if (message.type() === "error") v3ListConsoleErrors.push(message.text()); });
   v3List.on("pageerror", (error) => v3ListPageErrors.push(error.message));
-  await v3List.goto(`${server.origin}/meta-ads-updates/index.html?personal-fixture=v3`, { waitUntil: "networkidle" });
+  await v3List.goto(`${server.origin}/meta-ads-updates/ja/?personal-fixture=v3`, { waitUntil: "networkidle" });
   assert(await v3List.locator("#update-list .update-card").count() === personalFeedV3Report.items.length, "v3 Personal Feed list did not render");
   assert((await v3List.locator("#update-list h2").allTextContents()).includes("Meta広告の計測機能を更新"), "v3 list did not use its Japanese locale overlay");
   assert(await v3List.locator(".detail-link").first().getAttribute("href").then((href) => href?.includes("personal-fixture=v3")), "v3 detail links did not retain the fixed fixture selector");
@@ -330,7 +330,7 @@ try {
     page.on("console", (message) => { if (message.type() === "error") consoleErrors.push(message.text()); });
     page.on("pageerror", (error) => pageErrors.push(error.message));
     const label = `personal-detail/${viewport.name}`;
-    await page.goto(`${server.origin}/meta-ads-updates/index.html?personal-fixture=1`, { waitUntil: "networkidle" });
+    await page.goto(`${server.origin}/meta-ads-updates/ja/?personal-fixture=1`, { waitUntil: "networkidle" });
     await page.selectOption("#source-filter", "search-engine-land-meta-rss");
     await page.selectOption("#priority-filter", "unofficial");
     await page.fill("#query-filter", "表示変更");
@@ -340,7 +340,7 @@ try {
     await page.waitForURL(/detail\.html\?/);
     assert(await page.locator("#detail-card").isVisible(), `${label}: detail card is missing`);
     assert((await page.locator("#detail-title").textContent()).includes("Meta Adsの表示変更"), `${label}: Japanese short headline is missing`);
-    assert((await page.locator("#detail-summary").textContent()).includes("日本語要約を準備中"), `${label}: pending-summary fallback is missing`);
+    assert((await page.locator("#detail-summary").textContent()).includes("要約は利用できません"), `${label}: pending-summary fallback is missing`);
     assert((await page.locator("#detail-original-title").textContent()).includes("Meta Adsの表示変更"), `${label}: original title is missing`);
     assert(!(await page.locator(".fact-label").allTextContents()).includes("最終確認"), `${label}: automated observation timestamp must not be shown on detail page`);
     assert(await page.locator("#detail-unofficial-notice").isVisible(), `${label}: non-official notice is missing`);
@@ -355,7 +355,7 @@ try {
       await page.screenshot({ path: path.join(artifactDirectory, `personal-detail-${viewport.name}-full-page.png`), fullPage: true });
     }
     await page.locator("#back-link").click();
-    await page.waitForURL(/index\.html\?/);
+    await page.waitForURL(/\/ja\/\?/);
     assert(await page.locator("#source-filter").inputValue() === "search-engine-land-meta-rss", `${label}: source filter was not restored`);
     assert(await page.locator("#priority-filter").inputValue() === "unofficial", `${label}: classification filter was not restored`);
     assert(await page.locator("#query-filter").inputValue() === "表示変更", `${label}: query filter was not restored`);
@@ -363,20 +363,20 @@ try {
   }
 
   const missingDetail = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-  await missingDetail.goto(`${server.origin}/meta-ads-updates/detail.html?id=missing-item&personal-fixture=1`, { waitUntil: "networkidle" });
+  await missingDetail.goto(`${server.origin}/meta-ads-updates/ja/detail.html?id=missing-item&personal-fixture=1`, { waitUntil: "networkidle" });
   assert(await missingDetail.locator("#detail-error").isVisible(), "missing detail must show a safe error state");
   assert(!(await missingDetail.locator("#detail-card").isVisible()), "missing detail must not show a card");
   await missingDetail.close();
 
   const generatedDetail = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-  await generatedDetail.goto(`${server.origin}/meta-ads-updates/detail.html?id=search-engine-land-meta-rss-bbbbbbbbbbbbbbbbbbbb&personal-fixture=1`, { waitUntil: "networkidle" });
+  await generatedDetail.goto(`${server.origin}/meta-ads-updates/ja/detail.html?id=search-engine-land-meta-rss-bbbbbbbbbbbbbbbbbbbb&personal-fixture=1`, { waitUntil: "networkidle" });
   assert((await generatedDetail.locator("#detail-title").textContent()) === "Meta Ads APIの観測", "generated detail must use the Japanese short headline");
   assert((await generatedDetail.locator("#detail-summary").textContent()).includes("Meta Ads APIに関する観測記事です。"), "generated detail must display the Japanese summary");
   assert(await generatedDetail.locator("#detail-unofficial-notice").isVisible(), "generated non-official detail must show the notice");
   await generatedDetail.close();
 
   const v3MachineDetail = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-  await v3MachineDetail.goto(`${server.origin}/meta-ads-updates/detail.html?id=meta-product-news-rss-aaaaaaaaaaaaaaaaaaaa&personal-fixture=v3`, { waitUntil: "networkidle" });
+  await v3MachineDetail.goto(`${server.origin}/meta-ads-updates/ja/detail.html?id=meta-product-news-rss-aaaaaaaaaaaaaaaaaaaa&personal-fixture=v3`, { waitUntil: "networkidle" });
   assert((await v3MachineDetail.locator("#detail-title").textContent()) === "Meta広告の計測機能を更新", "v3 detail must use the Japanese locale headline");
   assert((await v3MachineDetail.locator("#detail-summary").textContent()).includes("広告主向け計測機能の更新"), "v3 detail must use the Japanese locale summary");
   assert((await v3MachineDetail.locator("#detail-facts").textContent()).includes("Metaプラットフォーム全般"), "v3 detail must translate platform IDs for the current Japanese UI");
@@ -384,9 +384,9 @@ try {
   await v3MachineDetail.close();
 
   const v3MissingDetail = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-  await v3MissingDetail.goto(`${server.origin}/meta-ads-updates/detail.html?id=social-media-today-meta-ads-bbbbbbbbbbbbbbbbbbbb&personal-fixture=v3`, { waitUntil: "networkidle" });
+  await v3MissingDetail.goto(`${server.origin}/meta-ads-updates/ja/detail.html?id=social-media-today-meta-ads-bbbbbbbbbbbbbbbbbbbb&personal-fixture=v3`, { waitUntil: "networkidle" });
   assert((await v3MissingDetail.locator("#detail-title").textContent()) === "Meta Ads source article", "v3 missing detail must fall back to the original title");
-  assert((await v3MissingDetail.locator("#detail-summary").textContent()).includes("日本語要約を準備中"), "v3 missing detail must show the Japanese fallback");
+  assert((await v3MissingDetail.locator("#detail-summary").textContent()).includes("要約は利用できません"), "v3 missing detail must show the Japanese fallback");
   assert(await v3MissingDetail.locator("#detail-unofficial-notice").isVisible(), "v3 unofficial detail must show the notice");
   await v3MissingDetail.close();
 
@@ -394,21 +394,17 @@ try {
   const legacyItem = personalFeedReport.items[0];
   await productionDetail.goto(`${server.origin}/meta-ads-updates/detail.html?id=${encodeURIComponent(legacyItem.id)}`, { waitUntil: "networkidle" });
   assert(await productionDetail.locator("#detail-card").isVisible(), "v1 production feed detail must render");
-  const productionJapanese = legacyItem.presentation?.schemaVersion === "meta-ads-personal-feed-presentation/v2"
-    ? legacyItem.presentation.locales?.ja
+  const productionEnglish = legacyItem.presentation?.schemaVersion === "meta-ads-personal-feed-presentation/v2"
+    ? legacyItem.presentation.locales?.en
     : null;
-  const expectedProductionTitle = (productionJapanese?.status === "machine" || productionJapanese?.status === "reviewed") && productionJapanese.shortHeadline
-    ? productionJapanese.shortHeadline
-    : legacyItem.presentation?.status === "generated" && legacyItem.presentation.shortHeadlineJa
-      ? legacyItem.presentation.shortHeadlineJa
+  const expectedProductionTitle = (productionEnglish?.status === "machine" || productionEnglish?.status === "reviewed") && productionEnglish.shortHeadline
+    ? productionEnglish.shortHeadline
     : legacyItem.title;
-  assert((await productionDetail.locator("#detail-title").textContent()) === expectedProductionTitle, "production feed detail must use the generated headline or original title");
-  const expectedProductionSummary = (productionJapanese?.status === "machine" || productionJapanese?.status === "reviewed") && productionJapanese.summary
-    ? productionJapanese.summary
-    : legacyItem.presentation?.status === "generated" && legacyItem.presentation.summaryJa
-      ? legacyItem.presentation.summaryJa
-    : "日本語要約を準備中";
-  assert((await productionDetail.locator("#detail-summary").textContent()).includes(expectedProductionSummary), "production feed detail must use the generated summary or pending fallback");
+  assert((await productionDetail.locator("#detail-title").textContent()) === expectedProductionTitle, "English production detail must use the English headline or original title");
+  const expectedProductionSummary = (productionEnglish?.status === "machine" || productionEnglish?.status === "reviewed") && productionEnglish.summary
+    ? productionEnglish.summary
+    : "Summary not available. Review the original source.";
+  assert((await productionDetail.locator("#detail-summary").textContent()).includes(expectedProductionSummary), "English production detail must use the English summary or fallback");
   await productionDetail.close();
 
   for (const viewport of [viewports[0], viewports[2]]) {
@@ -416,7 +412,7 @@ try {
     const label = `delayed-recovery/${viewport.name}`;
     await page.goto(`${server.origin}/meta-ads-updates/index.html?fixture=delayed-recovery`, { waitUntil: "networkidle" });
     assert(await page.locator("#recovery-banner").isVisible(), `${label}: delayed-recovery banner is missing`);
-    assert((await page.locator("#recovery-banner").textContent()).includes("金曜17:00 MYTの締切前candidateが不足"), `${label}: delayed-recovery banner is misleading`);
+    assert((await page.locator("#recovery-banner").textContent()).includes("Friday 17:00 MYT cutoff"), `${label}: delayed-recovery banner is misleading`);
     assert(!(await page.locator("#demo-banner").isVisible()), `${label}: delayed recovery must not be labelled as a demo`);
     assert(await page.locator("#update-list .update-card").count() === 3, `${label}: recovery cards are missing`);
     await assertTokens(page);
@@ -487,7 +483,37 @@ try {
   await page.fill("#query-filter", "設定手順B");
   assert(await page.locator("#update-list .update-card").count() === 1, "query filter failed");
   await page.close();
-  console.log(`PASS: production UI ${caseCount}/15 fixture viewport cases plus Personal Feed detail, production, and demo E2E flows, overflow, targets, focus, axe, and approved tokens`);
+  const englishList = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await englishList.goto(`${server.origin}/meta-ads-updates/?personal-fixture=v3&source=meta-product-news-rss&type=official&q=measurement`, { waitUntil: "networkidle" });
+  assert(await englishList.locator("html").getAttribute("lang") === "en", "root route must be English");
+  assert((await englishList.locator("#update-list h2").textContent()) === "Meta Ads measurement update", "English route must use the English overlay");
+  assert(await englishList.locator("#update-list").textContent().then((text) => !text.includes("machine") && !text.includes("missing")), "list cards must not expose generation status");
+  assert(await englishList.locator("#locale-ja").getAttribute("href").then((href) => href === "/meta-ads-updates/ja/?source=meta-product-news-rss&type=official&q=measurement&personal-fixture=v3"), "language switch must retain supported list filters");
+  assert(await englishList.locator("#canonical-link").getAttribute("href") === "https://ysmsnsmr.github.io/meta-ads-updates/", "English list canonical is incorrect");
+  assert(await englishList.locator("#alternate-ja").getAttribute("href") === "https://ysmsnsmr.github.io/meta-ads-updates/ja/", "English list hreflang is incorrect");
+  await assertAccessibilityAndLayout(englishList, "english-list/desktop");
+  await englishList.locator(".detail-link").click();
+  await englishList.waitForURL(/detail\.html\?/);
+  assert((await englishList.locator("#detail-title").textContent()) === "Meta Ads measurement update", "English detail must use the English overlay");
+  assert((await englishList.locator("#detail-presentation-status").textContent()) === "Machine-generated summary", "detail must disclose a machine-generated summary");
+  assert(await englishList.locator('meta[name="robots"]').getAttribute("content") === "noindex,follow", "detail must be noindex,follow");
+  assert(await englishList.locator("#canonical-link").getAttribute("href").then((href) => href?.startsWith("https://ysmsnsmr.github.io/meta-ads-updates/detail.html?id=")), "English detail canonical is incorrect");
+  assert(await englishList.locator("#alternate-ja").getAttribute("href").then((href) => href?.startsWith("https://ysmsnsmr.github.io/meta-ads-updates/ja/detail.html?id=")), "English detail hreflang is incorrect");
+  assert(await englishList.locator("#locale-ja").getAttribute("href").then((href) => href?.includes("/ja/detail.html?id=") && href.includes("source=meta-product-news-rss") && href.includes("type=official") && href.includes("q=measurement")), "detail language switch must retain id and filters");
+  await englishList.close();
+
+  const englishMissing = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await englishMissing.goto(`${server.origin}/meta-ads-updates/detail.html?id=social-media-today-meta-ads-bbbbbbbbbbbbbbbbbbbb&personal-fixture=v3`, { waitUntil: "networkidle" });
+  assert((await englishMissing.locator("#detail-summary").textContent()) === "Summary not available. Review the original source.", "English detail must describe a missing summary without invention");
+  assert((await englishMissing.locator("#detail-presentation-status").textContent()) === "Summary not available", "missing summary status is absent");
+  await englishMissing.close();
+
+  const japaneseDemoRedirect = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await japaneseDemoRedirect.goto(`${server.origin}/meta-ads-updates/?demo=1`, { waitUntil: "networkidle" });
+  assert(new URL(japaneseDemoRedirect.url()).pathname === "/meta-ads-updates/ja/", "root demo URL must redirect to the Japanese demo route");
+  assert(await japaneseDemoRedirect.locator("#locale-en").getAttribute("href") === "/meta-ads-updates/", "Japanese demo must not carry its demo query into a normal language route");
+  await japaneseDemoRedirect.close();
+  console.log(`PASS: production UI ${caseCount}/15 fixture viewport cases plus English/Japanese routes, detail status, SEO metadata, demo redirect, and existing E2E flows`);
 } finally {
   await browser.close();
   await server.close();
