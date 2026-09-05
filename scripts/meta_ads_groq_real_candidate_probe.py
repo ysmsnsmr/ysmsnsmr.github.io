@@ -22,6 +22,7 @@ from meta_ads_personal_feed_presentation import (
     _strict_schema,
     _text,
     request_bilingual_presentation,
+    request_presentation,
 )
 from meta_ads_tracker_collect import SourceFetchError, _request as bounded_request
 
@@ -112,13 +113,9 @@ def _request_locale_presentation(
     summary_max_chars: int,
     timeout: float,
 ) -> dict[str, str]:
-    if locale not in {"en", "ja"}:
+    if locale != "en":
         raise ValueError("locale must be en or ja")
-    fields = (
-        {"shortHeadlineEn": short_headline_max_chars, "summaryEn": summary_max_chars}
-        if locale == "en"
-        else {"shortHeadlineJa": short_headline_max_chars, "summaryJa": summary_max_chars}
-    )
+    fields = {"shortHeadlineEn": short_headline_max_chars, "summaryEn": summary_max_chars}
     request = urllib.request.Request(
         "https://api.groq.com/openai/v1/chat/completions",
         data=json.dumps(
@@ -194,7 +191,7 @@ def run_probe(
             timeout=timeout,
             max_attempts=1,
         )
-    else:
+    elif locale == "en":
         _request_locale_presentation(
             api_key=api_key,
             model=model,
@@ -205,6 +202,19 @@ def run_probe(
             summary_max_chars=policy["summaryMaxChars"],
             timeout=timeout,
         )
+    elif locale == "ja":
+        request_presentation(
+            api_key=api_key,
+            model=model,
+            title=matching["title"],
+            source_context=source_context,
+            short_headline_max_chars=policy["shortHeadlineMaxChars"],
+            summary_max_chars=policy["summaryMaxChars"],
+            timeout=timeout,
+            max_attempts=1,
+        )
+    else:
+        raise ValueError("locale must be en, ja, or bilingual")
     # Keep the result deliberately minimal; generated text is discarded.
     return {
         "sourceId": source_id,

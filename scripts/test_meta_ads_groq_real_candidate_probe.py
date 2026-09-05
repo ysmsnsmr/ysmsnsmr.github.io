@@ -181,6 +181,7 @@ class GroqRealCandidateProbeTest(unittest.TestCase):
                 patch("meta_ads_groq_real_candidate_probe.bounded_request", return_value=("ignored", "application/rss+xml")),
                 patch("meta_ads_groq_real_candidate_probe.extract_items", return_value=[source_item]),
                 patch("meta_ads_groq_real_candidate_probe._request_locale_presentation", return_value={"ok": "discarded"}) as present,
+                patch("meta_ads_groq_real_candidate_probe.request_presentation", return_value={"ok": "discarded"}) as japanese_present,
             ):
                 for locale in ("en", "ja"):
                     result = run_probe(
@@ -195,8 +196,11 @@ class GroqRealCandidateProbeTest(unittest.TestCase):
                         locale=locale,
                     )
                     self.assertEqual(result["locale"], locale)
-                    self.assertEqual(present.call_args.kwargs["locale"], locale)
-                    self.assertEqual(present.call_args.kwargs["title"], "Missing title")
+                    if locale == "en":
+                        self.assertEqual(present.call_args.kwargs["locale"], locale)
+                        self.assertEqual(present.call_args.kwargs["title"], "Missing title")
+                    else:
+                        self.assertEqual(japanese_present.call_args.kwargs["title"], "Missing title")
 
 
 if __name__ == "__main__":
