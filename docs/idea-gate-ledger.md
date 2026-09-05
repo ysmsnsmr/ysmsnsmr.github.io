@@ -151,3 +151,55 @@ must use `supersedes` instead of editing an earlier entry.
 - Allowed action: 既存source-local契約に限定し、Jon Loomerのタイトル・説明・カテゴリを使う関連性fixture、除外fixture、relevanceRevision更新、source-local reseedを追加する実装
 - Revisit when: 新契約でMeta Adsと無関係な記事が除外され、関連する記事が残ることをfixtureとartifactで確認する; Jon Loomerの件数がゼロ固定にならず、公式発見リンクの候補も失われないことを確認する; 変更後7日間のsource pipelineでmatched、relevance_excluded、retainedの推移を確認する
 - Override: not applied
+
+<!-- idea-gate:20260905t183947-malaysia-recent-compact-day-rows -->
+## 直近7日を3見出し付きのコンパクトな日次行へ再設計する
+
+- Record ID: `20260905t183947-malaysia-recent-compact-day-rows`
+- Evaluated: 2026-09-05T18:39:47+08:00
+- Project: ysmsnsmr.github.io / Malaysia News
+- Rubric: 1.0.0
+- Decision: **GO**
+- Score: 80/100
+- Confidence: medium - 複数日の本番データと実利用の観察がある一方、コンパクト行でのクリック行動はまだ未検証
+
+### Problem Card
+
+- Who: Malaysia Newsを日常的に確認する個人読者
+- When: トップページで直近の日付と記事を短時間で見比べるとき
+- Problem: 長くなった短見出しを最大5件ずつ3列カードへ詰めるため、横幅が狭く情報密度も高い
+- Current behavior: 各日カードの見出しを縦に読み、関心のある日を日別ページで開く
+
+### Evidence
+
+- Tier: 3
+- 最新生成ページでは直近6日中5日が最大5見出しまで埋まっている
+- PCでは3日カードが横並びになり、最大15見出しが同じ行に入る
+- Editorial Entry v3で短見出しを18〜22文字目安、最大26文字へ拡張した
+- 利用者本人がv3反映後の実画面で密度上昇を観察した
+- 既存の月別アーカイブには1日1行で日付を比較する表示パターンがある
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 14/20 |
+| `current_workaround_gap` | 12/20 |
+| `evidence_strength` | 18/20 |
+| `behavior_outcome_impact` | 13/15 |
+| `strategic_fit_reuse` | 10/10 |
+| `ui_operational_lightness` | 13/15 |
+| **Total** | **80/100** |
+
+### Alternatives
+
+- **SHRINK - 現行カードを3見出しへ縮小:** EXPERIMENT_ONLY (78/100). 3列カードは維持し、各日の表示だけを最大3見出しへ減らす
+- **INTEGRATE - アーカイブ型の日次行へ統合:** GO (82/100). 1日を1本の横長行にし、日付・カテゴリ件数・短見出し3件・日別リンクを同じ行へ収める
+- **NO_FEATURE - 表示を変えず観察を続ける:** EXPERIMENT_ONLY (66/100). 5見出し・3列カードを維持し、v3反映後の閲覧をさらに観察する
+
+### Next Step
+
+- Allowed action: INTEGRATE案について、既存データだけを使うPC・モバイルの静的比較を作り、行高と読みやすさを確認する
+- Revisit when: コンパクト行で6日分が現在より短い縦幅に収まる; 26文字の短見出し3件が主体・方向を読み取れる状態で折り返す; 日付から日別ページを開く操作が現行カードより分かりにくくならない
+- Supersedes: `20260905t183134-malaysia-recent-summary-density`
+- Override: not applied

@@ -15,6 +15,7 @@ OUTPUT_PATH = NEWS_DIR / "index.html"
 CATEGORIES = ("【速報】", "【生活インパクト】", "【知っておくと得】")
 SOURCE_ONLY_HEADER = "【原文のみ】"
 LEGACY_PICKUP_HEADLINE_MAX_WIDTH = 15.5
+RECENT_HEADLINE_LIMIT = 3
 
 
 @dataclass
@@ -412,9 +413,15 @@ def render_latest_summary(day: NewsDay) -> str:
 
 
 def render_recent_day(day: NewsDay) -> str:
-    headlines = [display_short_headline(item) for item in ordered_items(day)[:5]]
+    headlines = [
+        display_short_headline(item)
+        for item in ordered_items(day)[:RECENT_HEADLINE_LIMIT]
+    ]
     if not headlines:
-        headlines = [shorten_pickup_headline(point) for point in day.conclusions[:5]]
+        headlines = [
+            shorten_pickup_headline(point)
+            for point in day.conclusions[:RECENT_HEADLINE_LIMIT]
+        ]
     if headlines:
         headline_list = "<ol class=\"recent-headline-list\">" + "\n".join(
             f"<li>{esc(headline)}</li>" for headline in headlines
@@ -423,17 +430,18 @@ def render_recent_day(day: NewsDay) -> str:
         headline_list = '<p class="muted">見出しを抽出できませんでした。</p>'
 
     return f"""
-        <article class="recent-card">
-          <p class="eyebrow">Daily</p>
-          <h3>{esc(format_date(day.date))}</h3>
-          <div class="counts compact-counts" aria-label="カテゴリ別件数">
-            {render_counts(day)}
+        <article class="recent-day-row">
+          <div class="recent-day-meta">
+            <h3>{esc(format_date(day.date))}</h3>
+            <div class="counts compact-counts" aria-label="カテゴリ別件数">
+              {render_counts(day)}
+            </div>
+            <p class="recent-status">{esc(format_count(day.summarized_count))} / {esc(failed_label(day))}</p>
           </div>
-          <div class="recent-body">
+          <div class="recent-day-headlines">
             {headline_list}
           </div>
-          <p class="recent-meta">{esc(format_count(day.summarized_count))} / {esc(failed_label(day))}</p>
-          <a class="open-link" href="{daily_page_link(day)}">その日のまとめ</a>
+          <a class="open-link recent-day-link" href="{daily_page_link(day)}">その日のまとめ</a>
         </article>
     """
 
@@ -836,27 +844,33 @@ def render_html(days: list[NewsDay]) -> str:
     }}
     .recent-list {{
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
+      border-top: 1px solid var(--line);
     }}
-    .recent-card {{
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    .recent-day-row {{
+      display: grid;
+      grid-template-columns: minmax(11rem, 0.8fr) minmax(0, 2.4fr) auto;
+      gap: 20px;
+      align-items: start;
       min-width: 0;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-card);
-      background: var(--panel);
-      padding: 14px;
+      border-bottom: 1px solid var(--line);
+      padding: 16px 0;
     }}
-    .recent-card h3 {{ font-size: 1rem; }}
-    .recent-headline-list {{ margin: 0; padding-left: 1.35em; }}
-    .recent-headline-list li + li {{ margin-top: 0.35rem; }}
-    .recent-meta {{
-      margin: auto 0 0;
+    .recent-day-meta h3 {{ font-size: 1rem; }}
+    .recent-day-meta .counts {{ margin-top: 8px; }}
+    .recent-day-headlines {{ min-width: 0; }}
+    .recent-headline-list {{
+      display: grid;
+      gap: 5px;
+      margin: 0;
+      padding-left: 1.35em;
+    }}
+    .recent-headline-list li + li {{ margin-top: 0; }}
+    .recent-status {{
+      margin: 8px 0 0;
       color: var(--muted);
-      font-size: 0.86rem;
+      font-size: 0.82rem;
     }}
+    .recent-day-link {{ align-self: center; }}
     .compact-counts {{ gap: 6px; }}
     .compact-counts .count-pill {{
       min-height: 24px;
@@ -1027,18 +1041,18 @@ def render_html(days: list[NewsDay]) -> str:
         gap: 2px;
       }}
       .recent-list {{
-        display: flex;
-        gap: 10px;
-        margin-inline: -10px;
-        overflow-x: auto;
-        padding: 0 10px 6px;
-        scroll-snap-type: x proximity;
+        display: grid;
+        margin: 0;
+        overflow: visible;
+        padding: 0;
       }}
-      .recent-card {{
-        flex: 0 0 min(18rem, calc(100vw - 48px));
-        scroll-snap-align: start;
+      .recent-day-row {{
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 16px 0;
       }}
       .open-link {{ min-height: 40px; }}
+      .recent-day-link {{ width: 100%; min-height: 44px; }}
       .archive-list li {{
         grid-template-columns: 1fr;
         gap: 4px;

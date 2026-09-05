@@ -149,7 +149,7 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertEqual(day.items[0].short_headline, "雷雨・大雨に注意")
         self.assertEqual(builder.display_short_headline(day.items[0]), "雷雨・大雨に注意")
 
-    def test_recent_day_lists_at_most_five_short_headlines(self) -> None:
+    def test_recent_day_lists_at_most_three_short_headlines(self) -> None:
         items = [
             builder.NewsItem(
                 category="【速報】",
@@ -171,11 +171,16 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
 
         html = builder.render_recent_day(day)
 
+        self.assertIn('class="recent-day-row"', html)
         self.assertIn('<ol class="recent-headline-list">', html)
-        for index in range(1, 6):
+        for index in range(1, 4):
             self.assertIn(f"<li>短見出し{index}</li>", html)
-        self.assertNotIn("短見出し6", html)
+        for index in range(4, 7):
+            self.assertNotIn(f"短見出し{index}", html)
         self.assertNotIn("長い要約本文", html)
+        self.assertIn('aria-label="カテゴリ別件数"', html)
+        self.assertIn('class="recent-status"', html)
+        self.assertIn('href="./2026-08-28.html">その日のまとめ</a>', html)
 
     def test_daily_html_keeps_fallback_heading_and_source_aligned(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -209,6 +214,13 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertIn(first.conclusion, builder.render_item_card(first))
         self.assertIn(first.short_headline, builder.render_recent_day(day))
         self.assertIn(first.headline, builder.render_daily_page(day))
+
+    def test_top_page_uses_compact_recent_day_rows(self) -> None:
+        page = builder.render_html([self.parse_sample(), self.parse_sample()])
+
+        self.assertIn('class="recent-day-row"', page)
+        self.assertNotIn('class="recent-card"', page)
+        self.assertIn("grid-template-columns: minmax(11rem, 0.8fr)", page)
 
     def test_source_only_entries_are_not_cards_but_remain_on_daily_page(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
