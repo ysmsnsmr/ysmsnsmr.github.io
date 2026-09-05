@@ -102,3 +102,52 @@ must use `supersedes` instead of editing an earlier entry.
 - Allowed action: 原文のみ一覧へ降格するINTEGRATE案を既存のsingle renderer内で実装する
 - Revisit when: 14回程度のscheduled runでfallback内容を観察できた; fallback記事に重要ニュースが含まれないことを確認できた; 原文のみ一覧自体が継続的なノイズになる
 - Override: not applied
+
+<!-- idea-gate:20260905-meta-ads-jon-loomer-relevance -->
+## Jon Loomerの関連性判定を強化
+
+- Record ID: `20260905-meta-ads-jon-loomer-relevance`
+- Evaluated: 2026-09-05T10:25:00+08:00
+- Project: Meta Ads Personal Feed
+- Rubric: 1.0.0
+- Decision: **GO**
+- Score: 80/100
+- Confidence: medium - カテゴリのみの契約と複数回のartifact観察は確認できているが、誤採用率と除外語の最適値はまだ測定されていない
+
+### Problem Card
+
+- Who: Meta Ads Personal Feedを読む個人運用者と保守する個人運用者
+- When: Jon Loomer RSSのMeta Advertisingカテゴリ記事をdaily収集するとき
+- Problem: カテゴリ一致だけではMeta Adsの実務更新と周辺記事を十分に区別できず、非公式ソースの件数と重要度が実際の価値以上に見える可能性がある
+- Current behavior: Meta Advertisingカテゴリを機械的に採用し、公開後に利用者がタイトルと本文を個別判断する。必要なら別ソースや公式リンクを手動で確認する
+
+### Evidence
+
+- Tier: 2
+- 現在のconfig/meta_ads_personal_feed_sources.jsonはJon Loomerにrss_category=Meta Advertisingだけを指定している
+- artifact観察と利用者の報告で、更新が少ない週にJon Loomerの件数が相対的に多くなり、フィードがJon Loomerまとめサイトに偏る懸念が確認された
+- 現行の関連性判定コードはカテゴリ以外のタイトル語、Meta Ads対象語、除外語の契約をJon Loomer向けには持っていない
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 15/20 |
+| `current_workaround_gap` | 15/20 |
+| `evidence_strength` | 15/20 |
+| `behavior_outcome_impact` | 12/15 |
+| `strategic_fit_reuse` | 9/10 |
+| `ui_operational_lightness` | 14/15 |
+| **Total** | **80/100** |
+
+### Alternatives
+
+- **SHRINK - Jon Loomerのタイトル語と除外語だけを追加する:** EXPERIMENT_ONLY (78/100). 既存RSSと既存判定器を維持し、Meta Ads対象語と明らかな周辺語のfixture契約だけを追加する
+- **INTEGRATE - 既存のsource relevance契約にJon Loomer専用の二群判定を統合する:** GO (81/100). RSSカテゴリ一致に加えて、タイトル・説明のMeta Ads語、対象プラットフォーム語、公式リンク発見を既存のsource-local relevanceRevisionで管理する
+- **NO_FEATURE - カテゴリ判定を維持し、利用者が個別に判断する:** STOP (52/100). 取得経路と契約は変更せず、非公式ラベルと注意書きだけで誤採用リスクを利用者に委ねる
+
+### Next Step
+
+- Allowed action: 既存source-local契約に限定し、Jon Loomerのタイトル・説明・カテゴリを使う関連性fixture、除外fixture、relevanceRevision更新、source-local reseedを追加する実装
+- Revisit when: 新契約でMeta Adsと無関係な記事が除外され、関連する記事が残ることをfixtureとartifactで確認する; Jon Loomerの件数がゼロ固定にならず、公式発見リンクの候補も失われないことを確認する; 変更後7日間のsource pipelineでmatched、relevance_excluded、retainedの推移を確認する
+- Override: not applied
