@@ -50,13 +50,13 @@ Meta Newsroom Product News RSSは、広告関連語がタイトル、RSS説明�
 
 ## 英語・日本語の短見出し・要約
 
-収集時には、RSSの説明文またはSDK release notesを**そのrunの一時入力だけ**として、英語の短見出し・要約と、その日本語訳を**1記事につきGroqへ1回だけ**要求します。元の本文・説明文・release notes、Groq応答はstate、公開JSON、artifact、ログへ保存しません。
+収集時には、RSSの説明文またはSDK release notesを**そのrunの一時入力だけ**として、英語の短見出し・要約と、その日本語訳を**1記事につきGroqへ1回**要求します。4項目の応答が失敗した場合は、英語2項目、続いて日本語2項目を各1回だけ再試行します。元の本文・説明文・release notes、Groq応答はstate、公開JSON、artifact、ログへ保存しません。
 
-生成済みの表示データは記事内容のfingerprintに結び付けて再利用します。同じ内容には再課金しません。内容が変わった記事、または未生成の記事だけを新しい順に1 runあたり最大12件処理します。
+生成済みの表示データは記事内容のfingerprintに結び付けて再利用します。同じ内容には再課金しません。英語と日本語はlocaleごとに`machine`または`missing`を保持し、片方の生成失敗で成功済みのもう片方を消しません。内容が変わった記事、または未生成localeのある記事だけを新しい順に1 runあたり最大12件処理します。英語を再生成した場合、日本語は新しい英語に基づくoverlayとして再生成対象になります。
 
-GroqのAPIキーがない、生成に失敗する、または4項目の出力契約に合わない場合でも、収集と公開は継続します。その記事は英語・日本語をともに`missing`として記録し、原文タイトルのまま表示できます。一方の言語だけを公開することはありません。表示データは事実確認や運用判断を代替しません。
+GroqのAPIキーがない、生成に失敗する、または出力契約に合わない場合でも、収集と公開は継続します。失敗したlocaleだけを`missing`として記録し、原文タイトルのまま表示できます。両localeが失敗した場合も同様です。表示データは事実確認や運用判断を代替しません。
 
-各runは本文を出さずに `PRESENTATION` と `PRESENTATION_SOURCE` の行を出力します。ここでは生成候補数、試行数、成功数、失敗数、次回以降へ繰り越した数だけを確認します。失敗がある場合は、全体の `PRESENTATION_FAILURE` とソース別の `PRESENTATION_SOURCE_FAILURE` に安全な理由コードと件数を出します。
+各runは本文を出さずに `PRESENTATION` と `PRESENTATION_SOURCE` の行を出力します。ここでは記事候補数、記事単位の試行数、locale単位の試行・成功・失敗数、次回以降へ繰り越した数を確認します。失敗がある場合は、全体の `PRESENTATION_FAILURE` / `PRESENTATION_FALLBACK_FAILURE` とソース別の同名ログに安全な理由コードと件数を出します。
 
 - `api_key_unavailable` — APIキーが未設定
 - `http_client_error` / `http_server_error` — Groq側のHTTP 4xx / 5xx 応答
