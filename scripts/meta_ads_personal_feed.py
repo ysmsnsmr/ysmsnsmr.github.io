@@ -65,6 +65,10 @@ CONTENT_TYPES = {
 PRESENTATION_STATUSES = {"generated", "pending"}
 BILINGUAL_PRESENTATION_STATUSES = {"machine", "missing", "reviewed"}
 SUPPORTED_LOCALES = ("en", "ja")
+PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION = "meta-ads-personal-feed-presentation-retry/v1"
+PRESENTATION_RETRY_MAX_FAILURES = 5
+PRESENTATION_RETRY_BASE_DELAY_SECONDS = 3600
+PRESENTATION_RETRY_MAX_DELAY_SECONDS = 7 * 24 * 3600
 PLATFORM_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 PARSER_VERSION = "meta-ads-personal-feed-parser/v2"
 
@@ -847,10 +851,137 @@ def validate_v3_json_schema(payload: Any, schema_path: Path = DEFAULT_V3_SCHEMA)
         raise ContractError(f"personal feed v3 violates JSON Schema at {location}: {error.message}")
 
 
+def _empty_presentation_retry_queue() -> dict[str, Any]:
+    return {"schemaVersion": PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION, "entries": []}
+
+
+def _retry_queue_key(source_id: str, item_key: str, locale: str) -> tuple[str, str, str]:
+    return source_id, item_key, locale
+
+
+def _retry_queue_map(queue: dict[str, Any] | None) -> dict[tuple[str, str, str], dict[str, Any]]:
+    if not queue:
+        return {}
+    return {
+        _retry_queue_key(entry["sourceId"], entry["itemKey"], entry["locale"]): entry
+        for entry in queue["entries"]
+    }
+
+
+def _retry_queue_payload(entries: dict[tuple[str, str, str], dict[str, Any]]) -> dict[str, Any]:
+    return {
+        "schemaVersion": PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION,
+        "entries": [entries[key] for key in sorted(entries)],
+    }
+
+
+def _validate_presentation_retry_queue(
+    value: Any,
+    config: dict[str, Any],
+    sources: dict[str, Any],
+) -> dict[str, Any]:
+    queue = _expect_keys(value, {"schemaVersion", "entries"}, "personal feed presentationRetryQueue")
+    if queue["schemaVersion"] != PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION:
+        raise ContractError("personal feed presentationRetryQueue schemaVersion is unsupported")
+    if not isinstance(queue["entries"], list):
+        raise ContractError("personal feed presentationRetryQueue.entries must be an array")
+    seen: set[tuple[str, str, str]] = set()
+    for index, entry in enumerate(queue["entries"]):
+        label = f"personal feed presentationRetryQueue.entries[{index}]"
+        entry = _expect_keys(
+            entry,
+            {"sourceId", "itemKey", "fingerprint", "locale", "failureCount", "lastFailureAt", "nextRetryAt", "lastFailureCode", "quarantined"},
+            label,
+        )
+        source_id = _expect_identifier(entry["sourceId"], f"{label}.sourceId")
+        if source_id not in sources:
+            raise ContractError(f"{label}.sourceId is unknown")
+        item_key = _text(entry["itemKey"], f"{label}.itemKey")
+        locale = entry["locale"]
+        if locale not in SUPPORTED_LOCALES:
+            raise ContractError(f"{label}.locale is unsupported")
+        key = _retry_queue_key(source_id, item_key, locale)
+        if key in seen:
+            raise ContractError(f"{label} duplicates another queue entry")
+        seen.add(key)
+        if not isinstance(entry["fingerprint"], str) or not re.fullmatch(r"[a-f0-9]{64}", entry["fingerprint"]):
+            raise ContractError(f"{label}.fingerprint must be a SHA-256 hash")
+        _limit(entry["failureCount"], f"{label}.failureCount", 1, PRESENTATION_RETRY_MAX_FAILURES)
+        _timestamp(entry["lastFailureAt"], f"{label}.lastFailureAt")
+        _timestamp(entry["nextRetryAt"], f"{label}.nextRetryAt", nullable=True)
+        if not isinstance(entry["lastFailureCode"], str) or not re.fullmatch(r"[a-z0-9][a-z0-9_.:-]{0,63}", entry["lastFailureCode"]):
+            raise ContractError(f"{label}.lastFailureCode must be a safe reason code")
+        if not isinstance(entry["quarantined"], bool):
+            raise ContractError(f"{label}.quarantined must be a boolean")
+        if entry["quarantined"] and entry["nextRetryAt"] is not None:
+            raise ContractError(f"{label}.nextRetryAt must be null while quarantined")
+        if not entry["quarantined"] and entry["nextRetryAt"] is None:
+            raise ContractError(f"{label}.nextRetryAt is required before quarantine")
+        item = sources[source_id]["items"].get(item_key)
+        if item is None:
+            raise ContractError(f"{label}.itemKey does not reference a retained item")
+        if item["fingerprint"] != entry["fingerprint"]:
+            raise ContractError(f"{label}.fingerprint must match the retained item")
+        if item["presentation"]["locales"][locale]["status"] in {"machine", "reviewed"}:
+            raise ContractError(f"{label} cannot queue a completed locale")
+    return queue
+
+
+def _retry_is_due(entry: dict[str, Any] | None, now: datetime) -> bool:
+    if entry is None:
+        return True
+    if entry["quarantined"] or entry["nextRetryAt"] is None:
+        return False
+    retry_at = datetime.fromisoformat(entry["nextRetryAt"].replace("Z", "+00:00"))
+    return retry_at <= now.astimezone(timezone.utc)
+
+
+def _record_retry_failure(
+    queue: dict[tuple[str, str, str], dict[str, Any]],
+    source_id: str,
+    item_key: str,
+    fingerprint: str,
+    locale: str,
+    code: str,
+    now: str,
+) -> None:
+    key = _retry_queue_key(source_id, item_key, locale)
+    previous = queue.get(key)
+    failure_count = (previous["failureCount"] if previous else 0) + 1
+    failure_count = min(failure_count, PRESENTATION_RETRY_MAX_FAILURES)
+    quarantined = failure_count >= PRESENTATION_RETRY_MAX_FAILURES
+    next_retry_at = None
+    if not quarantined:
+        delay = min(
+            PRESENTATION_RETRY_BASE_DELAY_SECONDS * (2 ** (failure_count - 1)),
+            PRESENTATION_RETRY_MAX_DELAY_SECONDS,
+        )
+        retry_at = datetime.fromisoformat(now.replace("Z", "+00:00")) + timedelta(seconds=delay)
+        next_retry_at = _now(retry_at)
+    queue[key] = {
+        "sourceId": source_id,
+        "itemKey": item_key,
+        "fingerprint": fingerprint,
+        "locale": locale,
+        "failureCount": failure_count,
+        "lastFailureAt": now,
+        "nextRetryAt": next_retry_at,
+        "lastFailureCode": code,
+        "quarantined": quarantined,
+    }
+
+
 def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
-    state = _expect_keys(payload, {"schemaVersion", "updatedAt", "sources"}, "personal feed state")
+    if not isinstance(payload, dict):
+        raise ContractError("personal feed state must be an object")
+    expected_state_keys = {"schemaVersion", "updatedAt", "sources"}
+    if "presentationRetryQueue" in payload:
+        expected_state_keys.add("presentationRetryQueue")
+    state = _expect_keys(payload, expected_state_keys, "personal feed state")
     if state["schemaVersion"] not in {LEGACY_STATE_SCHEMA_VERSION, STATE_SCHEMA_VERSION, STATE_V3_SCHEMA_VERSION}:
         raise ContractError(f"personal feed state schemaVersion must be {LEGACY_STATE_SCHEMA_VERSION}, {STATE_SCHEMA_VERSION}, or {STATE_V3_SCHEMA_VERSION}")
+    if "presentationRetryQueue" in payload and state["schemaVersion"] != STATE_V3_SCHEMA_VERSION:
+        raise ContractError("personal feed presentationRetryQueue requires the v3 state schema")
     _timestamp(state["updatedAt"], "personal feed state.updatedAt", nullable=True)
     if not isinstance(state["sources"], dict):
         raise ContractError("personal feed state.sources must be an object")
@@ -895,6 +1026,8 @@ def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
                     entry["fingerprint"],
                     "personal feed state item.presentation",
                 )
+    queue = state.get("presentationRetryQueue", _empty_presentation_retry_queue())
+    _validate_presentation_retry_queue(queue, config, state["sources"])
     return state
 
 
@@ -1413,6 +1546,8 @@ def _presentation_stats(
         "fallbackGeneratedLocales": 0,
         "fallbackFailedLocales": 0,
         "deferred": 0,
+        "retryDeferred": 0,
+        "retryQuarantined": 0,
         "failureReasons": {},
         "fallbackFailureReasons": {},
         "providerErrorTypes": {},
@@ -1429,6 +1564,8 @@ def _presentation_stats(
                 "fallbackAttempts": 0,
                 "fallbackGeneratedLocales": 0,
                 "fallbackFailedLocales": 0,
+                "retryDeferred": 0,
+                "retryQuarantined": 0,
                 "failureReasons": {},
                 "fallbackFailureReasons": {},
                 "providerErrorTypes": {},
@@ -1534,7 +1671,8 @@ def _print_presentation_stats(stats: dict[str, Any]) -> None:
         f"failed={stats['failed']} locale_failed={stats['localeFailed']} "
         f"deferred={stats['deferred']} fallback_attempts={stats['fallbackAttempts']} "
         f"fallback_generated_locales={stats['fallbackGeneratedLocales']} "
-        f"fallback_failed_locales={stats['fallbackFailedLocales']}"
+        f"fallback_failed_locales={stats['fallbackFailedLocales']} "
+        f"retry_deferred={stats['retryDeferred']} retry_quarantined={stats['retryQuarantined']}"
     )
     for source_id, counts in stats["sources"].items():
         print(
@@ -1546,6 +1684,7 @@ def _print_presentation_stats(stats: dict[str, Any]) -> None:
             f"fallback_attempts={counts['fallbackAttempts']} "
             f"fallback_generated_locales={counts['fallbackGeneratedLocales']} "
             f"fallback_failed_locales={counts['fallbackFailedLocales']}"
+            f" retry_deferred={counts['retryDeferred']} retry_quarantined={counts['retryQuarantined']}"
         )
         for code, count in sorted(counts["failureReasons"].items()):
             print(f"PRESENTATION_SOURCE_FAILURE: id={source_id} code={code} count={count}")
@@ -1804,11 +1943,15 @@ def collect(
     presentation_stats: dict[str, Any] | None = None,
     source_pipeline_stats: dict[str, Any] | None = None,
     reseed_source_id: str | None = None,
+    retry_failed: bool = False,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     validate_config(config)
     validate_state(state, config)
     if state["schemaVersion"] != STATE_V3_SCHEMA_VERSION:
         state = migrate_state_v2_to_v3(state, config)
+    retry_queue = _retry_queue_map(state.get("presentationRetryQueue"))
+    if retry_failed:
+        retry_queue.clear()
     reseed_source_id = _reseed_source(config, reseed_source_id)
     _assert_relevance_reseed(state, config, reseed_source_id)
     generated_at = _now(now)
@@ -1909,7 +2052,7 @@ def collect(
     # sourceContext, release notes, markup, and any model response remain local
     # variables and are deliberately excluded from this structure.
     next_state: dict[str, Any] = {"schemaVersion": STATE_V3_SCHEMA_VERSION, "updatedAt": generated_at, "sources": {}}
-    presentation_candidates: list[tuple[str, dict[str, Any], dict[str, Any]]] = []
+    presentation_candidates: list[tuple[str, dict[str, Any], dict[str, Any], list[str]]] = []
     for source in _all_sources(config):
         prior = state["sources"].get(source["id"], {"items": {}})["items"]
         current: dict[str, Any] = {}
@@ -1944,10 +2087,25 @@ def collect(
                 "presentation": cached or _missing_bilingual_presentation(raw["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION),
             }
             current[raw["key"]] = record
-            if _pending_presentation_locales(record["presentation"]):
-                presentation_candidates.append((source["id"], record, raw))
+            pending_locales = _pending_presentation_locales(record["presentation"])
+            due_locales = [
+                locale
+                for locale in pending_locales
+                if _retry_is_due(retry_queue.get(_retry_queue_key(source["id"], raw["key"], locale)), now)
+            ]
+            if due_locales:
+                presentation_candidates.append((source["id"], record, raw, due_locales))
                 stats["eligible"] += 1
                 stats["sources"][source["id"]]["eligible"] += 1
+            elif pending_locales:
+                stats["retryDeferred"] += 1
+                stats["sources"][source["id"]]["retryDeferred"] += 1
+                if any(
+                    retry_queue.get(_retry_queue_key(source["id"], raw["key"], locale), {}).get("quarantined", False)
+                    for locale in pending_locales
+                ):
+                    stats["retryQuarantined"] += 1
+                    stats["sources"][source["id"]]["retryQuarantined"] += 1
         retained: dict[str, Any] = {}
         for key, record in current.items():
             observed = datetime.fromisoformat(record["lastObservedAt"].replace("Z", "+00:00"))
@@ -1955,6 +2113,14 @@ def collect(
                 retained[key] = record
         next_state["sources"][source["id"]] = {"relevanceRevision": source["relevanceRevision"], "items": retained}
         pipeline["sources"][source["id"]]["retainedItems"] = len(retained)
+
+    # Remove queue entries for expired, replaced, or successfully completed
+    # records before the next state is validated and persisted.
+    for queue_key, entry in list(retry_queue.items()):
+        source_id, item_key, locale = queue_key
+        record = next_state["sources"].get(source_id, {"items": {}})["items"].get(item_key)
+        if record is None or record["fingerprint"] != entry["fingerprint"] or record["presentation"]["locales"][locale]["status"] in {"machine", "reviewed"}:
+            del retry_queue[queue_key]
 
     presentation_candidates.sort(
         key=lambda pair: (
@@ -1964,20 +2130,32 @@ def collect(
         reverse=True,
     )
     if present_item is not None or locale_item is not None:
-        for source_id, record, raw in presentation_candidates[:request_limit]:
+        for source_id, record, raw, due_locales in presentation_candidates[:request_limit]:
             stats["attempted"] += 1
             stats["sources"][source_id]["attempted"] += 1
             pending = _pending_presentation_locales(record["presentation"])
-            if len(pending) == len(SUPPORTED_LOCALES) and present_item is not None:
+            initial_statuses = {
+                locale: record["presentation"]["locales"][locale]["status"]
+                for locale in SUPPORTED_LOCALES
+            }
+            full_attempt = (
+                present_item is not None
+                and len(pending) == len(SUPPORTED_LOCALES)
+                and set(due_locales) == set(SUPPORTED_LOCALES)
+            )
+            if full_attempt:
                 stats["localeAttempted"] += len(SUPPORTED_LOCALES)
                 stats["sources"][source_id]["localeAttempted"] += len(SUPPORTED_LOCALES)
                 try:
                     generated = present_item(record["title"], _presentation_context_for_model(raw, presentation_policy), presentation_policy)
                     record["presentation"] = _machine_bilingual_presentation(record["fingerprint"], generated, generated_at)
+                    for locale in SUPPORTED_LOCALES:
+                        retry_queue.pop(_retry_queue_key(source_id, raw["key"], locale), None)
                     stats["localeGenerated"] += len(SUPPORTED_LOCALES)
                     stats["sources"][source_id]["localeGenerated"] += len(SUPPORTED_LOCALES)
                 except (KeyError, PresentationError, ValueError, OSError) as error:
-                    _record_presentation_failure(stats, source_id, _presentation_failure_code(error), error)
+                    failure_code = _presentation_failure_code(error)
+                    _record_presentation_failure(stats, source_id, failure_code, error)
                     fallback_generated: dict[str, str] = {}
                     fallback_failures: dict[str, Exception] = {}
                     if fallback_item is not None:
@@ -1994,18 +2172,16 @@ def collect(
                         for locale, fallback_error in fallback_failures.items():
                             code = _presentation_failure_code(fallback_error)
                             _record_fallback_failure(stats, source_id, locale, code)
-                        generated_locales = sum(
-                            int(field in fallback_generated)
-                            for field in ("shortHeadlineEn", "summaryEn", "shortHeadlineJa", "summaryJa")
-                        ) // 2
-                        stats["fallbackGeneratedLocales"] += generated_locales
-                        stats["fallbackFailedLocales"] += len(fallback_failures)
-                        stats["localeGenerated"] += generated_locales
-                        stats["localeFailed"] += len(fallback_failures)
-                        stats["sources"][source_id]["fallbackGeneratedLocales"] += generated_locales
-                        stats["sources"][source_id]["fallbackFailedLocales"] += len(fallback_failures)
-                        stats["sources"][source_id]["localeGenerated"] += generated_locales
-                        stats["sources"][source_id]["localeFailed"] += len(fallback_failures)
+
+                    complete_locales = {
+                        locale
+                        for locale, (headline_key, summary_key) in {
+                            "en": ("shortHeadlineEn", "summaryEn"),
+                            "ja": ("shortHeadlineJa", "summaryJa"),
+                        }.items()
+                        if isinstance(fallback_generated.get(headline_key), str)
+                        and isinstance(fallback_generated.get(summary_key), str)
+                    }
                     if fallback_generated:
                         try:
                             record["presentation"] = _partial_bilingual_presentation(
@@ -2013,16 +2189,54 @@ def collect(
                             )
                         except (KeyError, PresentationError, ValueError) as fallback_error:
                             _record_fallback_failure(stats, source_id, "presentation", _presentation_failure_code(fallback_error))
+                            complete_locales = set()
                             record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION)
                     else:
                         # Model errors must not block publication. The source title
                         # remains available while both generated locales stay missing.
                         record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION)
+
+                    generated_locales = len(complete_locales)
+                    fallback_failed_locales = len(set(SUPPORTED_LOCALES) - complete_locales)
+                    if fallback_item is not None:
+                        stats["fallbackGeneratedLocales"] += generated_locales
+                        stats["fallbackFailedLocales"] += fallback_failed_locales
+                        stats["localeGenerated"] += generated_locales
+                        stats["localeFailed"] += fallback_failed_locales
+                        stats["sources"][source_id]["fallbackGeneratedLocales"] += generated_locales
+                        stats["sources"][source_id]["fallbackFailedLocales"] += fallback_failed_locales
+                        stats["sources"][source_id]["localeGenerated"] += generated_locales
+                        stats["sources"][source_id]["localeFailed"] += fallback_failed_locales
+                    for locale in due_locales:
+                        if locale in complete_locales:
+                            retry_queue.pop(_retry_queue_key(source_id, raw["key"], locale), None)
+                        else:
+                            code = _presentation_failure_code(fallback_failures.get(locale, error))
+                            _record_retry_failure(
+                                retry_queue,
+                                source_id,
+                                raw["key"],
+                                record["fingerprint"],
+                                locale,
+                                code,
+                                generated_at,
+                            )
             elif locale_item is not None:
                 # A previously successful locale is never regenerated merely
                 # because its sibling is missing. Each locale has its own
                 # lifecycle and can recover on a later run independently.
-                for locale in SUPPORTED_LOCALES:
+                locales_to_attempt = list(due_locales)
+                # If English was pending and regenerating it invalidates a
+                # previously successful Japanese overlay, refresh that overlay
+                # immediately. A Japanese locale already deferred by the queue
+                # remains deferred and is not silently retried.
+                if (
+                    "en" in locales_to_attempt
+                    and initial_statuses.get("ja") in {"machine", "reviewed"}
+                    and "ja" not in locales_to_attempt
+                ):
+                    locales_to_attempt.append("ja")
+                for locale in locales_to_attempt:
                     if locale not in _pending_presentation_locales(record["presentation"]):
                         continue
                     stats["localeAttempted"] += 1
@@ -2037,10 +2251,21 @@ def collect(
                         record["presentation"] = _merge_locale_presentation(
                             record["presentation"], record["fingerprint"], locale, generated, generated_at
                         )
+                        retry_queue.pop(_retry_queue_key(source_id, raw["key"], locale), None)
                         stats["localeGenerated"] += 1
                         stats["sources"][source_id]["localeGenerated"] += 1
                     except (KeyError, PresentationError, ValueError, OSError) as error:
-                        _record_presentation_failure(stats, source_id, _presentation_failure_code(error), error)
+                        code = _presentation_failure_code(error)
+                        _record_presentation_failure(stats, source_id, code, error)
+                        _record_retry_failure(
+                            retry_queue,
+                            source_id,
+                            raw["key"],
+                            record["fingerprint"],
+                            locale,
+                            code,
+                            generated_at,
+                        )
                         stats["localeFailed"] += 1
                         stats["sources"][source_id]["localeFailed"] += 1
             if any(locale["status"] in {"machine", "reviewed"} for locale in record["presentation"]["locales"].values()):
@@ -2049,6 +2274,7 @@ def collect(
             else:
                 stats["failed"] += 1
                 stats["sources"][source_id]["failed"] += 1
+    next_state["presentationRetryQueue"] = _retry_queue_payload(retry_queue)
     stats["deferred"] = max(0, stats["eligible"] - stats["attempted"])
 
     feed = build_feed(next_state, config, generated_at)
@@ -2074,6 +2300,7 @@ def collect_and_write(
     presentation_stats: dict[str, Any] | None = None,
     source_pipeline_stats: dict[str, Any] | None = None,
     reseed_source_id: str | None = None,
+    retry_failed: bool = False,
 ) -> dict[str, Any]:
     config = load_config(config_path)
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
@@ -2093,6 +2320,7 @@ def collect_and_write(
         presentation_stats=presentation_stats,
         source_pipeline_stats=source_pipeline_stats,
         reseed_source_id=reseed_source_id,
+        retry_failed=retry_failed,
     )
     # Both payloads are fully constructed and validated before either single-file atomic write.
     write_json(output_path, feed)
@@ -2114,6 +2342,11 @@ def main() -> int:
     parser.add_argument("--timeout", type=float, default=30.0)
     parser.add_argument("--presentation-limit", type=_parse_presentation_limit, default=None)
     parser.add_argument("--reseed-source", default=None, help="re-evaluate one configured source under its current relevance revision")
+    parser.add_argument(
+        "--retry-failed",
+        action="store_true",
+        help="clear the isolated presentation retry queue before this run",
+    )
     args = parser.parse_args()
     try:
         stats: dict[str, Any] = {}
@@ -2127,6 +2360,7 @@ def main() -> int:
             presentation_stats=stats,
             source_pipeline_stats=pipeline,
             reseed_source_id=args.reseed_source,
+            retry_failed=args.retry_failed,
         )
     except SourceFetchError as error:
         print(

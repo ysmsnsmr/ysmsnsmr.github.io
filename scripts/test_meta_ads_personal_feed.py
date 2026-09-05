@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from contextlib import redirect_stdout
 from unittest.mock import call, patch
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 from urllib.error import URLError
@@ -829,6 +829,105 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual((stats["attempted"], stats["generated"], stats["failed"]), (4, 0, 4))
         self.assertEqual(stats["failureReasons"], {"unknown": 4})
         self.assertNotIn("intentionally not exposed", json.dumps(stats))
+        validate_feed(feed, self.config)
+
+    def test_failed_presentation_isolated_queue_defers_and_retries_by_locale(self) -> None:
+        calls: list[str] = []
+
+        def failing_presenter(_title: str, _source_context: str, _policy: dict) -> dict[str, str]:
+            calls.append("bilingual")
+            raise PresentationError("http_400")
+
+        initial = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
+        _feed, failed_state = collect(self.config, initial, 1, NOW, self.fetcher(), failing_presenter)
+        queue = failed_state["presentationRetryQueue"]["entries"]
+        self.assertEqual(len(queue), 8)
+        self.assertTrue(all(entry["failureCount"] == 1 for entry in queue))
+        self.assertTrue(all(entry["nextRetryAt"] == "2026-08-29T10:00:00Z" for entry in queue))
+        self.assertTrue(all(entry["locale"] in {"en", "ja"} for entry in queue))
+
+        calls.clear()
+        stats: dict[str, Any] = {}
+        _feed, deferred_state = collect(
+            self.config,
+            failed_state,
+            1,
+            NOW + timedelta(minutes=30),
+            self.fetcher(),
+            failing_presenter,
+            presentation_stats=stats,
+        )
+        self.assertEqual(calls, [])
+        self.assertEqual(stats["attempted"], 0)
+        self.assertEqual(stats["retryDeferred"], 4)
+        self.assertEqual(len(deferred_state["presentationRetryQueue"]["entries"]), 8)
+
+        calls.clear()
+        _feed, retried_state = collect(
+            self.config,
+            deferred_state,
+            1,
+            NOW + timedelta(hours=1),
+            self.fetcher(),
+            failing_presenter,
+        )
+        self.assertEqual(len(calls), 4)
+        retried_queue = retried_state["presentationRetryQueue"]["entries"]
+        self.assertTrue(all(entry["failureCount"] == 2 for entry in retried_queue))
+        self.assertTrue(all(entry["nextRetryAt"] == "2026-08-29T12:00:00Z" for entry in retried_queue))
+        validate_state(retried_state, self.config)
+
+    def test_retry_queue_quarantines_after_max_failures_and_manual_retry_releases_it(self) -> None:
+        def failing_presenter(_title: str, _source_context: str, _policy: dict) -> dict[str, str]:
+            raise PresentationError("http_400")
+
+        state: dict[str, Any] = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
+        _feed, state = collect(
+            self.config,
+            state,
+            1,
+            NOW,
+            self.fetcher(),
+            failing_presenter,
+            presentation_limit=1,
+        )
+        for _attempt in range(4):
+            first_entry = state["presentationRetryQueue"]["entries"][0]
+            retry_at = datetime.fromisoformat(first_entry["nextRetryAt"].replace("Z", "+00:00"))
+            _feed, state = collect(
+                self.config,
+                state,
+                1,
+                retry_at,
+                self.fetcher(),
+                failing_presenter,
+                presentation_limit=1,
+            )
+        queue = state["presentationRetryQueue"]["entries"]
+        self.assertEqual(len(queue), 2)
+        self.assertTrue(all(entry["failureCount"] == 5 for entry in queue))
+        self.assertTrue(all(entry["quarantined"] and entry["nextRetryAt"] is None for entry in queue))
+
+        def locale_presenter(_title: str, _context: str, _policy: dict, locale: str) -> dict[str, str]:
+            if locale == "en":
+                return {"shortHeadlineEn": "Recovered headline", "summaryEn": "Recovered summary"}
+            return {"shortHeadlineJa": "復旧見出し", "summaryJa": "復旧要約"}
+
+        feed, recovered_state = collect(
+            self.config,
+            state,
+            1,
+            NOW + timedelta(days=30),
+            self.fetcher(),
+            locale_item=locale_presenter,
+            presentation_limit=1,
+            retry_failed=True,
+        )
+        self.assertEqual(recovered_state["presentationRetryQueue"]["entries"], [])
+        recovered = feed["items"][0]["presentation"]["locales"]
+        self.assertEqual(recovered["en"]["status"], "machine")
+        self.assertEqual(recovered["ja"]["status"], "machine")
+        validate_state(recovered_state, self.config)
         validate_feed(feed, self.config)
 
     def test_presentation_failure_logs_only_reason_codes(self) -> None:
