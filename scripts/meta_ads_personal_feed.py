@@ -155,6 +155,21 @@ def _validate_match(value: Any, parser: str, label: str) -> dict[str, Any]:
         for category in categories:
             _text(category, f"{label}.categories value")
         return payload
+    if kind == "rss_category_and_terms":
+        if parser != "rss":
+            raise ContractError(f"{label}.kind rss_category_and_terms requires an rss parser")
+        payload = _expect_keys(value, {"kind", "categories", "terms"}, label)
+        categories = payload["categories"]
+        terms = payload["terms"]
+        if not isinstance(categories, list) or not categories or len(categories) != len(set(categories)):
+            raise ContractError(f"{label}.categories must be a unique non-empty array")
+        if not isinstance(terms, list) or not terms or len(terms) != len(set(terms)):
+            raise ContractError(f"{label}.terms must be a unique non-empty array")
+        for category in categories:
+            _text(category, f"{label}.categories value")
+        for term in terms:
+            _text(term, f"{label}.terms value")
+        return payload
     raise ContractError(f"{label}.kind is unsupported")
 
 
@@ -525,6 +540,19 @@ def _match(
         category_set = {item.casefold() for item in categories}
         matched = [item for item in policy["categories"] if item.casefold() in category_set]
         return ([f"category:{item}" for item in matched] or None), []
+    if policy["kind"] == "rss_category_and_terms":
+        category_set = {item.casefold() for item in categories}
+        matched_categories = [item for item in policy["categories"] if item.casefold() in category_set]
+        if not matched_categories:
+            return None, []
+        searchable = "\n".join([title, source_context]).casefold()
+        matched_term = next((term for term in policy["terms"] if _contains_term(searchable, term)), None)
+        if matched_term is None:
+            return None, []
+        return (
+            [f"category:{item}" for item in matched_categories] + [f"keyword:{matched_term}"],
+            [],
+        )
     # Existing two-group sources keep their title-only contract.  Product News
     # uses any_terms, which intentionally also considers RSS descriptions and
     # categories under its separately versioned relevance rule.

@@ -14,7 +14,7 @@ Search Engine Land Meta RSSは、2026-08-30にGitHub ActionsでHTTP 403が繰り
 
 Social Media Todayは一般ニュースRSSのため、Meta／Facebook／Instagramの語と広告関連語の両方を含む見出しだけを掲載候補にします。これは記事の正確性を保証するものではなく、フィードの対象範囲を絞るための機械的な条件です。
 
-Jon Loomerの `Meta Advertising` カテゴリ記事に `https://www.facebook.com/business/news/<slug>` 形式のリンクがある場合は、リンク先をMeta公式記事の候補として扱います。完全一致するHTTPSホストとパスだけを許可し、Meta公式ページ自身からcanonical URL、記事種別、タイトル、説明、発表日を検証できた候補だけを「Meta公式」として掲載します。Jon Loomer側の見出しや説明をMeta公式情報として転用しません。
+Jon Loomerは `Meta Advertising` カテゴリだけでなく、タイトルまたはRSS説明に広告運用を示す具体的な語（Ads Manager、campaign、pixel、Conversions API、audienceなど）がある記事だけを掲載候補にします。カテゴリだけの周辺記事は除外します。この判定はsource-localの`relevanceRevision`で管理します。カテゴリ記事に `https://www.facebook.com/business/news/<slug>` 形式のリンクがある場合は、リンク先をMeta公式記事の候補として扱います。完全一致するHTTPSホストとパスだけを許可し、Meta公式ページ自身からcanonical URL、記事種別、タイトル、説明、発表日を検証できた候補だけを「Meta公式」として掲載します。Jon Loomer側の見出しや説明をMeta公式情報として転用しません。
 
 Meta公式ページはRSSや公開APIではなくHTMLから限定的なmetadataを読むため、アクセス制限や構造変更の影響を受けます。この追加取得だけが失敗した場合は該当候補を掲載せず、他のPersonal Feed収集は継続します。本文・失敗URL・例外本文は保存またはログ出力せず、許可ホスト、最大3回のredirect、1 MiBの応答上限、1 run最大20件を維持します。
 
@@ -44,9 +44,9 @@ Meta公式ページはRSSや公開APIではなくHTMLから限定的なmetadata�
 
 発表日または最終更新日の新しい方が365日より前の記事は、表示データ生成の前に除外します。どちらの日付もない記事だけは初回観測日を使います。再観測日時で期限を延長することはありません。期限切れの記事はstate、公開feed、artifactに残しません。
 
-Meta Newsroom Product News RSSは、広告関連語がタイトル、RSS説明、カテゴリのいずれかにある記事だけを採用します。Business SDKは全release、Jon Loomerは`Meta Advertising`カテゴリ、Social Media Todayは既存のMeta系語と広告系語の二群条件を維持します。ソースごとに`relevanceRevision`を持ち、意味のある条件変更時には当該ソースだけをreseedします。
+Meta Newsroom Product News RSSは、広告関連語がタイトル、RSS説明、カテゴリのいずれかにある記事だけを採用します。Business SDKは全release、Jon Loomerは`Meta Advertising`カテゴリと具体的な広告運用語、Social Media Todayは既存のMeta系語と広告系語の二群条件を維持します。ソースごとに`relevanceRevision`を持ち、意味のある条件変更時には当該ソースだけをreseedします。
 
-`workflow_dispatch`で`reseed_source_id`に設定済みのソースIDを指定すると、そのソースだけを現行の鮮度・関連性条件で再構築します。初回のProduct News移行では`meta-product-news-rss`を指定します。同じURLが引き続き採用される場合、`firstObservedAt`は維持されます。未登録IDはcollectorが失敗して既存公開物を保持します。
+`workflow_dispatch`で`reseed_source_id`に設定済みのソースIDを指定すると、そのソースだけを現行の鮮度・関連性条件で再構築します。関連性契約を変更した場合は、次回scheduled runの前に対象ソースを手動reseedしてください。Jon Loomerのv3契約へ移行するときは`jon-loomer-meta-ads`を指定します。初回のProduct News移行では`meta-product-news-rss`を指定します。同じURLが引き続き採用される場合、`firstObservedAt`は維持されます。未登録IDはcollectorが失敗して既存公開物を保持します。
 
 ## 英語・日本語の短見出し・要約
 

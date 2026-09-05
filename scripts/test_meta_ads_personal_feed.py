@@ -114,6 +114,8 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(sources["social-media-today-meta-ads"]["fetchUrl"], "https://www.socialmediatoday.com/feeds/news/")
         self.assertEqual(sources["social-media-today-meta-ads"]["match"]["kind"], "all_groups")
         self.assertEqual(sources["jon-loomer-meta-ads"]["fetchUrl"], "https://www.jonloomer.com/feed/")
+        self.assertEqual(sources["jon-loomer-meta-ads"]["match"]["kind"], "rss_category_and_terms")
+        self.assertEqual(sources["jon-loomer-meta-ads"]["relevanceRevision"], "jon-loomer-v3")
         self.assertEqual(sources["meta-business-sdk-releases"]["parser"], "github_releases")
         self.assertEqual(discovered["meta-business-news-discovered"]["classification"], "official")
         self.assertEqual(discovered["meta-business-news-discovered"]["discovery"]["fromSourceId"], "jon-loomer-meta-ads")
@@ -128,6 +130,38 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(self.config["policies"]["bilingualPresentation"]["maxRetryDelaySeconds"], 60)
         self.assertTrue(all(source["contentLanguage"] == "en" for source in [*sources.values(), *discovered.values()]))
         self.assertTrue(all(source["platformIds"] for source in [*sources.values(), *discovered.values()]))
+
+    def test_jon_loomer_relevance_requires_category_and_specific_ads_signal(self) -> None:
+        jon = """<rss><channel>
+        <item><title>How to use the new Ads Manager placement controls</title><link>https://www.jonloomer.com/ads-manager-placement/</link><description>Review campaign and ad set delivery options.</description><category>Meta Advertising</category><pubDate>Fri, 29 Aug 2026 02:00:00 +0000</pubDate></item>
+        <item><title>New platform announcement</title><link>https://www.jonloomer.com/platform-announcement/</link><description>General creator and platform news.</description><category>Meta Advertising</category><pubDate>Fri, 29 Aug 2026 03:00:00 +0000</pubDate></item>
+        <item><title>Ads Manager tips</title><link>https://www.jonloomer.com/ads-manager-tips/</link><description>Advertising workflow notes.</description><category>Marketing</category><pubDate>Fri, 29 Aug 2026 04:00:00 +0000</pubDate></item>
+        </channel></rss>"""
+        bodies = {
+            "meta-product-news-rss": META,
+            "meta-business-sdk-releases": SDK,
+            "social-media-today-meta-ads": SOCIAL_MEDIA_TODAY,
+            "jon-loomer-meta-ads": jon,
+        }
+        pipeline: dict[str, Any] = {}
+        feed, state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(bodies=bodies),
+            source_pipeline_stats=pipeline,
+        )
+        jon_items = [item for item in feed["items"] if item["sourceId"] == "jon-loomer-meta-ads"]
+        self.assertEqual({item["url"] for item in jon_items}, {"https://www.jonloomer.com/ads-manager-placement/"})
+        self.assertEqual(
+            pipeline["sources"]["jon-loomer-meta-ads"]["relevanceExcludedItems"],
+            2,
+        )
+        self.assertEqual(
+            next(iter(state["sources"]["jon-loomer-meta-ads"]["items"].values()))["matchEvidence"],
+            ["category:Meta Advertising", "keyword:ads manager"],
+        )
 
     def test_config_rejects_insecure_source_and_invalid_source_classification(self) -> None:
         invalid = copy.deepcopy(self.config)
