@@ -189,8 +189,8 @@ def main() -> int:
             fail("Personal Feed presentation backfill must be manual only")
         backfill_inputs = backfill["on"]["workflow_dispatch"].get("inputs", {})
         limit_input = backfill_inputs.get("presentation_limit", {}) if isinstance(backfill_inputs, dict) else {}
-        if limit_input.get("options") != [str(value) for value in range(1, 13)]:
-            fail("Personal Feed presentation backfill must offer only limits 1 through 12")
+        if limit_input.get("options") != [str(value) for value in range(1, 51)]:
+            fail("Personal Feed presentation backfill must offer only limits 1 through 50")
         backfill_steps = steps(backfill)
         backfill_kill_switch = next((step for step in backfill_steps if step.get("id") == "kill_switch"), None)
         if backfill_kill_switch is None or "META_ADS_TRACKER_COLLECT_ENABLED" not in str(backfill_kill_switch):

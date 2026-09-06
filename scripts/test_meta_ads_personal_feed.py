@@ -124,7 +124,7 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(sources["meta-product-news-rss"]["match"]["kind"], "any_terms")
         self.assertEqual(sources["meta-product-news-rss"]["relevanceRevision"], "meta-ads-v1")
         self.assertEqual(self.config["policies"]["freshness"]["maxItemAgeDays"], 365)
-        self.assertEqual(self.config["policies"]["bilingualPresentation"]["maxRequestsPerRun"], 12)
+        self.assertEqual(self.config["policies"]["bilingualPresentation"]["maxRequestsPerRun"], 50)
         self.assertEqual(self.config["policies"]["bilingualPresentation"]["minRequestIntervalSeconds"], 12)
         self.assertEqual(self.config["policies"]["bilingualPresentation"]["maxAttempts"], 3)
         self.assertEqual(self.config["policies"]["bilingualPresentation"]["maxRetryDelaySeconds"], 60)
@@ -840,14 +840,14 @@ class PersonalFeedTest(unittest.TestCase):
         def unexpected_fetch(_source: dict, _timeout: float) -> tuple[str, str]:
             raise AssertionError("invalid backfill limit must not fetch a source")
 
-        with self.assertRaisesRegex(ContractError, "from 1 to 12"):
+        with self.assertRaisesRegex(ContractError, "from 1 to 50"):
             collect(
                 self.config,
                 {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
                 1,
                 NOW,
                 unexpected_fetch,
-                presentation_limit=13,
+                presentation_limit=51,
             )
 
     def test_presentation_failure_remains_pending_without_blocking_publication(self) -> None:
