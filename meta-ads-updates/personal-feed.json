@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-09-05T08:40:34Z",
+  "generatedAt": "2026-09-06T04:41:48Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -68,7 +68,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -108,7 +108,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -146,7 +146,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -186,7 +186,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -226,7 +226,7 @@
       "publishedDate": "2026-08-13",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -266,7 +266,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -306,7 +306,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -346,7 +346,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -386,7 +386,7 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -424,7 +424,7 @@
       "publishedDate": "2026-08-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -464,7 +464,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -504,7 +504,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -544,7 +544,7 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -582,7 +582,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -622,7 +622,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -662,7 +662,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -702,7 +702,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -741,7 +741,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -780,7 +780,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -820,7 +820,7 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -858,7 +858,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -880,11 +880,11 @@
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta広告の包括的ガイド「The Master Brief」概要",
+            "summary": "The Master Briefは、著者が推奨するMeta広告の全体像をまとめた文書です。ブログ記事や動画、ポッドキャストの内容をツールで自動生成し、著者がレビュー・承認しています。ターゲティング、バリュー・ルール、キャンペーン構造、アトリビューション、クリエイティブ、トラッキングなどを網羅し、アルゴリズム配信を重視して手動ターゲティングを最小化する方針を示します。年齢・性別などの制限はコスト増につながり、詳細ターゲティングや類似オーディエンスはほぼ不要としています。場所などのハードリミットは例外です。2026年7月時点のスナップショットで、メンバー向けに月次で更新されます。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-09-06T04:41:48Z",
             "reviewedAt": null
           }
         }
@@ -898,7 +898,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -938,7 +938,7 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -960,11 +960,11 @@
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta広告の新機能：インスタントフォームで予約、ChatGPT広告のコンバージョン最適化、クリエイティブ探索ツールなど",
+            "summary": "Metaはリード広告のインスタントフォームに「Book time」アクションを追加し、CalendlyやHighLevelなどのスケジューラリンクを埋め込んで予約を自動的にカレンダーへ転送できるようにした。また、ChatGPT広告でコンバージョン最適化キャンペーンが利用可能となり、コンバージョン目標と入札上限を設定できるが課金はクリック単位のまま。さらに、Creative Exploration Toolが発表されたが詳細は不明。加えて、Customer Lifecycle Strategyの除外対象やターゲティングラベル変更、Events Manager設定のバグ情報も含まれる。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-09-06T04:41:48Z",
             "reviewedAt": null
           }
         }
@@ -978,7 +978,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -991,19 +991,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta unveils AI creative tools and Creator Hub at Cannes Lions 2026",
+            "summary": "At Cannes Lions 2026, Meta announced AI-powered creative tools, a unified Creator Marketing Hub, and updates to its Business Agent, designed to help every marketer create better ads more quickly.",
             "inputHash": "3ccea9eee351c57bf9bd57fa42ebdf1d95eff9d43549f6a557272417ba4e4db1",
-            "generatedAt": null,
+            "generatedAt": "2026-09-06T04:41:48Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "MetaがCannes Lions 2026でAIクリエイティブツールとCreator Hubを発表",
+            "summary": "Cannes Lions 2026でMetaは、AI搭載のクリエイティブツール、統合Creator Marketing Hub、Business Agentの更新を発表し、すべてのマーケターがより速く、より良い広告を作成できるよう支援することを目的とした。",
+            "inputHash": "e17323a80fb94549d8704db751d10db5835ecf842dba56f12d7edd4f26c13b3f",
+            "generatedAt": "2026-09-06T04:41:48Z",
             "reviewedAt": null
           }
         }
@@ -1017,7 +1017,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1030,19 +1030,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Book appointments directly from Lead Ads",
+            "summary": "We are launching Embedded Appointment Booking for Lead Ads Instant Forms on Facebook. It offers a seamless, in-app booking experience that lets leads schedule an appointment the moment they express interest, without ever leaving Facebook.",
             "inputHash": "f2552f293ee01d58d188409e2c7eb674ab1f7cac75057fabd4ac868e2a2a4753",
-            "generatedAt": null,
+            "generatedAt": "2026-09-06T04:41:48Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "リード広告から直接予約",
+            "summary": "Facebookでリード広告のインスタントフォーム向けに埋め込み型予約機能を開始します。シームレスなアプリ内予約体験を提供し、リードは関心を示した瞬間にFacebookを離れることなく予約できます。",
+            "inputHash": "2618596af6427c62c4fe0604800b4226169f374e4bdf672386722702b38664df",
+            "generatedAt": "2026-09-06T04:41:48Z",
             "reviewedAt": null
           }
         }
@@ -1056,7 +1056,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1070,18 +1070,18 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Guidelines for Number of Meta Ad Sets",
+            "summary": "Keep ad set count low to avoid budget dilution and audience fragmentation. $100 daily in one ad set outperforms splitting across five. Aim for at least 50 optimized events per week per ad set. Separate ad sets by location, age, or gender only as exceptions when sufficient budget exists.",
             "inputHash": "7a5757a3ee8399c3783de50bff677c09192a18409486f30845625bcff83d467a",
-            "generatedAt": null,
+            "generatedAt": "2026-09-06T04:41:48Z",
             "reviewedAt": null
           },
           "ja": {
             "status": "missing",
             "shortHeadline": null,
             "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "inputHash": "ff0bde0b320666ad3a34a8f0bbcf305d42598df1cff7ebac77180f159ab6656b",
             "generatedAt": null,
             "reviewedAt": null
           }
@@ -1096,7 +1096,7 @@
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1136,7 +1136,7 @@
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1176,7 +1176,7 @@
       "publishedDate": "2026-06-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1216,7 +1216,7 @@
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1256,7 +1256,7 @@
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1296,7 +1296,7 @@
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1336,7 +1336,7 @@
       "publishedDate": "2026-05-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1376,7 +1376,7 @@
       "publishedDate": "2026-05-26",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1416,7 +1416,7 @@
       "publishedDate": "2026-05-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1456,7 +1456,7 @@
       "publishedDate": "2026-05-19",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1496,7 +1496,7 @@
       "publishedDate": "2026-05-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1536,7 +1536,7 @@
       "publishedDate": "2026-05-12",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1576,7 +1576,7 @@
       "publishedDate": "2026-05-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1616,7 +1616,7 @@
       "publishedDate": "2026-05-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1656,7 +1656,7 @@
       "publishedDate": "2026-04-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1695,7 +1695,7 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1733,7 +1733,7 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1771,7 +1771,7 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1809,7 +1809,7 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1847,7 +1847,7 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1885,7 +1885,7 @@
       "publishedDate": "2025-09-26",
       "updatedDate": "2025-09-26",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-05T08:40:34Z",
+      "lastObservedAt": "2026-09-06T04:41:48Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
