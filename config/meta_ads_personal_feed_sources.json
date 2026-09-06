@@ -8,7 +8,7 @@
       "maxItemAgeDays": 365
     },
     "bilingualPresentation": {
-      "maxRequestsPerRun": 12,
+      "maxRequestsPerRun": 50,
       "maxInputChars": 4000,
       "shortHeadlineMaxChars": 80,
       "summaryMaxChars": 360,

@@ -52,7 +52,7 @@ Meta Newsroom Product News RSSは、広告関連語がタイトル、RSS説明�
 
 収集時には、RSSの説明文またはSDK release notesを**そのrunの一時入力だけ**として、英語の短見出し・要約と、その日本語訳を**1記事につきGroqへ1回**要求します。4項目の応答が失敗した場合は、英語2項目、続いて日本語2項目を各1回だけ再試行します。元の本文・説明文・release notes、Groq応答はstate、公開JSON、artifact、ログへ保存しません。
 
-生成済みの表示データは記事内容のfingerprintに結び付けて再利用します。同じ内容には再課金しません。英語と日本語はlocaleごとに`machine`または`missing`を保持し、片方の生成失敗で成功済みのもう片方を消しません。内容が変わった記事、または未生成localeのある記事だけを新しい順に1 runあたり最大12件処理します。英語を再生成した場合、日本語は新しい英語に基づくoverlayとして再生成対象になります。
+生成済みの表示データは記事内容のfingerprintに結び付けて再利用します。同じ内容には再課金しません。英語と日本語はlocaleごとに`machine`または`missing`を保持し、片方の生成失敗で成功済みのもう片方を消しません。内容が変わった記事、または未生成localeのある記事だけを新しい順に1 runあたり最大50件処理します。英語を再生成した場合、日本語は新しい英語に基づくoverlayとして再生成対象になります。
 
 GroqのAPIキーがない、生成に失敗する、または出力契約に合わない場合でも、収集と公開は継続します。失敗したlocaleだけを`missing`として記録し、原文タイトルのまま表示できます。両localeが失敗した場合も同様です。表示データは事実確認や運用判断を代替しません。
 
@@ -70,7 +70,7 @@ GroqのAPIキーがない、生成に失敗する、または出力契約に合�
 
 理由コードは調査の入口であり、記事本文やGroqの応答内容を出すものではありません。タイトル、RSS説明文、release notes、Groqの応答や例外本文はログに出しません。
 
-既存の`missing`を確認する場合は、手動workflow `Meta Ads Personal Feed Japanese presentation backfill` を使います。最初は `presentation_limit=1` で実行し、`generated=1` と `failed=0` を確認してから、必要に応じて最大12件まで増やします。このworkflowも現在のRSS/APIを取得して一時文脈を作るため、すでにRSS/APIから消えた古い記事の要約は生成しません。stateには本文を保存しない設計のため、そのような記事を要約するには個別取得の別設計が必要です。
+既存の`missing`を確認する場合は、手動workflow `Meta Ads Personal Feed Japanese presentation backfill` を使います。最初は `presentation_limit=1` で実行し、`generated=1` と `failed=0` を確認してから、必要に応じて最大50件まで増やします。このworkflowも現在のRSS/APIを取得して一時文脈を作るため、すでにRSS/APIから消えた古い記事の要約は生成しません。stateには本文を保存しない設計のため、そのような記事を要約するには個別取得の別設計が必要です。
 
 ## 画面の使い方
 
