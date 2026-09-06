@@ -149,11 +149,12 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertEqual(day.items[0].short_headline, "雷雨・大雨に注意")
         self.assertEqual(builder.display_short_headline(day.items[0]), "雷雨・大雨に注意")
 
-    def test_recent_day_lists_at_most_three_short_headlines(self) -> None:
+    def test_recent_day_lists_at_most_three_full_headlines(self) -> None:
         items = [
             builder.NewsItem(
                 category="【速報】",
                 conclusion=f"長い要約本文 {index}",
+                headline=f"通常見出し{index}",
                 short_headline=f"短見出し{index}",
             )
             for index in range(1, 7)
@@ -174,8 +175,10 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertIn('class="recent-day-row"', html)
         self.assertIn('<ol class="recent-headline-list">', html)
         for index in range(1, 4):
-            self.assertIn(f"<li>短見出し{index}</li>", html)
+            self.assertIn(f"<li>通常見出し{index}</li>", html)
         for index in range(4, 7):
+            self.assertNotIn(f"通常見出し{index}", html)
+        for index in range(1, 7):
             self.assertNotIn(f"短見出し{index}", html)
         self.assertNotIn("長い要約本文", html)
         self.assertIn('aria-label="カテゴリ別件数"', html)
@@ -199,7 +202,7 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertIn("https://example.test/fallback", html[fallback:market])
         self.assertNotIn("https://example.test/market", html[fallback:market])
 
-    def test_v3_routes_full_headline_to_pickup_and_daily_but_short_to_recent(self) -> None:
+    def test_v3_routes_full_headline_to_every_display_surface(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "2026-09-03.md"
             path.write_text(V3_MARKDOWN, encoding="utf-8")
@@ -212,7 +215,9 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertEqual(builder.display_short_headline(first), first.short_headline)
         self.assertIn(first.headline, builder.render_item_card(first))
         self.assertIn(first.conclusion, builder.render_item_card(first))
-        self.assertIn(first.short_headline, builder.render_recent_day(day))
+        recent = builder.render_recent_day(day)
+        self.assertIn(first.headline, recent)
+        self.assertNotIn(first.short_headline, recent)
         self.assertIn(first.headline, builder.render_daily_page(day))
 
     def test_top_page_uses_compact_recent_day_rows(self) -> None:

@@ -414,7 +414,7 @@ def render_latest_summary(day: NewsDay) -> str:
 
 def render_recent_day(day: NewsDay) -> str:
     headlines = [
-        display_short_headline(item)
+        display_full_headline(item)
         for item in ordered_items(day)[:RECENT_HEADLINE_LIMIT]
     ]
     if not headlines:
