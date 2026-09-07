@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-09-06T04:41:48Z",
+  "generatedAt": "2026-09-07T04:44:41Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -68,7 +68,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -108,7 +108,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -146,7 +146,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -186,7 +186,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -226,7 +226,7 @@
       "publishedDate": "2026-08-13",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -266,7 +266,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -306,7 +306,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -346,7 +346,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -386,7 +386,7 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -424,7 +424,7 @@
       "publishedDate": "2026-08-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -464,7 +464,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -504,7 +504,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -544,7 +544,7 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -582,7 +582,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -622,7 +622,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -662,7 +662,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -702,7 +702,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -741,7 +741,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -780,7 +780,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -820,7 +820,7 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -858,7 +858,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -872,19 +872,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "The Master Brief: Consolidated Meta Ads Strategy",
+            "summary": "The Master Brief is a single document that merges 24 ad briefs into a comprehensive guide on Meta ads, covering targeting, value rules, campaign structure, attribution, creative, tracking, and more. It was generated by a tool, reviewed and approved by the author, and serves as a core resource for the PHC‑Elite community.",
             "inputHash": "5786dd554f4b3d350139b6b46e88e1464d3697ad01b3e0ec889f40c6ea3ce93a",
-            "generatedAt": null,
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta広告の包括的ガイド「The Master Brief」概要",
-            "summary": "The Master Briefは、著者が推奨するMeta広告の全体像をまとめた文書です。ブログ記事や動画、ポッドキャストの内容をツールで自動生成し、著者がレビュー・承認しています。ターゲティング、バリュー・ルール、キャンペーン構造、アトリビューション、クリエイティブ、トラッキングなどを網羅し、アルゴリズム配信を重視して手動ターゲティングを最小化する方針を示します。年齢・性別などの制限はコスト増につながり、詳細ターゲティングや類似オーディエンスはほぼ不要としています。場所などのハードリミットは例外です。2026年7月時点のスナップショットで、メンバー向けに月次で更新されます。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-06T04:41:48Z",
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "a9fc2e9052016a45110ac47b502be1cb20dc94e8481acf5d37861f4e995f055c",
+            "generatedAt": null,
             "reviewedAt": null
           }
         }
@@ -898,7 +898,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -938,7 +938,7 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -978,7 +978,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1017,7 +1017,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1056,7 +1056,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1078,11 +1078,11 @@
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta広告のアクティブ広告セットは必要最小限に",
+            "summary": "Meta広告キャンペーンでの広告セットは、予算を分散させず効率を落とさないよう、できるだけ少なくまとめることが推奨されます。1日100ドルを5つに分けるより1つに集中した方が効果的で、週に50件の最適化イベントを確保できる規模が目安です。広告セットを増やす理由としては、地域や年齢・性別などで明確な差別化が必要で、かつ各セットに十分な予算がある場合に限ります。不要なセットは予算の希薄化やオーディエンスの分散を招くため、慎重に検討すべきです。",
             "inputHash": "ff0bde0b320666ad3a34a8f0bbcf305d42598df1cff7ebac77180f159ab6656b",
-            "generatedAt": null,
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           }
         }
@@ -1096,7 +1096,7 @@
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1118,11 +1118,11 @@
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta広告のAI開示チェックボックスとクリエイティブテスト上限が7件に増加",
+            "summary": "Meta Ads ManagerにAIで生成・編集した媒体を使用した場合にチェックするAI開示チェックボックスが追加されました。チェックするとAI情報ラベルが広告に表示され、地域によっては法令遵守のため目立つ形で表示されます。また、Creative Testing Toolの同時テスト可能な広告数上限が従来から7件に拡大されました。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           }
         }
@@ -1136,7 +1136,7 @@
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1150,19 +1150,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Guidelines for Determining Number of Meta Ads Campaigns",
+            "summary": "Start with a single Meta ads campaign and consolidate budget toward one business goal. Add more campaigns only when clear exceptions exist, such as distinct daily budget limits, a primary performance goal, or separate secondary goals. Aim for about 50 optimized actions per week to exit the learning phase.",
             "inputHash": "fb728d991cda08f20f8ad33819fb29cb56702be77d94eabdac43de44abf0778d",
-            "generatedAt": null,
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "Meta広告は1つのキャンペーンから始め、予算と目的で数を決める",
+            "summary": "Meta広告のキャンペーンは、まず1つに絞り予算を単一のビジネス目標に集約するのが基本とされる。例外がある場合のみ複数キャンペーンを作成すべきで、判断は日々の予算額と最重要目標に基づく。最適化アクションの平均コストや週50件のアクションという目安も考慮し、二次的な目標がある場合に限り追加キャンペーンを検討する。",
+            "inputHash": "06e022bda96aef987a73a5ebc2328c273daaaa6efd140ce66c83765fcddffc27",
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           }
         }
@@ -1176,7 +1176,7 @@
       "publishedDate": "2026-06-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1216,7 +1216,7 @@
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1238,11 +1238,11 @@
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "「Push Delivery to This Ad」機能の概要と利用方法",
+            "summary": "Meta広告のテスト機能「Push Delivery to This Ad」は、広告セット内に2つ以上の広告がある場合に表示され、指定した予算の割合を一定期間（最短1日、最長30日）その広告に割り当てて配信を保証できる。設定はデフォルトでオフで、手動で予算比率と期間を入力する。キャンペーン目的や広告形式、既存・新規広告を問わず利用可能だが、同時に複数広告へ適用すると配信に影響する可能性がある。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           }
         }
@@ -1256,7 +1256,7 @@
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1296,7 +1296,7 @@
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1336,7 +1336,7 @@
       "publishedDate": "2026-05-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1376,7 +1376,7 @@
       "publishedDate": "2026-05-26",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1390,19 +1390,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "7 Common Meta Ads Mistakes Agencies Make",
+            "summary": "The article lists seven frequent errors agencies make with Meta ads, such as giving agencies ownership of client assets instead of proper access, and failing to define or correctly set up audience segments, which can degrade campaign performance.",
             "inputHash": "7bd325b701c641aeaa08ad65484e50b54103a4e3b4dc7e71baf6be3dc967811f",
-            "generatedAt": null,
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "エージェンシーが犯す7つのMeta広告ミス",
+            "summary": "この記事では、エージェンシーがMeta広告で犯す7つの一般的なミスを紹介しています。例えば、クライアント資産を所有させる代わりにアクセス権だけを付与しないことや、オーディエンスセグメントを定義せず不完全なままにすることが、キャンペーンの成果を悪化させます。",
+            "inputHash": "36420036e97fab7fa6cb919d25cbd41757396313fdb3b4d8a89afef1ecf40aa3",
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           }
         }
@@ -1416,7 +1416,7 @@
       "publishedDate": "2026-05-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1456,7 +1456,7 @@
       "publishedDate": "2026-05-19",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1496,7 +1496,7 @@
       "publishedDate": "2026-05-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1536,7 +1536,7 @@
       "publishedDate": "2026-05-12",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1550,19 +1550,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta Ads Automation: Split Opinions on AI's Future Impact",
+            "summary": "Meta is moving toward fully automated ad campaigns, where advertisers set objectives and budgets and AI handles the rest. Opinions fall into two extremes: some claim AI will make advertisers obsolete, others argue AI’s flaws ensure human roles remain. Large brands like Nike may be cautious, while small businesses see AI as an “easy button” for ad management.",
             "inputHash": "14895787676ce43507ec2ea5ef5ce4c8a96759820a36a5452f831b3177ebb003",
-            "generatedAt": null,
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "Meta広告自動化：AIの将来影響に分かれる見解",
+            "summary": "Metaは広告主が目的と予算を設定すれば、AIが残りを自動で処理する完全自動キャンペーンを目指しています。意見は二極化し、AIが広告主を不要にすると主張する側と、AIの欠点で人間の役割は残るとする側に分かれます。Nikeのような大企業は慎重になる可能性が高く、小規模事業者はAIを広告運用の「イージーボタン」と捉えています。",
+            "inputHash": "b6eff70fb675c5ff985f568864fe29173e465c47aa7faf6093bd6d6bcf72f3ef",
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           }
         }
@@ -1576,7 +1576,7 @@
       "publishedDate": "2026-05-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1616,7 +1616,7 @@
       "publishedDate": "2026-05-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1656,7 +1656,7 @@
       "publishedDate": "2026-04-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1669,19 +1669,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta updates Pixel and Conversions API to reduce technical barriers",
+            "summary": "Meta announced updates to the Meta Pixel and Conversions API designed to simplify setup, keep integrations current, and help businesses of all sizes achieve stronger ad performance.",
             "inputHash": "4a00dd5090d52c6096d32429a24bb6b31830b6339857ed7086119b5680d0b85b",
-            "generatedAt": null,
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "MetaがPixelとConversions APIを更新し、技術的障壁を削減",
+            "summary": "MetaはMeta PixelとConversions APIの更新を発表し、設定を簡素化し、連携を最新に保ち、あらゆる規模の企業が広告パフォーマンスを向上させることを支援します。",
+            "inputHash": "f5a39c99b364d38c501846dfbf094ce9141cee2e07077f69fe5902643b3f6c20",
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           }
         }
@@ -1695,7 +1695,7 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1707,19 +1707,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Version v25.0.1 released",
+            "summary": "The Facebook Node.js Business SDK has been updated to version v25.0.1.",
             "inputHash": "adf3c9e950136c5f407ca6da23f547b59f45324c6af83e2552cb15b04aad8a3e",
-            "generatedAt": null,
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "バージョン v25.0.1 がリリースされました",
+            "summary": "Facebook の Node.js Business SDK がバージョン v25.0.1 に更新されました。",
+            "inputHash": "b4aaf6ba7f8d2f10a027cb5e8edfec1e41b849507e62df4881f551a7f5a974ac",
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           }
         }
@@ -1733,7 +1733,7 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1753,11 +1753,11 @@
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta Business SDK 25.0.0 リリース概要",
+            "summary": "Meta Business SDK 25.0.0では、Advantage+ Shopping Campaign（ASC）とAdvantage+ App Campaign（AAC）がMarketing APIで作成・更新できなくなります。v25.0から適用され、2026年5月19日までに全バージョンで有効になります。Ads Insights Async APIはレポート失敗時に詳細エラー情報を返すようになり、Page Reach、Impressions、3秒ビューアなどの旧指標は2026年6月に廃止され、Media Views と Media Viewers に置き換えられます。Webhooks の mTLS 証明書は2026年3月31日からMeta所有の認証局へ移行します。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           }
         }
@@ -1771,7 +1771,7 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1783,19 +1783,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Release v24.0.1 of Facebook Node.js Business SDK",
+            "summary": "Version v24.0.1 of the Facebook Node.js Business SDK has been released, updating from v24.0.0.",
             "inputHash": "732b6e6d7cbddfd0ae03762883d825c659b1c26702eb0c56d607847756953184",
-            "generatedAt": null,
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "Facebook Node.js Business SDK v24.0.1 リリース",
+            "summary": "Facebook Node.js Business SDK のバージョン v24.0.1 がリリースされ、v24.0.0 から更新されました。",
+            "inputHash": "aa364a16f122920e5f232a5bc354cdd6ea8433ad68bdc5811581525980f1770a",
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           }
         }
@@ -1809,7 +1809,7 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1847,7 +1847,7 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1859,19 +1859,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Release v23.0.3",
+            "summary": "Version v23.0.3 of the Facebook Node.js Business SDK has been released.",
             "inputHash": "1bb8b316f1349084bcdb7fe7d8b73638de1265deb53ae5c2e3ae97917114c9b9",
-            "generatedAt": null,
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "リリース v23.0.3",
+            "summary": "Facebook Node.js Business SDK のバージョン v23.0.3 がリリースされました。",
+            "inputHash": "c35f2837c12b6bab551a494a31a13630fc385f64d57b7df4ddd27dbeda6009f8",
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           }
         }
@@ -1885,7 +1885,7 @@
       "publishedDate": "2025-09-26",
       "updatedDate": "2025-09-26",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-06T04:41:48Z",
+      "lastObservedAt": "2026-09-07T04:44:41Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1897,19 +1897,19 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Version v23.0.2 released",
+            "summary": "The software has been updated to version v23.0.2.",
             "inputHash": "26f18ae7679a2a508c3b738be6197f8735106558a0902a261ab255631a526040",
-            "generatedAt": null,
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "バージョン v23.0.2 がリリースされました",
+            "summary": "ソフトウェアがバージョン v23.0.2 に更新されました。",
+            "inputHash": "5e033da59bf3a3836d457e564fb328fe0689dda2dff85da767d10ab697807500",
+            "generatedAt": "2026-09-07T04:44:41Z",
             "reviewedAt": null
           }
         }

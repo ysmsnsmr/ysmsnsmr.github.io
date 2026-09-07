@@ -1,6 +1,6 @@
 {
   "schemaVersion": "meta-ads-personal-feed-state/v3",
-  "updatedAt": "2026-09-06T04:41:48Z",
+  "updatedAt": "2026-09-07T04:44:41Z",
   "sources": {
     "meta-product-news-rss": {
       "relevanceRevision": "meta-ads-v1",
@@ -15,7 +15,7 @@
           ],
           "fingerprint": "87932d2acdd42983aa7d5e1d5d805f68da0efe998c8ea58dce18665d343aa3a1",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "87932d2acdd42983aa7d5e1d5d805f68da0efe998c8ea58dce18665d343aa3a1",
@@ -53,7 +53,7 @@
           "matchEvidence": [],
           "fingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
@@ -86,7 +86,7 @@
           "matchEvidence": [],
           "fingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
@@ -119,7 +119,7 @@
           "matchEvidence": [],
           "fingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
@@ -152,7 +152,7 @@
           "matchEvidence": [],
           "fingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
@@ -185,26 +185,26 @@
           "matchEvidence": [],
           "fingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Version v25.0.1 released",
+                "summary": "The Facebook Node.js Business SDK has been updated to version v25.0.1.",
                 "inputHash": "adf3c9e950136c5f407ca6da23f547b59f45324c6af83e2552cb15b04aad8a3e",
-                "generatedAt": null,
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "shortHeadline": "バージョン v25.0.1 がリリースされました",
+                "summary": "Facebook の Node.js Business SDK がバージョン v25.0.1 に更新されました。",
+                "inputHash": "b4aaf6ba7f8d2f10a027cb5e8edfec1e41b849507e62df4881f551a7f5a974ac",
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               }
             }
@@ -218,7 +218,7 @@
           "matchEvidence": [],
           "fingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
@@ -233,11 +233,11 @@
                 "reviewedAt": null
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Meta Business SDK 25.0.0 リリース概要",
+                "summary": "Meta Business SDK 25.0.0では、Advantage+ Shopping Campaign（ASC）とAdvantage+ App Campaign（AAC）がMarketing APIで作成・更新できなくなります。v25.0から適用され、2026年5月19日までに全バージョンで有効になります。Ads Insights Async APIはレポート失敗時に詳細エラー情報を返すようになり、Page Reach、Impressions、3秒ビューアなどの旧指標は2026年6月に廃止され、Media Views と Media Viewers に置き換えられます。Webhooks の mTLS 証明書は2026年3月31日からMeta所有の認証局へ移行します。",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               }
             }
@@ -251,26 +251,26 @@
           "matchEvidence": [],
           "fingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Release v24.0.1 of Facebook Node.js Business SDK",
+                "summary": "Version v24.0.1 of the Facebook Node.js Business SDK has been released, updating from v24.0.0.",
                 "inputHash": "732b6e6d7cbddfd0ae03762883d825c659b1c26702eb0c56d607847756953184",
-                "generatedAt": null,
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "shortHeadline": "Facebook Node.js Business SDK v24.0.1 リリース",
+                "summary": "Facebook Node.js Business SDK のバージョン v24.0.1 がリリースされ、v24.0.0 から更新されました。",
+                "inputHash": "aa364a16f122920e5f232a5bc354cdd6ea8433ad68bdc5811581525980f1770a",
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               }
             }
@@ -284,7 +284,7 @@
           "matchEvidence": [],
           "fingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
@@ -317,26 +317,26 @@
           "matchEvidence": [],
           "fingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Release v23.0.3",
+                "summary": "Version v23.0.3 of the Facebook Node.js Business SDK has been released.",
                 "inputHash": "1bb8b316f1349084bcdb7fe7d8b73638de1265deb53ae5c2e3ae97917114c9b9",
-                "generatedAt": null,
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "shortHeadline": "リリース v23.0.3",
+                "summary": "Facebook Node.js Business SDK のバージョン v23.0.3 がリリースされました。",
+                "inputHash": "c35f2837c12b6bab551a494a31a13630fc385f64d57b7df4ddd27dbeda6009f8",
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               }
             }
@@ -350,26 +350,26 @@
           "matchEvidence": [],
           "fingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Version v23.0.2 released",
+                "summary": "The software has been updated to version v23.0.2.",
                 "inputHash": "26f18ae7679a2a508c3b738be6197f8735106558a0902a261ab255631a526040",
-                "generatedAt": null,
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "shortHeadline": "バージョン v23.0.2 がリリースされました",
+                "summary": "ソフトウェアがバージョン v23.0.2 に更新されました。",
+                "inputHash": "5e033da59bf3a3836d457e564fb328fe0689dda2dff85da767d10ab697807500",
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               }
             }
@@ -395,7 +395,7 @@
           ],
           "fingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
           "firstObservedAt": "2026-09-02T04:36:59Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
@@ -431,7 +431,7 @@
           ],
           "fingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
@@ -467,7 +467,7 @@
           ],
           "fingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
@@ -503,7 +503,7 @@
           ],
           "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
@@ -539,7 +539,7 @@
           ],
           "fingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
@@ -575,7 +575,7 @@
           ],
           "fingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
@@ -611,7 +611,7 @@
           ],
           "fingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
@@ -647,7 +647,7 @@
           ],
           "fingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
@@ -683,7 +683,7 @@
           ],
           "fingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
@@ -719,7 +719,7 @@
           ],
           "fingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
@@ -755,7 +755,7 @@
           ],
           "fingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
@@ -791,7 +791,7 @@
           ],
           "fingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
@@ -827,7 +827,7 @@
           ],
           "fingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
@@ -863,7 +863,7 @@
           ],
           "fingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
@@ -899,26 +899,26 @@
           ],
           "fingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "The Master Brief: Consolidated Meta Ads Strategy",
+                "summary": "The Master Brief is a single document that merges 24 ad briefs into a comprehensive guide on Meta ads, covering targeting, value rules, campaign structure, attribution, creative, tracking, and more. It was generated by a tool, reviewed and approved by the author, and serves as a core resource for the PHC‑Elite community.",
                 "inputHash": "5786dd554f4b3d350139b6b46e88e1464d3697ad01b3e0ec889f40c6ea3ce93a",
-                "generatedAt": null,
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               },
               "ja": {
-                "status": "machine",
-                "shortHeadline": "Meta広告の包括的ガイド「The Master Brief」概要",
-                "summary": "The Master Briefは、著者が推奨するMeta広告の全体像をまとめた文書です。ブログ記事や動画、ポッドキャストの内容をツールで自動生成し、著者がレビュー・承認しています。ターゲティング、バリュー・ルール、キャンペーン構造、アトリビューション、クリエイティブ、トラッキングなどを網羅し、アルゴリズム配信を重視して手動ターゲティングを最小化する方針を示します。年齢・性別などの制限はコスト増につながり、詳細ターゲティングや類似オーディエンスはほぼ不要としています。場所などのハードリミットは例外です。2026年7月時点のスナップショットで、メンバー向けに月次で更新されます。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-06T04:41:48Z",
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "a9fc2e9052016a45110ac47b502be1cb20dc94e8481acf5d37861f4e995f055c",
+                "generatedAt": null,
                 "reviewedAt": null
               }
             }
@@ -935,7 +935,7 @@
           ],
           "fingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
@@ -971,7 +971,7 @@
           ],
           "fingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
@@ -1007,7 +1007,7 @@
           ],
           "fingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
@@ -1022,11 +1022,11 @@
                 "reviewedAt": null
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Meta広告のアクティブ広告セットは必要最小限に",
+                "summary": "Meta広告キャンペーンでの広告セットは、予算を分散させず効率を落とさないよう、できるだけ少なくまとめることが推奨されます。1日100ドルを5つに分けるより1つに集中した方が効果的で、週に50件の最適化イベントを確保できる規模が目安です。広告セットを増やす理由としては、地域や年齢・性別などで明確な差別化が必要で、かつ各セットに十分な予算がある場合に限ります。不要なセットは予算の希薄化やオーディエンスの分散を招くため、慎重に検討すべきです。",
                 "inputHash": "ff0bde0b320666ad3a34a8f0bbcf305d42598df1cff7ebac77180f159ab6656b",
-                "generatedAt": null,
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               }
             }
@@ -1043,7 +1043,7 @@
           ],
           "fingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
@@ -1058,11 +1058,11 @@
                 "reviewedAt": null
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Meta広告のAI開示チェックボックスとクリエイティブテスト上限が7件に増加",
+                "summary": "Meta Ads ManagerにAIで生成・編集した媒体を使用した場合にチェックするAI開示チェックボックスが追加されました。チェックするとAI情報ラベルが広告に表示され、地域によっては法令遵守のため目立つ形で表示されます。また、Creative Testing Toolの同時テスト可能な広告数上限が従来から7件に拡大されました。",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               }
             }
@@ -1079,26 +1079,26 @@
           ],
           "fingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Guidelines for Determining Number of Meta Ads Campaigns",
+                "summary": "Start with a single Meta ads campaign and consolidate budget toward one business goal. Add more campaigns only when clear exceptions exist, such as distinct daily budget limits, a primary performance goal, or separate secondary goals. Aim for about 50 optimized actions per week to exit the learning phase.",
                 "inputHash": "fb728d991cda08f20f8ad33819fb29cb56702be77d94eabdac43de44abf0778d",
-                "generatedAt": null,
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "shortHeadline": "Meta広告は1つのキャンペーンから始め、予算と目的で数を決める",
+                "summary": "Meta広告のキャンペーンは、まず1つに絞り予算を単一のビジネス目標に集約するのが基本とされる。例外がある場合のみ複数キャンペーンを作成すべきで、判断は日々の予算額と最重要目標に基づく。最適化アクションの平均コストや週50件のアクションという目安も考慮し、二次的な目標がある場合に限り追加キャンペーンを検討する。",
+                "inputHash": "06e022bda96aef987a73a5ebc2328c273daaaa6efd140ce66c83765fcddffc27",
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               }
             }
@@ -1115,7 +1115,7 @@
           ],
           "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
@@ -1151,7 +1151,7 @@
           ],
           "fingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
@@ -1166,11 +1166,11 @@
                 "reviewedAt": null
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "「Push Delivery to This Ad」機能の概要と利用方法",
+                "summary": "Meta広告のテスト機能「Push Delivery to This Ad」は、広告セット内に2つ以上の広告がある場合に表示され、指定した予算の割合を一定期間（最短1日、最長30日）その広告に割り当てて配信を保証できる。設定はデフォルトでオフで、手動で予算比率と期間を入力する。キャンペーン目的や広告形式、既存・新規広告を問わず利用可能だが、同時に複数広告へ適用すると配信に影響する可能性がある。",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               }
             }
@@ -1187,7 +1187,7 @@
           ],
           "fingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
@@ -1223,7 +1223,7 @@
           ],
           "fingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
@@ -1259,7 +1259,7 @@
           ],
           "fingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
@@ -1295,26 +1295,26 @@
           ],
           "fingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "7 Common Meta Ads Mistakes Agencies Make",
+                "summary": "The article lists seven frequent errors agencies make with Meta ads, such as giving agencies ownership of client assets instead of proper access, and failing to define or correctly set up audience segments, which can degrade campaign performance.",
                 "inputHash": "7bd325b701c641aeaa08ad65484e50b54103a4e3b4dc7e71baf6be3dc967811f",
-                "generatedAt": null,
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "shortHeadline": "エージェンシーが犯す7つのMeta広告ミス",
+                "summary": "この記事では、エージェンシーがMeta広告で犯す7つの一般的なミスを紹介しています。例えば、クライアント資産を所有させる代わりにアクセス権だけを付与しないことや、オーディエンスセグメントを定義せず不完全なままにすることが、キャンペーンの成果を悪化させます。",
+                "inputHash": "36420036e97fab7fa6cb919d25cbd41757396313fdb3b4d8a89afef1ecf40aa3",
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               }
             }
@@ -1331,7 +1331,7 @@
           ],
           "fingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
@@ -1367,7 +1367,7 @@
           ],
           "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
@@ -1403,7 +1403,7 @@
           ],
           "fingerprint": "df19403656263ac9e00d4d6b0ba326faf03ae83fadc7c0ce7bfc212072f92d5d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "df19403656263ac9e00d4d6b0ba326faf03ae83fadc7c0ce7bfc212072f92d5d",
@@ -1439,26 +1439,26 @@
           ],
           "fingerprint": "506108f10b4c1d594d43e31993c5e9e0d98a75fdf46ae71f9884e802efed039d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "506108f10b4c1d594d43e31993c5e9e0d98a75fdf46ae71f9884e802efed039d",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Meta Ads Automation: Split Opinions on AI's Future Impact",
+                "summary": "Meta is moving toward fully automated ad campaigns, where advertisers set objectives and budgets and AI handles the rest. Opinions fall into two extremes: some claim AI will make advertisers obsolete, others argue AI’s flaws ensure human roles remain. Large brands like Nike may be cautious, while small businesses see AI as an “easy button” for ad management.",
                 "inputHash": "14895787676ce43507ec2ea5ef5ce4c8a96759820a36a5452f831b3177ebb003",
-                "generatedAt": null,
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "shortHeadline": "Meta広告自動化：AIの将来影響に分かれる見解",
+                "summary": "Metaは広告主が目的と予算を設定すれば、AIが残りを自動で処理する完全自動キャンペーンを目指しています。意見は二極化し、AIが広告主を不要にすると主張する側と、AIの欠点で人間の役割は残るとする側に分かれます。Nikeのような大企業は慎重になる可能性が高く、小規模事業者はAIを広告運用の「イージーボタン」と捉えています。",
+                "inputHash": "b6eff70fb675c5ff985f568864fe29173e465c47aa7faf6093bd6d6bcf72f3ef",
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               }
             }
@@ -1475,7 +1475,7 @@
           ],
           "fingerprint": "ece9be71bc29c0a7fc7a46e089756141e99db290a908309ecfd2719f9e8c686e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "ece9be71bc29c0a7fc7a46e089756141e99db290a908309ecfd2719f9e8c686e",
@@ -1511,7 +1511,7 @@
           ],
           "fingerprint": "4bda6e29ffa378f20da5718e67adb16b2431a61aa6e3f8a8191b17f7ce7d9590",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "4bda6e29ffa378f20da5718e67adb16b2431a61aa6e3f8a8191b17f7ce7d9590",
@@ -1551,7 +1551,7 @@
           ],
           "fingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
@@ -1586,7 +1586,7 @@
           ],
           "fingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
@@ -1621,7 +1621,7 @@
           ],
           "fingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
@@ -1656,26 +1656,26 @@
           ],
           "fingerprint": "d2dc0dc1c4efc057c1c0191e0388749eee34a824f326f4644babbc1469695685",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-06T04:41:48Z",
+          "lastObservedAt": "2026-09-07T04:44:41Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "d2dc0dc1c4efc057c1c0191e0388749eee34a824f326f4644babbc1469695685",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Meta updates Pixel and Conversions API to reduce technical barriers",
+                "summary": "Meta announced updates to the Meta Pixel and Conversions API designed to simplify setup, keep integrations current, and help businesses of all sizes achieve stronger ad performance.",
                 "inputHash": "4a00dd5090d52c6096d32429a24bb6b31830b6339857ed7086119b5680d0b85b",
-                "generatedAt": null,
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "shortHeadline": "MetaがPixelとConversions APIを更新し、技術的障壁を削減",
+                "summary": "MetaはMeta PixelとConversions APIの更新を発表し、設定を簡素化し、連携を最新に保ち、あらゆる規模の企業が広告パフォーマンスを向上させることを支援します。",
+                "inputHash": "f5a39c99b364d38c501846dfbf094ce9141cee2e07077f69fe5902643b3f6c20",
+                "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               }
             }
@@ -1689,12 +1689,12 @@
     "entries": [
       {
         "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/active-ad-sets-meta-ads-campaign/",
-        "fingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
-        "locale": "ja",
+        "itemKey": "https://www.jonloomer.com/ai-disclosure-checkbox-chatgpt-attribution/",
+        "fingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
+        "locale": "en",
         "failureCount": 1,
-        "lastFailureAt": "2026-09-06T04:41:48Z",
-        "nextRetryAt": "2026-09-06T05:41:48Z",
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1703,9 +1703,108 @@
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-automated-bidding-placements-url-parameters/",
         "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-06T04:41:48Z",
-        "nextRetryAt": "2026-09-06T06:41:48Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T08:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/chatgpt-ads-initial-impressions/",
+        "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "summary_invalid",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/chatgpt-ads-initial-impressions/",
+        "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/chatgpt-ads-limitations-ai-instant-forms/",
+        "fingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/chatgpt-ads-limitations-ai-instant-forms/",
+        "fingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/chatgpt-ads-self-serve/",
+        "fingerprint": "ece9be71bc29c0a7fc7a46e089756141e99db290a908309ecfd2719f9e8c686e",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/chatgpt-ads-self-serve/",
+        "fingerprint": "ece9be71bc29c0a7fc7a46e089756141e99db290a908309ecfd2719f9e8c686e",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/customer-lifecycle-strategy-not-what-advertisers-thought/",
+        "fingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/customer-lifecycle-strategy-not-what-advertisers-thought/",
+        "fingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/hands-on-push-delivery-to-this-ad/",
+        "fingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1714,10 +1813,10 @@
         "itemKey": "https://www.jonloomer.com/instant-form-appointments-chatgpt-conversion-optimization/",
         "fingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-06T04:41:48Z",
-        "nextRetryAt": "2026-09-06T06:41:48Z",
-        "lastFailureCode": "http_400",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T08:44:41Z",
+        "lastFailureCode": "summary_invalid",
         "quarantined": false
       },
       {
@@ -1725,9 +1824,9 @@
         "itemKey": "https://www.jonloomer.com/lead-capture-ai-agent-instant-forms/",
         "fingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-06T04:41:48Z",
-        "nextRetryAt": "2026-09-06T06:41:48Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T08:44:41Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1736,9 +1835,31 @@
         "itemKey": "https://www.jonloomer.com/lead-capture-ai-agent-instant-forms/",
         "fingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
         "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-06T04:41:48Z",
-        "nextRetryAt": "2026-09-06T06:41:48Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T08:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/meta-ads-ai-connectors-claude/",
+        "fingerprint": "4bda6e29ffa378f20da5718e67adb16b2431a61aa6e3f8a8191b17f7ce7d9590",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/meta-ads-ai-connectors-claude/",
+        "fingerprint": "4bda6e29ffa378f20da5718e67adb16b2431a61aa6e3f8a8191b17f7ce7d9590",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1747,9 +1868,53 @@
         "itemKey": "https://www.jonloomer.com/meta-ads-ai-connectors-security-controls/",
         "fingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-06T04:41:48Z",
-        "nextRetryAt": "2026-09-06T06:41:48Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T08:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/meta-ads-attribution-reporting/",
+        "fingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/meta-ads-attribution-reporting/",
+        "fingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/meta-ads-grouping-reports-chatgpt-conversions/",
+        "fingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/meta-ads-grouping-reports-chatgpt-conversions/",
+        "fingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1757,10 +1922,10 @@
         "sourceId": "jon-loomer-meta-ads",
         "itemKey": "https://www.jonloomer.com/meta-ads-master-brief/",
         "fingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
-        "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-06T04:41:48Z",
-        "nextRetryAt": "2026-09-06T06:41:48Z",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1769,9 +1934,86 @@
         "itemKey": "https://www.jonloomer.com/meta-tests-sequenced-events-preferred-lead-answers/",
         "fingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-06T04:41:48Z",
-        "nextRetryAt": "2026-09-06T06:41:48Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T08:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/one-click-capi-activated-new-meta-ads-features/",
+        "fingerprint": "df19403656263ac9e00d4d6b0ba326faf03ae83fadc7c0ce7bfc212072f92d5d",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "short_headline_invalid",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/one-click-capi-activated-new-meta-ads-features/",
+        "fingerprint": "df19403656263ac9e00d4d6b0ba326faf03ae83fadc7c0ce7bfc212072f92d5d",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "rate_limited_429",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/push-delivery-tests-chatgpt-ads-updates/",
+        "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/push-delivery-tests-chatgpt-ads-updates/",
+        "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "meta-business-sdk-releases",
+        "itemKey": "v24.0.0",
+        "fingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "meta-business-sdk-releases",
+        "itemKey": "v24.0.0",
+        "fingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
+        "lastFailureCode": "http_400",
+        "quarantined": false
+      },
+      {
+        "sourceId": "meta-business-sdk-releases",
+        "itemKey": "v25.0.0",
+        "fingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T05:44:41Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1780,9 +2022,9 @@
         "itemKey": "v25.0.2",
         "fingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
         "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-06T04:41:48Z",
-        "nextRetryAt": "2026-09-06T06:41:48Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T08:44:41Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1791,9 +2033,9 @@
         "itemKey": "v26.0.0",
         "fingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-06T04:41:48Z",
-        "nextRetryAt": "2026-09-06T06:41:48Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T08:44:41Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1802,10 +2044,10 @@
         "itemKey": "v26.0.0",
         "fingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
         "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-06T04:41:48Z",
-        "nextRetryAt": "2026-09-06T06:41:48Z",
-        "lastFailureCode": "http_400",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T08:44:41Z",
+        "lastFailureCode": "summary_invalid",
         "quarantined": false
       },
       {
@@ -1813,9 +2055,9 @@
         "itemKey": "https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/",
         "fingerprint": "87932d2acdd42983aa7d5e1d5d805f68da0efe998c8ea58dce18665d343aa3a1",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-06T04:41:48Z",
-        "nextRetryAt": "2026-09-06T06:41:48Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-07T04:44:41Z",
+        "nextRetryAt": "2026-09-07T08:44:41Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       }
