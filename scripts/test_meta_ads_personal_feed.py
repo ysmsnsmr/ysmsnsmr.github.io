@@ -713,11 +713,21 @@ class PersonalFeedTest(unittest.TestCase):
                 raise URLError("temporary block")
             return self.fetcher(bodies=bodies)(source, timeout)
 
-        feed, next_state = collect(self.config, seeded, 1, NOW.replace(day=30), fetch)
+        pipeline: dict[str, Any] = {}
+        feed, next_state = collect(
+            self.config,
+            seeded,
+            1,
+            NOW.replace(day=30),
+            fetch,
+            source_pipeline_stats=pipeline,
+        )
         promoted = next(item for item in feed["items"] if item["sourceId"] == "meta-business-news-discovered")
         self.assertEqual(promoted["lastObservedAt"], "2026-08-29T09:00:00Z")
         retained = next(iter(next_state["sources"]["meta-business-news-discovered"]["items"].values()))
         self.assertEqual(retained["lastObservedAt"], "2026-08-29T09:00:00Z")
+        discovered = pipeline["sources"]["meta-business-news-discovered"]
+        self.assertEqual((discovered["matchedItems"], discovered["carriedForwardItems"], discovered["retainedItems"]), (0, 1, 1))
 
     def test_first_collection_publishes_provenance_labelled_baseline_without_human_decisions(self) -> None:
         state = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
@@ -824,6 +834,11 @@ class PersonalFeedTest(unittest.TestCase):
         )
         self.assertEqual(social["matchGroupMatches"], [2, 1])
         self.assertEqual(social["retainedItems"], 1)
+        sdk = pipeline["sources"]["meta-business-sdk-releases"]
+        self.assertEqual(
+            (sdk["parsedItems"], sdk["validItems"], sdk["matchedItems"], sdk["freshnessExcludedItems"], sdk["retainedItems"]),
+            (1, 1, 1, 0, 1),
+        )
         self.assertTrue(all(pipeline["sources"][source["id"]]["responseBytes"] > 0 for source in self.config["sources"]))
         self.assertEqual(pipeline["sources"]["meta-business-news-discovered"]["responseBytes"], 0)
         output = io.StringIO()
@@ -831,6 +846,7 @@ class PersonalFeedTest(unittest.TestCase):
             _print_source_pipeline_stats(pipeline)
         log = output.getvalue()
         self.assertIn("SOURCE_PIPELINE: id=social-media-today-meta-ads", log)
+        self.assertIn("carried_forward=0 retained=1", log)
         self.assertIn("SOURCE_MATCH_GROUP: id=social-media-today-meta-ads group=1 matched=2", log)
         self.assertIn("SOURCE_MATCH_GROUP: id=social-media-today-meta-ads group=2 matched=1", log)
         self.assertNotIn("campaign controls", log)
