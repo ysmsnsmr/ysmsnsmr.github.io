@@ -640,7 +640,6 @@ def _github_release_items(source: dict[str, Any], body: str, pipeline: dict[str,
             continue
         if pipeline is not None:
             pipeline["validItems"] += 1
-            pipeline["matchedItems"] += 1
         published = _date_from_feed(str(release.get("published_at") or release.get("created_at") or ""))
         updated = _date_from_feed(str(release.get("updated_at") or ""))
         source_context = _normalise(str(release.get("body") or ""))
@@ -1620,6 +1619,7 @@ def _source_pipeline_stats(config: dict[str, Any]) -> dict[str, Any]:
                 "freshnessExcludedItems": 0,
                 "relevanceExcludedItems": 0,
                 "retainedItems": 0,
+                "carriedForwardItems": 0,
                 "matchGroupMatches": [0 for _group in source.get("match", {}).get("groups", [])],
                 "discoveredLinks": 0,
                 "attemptedLinks": 0,
@@ -1743,7 +1743,7 @@ def _print_source_pipeline_stats(stats: dict[str, Any]) -> None:
             f"response_bytes={counts['responseBytes']} parsed={counts['parsedItems']} valid={counts['validItems']} "
             f"matched={counts['matchedItems']} expired={counts['freshnessExcludedItems']} "
             f"relevance_excluded={counts['relevanceExcludedItems']} excluded={counts['excludedItems']} "
-            f"retained={counts['retainedItems']} "
+            f"carried_forward={counts['carriedForwardItems']} retained={counts['retainedItems']} "
             f"discovered_links={counts['discoveredLinks']} attempted_links={counts['attemptedLinks']} "
             f"rejected_links={counts['rejectedLinks']} deferred_links={counts['deferredLinks']}"
         )
@@ -2084,6 +2084,7 @@ def collect(
     for source in _all_sources(config):
         prior = state["sources"].get(source["id"], {"items": {}})["items"]
         current: dict[str, Any] = {}
+        carried_forward_keys: set[str] = set()
         if source["id"] != reseed_source_id:
             for key, record in prior.items():
                 if _is_fresh(record, record["firstObservedAt"], now, config["policies"]["freshness"]):
@@ -2098,8 +2099,10 @@ def collect(
                         "lastObservedAt": record["lastObservedAt"],
                         "presentation": record["presentation"],
                     }
+                    carried_forward_keys.add(key)
         for key in rejected_by_source[source["id"]]:
             current.pop(key, None)
+            carried_forward_keys.discard(key)
         for raw in raw_by_source[source["id"]]:
             existing = prior.get(raw["key"])
             cached = existing.get("presentation") if existing and existing.get("fingerprint") == raw["fingerprint"] else None
@@ -2115,6 +2118,7 @@ def collect(
                 "presentation": cached or _missing_bilingual_presentation(raw["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION),
             }
             current[raw["key"]] = record
+            carried_forward_keys.discard(raw["key"])
             pending_locales = _pending_presentation_locales(record["presentation"])
             due_locales = [
                 locale
@@ -2141,6 +2145,7 @@ def collect(
                 retained[key] = record
         next_state["sources"][source["id"]] = {"relevanceRevision": source["relevanceRevision"], "items": retained}
         pipeline["sources"][source["id"]]["retainedItems"] = len(retained)
+        pipeline["sources"][source["id"]]["carriedForwardItems"] = sum(key in carried_forward_keys for key in retained)
 
     # Remove queue entries for expired, replaced, or successfully completed
     # records before the next state is validated and persisted.
