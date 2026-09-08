@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-09-07T04:44:41Z",
+  "generatedAt": "2026-09-08T04:39:15Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -68,7 +68,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -108,7 +108,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -146,7 +146,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -186,7 +186,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -226,7 +226,7 @@
       "publishedDate": "2026-08-13",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -266,7 +266,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -306,7 +306,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -346,7 +346,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -386,7 +386,7 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -424,7 +424,7 @@
       "publishedDate": "2026-08-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -464,7 +464,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -504,7 +504,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -544,7 +544,7 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -582,7 +582,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -622,7 +622,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -662,7 +662,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -702,7 +702,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -741,7 +741,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -780,7 +780,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -820,7 +820,7 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -858,7 +858,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -898,7 +898,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -938,7 +938,7 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -978,7 +978,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1017,7 +1017,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1056,7 +1056,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1096,7 +1096,7 @@
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1136,7 +1136,7 @@
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1176,7 +1176,7 @@
       "publishedDate": "2026-06-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1216,7 +1216,7 @@
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1256,7 +1256,7 @@
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1296,7 +1296,7 @@
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1318,11 +1318,11 @@
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta広告の属性レポートで結果の意味を把握する方法",
+            "summary": "Meta広告の標準属性モデルは、クリック7日、エンゲージ1日、ビュー1日のウィンドウでコンバージョンを計測します。属性設定で「属性別ブレークダウン」を使用すると、クリック（1日・2‑7日）、エンゲージ、ビューの4行が表示され、各設定でのコンバージョン数を確認できます。クリック経由のコンバージョンは広告効果が最も明確に結びつきやすく、エンゲージやビューは他のチャネルの影響も考慮する必要があります。正しくイベントを設定し重複除去すれば、デフォルトレポートに隠れた結果を把握でき、インクリメンタルな効果や長期的なリード転換も評価できます。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-09-08T04:39:15Z",
             "reviewedAt": null
           }
         }
@@ -1336,7 +1336,7 @@
       "publishedDate": "2026-05-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1358,11 +1358,11 @@
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta広告に新機能：グルーピングレポートとChatGPTのコンバージョン最適化キャンペーン",
+            "summary": "Meta Ads Managerに、キャンペーンや広告セットを「広告設定」「属性」「予算・入札」「ビジネス目標」の4カテゴリでまとめて表示できるグルーピングレポート機能が追加された。Breakdownsとは異なり、同一変数でグループ化する。さらに、ChatGPT広告向けにコンバージョン最適化キャンペーンが6月初旬に提供開始予定で、6月1日までにPixelまたはConversions APIを設定したアカウントは6月5日頃に先行利用できる。Instagram Live動画のコンバージョン位置に関する情報も含まれる。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-09-08T04:39:15Z",
             "reviewedAt": null
           }
         }
@@ -1376,7 +1376,7 @@
       "publishedDate": "2026-05-26",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1416,7 +1416,7 @@
       "publishedDate": "2026-05-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1456,7 +1456,7 @@
       "publishedDate": "2026-05-19",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1496,7 +1496,7 @@
       "publishedDate": "2026-05-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1536,7 +1536,7 @@
       "publishedDate": "2026-05-12",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1576,7 +1576,7 @@
       "publishedDate": "2026-05-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1656,7 +1656,7 @@
       "publishedDate": "2026-04-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1695,7 +1695,7 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1733,7 +1733,7 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1771,7 +1771,7 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1809,7 +1809,7 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1847,7 +1847,7 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1885,7 +1885,7 @@
       "publishedDate": "2025-09-26",
       "updatedDate": "2025-09-26",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-07T04:44:41Z",
+      "lastObservedAt": "2026-09-08T04:39:15Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
