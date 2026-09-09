@@ -58,7 +58,9 @@ GroqのAPIキーがない、生成に失敗する、または出力契約に合�
 
 各runは本文を出さずに `PRESENTATION` と `PRESENTATION_SOURCE` の行を出力します。ここでは記事候補数、記事単位の試行数、locale単位の試行・成功・失敗数、次回以降へ繰り越した数を確認します。失敗がある場合は、全体の `PRESENTATION_FAILURE` / `PRESENTATION_FALLBACK_FAILURE` とソース別の同名ログに安全な理由コードと件数を出します。
 
-表示生成の失敗は、公開feedとは分離したstate内の `presentationRetryQueue` にlocale単位で隔離します。各エントリはsource、item fingerprint、locale、`failureCount`、`lastFailureAt`、`nextRetryAt`、安全な失敗コード、`quarantined`だけを持ち、本文やGroq応答は保存しません。再試行間隔は1時間、2時間、4時間…と指数バックオフし、5回目の失敗で隔離して自動再試行を止めます。再試行時刻前のrunは外部モデルを呼ばず、公開feedはそのまま更新できます。手動で原因を確認して再試行を許可する場合だけ、daily collectのworkflow_dispatchで `retry_failed=true` を指定します。これはキューを空にしてそのrunで再評価する操作であり、失敗中の候補を無制限に繰り返すものではありません。
+表示生成の失敗は、公開feedとは分離したstate内の `presentationRetryQueue` にlocale単位で隔離します。各エントリはsource、item fingerprint、locale、`failureCount`、`lastFailureAt`、`nextRetryAt`、安全な失敗コード、Groqが安全に返したprovider error code、`quarantined`だけを持ち、本文やGroq応答は保存しません。再試行間隔は1時間、2時間、4時間…と指数バックオフし、5回目の失敗で隔離して自動再試行を止めます。再試行時刻前のrunは外部モデルを呼ばず、公開feedはそのまま更新できます。
+
+`json_validate_failed` と記録された隔離だけを再試行する場合は、daily collectのworkflow_dispatchで `retry_json_validate_failed=true` を指定します。これはその分類の隔離だけを解除し、他の原因の隔離は維持します。以前のv1 stateはprovider error codeを記録していないため、この操作で対象と推測しません。ログを確認済みの旧HTTP 400隔離を今回に限り回復させる場合は、`retry_json_validate_failed=true` と `retry_legacy_http_400=true` を**両方**指定します。後者だけの実行は拒否されます。原因を限定できない場合は、従来どおり `retry_failed=true` で全キューを手動解除できますが、これは最後の手段です。
 
 - `api_key_unavailable` — APIキーが未設定
 - `http_client_error` / `http_server_error` — Groq側のHTTP 4xx / 5xx 応答

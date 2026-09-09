@@ -33,7 +33,12 @@ from defusedxml.common import DefusedXmlException
 from meta_ads_tracker_collect import SourceFetchError, _request as bounded_request
 from meta_ads_tracker_contract import ContractError, _expect_hostname, _expect_https_url, _expect_identifier
 from meta_ads_tracker_publication import write_json
-from meta_ads_personal_feed_presentation import PresentationError, request_bilingual_presentation, request_english_presentation, request_presentation
+from meta_ads_personal_feed_presentation import (
+    PresentationError,
+    request_bilingual_presentation,
+    request_english_presentation_json_object,
+    request_presentation,
+)
 
 
 SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v5"
@@ -65,7 +70,10 @@ CONTENT_TYPES = {
 PRESENTATION_STATUSES = {"generated", "pending"}
 BILINGUAL_PRESENTATION_STATUSES = {"machine", "missing", "reviewed"}
 SUPPORTED_LOCALES = ("en", "ja")
-PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION = "meta-ads-personal-feed-presentation-retry/v1"
+PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION = "meta-ads-personal-feed-presentation-retry/v2"
+LEGACY_PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION = "meta-ads-personal-feed-presentation-retry/v1"
+LEGACY_UNKNOWN_PROVIDER_ERROR_CODE = "legacy_unknown"
+JSON_VALIDATE_FAILED_PROVIDER_ERROR_CODE = "json_validate_failed"
 PRESENTATION_RETRY_MAX_FAILURES = 5
 PRESENTATION_RETRY_BASE_DELAY_SECONDS = 3600
 PRESENTATION_RETRY_MAX_DELAY_SECONDS = 7 * 24 * 3600
@@ -895,6 +903,23 @@ def _retry_queue_map(queue: dict[str, Any] | None) -> dict[tuple[str, str, str],
     }
 
 
+def _migrate_presentation_retry_queue(queue: dict[str, Any] | None) -> dict[str, Any]:
+    """Upgrade queue metadata without guessing a legacy provider error code.
+
+    v1 recorded only a broad HTTP status. It must not be treated as an exact
+    provider classification, so the migration explicitly labels it legacy.
+    """
+    if not queue or queue.get("schemaVersion") != LEGACY_PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION:
+        return queue or _empty_presentation_retry_queue()
+    return {
+        "schemaVersion": PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION,
+        "entries": [
+            {**entry, "lastProviderErrorCode": LEGACY_UNKNOWN_PROVIDER_ERROR_CODE}
+            for entry in queue["entries"]
+        ],
+    }
+
+
 def _retry_queue_payload(entries: dict[tuple[str, str, str], dict[str, Any]]) -> dict[str, Any]:
     return {
         "schemaVersion": PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION,
@@ -908,18 +933,18 @@ def _validate_presentation_retry_queue(
     sources: dict[str, Any],
 ) -> dict[str, Any]:
     queue = _expect_keys(value, {"schemaVersion", "entries"}, "personal feed presentationRetryQueue")
-    if queue["schemaVersion"] != PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION:
+    version = queue["schemaVersion"]
+    if version not in {LEGACY_PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION, PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION}:
         raise ContractError("personal feed presentationRetryQueue schemaVersion is unsupported")
     if not isinstance(queue["entries"], list):
         raise ContractError("personal feed presentationRetryQueue.entries must be an array")
     seen: set[tuple[str, str, str]] = set()
     for index, entry in enumerate(queue["entries"]):
         label = f"personal feed presentationRetryQueue.entries[{index}]"
-        entry = _expect_keys(
-            entry,
-            {"sourceId", "itemKey", "fingerprint", "locale", "failureCount", "lastFailureAt", "nextRetryAt", "lastFailureCode", "quarantined"},
-            label,
-        )
+        expected_keys = {"sourceId", "itemKey", "fingerprint", "locale", "failureCount", "lastFailureAt", "nextRetryAt", "lastFailureCode", "quarantined"}
+        if version == PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION:
+            expected_keys.add("lastProviderErrorCode")
+        entry = _expect_keys(entry, expected_keys, label)
         source_id = _expect_identifier(entry["sourceId"], f"{label}.sourceId")
         if source_id not in sources:
             raise ContractError(f"{label}.sourceId is unknown")
@@ -938,6 +963,12 @@ def _validate_presentation_retry_queue(
         _timestamp(entry["nextRetryAt"], f"{label}.nextRetryAt", nullable=True)
         if not isinstance(entry["lastFailureCode"], str) or not re.fullmatch(r"[a-z0-9][a-z0-9_.:-]{0,63}", entry["lastFailureCode"]):
             raise ContractError(f"{label}.lastFailureCode must be a safe reason code")
+        if version == PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION:
+            provider_code = entry["lastProviderErrorCode"]
+            if provider_code is not None and (
+                not isinstance(provider_code, str) or not re.fullmatch(r"[a-z0-9][a-z0-9_.:-]{0,63}", provider_code)
+            ):
+                raise ContractError(f"{label}.lastProviderErrorCode must be a safe reason code or null")
         if not isinstance(entry["quarantined"], bool):
             raise ContractError(f"{label}.quarantined must be a boolean")
         if entry["quarantined"] and entry["nextRetryAt"] is not None:
@@ -971,6 +1002,7 @@ def _record_retry_failure(
     locale: str,
     code: str,
     now: str,
+    provider_error_code: str | None = None,
 ) -> None:
     key = _retry_queue_key(source_id, item_key, locale)
     previous = queue.get(key)
@@ -994,8 +1026,54 @@ def _record_retry_failure(
         "lastFailureAt": now,
         "nextRetryAt": next_retry_at,
         "lastFailureCode": code,
+        "lastProviderErrorCode": provider_error_code,
         "quarantined": quarantined,
     }
+
+
+def _provider_error_code(error: Exception) -> str | None:
+    value = getattr(error, "provider_error_code", None)
+    if not isinstance(value, str) or not re.fullmatch(r"[a-z0-9][a-z0-9_.:-]{0,63}", value):
+        return None
+    return value
+
+
+def _release_json_validate_failed_quarantine(
+    queue: dict[tuple[str, str, str], dict[str, Any]],
+) -> set[tuple[str, str, str]]:
+    """Release only exact v2 ``json_validate_failed`` quarantines.
+
+    Legacy v1 entries are deliberately excluded: their provider code was never
+    stored, so an HTTP 400 alone cannot prove it was a schema-validation error.
+    """
+    released: set[tuple[str, str, str]] = set()
+    for key, entry in list(queue.items()):
+        if entry["quarantined"] and entry.get("lastProviderErrorCode") == JSON_VALIDATE_FAILED_PROVIDER_ERROR_CODE:
+            del queue[key]
+            released.add(key)
+    return released
+
+
+def _release_legacy_http_400_quarantine(
+    queue: dict[tuple[str, str, str], dict[str, Any]],
+) -> set[tuple[str, str, str]]:
+    """Release the reviewed legacy HTTP-400 cohort, never automatic retries.
+
+    This path exists only because v1 queue entries predate provider error-code
+    storage. The workflow requires an explicit operator input after reviewing
+    the corresponding run log; it never runs on a schedule.
+    """
+    released: set[tuple[str, str, str]] = set()
+    for key, entry in list(queue.items()):
+        if not entry["quarantined"]:
+            continue
+        if entry.get("lastProviderErrorCode") != LEGACY_UNKNOWN_PROVIDER_ERROR_CODE:
+            continue
+        if entry["lastFailureCode"] != "http_400":
+            continue
+        del queue[key]
+        released.add(key)
+    return released
 
 
 def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
@@ -1450,7 +1528,7 @@ def _locale_presentation_from_environment(
             time.sleep(delay)
         try:
             if locale == "en":
-                return request_english_presentation(
+                return request_english_presentation_json_object(
                     api_key=api_key,
                     model=model,
                     title=title,
@@ -1506,7 +1584,7 @@ def _bilingual_fallback_from_environment(
                 try:
                     if locale == "en":
                         generated.update(
-                            request_english_presentation(
+                            request_english_presentation_json_object(
                                 api_key=api_key,
                                 model=model,
                                 title=title,
@@ -1575,6 +1653,8 @@ def _presentation_stats(
         "deferred": 0,
         "retryDeferred": 0,
         "retryQuarantined": 0,
+        "retryReleasedJsonValidateFailed": 0,
+        "retryReleasedLegacyHttp400": 0,
         "failureReasons": {},
         "fallbackFailureReasons": {},
         "providerErrorTypes": {},
@@ -1593,6 +1673,8 @@ def _presentation_stats(
                 "fallbackFailedLocales": 0,
                 "retryDeferred": 0,
                 "retryQuarantined": 0,
+                "retryReleasedJsonValidateFailed": 0,
+                "retryReleasedLegacyHttp400": 0,
                 "failureReasons": {},
                 "fallbackFailureReasons": {},
                 "providerErrorTypes": {},
@@ -1700,7 +1782,9 @@ def _print_presentation_stats(stats: dict[str, Any]) -> None:
         f"deferred={stats['deferred']} fallback_attempts={stats['fallbackAttempts']} "
         f"fallback_generated_locales={stats['fallbackGeneratedLocales']} "
         f"fallback_failed_locales={stats['fallbackFailedLocales']} "
-        f"retry_deferred={stats['retryDeferred']} retry_quarantined={stats['retryQuarantined']}"
+        f"retry_deferred={stats['retryDeferred']} retry_quarantined={stats['retryQuarantined']} "
+        f"retry_released_json_validate_failed={stats['retryReleasedJsonValidateFailed']} "
+        f"retry_released_legacy_http_400={stats['retryReleasedLegacyHttp400']}"
     )
     for source_id, counts in stats["sources"].items():
         print(
@@ -1713,6 +1797,8 @@ def _print_presentation_stats(stats: dict[str, Any]) -> None:
             f"fallback_generated_locales={counts['fallbackGeneratedLocales']} "
             f"fallback_failed_locales={counts['fallbackFailedLocales']}"
             f" retry_deferred={counts['retryDeferred']} retry_quarantined={counts['retryQuarantined']}"
+            f" retry_released_json_validate_failed={counts['retryReleasedJsonValidateFailed']}"
+            f" retry_released_legacy_http_400={counts['retryReleasedLegacyHttp400']}"
         )
         for code, count in sorted(counts["failureReasons"].items()):
             print(f"PRESENTATION_SOURCE_FAILURE: id={source_id} code={code} count={count}")
@@ -1972,12 +2058,18 @@ def collect(
     source_pipeline_stats: dict[str, Any] | None = None,
     reseed_source_id: str | None = None,
     retry_failed: bool = False,
+    retry_json_validate_failed: bool = False,
+    retry_legacy_http_400: bool = False,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     validate_config(config)
     validate_state(state, config)
     if state["schemaVersion"] != STATE_V3_SCHEMA_VERSION:
         state = migrate_state_v2_to_v3(state, config)
-    retry_queue = _retry_queue_map(state.get("presentationRetryQueue"))
+    retry_queue = _retry_queue_map(_migrate_presentation_retry_queue(state.get("presentationRetryQueue")))
+    if retry_failed and (retry_json_validate_failed or retry_legacy_http_400):
+        raise ContractError("retry-failed cannot be combined with targeted retry options")
+    if retry_legacy_http_400 and not retry_json_validate_failed:
+        raise ContractError("retry-legacy-http-400 requires retry-json-validate-failed")
     if retry_failed:
         retry_queue.clear()
     reseed_source_id = _reseed_source(config, reseed_source_id)
@@ -1988,6 +2080,16 @@ def collect(
     request_limit = _presentation_request_limit(presentation_limit, presentation_policy)
     stats = _presentation_stats(config, present_item is not None or locale_item is not None, request_limit, presentation_policy)
     pipeline = _source_pipeline_stats(config)
+    if retry_json_validate_failed:
+        released_keys = _release_json_validate_failed_quarantine(retry_queue)
+        stats["retryReleasedJsonValidateFailed"] = len(released_keys)
+        for source_id, _item_key, _locale in released_keys:
+            stats["sources"][source_id]["retryReleasedJsonValidateFailed"] += 1
+    if retry_legacy_http_400:
+        released_keys = _release_legacy_http_400_quarantine(retry_queue)
+        stats["retryReleasedLegacyHttp400"] = len(released_keys)
+        for source_id, _item_key, _locale in released_keys:
+            stats["sources"][source_id]["retryReleasedLegacyHttp400"] += 1
 
     # First complete safe fetch, format validation and parsing for every direct
     # source.  No model request or persistent output is produced before all of
@@ -2253,6 +2355,7 @@ def collect(
                                 locale,
                                 code,
                                 generated_at,
+                                provider_error_code=_provider_error_code(fallback_failures.get(locale, error)),
                             )
             elif locale_item is not None:
                 # A previously successful locale is never regenerated merely
@@ -2298,6 +2401,7 @@ def collect(
                             locale,
                             code,
                             generated_at,
+                            provider_error_code=_provider_error_code(error),
                         )
                         stats["localeFailed"] += 1
                         stats["sources"][source_id]["localeFailed"] += 1
@@ -2334,6 +2438,8 @@ def collect_and_write(
     source_pipeline_stats: dict[str, Any] | None = None,
     reseed_source_id: str | None = None,
     retry_failed: bool = False,
+    retry_json_validate_failed: bool = False,
+    retry_legacy_http_400: bool = False,
 ) -> dict[str, Any]:
     config = load_config(config_path)
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
@@ -2354,6 +2460,8 @@ def collect_and_write(
         source_pipeline_stats=source_pipeline_stats,
         reseed_source_id=reseed_source_id,
         retry_failed=retry_failed,
+        retry_json_validate_failed=retry_json_validate_failed,
+        retry_legacy_http_400=retry_legacy_http_400,
     )
     # Both payloads are fully constructed and validated before either single-file atomic write.
     write_json(output_path, feed)
@@ -2380,6 +2488,16 @@ def main() -> int:
         action="store_true",
         help="clear the isolated presentation retry queue before this run",
     )
+    parser.add_argument(
+        "--retry-json-validate-failed",
+        action="store_true",
+        help="release only quarantined entries whose stored provider error code is json_validate_failed",
+    )
+    parser.add_argument(
+        "--retry-legacy-http-400",
+        action="store_true",
+        help="with --retry-json-validate-failed, release reviewed legacy quarantined HTTP 400 entries",
+    )
     args = parser.parse_args()
     try:
         stats: dict[str, Any] = {}
@@ -2394,6 +2512,8 @@ def main() -> int:
             source_pipeline_stats=pipeline,
             reseed_source_id=args.reseed_source,
             retry_failed=args.retry_failed,
+            retry_json_validate_failed=args.retry_json_validate_failed,
+            retry_legacy_http_400=args.retry_legacy_http_400,
         )
     except SourceFetchError as error:
         print(

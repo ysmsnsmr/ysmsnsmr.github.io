@@ -11,6 +11,7 @@ from meta_ads_personal_feed_presentation import (
     _bilingual_messages,
     _messages,
     request_english_presentation,
+    request_english_presentation_json_object,
     request_bilingual_presentation,
     request_presentation,
 )
@@ -119,6 +120,38 @@ class PersonalFeedPresentationTest(unittest.TestCase):
         self.assertEqual(result["shortHeadlineEn"], "Meta Ads update")
         request_body = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
         self.assertEqual(request_body["response_format"]["json_schema"]["schema"]["required"], ["shortHeadlineEn", "summaryEn"])
+
+    @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
+    def test_english_json_object_fallback_still_enforces_the_exact_local_contract(self, urlopen) -> None:
+        urlopen.return_value = _Response(
+            {"choices": [{"message": {"content": json.dumps({"shortHeadlineEn": "Meta Ads update", "summaryEn": "A Meta Ads update was announced."})}}]}
+        )
+        result = request_english_presentation_json_object(
+            api_key="test-key",
+            model="test-model",
+            title="Meta Ads update",
+            source_context="Context",
+            short_headline_max_chars=80,
+            summary_max_chars=360,
+            timeout=1,
+        )
+        self.assertEqual(result, {"shortHeadlineEn": "Meta Ads update", "summaryEn": "A Meta Ads update was announced."})
+        request_body = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
+        self.assertEqual(request_body["response_format"], {"type": "json_object"})
+
+        urlopen.return_value = _Response(
+            {"choices": [{"message": {"content": json.dumps({"shortHeadlineEn": "Meta Ads update", "summaryEn": "Summary", "extra": "reject"})}}]}
+        )
+        with self.assertRaisesRegex(PresentationError, "response_invalid_shape"):
+            request_english_presentation_json_object(
+                api_key="test-key",
+                model="test-model",
+                title="Meta Ads update",
+                source_context="Context",
+                short_headline_max_chars=80,
+                summary_max_chars=360,
+                timeout=1,
+            )
 
     @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
     def test_classifies_http_failures_without_exposing_the_response(self, urlopen) -> None:

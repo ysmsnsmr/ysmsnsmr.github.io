@@ -142,6 +142,17 @@ def _strict_schema(name: str, fields: dict[str, int]) -> dict[str, Any]:
     }
 
 
+def _json_object_format() -> dict[str, str]:
+    """Return Groq JSON Object mode for a locally validated fallback.
+
+    The provider guarantees JSON syntax in this mode, while the exact keys,
+    types, and length limits remain enforced by this module before anything is
+    persisted.  This is intentionally used only after strict Structured
+    Outputs has failed for an item.
+    """
+    return {"type": "json_object"}
+
+
 def _completion_content(
     request: urllib.request.Request,
     *,
@@ -338,6 +349,61 @@ def request_english_presentation(
             "meta_ads_english_presentation",
             {"shortHeadlineEn": short_headline_max_chars, "summaryEn": summary_max_chars},
         ),
+    }
+    request = urllib.request.Request(
+        GROQ_URL,
+        data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json", "User-Agent": "ysmsnsmr-meta-ads-personal-feed/1.0"},
+        method="POST",
+    )
+    content = _completion_content(
+        request,
+        timeout=timeout,
+        response_limit=50_000,
+        max_attempts=max_attempts,
+        max_retry_delay_seconds=max_retry_delay_seconds,
+        sleep=sleep,
+    )
+    try:
+        value = json.loads(content)
+    except json.JSONDecodeError:
+        raise PresentationError("response_invalid_json") from None
+    if not isinstance(value, dict) or set(value) != {"shortHeadlineEn", "summaryEn"}:
+        raise PresentationError("response_invalid_shape")
+    return {
+        "shortHeadlineEn": _text(value["shortHeadlineEn"], "short_headline_invalid", short_headline_max_chars),
+        "summaryEn": _text(value["summaryEn"], "summary_invalid", summary_max_chars),
+    }
+
+
+def request_english_presentation_json_object(
+    *,
+    api_key: str,
+    model: str,
+    title: str,
+    source_context: str,
+    short_headline_max_chars: int,
+    summary_max_chars: int,
+    timeout: float,
+    max_attempts: int = MAX_GROQ_ATTEMPTS,
+    max_retry_delay_seconds: float = MAX_GROQ_RETRY_DELAY_SECONDS,
+    sleep: Any = time.sleep,
+) -> dict[str, str]:
+    """Request the English fallback in JSON Object mode and validate locally.
+
+    This is not a weaker persistence contract: the response still must contain
+    exactly the two expected non-empty strings within the configured limits.
+    It only avoids repeating a provider-side strict-schema validation failure.
+    """
+    if not api_key.strip():
+        raise PresentationError("api_key_unavailable")
+    payload = {
+        "model": model,
+        "messages": _english_messages(title, source_context, short_headline_max_chars, summary_max_chars),
+        "temperature": 0,
+        "max_tokens": 700,
+        "stream": False,
+        "response_format": _json_object_format(),
     }
     request = urllib.request.Request(
         GROQ_URL,

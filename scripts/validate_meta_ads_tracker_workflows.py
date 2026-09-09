@@ -176,6 +176,20 @@ def main() -> int:
             fail("Personal Feed reseed input must pass through an environment variable")
         if '--reseed-source "${META_ADS_PERSONAL_FEED_RESEED_SOURCE_ID}"' not in collect_runs:
             fail("Personal Feed collection must pass the reseed environment value to Python")
+        retry_json_validate_input = parsed["collect"].get("on", {}).get("workflow_dispatch", {}).get("inputs", {}).get("retry_json_validate_failed", {})
+        if not isinstance(retry_json_validate_input, dict) or retry_json_validate_input.get("type") != "boolean":
+            fail("Personal Feed collection must expose a boolean json-validate retry input")
+        if personal_env.get("META_ADS_PERSONAL_FEED_RETRY_JSON_VALIDATE_FAILED") != "${{ inputs.retry_json_validate_failed }}":
+            fail("Personal Feed json-validate retry input must pass through an environment variable")
+        if '--retry-json-validate-failed' not in collect_runs:
+            fail("Personal Feed collection must pass the bounded json-validate retry flag to Python")
+        retry_legacy_input = parsed["collect"].get("on", {}).get("workflow_dispatch", {}).get("inputs", {}).get("retry_legacy_http_400", {})
+        if not isinstance(retry_legacy_input, dict) or retry_legacy_input.get("type") != "boolean":
+            fail("Personal Feed collection must expose a boolean legacy HTTP-400 retry input")
+        if personal_env.get("META_ADS_PERSONAL_FEED_RETRY_LEGACY_HTTP_400") != "${{ inputs.retry_legacy_http_400 }}":
+            fail("Personal Feed legacy HTTP-400 retry input must pass through an environment variable")
+        if '--retry-legacy-http-400' not in collect_runs:
+            fail("Personal Feed collection must pass the reviewed legacy HTTP-400 retry flag to Python")
         if 'git add -- data/meta_ads_personal_feed_state.json meta-ads-updates/personal-feed.json' not in collect_runs:
             fail("Personal Feed collection must stage only its explicit state and public feed paths")
         artifact = next((step for step in collect_steps if step.get("name") == "Upload Personal Feed artifact"), None)
