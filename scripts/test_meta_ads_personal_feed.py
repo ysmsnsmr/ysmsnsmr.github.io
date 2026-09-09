@@ -49,6 +49,11 @@ SOCIAL_MEDIA_TODAY = """<rss><channel>
 <item><title>Meta expands Ads Manager campaign controls</title><link>https://www.socialmediatoday.com/news/meta-expands-ads-manager-campaign-controls/123456/</link><description>Meta announced new campaign controls for advertisers.</description><pubDate>Fri, 29 Aug 2026 02:00:00 -0400</pubDate></item>
 <item><title>Meta launches a new AI subscription</title><link>https://www.socialmediatoday.com/news/meta-ai-subscription/123457/</link><description>Meta announced a consumer subscription package.</description><pubDate>Fri, 29 Aug 2026 01:00:00 -0400</pubDate></item>
 </channel></rss>"""
+SOCIAL_MEDIA_TODAY_TOPIC = """<rss><channel>
+<item><title>Meta removes option to exclude ad placements</title><link>https://www.socialmediatoday.com/news/meta-removes-option-to-exclude-ad-placements/828461/</link><description>Meta advertisers may lose the option to exclude ad placements from campaign ad sets.</description><pubDate>Thu, 20 Aug 2026 17:53:57 -0400</pubDate></item>
+<item><title>Meta publishes holiday marketing guides</title><link>https://www.socialmediatoday.com/news/meta-publishes-holiday-marketing-guides/827856/</link><description>Meta recommends Advantage+ campaign planning and ads learning before the holiday season.</description><pubDate>Thu, 13 Aug 2026 15:33:30 -0400</pubDate></item>
+<item><title>Meta expands access to Creator Studio app</title><link>https://www.socialmediatoday.com/news/meta-expands-access-to-creator-studio-app/827745/</link><description>The app helps creators manage content and audience insights on Facebook.</description><pubDate>Wed, 12 Aug 2026 15:23:02 -0400</pubDate></item>
+</channel></rss>"""
 JON = """<rss><channel>
 <item><title>How to review a new Meta Ads setting</title><link>https://www.jonloomer.com/meta-ads-manager-rollout/</link><description>Review the new setting before changing a campaign.</description><category>Meta Advertising</category><pubDate>Fri, 29 Aug 2026 02:00:00 +0000</pubDate></item>
 <item><title>General marketing notes</title><link>https://www.jonloomer.com/general-marketing-notes/</link><category>Marketing</category></item>
@@ -112,8 +117,11 @@ class PersonalFeedTest(unittest.TestCase):
         discovered = {source["id"]: source for source in self.config["discoveredSources"]}
         self.assertEqual(set(sources), {"meta-product-news-rss", "meta-business-sdk-releases", "social-media-today-meta-ads", "jon-loomer-meta-ads"})
         self.assertEqual(set(discovered), {"meta-business-news-discovered"})
-        self.assertEqual(sources["social-media-today-meta-ads"]["fetchUrl"], "https://www.socialmediatoday.com/feeds/news/")
+        self.assertEqual(sources["social-media-today-meta-ads"]["sourceUrl"], "https://www.socialmediatoday.com/topic/facebook/")
+        self.assertEqual(sources["social-media-today-meta-ads"]["fetchUrl"], "https://www.socialmediatoday.com/feeds/topic/facebook/")
         self.assertEqual(sources["social-media-today-meta-ads"]["match"]["kind"], "all_groups")
+        self.assertEqual(sources["social-media-today-meta-ads"]["match"]["groupSearchFields"], ["title", "title_and_context"])
+        self.assertEqual(sources["social-media-today-meta-ads"]["relevanceRevision"], "social-media-today-meta-ads-v2")
         self.assertEqual(sources["jon-loomer-meta-ads"]["fetchUrl"], "https://www.jonloomer.com/feed/")
         self.assertEqual(sources["jon-loomer-meta-ads"]["match"]["kind"], "rss_category_and_terms")
         self.assertEqual(sources["jon-loomer-meta-ads"]["relevanceRevision"], "jon-loomer-v3")
@@ -277,6 +285,80 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(len(jon), 2)
         self.assertEqual(social_media_today[0]["matchEvidence"], [])
         self.assertIn("Review the new setting", jon[0]["sourceContext"])
+
+    def test_social_media_today_requires_platform_in_title_and_ads_signal_in_title_or_context(self) -> None:
+        bodies = {
+            "meta-product-news-rss": META,
+            "meta-business-sdk-releases": SDK,
+            "social-media-today-meta-ads": SOCIAL_MEDIA_TODAY_TOPIC,
+            "jon-loomer-meta-ads": JON,
+        }
+        pipeline: dict = {}
+        feed, _state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(bodies=bodies),
+            source_pipeline_stats=pipeline,
+        )
+        social_titles = {
+            item["title"]
+            for item in feed["items"]
+            if item["sourceId"] == "social-media-today-meta-ads"
+        }
+        self.assertEqual(
+            social_titles,
+            {
+                "Meta removes option to exclude ad placements",
+                "Meta publishes holiday marketing guides",
+            },
+        )
+        social = pipeline["sources"]["social-media-today-meta-ads"]
+        self.assertEqual((social["matchedItems"], social["relevanceExcludedItems"], social["retainedItems"]), (2, 1, 2))
+        self.assertEqual(social["matchGroupMatches"], [3, 2])
+
+    def test_social_media_today_revision_requires_and_limits_reseed_to_that_source(self) -> None:
+        _feed, seeded = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+        )
+        source_id = "social-media-today-meta-ads"
+        legacy_state = copy.deepcopy(seeded)
+        legacy_state["sources"][source_id]["relevanceRevision"] = "legacy-v2"
+        with self.assertRaisesRegex(ContractError, "--reseed-source social-media-today-meta-ads"):
+            collect(self.config, legacy_state, 1, NOW.replace(day=30), self.fetcher())
+
+        bodies = {
+            "meta-product-news-rss": META,
+            "meta-business-sdk-releases": SDK,
+            source_id: SOCIAL_MEDIA_TODAY_TOPIC,
+            "jon-loomer-meta-ads": JON,
+        }
+        _feed, reseeded = collect(
+            self.config,
+            legacy_state,
+            1,
+            NOW.replace(day=30),
+            self.fetcher(bodies=bodies),
+            reseed_source_id=source_id,
+        )
+        social_titles = {record["title"] for record in reseeded["sources"][source_id]["items"].values()}
+        self.assertEqual(
+            social_titles,
+            {
+                "Meta removes option to exclude ad placements",
+                "Meta publishes holiday marketing guides",
+            },
+        )
+        self.assertEqual(reseeded["sources"][source_id]["relevanceRevision"], "social-media-today-meta-ads-v2")
+        self.assertEqual(
+            set(reseeded["sources"]["meta-product-news-rss"]["items"]),
+            set(seeded["sources"]["meta-product-news-rss"]["items"]),
+        )
 
     def test_rss_presentation_context_keeps_complete_semantic_units(self) -> None:
         context = _rss_presentation_text(

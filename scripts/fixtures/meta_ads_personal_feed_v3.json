@@ -24,7 +24,7 @@
       "id": "social-media-today-meta-ads",
       "name": "Social Media Today (Meta Ads)",
       "classification": "unofficial",
-      "sourceUrl": "https://www.socialmediatoday.com/",
+      "sourceUrl": "https://www.socialmediatoday.com/topic/facebook/",
       "contentLanguage": "en",
       "platformIds": ["meta-ads"]
     },
