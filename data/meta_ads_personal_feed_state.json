@@ -1,6 +1,6 @@
 {
   "schemaVersion": "meta-ads-personal-feed-state/v3",
-  "updatedAt": "2026-09-08T04:39:15Z",
+  "updatedAt": "2026-09-09T04:45:10Z",
   "sources": {
     "meta-product-news-rss": {
       "relevanceRevision": "meta-ads-v1",
@@ -15,7 +15,7 @@
           ],
           "fingerprint": "87932d2acdd42983aa7d5e1d5d805f68da0efe998c8ea58dce18665d343aa3a1",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "87932d2acdd42983aa7d5e1d5d805f68da0efe998c8ea58dce18665d343aa3a1",
@@ -53,7 +53,7 @@
           "matchEvidence": [],
           "fingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
@@ -86,7 +86,7 @@
           "matchEvidence": [],
           "fingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
@@ -119,7 +119,7 @@
           "matchEvidence": [],
           "fingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
@@ -152,7 +152,7 @@
           "matchEvidence": [],
           "fingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
@@ -167,11 +167,11 @@
                 "reviewedAt": null
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "v25.0.2 リリース：Conversions API パラメータビルダー統合で自動入力機能を追加",
+                "summary": "このリリース v25.0.2 では、Conversions API Parameter Builder の統合が追加されました。サーバーサイドの Event/ServerEvent は setRequestContext(request) を呼び出すことで、受信した HTTP リクエストから fbc、fbp、event_source_url、referrer_url などの空欄パラメータを自動的に埋めます。PHP と NodeJS では client_ip_address の取得や PII の正規化・ハッシュ化も自動で行われます。自動入力は Preference により制御され、設定した値は上書きされず、呼び出しを行わなければ動作は変わりません。",
                 "inputHash": "5c831d182724a95616f262e352d92b68fb47223a32ba92c063a7e3ef7d45b779",
-                "generatedAt": null,
+                "generatedAt": "2026-09-09T04:45:10Z",
                 "reviewedAt": null
               }
             }
@@ -185,7 +185,7 @@
           "matchEvidence": [],
           "fingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
@@ -218,7 +218,7 @@
           "matchEvidence": [],
           "fingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
@@ -251,7 +251,7 @@
           "matchEvidence": [],
           "fingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
@@ -284,7 +284,7 @@
           "matchEvidence": [],
           "fingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
@@ -317,7 +317,7 @@
           "matchEvidence": [],
           "fingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
@@ -350,7 +350,7 @@
           "matchEvidence": [],
           "fingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
@@ -395,7 +395,7 @@
           ],
           "fingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
           "firstObservedAt": "2026-09-02T04:36:59Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
@@ -431,7 +431,7 @@
           ],
           "fingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
@@ -467,7 +467,7 @@
           ],
           "fingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
@@ -503,7 +503,7 @@
           ],
           "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
@@ -539,7 +539,7 @@
           ],
           "fingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
@@ -575,7 +575,7 @@
           ],
           "fingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
@@ -611,7 +611,7 @@
           ],
           "fingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
@@ -647,7 +647,7 @@
           ],
           "fingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
@@ -683,7 +683,7 @@
           ],
           "fingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
@@ -719,7 +719,7 @@
           ],
           "fingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
@@ -755,7 +755,7 @@
           ],
           "fingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
@@ -791,7 +791,7 @@
           ],
           "fingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
@@ -827,7 +827,7 @@
           ],
           "fingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
@@ -863,7 +863,7 @@
           ],
           "fingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
@@ -899,7 +899,7 @@
           ],
           "fingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
@@ -935,7 +935,7 @@
           ],
           "fingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
@@ -971,7 +971,7 @@
           ],
           "fingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
@@ -1007,7 +1007,7 @@
           ],
           "fingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
@@ -1043,7 +1043,7 @@
           ],
           "fingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
@@ -1079,7 +1079,7 @@
           ],
           "fingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
@@ -1115,7 +1115,7 @@
           ],
           "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
@@ -1151,7 +1151,7 @@
           ],
           "fingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
@@ -1187,26 +1187,26 @@
           ],
           "fingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Customer Lifecycle Strategy uses manual audience exclusions, not AI",
+                "summary": "Meta’s Customer Lifecycle Strategy feature does not automatically exclude existing customers. When “acquire new customers” is chosen, users must manually select custom audiences to exclude; it does not pull from predefined segments or labels. A new “Legal and Operational” exclusion option is also provided, separate from the lifecycle setting.",
                 "inputHash": "87eecd7da912f32427c1ce01ffb6e4e711c1dd259a93c291caa9376a1bd41efb",
-                "generatedAt": null,
+                "generatedAt": "2026-09-09T04:45:10Z",
                 "reviewedAt": null
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "shortHeadline": "カスタマーライフサイクル戦略は手動でオーディエンス除外、AIなし",
+                "summary": "Meta のカスタマーライフサイクル戦略機能は、既存顧客を自動で除外しません。「新規顧客を獲得」を選択すると、カスタムオーディエンスを手動で選んで除外する必要があります。事前定義されたセグメントやラベルからは取得されません。また、「法的・運用上の」除外オプションが別途提供されています。",
+                "inputHash": "c65b9b8573e226c01a821a5471c7b4e139521bf378ae47c12af34d58f9ab4a10",
+                "generatedAt": "2026-09-09T04:45:10Z",
                 "reviewedAt": null
               }
             }
@@ -1223,7 +1223,7 @@
           ],
           "fingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
@@ -1259,7 +1259,7 @@
           ],
           "fingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
@@ -1295,7 +1295,7 @@
           ],
           "fingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
@@ -1331,7 +1331,7 @@
           ],
           "fingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
@@ -1367,7 +1367,7 @@
           ],
           "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
@@ -1403,7 +1403,7 @@
           ],
           "fingerprint": "df19403656263ac9e00d4d6b0ba326faf03ae83fadc7c0ce7bfc212072f92d5d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "df19403656263ac9e00d4d6b0ba326faf03ae83fadc7c0ce7bfc212072f92d5d",
@@ -1418,11 +1418,11 @@
                 "reviewedAt": null
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Meta広告でOne-Click CAPIが有効化、フォーマット表示オプションや動画生成・AI翻訳機能が更新",
+                "summary": "Meta広告マネージャーで、約1か月前に発表された無償のOne‑Click Conversions APIがバグ修正により有効化された。フォーマット表示オプションが更新され、シングルメディア、カルーセル、コレクションの選択状態が確認できるようになった。動画生成機能が復活し、最大5枚の静止画から自動で動画コンセプトを3つ作成し選択できる。クリエイティブワークフローにAI翻訳ステップが追加され、最大12言語への翻訳が可能となった。",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-09T04:45:10Z",
                 "reviewedAt": null
               }
             }
@@ -1439,7 +1439,7 @@
           ],
           "fingerprint": "506108f10b4c1d594d43e31993c5e9e0d98a75fdf46ae71f9884e802efed039d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "506108f10b4c1d594d43e31993c5e9e0d98a75fdf46ae71f9884e802efed039d",
@@ -1535,6 +1535,42 @@
               }
             }
           }
+        },
+        "https://www.jonloomer.com/meta-advertising-control/": {
+          "url": "https://www.jonloomer.com/meta-advertising-control/",
+          "title": "How to Approach Meta Advertising Control",
+          "publishedDate": "2026-09-08",
+          "updatedDate": null,
+          "matchEvidence": [
+            "category:Meta Advertising",
+            "keyword:campaign"
+          ],
+          "fingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
+          "firstObservedAt": "2026-09-09T04:45:10Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+            "sourceFingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Meta Advertising Control: Age Targeting Approaches",
+                "summary": "The post outlines how to manage control settings in Meta ads, covering age, gender, custom audiences, detailed targeting, lookalike audiences, and placements. It describes a primary hands‑off approach, optional audience suggestions, secondary value‑rule adjustments, and last‑resort restrictions, especially for age targeting.",
+                "inputHash": "7a22ec6fe56ed9ebfa5b5364c5c46e929882ccaec3d440ea7558f07e985e3441",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Meta広告のコントロール：年齢ターゲティングのアプローチ",
+                "summary": "この投稿では、Meta広告のコントロール設定の管理方法を説明し、年齢、性別、カスタムオーディエンス、詳細ターゲティング、類似オーディエンス、配置について取り上げています。主にハンズオフのアプローチ、オーディエンス提案のオプション、価値ルールによる調整、年齢ターゲティングの最終的な制限について述べています。",
+                "inputHash": "5b6eeaaa0f1701e8e6863dd0210e13a5979f4dab90360d7a9bb5207e81244fec",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              }
+            }
+          }
         }
       }
     },
@@ -1551,7 +1587,7 @@
           ],
           "fingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
@@ -1586,7 +1622,7 @@
           ],
           "fingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
@@ -1621,7 +1657,7 @@
           ],
           "fingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
@@ -1656,7 +1692,7 @@
           ],
           "fingerprint": "d2dc0dc1c4efc057c1c0191e0388749eee34a824f326f4644babbc1469695685",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-08T04:39:15Z",
+          "lastObservedAt": "2026-09-09T04:45:10Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "d2dc0dc1c4efc057c1c0191e0388749eee34a824f326f4644babbc1469695685",
@@ -1692,9 +1728,9 @@
         "itemKey": "https://www.jonloomer.com/ai-disclosure-checkbox-chatgpt-attribution/",
         "fingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": "2026-09-09T08:45:10Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1703,21 +1739,21 @@
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-automated-bidding-placements-url-parameters/",
         "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
         "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T12:39:15Z",
-        "lastFailureCode": "summary_invalid",
-        "quarantined": false
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": null,
+        "lastFailureCode": "http_400",
+        "quarantined": true
       },
       {
         "sourceId": "jon-loomer-meta-ads",
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-initial-impressions/",
         "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
-        "lastFailureCode": "summary_invalid",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": "2026-09-09T08:45:10Z",
+        "lastFailureCode": "http_400",
         "quarantined": false
       },
       {
@@ -1725,9 +1761,9 @@
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-initial-impressions/",
         "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
         "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": "2026-09-09T08:45:10Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1736,9 +1772,9 @@
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-limitations-ai-instant-forms/",
         "fingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": "2026-09-09T08:45:10Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1747,10 +1783,10 @@
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-limitations-ai-instant-forms/",
         "fingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
         "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
-        "lastFailureCode": "http_400",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": "2026-09-09T08:45:10Z",
+        "lastFailureCode": "rate_limited_429",
         "quarantined": false
       },
       {
@@ -1768,28 +1804,6 @@
         "sourceId": "jon-loomer-meta-ads",
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-self-serve/",
         "fingerprint": "ece9be71bc29c0a7fc7a46e089756141e99db290a908309ecfd2719f9e8c686e",
-        "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
-        "lastFailureCode": "http_400",
-        "quarantined": false
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/customer-lifecycle-strategy-not-what-advertisers-thought/",
-        "fingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
-        "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
-        "lastFailureCode": "http_400",
-        "quarantined": false
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/customer-lifecycle-strategy-not-what-advertisers-thought/",
-        "fingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
         "locale": "ja",
         "failureCount": 2,
         "lastFailureAt": "2026-09-08T04:39:15Z",
@@ -1802,9 +1816,9 @@
         "itemKey": "https://www.jonloomer.com/hands-on-push-delivery-to-this-ad/",
         "fingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": "2026-09-09T08:45:10Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1813,33 +1827,33 @@
         "itemKey": "https://www.jonloomer.com/instant-form-appointments-chatgpt-conversion-optimization/",
         "fingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
         "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T12:39:15Z",
-        "lastFailureCode": "short_headline_invalid",
-        "quarantined": false
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": null,
+        "lastFailureCode": "http_400",
+        "quarantined": true
       },
       {
         "sourceId": "jon-loomer-meta-ads",
         "itemKey": "https://www.jonloomer.com/lead-capture-ai-agent-instant-forms/",
         "fingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
         "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T12:39:15Z",
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": null,
         "lastFailureCode": "http_400",
-        "quarantined": false
+        "quarantined": true
       },
       {
         "sourceId": "jon-loomer-meta-ads",
         "itemKey": "https://www.jonloomer.com/lead-capture-ai-agent-instant-forms/",
         "fingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
         "locale": "ja",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T12:39:15Z",
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": null,
         "lastFailureCode": "http_400",
-        "quarantined": false
+        "quarantined": true
       },
       {
         "sourceId": "jon-loomer-meta-ads",
@@ -1868,20 +1882,20 @@
         "itemKey": "https://www.jonloomer.com/meta-ads-ai-connectors-security-controls/",
         "fingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
         "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T12:39:15Z",
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": null,
         "lastFailureCode": "http_400",
-        "quarantined": false
+        "quarantined": true
       },
       {
         "sourceId": "jon-loomer-meta-ads",
         "itemKey": "https://www.jonloomer.com/meta-ads-attribution-reporting/",
         "fingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": "2026-09-09T08:45:10Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1890,9 +1904,9 @@
         "itemKey": "https://www.jonloomer.com/meta-ads-grouping-reports-chatgpt-conversions/",
         "fingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": "2026-09-09T08:45:10Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1901,9 +1915,9 @@
         "itemKey": "https://www.jonloomer.com/meta-ads-master-brief/",
         "fingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
         "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": "2026-09-09T08:45:10Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1912,32 +1926,21 @@
         "itemKey": "https://www.jonloomer.com/meta-tests-sequenced-events-preferred-lead-answers/",
         "fingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
         "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T12:39:15Z",
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": null,
         "lastFailureCode": "http_400",
-        "quarantined": false
+        "quarantined": true
       },
       {
         "sourceId": "jon-loomer-meta-ads",
         "itemKey": "https://www.jonloomer.com/one-click-capi-activated-new-meta-ads-features/",
         "fingerprint": "df19403656263ac9e00d4d6b0ba326faf03ae83fadc7c0ce7bfc212072f92d5d",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
-        "lastFailureCode": "http_400",
-        "quarantined": false
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/one-click-capi-activated-new-meta-ads-features/",
-        "fingerprint": "df19403656263ac9e00d4d6b0ba326faf03ae83fadc7c0ce7bfc212072f92d5d",
-        "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
-        "lastFailureCode": "http_400",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": "2026-09-09T08:45:10Z",
+        "lastFailureCode": "short_headline_invalid",
         "quarantined": false
       },
       {
@@ -1945,9 +1948,9 @@
         "itemKey": "https://www.jonloomer.com/push-delivery-tests-chatgpt-ads-updates/",
         "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": "2026-09-09T08:45:10Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1956,9 +1959,9 @@
         "itemKey": "https://www.jonloomer.com/push-delivery-tests-chatgpt-ads-updates/",
         "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
         "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": "2026-09-09T08:45:10Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1967,10 +1970,10 @@
         "itemKey": "v24.0.0",
         "fingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
-        "lastFailureCode": "summary_invalid",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": "2026-09-09T08:45:10Z",
+        "lastFailureCode": "http_400",
         "quarantined": false
       },
       {
@@ -1978,9 +1981,9 @@
         "itemKey": "v24.0.0",
         "fingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
         "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": "2026-09-09T08:45:10Z",
         "lastFailureCode": "http_400",
         "quarantined": false
       },
@@ -1989,21 +1992,10 @@
         "itemKey": "v25.0.0",
         "fingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T06:39:15Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": "2026-09-09T08:45:10Z",
         "lastFailureCode": "http_400",
-        "quarantined": false
-      },
-      {
-        "sourceId": "meta-business-sdk-releases",
-        "itemKey": "v25.0.2",
-        "fingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
-        "locale": "ja",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T12:39:15Z",
-        "lastFailureCode": "summary_invalid",
         "quarantined": false
       },
       {
@@ -2011,33 +2003,33 @@
         "itemKey": "v26.0.0",
         "fingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
         "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T12:39:15Z",
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": null,
         "lastFailureCode": "http_400",
-        "quarantined": false
+        "quarantined": true
       },
       {
         "sourceId": "meta-business-sdk-releases",
         "itemKey": "v26.0.0",
         "fingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
         "locale": "ja",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T12:39:15Z",
-        "lastFailureCode": "summary_invalid",
-        "quarantined": false
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": null,
+        "lastFailureCode": "http_400",
+        "quarantined": true
       },
       {
         "sourceId": "meta-product-news-rss",
         "itemKey": "https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/",
         "fingerprint": "87932d2acdd42983aa7d5e1d5d805f68da0efe998c8ea58dce18665d343aa3a1",
         "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-08T04:39:15Z",
-        "nextRetryAt": "2026-09-08T12:39:15Z",
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-09T04:45:10Z",
+        "nextRetryAt": null,
         "lastFailureCode": "http_400",
-        "quarantined": false
+        "quarantined": true
       }
     ]
   }
