@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-09-09T04:45:10Z",
+  "generatedAt": "2026-09-09T22:29:27Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -68,7 +68,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T04:45:10Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -108,7 +108,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -141,6 +141,86 @@
       }
     },
     {
+      "id": "social-media-today-meta-ads-166acb912126309cdfdb",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "How will Meta’s settlement impact social media?",
+      "url": "https://www.socialmediatoday.com/news/how-will-metas-settlement-impact-social-media/829033/",
+      "publishedDate": "2026-08-27",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-09T22:29:27Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "keyword:meta",
+        "keyword:advertiser"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "6f7d52b2fd0cbfd69162b47300448398c2dcb83acb2621132625324c058fac90",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-d855c2e9c79189f9b65a",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta settles landmark lawsuit for $18B",
+      "url": "https://www.socialmediatoday.com/news/meta-settles-landmark-lawsuit-for-18b/828900/",
+      "publishedDate": "2026-08-26",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-09T22:29:27Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "keyword:meta",
+        "keyword:ad"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "9cd91ccdc4729c19666731d70e895b7d301a6c4214889bfc83ee2b53d6293b84",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
+      }
+    },
+    {
       "id": "meta-business-sdk-releases-8ada906f14c5e1731d04",
       "sourceId": "meta-business-sdk-releases",
       "title": "v26.0.1",
@@ -148,7 +228,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -186,7 +266,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -219,6 +299,46 @@
       }
     },
     {
+      "id": "social-media-today-meta-ads-7acf956231436a87c7b7",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta removes option to exclude ad placements",
+      "url": "https://www.socialmediatoday.com/news/meta-removes-option-to-exclude-ad-placements/828461/",
+      "publishedDate": "2026-08-20",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-09T22:29:27Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "keyword:meta",
+        "keyword:advertising"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "7acf956231436a87c7b7a9015db094361a079af2b65baf71f7b29d23f773fa11",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta to eliminate ad placement exclusion option",
+            "summary": "Meta announced it will soon remove the Placements option that lets advertisers exclude specific ad placements and also the ability to exclude platforms, requiring ads to run across all Meta apps. No timeline was given. The change is part of Meta’s push toward fully automated, AI‑driven ad campaigns.",
+            "inputHash": "95d2a3dc5fc4207feba2def37ef82a16aecdce00d67dc7d945e198b12b68e6a5",
+            "generatedAt": "2026-09-09T22:29:27Z",
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、広告配置除外オプションを廃止",
+            "summary": "Metaは、広告主が特定の広告配置やプラットフォームを除外できる「Placements」オプションを近日中に廃止し、すべてのMetaアプリで広告を配信するよう求めると発表した。具体的な時期は示されていない。この変更は、完全に自動化されたAI駆動の広告キャンペーンへの移行の一環である。",
+            "inputHash": "11f8c70826855ec4092ac9a382f103714e0430096ea9faecfa4750a6c1f53dcf",
+            "generatedAt": "2026-09-09T22:29:27Z",
+            "reviewedAt": null
+          }
+        }
+      }
+    },
+    {
       "id": "jon-loomer-meta-ads-d244cc3298bed37cd7fb",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta Is Removing Placement Controls From Ad Sets",
@@ -226,7 +346,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -259,6 +379,166 @@
       }
     },
     {
+      "id": "social-media-today-meta-ads-caba183d8fc7ae1644b2",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta adds AI-powered assistant for SMB owners",
+      "url": "https://www.socialmediatoday.com/news/meta-adds-ai-powered-assistant-for-smb-owners/828344/",
+      "publishedDate": "2026-08-19",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-09T22:29:27Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "keyword:meta",
+        "keyword:ads"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "caba183d8fc7ae1644b298b799c9cc7f087140275704cc3da5246f72209d9161",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta adds AI-powered assistant for SMB owners",
+            "summary": "Meta introduced an AI‑powered assistant for small‑business owners that links Facebook, Instagram, Meta Ads and Google Workspace data to Meta AI. The assistant can answer questions, give recommendations, create documents, spreadsheets, tasks and reminders, and is free to start with optional paid subscription for expanded use.",
+            "inputHash": "c3a2038dbd9ac838ac5cad19ea0b763fc9d6ab1b3880d3a41076684b6f409a57",
+            "generatedAt": "2026-09-09T22:29:27Z",
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、SMB向けAIアシスタントを追加",
+            "summary": "Metaは、Facebook、Instagram、Meta Ads、Google WorkspaceのデータをMeta AIに連携させるAIアシスタントを小規模事業者向けに導入した。このアシスタントは質問に回答し、推奨事項を提示し、文書やスプレッドシート、タスクやリマインダーを作成でき、無料で開始でき、拡張利用には有料サブスクリプションが用意されている。",
+            "inputHash": "83ce2c938add4e65ad1aee27dec9b32832d68e11d82984465c7c5575f6ef44ea",
+            "generatedAt": "2026-09-09T22:29:27Z",
+            "reviewedAt": null
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-143436c34d5eef00048e",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta AI launches for Mac",
+      "url": "https://www.socialmediatoday.com/news/meta-ai-launches-for-mac/828347/",
+      "publishedDate": "2026-08-19",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-09T22:29:27Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "keyword:meta",
+        "keyword:ad"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "143436c34d5eef00048e1b6e3dae36a41ad7a161b317c577367a64dc953d8e2d",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "053a54546d8828ae772a850ff354901e966c366578fb79d23b9281f7a6e6c842",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta AI、Mac向けアプリをリリース ビジネス向け機能も搭載",
+            "summary": "MetaはMac向けにMeta AIアプリを提供開始した。モバイル版と同様の機能に加え、ウィンドウ共有や全アプリ対応の音声入力が可能で、デスクトップ作業にAIアシスタントを組み込める。ビジネスユーザーは自社の広告実績やアカウント情報、公開されている同業他社のデータを元に質問でき、資料作成やタスク設定も支援する。基本は無料だが、より高度な利用には有料サブスクリプション「Meta One」への移行が想定されている。",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-09-09T22:29:27Z",
+            "reviewedAt": null
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-da39b3baf02d4feaf401",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta removed more than 750,000 teen accounts in Australia",
+      "url": "https://www.socialmediatoday.com/news/meta-removed-more-than-750000-teen-accounts-in-australia/827865/",
+      "publishedDate": "2026-08-13",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-09T22:29:27Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "keyword:meta",
+        "keyword:campaign"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "da39b3baf02d4feaf40106aadcc9cf1c7208ee94ec16b03daf04c3040c5736be",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "565d2a165c41b78dd540b1a857601fd6cbffa1076fd660f2a3a130365f20fda0",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、オーストラリアで75万超の未成年アカウントを削除",
+            "summary": "Metaは2025年6月以降、オーストラリアのFacebookとInstagramで、16歳未満と判断されたアカウント750,000件以上を削除したと報告した。これは1月に報告された55万件から増加している。AIによるプロフィール分析や報告体制の強化、教育キャンペーンが要因とされる。一方、eSafety委員会の調査では、未成年ユーザーの81.5％が依然として利用を続けており、アプリ側の年齢確認不足が指摘され、罰則強化が検討されている。MetaはOSやアプリストアレベルでの統一的な年齢認証を求めている。",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-09-09T22:29:27Z",
+            "reviewedAt": null
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-c04837311b5913cc77c7",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta publishes holiday marketing guides",
+      "url": "https://www.socialmediatoday.com/news/meta-publishes-holiday-marketing-guides/827856/",
+      "publishedDate": "2026-08-13",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-09T22:29:27Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "keyword:meta",
+        "keyword:campaign"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "sourceFingerprint": "c04837311b5913cc77c74ad2d4f3c03724c16e3ddb4a1e0ae315724aa9954730",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "04eca49a508c6dc957901089100f3b389f8caf17f24375bcbfbecba043e288bf",
+            "generatedAt": null,
+            "reviewedAt": null
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null
+          }
+        }
+      }
+    },
+    {
       "id": "jon-loomer-meta-ads-31a647f219704abc5612",
       "sourceId": "jon-loomer-meta-ads",
       "title": "ChatGPT Ads Get Automated Bidding, Placements, and URL Parameters",
@@ -266,7 +546,7 @@
       "publishedDate": "2026-08-13",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -306,7 +586,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -346,7 +626,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -386,7 +666,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -426,7 +706,7 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -464,7 +744,7 @@
       "publishedDate": "2026-08-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -504,7 +784,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -544,7 +824,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -584,7 +864,7 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -622,7 +902,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -662,7 +942,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -702,7 +982,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -742,7 +1022,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -781,7 +1061,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -820,7 +1100,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -860,7 +1140,7 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -898,7 +1178,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -920,11 +1200,11 @@
             "reviewedAt": null
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta広告の包括的ガイド「The Master Brief」概要",
+            "summary": "The Master Briefは、Meta広告に対する著者の推奨アプローチをまとめた文書で、ターゲティング、価値ルール、キャンペーン構造、アトリビューション、クリエイティブ、トラッキングなどを網羅しています。ブログ記事や動画、ポッドキャストの内容をツールで広告ブリーフに変換し、著者がレビュー・承認したものです。アルゴリズム配信を重視し、Advantage+ Audienceを前提に手動ターゲティングは最小限に抑える方針を示しています。詳細ターゲティングや類似オーディエンスは提案レベルに留め、実質的な効果は限定的としています。文書は会員向けに毎月更新され、2026年7月時点のスナップショットが示されています。",
             "inputHash": "a9fc2e9052016a45110ac47b502be1cb20dc94e8481acf5d37861f4e995f055c",
-            "generatedAt": null,
+            "generatedAt": "2026-09-09T22:29:27Z",
             "reviewedAt": null
           }
         }
@@ -938,7 +1218,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -978,7 +1258,7 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1018,7 +1298,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1057,7 +1337,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1096,7 +1376,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1136,7 +1416,7 @@
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1176,7 +1456,7 @@
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1216,7 +1496,7 @@
       "publishedDate": "2026-06-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1256,7 +1536,7 @@
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1296,7 +1576,7 @@
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1336,7 +1616,7 @@
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1376,7 +1656,7 @@
       "publishedDate": "2026-05-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1416,7 +1696,7 @@
       "publishedDate": "2026-05-26",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1456,7 +1736,7 @@
       "publishedDate": "2026-05-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1496,7 +1776,7 @@
       "publishedDate": "2026-05-19",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1536,7 +1816,7 @@
       "publishedDate": "2026-05-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1576,7 +1856,7 @@
       "publishedDate": "2026-05-12",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1696,7 +1976,7 @@
       "publishedDate": "2026-04-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1735,7 +2015,7 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1773,7 +2053,7 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1811,7 +2091,7 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1849,7 +2129,7 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1887,7 +2167,7 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1925,7 +2205,7 @@
       "publishedDate": "2025-09-26",
       "updatedDate": "2025-09-26",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-09T04:45:10Z",
+      "lastObservedAt": "2026-09-09T22:29:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
