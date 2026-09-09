@@ -24,6 +24,7 @@ from meta_ads_personal_feed import (
     _meta_business_news_date,
     _bilingual_presentation_from_environment,
     _bilingual_fallback_from_environment,
+    _locale_presentation_from_environment,
     _presentation_from_environment,
     _print_presentation_stats,
     _print_source_pipeline_stats,
@@ -216,7 +217,7 @@ class PersonalFeedTest(unittest.TestCase):
     def test_environment_fallback_requests_english_then_japanese_once_each(self) -> None:
         policy = self.config["policies"]["bilingualPresentation"]
         with patch.dict(os.environ, {"GROQ_API_KEY": "test-key", "META_ADS_PERSONAL_FEED_JA_ENABLED": "true"}, clear=True), patch(
-            "meta_ads_personal_feed.request_english_presentation",
+            "meta_ads_personal_feed.request_english_presentation_json_object",
             side_effect=PresentationError("http_400"),
         ) as english, patch(
             "meta_ads_personal_feed.request_presentation",
@@ -234,6 +235,21 @@ class PersonalFeedTest(unittest.TestCase):
         japanese.assert_called_once()
         self.assertEqual(japanese.call_args.kwargs["max_attempts"], 1)
         self.assertEqual(sleep.call_args_list, [call(12), call(12), call(12)])
+
+    def test_environment_english_locale_retry_uses_json_object_mode(self) -> None:
+        policy = self.config["policies"]["bilingualPresentation"]
+        with patch.dict(os.environ, {"GROQ_API_KEY": "test-key", "META_ADS_PERSONAL_FEED_JA_ENABLED": "true"}, clear=True), patch(
+            "meta_ads_personal_feed.request_english_presentation_json_object",
+            return_value={"shortHeadlineEn": "English headline", "summaryEn": "English summary"},
+        ) as english:
+            presenter = _locale_presentation_from_environment(1)
+            self.assertIsNotNone(presenter)
+            assert presenter is not None
+            result = presenter("Title", "Context", policy, "en")
+
+        self.assertEqual(result, {"shortHeadlineEn": "English headline", "summaryEn": "English summary"})
+        english.assert_called_once()
+        self.assertEqual(english.call_args.kwargs["max_attempts"], policy["maxAttempts"])
 
     def test_empty_workflow_variables_use_the_documented_presentation_defaults(self) -> None:
         with patch.dict(
@@ -978,6 +994,161 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(recovered["en"]["status"], "machine")
         self.assertEqual(recovered["ja"]["status"], "machine")
         validate_state(recovered_state, self.config)
+        validate_feed(feed, self.config)
+
+    def test_retry_json_validate_failed_releases_only_exactly_classified_quarantine(self) -> None:
+        def failing_presenter(_title: str, _source_context: str, _policy: dict) -> dict[str, str]:
+            raise PresentationError("http_400", provider_error_code="json_validate_failed")
+
+        state: dict[str, Any] = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
+        _feed, state = collect(
+            self.config,
+            state,
+            1,
+            NOW,
+            self.fetcher(),
+            failing_presenter,
+            presentation_limit=1,
+        )
+        for _attempt in range(4):
+            entry = state["presentationRetryQueue"]["entries"][0]
+            retry_at = datetime.fromisoformat(entry["nextRetryAt"].replace("Z", "+00:00"))
+            _feed, state = collect(
+                self.config,
+                state,
+                1,
+                retry_at,
+                self.fetcher(),
+                failing_presenter,
+                presentation_limit=1,
+            )
+
+        queue = state["presentationRetryQueue"]["entries"]
+        self.assertTrue(all(entry["lastProviderErrorCode"] == "json_validate_failed" for entry in queue))
+        retained_entry = next(entry for entry in queue if entry["locale"] == "ja")
+        retained_entry["lastProviderErrorCode"] = "other_provider_error"
+
+        def locale_presenter(_title: str, _context: str, _policy: dict, locale: str) -> dict[str, str]:
+            if locale == "en":
+                return {"shortHeadlineEn": "Recovered headline", "summaryEn": "Recovered summary"}
+            return {"shortHeadlineJa": "復旧見出し", "summaryJa": "復旧要約"}
+
+        stats: dict[str, Any] = {}
+        feed, recovered_state = collect(
+            self.config,
+            state,
+            1,
+            NOW + timedelta(days=30),
+            self.fetcher(),
+            locale_item=locale_presenter,
+            presentation_limit=1,
+            presentation_stats=stats,
+            retry_json_validate_failed=True,
+        )
+        self.assertEqual(stats["retryReleasedJsonValidateFailed"], 1)
+        self.assertEqual(feed["items"][0]["presentation"]["locales"]["en"]["status"], "machine")
+        retained_queue = recovered_state["presentationRetryQueue"]["entries"]
+        self.assertEqual(len(retained_queue), 1)
+        self.assertEqual(retained_queue[0]["lastProviderErrorCode"], "other_provider_error")
+        validate_state(recovered_state, self.config)
+        validate_feed(feed, self.config)
+
+    def test_targeted_retry_options_require_an_explicit_safe_combination(self) -> None:
+        state: dict[str, Any] = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
+        with self.assertRaisesRegex(ContractError, "retry-legacy-http-400 requires retry-json-validate-failed"):
+            collect(
+                self.config,
+                state,
+                1,
+                NOW,
+                self.fetcher(),
+                retry_legacy_http_400=True,
+            )
+        with self.assertRaisesRegex(ContractError, "retry-failed cannot be combined with targeted retry options"):
+            collect(
+                self.config,
+                state,
+                1,
+                NOW,
+                self.fetcher(),
+                retry_failed=True,
+                retry_json_validate_failed=True,
+            )
+
+    def test_retry_json_validate_failed_does_not_infer_a_provider_code_for_legacy_queue_entries(self) -> None:
+        def failing_presenter(_title: str, _source_context: str, _policy: dict) -> dict[str, str]:
+            raise PresentationError("http_400", provider_error_code="json_validate_failed")
+
+        state: dict[str, Any] = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
+        _feed, state = collect(
+            self.config,
+            state,
+            1,
+            NOW,
+            self.fetcher(),
+            failing_presenter,
+            presentation_limit=1,
+        )
+        for _attempt in range(4):
+            entry = state["presentationRetryQueue"]["entries"][0]
+            retry_at = datetime.fromisoformat(entry["nextRetryAt"].replace("Z", "+00:00"))
+            _feed, state = collect(
+                self.config,
+                state,
+                1,
+                retry_at,
+                self.fetcher(),
+                failing_presenter,
+                presentation_limit=1,
+            )
+
+        legacy = copy.deepcopy(state)
+        legacy_queue = legacy["presentationRetryQueue"]
+        legacy_queue["schemaVersion"] = "meta-ads-personal-feed-presentation-retry/v1"
+        for entry in legacy_queue["entries"]:
+            del entry["lastProviderErrorCode"]
+
+        stats: dict[str, Any] = {}
+        _feed, migrated = collect(
+            self.config,
+            legacy,
+            1,
+            NOW + timedelta(days=30),
+            self.fetcher(),
+            presentation_limit=1,
+            presentation_stats=stats,
+            retry_json_validate_failed=True,
+        )
+        self.assertEqual(stats["retryReleasedJsonValidateFailed"], 0)
+        self.assertTrue(
+            all(entry["lastProviderErrorCode"] == "legacy_unknown" for entry in migrated["presentationRetryQueue"]["entries"])
+        )
+
+        def locale_presenter(_title: str, _context: str, _policy: dict, locale: str) -> dict[str, str]:
+            if locale == "en":
+                return {"shortHeadlineEn": "Recovered headline", "summaryEn": "Recovered summary"}
+            return {"shortHeadlineJa": "復旧見出し", "summaryJa": "復旧要約"}
+
+        recovery_stats: dict[str, Any] = {}
+        feed, recovered = collect(
+            self.config,
+            migrated,
+            1,
+            NOW + timedelta(days=31),
+            self.fetcher(),
+            locale_item=locale_presenter,
+            presentation_limit=1,
+            presentation_stats=recovery_stats,
+            retry_json_validate_failed=True,
+            retry_legacy_http_400=True,
+        )
+        self.assertEqual(recovery_stats["retryReleasedLegacyHttp400"], 2)
+        self.assertEqual(recovered["presentationRetryQueue"]["entries"], [])
+        # The one-request limit recovers only the released candidate. Other
+        # candidates remain pending and must not be mistaken for a failed
+        # targeted retry.
+        self.assertEqual(feed["items"][0]["presentation"]["locales"]["en"]["status"], "machine")
+        validate_state(recovered, self.config)
         validate_feed(feed, self.config)
 
     def test_presentation_failure_logs_only_reason_codes(self) -> None:
