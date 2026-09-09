@@ -203,3 +203,57 @@ must use `supersedes` instead of editing an earlier entry.
 - Revisit when: コンパクト行で6日分が現在より短い縦幅に収まる; 26文字の短見出し3件が主体・方向を読み取れる状態で折り返す; 日付から日別ページを開く操作が現行カードより分かりにくくならない
 - Supersedes: `20260905t183134-malaysia-recent-summary-density`
 - Override: not applied
+
+<!-- idea-gate:20260909t201257-malaysia-selector-priority-bands-override -->
+## BusinessToday shadowの知見を使ったgeneric selectorとcap優先度のproduction改善
+
+- Record ID: `20260909t201257-malaysia-selector-priority-bands-override`
+- Evaluated: 2026-09-09T20:12:57+08:00
+- Project: ysmsnsmr.github.io / Malaysia News
+- Rubric: 1.0.0
+- Decision: **EXPERIMENT_ONLY**
+- Score: 77/100
+- Confidence: medium - 7日間の実測と具体的な誤選択・押し出し事例はあるが、正式な手動ラベルが未完了で、複数のselector変更を同時導入した場合の回帰率は未測定である
+
+### Problem Card
+
+- Who: Malaysia Newsを日常的に読む個人利用者と、その日次生成を保守する担当者
+- When: 日次RSSから最大15件を選び、Groq要約対象と公開候補を作るとき
+- Problem: 低関連性記事が選択枠を使う一方、地域交通・Malaysia便の運航影響・ヘイズ緊急対応など生活に直結する記事がselectorまたはcapで落ちる
+- Current behavior: 既存4媒体の出力を読み、欠落や曖昧さに気づいた場合は出典やartifactを手動確認し、個別のselector修正を重ねている
+
+### Evidence
+
+- Tier: 3
+- BusinessToday Newsの7観測日で140件を収集し、全日で取得成功、feed error 0だった
+- selector選択10件のタイトル確認で少なくとも4件が低関連性または不明確だった
+- 候補追加により既存記事が延べ3件押し出され、Serianのヘイズ緊急対応が低関連性候補より先に落ちた事例があった
+- Jakarta火山灰によるMalaysia便の欠航と再開がproduction_final_noise_gateで除外された
+- shadowで使ったc15c395相当のselector改善はorigin/mainにまだ反映されていない
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 14/20 |
+| `current_workaround_gap` | 15/20 |
+| `evidence_strength` | 17/20 |
+| `behavior_outcome_impact` | 12/15 |
+| `strategic_fit_reuse` | 9/10 |
+| `ui_operational_lightness` | 10/15 |
+| **Total** | **77/100** |
+
+### Alternatives
+
+- **SHRINK - 高重要度cap保護とMalaysia運航影響だけを先に検証:** EXPERIMENT_ONLY (78/100). 既存flagsを使う優先度帯とMalaysia便の運航影響判定だけを非production replayへ追加し、noise precision変更は後段に分ける
+- **INTEGRATE - generic selectorとpriority bandを一括統合:** EXPERIMENT_ONLY (77/100). c15c395相当、地域運用recall、背景記事precision、priority bandを既存production selectorへまとめて導入する
+- **NO_FEATURE - production selectorを維持して限定レビューだけ続ける:** EXPERIMENT_ONLY (61/100). 既存4媒体とselectorを変えず、eligible・押し出し・重複候補・noise標本だけを確認する
+
+### Next Step
+
+- Allowed action: ユーザーoverrideにより、最新origin/mainから切った専用branchでgeneric selectorとpriority bandをproductionへ一括統合し、既存self-testと新規golden fixtureで検証する
+- Revisit when: production artifactで高重要度記事が低関連性候補によりcap押し出しされる; Malaysia便の欠航・再開または地域運用情報がfalse negativeになる; 既存production golden fixtureの有用記事保持率が90%を下回る; selector変更による回帰が変更commitのrevertで回復しない
+- Supersedes: `20260908t213952-malaysia-selector-priority-bands`
+- Override: applied by yas at 2026-09-09T20:12:57+08:00
+- Override reason: 既存4媒体・7日間の観察と具体的なcap押し出し事例を重視し、限定replayを省略しても、変更はrevert可能であるためproduction統合を承認する。
+- Override constraints: BusinessTodayはproduction sourceへ追加しない; LLM契約、呼び出し回数、Groq request cap 12、renderer、production overwriteは変更しない; selector変更が不合格の場合は変更commitをrevertする

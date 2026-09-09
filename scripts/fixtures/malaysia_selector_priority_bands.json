@@ -1,0 +1,69 @@
+{
+  "cases": [
+    {
+      "id": "rapid_kl_operational_disruption",
+      "title": "Rapid KL deploys entry control after LRT congestion at Pasar Seni",
+      "description": "Passenger flow control is in place while no schedule delays are reported.",
+      "expect_selected": true,
+      "expect_tier": "urgent_operational"
+    },
+    {
+      "id": "penang_lane_closure",
+      "title": "Penang lane closure causes traffic disruption for road users",
+      "description": "Drivers are advised to plan journeys around the temporary lane closure.",
+      "expect_selected": true,
+      "expect_tier": "urgent_operational"
+    },
+    {
+      "id": "malaysia_flight_cancellation",
+      "title": "Jakarta volcanic ash cancels Malaysia Airlines flights before services resume",
+      "description": "Flights between Kuala Lumpur and Jakarta were cancelled and later resumed after volcanic ash disruption.",
+      "expect_selected": true,
+      "expect_tier": "urgent_operational"
+    },
+    {
+      "id": "serian_haze_response",
+      "title": "Serian declares haze emergency response as air quality turns hazardous",
+      "description": "Authorities issued an emergency declaration after the air pollutant index reached hazardous readings.",
+      "expect_selected": true,
+      "expect_tier": "urgent_operational"
+    },
+    {
+      "id": "johor_cloud_seeding",
+      "title": "Johor prepares cloud seeding operations if dam water levels fall during El Nino",
+      "description": "The state is ready to conduct cloud seeding exercises if its dams face low water levels.",
+      "expect_selected": true,
+      "expect_tier": "direct_life_impact"
+    },
+    {
+      "id": "maha_closing_ceremony",
+      "title": "MAHA closing ceremony celebrates agriculture achievements",
+      "description": "The event recognised exhibitors and visitors at the annual showcase.",
+      "expect_selected": false
+    },
+    {
+      "id": "panama_canal_background",
+      "title": "Panama Canal project draws attention from global shipping industry",
+      "description": "International operators discussed longer-term development plans.",
+      "expect_selected": false
+    },
+    {
+      "id": "golf_development_project",
+      "title": "Three companies unveil golf course development project",
+      "description": "The private development was announced at a corporate event.",
+      "expect_selected": false
+    },
+    {
+      "id": "agriculture_budget_expectation",
+      "title": "Agriculture ministry expects budget allocation for farm development",
+      "description": "Officials discussed agricultural development plans during a ceremony.",
+      "expect_selected": false
+    },
+    {
+      "id": "foreign_volcano_without_malaysia_connection",
+      "title": "Volcanic ash disrupts flights around Jakarta",
+      "description": "Airlines cancel flights after an overseas volcano eruption.",
+      "expect_selected": false
+    }
+  ]
+}

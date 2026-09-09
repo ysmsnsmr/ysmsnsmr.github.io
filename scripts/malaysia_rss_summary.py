@@ -28,6 +28,11 @@ MYT = timezone(timedelta(hours=8))
 
 FLAG_WEATHER = "is_weather"
 FLAG_HEAT = "is_heat"
+FLAG_FUEL_POLICY = "is_fuel_policy"
+FLAG_HAZE_IMPACT = "is_haze_impact"
+FLAG_IDENTITY_DOCUMENT_SERVICE = "is_identity_document_service"
+FLAG_MALAYSIA_TRAVEL_DISRUPTION = "is_malaysia_travel_disruption"
+FLAG_CLOUD_SEEDING_IMPACT = "is_cloud_seeding_impact"
 FLAG_PUBLIC_TRANSPORT = "is_public_transport"
 FLAG_ROAD_ISSUE = "is_road_issue"
 FLAG_FLOOD_IMPACT = "is_flood_impact"
@@ -55,6 +60,11 @@ FLAG_POLITICAL_NOISE = "is_political_noise"
 ALL_FLAGS = [
     FLAG_WEATHER,
     FLAG_HEAT,
+    FLAG_FUEL_POLICY,
+    FLAG_HAZE_IMPACT,
+    FLAG_IDENTITY_DOCUMENT_SERVICE,
+    FLAG_MALAYSIA_TRAVEL_DISRUPTION,
+    FLAG_CLOUD_SEEDING_IMPACT,
     FLAG_PUBLIC_TRANSPORT,
     FLAG_ROAD_ISSUE,
     FLAG_FLOOD_IMPACT,
@@ -81,6 +91,7 @@ ALL_FLAGS = [
 ]
 
 LAST_FINALIZE_STATS: dict[str, object] = {}
+LAST_SELECTION_STATS: dict[str, object] = {}
 RECENT_WINDOW_HOURS = 24
 FRESHNESS_OBSERVATION_WINDOW_HOURS = 24
 FRESHNESS_REFERENCE_WINDOW_HOURS = 48
@@ -104,10 +115,10 @@ PRACTICAL_LIFE_TAGS = {
     "jpj",
     "mykad",
     "mydigital",
+    "identity_documents",
+    "air_quality",
     "food_supply",
-    "agriculture",
     "scam",
-    "urban_development",
     "fuel",
     "vehicle_safety",
 }
@@ -294,6 +305,8 @@ class Item:
     expires_at: datetime | None = None
     active_until: datetime | None = None
     flags: dict[str, bool] = field(default_factory=dict)
+    selection_priority_tier: str = "background_context"
+    selection_priority_reasons: list[str] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         if self.published_at is None:
@@ -538,6 +551,139 @@ def has_weather_warning_context(text: str) -> bool:
     )
 
 
+def has_fuel_policy_context(text: str) -> bool:
+    has_consumer_fuel = has_any(text, ["ron95", "ron97", "budi95", "budi madani"]) or (
+        has_any(text, ["petrol", "diesel"])
+        and has_any(text, ["retail", "per litre", "per liter", "subsidy", "quota", "litres", "liters"])
+    )
+    return has_consumer_fuel and has_any(
+        text,
+        [
+            "price",
+            "prices",
+            "raised",
+            "raise",
+            "increase",
+            "increased",
+            "quota",
+            "limit",
+            "limits",
+            "litres",
+            "liters",
+            "subsidy",
+            "subsidised",
+            "subsidized",
+            "effective",
+        ],
+    )
+
+
+def has_haze_impact_context(text: str) -> bool:
+    has_air_quality_subject = has_any(
+        text,
+        ["haze", "jerebu", "air pollutant index", "air quality", "unhealthy air", "very unhealthy", "hazardous", "ipu", "api"],
+    )
+    return has_air_quality_subject and has_any(
+        text,
+        [
+            "unhealthy",
+            "very unhealthy",
+            "hazardous",
+            "worsens",
+            "worsening",
+            "persists",
+            "emergency declaration",
+            "school",
+            "schools",
+            "school closure",
+            "close schools",
+            "reading",
+            "readings",
+            "air pollutant index",
+            "air quality",
+        ],
+    )
+
+
+def has_identity_document_service_context(text: str) -> bool:
+    has_identity_subject = has_any(text, ["mykad", "identity card", "national registration department", "jpn"])
+    return has_identity_subject and has_any(
+        text,
+        [
+            "issuance",
+            "issue",
+            "replacement",
+            "renewal",
+            "printing",
+            "service",
+            "services",
+            "delay",
+            "delays",
+            "delayed",
+            "disruption",
+            "disrupt",
+            "temporary",
+            "application",
+            "applications",
+        ],
+    )
+
+
+def has_malaysia_travel_disruption_context(text: str) -> bool:
+    has_air_travel = has_any(text, ["flight", "flights", "airline", "airport", "aviation", "air travel"])
+    has_operational_state = has_any(
+        text,
+        ["cancelled", "canceled", "resumed", "resume", "suspended", "suspension", "delayed", "delay", "diverted", "diversion"],
+    )
+    has_malaysia_connection = has_any(
+        text,
+        ["malaysia", "malaysian", "kuala lumpur", "klia", "malaysia airlines", "airasia malaysia", "batik air malaysia"],
+    )
+    return has_air_travel and has_operational_state and has_malaysia_connection
+
+
+def has_cloud_seeding_impact_context(text: str) -> bool:
+    has_malaysia_place = has_any(
+        text,
+        ["malaysia", "johor", "kedah", "perlis", "penang", "selangor", "sabah", "sarawak", "kelantan", "terengganu", "pahang", "perak", "negeri sembilan", "melaka"],
+    )
+    has_operation = has_any(text, ["cloud seeding", "artificial rain"]) and has_any(
+        text,
+        ["conduct", "conducted", "prepare", "prepared", "ready", "plan", "planned", "operation", "operations", "exercise", "exercises"],
+    )
+    has_water_supply_basis = has_any(
+        text,
+        ["dam", "dams", "water level", "water levels", "water supply", "drought", "el nino", "reservoir", "rice bowl"],
+    )
+    return has_malaysia_place and has_operation and has_water_supply_basis
+
+
+def has_operational_transport_disruption_context(text: str) -> bool:
+    return has_any(
+        text,
+        [
+            "service disruption",
+            "service suspended",
+            "service suspension",
+            "service resumed",
+            "services resumed",
+            "train services",
+            "entry control",
+            "passenger flow control",
+            "traffic disruption",
+            "traffic congestion",
+            "road closure",
+            "road closed",
+            "lane closure",
+            "lanes closed",
+            "flight cancelled",
+            "flights cancelled",
+            "flight resumed",
+            "flights resumed",
+        ],
+    )
+
+
 def has_ai_workers_context(text: str) -> bool:
     if not (has_phrase(text, "ai") or has_phrase(text, "artificial intelligence")):
         return False
@@ -595,6 +741,8 @@ def has_road_issue_context(text: str) -> bool:
             "road users advised",
             "road closure",
             "road closed",
+            "lane closure",
+            "lanes closed",
             "traffic disruption",
             "traffic congestion",
             "jalan ditutup",
@@ -813,6 +961,11 @@ def build_flags(item: Item) -> dict[str, bool]:
         text,
         ["cuaca panas", "strok haba", "heat stroke", "heat related", "hot weather"],
     ) or (has_phrase(text, "heat") and has_any(text, ["illness", "stroke", "weather", "related", "death", "deaths"]))
+    flags[FLAG_FUEL_POLICY] = has_fuel_policy_context(text)
+    flags[FLAG_HAZE_IMPACT] = has_haze_impact_context(text)
+    flags[FLAG_IDENTITY_DOCUMENT_SERVICE] = has_identity_document_service_context(text)
+    flags[FLAG_MALAYSIA_TRAVEL_DISRUPTION] = has_malaysia_travel_disruption_context(text)
+    flags[FLAG_CLOUD_SEEDING_IMPACT] = has_cloud_seeding_impact_context(text)
     flags[FLAG_PUBLIC_TRANSPORT] = has_any(
         text,
         [
@@ -1046,8 +1199,10 @@ def has_background_value(item: Item) -> bool:
         "road_closure",
         "flood",
         "weather",
+        "air_quality",
         "klang_valley",
         "fuel",
+        "identity_documents",
         "vehicle_safety",
     }
     if any(tag in tag_values for tag in item.tags):
@@ -1062,10 +1217,14 @@ def has_background_value(item: Item) -> bool:
         or flags[FLAG_MARKET]
         or flags[FLAG_AI_ECONOMY]
         or flags[FLAG_COST_OF_LIVING]
-        or flags[FLAG_URBAN_DEVELOPMENT]
         or flags[FLAG_PUBLIC_TRANSPORT]
         or flags[FLAG_ROAD_ISSUE]
         or flags[FLAG_FLOOD_IMPACT]
+        or flags[FLAG_FUEL_POLICY]
+        or flags[FLAG_HAZE_IMPACT]
+        or flags[FLAG_IDENTITY_DOCUMENT_SERVICE]
+        or flags[FLAG_MALAYSIA_TRAVEL_DISRUPTION]
+        or flags[FLAG_CLOUD_SEEDING_IMPACT]
     ):
         return True
     if flags[FLAG_SCAM] and has_any(text, ["warning", "warns", "beware", "waspada", "alert", "do not share"]):
@@ -1098,10 +1257,8 @@ def has_background_value(item: Item) -> bool:
             "rakan strategik",
             "public health",
             "drought",
-            "cloud seeding",
             "food supply",
             "rice bowl",
-            "agriculture",
             "food aid",
             "farmer aid",
             "farmers",
@@ -1129,6 +1286,11 @@ def has_practical_life_value(item: Item) -> bool:
     if (
         flags[FLAG_WEATHER]
         or flags[FLAG_HEAT]
+        or flags[FLAG_FUEL_POLICY]
+        or flags[FLAG_HAZE_IMPACT]
+        or flags[FLAG_IDENTITY_DOCUMENT_SERVICE]
+        or flags[FLAG_MALAYSIA_TRAVEL_DISRUPTION]
+        or flags[FLAG_CLOUD_SEEDING_IMPACT]
         or flags[FLAG_PUBLIC_TRANSPORT]
         or flags[FLAG_ROAD_ISSUE]
         or flags[FLAG_FLOOD_IMPACT]
@@ -1139,7 +1301,6 @@ def has_practical_life_value(item: Item) -> bool:
         or flags[FLAG_SOCIAL_SECURITY]
         or flags[FLAG_SCAM]
         or flags[FLAG_HEALTH_SYSTEM]
-        or flags[FLAG_URBAN_DEVELOPMENT]
         or flags[FLAG_COST_OF_LIVING]
     ):
         return True
@@ -1165,8 +1326,6 @@ def has_practical_life_value(item: Item) -> bool:
             "public health",
             "food supply",
             "rice bowl",
-            "agriculture",
-            "cloud seeding",
             "drought",
             "bnm",
             "bank negara",
@@ -1314,6 +1473,16 @@ def evaluate_item(item: Item) -> Item:
         else:
             add_unique(item.penalties, reason)
 
+    if flags[FLAG_FUEL_POLICY]:
+        add_score(7, ["fuel", "prices"], "燃料価格・給油上限の変更")
+    if flags[FLAG_HAZE_IMPACT]:
+        add_score(8, ["air_quality", "health"], "ヘイズ・大気汚染による生活影響")
+    if flags[FLAG_IDENTITY_DOCUMENT_SERVICE]:
+        add_score(7, ["identity_documents"], "身分証の発行・再発行サービスに影響")
+    if flags[FLAG_MALAYSIA_TRAVEL_DISRUPTION]:
+        add_score(8, ["public_transport"], "Malaysia発着便の運航に影響")
+    if flags[FLAG_CLOUD_SEEDING_IMPACT]:
+        add_score(7, ["water", "food_supply"], "地域の水供給に備える人工降雨の準備")
     if flags[FLAG_WEATHER]:
         add_score(8, ["weather"], "公式警報・天候リスク")
     if flags[FLAG_HEAT]:
@@ -1343,9 +1512,8 @@ def evaluate_item(item: Item) -> Item:
         or flags[FLAG_AI_ECONOMY]
         or flags[FLAG_CURRENCY]
         or flags[FLAG_MARKET]
-        or flags[FLAG_URBAN_DEVELOPMENT]
         or flags[FLAG_COST_OF_LIVING]
-        or has_any(item_text(item), ["jualan rahmah", "kos sara hidup", "cost of living", "bnm", "bank negara", "opr", "lpg", "drought", "cloud seeding", "food supply", "rice bowl", "agriculture"])
+        or has_any(item_text(item), ["jualan rahmah", "kos sara hidup", "cost of living", "bnm", "bank negara", "opr", "lpg", "drought", "food supply", "rice bowl"])
     ):
         tags = []
         if flags[FLAG_HEALTH_SYSTEM]:
@@ -1356,12 +1524,10 @@ def evaluate_item(item: Item) -> Item:
             tags.append("currency")
         if flags[FLAG_MARKET]:
             tags.append("economy")
-        if flags[FLAG_URBAN_DEVELOPMENT]:
-            tags.append("urban_development")
         if flags[FLAG_COST_OF_LIVING] or has_any(item_text(item), ["jualan rahmah", "kos sara hidup", "cost of living", "lpg"]):
             tags.extend(["prices", "social_support"])
             tags.append("cost_of_living")
-        if has_any(item_text(item), ["drought", "cloud seeding", "food supply", "rice bowl", "agriculture"]):
+        if has_any(item_text(item), ["drought", "food supply", "rice bowl"]):
             tags.append("food_supply")
         add_score(5, tags, "医療・雇用・経済・都市生活の背景価値")
     if has_any(item_text(item), ["dams hit alert levels", "dam hit alert levels", "alert levels", "rice bowl", "drought grips"]):
@@ -1387,7 +1553,7 @@ def evaluate_item(item: Item) -> Item:
             add_unique(item.penalties, "Paul Tan source-specific gate requires review")
         else:
             add_unique(item.penalties, "Paul Tan source-specific gate rejected")
-    if flags[FLAG_INDIVIDUAL_INCIDENT]:
+    if flags[FLAG_INDIVIDUAL_INCIDENT] and not has_operational_transport_disruption_context(item_text(item)):
         add_score(-8, [], "単発事件・事故の可能性")
     if flags[FLAG_POLITICAL_NOISE]:
         add_score(-5, [], "発言ベースの政治ニュースの可能性")
@@ -1410,6 +1576,12 @@ def score_item(item: Item) -> int:
 def should_exclude_item(item: Item) -> bool:
     text = item_text(item)
     flags = ensure_flags(item)
+    if (
+        is_corporate_appointment_noise(item)
+        or is_corporate_earnings_noise(item)
+        or is_market_snapshot_or_forecast_noise(item)
+    ):
+        return True
     if is_paul_tan_item(item) and paul_tan_gate_decision(item) != "accept":
         return True
     if item.feed == "Malay Mail Money" and not (
@@ -1423,6 +1595,8 @@ def should_exclude_item(item: Item) -> bool:
     practical_exception = (
         flags[FLAG_WEATHER]
         or flags[FLAG_HEAT]
+        or flags[FLAG_HAZE_IMPACT]
+        or flags[FLAG_MALAYSIA_TRAVEL_DISRUPTION]
         or flags[FLAG_PUBLIC_TRANSPORT]
         or flags[FLAG_ROAD_ISSUE]
         or flags[FLAG_FLOOD_IMPACT]
@@ -1438,8 +1612,8 @@ def should_exclude_item(item: Item) -> bool:
         or has_any(text, ["m40 women", "childcare", "tax relief", "budi madani", "spm", "moral studies", "education"])
         or flags[FLAG_SOCIAL_SECURITY]
         or flags[FLAG_HEALTH_SYSTEM]
-        or flags[FLAG_URBAN_DEVELOPMENT]
         or flags[FLAG_JPJ]
+        or has_concrete_policy_value(item)
     )
     if flags[FLAG_POLITICAL_NOISE] and not policy_exception:
         return True
@@ -1459,6 +1633,11 @@ def category_for(item: Item) -> str:
         flags[FLAG_PUBLIC_TRANSPORT]
         or flags[FLAG_ROAD_ISSUE]
         or flags[FLAG_FLOOD_IMPACT]
+        or flags[FLAG_FUEL_POLICY]
+        or flags[FLAG_HAZE_IMPACT]
+        or flags[FLAG_IDENTITY_DOCUMENT_SERVICE]
+        or flags[FLAG_MALAYSIA_TRAVEL_DISRUPTION]
+        or flags[FLAG_CLOUD_SEEDING_IMPACT]
         or flags[FLAG_JPJ]
         or flags[FLAG_UTILITY_BILL]
         or flags[FLAG_SABAH_ELECTRICITY]
@@ -1480,6 +1659,63 @@ def financial_topic_bucket(item: Item) -> str:
     if flags[FLAG_CURRENCY]:
         return "ringgit"
     return ""
+
+
+SELECTION_PRIORITY_ORDER = {
+    "urgent_operational": 0,
+    "direct_life_impact": 1,
+    "background_context": 2,
+}
+
+
+def assign_selection_priority(item: Item) -> None:
+    flags = ensure_flags(item)
+    text = item_text(item)
+    item.selection_priority_reasons = []
+    urgent_reasons: list[str] = []
+    if flags[FLAG_WEATHER]:
+        urgent_reasons.append("公式警報・悪天候")
+    if flags[FLAG_HAZE_IMPACT]:
+        urgent_reasons.append("ヘイズ・大気汚染の悪化")
+    if flags[FLAG_FLOOD_IMPACT]:
+        urgent_reasons.append("冠水・倒木などの移動影響")
+    if flags[FLAG_MALAYSIA_TRAVEL_DISRUPTION]:
+        urgent_reasons.append("Malaysia発着便の運航状態")
+    if (flags[FLAG_PUBLIC_TRANSPORT] or flags[FLAG_ROAD_ISSUE]) and has_operational_transport_disruption_context(text):
+        urgent_reasons.append("公共交通・道路の運行影響")
+    if urgent_reasons:
+        item.selection_priority_tier = "urgent_operational"
+        item.selection_priority_reasons = urgent_reasons
+        return
+
+    direct_reasons: list[str] = []
+    if flags[FLAG_FUEL_POLICY]:
+        direct_reasons.append("燃料価格・補助・給油上限")
+    if flags[FLAG_IDENTITY_DOCUMENT_SERVICE]:
+        direct_reasons.append("身分証サービス")
+    if flags[FLAG_CLOUD_SEEDING_IMPACT]:
+        direct_reasons.append("地域の水供給への備え")
+    if flags[FLAG_PUBLIC_TRANSPORT] or flags[FLAG_ROAD_ISSUE]:
+        direct_reasons.append("交通・道路の利用情報")
+    if flags[FLAG_JPJ] or flags[FLAG_UTILITY_BILL] or flags[FLAG_SABAH_ELECTRICITY]:
+        direct_reasons.append("手続き・料金")
+    if flags[FLAG_SOCIAL_SECURITY] or flags[FLAG_SCAM] or flags[FLAG_COST_OF_LIVING]:
+        direct_reasons.append("家計・支援・注意喚起")
+    if direct_reasons:
+        item.selection_priority_tier = "direct_life_impact"
+        item.selection_priority_reasons = direct_reasons
+        return
+
+    item.selection_priority_tier = "background_context"
+    item.selection_priority_reasons = ["生活に関わる背景情報"]
+
+
+def selection_sort_key(item: Item) -> tuple[int, int, float]:
+    return (
+        SELECTION_PRIORITY_ORDER.get(item.selection_priority_tier, 9),
+        -item.score,
+        -item.pub_date.timestamp(),
+    )
 
 
 def final_sort_key(item: Item) -> tuple[int, int, float]:
@@ -1529,7 +1765,10 @@ def has_corporate_appointment_exception(text: str) -> bool:
 
 def is_corporate_appointment_noise(item: Item) -> bool:
     text = final_noise_text(item)
-    is_appointment = has_any(text, ["appoints", "appointed", "appointment", "names", "named"])
+    is_appointment = has_any(
+        text,
+        ["appoints", "appointed", "appointment", "names", "named", "new chairman", "new chief executive", "new ceo"],
+    )
     is_corporate_role = has_any(
         text,
         [
@@ -1546,9 +1785,58 @@ def is_corporate_appointment_noise(item: Item) -> bool:
     return is_appointment and is_corporate_role and not has_corporate_appointment_exception(text)
 
 
+def has_financial_reporting_period(text: str) -> bool:
+    return bool(re.search(r"(?<![a-z0-9])(?:fy|[1-4]q|q[1-4]|[12]h|h[12])\s?\d{2,4}(?![a-z0-9])", text)) or has_any(
+        text,
+        ["quarter", "quarterly", "financial year", "full year", "half year", "financial results"],
+    )
+
+
+def is_corporate_earnings_noise(item: Item) -> bool:
+    text = final_noise_text(item)
+    has_earnings = has_any(text, ["earnings", "net profit", "profit", "revenue", "loss", "pat", "patami", "patnci"])
+    return has_earnings and has_financial_reporting_period(text) and not has_corporate_appointment_exception(text)
+
+
+def is_market_snapshot_or_forecast_noise(item: Item) -> bool:
+    text = final_noise_text(item)
+    if has_fuel_policy_context(text):
+        return False
+    if has_any(text, ["foreign exchange rates", "exchange rates"]) and not has_any(
+        text,
+        ["bank negara", "monetary policy", "opr", "loan costs"],
+    ):
+        return True
+    has_financial_market_subject = has_any(
+        text,
+        [
+            "bursa malaysia",
+            "fbm klci",
+            "ringgit",
+            "rubber market",
+            "share market",
+            "stock market",
+            "commodity market",
+            "cpo",
+            "crude oil",
+            "gold prices",
+            "silver prices",
+        ],
+    )
+    has_snapshot_or_forecast = has_any(
+        text,
+        ["forecast", "expected", "outlook", "trading", "trade in", "range-bound", "range bound", "remains firm", "remain firm", "holds near", "midday", "closes", "ends week"],
+    )
+    return has_financial_market_subject and has_snapshot_or_forecast
+
+
 def is_forced_final_noise(item: Item) -> bool:
     text = final_noise_text(item)
-    if is_corporate_appointment_noise(item):
+    if (
+        is_corporate_appointment_noise(item)
+        or is_corporate_earnings_noise(item)
+        or is_market_snapshot_or_forecast_noise(item)
+    ):
         return True
     has_practical_value = has_practical_life_value(item)
     noise_checks = [
@@ -1683,6 +1971,7 @@ def freshness_observation(items: list[Item], selected: list[Item], now: datetime
 
 
 def select_items(items: list[Item], now: datetime) -> list[Item]:
+    global LAST_SELECTION_STATS
     cutoff = now - timedelta(hours=RECENT_WINDOW_HOURS)
     recent = [item for item in items if cutoff <= item.pub_date <= now]
     by_key: dict[str, Item] = {}
@@ -1699,35 +1988,76 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
         if item.source_count > 1:
             add_unique(item.reasons, "複数媒体で同一論点を報道")
 
-    candidates = [item for item in by_key.values() if item.score >= 3 and not should_exclude_item(item)]
-    candidates.sort(key=lambda item: (item.score, item.pub_date), reverse=True)
+    candidates = [
+        item
+        for item in by_key.values()
+        if item.score >= 3 and not should_exclude_item(item) and not is_forced_final_noise(item)
+    ]
+    for item in candidates:
+        item.category = category_for(item)
+        assign_selection_priority(item)
+    candidates.sort(key=selection_sort_key)
 
     selected: list[Item] = []
     source_counts: Counter[str] = Counter()
     category_limits = {"【速報】": 3, "【生活インパクト】": 5, "【知っておくと得】": 8}
     category_counts: Counter[str] = Counter()
     financial_counts: Counter[str] = Counter()
+    cap_excluded: list[dict[str, object]] = []
+
+    def record_cap_exclusion(item: Item, reason: str) -> None:
+        cap_excluded.append(
+            {
+                "reason": reason,
+                "tier": item.selection_priority_tier,
+                "source": item.source,
+                "title": item.title,
+                "link": item.link,
+            }
+        )
+
     for item in candidates:
-        category = category_for(item)
-        item.category = category
-        if is_forced_final_noise(item):
-            continue
+        category = item.category
         financial_bucket = financial_topic_bucket(item) if category == "【知っておくと得】" else ""
         source_limit = SOURCE_LIMITS.get(item.source, 24)
         if source_counts[item.source] >= source_limit:
+            record_cap_exclusion(item, "source_cap")
             continue
-        if category_counts[category] >= category_limits[category]:
+        if (
+            item.selection_priority_tier == "background_context"
+            and category_counts[category] >= category_limits[category]
+        ):
+            record_cap_exclusion(item, "category_cap")
             continue
         if financial_bucket and financial_counts[financial_bucket] >= FINANCIAL_LIMITS[financial_bucket]:
+            record_cap_exclusion(item, "financial_cap")
+            continue
+        if len(selected) >= 15:
+            record_cap_exclusion(item, "overall_cap")
             continue
         selected.append(item)
         source_counts[item.source] += 1
         category_counts[category] += 1
         if financial_bucket:
             financial_counts[financial_bucket] += 1
-        if len(selected) >= 15:
-            break
-    return finalize_selected_items(selected)
+    finalized = finalize_selected_items(selected)
+    cap_counts = Counter(str(record["tier"]) for record in cap_excluded)
+    highest_cap_excluded = min(
+        cap_excluded,
+        key=lambda record: (
+            SELECTION_PRIORITY_ORDER.get(str(record["tier"]), 9),
+            str(record["link"]),
+        ),
+        default=None,
+    )
+    LAST_SELECTION_STATS = {
+        "candidate_counts_by_tier": dict(Counter(item.selection_priority_tier for item in candidates)),
+        "selected_counts_by_tier": dict(Counter(item.selection_priority_tier for item in finalized)),
+        "cap_excluded_counts_by_tier": dict(cap_counts),
+        "cap_excluded_count": len(cap_excluded),
+        "highest_cap_excluded": highest_cap_excluded,
+    }
+    return finalized
 
 
 def selection_summary(items: list[Item], selected: list[Item], now: datetime) -> str:
@@ -1740,6 +2070,10 @@ def selection_summary(items: list[Item], selected: list[Item], now: datetime) ->
     top_tags = ", ".join(f"{tag}:{count}" for tag, count in tag_counts.most_common(8)) or "なし"
     validation_errors = LAST_FINALIZE_STATS.get("validation_errors", [])
     validation_text = ", ".join(validation_errors) if validation_errors else "なし"
+    candidate_tiers = LAST_SELECTION_STATS.get("candidate_counts_by_tier", {})
+    selected_tiers = LAST_SELECTION_STATS.get("selected_counts_by_tier", {})
+    cap_excluded_tiers = LAST_SELECTION_STATS.get("cap_excluded_counts_by_tier", {})
+    highest_cap_excluded = LAST_SELECTION_STATS.get("highest_cap_excluded")
     freshness = freshness_observation(items, selected, now)
     lines = [
         "selection_summary:",
@@ -1747,6 +2081,9 @@ def selection_summary(items: list[Item], selected: list[Item], now: datetime) ->
         f"- unique_topics: {len(unique_keys)}",
         f"- selected_items: {len(selected)}",
         f"- categories: 速報={category_counts['【速報】']}, 生活インパクト={category_counts['【生活インパクト】']}, 知っておくと得={category_counts['【知っておくと得】']}",
+        f"- priority_candidates: urgent_operational={candidate_tiers.get('urgent_operational', 0)}, direct_life_impact={candidate_tiers.get('direct_life_impact', 0)}, background_context={candidate_tiers.get('background_context', 0)}",
+        f"- priority_selected: urgent_operational={selected_tiers.get('urgent_operational', 0)}, direct_life_impact={selected_tiers.get('direct_life_impact', 0)}, background_context={selected_tiers.get('background_context', 0)}",
+        f"- priority_cap_excluded: urgent_operational={cap_excluded_tiers.get('urgent_operational', 0)}, direct_life_impact={cap_excluded_tiers.get('direct_life_impact', 0)}, background_context={cap_excluded_tiers.get('background_context', 0)}",
         f"- top_tags: {top_tags}",
         f"- recent_window_hours: {freshness['recent_window_hours']}",
         f"- comparison_window_hours: {freshness['comparison_window_hours']}",
@@ -1761,6 +2098,14 @@ def selection_summary(items: list[Item], selected: list[Item], now: datetime) ->
         f"- final_removed_financial_cap: {LAST_FINALIZE_STATS.get('removed_financial_cap', 0)}",
         f"- final_validation_errors: {validation_text}",
     ]
+    if isinstance(highest_cap_excluded, dict):
+        lines.append(
+            "- highest_priority_cap_excluded: "
+            f"{highest_cap_excluded.get('tier')} {highest_cap_excluded.get('reason')} "
+            f"{highest_cap_excluded.get('link')}"
+        )
+    else:
+        lines.append("- highest_priority_cap_excluded: none")
     selected_over_items = freshness.get("selected_over_24h_items")
     if isinstance(selected_over_items, list) and selected_over_items:
         lines.append("- selected_over_24h_items:")
@@ -2007,6 +2352,8 @@ def item_json(item: Item) -> dict[str, object]:
         "score": item.score,
         "reasons": item.reasons,
         "penalties": item.penalties,
+        "selection_priority_tier": item.selection_priority_tier,
+        "selection_priority_reasons": item.selection_priority_reasons,
         "background_value": item.background_value,
         "selected_summary": selected_summary_json(item),
         "editorial_entry": editorial_entry_json(item),
@@ -2036,6 +2383,7 @@ def build_selected_items_json(
         },
         "failed_sources": failed_sources,
         "items": [item_json(item) for item in selected],
+        "selection_priority_observation": LAST_SELECTION_STATS,
     }
     if freshness is not None:
         payload["freshness_observation"] = freshness
@@ -2154,6 +2502,99 @@ def self_test() -> int:
     heat_item = item("Cuaca panas: 56 kes, dua kematian akibat strok haba")
     evaluate_item(heat_item)
     check("BM heat triggers heat", heat_item.flags[FLAG_HEAT])
+
+    fuel_policy_item = item(
+        "RON95 limit raised to 300 litres while diesel quota increases to 400 litres",
+        "The BUDI95 monthly quota is restored for eligible motorists.",
+    )
+    evaluate_item(fuel_policy_item)
+    check("Fuel quota change triggers fuel policy", fuel_policy_item.flags[FLAG_FUEL_POLICY])
+    check("Fuel quota change is direct life impact", category_for(fuel_policy_item) == "【生活インパクト】")
+
+    haze_school_item = item(
+        "Air quality reaches hazardous level; schools to close if API exceeds 200",
+        "Haze pushes the air pollutant index above 300, with school closure guidance issued.",
+    )
+    evaluate_item(haze_school_item)
+    assign_selection_priority(haze_school_item)
+    check("Haze school impact triggers haze flag", haze_school_item.flags[FLAG_HAZE_IMPACT])
+    check("Haze school impact is urgent operational", haze_school_item.selection_priority_tier == "urgent_operational")
+
+    mykad_delay_item = item(
+        "MyKad issuance to face delay as government transitions to new version",
+        "JPN says MyKad issuance and replacement services will be temporarily delayed during the transition.",
+    )
+    evaluate_item(mykad_delay_item)
+    check("MyKad delay triggers identity service flag", mykad_delay_item.flags[FLAG_IDENTITY_DOCUMENT_SERVICE])
+    check("MyKad delay is direct life impact", category_for(mykad_delay_item) == "【生活インパクト】")
+
+    malaysia_flight_disruption = item(
+        "Jakarta volcanic ash cancels Malaysia Airlines flights before services resume",
+        "Flights between Kuala Lumpur and Jakarta were cancelled and later resumed after volcanic ash disruption.",
+    )
+    evaluate_item(malaysia_flight_disruption)
+    assign_selection_priority(malaysia_flight_disruption)
+    check("Malaysia flight disruption requires all travel signals", malaysia_flight_disruption.flags[FLAG_MALAYSIA_TRAVEL_DISRUPTION])
+    check("Malaysia flight disruption is urgent operational", malaysia_flight_disruption.selection_priority_tier == "urgent_operational")
+
+    foreign_volcano_only = item(
+        "Volcanic ash disrupts flights around Jakarta",
+        "Airlines cancel flights after an overseas volcano eruption.",
+    )
+    evaluate_item(foreign_volcano_only)
+    check("Foreign volcano without Malaysia connection is not travel disruption", not foreign_volcano_only.flags[FLAG_MALAYSIA_TRAVEL_DISRUPTION])
+
+    foreign_airasia_only = item(
+        "AirAsia cancels flights around Jakarta after volcanic ash disruption",
+        "The airline suspended local flights after an overseas volcano eruption.",
+    )
+    evaluate_item(foreign_airasia_only)
+    check("AirAsia without a Malaysia connection is not travel disruption", not foreign_airasia_only.flags[FLAG_MALAYSIA_TRAVEL_DISRUPTION])
+
+    rapid_kl_disruption = item(
+        "Rapid KL train incident causes service disruption and entry control",
+        "Passenger flow control is in place while affected LRT services resume.",
+    )
+    evaluate_item(rapid_kl_disruption)
+    check("Operational transport incident has no single-incident penalty", "単発事件・事故の可能性" not in rapid_kl_disruption.penalties)
+
+    cloud_seeding_item = item(
+        "Johor prepares cloud seeding operations if dam water levels fall during El Nino",
+        "The state is ready to conduct cloud seeding exercises if its dams face low water levels.",
+    )
+    evaluate_item(cloud_seeding_item)
+    check("Cloud seeding with water basis is direct impact", cloud_seeding_item.flags[FLAG_CLOUD_SEEDING_IMPACT])
+
+    agriculture_plain = item(
+        "Agriculture ministry expects budget allocation for farm development",
+        "Officials discussed agricultural development plans during a ceremony.",
+    )
+    evaluate_item(agriculture_plain)
+    check("Standalone agriculture does not get background score", agriculture_plain.score < 3)
+    check("Standalone agriculture is excluded", should_exclude_item(agriculture_plain))
+
+    corporate_earnings = item("Company posts 2Q26 net profit gain after revenue rises")
+    evaluate_item(corporate_earnings)
+    check("Corporate earnings are excluded", should_exclude_item(corporate_earnings))
+    check("Corporate earnings are removed by final noise gate", not final_noise_gate([corporate_earnings]))
+
+    rubber_market_forecast = item(
+        "Rubber market expected to remain firm amid supply constraints",
+        "Adverse weather may limit supply, while traders expect the market to remain firm next week.",
+    )
+    evaluate_item(rubber_market_forecast)
+    check("Market forecast is excluded", should_exclude_item(rubber_market_forecast))
+    check("Market forecast is removed by final noise gate", not final_noise_gate([rubber_market_forecast]))
+
+    cap_direct_items = [
+        item(f"Rapid KL commuter update {number}", "Public transport information for commuters.")
+        for number in range(15)
+    ]
+    cap_priority_items = cap_direct_items + [haze_school_item]
+    cap_priority_selected = select_items(cap_priority_items, now)
+    check("Urgent haze remains selected when overall cap is full", haze_school_item in cap_priority_selected)
+    check("Priority observation records a cap exclusion", LAST_SELECTION_STATS.get("cap_excluded_count") == 1)
+    check("Priority observation protects urgent items before direct items", LAST_SELECTION_STATS.get("highest_cap_excluded", {}).get("tier") == "direct_life_impact")
 
     sabah_item = item("Sabah electricity bills rising?", "Tariff unchanged; aircon use is the likeliest reason.")
     evaluate_item(sabah_item)
