@@ -41,7 +41,7 @@ from meta_ads_personal_feed_presentation import (
 )
 
 
-SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v5"
+SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v6"
 STATE_SCHEMA_VERSION = "meta-ads-personal-feed-state/v2"
 LEGACY_STATE_SCHEMA_VERSION = "meta-ads-personal-feed-state/v1"
 STATE_V3_SCHEMA_VERSION = "meta-ads-personal-feed-state/v3"
@@ -135,7 +135,10 @@ def _validate_match(value: Any, parser: str, label: str) -> dict[str, Any]:
     if kind == "all":
         return _expect_keys(value, {"kind"}, label)
     if kind == "all_groups":
-        payload = _expect_keys(value, {"kind", "groups"}, label)
+        expected_keys = {"kind", "groups"}
+        if "groupSearchFields" in value:
+            expected_keys.add("groupSearchFields")
+        payload = _expect_keys(value, expected_keys, label)
         groups = payload["groups"]
         if not isinstance(groups, list) or len(groups) < 2:
             raise ContractError(f"{label}.groups must contain at least two groups")
@@ -144,6 +147,12 @@ def _validate_match(value: Any, parser: str, label: str) -> dict[str, Any]:
                 raise ContractError(f"{label}.groups[{index}] must be a unique non-empty array")
             for term in group:
                 _text(term, f"{label}.groups[{index}] term")
+        fields = payload.get("groupSearchFields")
+        if fields is not None:
+            if not isinstance(fields, list) or len(fields) != len(groups):
+                raise ContractError(f"{label}.groupSearchFields must have one field per group")
+            if any(field not in {"title", "title_and_context"} for field in fields):
+                raise ContractError(f"{label}.groupSearchFields values must be title or title_and_context")
         return payload
     if kind == "any_terms":
         payload = _expect_keys(value, {"kind", "terms"}, label)
@@ -561,10 +570,17 @@ def _match(
             [f"category:{item}" for item in matched_categories] + [f"keyword:{matched_term}"],
             [],
         )
-    # Existing two-group sources keep their title-only contract.  Product News
-    # uses any_terms, which intentionally also considers RSS descriptions and
-    # categories under its separately versioned relevance rule.
-    terms = [next((candidate for candidate in group if _contains_term(title.casefold(), candidate)), None) for group in policy["groups"]]
+    # Each group has an explicit search scope. Legacy all_groups configurations
+    # remain title-only; a source may opt in to title_and_context for only the
+    # groups where RSS descriptions add meaningful relevance evidence.
+    scopes = policy.get("groupSearchFields", ["title"] * len(policy["groups"]))
+    title_text = title.casefold()
+    title_and_context = "\n".join([title, source_context]).casefold()
+    search_texts = [title_text if scope == "title" else title_and_context for scope in scopes]
+    terms = [
+        next((candidate for candidate in group if _contains_term(search_text, candidate)), None)
+        for group, search_text in zip(policy["groups"], search_texts)
+    ]
     group_matches = [term is not None for term in terms]
     if not all(group_matches):
         return None, group_matches

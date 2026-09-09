@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "meta-ads-personal-feed-sources/v5",
+  "schemaVersion": "meta-ads-personal-feed-sources/v6",
   "policies": {
     "persistRawResponseBody": false,
     "historyRetentionDays": 180,
@@ -83,14 +83,14 @@
       "id": "social-media-today-meta-ads",
       "name": "Social Media Today (Meta Ads)",
       "classification": "unofficial",
-      "sourceUrl": "https://www.socialmediatoday.com/",
-      "fetchUrl": "https://www.socialmediatoday.com/feeds/news/",
+      "sourceUrl": "https://www.socialmediatoday.com/topic/facebook/",
+      "fetchUrl": "https://www.socialmediatoday.com/feeds/topic/facebook/",
       "parser": "rss",
       "expectedContentTypes": ["application/rss+xml", "application/xml", "text/xml"],
       "contentLanguage": "en",
       "platforms": ["Meta Ads"],
       "platformIds": ["meta-ads"],
-      "relevanceRevision": "legacy-v2",
+      "relevanceRevision": "social-media-today-meta-ads-v2",
       "transport": {
         "allowedFetchHosts": ["www.socialmediatoday.com"],
         "allowedContentHosts": ["www.socialmediatoday.com"],
@@ -100,6 +100,7 @@
       },
       "match": {
         "kind": "all_groups",
+        "groupSearchFields": ["title", "title_and_context"],
         "groups": [
           ["meta", "facebook", "instagram"],
           ["marketing api", "ads manager", "advertising", "advertiser", "campaign", "promotion", "ads", "ad"]
