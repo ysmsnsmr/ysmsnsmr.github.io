@@ -1,6 +1,6 @@
 {
   "schemaVersion": "meta-ads-personal-feed-state/v3",
-  "updatedAt": "2026-09-09T22:29:27Z",
+  "updatedAt": "2026-09-10T04:45:17Z",
   "sources": {
     "meta-product-news-rss": {
       "relevanceRevision": "meta-ads-v1",
@@ -15,7 +15,7 @@
           ],
           "fingerprint": "87932d2acdd42983aa7d5e1d5d805f68da0efe998c8ea58dce18665d343aa3a1",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "87932d2acdd42983aa7d5e1d5d805f68da0efe998c8ea58dce18665d343aa3a1",
@@ -53,7 +53,7 @@
           "matchEvidence": [],
           "fingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
@@ -86,7 +86,7 @@
           "matchEvidence": [],
           "fingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
@@ -119,7 +119,7 @@
           "matchEvidence": [],
           "fingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
@@ -152,7 +152,7 @@
           "matchEvidence": [],
           "fingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
@@ -185,7 +185,7 @@
           "matchEvidence": [],
           "fingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
@@ -218,7 +218,7 @@
           "matchEvidence": [],
           "fingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
@@ -251,7 +251,7 @@
           "matchEvidence": [],
           "fingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
@@ -284,7 +284,7 @@
           "matchEvidence": [],
           "fingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
@@ -317,7 +317,7 @@
           "matchEvidence": [],
           "fingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
@@ -350,7 +350,7 @@
           "matchEvidence": [],
           "fingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
@@ -391,7 +391,7 @@
           ],
           "fingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
@@ -427,7 +427,7 @@
           ],
           "fingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
@@ -463,7 +463,7 @@
           ],
           "fingerprint": "7acf956231436a87c7b7a9015db094361a079af2b65baf71f7b29d23f773fa11",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "7acf956231436a87c7b7a9015db094361a079af2b65baf71f7b29d23f773fa11",
@@ -499,7 +499,7 @@
           ],
           "fingerprint": "143436c34d5eef00048e1b6e3dae36a41ad7a161b317c577367a64dc953d8e2d",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "143436c34d5eef00048e1b6e3dae36a41ad7a161b317c577367a64dc953d8e2d",
@@ -535,7 +535,7 @@
           ],
           "fingerprint": "caba183d8fc7ae1644b298b799c9cc7f087140275704cc3da5246f72209d9161",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "caba183d8fc7ae1644b298b799c9cc7f087140275704cc3da5246f72209d9161",
@@ -571,7 +571,7 @@
           ],
           "fingerprint": "da39b3baf02d4feaf40106aadcc9cf1c7208ee94ec16b03daf04c3040c5736be",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "da39b3baf02d4feaf40106aadcc9cf1c7208ee94ec16b03daf04c3040c5736be",
@@ -607,7 +607,7 @@
           ],
           "fingerprint": "c04837311b5913cc77c74ad2d4f3c03724c16e3ddb4a1e0ae315724aa9954730",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "c04837311b5913cc77c74ad2d4f3c03724c16e3ddb4a1e0ae315724aa9954730",
@@ -648,7 +648,7 @@
           ],
           "fingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
           "firstObservedAt": "2026-09-02T04:36:59Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
@@ -684,7 +684,7 @@
           ],
           "fingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
@@ -720,7 +720,7 @@
           ],
           "fingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
@@ -756,7 +756,7 @@
           ],
           "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
@@ -792,7 +792,7 @@
           ],
           "fingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
@@ -828,7 +828,7 @@
           ],
           "fingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
@@ -864,7 +864,7 @@
           ],
           "fingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
@@ -900,7 +900,7 @@
           ],
           "fingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
@@ -936,7 +936,7 @@
           ],
           "fingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
@@ -972,7 +972,7 @@
           ],
           "fingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
@@ -1008,7 +1008,7 @@
           ],
           "fingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
@@ -1044,7 +1044,7 @@
           ],
           "fingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
@@ -1080,7 +1080,7 @@
           ],
           "fingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
@@ -1116,7 +1116,7 @@
           ],
           "fingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
@@ -1152,7 +1152,7 @@
           ],
           "fingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
@@ -1188,7 +1188,7 @@
           ],
           "fingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
@@ -1224,7 +1224,7 @@
           ],
           "fingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
@@ -1260,7 +1260,7 @@
           ],
           "fingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
@@ -1296,7 +1296,7 @@
           ],
           "fingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
@@ -1332,7 +1332,7 @@
           ],
           "fingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
@@ -1368,7 +1368,7 @@
           ],
           "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
@@ -1404,7 +1404,7 @@
           ],
           "fingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
@@ -1440,7 +1440,7 @@
           ],
           "fingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
@@ -1476,7 +1476,7 @@
           ],
           "fingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
@@ -1512,7 +1512,7 @@
           ],
           "fingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
@@ -1548,7 +1548,7 @@
           ],
           "fingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
@@ -1584,7 +1584,7 @@
           ],
           "fingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
@@ -1620,7 +1620,7 @@
           ],
           "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
@@ -1656,7 +1656,7 @@
           ],
           "fingerprint": "df19403656263ac9e00d4d6b0ba326faf03ae83fadc7c0ce7bfc212072f92d5d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "df19403656263ac9e00d4d6b0ba326faf03ae83fadc7c0ce7bfc212072f92d5d",
@@ -1692,7 +1692,7 @@
           ],
           "fingerprint": "506108f10b4c1d594d43e31993c5e9e0d98a75fdf46ae71f9884e802efed039d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "506108f10b4c1d594d43e31993c5e9e0d98a75fdf46ae71f9884e802efed039d",
@@ -1800,7 +1800,7 @@
           ],
           "fingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
           "firstObservedAt": "2026-09-09T04:45:10Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
@@ -1840,7 +1840,7 @@
           ],
           "fingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
@@ -1875,7 +1875,7 @@
           ],
           "fingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
@@ -1910,7 +1910,7 @@
           ],
           "fingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
@@ -1945,7 +1945,7 @@
           ],
           "fingerprint": "d2dc0dc1c4efc057c1c0191e0388749eee34a824f326f4644babbc1469695685",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-09T22:29:27Z",
+          "lastObservedAt": "2026-09-10T04:45:17Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v2",
             "sourceFingerprint": "d2dc0dc1c4efc057c1c0191e0388749eee34a824f326f4644babbc1469695685",
@@ -2305,9 +2305,9 @@
         "itemKey": "https://www.socialmediatoday.com/news/how-will-metas-settlement-impact-social-media/829033/",
         "fingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
         "locale": "en",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-09T22:29:27Z",
-        "nextRetryAt": "2026-09-09T23:29:27Z",
+        "failureCount": 2,
+        "lastFailureAt": "2026-09-10T04:45:17Z",
+        "nextRetryAt": "2026-09-10T06:45:17Z",
         "lastFailureCode": "http_400",
         "lastProviderErrorCode": "json_validate_failed",
         "quarantined": false
@@ -2317,9 +2317,9 @@
         "itemKey": "https://www.socialmediatoday.com/news/how-will-metas-settlement-impact-social-media/829033/",
         "fingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
         "locale": "ja",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-09T22:29:27Z",
-        "nextRetryAt": "2026-09-09T23:29:27Z",
+        "failureCount": 2,
+        "lastFailureAt": "2026-09-10T04:45:17Z",
+        "nextRetryAt": "2026-09-10T06:45:17Z",
         "lastFailureCode": "http_400",
         "lastProviderErrorCode": "json_validate_failed",
         "quarantined": false
@@ -2329,11 +2329,11 @@
         "itemKey": "https://www.socialmediatoday.com/news/meta-ai-launches-for-mac/828347/",
         "fingerprint": "143436c34d5eef00048e1b6e3dae36a41ad7a161b317c577367a64dc953d8e2d",
         "locale": "en",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-09T22:29:27Z",
-        "nextRetryAt": "2026-09-09T23:29:27Z",
-        "lastFailureCode": "summary_invalid",
-        "lastProviderErrorCode": null,
+        "failureCount": 2,
+        "lastFailureAt": "2026-09-10T04:45:17Z",
+        "nextRetryAt": "2026-09-10T06:45:17Z",
+        "lastFailureCode": "http_400",
+        "lastProviderErrorCode": "json_validate_failed",
         "quarantined": false
       },
       {
@@ -2341,9 +2341,9 @@
         "itemKey": "https://www.socialmediatoday.com/news/meta-publishes-holiday-marketing-guides/827856/",
         "fingerprint": "c04837311b5913cc77c74ad2d4f3c03724c16e3ddb4a1e0ae315724aa9954730",
         "locale": "en",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-09T22:29:27Z",
-        "nextRetryAt": "2026-09-09T23:29:27Z",
+        "failureCount": 2,
+        "lastFailureAt": "2026-09-10T04:45:17Z",
+        "nextRetryAt": "2026-09-10T06:45:17Z",
         "lastFailureCode": "http_400",
         "lastProviderErrorCode": "json_validate_failed",
         "quarantined": false
@@ -2353,9 +2353,9 @@
         "itemKey": "https://www.socialmediatoday.com/news/meta-publishes-holiday-marketing-guides/827856/",
         "fingerprint": "c04837311b5913cc77c74ad2d4f3c03724c16e3ddb4a1e0ae315724aa9954730",
         "locale": "ja",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-09T22:29:27Z",
-        "nextRetryAt": "2026-09-09T23:29:27Z",
+        "failureCount": 2,
+        "lastFailureAt": "2026-09-10T04:45:17Z",
+        "nextRetryAt": "2026-09-10T06:45:17Z",
         "lastFailureCode": "http_400",
         "lastProviderErrorCode": "json_validate_failed",
         "quarantined": false
@@ -2365,9 +2365,9 @@
         "itemKey": "https://www.socialmediatoday.com/news/meta-removed-more-than-750000-teen-accounts-in-australia/827865/",
         "fingerprint": "da39b3baf02d4feaf40106aadcc9cf1c7208ee94ec16b03daf04c3040c5736be",
         "locale": "en",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-09T22:29:27Z",
-        "nextRetryAt": "2026-09-09T23:29:27Z",
+        "failureCount": 2,
+        "lastFailureAt": "2026-09-10T04:45:17Z",
+        "nextRetryAt": "2026-09-10T06:45:17Z",
         "lastFailureCode": "http_400",
         "lastProviderErrorCode": "json_validate_failed",
         "quarantined": false
@@ -2377,9 +2377,9 @@
         "itemKey": "https://www.socialmediatoday.com/news/meta-settles-landmark-lawsuit-for-18b/828900/",
         "fingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
         "locale": "en",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-09T22:29:27Z",
-        "nextRetryAt": "2026-09-09T23:29:27Z",
+        "failureCount": 2,
+        "lastFailureAt": "2026-09-10T04:45:17Z",
+        "nextRetryAt": "2026-09-10T06:45:17Z",
         "lastFailureCode": "http_400",
         "lastProviderErrorCode": "json_validate_failed",
         "quarantined": false
@@ -2389,9 +2389,9 @@
         "itemKey": "https://www.socialmediatoday.com/news/meta-settles-landmark-lawsuit-for-18b/828900/",
         "fingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
         "locale": "ja",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-09T22:29:27Z",
-        "nextRetryAt": "2026-09-09T23:29:27Z",
+        "failureCount": 2,
+        "lastFailureAt": "2026-09-10T04:45:17Z",
+        "nextRetryAt": "2026-09-10T06:45:17Z",
         "lastFailureCode": "http_400",
         "lastProviderErrorCode": "json_validate_failed",
         "quarantined": false
