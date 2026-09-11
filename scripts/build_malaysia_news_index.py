@@ -402,7 +402,7 @@ def render_latest_summary(day: NewsDay) -> str:
             <h2>{esc(format_date(day.date))}</h2>
             <p class="muted">カテゴリ順に、生活への影響を確認できます。</p>
           </div>
-          <a class="primary-link" href="{daily_page_link(day)}">10件すべて読む</a>
+          <a class="primary-link" href="{daily_page_link(day)}">すべて読む</a>
         </div>
         <div class="focus-grid">
           {render_latest_items(day)}
