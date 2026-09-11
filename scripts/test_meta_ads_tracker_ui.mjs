@@ -31,6 +31,7 @@ const fixtures = new Map(
 const demoReport = JSON.parse(await fs.readFile(path.join(repositoryRoot, "meta-ads-updates/demo-latest.json"), "utf8"));
 const personalFeedReport = JSON.parse(await fs.readFile(path.join(repositoryRoot, "meta-ads-updates/personal-feed.json"), "utf8"));
 const personalFeedV3Report = JSON.parse(await fs.readFile(path.join(repositoryRoot, "scripts/fixtures/meta_ads_personal_feed_v3.json"), "utf8"));
+const personalFeedV4Report = JSON.parse(await fs.readFile(path.join(repositoryRoot, "scripts/fixtures/meta_ads_personal_feed_v4.json"), "utf8"));
 const axeSource = await fs.readFile(require.resolve("axe-core/axe.min.js"), "utf8");
 const artifactDirectory = process.env.META_ADS_UI_ARTIFACT_DIR
   ? path.resolve(process.env.META_ADS_UI_ARTIFACT_DIR)
@@ -114,6 +115,10 @@ async function startServer() {
         if (referer.searchParams.get("personal-fixture") === "v3") {
           response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
           return response.end(JSON.stringify(personalFeedV3Report));
+        }
+        if (referer.searchParams.get("personal-fixture") === "v4") {
+          response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
+          return response.end(JSON.stringify(personalFeedV4Report));
         }
       }
       let filePath = path.resolve(repositoryRoot, `.${decodeURIComponent(url.pathname)}`);
@@ -322,6 +327,24 @@ try {
   await assertTokens(v3List);
   await assertAccessibilityAndLayout(v3List, "personal-feed-v3/desktop");
   await v3List.close();
+
+  const v4List = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await v4List.goto(`${server.origin}/meta-ads-updates/ja/?personal-fixture=v4`, { waitUntil: "networkidle" });
+  assert(await v4List.locator("#update-list .update-card").count() === 1, "v4 ACTION lane must render one direct-impact card");
+  assert(await v4List.locator("#watch-list .update-card").count() === 1, "v4 WATCH lane must render one strategic-signal card");
+  assert(await v4List.locator("#action-lane").isVisible(), "v4 ACTION lane is missing");
+  assert(await v4List.locator("#watch-lane").isVisible(), "v4 WATCH lane is missing");
+  assert((await v4List.locator("#action-lane").textContent()).includes("直接影響"), "v4 ACTION lane label is missing");
+  assert((await v4List.locator("#watch-lane").textContent()).includes("戦略的シグナル"), "v4 WATCH lane label is missing");
+  assert(await v4List.locator(".lane-label--action").count() === 1, "v4 direct-impact badge is missing");
+  assert(await v4List.locator(".lane-label--watch").count() === 1, "v4 strategic-signal badge is missing");
+  assert((await v4List.locator("#result-summary").textContent()).includes("直接影響 1件") && (await v4List.locator("#result-summary").textContent()).includes("戦略的シグナル 1件"), "v4 lane counts are misleading");
+  await assertAccessibilityAndLayout(v4List, "personal-feed-v4/desktop");
+  await v4List.locator("#watch-list .detail-link").click();
+  await v4List.waitForURL(/detail\.html\?/);
+  assert((await v4List.locator(".lane-label").textContent()) === "戦略的シグナル", "v4 detail did not retain its lane");
+  assert((await v4List.locator(".fact-label").allTextContents()).includes("レーン"), "v4 detail is missing the lane fact");
+  await v4List.close();
 
   for (const viewport of [viewports[0], viewports[2]]) {
     const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });

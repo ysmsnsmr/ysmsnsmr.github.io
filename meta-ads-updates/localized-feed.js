@@ -6,7 +6,7 @@
   const demoMode = params.get("demo") === "1";
   const fixtureMode = params.has("fixture");
   const root = locale === "ja" ? "../" : "./";
-  const personalVersions = new Set(["meta-ads-personal-feed/v1", "meta-ads-personal-feed/v2", "meta-ads-personal-feed/v3"]);
+  const personalVersions = new Set(["meta-ads-personal-feed/v1", "meta-ads-personal-feed/v2", "meta-ads-personal-feed/v3", "meta-ads-personal-feed/v4"]);
   const words = locale === "ja" ? {
     allSources: "すべてのソース", allTypes: "すべて", official: "Meta公式", unofficial: "非公式・未確認",
     retrieved: "最終取得", waiting: "初回取得待ち", shown: "表示中：", automatic: "件（自動取得・要確認）",
@@ -14,6 +14,7 @@
     noMatches: "条件に一致する更新はありません", noMatchesCopy: "検索語または絞り込み条件を変更してください。",
     noItems: "取得済みの情報はありません", noItemsCopy: "初回取得後にソースからの情報を表示します。",
     error: "公開フィードを読み込めません", errorTitle: "現在の公開内容を表示できません", errorCopy: "公開フィードを読み込めませんでした。しばらくしてからもう一度お試しください。",
+    action: "直接影響", watch: "戦略的シグナル", actionCount: "直接影響 {count}件", watchCount: "戦略的シグナル {count}件",
     demoFooter: "この画面は架空データによるデモです。実運用の承認・判断には使用しないでください。", demoResult: "（デモ用の架空更新）", demoLink: "公式ソース例を開く"
   } : {
     allSources: "All sources", allTypes: "All", official: "Official", unofficial: "Unofficial",
@@ -22,13 +23,14 @@
     noMatches: "No updates match these filters", noMatchesCopy: "Change the keyword or filters and try again.",
     noItems: "No collected updates yet", noItemsCopy: "Items will appear after the first successful collection.",
     error: "Unable to load the published feed", errorTitle: "The current published content is unavailable", errorCopy: "Please try again later.",
+    action: "Direct impact", watch: "Strategic signal", actionCount: "{count} direct impact items", watchCount: "{count} strategic signals",
     demoFooter: "This screen contains fictional data and must not be used for operational decisions.", demoResult: " (fictional demo updates)", demoLink: "Open official source example"
   };
   const el = {
     demo: document.querySelector("#demo-banner"), recovery: document.querySelector("#recovery-banner"), recoveryCopy: document.querySelector("#recovery-banner-copy"),
     notice: document.querySelector("#unofficial-notice"), stamp: document.querySelector("#week-stamp"), form: document.querySelector("#filter-form"),
     source: document.querySelector("#source-filter"), type: document.querySelector("#priority-filter"), typeLabel: document.querySelector("#priority-filter-label"), query: document.querySelector("#query-filter"), reset: document.querySelector("#reset-button"),
-    summary: document.querySelector("#result-summary"), list: document.querySelector("#update-list"), empty: document.querySelector("#empty-state"), emptyTitle: document.querySelector("#empty-title"), emptyCopy: document.querySelector("#empty-copy"),
+    summary: document.querySelector("#result-summary"), actionLane: document.querySelector("#action-lane"), actionCount: document.querySelector("#action-lane-count"), list: document.querySelector("#update-list"), watchLane: document.querySelector("#watch-lane"), watchCount: document.querySelector("#watch-lane-count"), watchList: document.querySelector("#watch-list"), empty: document.querySelector("#empty-state"), emptyTitle: document.querySelector("#empty-title"), emptyCopy: document.querySelector("#empty-copy"),
     footer: document.querySelector("#tracker-footer"), en: document.querySelector("#locale-en"), ja: document.querySelector("#locale-ja")
   };
   const state = { source: "all", type: "all", q: "" };
@@ -92,6 +94,10 @@
 
   function headline(item) { return presentation(item).shortHeadline || item.title; }
 
+  function lane(item) { return item.lane === "watch" ? "watch" : "action"; }
+
+  function countLabel(template, count) { return template.replace("{count}", String(count)); }
+
   function fact(label, value, fallback = words.unknown) {
     const wrapper = make("div");
     wrapper.append(make("dt", "fact-label", label), make("dd", value ? "" : "not-stated not-stated--plain", value || fallback));
@@ -104,7 +110,7 @@
     if (state.type !== "all") query.set("type", state.type);
     if (state.q.trim()) query.set("q", state.q.trim());
     const fixture = params.get("personal-fixture");
-    if (fixture === "1" || fixture === "v3") query.set("personal-fixture", fixture);
+    if (["1", "v3", "v4"].includes(fixture)) query.set("personal-fixture", fixture);
     return `./detail.html?${query.toString()}`;
   }
 
@@ -113,7 +119,7 @@
     const card = make("article", `update-card update-card--${source.classification}`);
     const heading = make("div", "card-heading");
     const official = source.classification === "official";
-    heading.append(make("span", official ? "origin-label origin-label--official" : "origin-label origin-label--unofficial", official ? words.official : words.unofficial), make("p", "source-name", source.name));
+    heading.append(make("span", `lane-label lane-label--${lane(item)}`, lane(item) === "action" ? words.action : words.watch), make("span", official ? "origin-label origin-label--official" : "origin-label origin-label--unofficial", official ? words.official : words.unofficial), make("p", "source-name", source.name));
     const facts = make("dl", "fact-grid");
     facts.append(fact(words.published, item.publishedDate), fact(words.updated, item.updatedDate));
     const link = make("a", "detail-link", words.details);
@@ -147,6 +153,7 @@
     const personal = personalVersions.has(report.schemaVersion);
     const sources = new Map((report.sources || []).map((source) => [source.id, source]));
     el.list.classList.toggle("update-list--personal", personal);
+    el.watchList.classList.toggle("update-list--personal", personal);
     const delayedRecovery = !personal && report.publication?.mode === "delayed_recovery";
     el.demo.hidden = !demoMode;
     el.recovery.hidden = !delayedRecovery;
@@ -189,7 +196,7 @@
       if (state.type !== "all") next.set("type", state.type);
       if (state.q.trim()) next.set("q", state.q.trim());
       const fixture = params.get("personal-fixture");
-      if (fixture === "1" || fixture === "v3") next.set("personal-fixture", fixture);
+      if (["1", "v3", "v4"].includes(fixture)) next.set("personal-fixture", fixture);
       window.history.replaceState(null, "", `${window.location.pathname}${next.size ? `?${next}` : ""}`);
       for (const key of ["source", "type", "q"]) params.delete(key);
       next.forEach((value, key) => params.set(key, value));
@@ -205,14 +212,23 @@
     }
     function render() {
       const items = visible();
-      el.list.replaceChildren(...items.map((item) => personal ? personalCard(item, sources.get(item.sourceId)) : legacyCard(item)));
+      const actionItems = personal ? items.filter((item) => lane(item) === "action") : items;
+      const watchItems = personal ? items.filter((item) => lane(item) === "watch") : [];
+      el.list.replaceChildren(...actionItems.map((item) => personal ? personalCard(item, sources.get(item.sourceId)) : legacyCard(item)));
+      el.watchList.replaceChildren(...watchItems.map((item) => personalCard(item, sources.get(item.sourceId))));
+      el.actionLane.hidden = personal && actionItems.length === 0;
+      el.watchLane.hidden = !personal || watchItems.length === 0;
+      el.actionCount.textContent = personal ? countLabel(words.actionCount, actionItems.length) : "";
+      el.watchCount.textContent = personal ? countLabel(words.watchCount, watchItems.length) : "";
       el.empty.hidden = items.length > 0;
       if (!items.length) {
         const filtered = state.source !== "all" || state.type !== "all" || Boolean(state.q.trim());
         el.emptyTitle.textContent = filtered ? words.noMatches : personal ? words.noItems : "No updates";
         el.emptyCopy.textContent = filtered ? words.noMatchesCopy : personal ? words.noItemsCopy : "";
       }
-      el.summary.textContent = personal ? `${words.shown}${items.length}${words.automatic}` : `${words.shown}${items.length}${demoMode ? words.demoResult : ""}`;
+      el.summary.textContent = personal
+        ? `${words.shown}${items.length}${words.automatic} · ${countLabel(words.actionCount, actionItems.length)} · ${countLabel(words.watchCount, watchItems.length)}`
+        : `${words.shown}${items.length}${demoMode ? words.demoResult : ""}`;
     }
     function syncControls() { el.source.value = state.source; el.type.value = state.type; el.query.value = state.q; }
     el.form.addEventListener("submit", (event) => event.preventDefault());

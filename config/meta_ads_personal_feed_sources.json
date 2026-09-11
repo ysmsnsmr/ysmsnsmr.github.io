@@ -29,7 +29,7 @@
       "contentLanguage": "en",
       "platforms": ["Metaプラットフォーム全般"],
       "platformIds": ["meta-platforms"],
-      "relevanceRevision": "meta-ads-v1",
+      "relevanceRevision": "meta-ads-lanes-v1",
       "transport": {
         "allowedFetchHosts": ["about.fb.com"],
         "allowedContentHosts": ["about.fb.com"],
@@ -37,26 +37,7 @@
         "maxRedirects": 3,
         "maxItems": 50
       },
-      "match": {
-        "kind": "any_terms",
-        "terms": [
-          "meta ads",
-          "facebook ads",
-          "instagram ads",
-          "advertising",
-          "advertiser",
-          "ads manager",
-          "ad set",
-          "marketing api",
-          "business sdk",
-          "conversion api",
-          "conversions api",
-          "meta pixel",
-          "facebook pixel",
-          "audience network",
-          "advantage+"
-        ]
-      }
+      "match": {"kind": "all"}
     },
     {
       "id": "meta-business-sdk-releases",

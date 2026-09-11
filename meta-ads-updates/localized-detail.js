@@ -5,11 +5,11 @@
   const locale = document.documentElement.lang === "ja" ? "ja" : "en";
   const root = locale === "ja" ? "../" : "./";
   const itemId = params.get("id");
-  const personalVersions = new Set(["meta-ads-personal-feed/v1", "meta-ads-personal-feed/v2", "meta-ads-personal-feed/v3"]);
+  const personalVersions = new Set(["meta-ads-personal-feed/v1", "meta-ads-personal-feed/v2", "meta-ads-personal-feed/v3", "meta-ads-personal-feed/v4"]);
   const words = locale === "ja" ? {
-    official: "Meta公式", unofficial: "非公式・未確認", summaryMissing: "要約は利用できません。原文をご確認ください。", statusMachine: "AI生成の要約", statusReviewed: "レビュー済みの要約", statusMissing: "要約なし", original: "原文タイトル", published: "発表日", updated: "最終更新日", platform: "対象", unknown: "確認できず", unclassified: "未分類", sourceOfficial: "公式ソースを開く", sourceUnofficial: "非公式ソースを開く", notFound: "記事が見つかりません", notFoundCopy: "この記事は更新または保存期間の終了により、一覧から削除された可能性があります。", invalid: "記事を特定できません", invalidCopy: "一覧へ戻り、もう一度記事を選択してください。", error: "現在の公開内容を表示できません", errorCopy: "公開フィードを読み込めませんでした。しばらくしてからもう一度お試しください。"
+    official: "Meta公式", unofficial: "非公式・未確認", action: "直接影響", watch: "戦略的シグナル", lane: "レーン", summaryMissing: "要約は利用できません。原文をご確認ください。", statusMachine: "AI生成の要約", statusReviewed: "レビュー済みの要約", statusMissing: "要約なし", original: "原文タイトル", published: "発表日", updated: "最終更新日", platform: "対象", unknown: "確認できず", unclassified: "未分類", sourceOfficial: "公式ソースを開く", sourceUnofficial: "非公式ソースを開く", notFound: "記事が見つかりません", notFoundCopy: "この記事は更新または保存期間の終了により、一覧から削除された可能性があります。", invalid: "記事を特定できません", invalidCopy: "一覧へ戻り、もう一度記事を選択してください。", error: "現在の公開内容を表示できません", errorCopy: "公開フィードを読み込めませんでした。しばらくしてからもう一度お試しください。"
   } : {
-    official: "Official", unofficial: "Unofficial", summaryMissing: "Summary not available. Review the original source.", statusMachine: "Machine-generated summary", statusReviewed: "Reviewed summary", statusMissing: "Summary not available", original: "Original title", published: "Published", updated: "Updated", platform: "Platforms", unknown: "Not found", unclassified: "Unclassified", sourceOfficial: "Open official source", sourceUnofficial: "Open unofficial source", notFound: "Item not found", notFoundCopy: "This item may have been removed after an update or the end of its retention period.", invalid: "Unable to identify the item", invalidCopy: "Return to the feed and select the item again.", error: "The current published content is unavailable", errorCopy: "Please try again later."
+    official: "Official", unofficial: "Unofficial", action: "Direct impact", watch: "Strategic signal", lane: "Lane", summaryMissing: "Summary not available. Review the original source.", statusMachine: "Machine-generated summary", statusReviewed: "Reviewed summary", statusMissing: "Summary not available", original: "Original title", published: "Published", updated: "Updated", platform: "Platforms", unknown: "Not found", unclassified: "Unclassified", sourceOfficial: "Open official source", sourceUnofficial: "Open unofficial source", notFound: "Item not found", notFoundCopy: "This item may have been removed after an update or the end of its retention period.", invalid: "Unable to identify the item", invalidCopy: "Return to the feed and select the item again.", error: "The current published content is unavailable", errorCopy: "Please try again later."
   };
   const platformNames = locale === "ja" ? { "meta-platforms": "Metaプラットフォーム全般", "meta-business-sdk": "Meta Business SDK", "marketing-api": "Marketing API", "meta-ads": "Meta Ads" } : { "meta-platforms": "Meta platforms", "meta-business-sdk": "Meta Business SDK", "marketing-api": "Marketing API", "meta-ads": "Meta Ads" };
   const el = { back: document.querySelector("#back-link"), en: document.querySelector("#locale-en"), ja: document.querySelector("#locale-ja"), notice: document.querySelector("#detail-unofficial-notice"), card: document.querySelector("#detail-card"), heading: document.querySelector("#detail-heading"), title: document.querySelector("#detail-title"), summary: document.querySelector("#detail-summary"), status: document.querySelector("#detail-presentation-status"), original: document.querySelector("#detail-original-title"), facts: document.querySelector("#detail-facts"), sourceLink: document.querySelector("#detail-source-link"), error: document.querySelector("#detail-error"), errorTitle: document.querySelector("#detail-error-title"), errorCopy: document.querySelector("#detail-error-copy") };
@@ -46,6 +46,7 @@
     if (locale === "ja" && value?.status === "generated" && value.shortHeadlineJa && value.summaryJa) return { status: "machine", shortHeadline: value.shortHeadlineJa, summary: value.summaryJa };
     return { status: "missing", shortHeadline: null, summary: null };
   }
+  function lane(item) { return item.lane === "watch" ? "watch" : "action"; }
   function appendFact(label, value, fallback) { const wrapper = make("div"); wrapper.append(make("dt", "fact-label", label), make("dd", value ? "" : "not-stated not-stated--plain", value || fallback)); el.facts.append(wrapper); }
   function showError(title, copy) { el.card.hidden = true; el.notice.hidden = true; el.errorTitle.textContent = title; el.errorCopy.textContent = copy; el.error.hidden = false; }
 
@@ -62,7 +63,8 @@
     if (!item || !source || !sourceUrl) { showError(words.notFound, words.notFoundCopy); return; }
     const result = presentation(item);
     const official = source.classification === "official";
-    el.heading.append(make("span", official ? "origin-label origin-label--official" : "origin-label origin-label--unofficial", official ? words.official : words.unofficial), make("p", "source-name", source.name));
+    const itemLane = lane(item);
+    el.heading.append(make("span", `lane-label lane-label--${itemLane}`, itemLane === "action" ? words.action : words.watch), make("span", official ? "origin-label origin-label--official" : "origin-label origin-label--unofficial", official ? words.official : words.unofficial), make("p", "source-name", source.name));
     el.title.textContent = result.shortHeadline || item.title;
     el.summary.textContent = result.summary || words.summaryMissing;
     el.status.textContent = result.status === "machine" ? words.statusMachine : result.status === "reviewed" ? words.statusReviewed : words.statusMissing;
@@ -70,6 +72,7 @@
     el.original.textContent = item.title;
     appendFact(words.published, item.publishedDate, words.unknown);
     appendFact(words.updated, item.updatedDate, words.unknown);
+    appendFact(words.lane, itemLane === "action" ? words.action : words.watch, words.unclassified);
     const platforms = Array.isArray(item.platformIds) ? item.platformIds.map((id) => platformNames[id] || id).join(" / ") : Array.isArray(item.platforms) ? item.platforms.join(" / ") : null;
     appendFact(words.platform, platforms, words.unclassified);
     el.sourceLink.href = sourceUrl;

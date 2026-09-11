@@ -18,9 +18,12 @@ from meta_ads_personal_feed import (
     DEFAULT_CONFIG,
     FEED_SCHEMA_VERSION,
     FEED_V3_SCHEMA_VERSION,
+    FEED_V4_SCHEMA_VERSION,
     PRESENTATION_SCHEMA_VERSION,
     STATE_SCHEMA_VERSION,
     STATE_V3_SCHEMA_VERSION,
+    STATE_V4_SCHEMA_VERSION,
+    _classify_lane,
     _meta_business_news_date,
     _bilingual_presentation_from_environment,
     _bilingual_fallback_from_environment,
@@ -36,6 +39,7 @@ from meta_ads_personal_feed import (
     load_config,
     migrate_feed_v2_to_v3,
     migrate_state_v2_to_v3,
+    migrate_state_v3_to_v4,
     validate_config,
     validate_feed,
     validate_state,
@@ -45,6 +49,7 @@ from meta_ads_personal_feed_presentation import PresentationError
 
 NOW = datetime(2026, 8, 29, 9, 0, tzinfo=timezone.utc)
 V3_FIXTURE = Path(__file__).resolve().parent / "fixtures" / "meta_ads_personal_feed_v3.json"
+V4_FIXTURE = Path(__file__).resolve().parent / "fixtures" / "meta_ads_personal_feed_v4.json"
 SOCIAL_MEDIA_TODAY = """<rss><channel>
 <item><title>Meta expands Ads Manager campaign controls</title><link>https://www.socialmediatoday.com/news/meta-expands-ads-manager-campaign-controls/123456/</link><description>Meta announced new campaign controls for advertisers.</description><pubDate>Fri, 29 Aug 2026 02:00:00 -0400</pubDate></item>
 <item><title>Meta launches a new AI subscription</title><link>https://www.socialmediatoday.com/news/meta-ai-subscription/123457/</link><description>Meta announced a consumer subscription package.</description><pubDate>Fri, 29 Aug 2026 01:00:00 -0400</pubDate></item>
@@ -130,8 +135,8 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(discovered["meta-business-news-discovered"]["discovery"]["fromSourceId"], "jon-loomer-meta-ads")
         self.assertEqual(discovered["meta-business-news-discovered"]["transport"]["allowedFetchHosts"], ["www.facebook.com"])
         self.assertFalse(self.config["policies"]["persistRawResponseBody"])
-        self.assertEqual(sources["meta-product-news-rss"]["match"]["kind"], "any_terms")
-        self.assertEqual(sources["meta-product-news-rss"]["relevanceRevision"], "meta-ads-v1")
+        self.assertEqual(sources["meta-product-news-rss"]["match"]["kind"], "all")
+        self.assertEqual(sources["meta-product-news-rss"]["relevanceRevision"], "meta-ads-lanes-v1")
         self.assertEqual(self.config["policies"]["freshness"]["maxItemAgeDays"], 365)
         self.assertEqual(self.config["policies"]["bilingualPresentation"]["maxRequestsPerRun"], 50)
         self.assertEqual(self.config["policies"]["bilingualPresentation"]["minRequestIntervalSeconds"], 12)
@@ -139,6 +144,30 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(self.config["policies"]["bilingualPresentation"]["maxRetryDelaySeconds"], 60)
         self.assertTrue(all(source["contentLanguage"] == "en" for source in [*sources.values(), *discovered.values()]))
         self.assertTrue(all(source["platformIds"] for source in [*sources.values(), *discovered.values()]))
+
+    def test_action_watch_drop_lanes_match_the_reviewed_fifteen_item_set(self) -> None:
+        sources = {source["id"]: source for source in [*self.config["sources"], *self.config["discoveredSources"]]}
+        cases = [
+            ("jon-loomer-meta-ads", "How to Approach Meta Advertising Control", "", "action"),
+            ("jon-loomer-meta-ads", "Meta Introduces a New Automatic Events Feature", "", "action"),
+            ("jon-loomer-meta-ads", "Reply to Keywords Meta Ads Feature", "", "action"),
+            ("jon-loomer-meta-ads", "Meta Is Removing Placement Controls From Ad Sets", "", "action"),
+            ("jon-loomer-meta-ads", "ChatGPT Ads Get Automated Bidding, Placements, and URL Parameters", "Meta advertisers did not see this feature until last year.", "drop"),
+            ("social-media-today-meta-ads", "Meta removes option to exclude ad placements", "", "action"),
+            ("social-media-today-meta-ads", "Meta adds AI-powered assistant for SMB owners", "", "watch"),
+            ("social-media-today-meta-ads", "Meta AI launches for Mac", "", "watch"),
+            ("social-media-today-meta-ads", "Meta publishes holiday marketing guides", "", "watch"),
+            ("social-media-today-meta-ads", "How will Meta’s settlement impact social media?", "", "drop"),
+            ("social-media-today-meta-ads", "Meta settles landmark lawsuit for $18B", "", "drop"),
+            ("social-media-today-meta-ads", "Meta removed more than 750,000 teen accounts in Australia", "Meta ran an educational campaign.", "drop"),
+            ("meta-business-sdk-releases", "v26.0.1", "Marketing API release support.", "watch"),
+            ("meta-product-news-rss", "Introducing Muse: The World’s First Personal AI Agent Built for Everyone", "Muse helps with purchases and payments in WhatsApp.", "watch"),
+            ("meta-product-news-rss", "New Account Security Features for WhatsApp", "Two-step verification and passkeys.", "drop"),
+        ]
+        for source_id, title, source_context, expected_lane in cases:
+            lane, evidence = _classify_lane(sources[source_id], {"title": title, "sourceContext": source_context, "categories": []})
+            self.assertEqual(lane, expected_lane, title)
+            self.assertTrue(evidence, title)
 
     def test_jon_loomer_relevance_requires_category_and_specific_ads_signal(self) -> None:
         jon = """<rss><channel>
@@ -435,11 +464,12 @@ class PersonalFeedTest(unittest.TestCase):
             source_pipeline_stats=pipeline,
         )
         product = pipeline["sources"]["meta-product-news-rss"]
-        self.assertEqual((product["parsedItems"], product["freshnessExcludedItems"], product["relevanceExcludedItems"], product["retainedItems"]), (3, 1, 1, 1))
+        self.assertEqual((product["parsedItems"], product["freshnessExcludedItems"], product["relevanceExcludedItems"], product["retainedItems"]), (3, 1, 0, 2))
         self.assertIn("meta-product-news-rss", {item["sourceId"] for item in feed["items"]})
         self.assertNotIn("old-update", json.dumps(state))
-        self.assertNotIn("group-chat-update", json.dumps(state))
+        self.assertIn("group-chat-update", json.dumps(state))
         self.assertIn("boundary-update", json.dumps(state))
+        self.assertNotIn("WhatsApp group chat update", {item["title"] for item in feed["items"]})
         self.assertNotIn("Meta Ads old update", calls)
 
     def test_product_news_relevance_revision_requires_local_reseed_and_preserves_first_observation(self) -> None:
@@ -466,7 +496,7 @@ class PersonalFeedTest(unittest.TestCase):
         record = next(iter(reseeded["sources"][product_id]["items"].values()))
         self.assertEqual(record["firstObservedAt"], "2026-08-29T09:00:00Z")
         self.assertEqual(record["lastObservedAt"], "2026-08-30T09:00:00Z")
-        self.assertEqual(reseeded["sources"][product_id]["relevanceRevision"], "meta-ads-v1")
+        self.assertEqual(reseeded["sources"][product_id]["relevanceRevision"], "meta-ads-lanes-v1")
 
     def test_reseed_source_id_is_validated_before_any_fetch(self) -> None:
         def unexpected_fetch(_source: dict, _timeout: float) -> tuple[str, str]:
@@ -832,7 +862,7 @@ class PersonalFeedTest(unittest.TestCase):
         feed, next_state = collect(self.config, state, 1, NOW, self.fetcher())
         self.assertEqual(len(feed["sources"]), 4)
         self.assertEqual(len(feed["items"]), 4)
-        self.assertEqual(feed["schemaVersion"], FEED_V3_SCHEMA_VERSION)
+        self.assertEqual(feed["schemaVersion"], FEED_V4_SCHEMA_VERSION)
         self.assertEqual({item["sourceId"] for item in feed["items"]}, {"meta-product-news-rss", "meta-business-sdk-releases", "social-media-today-meta-ads", "jon-loomer-meta-ads"})
         sdk = next(item for item in feed["items"] if item["sourceId"] == "meta-business-sdk-releases")
         self.assertEqual(sdk["updatedDate"], "2026-08-29")
@@ -1309,8 +1339,8 @@ class PersonalFeedTest(unittest.TestCase):
     def test_legacy_state_is_upgraded_without_persisting_source_context(self) -> None:
         legacy_state = {"schemaVersion": "meta-ads-personal-feed-state/v1", "updatedAt": None, "sources": {}}
         feed, upgraded = collect(self.config, legacy_state, 1, NOW.replace(day=30), self.fetcher())
-        self.assertEqual(upgraded["schemaVersion"], STATE_V3_SCHEMA_VERSION)
-        self.assertEqual(feed["schemaVersion"], FEED_V3_SCHEMA_VERSION)
+        self.assertEqual(upgraded["schemaVersion"], STATE_V4_SCHEMA_VERSION)
+        self.assertEqual(feed["schemaVersion"], FEED_V4_SCHEMA_VERSION)
         self.assertTrue(all(item["presentation"]["locales"]["en"]["status"] == "missing" for item in feed["items"]))
         self.assertNotIn("sourceContext", json.dumps(upgraded))
         validate_state(upgraded, self.config)
@@ -1333,6 +1363,22 @@ class PersonalFeedTest(unittest.TestCase):
         immutable_input_invalid["items"][0]["presentation"]["locales"]["ja"]["inputHash"] = "0" * 64
         with self.assertRaisesRegex(ContractError, "immutable input"):
             validate_feed(immutable_input_invalid, self.config)
+
+    def test_v4_fixed_fixture_requires_a_public_lane_and_lane_evidence(self) -> None:
+        fixture = json.loads(V4_FIXTURE.read_text(encoding="utf-8"))
+        validated = validate_feed(fixture, self.config)
+        self.assertEqual(validated["schemaVersion"], FEED_V4_SCHEMA_VERSION)
+        self.assertEqual([item["lane"] for item in validated["items"]], ["action", "watch"])
+
+        invalid = copy.deepcopy(fixture)
+        invalid["items"][0]["lane"] = "drop"
+        with self.assertRaisesRegex(ContractError, "JSON Schema"):
+            validate_feed(invalid, self.config)
+
+        invalid = copy.deepcopy(fixture)
+        invalid["items"][0]["laneEvidence"] = []
+        with self.assertRaisesRegex(ContractError, "JSON Schema"):
+            validate_feed(invalid, self.config)
 
     def test_v2_state_and_feed_migrate_one_way_to_v3_with_missing_locales(self) -> None:
         # Production files are intentionally updated by scheduled collection.
