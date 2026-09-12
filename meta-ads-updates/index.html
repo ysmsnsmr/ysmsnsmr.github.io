@@ -69,7 +69,21 @@
         <p id="result-summary" class="result-summary" aria-live="polite"></p>
       </section>
 
-      <ol id="update-list" class="update-list" aria-live="polite"></ol>
+      <section id="action-lane" class="feed-lane" aria-labelledby="action-lane-heading">
+        <header class="feed-lane-heading">
+          <div><p class="section-kicker">Action</p><h2 id="action-lane-heading">Direct impact</h2></div>
+          <p id="action-lane-count" class="lane-count"></p>
+        </header>
+        <ol id="update-list" class="update-list" aria-live="polite"></ol>
+      </section>
+
+      <section id="watch-lane" class="feed-lane feed-lane--watch" aria-labelledby="watch-lane-heading" hidden>
+        <header class="feed-lane-heading">
+          <div><p class="section-kicker">Watch</p><h2 id="watch-lane-heading">Strategic signals</h2></div>
+          <p id="watch-lane-count" class="lane-count"></p>
+        </header>
+        <ol id="watch-list" class="update-list" aria-live="polite"></ol>
+      </section>
 
       <section id="empty-state" class="empty-state" aria-live="polite" hidden>
         <h2 id="empty-title"></h2>

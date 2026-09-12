@@ -26,7 +26,20 @@
       </section>
       <header class="masthead"><div><h1>Meta Ads Update Feed</h1><p class="masthead-copy">Meta公式と非公式の情報を区別し、発表日・最終更新日を確認できます。</p></div><div class="masthead-actions"><nav class="locale-switch" aria-label="言語"><a id="locale-en">English</a><a id="locale-ja" aria-current="page">日本語</a></nav><p id="week-stamp" class="week-stamp"></p></div></header>
       <section class="control-panel" aria-labelledby="filter-heading"><p id="filter-heading" class="section-kicker">表示条件</p><form id="filter-form" class="filter-form"><div class="filter-field"><label for="source-filter">ソース</label><select id="source-filter" name="source"><option value="all">すべてのソース</option></select></div><div class="filter-field"><label id="priority-filter-label" for="priority-filter">ソース区分</label><select id="priority-filter" name="priority"><option value="all">すべて</option><option value="official">Meta公式</option><option value="unofficial">非公式・未確認</option></select></div><div class="filter-field"><label for="query-filter">キーワード</label><input id="query-filter" name="query" type="search" placeholder="更新名を絞り込む" autocomplete="off"></div><button id="reset-button" class="reset-button" type="button">条件をリセット</button></form><p id="result-summary" class="result-summary" aria-live="polite"></p></section>
-      <ol id="update-list" class="update-list" aria-live="polite"></ol>
+      <section id="action-lane" class="feed-lane" aria-labelledby="action-lane-heading">
+        <header class="feed-lane-heading">
+          <div><p class="section-kicker">ACTION</p><h2 id="action-lane-heading">直接影響</h2></div>
+          <p id="action-lane-count" class="lane-count"></p>
+        </header>
+        <ol id="update-list" class="update-list" aria-live="polite"></ol>
+      </section>
+      <section id="watch-lane" class="feed-lane feed-lane--watch" aria-labelledby="watch-lane-heading" hidden>
+        <header class="feed-lane-heading">
+          <div><p class="section-kicker">WATCH</p><h2 id="watch-lane-heading">戦略的シグナル</h2></div>
+          <p id="watch-lane-count" class="lane-count"></p>
+        </header>
+        <ol id="watch-list" class="update-list" aria-live="polite"></ol>
+      </section>
       <section id="empty-state" class="empty-state" aria-live="polite" hidden><h2 id="empty-title"></h2><p id="empty-copy"></p></section>
       <p id="tracker-footer" class="tracker-footer">Meta公式・非公式の情報を区別して表示しています。</p>
     </main>

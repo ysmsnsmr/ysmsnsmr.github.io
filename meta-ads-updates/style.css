@@ -292,6 +292,48 @@ h1 {
   color: var(--tracker-ink);
 }
 
+.feed-lane {
+  margin-top: var(--tracker-space-5);
+}
+
+.feed-lane[hidden] {
+  display: none;
+}
+
+.feed-lane--unlaned .feed-lane-heading {
+  display: none;
+}
+
+.feed-lane-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--tracker-space-3);
+  padding-bottom: var(--tracker-space-3);
+  border-bottom: 1px solid var(--tracker-line);
+}
+
+.feed-lane-heading .section-kicker {
+  margin: 0 0 var(--tracker-space-1);
+}
+
+.feed-lane-heading h2 {
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.lane-count {
+  margin: 0;
+  color: var(--tracker-muted);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.feed-lane--watch .feed-lane-heading {
+  border-bottom-color: #a9c7eb;
+}
+
 .update-list {
   display: grid;
   gap: var(--tracker-space-3);
@@ -404,6 +446,26 @@ h1 {
 .origin-label--unofficial {
   background: #fff1d6;
   color: #825200;
+}
+
+.lane-label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 2px var(--tracker-space-2);
+  border-radius: var(--tracker-radius-sm);
+  font-size: 0.75rem;
+  font-weight: 750;
+}
+
+.lane-label--action {
+  background: var(--tracker-red-soft);
+  color: var(--tracker-red);
+}
+
+.lane-label--watch {
+  background: var(--tracker-blue-soft);
+  color: var(--tracker-navy);
 }
 
 .update-card--official {
