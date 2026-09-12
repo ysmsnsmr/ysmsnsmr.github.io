@@ -46,7 +46,7 @@
     if (locale === "ja" && value?.status === "generated" && value.shortHeadlineJa && value.summaryJa) return { status: "machine", shortHeadline: value.shortHeadlineJa, summary: value.summaryJa };
     return { status: "missing", shortHeadline: null, summary: null };
   }
-  function lane(item) { return item.lane === "watch" ? "watch" : "action"; }
+  function lane(item) { return item.lane === "action" || item.lane === "watch" ? item.lane : null; }
   function appendFact(label, value, fallback) { const wrapper = make("div"); wrapper.append(make("dt", "fact-label", label), make("dd", value ? "" : "not-stated not-stated--plain", value || fallback)); el.facts.append(wrapper); }
   function showError(title, copy) { el.card.hidden = true; el.notice.hidden = true; el.errorTitle.textContent = title; el.errorCopy.textContent = copy; el.error.hidden = false; }
 
@@ -64,7 +64,8 @@
     const result = presentation(item);
     const official = source.classification === "official";
     const itemLane = lane(item);
-    el.heading.append(make("span", `lane-label lane-label--${itemLane}`, itemLane === "action" ? words.action : words.watch), make("span", official ? "origin-label origin-label--official" : "origin-label origin-label--unofficial", official ? words.official : words.unofficial), make("p", "source-name", source.name));
+    if (itemLane) el.heading.append(make("span", `lane-label lane-label--${itemLane}`, itemLane === "action" ? words.action : words.watch));
+    el.heading.append(make("span", official ? "origin-label origin-label--official" : "origin-label origin-label--unofficial", official ? words.official : words.unofficial), make("p", "source-name", source.name));
     el.title.textContent = result.shortHeadline || item.title;
     el.summary.textContent = result.summary || words.summaryMissing;
     el.status.textContent = result.status === "machine" ? words.statusMachine : result.status === "reviewed" ? words.statusReviewed : words.statusMissing;
@@ -72,7 +73,7 @@
     el.original.textContent = item.title;
     appendFact(words.published, item.publishedDate, words.unknown);
     appendFact(words.updated, item.updatedDate, words.unknown);
-    appendFact(words.lane, itemLane === "action" ? words.action : words.watch, words.unclassified);
+    if (itemLane) appendFact(words.lane, itemLane === "action" ? words.action : words.watch, words.unclassified);
     const platforms = Array.isArray(item.platformIds) ? item.platformIds.map((id) => platformNames[id] || id).join(" / ") : Array.isArray(item.platforms) ? item.platforms.join(" / ") : null;
     appendFact(words.platform, platforms, words.unclassified);
     el.sourceLink.href = sourceUrl;

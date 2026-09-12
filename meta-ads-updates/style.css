@@ -300,6 +300,10 @@ h1 {
   display: none;
 }
 
+.feed-lane--unlaned .feed-lane-heading {
+  display: none;
+}
+
 .feed-lane-heading {
   display: flex;
   align-items: end;

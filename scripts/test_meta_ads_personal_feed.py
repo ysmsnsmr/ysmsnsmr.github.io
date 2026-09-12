@@ -33,6 +33,7 @@ from meta_ads_personal_feed import (
     _print_source_pipeline_stats,
     _rss_presentation_text,
     _shorten_rss_presentation_context,
+    _missing_bilingual_presentation,
     collect,
     collect_and_write,
     extract_items,
@@ -1379,6 +1380,68 @@ class PersonalFeedTest(unittest.TestCase):
         invalid["items"][0]["laneEvidence"] = []
         with self.assertRaisesRegex(ContractError, "JSON Schema"):
             validate_feed(invalid, self.config)
+
+    def test_nonempty_v3_migration_preserves_records_and_removes_drop_retry_queue(self) -> None:
+        source_id = "jon-loomer-meta-ads"
+        item_key = "https://www.jonloomer.com/chatgpt-ads-automated-bidding/"
+        fingerprint = "a" * 64
+        presentation = _missing_bilingual_presentation(fingerprint, "bilingual-v1")
+        v3_state = {
+            "schemaVersion": STATE_V3_SCHEMA_VERSION,
+            "updatedAt": "2026-08-29T09:00:00Z",
+            "sources": {
+                source_id: {
+                    "relevanceRevision": "jon-loomer-v3",
+                    "items": {
+                        item_key: {
+                            "url": item_key,
+                            "title": "ChatGPT Ads Get Automated Bidding, Placements, and URL Parameters",
+                            "publishedDate": "2026-08-29",
+                            "updatedDate": None,
+                            "matchEvidence": ["category:Meta Advertising", "term:meta ads"],
+                            "fingerprint": fingerprint,
+                            "firstObservedAt": "2026-08-29T09:00:00Z",
+                            "lastObservedAt": "2026-08-29T09:00:00Z",
+                            "presentation": presentation,
+                        }
+                    },
+                }
+            },
+            "presentationRetryQueue": {
+                "schemaVersion": "meta-ads-personal-feed-presentation-retry/v2",
+                "entries": [{
+                    "sourceId": source_id,
+                    "itemKey": item_key,
+                    "fingerprint": fingerprint,
+                    "locale": "en",
+                    "failureCount": 1,
+                    "lastFailureAt": "2026-08-29T09:00:00Z",
+                    "nextRetryAt": "2026-08-29T10:00:00Z",
+                    "lastFailureCode": "http_400",
+                    "lastProviderErrorCode": "json_validate_failed",
+                    "quarantined": False,
+                }],
+            },
+        }
+        validate_state(v3_state, self.config)
+        migrated = migrate_state_v3_to_v4(v3_state, self.config)
+        migrated_record = migrated["sources"][source_id]["items"][item_key]
+        self.assertEqual(migrated_record["lane"], "drop")
+        self.assertEqual(migrated_record["firstObservedAt"], "2026-08-29T09:00:00Z")
+        self.assertEqual(migrated_record["presentation"], presentation)
+        self.assertEqual(migrated["presentationRetryQueue"]["entries"], [])
+
+        feed, next_state = collect(self.config, v3_state, 1, NOW, self.fetcher())
+        retained = next_state["sources"][source_id]["items"][item_key]
+        self.assertEqual(next_state["schemaVersion"], STATE_V4_SCHEMA_VERSION)
+        self.assertEqual(retained["lane"], "drop")
+        self.assertEqual(retained["firstObservedAt"], "2026-08-29T09:00:00Z")
+        self.assertEqual(retained["presentation"], presentation)
+        self.assertNotIn(item_key, {item["url"] for item in feed["items"]})
+        self.assertFalse(any(
+            entry["sourceId"] == source_id and entry["itemKey"] == item_key
+            for entry in next_state["presentationRetryQueue"]["entries"]
+        ))
 
     def test_v2_state_and_feed_migrate_one_way_to_v3_with_missing_locales(self) -> None:
         # Production files are intentionally updated by scheduled collection.

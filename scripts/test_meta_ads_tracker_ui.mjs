@@ -321,11 +321,17 @@ try {
   await v3List.goto(`${server.origin}/meta-ads-updates/ja/?personal-fixture=v3`, { waitUntil: "networkidle" });
   assert(await v3List.locator("#update-list .update-card").count() === personalFeedV3Report.items.length, "v3 Personal Feed list did not render");
   assert((await v3List.locator("#update-list h2").allTextContents()).includes("Meta広告の計測機能を更新"), "v3 list did not use its Japanese locale overlay");
+  assert(await v3List.locator(".lane-label").count() === 0, "v3 items must not be labelled as ACTION or WATCH");
+  assert(await v3List.locator("#action-lane .feed-lane-heading").isHidden(), "v3 list must not show an ACTION lane heading");
   assert(await v3List.locator(".detail-link").first().getAttribute("href").then((href) => href?.includes("personal-fixture=v3")), "v3 detail links did not retain the fixed fixture selector");
   assert(await v3List.locator("#update-list").textContent().then((text) => !text.includes("machine") && !text.includes("missing")), "v3 list must not expose presentation status");
   assert(v3ListConsoleErrors.length === 0 && v3ListPageErrors.length === 0, `v3 Personal Feed list runtime errors: ${[...v3ListConsoleErrors, ...v3ListPageErrors].join("; ")}`);
   await assertTokens(v3List);
   await assertAccessibilityAndLayout(v3List, "personal-feed-v3/desktop");
+  await v3List.locator(".detail-link").first().click();
+  await v3List.waitForURL(/detail\.html\?/);
+  assert(await v3List.locator(".lane-label").count() === 0, "v3 detail must not show an ACTION or WATCH label");
+  assert(!(await v3List.locator(".fact-label").allTextContents()).includes("レーン"), "v3 detail must not show a lane fact");
   await v3List.close();
 
   const v4List = await browser.newPage({ viewport: { width: 1440, height: 900 } });

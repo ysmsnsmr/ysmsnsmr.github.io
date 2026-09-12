@@ -94,7 +94,7 @@
 
   function headline(item) { return presentation(item).shortHeadline || item.title; }
 
-  function lane(item) { return item.lane === "watch" ? "watch" : "action"; }
+  function lane(item) { return item.lane === "action" || item.lane === "watch" ? item.lane : null; }
 
   function countLabel(template, count) { return template.replace("{count}", String(count)); }
 
@@ -119,7 +119,9 @@
     const card = make("article", `update-card update-card--${source.classification}`);
     const heading = make("div", "card-heading");
     const official = source.classification === "official";
-    heading.append(make("span", `lane-label lane-label--${lane(item)}`, lane(item) === "action" ? words.action : words.watch), make("span", official ? "origin-label origin-label--official" : "origin-label origin-label--unofficial", official ? words.official : words.unofficial), make("p", "source-name", source.name));
+    const itemLane = lane(item);
+    if (itemLane) heading.append(make("span", `lane-label lane-label--${itemLane}`, itemLane === "action" ? words.action : words.watch));
+    heading.append(make("span", official ? "origin-label origin-label--official" : "origin-label origin-label--unofficial", official ? words.official : words.unofficial), make("p", "source-name", source.name));
     const facts = make("dl", "fact-grid");
     facts.append(fact(words.published, item.publishedDate), fact(words.updated, item.updatedDate));
     const link = make("a", "detail-link", words.details);
@@ -151,6 +153,7 @@
     if (!response.ok) throw new Error(`report HTTP ${response.status}`);
     const report = await response.json();
     const personal = personalVersions.has(report.schemaVersion);
+    const laneAware = report.schemaVersion === "meta-ads-personal-feed/v4";
     const sources = new Map((report.sources || []).map((source) => [source.id, source]));
     el.list.classList.toggle("update-list--personal", personal);
     el.watchList.classList.toggle("update-list--personal", personal);
@@ -212,23 +215,26 @@
     }
     function render() {
       const items = visible();
-      const actionItems = personal ? items.filter((item) => lane(item) === "action") : items;
-      const watchItems = personal ? items.filter((item) => lane(item) === "watch") : [];
+      const actionItems = laneAware ? items.filter((item) => lane(item) === "action") : items;
+      const watchItems = laneAware ? items.filter((item) => lane(item) === "watch") : [];
       el.list.replaceChildren(...actionItems.map((item) => personal ? personalCard(item, sources.get(item.sourceId)) : legacyCard(item)));
       el.watchList.replaceChildren(...watchItems.map((item) => personalCard(item, sources.get(item.sourceId))));
-      el.actionLane.hidden = personal && actionItems.length === 0;
-      el.watchLane.hidden = !personal || watchItems.length === 0;
-      el.actionCount.textContent = personal ? countLabel(words.actionCount, actionItems.length) : "";
-      el.watchCount.textContent = personal ? countLabel(words.watchCount, watchItems.length) : "";
+      el.actionLane.hidden = laneAware && actionItems.length === 0;
+      el.actionLane.classList.toggle("feed-lane--unlaned", !laneAware);
+      el.watchLane.hidden = !laneAware || watchItems.length === 0;
+      el.actionCount.textContent = laneAware ? countLabel(words.actionCount, actionItems.length) : "";
+      el.watchCount.textContent = laneAware ? countLabel(words.watchCount, watchItems.length) : "";
       el.empty.hidden = items.length > 0;
       if (!items.length) {
         const filtered = state.source !== "all" || state.type !== "all" || Boolean(state.q.trim());
         el.emptyTitle.textContent = filtered ? words.noMatches : personal ? words.noItems : "No updates";
         el.emptyCopy.textContent = filtered ? words.noMatchesCopy : personal ? words.noItemsCopy : "";
       }
-      el.summary.textContent = personal
+      el.summary.textContent = personal && laneAware
         ? `${words.shown}${items.length}${words.automatic} · ${countLabel(words.actionCount, actionItems.length)} · ${countLabel(words.watchCount, watchItems.length)}`
-        : `${words.shown}${items.length}${demoMode ? words.demoResult : ""}`;
+        : personal
+          ? `${words.shown}${items.length}${words.automatic}`
+          : `${words.shown}${items.length}${demoMode ? words.demoResult : ""}`;
     }
     function syncControls() { el.source.value = state.source; el.type.value = state.type; el.query.value = state.q; }
     el.form.addEventListener("submit", (event) => event.preventDefault());

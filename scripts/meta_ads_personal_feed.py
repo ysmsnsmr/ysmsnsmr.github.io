@@ -1089,6 +1089,8 @@ def _validate_presentation_retry_queue(
             raise ContractError(f"{label}.itemKey does not reference a retained item")
         if item["fingerprint"] != entry["fingerprint"]:
             raise ContractError(f"{label}.fingerprint must match the retained item")
+        if item.get("lane") is not None and item["lane"] not in PUBLIC_LANES:
+            raise ContractError(f"{label} cannot reference a non-public lane")
         if item["presentation"]["locales"][locale]["status"] in {"machine", "reviewed"}:
             raise ContractError(f"{label} cannot queue a completed locale")
     return queue
@@ -1406,11 +1408,17 @@ def migrate_state_v3_to_v4(state: dict[str, Any], config: dict[str, Any]) -> dic
                 "laneEvidence": lane_evidence,
             }
         sources[source_id] = {"relevanceRevision": source_state["relevanceRevision"], "items": records}
+    retry_queue = _migrate_presentation_retry_queue(state.get("presentationRetryQueue"))
+    retry_queue["entries"] = [
+        entry
+        for entry in retry_queue["entries"]
+        if sources.get(entry["sourceId"], {"items": {}})["items"].get(entry["itemKey"], {}).get("lane") in PUBLIC_LANES
+    ]
     migrated = {
         "schemaVersion": STATE_V4_SCHEMA_VERSION,
         "updatedAt": state["updatedAt"],
         "sources": sources,
-        "presentationRetryQueue": _migrate_presentation_retry_queue(state.get("presentationRetryQueue")),
+        "presentationRetryQueue": retry_queue,
     }
     validate_state(migrated, config)
     return migrated
@@ -2457,12 +2465,19 @@ def collect(
         pipeline["sources"][source["id"]]["retainedItems"] = len(retained)
         pipeline["sources"][source["id"]]["carriedForwardItems"] = sum(key in carried_forward_keys for key in retained)
 
-    # Remove queue entries for expired, replaced, or successfully completed
-    # records before the next state is validated and persisted.
+    # Remove queue entries for expired, replaced, completed, or non-public
+    # records before the next state is validated and persisted. DROP records
+    # remain in state for future classification changes, but must not retain a
+    # presentation retry lifecycle after leaving the public feed.
     for queue_key, entry in list(retry_queue.items()):
         source_id, item_key, locale = queue_key
         record = next_state["sources"].get(source_id, {"items": {}})["items"].get(item_key)
-        if record is None or record["fingerprint"] != entry["fingerprint"] or record["presentation"]["locales"][locale]["status"] in {"machine", "reviewed"}:
+        if (
+            record is None
+            or record["fingerprint"] != entry["fingerprint"]
+            or record["lane"] not in PUBLIC_LANES
+            or record["presentation"]["locales"][locale]["status"] in {"machine", "reviewed"}
+        ):
             del retry_queue[queue_key]
 
     presentation_candidates.sort(
