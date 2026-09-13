@@ -2301,6 +2301,109 @@
         "entry_ja": "米ドル安を背景に、リンギットが対米ドルで上昇した。",
         "supporting_points_ja": []
       }
+    },
+    {
+      "link": "https://www.malaymail.com/news/money/2026/09/09/bursa-malaysia-closes-flat-cautious-sentiment-dominates-amid-geopolitical-tensions-and-oil-surge/234585",
+      "first_observed_on": "2026-09-10",
+      "production_profile": "gpt-oss-120b",
+      "failure_reasons": [
+        "ValueError: unsafe numeric unit conversion: rm3.49 billion"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Malay Mail",
+        "published_date": "2026年9月9日",
+        "title": "Bursa Malaysia closes flat, cautious sentiment dominates amid geopolitical tensions and oil surge",
+        "description": "KUALA LUMPUR, Sept 9 — Bursa Malaysia closed flat on Wednesday amid investor caution as heightened tensions in Wes...",
+        "link": "https://www.malaymail.com/news/money/2026/09/09/bursa-malaysia-closes-flat-cautious-sentiment-dominates-amid-geopolitical-tensions-and-oil-surge/234585",
+        "tags": [
+          "klang_valley",
+          "economy"
+        ],
+        "flags": {
+          "is_market": true,
+          "is_currency": false,
+          "is_official": false
+        },
+        "body_excerpt_policy": "use_body",
+        "body_evidence_excerpt": "Turnover fell to 3.66 billion units valued at RM3.49 billion from 4.13 billion units valued at RM3.14 billion on Tuesday.",
+        "body_evidence_focus": [
+          "cost_or_subsidy"
+        ],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.astroawani.com/berita-malaysia/jkn-pahang-siasat-kematian-peserta-kkec-2026",
+      "first_observed_on": "2026-09-10",
+      "production_profile": "gpt-oss-120b",
+      "failure_reasons": [
+        "ValueError: unsupported death claim"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Astro Awani",
+        "published_date": "2026年9月9日",
+        "title": "JKN Pahang siasat kematian peserta KKEC 2026",
+        "description": "Jabatan Kesihatan Negeri (JKN) Pahang melalui Pejabat Kesihatan Daerah (PKD) Maran sedang menjalankan siasatan lanjut bagi mengenal pasti faktor berkaitan kematian seorang peserta Komander Kesatria Endurance Challenge (KKEC) 2026 di Maran, Sabtu lepas.",
+        "link": "https://www.astroawani.com/berita-malaysia/jkn-pahang-siasat-kematian-peserta-kkec-2026",
+        "tags": [
+          "health"
+        ],
+        "flags": {
+          "is_health_system": true,
+          "is_official": true
+        },
+        "body_excerpt_policy": "rss_fallback",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
+    },
+    {
+      "link": "https://www.astroawani.com/berita-malaysia/penangguhan-fds-sarawak-jumlah-penduduk-terjejas-akan-diumum-kp-kesihatan",
+      "first_observed_on": "2026-09-13",
+      "production_profile": "gpt-oss-120b",
+      "failure_reasons": [
+        "ValueError: unsupported death claim"
+      ],
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Astro Awani",
+        "published_date": "2026年9月13日",
+        "title": "Penangguhan FDS Sarawak: Jumlah penduduk terjejas akan diumum - KP Kesihatan",
+        "description": "Kementerian Kesihatan akan mengumumkan jumlah penduduk Sarawak terjejas akibat penangguhan sementara Perkhidmatan Doktor Udara susulan nahas helikopter yang mengorbankan lima individu.",
+        "link": "https://www.astroawani.com/berita-malaysia/penangguhan-fds-sarawak-jumlah-penduduk-terjejas-akan-diumum-kp-kesihatan",
+        "tags": [
+          "health"
+        ],
+        "flags": {
+          "is_health_system": true,
+          "is_official": true
+        },
+        "body_excerpt_policy": "rss_fallback",
+        "body_evidence_excerpt": "",
+        "body_evidence_focus": [],
+        "body_evidence_forbidden": [
+          "dateline",
+          "wire_credit",
+          "advertisement",
+          "related_links",
+          "unsupported_conditions"
+        ]
+      }
     }
   ]
 }

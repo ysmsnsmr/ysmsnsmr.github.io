@@ -1,0 +1,127 @@
+{
+  "schema_version": "malaysia-editorial-entry-semantic-fidelity/v1",
+  "description": "Editorial Entry v3 semantic fidelity fixtures. They preserve critical facts without prescribing an exact Japanese rendering.",
+  "cases": [
+    {
+      "id": "us_iran_entity_fidelity",
+      "source": {
+        "title": "Bursa Malaysia opens lower as Wall Street weakness, US-Iran conflict weigh on sentiment",
+        "description": "Wall Street weakness and the US-Iran conflict weighed on sentiment at Bursa Malaysia's opening.",
+        "link": "https://www.malaymail.com/news/money/2026/09/11/bursa-malaysia-opens-lower-as-wall-street-weakness-us-iran-conflict-weigh-on-sentiment/234786"
+      },
+      "expected": {
+        "subject": [
+          "ブルサ・マレーシア"
+        ],
+        "target": [
+          "米国",
+          "イラン"
+        ],
+        "direction": "下落で始まる",
+        "scope": "米国とイランの対立、および米国株安が市場心理に与えた影響",
+        "certainty": "reported_event",
+        "forbidden_meanings": [
+          "米伊",
+          "イタリアとの対立"
+        ]
+      }
+    },
+    {
+      "id": "penang_lane_closure_scope",
+      "source": {
+        "title": "Penang LRT works to close part of Jalan Magazine for 21 days from Sept 14",
+        "description": "Penang LRT works will close the left lane of part of Jalan Magazine for 21 days from Sept 14, while the other lanes remain open.",
+        "link": "https://www.malaymail.com/news/malaysia/2026/09/11/penang-lrt-works-to-close-part-of-jalan-magazine-for-21-days-from-sept-14/234855"
+      },
+      "expected": {
+        "subject": [
+          "ペナンLRT工事"
+        ],
+        "target": [
+          "ジャラン・マガジンの一部左側車線"
+        ],
+        "direction": null,
+        "scope": "21日間の一部車線閉鎖であり、ほかの車線は通行可能",
+        "certainty": "official_action",
+        "forbidden_meanings": [
+          "ジャラン・マガジン全体が通行止め",
+          "全面通行止め"
+        ]
+      }
+    },
+    {
+      "id": "ringgit_mixed_direction",
+      "source": {
+        "title": "Ringgit eases against US dollar but gains against most major, regional currencies",
+        "description": "The ringgit eased against the US dollar but gained against most major and regional currencies.",
+        "link": "https://www.malaymail.com/news/money/2026/09/11/ringgit-eases-against-us-dollar-but-gains-against-most-major-regional-currencies/234856"
+      },
+      "expected": {
+        "subject": [
+          "リンギット"
+        ],
+        "target": [
+          "米ドル",
+          "主要・地域通貨"
+        ],
+        "direction": {
+          "against_us_dollar": "下落",
+          "against_other_currencies": "上昇"
+        },
+        "scope": "通貨相手ごとに方向が異なる為替の動き",
+        "certainty": "reported_event",
+        "forbidden_meanings": [
+          "すべての通貨に対してリンギットが下落",
+          "米ドルに対してリンギットが上昇"
+        ]
+      }
+    },
+    {
+      "id": "rapid_kl_incident_service_normal",
+      "source": {
+        "title": "Rapid KL confirms electrical mishap incident on LRT Kelana Jaya Line today – service operating as usual",
+        "description": "Rapid KL confirmed an electrical mishap on the LRT Kelana Jaya Line at Jelatek station, while service continued as usual.",
+        "link": "https://paultan.org/2026/09/10/rapid-kl-confirms-electrical-mishap-incident-on-lrt-kelana-jaya-line-today-service-operating-as-usual/"
+      },
+      "expected": {
+        "subject": [
+          "Rapid KL"
+        ],
+        "target": [
+          "LRTケラナジャヤ線",
+          "ジェラテック駅"
+        ],
+        "direction": null,
+        "scope": "電気系統トラブルは発生したが、運行は通常どおり継続",
+        "certainty": "confirmed_official_statement",
+        "forbidden_meanings": [
+          "運休",
+          "運行停止"
+        ]
+      }
+    },
+    {
+      "id": "ringgit_forecast_certainty",
+      "source": {
+        "title": "Ringgit expected to hover between RM4.06 and RM4.08 against US dollar next week",
+        "description": "The ringgit is expected to hover between RM4.06 and RM4.08 against the US dollar next week.",
+        "link": "https://www.malaymail.com/news/money/2026/09/12/ringgit-expected-to-hover-between-rm406-and-rm408-against-us-dollar-next-week/234906"
+      },
+      "expected": {
+        "subject": [
+          "リンギット"
+        ],
+        "target": [
+          "米ドル"
+        ],
+        "direction": "RM4.06からRM4.08の範囲で推移する見通し",
+        "scope": "翌週の為替見通し",
+        "certainty": "forecast",
+        "forbidden_meanings": [
+          "確定した実績",
+          "翌週に必ずRM4.06からRM4.08で推移する"
+        ]
+      }
+    }
+  ]
+}

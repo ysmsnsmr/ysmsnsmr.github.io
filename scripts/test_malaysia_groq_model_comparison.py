@@ -37,6 +37,24 @@ class ModelComparisonTest(unittest.TestCase):
         self.assertIn("softer", item["item"]["title"])
         self.assertIn("上昇", item["observed_output"]["headline_ja"])
 
+    def test_migration_fixture_retains_recent_hard_safety_false_positives(self) -> None:
+        fixture_path = Path(__file__).resolve().parent / "fixtures/malaysia_groq_model_migration_failures.json"
+        items = json.loads(fixture_path.read_text(encoding="utf-8"))["items"]
+        by_link = {item["link"]: item for item in items}
+
+        cases = {
+            "https://www.malaymail.com/news/money/2026/09/09/bursa-malaysia-closes-flat-cautious-sentiment-dominates-amid-geopolitical-tensions-and-oil-surge/234585": "rm3.49 billion",
+            "https://www.astroawani.com/berita-malaysia/jkn-pahang-siasat-kematian-peserta-kkec-2026": "unsupported death claim",
+            "https://www.astroawani.com/berita-malaysia/penangguhan-fds-sarawak-jumlah-penduduk-terjejas-akan-diumum-kp-kesihatan": "unsupported death claim",
+        }
+        for link, reason in cases.items():
+            with self.subTest(link=link):
+                item = by_link[link]
+                self.assertEqual(item["production_profile"], "gpt-oss-120b")
+                self.assertIn(reason, item["failure_reasons"][0])
+                self.assertEqual(item["item"]["link"], link)
+                self.assertTrue(item["item"]["description"])
+
     def test_force_all_policy_has_no_source_priority_override(self) -> None:
         self.assertFalse(hasattr(malaysia_groq_force_all_policy, "force_all_request_priority"))
 
