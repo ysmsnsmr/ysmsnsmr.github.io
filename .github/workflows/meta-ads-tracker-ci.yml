@@ -34,7 +34,9 @@ jobs:
           python3 scripts/validate_meta_ads_tracker_recovery_decisions.py
           python3 scripts/validate_meta_ads_tracker_recovery_promotion.py
           python3 scripts/validate_meta_ads_tracker_publication.py --input meta-ads-updates/latest.json
-          python3 scripts/validate_meta_ads_personal_feed.py
+          # A relevance-rule change must include the state produced by its
+          # source-local reseed; otherwise this PR cannot merge.
+          python3 scripts/validate_meta_ads_personal_feed.py --require-current-relevance-revisions
           python3 scripts/validate_meta_ads_tracker_workflows.py
           node --check meta-ads-updates/app.js
           node --check meta-ads-updates/detail.js
