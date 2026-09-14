@@ -118,37 +118,13 @@ def _retry_delay(headers: Any, attempt: int, maximum: float) -> float:
     return min(float(2 ** (attempt - 1)), maximum)
 
 
-def _strict_schema(name: str, fields: dict[str, int]) -> dict[str, Any]:
-    """Build the exact Groq Structured Outputs contract for persisted fields."""
-    return {
-        "type": "json_schema",
-        "json_schema": {
-            "name": name,
-            "strict": True,
-            "schema": {
-                "type": "object",
-                "properties": {
-                    # Groq Structured Outputs currently rejects some JSON
-                    # Schema constraints. Keep the provider contract to the
-                    # supported primitive type; _text() remains the single
-                    # source of truth for persisted length validation.
-                    field: {"type": "string"}
-                    for field in fields
-                },
-                "required": list(fields),
-                "additionalProperties": False,
-            },
-        },
-    }
-
-
 def _json_object_format() -> dict[str, str]:
-    """Return Groq JSON Object mode for a locally validated fallback.
+    """Return Groq JSON Object mode for locally validated display text.
 
-    The provider guarantees JSON syntax in this mode, while the exact keys,
-    types, and length limits remain enforced by this module before anything is
-    persisted.  This is intentionally used only after strict Structured
-    Outputs has failed for an item.
+    Groq's strict JSON Schema validation has rejected valid presentation
+    requests with ``json_validate_failed``. JSON Object mode avoids that
+    provider-side schema gate. The exact keys, types, non-empty values, and
+    length limits remain enforced by this module before anything is persisted.
     """
     return {"type": "json_object"}
 
@@ -264,10 +240,7 @@ def request_presentation(
         "temperature": 0,
         "max_tokens": 700,
         "stream": False,
-        "response_format": _strict_schema(
-            "meta_ads_japanese_presentation",
-            {"shortHeadlineJa": short_headline_max_chars, "summaryJa": summary_max_chars},
-        ),
+        "response_format": _json_object_format(),
     }
     request = urllib.request.Request(
         GROQ_URL,
@@ -345,10 +318,7 @@ def request_english_presentation(
         "temperature": 0,
         "max_tokens": 700,
         "stream": False,
-        "response_format": _strict_schema(
-            "meta_ads_english_presentation",
-            {"shortHeadlineEn": short_headline_max_chars, "summaryEn": summary_max_chars},
-        ),
+        "response_format": _json_object_format(),
     }
     request = urllib.request.Request(
         GROQ_URL,
@@ -389,11 +359,11 @@ def request_english_presentation_json_object(
     max_retry_delay_seconds: float = MAX_GROQ_RETRY_DELAY_SECONDS,
     sleep: Any = time.sleep,
 ) -> dict[str, str]:
-    """Request the English fallback in JSON Object mode and validate locally.
+    """Request English display text in JSON Object mode and validate locally.
 
     This is not a weaker persistence contract: the response still must contain
     exactly the two expected non-empty strings within the configured limits.
-    It only avoids repeating a provider-side strict-schema validation failure.
+    It avoids a provider-side strict-schema validation failure.
     """
     if not api_key.strip():
         raise PresentationError("api_key_unavailable")
@@ -485,15 +455,7 @@ def request_bilingual_presentation(
         "temperature": 0,
         "max_tokens": 1400,
         "stream": False,
-        "response_format": _strict_schema(
-            "meta_ads_bilingual_presentation",
-            {
-                "shortHeadlineEn": short_headline_max_chars,
-                "summaryEn": summary_max_chars,
-                "shortHeadlineJa": short_headline_max_chars,
-                "summaryJa": summary_max_chars,
-            },
-        ),
+        "response_format": _json_object_format(),
     }
     request = urllib.request.Request(
         GROQ_URL,
