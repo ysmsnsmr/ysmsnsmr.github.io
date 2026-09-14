@@ -48,7 +48,18 @@ Meta Newsroom Product News RSSは候補を広く保存し、広告運用の具�
 
 この分類は事実認定ではなく、読む順番を決めるための運用ラベルです。広告主がすぐ対応すべき記事を`ACTION`へ、現時点の対応は不要でも将来の面・計測・購買導線に関係し得る記事を`WATCH`へ置きます。`WATCH`が後日`ACTION`になった例、または`ACTION`に`DROP`相当の記事が混じった例は、URLと理由を残して人間承認のうえで分類規則を見直します。
 
-`workflow_dispatch`で`reseed_source_id`に設定済みのソースIDを指定すると、そのソースだけを現行の鮮度・関連性条件で再構築します。関連性契約を変更した場合は、次回scheduled runの前に対象ソースを手動reseedしてください。今回のlane導入では、**最初に`meta-product-news-rss`を指定して手動実行**します。Social Media TodayのFacebook RSS移行時は`social-media-today-meta-ads`を指定します。Jon Loomerのv3契約へ移行するときは`jon-loomer-meta-ads`を指定します。同じURLが引き続き採用される場合、`firstObservedAt`は維持されます。未登録IDはcollectorが失敗して既存公開物を保持します。
+`workflow_dispatch`で`reseed_source_id`に設定済みのソースIDを指定すると、そのソースだけを現行の鮮度・関連性条件で再構築します。同じURLが引き続き採用される場合、`firstObservedAt`は維持されます。未登録IDはcollectorが失敗して既存公開物を保持します。
+
+### relevanceRevisionを変更するPRのmerge条件
+
+関連性契約を変更するPRは、**対象sourceごとのsource-local reseed成功がmerge条件**です。設定だけをmergeしてから定例収集でreseedを待つ運用は禁止します。各変更sourceについて、次をPR branch上で完了します。
+
+1. `Meta Ads Personal Feed daily collect`をPR branchに対して手動実行し、`reseed_source_id`へ対象source IDだけを入れる。複数sourceを変更した場合は1 sourceずつ実行する。
+2. runが成功し、botがstateと`personal-feed.json`を同じPR branchへcommitしたことを確認する。
+3. PR headを更新後、CIの`--require-current-relevance-revisions`をPASSさせる。これはconfigの`relevanceRevision`と全sourceのstate値が一致しない限り失敗する。
+4. PR本文またはreview記録に、変更source ID、reseed run URL、runが確認したPR head SHAを残す。
+
+これにより、関連性ルールと保存済みstateの不一致を`main`へ持ち込めません。今回のlane導入では、**最初に`meta-product-news-rss`を指定して手動実行**します。Social Media TodayのFacebook RSS移行時は`social-media-today-meta-ads`を指定します。Jon Loomerのv3契約へ移行するときは`jon-loomer-meta-ads`を指定します。
 
 ## 英語・日本語の短見出し・要約
 

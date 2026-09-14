@@ -256,7 +256,15 @@ try {
   productionPage.on("console", (message) => { if (message.type() === "error") productionConsoleErrors.push(message.text()); });
   productionPage.on("pageerror", (error) => productionPageErrors.push(error.message));
   await productionPage.goto(`${server.origin}/meta-ads-updates/index.html`, { waitUntil: "networkidle" });
-  assert(await productionPage.locator("#update-list .update-card").count() === personalFeedReport.items.length, `production route did not read personal-feed.json: ${[...productionConsoleErrors, ...productionPageErrors].join("; ")}`);
+  const productionActionCards = await productionPage.locator("#update-list .update-card").count();
+  const productionWatchCards = await productionPage.locator("#watch-list .update-card").count();
+  assert(productionActionCards + productionWatchCards === personalFeedReport.items.length, `production route did not read personal-feed.json: ${[...productionConsoleErrors, ...productionPageErrors].join("; ")}`);
+  if (personalFeedReport.schemaVersion === "meta-ads-personal-feed/v4") {
+    const expectedActionCards = personalFeedReport.items.filter((item) => item.lane === "action").length;
+    const expectedWatchCards = personalFeedReport.items.filter((item) => item.lane === "watch").length;
+    assert(productionActionCards === expectedActionCards, "production ACTION lane count does not match personal-feed.json");
+    assert(productionWatchCards === expectedWatchCards, "production WATCH lane count does not match personal-feed.json");
+  }
   assert(!(await productionPage.locator("#demo-banner").isVisible()), "production route must not show the demo banner");
   assert(!(await productionPage.locator("#recovery-banner").isVisible()), "ordinary production route must not show the delayed-recovery banner");
   assert(await productionPage.locator("#unofficial-notice").isVisible(), "Personal Feed must show the non-official-source notice");

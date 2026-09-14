@@ -46,6 +46,7 @@ from meta_ads_personal_feed import (
     validate_state,
 )
 from meta_ads_personal_feed_presentation import PresentationError
+from validate_meta_ads_personal_feed import validate_current_relevance_revisions
 
 
 NOW = datetime(2026, 8, 29, 9, 0, tzinfo=timezone.utc)
@@ -145,6 +146,23 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(self.config["policies"]["bilingualPresentation"]["maxRetryDelaySeconds"], 60)
         self.assertTrue(all(source["contentLanguage"] == "en" for source in [*sources.values(), *discovered.values()]))
         self.assertTrue(all(source["platformIds"] for source in [*sources.values(), *discovered.values()]))
+
+    def test_current_relevance_revision_gate_requires_reseeded_state(self) -> None:
+        state = {
+            "schemaVersion": STATE_V4_SCHEMA_VERSION,
+            "updatedAt": None,
+            "sources": {
+                source["id"]: {"relevanceRevision": source["relevanceRevision"], "items": {}}
+                for source in [*self.config["sources"], *self.config["discoveredSources"]]
+            },
+        }
+        validate_state(state, self.config)
+        validate_current_relevance_revisions(state, self.config)
+
+        stale = copy.deepcopy(state)
+        stale["sources"]["meta-product-news-rss"]["relevanceRevision"] = "legacy-v2"
+        with self.assertRaisesRegex(ContractError, "source-local reseed.*meta-product-news-rss"):
+            validate_current_relevance_revisions(stale, self.config)
 
     def test_action_watch_drop_lanes_match_the_reviewed_fifteen_item_set(self) -> None:
         sources = {source["id"]: source for source in [*self.config["sources"], *self.config["discoveredSources"]]}
