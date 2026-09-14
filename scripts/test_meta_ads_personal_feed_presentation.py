@@ -69,13 +69,7 @@ class PersonalFeedPresentationTest(unittest.TestCase):
         )
         request_body = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
         self.assertEqual(request_body["temperature"], 0)
-        response_format = request_body["response_format"]
-        self.assertEqual(response_format["type"], "json_schema")
-        self.assertTrue(response_format["json_schema"]["strict"])
-        self.assertEqual(response_format["json_schema"]["schema"]["required"], ["shortHeadlineJa", "summaryJa"])
-        self.assertFalse(response_format["json_schema"]["schema"]["additionalProperties"])
-        self.assertNotIn("minLength", response_format["json_schema"]["schema"]["properties"]["shortHeadlineJa"])
-        self.assertNotIn("maxLength", response_format["json_schema"]["schema"]["properties"]["summaryJa"])
+        self.assertEqual(request_body["response_format"], {"type": "json_object"})
 
     @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
     def test_rejects_extra_fields_and_overlong_output(self, urlopen) -> None:
@@ -119,10 +113,10 @@ class PersonalFeedPresentationTest(unittest.TestCase):
         )
         self.assertEqual(result["shortHeadlineEn"], "Meta Ads update")
         request_body = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
-        self.assertEqual(request_body["response_format"]["json_schema"]["schema"]["required"], ["shortHeadlineEn", "summaryEn"])
+        self.assertEqual(request_body["response_format"], {"type": "json_object"})
 
     @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
-    def test_english_json_object_fallback_still_enforces_the_exact_local_contract(self, urlopen) -> None:
+    def test_english_json_object_mode_still_enforces_the_exact_local_contract(self, urlopen) -> None:
         urlopen.return_value = _Response(
             {"choices": [{"message": {"content": json.dumps({"shortHeadlineEn": "Meta Ads update", "summaryEn": "A Meta Ads update was announced."})}}]}
         )
@@ -286,11 +280,7 @@ class PersonalFeedPresentationTest(unittest.TestCase):
         self.assertEqual(urlopen.call_count, 1)
         self.assertNotIn("Untrusted source text.", str(result))
         request_body = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
-        schema = request_body["response_format"]["json_schema"]
-        self.assertTrue(schema["strict"])
-        self.assertEqual(set(schema["schema"]["required"]), {"shortHeadlineEn", "summaryEn", "shortHeadlineJa", "summaryJa"})
-        self.assertFalse(schema["schema"]["additionalProperties"])
-        self.assertTrue(all("minLength" not in field and "maxLength" not in field for field in schema["schema"]["properties"].values()))
+        self.assertEqual(request_body["response_format"], {"type": "json_object"})
 
     @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
     def test_bilingual_request_rejects_partial_output(self, urlopen) -> None:
