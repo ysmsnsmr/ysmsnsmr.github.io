@@ -136,12 +136,19 @@ def main() -> int:
         context_input = real_probe.get("on", {}).get("workflow_dispatch", {}).get("inputs", {}).get("context_limit", {})
         if not isinstance(context_input, dict) or context_input.get("type") != "choice" or context_input.get("options") != ["4000", "2000", "1000", "0"]:
             fail("Groq real-candidate probe must offer the approved context-limit choices")
+        locale_input = real_probe.get("on", {}).get("workflow_dispatch", {}).get("inputs", {}).get("locale", {})
+        if not isinstance(locale_input, dict) or locale_input.get("type") != "choice" or locale_input.get("options") != ["en", "ja", "bilingual"]:
+            fail("Groq real-candidate probe must offer English, Japanese, and bilingual choices")
         if real_env.get("PROBE_CONTEXT_LIMIT") != "${{ inputs.context_limit }}":
             fail("Groq real-candidate probe must pass context limit through an environment variable")
+        if real_env.get("PROBE_LOCALE") != "${{ inputs.locale }}":
+            fail("Groq real-candidate probe must pass locale through an environment variable")
         if "--require-missing" not in real_runs or "--max-input-chars \"${PROBE_CONTEXT_LIMIT}\"" not in real_runs:
             fail("Groq real-candidate probe must target missing candidates with an explicit context limit")
         if '--candidate-id "${PROBE_CANDIDATE_ID}"' not in real_runs:
             fail("Groq real-candidate probe must pin the candidate ID")
+        if '--locale "${PROBE_LOCALE}"' not in real_runs:
+            fail("Groq real-candidate probe must pass the locale")
         publish_runs = "\n".join(run_blocks(parsed["publish"]))
         if "meta_ads_tracker_groq.py" in publish_runs or "GROQ_API_KEY" in str(parsed["publish"]):
             fail("publish workflow must not run Groq")

@@ -19,6 +19,12 @@ on:
         default: "4000"
         type: choice
         options: ["4000", "2000", "1000", "0"]
+      locale:
+        description: "Two-field output to probe, or the production four-field bilingual request"
+        required: true
+        default: "bilingual"
+        type: choice
+        options: ["en", "ja", "bilingual"]
 
 permissions:
   contents: read
@@ -45,9 +51,11 @@ jobs:
           PROBE_SOURCE_ID: ${{ inputs.source_id }}
           PROBE_CANDIDATE_ID: ${{ inputs.candidate_id }}
           PROBE_CONTEXT_LIMIT: ${{ inputs.context_limit }}
+          PROBE_LOCALE: ${{ inputs.locale }}
         run: |
           python3 scripts/meta_ads_groq_real_candidate_probe.py \
             --source-id "${PROBE_SOURCE_ID}" \
             --candidate-id "${PROBE_CANDIDATE_ID}" \
             --max-input-chars "${PROBE_CONTEXT_LIMIT}" \
+            --locale "${PROBE_LOCALE}" \
             --require-missing
