@@ -203,3 +203,102 @@ must use `supersedes` instead of editing an earlier entry.
 - Revisit when: コンパクト行で6日分が現在より短い縦幅に収まる; 26文字の短見出し3件が主体・方向を読み取れる状態で折り返す; 日付から日別ページを開く操作が現行カードより分かりにくくならない
 - Supersedes: `20260905t183134-malaysia-recent-summary-density`
 - Override: not applied
+
+<!-- idea-gate:20260916t105009-meta-ads-category-simplification -->
+## Replace ACTION/WATCH reader-facing lanes with official news, unofficial media, and SDK releases; keep binary relevance exclusion internally.
+
+- Record ID: `20260916t105009-meta-ads-category-simplification`
+- Evaluated: 2026-09-16T10:50:09+08:00
+- Project: Meta Ads Personal Feed
+- Rubric: 1.0.0
+- Decision: **EXPERIMENT_ONLY**
+- Score: 63/100
+- Confidence: medium - The owner has observed the live workflow across several days, but no reader study or measured abandonment has been recorded.
+
+### Problem Card
+
+- Who: The owner and colleagues reading the Meta Ads Personal Feed.
+- When: When scanning newly collected feed items after several days of real operation.
+- Problem: The ACTION/WATCH labels are subjective and make the feed harder to interpret, while their rule maintenance creates avoidable operational work.
+- Current behavior: Readers must infer the meaning of the two lanes and source provenance separately; the owner maintains lane rules, golden cases, and reseed checks.
+
+### Evidence
+
+- Tier: 1
+- 2026-09-16 owner observation after several days of operating the Personal Feed: ACTION/WATCH appears subjective to readers and adds ongoing classification work.
+- 2026-09-15 production artifact: 50 public items are already separated by source provenance and lane, showing the current feed has both concepts.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 11/20 |
+| `current_workaround_gap` | 10/20 |
+| `evidence_strength` | 10/20 |
+| `behavior_outcome_impact` | 10/15 |
+| `strategic_fit_reuse` | 9/10 |
+| `ui_operational_lightness` | 13/15 |
+| **Total** | **63/100** |
+
+### Alternatives
+
+- **SHRINK - Hide ACTION/WATCH, retain their current internal values:** EXPERIMENT_ONLY (60/100). Remove lane labels and grouping from the public UI while preserving the existing lane model and keeping DROP non-public.
+- **INTEGRATE - Map existing provenance and SDK type into three existing-page sections:** EXPERIMENT_ONLY (65/100). Use official/unofficial source classification plus sdk_release type to render the three requested groups without adding a page or control.
+- **NO_FEATURE - Keep ACTION/WATCH and only document their meaning:** STOP (30/100). Retain lane labels and rule maintenance, adding explanatory text for readers.
+
+### Next Step
+
+- Allowed action: Run a bounded evidence probe or obtain an explicit owner override before changing production UI or classification behavior.
+- Revisit when: At least one documented reader observation or a measured comparison shows that the three groups improve scanning or reduce confusion.; The owner explicitly overrides the Experiment Only decision with a reason and constraints.
+- Override: not applied
+
+<!-- idea-gate:20260916t113900-meta-ads-category-simplification-override -->
+## Replace ACTION/WATCH reader-facing lanes with official news, unofficial media, and SDK releases; keep binary relevance exclusion internally.
+
+- Record ID: `20260916t113900-meta-ads-category-simplification-override`
+- Evaluated: 2026-09-16T11:39:00+08:00
+- Project: Meta Ads Personal Feed
+- Rubric: 1.0.0
+- Decision: **EXPERIMENT_ONLY**
+- Score: 63/100
+- Confidence: medium - The owner has observed the live workflow across several days, but no reader study or measured abandonment has been recorded.
+
+### Problem Card
+
+- Who: The owner and colleagues reading the Meta Ads Personal Feed.
+- When: When scanning newly collected feed items after several days of real operation.
+- Problem: The ACTION/WATCH labels are subjective and make the feed harder to interpret, while their rule maintenance creates avoidable operational work.
+- Current behavior: Readers must infer the meaning of the two lanes and source provenance separately; the owner maintains lane rules, golden cases, and reseed checks.
+
+### Evidence
+
+- Tier: 1
+- 2026-09-16 owner observation after several days of operating the Personal Feed: ACTION/WATCH appears subjective to readers and adds ongoing classification work.
+- 2026-09-15 production artifact: 50 public items are already separated by source provenance and lane, showing the current feed has both concepts.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 11/20 |
+| `current_workaround_gap` | 10/20 |
+| `evidence_strength` | 10/20 |
+| `behavior_outcome_impact` | 10/15 |
+| `strategic_fit_reuse` | 9/10 |
+| `ui_operational_lightness` | 13/15 |
+| **Total** | **63/100** |
+
+### Alternatives
+
+- **SHRINK - Hide ACTION/WATCH, retain their current internal values:** EXPERIMENT_ONLY (60/100). Remove lane labels and grouping from the public UI while preserving the existing lane model and keeping DROP non-public.
+- **INTEGRATE - Map existing provenance and SDK type into three existing-page sections:** EXPERIMENT_ONLY (65/100). Use official/unofficial source classification plus sdk_release type to render the three requested groups without adding a page or control.
+- **NO_FEATURE - Keep ACTION/WATCH and only document their meaning:** STOP (30/100). Retain lane labels and rule maintenance, adding explanatory text for readers.
+
+### Next Step
+
+- Allowed action: Implement the existing-page integration under the recorded override, then verify source filters, classification mapping, sorting, detail views, and accessibility.
+- Revisit when: A reader reports that the three groups still obscure source provenance or scanning order.; A new source type cannot be represented by the separate classification and content-type fields.
+- Supersedes: `20260916t105009-meta-ads-category-simplification`
+- Override: applied by yas at 2026-09-16T11:39:00+08:00
+- Override reason: 個人・同僚向けで、主観的分類と維持負担を今すぐ減らすことを優先する
+- Override constraints: No new screen, external source, or recurring workflow.; Keep source provenance, existing source/classification/keyword filters, and detailed-page unofficial-information notice.; Keep binary relevance exclusion so DROP items remain non-public.

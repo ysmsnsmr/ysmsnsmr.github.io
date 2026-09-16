@@ -69,20 +69,20 @@
         <p id="result-summary" class="result-summary" aria-live="polite"></p>
       </section>
 
-      <section id="action-lane" class="feed-lane" aria-labelledby="action-lane-heading">
-        <header class="feed-lane-heading">
-          <div><p class="section-kicker">Action</p><h2 id="action-lane-heading">Direct impact</h2></div>
-          <p id="action-lane-count" class="lane-count"></p>
-        </header>
+      <section id="legacy-list-section" class="feed-group" hidden>
         <ol id="update-list" class="update-list" aria-live="polite"></ol>
       </section>
-
-      <section id="watch-lane" class="feed-lane feed-lane--watch" aria-labelledby="watch-lane-heading" hidden>
-        <header class="feed-lane-heading">
-          <div><p class="section-kicker">Watch</p><h2 id="watch-lane-heading">Strategic signals</h2></div>
-          <p id="watch-lane-count" class="lane-count"></p>
-        </header>
-        <ol id="watch-list" class="update-list" aria-live="polite"></ol>
+      <section id="official-group" class="feed-group" aria-labelledby="official-group-heading" hidden>
+        <header class="feed-group-heading"><h2 id="official-group-heading">Official updates</h2><p id="official-group-count" class="group-count"></p></header>
+        <ol id="official-list" class="update-list" aria-live="polite"></ol>
+      </section>
+      <section id="sdk-group" class="feed-group" aria-labelledby="sdk-group-heading" hidden>
+        <header class="feed-group-heading"><h2 id="sdk-group-heading">Meta Business SDK Releases</h2><p id="sdk-group-count" class="group-count"></p></header>
+        <ol id="sdk-list" class="update-list" aria-live="polite"></ol>
+      </section>
+      <section id="unofficial-group" class="feed-group" aria-labelledby="unofficial-group-heading" hidden>
+        <header class="feed-group-heading"><h2 id="unofficial-group-heading">Unofficial</h2><p id="unofficial-group-count" class="group-count"></p></header>
+        <ol id="unofficial-list" class="update-list" aria-live="polite"></ol>
       </section>
 
       <section id="empty-state" class="empty-state" aria-live="polite" hidden>

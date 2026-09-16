@@ -118,7 +118,7 @@
     const heading = element("div", "card-heading");
     const badge = source.classification === "official"
       ? element("span", "origin-label origin-label--official", "Meta公式")
-      : element("span", "origin-label origin-label--unofficial", "非公式・未確認");
+      : element("span", "origin-label origin-label--unofficial", "非公式");
     heading.append(badge, element("p", "source-name", source.name));
     const facts = element("dl", "fact-grid");
     appendFact(facts, "発表日", item.publishedDate);
@@ -163,7 +163,7 @@
       elements.priorityLabel.textContent = "ソース区分";
       elements.footer.textContent = "Meta公式・非公式の情報を区別して表示しています。";
       setOptions(elements.source, [{ value: "all", label: "すべてのソース" }, ...report.sources.map((source) => ({ value: source.id, label: source.name }))], "all");
-      setOptions(elements.priority, [{ value: "all", label: "すべて" }, { value: "official", label: "Meta公式" }, { value: "unofficial", label: "非公式・未確認" }], "all");
+      setOptions(elements.priority, [{ value: "all", label: "すべて" }, { value: "official", label: "Meta公式" }, { value: "unofficial", label: "非公式" }], "all");
     } else {
       elements.footer.textContent = "承認済みの公式更新だけを掲載しています。取得・Groq・validatorが失敗したrunでは、公開済み内容を変更しません。";
       elements.week.textContent = report.week.label;
