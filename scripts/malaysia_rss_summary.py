@@ -81,6 +81,7 @@ ALL_FLAGS = [
 ]
 
 LAST_FINALIZE_STATS: dict[str, object] = {}
+LAST_SELECTION_OBSERVATION: dict[str, object] = {}
 RECENT_WINDOW_HOURS = 24
 FRESHNESS_OBSERVATION_WINDOW_HOURS = 24
 FRESHNESS_REFERENCE_WINDOW_HOURS = 48
@@ -1682,9 +1683,89 @@ def freshness_observation(items: list[Item], selected: list[Item], now: datetime
     }
 
 
+def selection_observation_item(
+    item: Item,
+    *,
+    decision: str,
+    decision_stage: str,
+    decision_reason: str,
+    selector_evaluated: bool,
+    candidate_rank: int | None = None,
+    canonical_representative_link: str = "",
+) -> dict[str, object]:
+    """Return a read-only trace of one RSS item's selector path.
+
+    This deliberately records only RSS and selector metadata. It is not input
+    to rendering, body enrichment, or LLM processing.
+    """
+    return {
+        "source": item.source,
+        "feed": item.feed,
+        "published_at": item.pub_date.isoformat(),
+        "title": item.title,
+        "description": item.description,
+        "link": item.link,
+        "canonical_key": key_for(item),
+        "selector_evaluated": selector_evaluated,
+        "score": item.score if selector_evaluated else None,
+        "category": item.category or None,
+        "tags": list(item.tags),
+        "reasons": list(item.reasons),
+        "penalties": list(item.penalties),
+        "flags": dict(item.flags) if selector_evaluated else {},
+        "background_value": item.background_value if selector_evaluated else None,
+        "decision": decision,
+        "decision_stage": decision_stage,
+        "decision_reason": decision_reason,
+        "candidate_rank": candidate_rank,
+        "canonical_representative_link": canonical_representative_link or None,
+    }
+
+
+def build_selection_observation_json(
+    items: list[Item],
+    selected: list[Item],
+    processed_count: int,
+    failed_sources: list[str],
+    now: datetime,
+) -> dict[str, object]:
+    """Build the artifact payload produced by the most recent selection run."""
+    observation = LAST_SELECTION_OBSERVATION
+    records = observation.get("items", [])
+    stage_counts = observation.get("decision_stage_counts", {})
+    return {
+        "schema_version": "malaysia-rss-selection-observation/v1",
+        "generated_at": now.isoformat(),
+        "date": now.date().isoformat(),
+        "timezone": "Asia/Kuala_Lumpur",
+        "observation_only": True,
+        "recent_window_hours": RECENT_WINDOW_HOURS,
+        "counts": {
+            "parsed": len(items),
+            "processed_within_recent_window": processed_count,
+            "selected": len(selected),
+            "failed_sources": len(failed_sources),
+            "decision_stages": stage_counts,
+        },
+        "failed_sources": list(failed_sources),
+        "items": records if isinstance(records, list) else [],
+    }
+
+
 def select_items(items: list[Item], now: datetime) -> list[Item]:
+    global LAST_SELECTION_OBSERVATION
     cutoff = now - timedelta(hours=RECENT_WINDOW_HOURS)
     recent = [item for item in items if cutoff <= item.pub_date <= now]
+    recent_ids = {id(item) for item in recent}
+    decisions: dict[int, dict[str, object]] = {}
+    for item in items:
+        if id(item) not in recent_ids:
+            decisions[id(item)] = {
+                "decision": "excluded",
+                "decision_stage": "outside_recent_window",
+                "decision_reason": "outside the 24-hour selection window",
+            }
+
     by_key: dict[str, Item] = {}
     sources_by_key: dict[str, set[str]] = {}
     for item in recent:
@@ -1699,7 +1780,33 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
         if item.source_count > 1:
             add_unique(item.reasons, "複数媒体で同一論点を報道")
 
-    candidates = [item for item in by_key.values() if item.score >= 3 and not should_exclude_item(item)]
+    for item in recent:
+        key = key_for(item)
+        representative = by_key[key]
+        if representative is not item:
+            decisions[id(item)] = {
+                "decision": "excluded",
+                "decision_stage": "duplicate_canonical_event",
+                "decision_reason": "lower-ranked item for the same canonical event",
+                "canonical_representative_link": representative.link,
+            }
+
+    candidates: list[Item] = []
+    for item in by_key.values():
+        if item.score < 3:
+            decisions[id(item)] = {
+                "decision": "excluded",
+                "decision_stage": "score_below_threshold",
+                "decision_reason": "score is below the selector threshold of 3",
+            }
+        elif should_exclude_item(item):
+            decisions[id(item)] = {
+                "decision": "excluded",
+                "decision_stage": "selector_excluded",
+                "decision_reason": "excluded by existing selector policy",
+            }
+        else:
+            candidates.append(item)
     candidates.sort(key=lambda item: (item.score, item.pub_date), reverse=True)
 
     selected: list[Item] = []
@@ -1707,27 +1814,105 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
     category_limits = {"【速報】": 3, "【生活インパクト】": 5, "【知っておくと得】": 8}
     category_counts: Counter[str] = Counter()
     financial_counts: Counter[str] = Counter()
-    for item in candidates:
+    for candidate_rank, item in enumerate(candidates, start=1):
         category = category_for(item)
         item.category = category
         if is_forced_final_noise(item):
+            decisions[id(item)] = {
+                "decision": "excluded",
+                "decision_stage": "final_noise_gate",
+                "decision_reason": "excluded by existing final noise policy",
+                "candidate_rank": candidate_rank,
+            }
             continue
         financial_bucket = financial_topic_bucket(item) if category == "【知っておくと得】" else ""
         source_limit = SOURCE_LIMITS.get(item.source, 24)
         if source_counts[item.source] >= source_limit:
+            decisions[id(item)] = {
+                "decision": "excluded",
+                "decision_stage": "source_cap",
+                "decision_reason": f"source cap reached ({source_limit})",
+                "candidate_rank": candidate_rank,
+            }
             continue
         if category_counts[category] >= category_limits[category]:
+            decisions[id(item)] = {
+                "decision": "excluded",
+                "decision_stage": "category_cap",
+                "decision_reason": f"category cap reached ({category_limits[category]})",
+                "candidate_rank": candidate_rank,
+            }
             continue
         if financial_bucket and financial_counts[financial_bucket] >= FINANCIAL_LIMITS[financial_bucket]:
+            decisions[id(item)] = {
+                "decision": "excluded",
+                "decision_stage": "financial_cap",
+                "decision_reason": f"financial topic cap reached ({FINANCIAL_LIMITS[financial_bucket]})",
+                "candidate_rank": candidate_rank,
+            }
             continue
         selected.append(item)
+        decisions[id(item)] = {
+            "decision": "selected",
+            "decision_stage": "selected_pre_finalize",
+            "decision_reason": "selected before final deduplication and validation",
+            "candidate_rank": candidate_rank,
+        }
         source_counts[item.source] += 1
         category_counts[category] += 1
         if financial_bucket:
             financial_counts[financial_bucket] += 1
         if len(selected) >= 15:
+            for remaining_rank, remaining_item in enumerate(candidates[candidate_rank:], start=candidate_rank + 1):
+                decisions[id(remaining_item)] = {
+                    "decision": "excluded",
+                    "decision_stage": "total_cap",
+                    "decision_reason": "overall selector cap reached (15)",
+                    "candidate_rank": remaining_rank,
+                }
             break
-    return finalize_selected_items(selected)
+    finalized = finalize_selected_items(selected)
+    finalized_ids = {id(item) for item in finalized}
+    for item in selected:
+        candidate_rank = decisions[id(item)].get("candidate_rank")
+        if id(item) in finalized_ids:
+            decisions[id(item)] = {
+                "decision": "selected",
+                "decision_stage": "selected",
+                "decision_reason": "selected for rendering",
+                "candidate_rank": candidate_rank,
+            }
+        else:
+            decisions[id(item)] = {
+                "decision": "excluded",
+                "decision_stage": "finalize_removed",
+                "decision_reason": "removed during final deduplication, noise, or financial-cap validation",
+                "candidate_rank": candidate_rank,
+            }
+
+    records = []
+    for item in items:
+        decision = decisions.get(id(item), {
+            "decision": "excluded",
+            "decision_stage": "unclassified",
+            "decision_reason": "no selector decision was recorded",
+        })
+        records.append(
+            selection_observation_item(
+                item,
+                decision=str(decision["decision"]),
+                decision_stage=str(decision["decision_stage"]),
+                decision_reason=str(decision["decision_reason"]),
+                selector_evaluated=id(item) in recent_ids,
+                candidate_rank=decision.get("candidate_rank") if isinstance(decision.get("candidate_rank"), int) else None,
+                canonical_representative_link=str(decision.get("canonical_representative_link") or ""),
+            )
+        )
+    LAST_SELECTION_OBSERVATION = {
+        "items": records,
+        "decision_stage_counts": dict(Counter(record["decision_stage"] for record in records)),
+    }
+    return finalized
 
 
 def selection_summary(items: list[Item], selected: list[Item], now: datetime) -> str:
@@ -2631,6 +2816,45 @@ def self_test() -> int:
     )
     check("Editorial Entry v3 has at most two supporting points", len(editorial_entry["supporting_points_ja"]) <= 2)
 
+    observed_duplicate = Item(
+        "Test Duplicate",
+        "Test Feed",
+        weather_guard.title,
+        weather_guard.description,
+        now - timedelta(minutes=1),
+        "raw",
+        "https://example.test/weather-duplicate",
+    )
+    observed_old = Item(
+        "Test Old",
+        "Test Feed",
+        "Weather advisory from a previous day",
+        "Older RSS item outside the recent window.",
+        now - timedelta(hours=25),
+        "raw",
+        "https://example.test/weather-old",
+    )
+    observed_selected = select_items([weather_guard, observed_duplicate, observed_old], now)
+    observation_payload = build_selection_observation_json(
+        [weather_guard, observed_duplicate, observed_old],
+        observed_selected,
+        2,
+        [],
+        now,
+    )
+    observation_by_link = {record["link"]: record for record in observation_payload["items"]}
+    check("Selection observation is explicitly observation-only", observation_payload["observation_only"] is True)
+    check("Selection observation retains selected items", observation_by_link[weather_guard.link]["decision_stage"] == "selected")
+    check(
+        "Selection observation retains canonical duplicates",
+        observation_by_link[observed_duplicate.link]["decision_stage"] == "duplicate_canonical_event",
+    )
+    check(
+        "Selection observation retains items outside the recent window",
+        observation_by_link[observed_old.link]["decision_stage"] == "outside_recent_window"
+        and observation_by_link[observed_old.link]["score"] is None,
+    )
+
     if failures:
         print("self-test failed:")
         for failure in failures:
@@ -2648,6 +2872,10 @@ def main() -> int:
     parser.add_argument("--include-paul-tan", action="store_true", help="Locally opt in to the gated Paul Tan RSS source.")
     parser.add_argument("--output", help="Write the final Markdown summary to this path.")
     parser.add_argument("--json-output", help="Write selected final items as intermediate JSON to this path.")
+    parser.add_argument(
+        "--selection-observation-output",
+        help="Write an observation-only record of selected and excluded RSS items to this path.",
+    )
     args = parser.parse_args()
 
     if args.self_test:
@@ -2696,6 +2924,12 @@ def main() -> int:
             build_selected_items_json(selected, processed_count, failed_sources, now, freshness),
         )
         print(f"Wrote JSON: {args.json_output}")
+    if args.selection_observation_output:
+        write_json_output(
+            args.selection_observation_output,
+            build_selection_observation_json(all_items, selected, processed_count, failed_sources, now),
+        )
+        print(f"Wrote selection observation: {args.selection_observation_output}")
     return 0
 
 

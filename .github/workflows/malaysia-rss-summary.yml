@@ -188,7 +188,8 @@ jobs:
             --include-paul-tan \
             --diagnostics \
             --output "${output_path}" \
-            --json-output "${run_dir}/selected_items.json"
+            --json-output "${run_dir}/selected_items.json" \
+            --selection-observation-output "${run_dir}/selection_observation.json"
           cp "${output_path}" "${run_dir}/rss_production_fallback.md"
           if grep -q "::inbox-item" "${output_path}"; then
             echo "::error::Generated Markdown must not contain ::inbox-item metadata."
