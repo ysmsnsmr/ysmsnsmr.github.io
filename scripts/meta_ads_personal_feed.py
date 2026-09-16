@@ -46,16 +46,19 @@ STATE_SCHEMA_VERSION = "meta-ads-personal-feed-state/v2"
 LEGACY_STATE_SCHEMA_VERSION = "meta-ads-personal-feed-state/v1"
 STATE_V3_SCHEMA_VERSION = "meta-ads-personal-feed-state/v3"
 STATE_V4_SCHEMA_VERSION = "meta-ads-personal-feed-state/v4"
+STATE_V5_SCHEMA_VERSION = "meta-ads-personal-feed-state/v5"
 FEED_SCHEMA_VERSION = "meta-ads-personal-feed/v2"
 LEGACY_FEED_SCHEMA_VERSION = "meta-ads-personal-feed/v1"
 FEED_V3_SCHEMA_VERSION = "meta-ads-personal-feed/v3"
 FEED_V4_SCHEMA_VERSION = "meta-ads-personal-feed/v4"
+FEED_V5_SCHEMA_VERSION = "meta-ads-personal-feed/v5"
 PRESENTATION_SCHEMA_VERSION = "meta-ads-personal-feed-presentation/v1"
 BILINGUAL_PRESENTATION_SCHEMA_VERSION = "meta-ads-personal-feed-presentation/v2"
 DEFAULT_PRESENTATION_GENERATOR_REVISION = "bilingual-v1"
 LEGACY_RELEVANCE_REVISION = "legacy-v2"
 DEFAULT_V3_SCHEMA = Path(__file__).resolve().parent / "schemas/meta_ads_personal_feed_v3.schema.json"
 DEFAULT_V4_SCHEMA = Path(__file__).resolve().parent / "schemas/meta_ads_personal_feed_v4.schema.json"
+DEFAULT_V5_SCHEMA = Path(__file__).resolve().parent / "schemas/meta_ads_personal_feed_v5.schema.json"
 DEFAULT_CONFIG = Path("config/meta_ads_personal_feed_sources.json")
 DEFAULT_STATE = Path("data/meta_ads_personal_feed_state.json")
 DEFAULT_OUTPUT = Path("meta-ads-updates/personal-feed.json")
@@ -82,8 +85,11 @@ PRESENTATION_RETRY_BASE_DELAY_SECONDS = 3600
 PRESENTATION_RETRY_MAX_DELAY_SECONDS = 7 * 24 * 3600
 PLATFORM_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 PARSER_VERSION = "meta-ads-personal-feed-parser/v2"
-LANES = {"action", "watch", "drop"}
-PUBLIC_LANES = {"action", "watch"}
+PUBLICATION_STATUSES = {"included", "drop"}
+PUBLICATION_INCLUDED = "included"
+# v4 remains readable while existing public files and state are migrated.
+LEGACY_LANES = {"action", "watch", "drop"}
+LEGACY_PUBLIC_LANES = {"action", "watch"}
 
 ACTION_TERMS = (
     "ads manager", "meta ads", "facebook ads", "instagram ads", "ad placement", "placements",
@@ -97,10 +103,11 @@ STRATEGIC_SIGNAL_TERMS = (
     "business tools", "creator monetization", "marketing guide", "holiday marketing",
 )
 DROP_TERMS = (
-    "account security", "two-step verification", "passkey", "teen account", "under-16",
+    "account security", "two-step verification", "passkey", "teen account", "teen accounts", "under-16",
     "age verification", "settlement", "lawsuit", "safety enforcement", "account removal",
 )
 COMPETITOR_ONLY_TERMS = ("chatgpt ads", "openai ads")
+RELEVANCE_TERMS = ACTION_TERMS + STRATEGIC_SIGNAL_TERMS
 
 
 def _expect_keys(value: Any, expected: set[str], label: str) -> dict[str, Any]:
@@ -566,54 +573,41 @@ def _first_matching_term(text: str, terms: tuple[str, ...]) -> str | None:
     return next((term for term in terms if _contains_term(text, term)), None)
 
 
-def _classify_lane(source: dict[str, Any], raw: dict[str, Any]) -> tuple[str, list[str]]:
-    """Route a retained candidate without making an article's prose public.
+def _classify_publication(source: dict[str, Any], raw: dict[str, Any]) -> tuple[str, list[str]]:
+    """Decide whether a retained candidate is included, without public ranking.
 
-    ACTION is deliberately narrow: it needs a concrete advertising mechanism.
-    WATCH keeps plausible product or business signals visible without claiming an
-    immediate advertiser action. DROP stays in the local state so a future rule
-    revision can be evaluated without recreating source history.
+    ``drop`` is an internal exclusion state.  It preserves a candidate for a
+    future source-rule revision, but never publishes it or schedules a model
+    request.  All included items are displayed by source and recency only.
     """
     source_id = source["id"]
     title = str(raw.get("title") or "").casefold()
     context = str(raw.get("sourceContext") or "").casefold()
     categories = "\n".join(str(value) for value in raw.get("categories", [])).casefold()
     searchable = "\n".join((title, context, categories))
-    title_action = _first_matching_term(title, ACTION_TERMS)
-    action = _first_matching_term(searchable, ACTION_TERMS)
-    strategic = _first_matching_term(searchable, STRATEGIC_SIGNAL_TERMS)
+    relevance = _first_matching_term(searchable, RELEVANCE_TERMS)
     drop = _first_matching_term(searchable, DROP_TERMS)
 
     if source_id == "meta-business-sdk-releases":
-        return "watch", ["source:business-sdk-release"]
+        return PUBLICATION_INCLUDED, ["source:business-sdk-release"]
     if source_id == "meta-business-news-discovered":
-        return "action", ["source:meta-business-news"]
+        return PUBLICATION_INCLUDED, ["source:meta-business-news"]
     if source_id == "meta-product-news-rss":
-        if action is not None:
-            return "action", [f"mechanism:{action}"]
+        if relevance is not None:
+            return PUBLICATION_INCLUDED, [f"relevance:{relevance}"]
         if drop is not None:
             return "drop", [f"non_ads:{drop}"]
-        if strategic is not None:
-            return "watch", [f"signal:{strategic}"]
         return "drop", ["non_ads:product-news"]
     if source_id == "jon-loomer-meta-ads":
         competitor = _first_matching_term(title, COMPETITOR_ONLY_TERMS)
         if competitor is not None:
             return "drop", [f"competitor:{competitor}"]
-        if title_action is not None and _first_matching_term(title, ("meta", "facebook", "instagram")) is not None:
-            return "action", [f"mechanism:{title_action}"]
-        if strategic is not None:
-            return "watch", [f"signal:{strategic}"]
-        return "watch", ["source:meta-advertising-context"]
+        return PUBLICATION_INCLUDED, ["source:meta-advertising-context"]
     if source_id == "social-media-today-meta-ads":
         if drop is not None:
             return "drop", [f"non_ads:{drop}"]
-        if title_action is not None:
-            return "action", [f"mechanism:{title_action}"]
-        if strategic is not None:
-            return "watch", [f"signal:{strategic}"]
-        return "drop", ["non_ads:context-only"]
-    return "watch", ["source:unclassified"]
+        return PUBLICATION_INCLUDED, ["source:meta-ads-context"]
+    return PUBLICATION_INCLUDED, ["source:configured-source"]
 
 
 def _match(
@@ -995,6 +989,23 @@ def validate_v4_json_schema(payload: Any, schema_path: Path = DEFAULT_V4_SCHEMA)
         raise ContractError(f"personal feed v4 violates JSON Schema at {location}: {error.message}")
 
 
+def validate_v5_json_schema(payload: Any, schema_path: Path = DEFAULT_V5_SCHEMA) -> None:
+    """Execute the source-and-recency public-feed schema independently of Python checks."""
+    try:
+        from jsonschema import Draft202012Validator, FormatChecker
+    except ImportError as error:
+        raise ContractError("Personal Feed v5 JSON Schema validation requires jsonschema") from error
+    try:
+        schema = json.loads(schema_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise ContractError(f"unable to load Personal Feed v5 JSON Schema: {schema_path}") from error
+    errors = sorted(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(payload), key=lambda item: list(item.absolute_path))
+    if errors:
+        error = errors[0]
+        location = ".".join(str(part) for part in error.absolute_path) or "root"
+        raise ContractError(f"personal feed v5 violates JSON Schema at {location}: {error.message}")
+
+
 def _empty_presentation_retry_queue() -> dict[str, Any]:
     return {"schemaVersion": PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION, "entries": []}
 
@@ -1089,7 +1100,9 @@ def _validate_presentation_retry_queue(
             raise ContractError(f"{label}.itemKey does not reference a retained item")
         if item["fingerprint"] != entry["fingerprint"]:
             raise ContractError(f"{label}.fingerprint must match the retained item")
-        if item.get("lane") is not None and item["lane"] not in PUBLIC_LANES:
+        if item.get("publicationStatus") is not None and item["publicationStatus"] != PUBLICATION_INCLUDED:
+            raise ContractError(f"{label} cannot reference a non-public item")
+        if item.get("lane") is not None and item["lane"] not in {"action", "watch"}:
             raise ContractError(f"{label} cannot reference a non-public lane")
         if item["presentation"]["locales"][locale]["status"] in {"machine", "reviewed"}:
             raise ContractError(f"{label} cannot queue a completed locale")
@@ -1194,10 +1207,10 @@ def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
     if "presentationRetryQueue" in payload:
         expected_state_keys.add("presentationRetryQueue")
     state = _expect_keys(payload, expected_state_keys, "personal feed state")
-    if state["schemaVersion"] not in {LEGACY_STATE_SCHEMA_VERSION, STATE_SCHEMA_VERSION, STATE_V3_SCHEMA_VERSION, STATE_V4_SCHEMA_VERSION}:
-        raise ContractError(f"personal feed state schemaVersion must be {LEGACY_STATE_SCHEMA_VERSION}, {STATE_SCHEMA_VERSION}, {STATE_V3_SCHEMA_VERSION}, or {STATE_V4_SCHEMA_VERSION}")
-    if "presentationRetryQueue" in payload and state["schemaVersion"] not in {STATE_V3_SCHEMA_VERSION, STATE_V4_SCHEMA_VERSION}:
-        raise ContractError("personal feed presentationRetryQueue requires the v3 or v4 state schema")
+    if state["schemaVersion"] not in {LEGACY_STATE_SCHEMA_VERSION, STATE_SCHEMA_VERSION, STATE_V3_SCHEMA_VERSION, STATE_V4_SCHEMA_VERSION, STATE_V5_SCHEMA_VERSION}:
+        raise ContractError(f"personal feed state schemaVersion must be {LEGACY_STATE_SCHEMA_VERSION}, {STATE_SCHEMA_VERSION}, {STATE_V3_SCHEMA_VERSION}, {STATE_V4_SCHEMA_VERSION}, or {STATE_V5_SCHEMA_VERSION}")
+    if "presentationRetryQueue" in payload and state["schemaVersion"] not in {STATE_V3_SCHEMA_VERSION, STATE_V4_SCHEMA_VERSION, STATE_V5_SCHEMA_VERSION}:
+        raise ContractError("personal feed presentationRetryQueue requires the v3, v4, or v5 state schema")
     _timestamp(state["updatedAt"], "personal feed state.updatedAt", nullable=True)
     if not isinstance(state["sources"], dict):
         raise ContractError("personal feed state.sources must be an object")
@@ -1206,20 +1219,22 @@ def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
         raise ContractError("personal feed state has an unknown source")
     for source_id, source_state in state["sources"].items():
         expected_source_keys = {"items"}
-        if state["schemaVersion"] in {STATE_V3_SCHEMA_VERSION, STATE_V4_SCHEMA_VERSION}:
+        if state["schemaVersion"] in {STATE_V3_SCHEMA_VERSION, STATE_V4_SCHEMA_VERSION, STATE_V5_SCHEMA_VERSION}:
             expected_source_keys.add("relevanceRevision")
         source_payload = _expect_keys(source_state, expected_source_keys, f"personal feed state.sources.{source_id}")
-        if state["schemaVersion"] in {STATE_V3_SCHEMA_VERSION, STATE_V4_SCHEMA_VERSION}:
+        if state["schemaVersion"] in {STATE_V3_SCHEMA_VERSION, STATE_V4_SCHEMA_VERSION, STATE_V5_SCHEMA_VERSION}:
             _expect_identifier(source_payload["relevanceRevision"], f"personal feed state.sources.{source_id}.relevanceRevision")
         if not isinstance(source_payload["items"], dict):
             raise ContractError(f"personal feed state.sources.{source_id}.items must be an object")
         for key, item in source_payload["items"].items():
             _text(key, f"personal feed state.sources.{source_id} key")
             expected = {"url", "title", "publishedDate", "updatedDate", "matchEvidence", "fingerprint", "firstObservedAt", "lastObservedAt"}
-            if state["schemaVersion"] in {STATE_SCHEMA_VERSION, STATE_V3_SCHEMA_VERSION, STATE_V4_SCHEMA_VERSION}:
+            if state["schemaVersion"] in {STATE_SCHEMA_VERSION, STATE_V3_SCHEMA_VERSION, STATE_V4_SCHEMA_VERSION, STATE_V5_SCHEMA_VERSION}:
                 expected.add("presentation")
             if state["schemaVersion"] == STATE_V4_SCHEMA_VERSION:
                 expected.update({"lane", "laneEvidence"})
+            if state["schemaVersion"] == STATE_V5_SCHEMA_VERSION:
+                expected.update({"publicationStatus", "publicationEvidence"})
             entry = _expect_keys(item, expected, f"personal feed state.sources.{source_id}.items.{key}")
             _expect_https_url(entry["url"], "personal feed state item.url")
             _text(entry["title"], "personal feed state item.title")
@@ -1245,10 +1260,20 @@ def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
                     "personal feed state item.presentation",
                 )
             elif state["schemaVersion"] == STATE_V4_SCHEMA_VERSION:
-                if entry["lane"] not in LANES:
+                if entry["lane"] not in LEGACY_LANES:
                     raise ContractError("personal feed state item.lane is unsupported")
                 if not isinstance(entry["laneEvidence"], list) or not entry["laneEvidence"] or not all(isinstance(value, str) and value for value in entry["laneEvidence"]):
                     raise ContractError("personal feed state item.laneEvidence must be a non-empty string array")
+                _validate_bilingual_presentation(
+                    entry["presentation"],
+                    entry["fingerprint"],
+                    "personal feed state item.presentation",
+                )
+            elif state["schemaVersion"] == STATE_V5_SCHEMA_VERSION:
+                if entry["publicationStatus"] not in PUBLICATION_STATUSES:
+                    raise ContractError("personal feed state item.publicationStatus is unsupported")
+                if not isinstance(entry["publicationEvidence"], list) or not entry["publicationEvidence"] or not all(isinstance(value, str) and value for value in entry["publicationEvidence"]):
+                    raise ContractError("personal feed state item.publicationEvidence must be a non-empty string array")
                 _validate_bilingual_presentation(
                     entry["presentation"],
                     entry["fingerprint"],
@@ -1296,7 +1321,8 @@ def _source_descriptors_v3(config: dict[str, Any], active_discovered_ids: set[st
 
 
 def _sort_key(item: dict[str, Any]) -> tuple[str, str]:
-    return (item["updatedDate"] or item["publishedDate"] or item["firstObservedAt"], item["id"])
+    dates = [value for value in (item["publishedDate"], item["updatedDate"]) if value]
+    return (max(dates) if dates else item["firstObservedAt"], item["id"])
 
 
 def build_feed(state: dict[str, Any], config: dict[str, Any], generated_at: str) -> dict[str, Any]:
@@ -1308,7 +1334,7 @@ def build_feed(state: dict[str, Any], config: dict[str, Any], generated_at: str)
     }
     for source in _all_sources(config):
         for key, record in state["sources"].get(source["id"], {"items": {}})["items"].items():
-            if record["lane"] not in PUBLIC_LANES:
+            if record.get("publicationStatus") != PUBLICATION_INCLUDED:
                 continue
             items.append({
                 "id": f"{source['id']}-{record['fingerprint'][:20]}",
@@ -1321,13 +1347,11 @@ def build_feed(state: dict[str, Any], config: dict[str, Any], generated_at: str)
                 "lastObservedAt": record["lastObservedAt"],
                 "platformIds": source["platformIds"],
                 "matchEvidence": record["matchEvidence"],
-                "lane": record["lane"],
-                "laneEvidence": record["laneEvidence"],
                 "presentation": record["presentation"],
             })
     items.sort(key=_sort_key, reverse=True)
     return {
-        "schemaVersion": FEED_V4_SCHEMA_VERSION,
+        "schemaVersion": FEED_V5_SCHEMA_VERSION,
         "defaultLocale": "en",
         "availableLocales": list(SUPPORTED_LOCALES),
         "generatedAt": generated_at,
@@ -1401,7 +1425,8 @@ def migrate_state_v3_to_v4(state: dict[str, Any], config: dict[str, Any]) -> dic
         source = sources_by_id[source_id]
         records: dict[str, dict[str, Any]] = {}
         for key, record in source_state["items"].items():
-            lane, lane_evidence = _classify_lane(source, {"title": record["title"], "matchEvidence": record["matchEvidence"]})
+            publication_status, lane_evidence = _classify_publication(source, {"title": record["title"], "matchEvidence": record["matchEvidence"]})
+            lane = "watch" if publication_status == PUBLICATION_INCLUDED else "drop"
             records[key] = {
                 **record,
                 "lane": lane,
@@ -1412,10 +1437,43 @@ def migrate_state_v3_to_v4(state: dict[str, Any], config: dict[str, Any]) -> dic
     retry_queue["entries"] = [
         entry
         for entry in retry_queue["entries"]
-        if sources.get(entry["sourceId"], {"items": {}})["items"].get(entry["itemKey"], {}).get("lane") in PUBLIC_LANES
+        if sources.get(entry["sourceId"], {"items": {}})["items"].get(entry["itemKey"], {}).get("lane") in {"action", "watch"}
     ]
     migrated = {
         "schemaVersion": STATE_V4_SCHEMA_VERSION,
+        "updatedAt": state["updatedAt"],
+        "sources": sources,
+        "presentationRetryQueue": retry_queue,
+    }
+    validate_state(migrated, config)
+    return migrated
+
+
+def migrate_state_v4_to_v5(state: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
+    """Replace public lane ranking with the internal included/drop contract."""
+    if state.get("schemaVersion") != STATE_V4_SCHEMA_VERSION:
+        raise ContractError("state publication migration accepts only Personal Feed state v4")
+    validate_state(state, config)
+    sources: dict[str, dict[str, Any]] = {}
+    for source_id, source_state in state["sources"].items():
+        records: dict[str, dict[str, Any]] = {}
+        for key, record in source_state["items"].items():
+            publication_status = PUBLICATION_INCLUDED if record["lane"] in {"action", "watch"} else "drop"
+            records[key] = {
+                field: record[field]
+                for field in ("url", "title", "publishedDate", "updatedDate", "matchEvidence", "fingerprint", "firstObservedAt", "lastObservedAt", "presentation")
+            }
+            records[key]["publicationStatus"] = publication_status
+            records[key]["publicationEvidence"] = record["laneEvidence"]
+        sources[source_id] = {"relevanceRevision": source_state["relevanceRevision"], "items": records}
+    retry_queue = _migrate_presentation_retry_queue(state.get("presentationRetryQueue"))
+    retry_queue["entries"] = [
+        entry
+        for entry in retry_queue["entries"]
+        if sources.get(entry["sourceId"], {"items": {}})["items"].get(entry["itemKey"], {}).get("publicationStatus") == PUBLICATION_INCLUDED
+    ]
+    migrated = {
+        "schemaVersion": STATE_V5_SCHEMA_VERSION,
         "updatedAt": state["updatedAt"],
         "sources": sources,
         "presentationRetryQueue": retry_queue,
@@ -1570,7 +1628,7 @@ def _validate_feed_v4(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
             raise ContractError("personal feed v4 item platformIds must match its source")
         if not isinstance(entry["matchEvidence"], list) or not all(isinstance(value, str) for value in entry["matchEvidence"]):
             raise ContractError("personal feed v4 item.matchEvidence must be a string array")
-        if entry["lane"] not in PUBLIC_LANES:
+        if entry["lane"] not in LEGACY_PUBLIC_LANES:
             raise ContractError("personal feed v4 public item lane must be action or watch")
         if not isinstance(entry["laneEvidence"], list) or not entry["laneEvidence"] or not all(isinstance(value, str) and value for value in entry["laneEvidence"]):
             raise ContractError("personal feed v4 item.laneEvidence must be a non-empty string array")
@@ -1578,7 +1636,51 @@ def _validate_feed_v4(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
     return feed
 
 
+def _validate_feed_v5(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
+    validate_v5_json_schema(payload)
+    feed = _expect_keys(payload, {"schemaVersion", "defaultLocale", "availableLocales", "generatedAt", "sources", "items"}, "personal feed v5")
+    if feed["schemaVersion"] != FEED_V5_SCHEMA_VERSION:
+        raise ContractError(f"personal feed v5 schemaVersion must be {FEED_V5_SCHEMA_VERSION}")
+    if feed["defaultLocale"] != "en" or feed["availableLocales"] != list(SUPPORTED_LOCALES):
+        raise ContractError("personal feed v5 locales must be default en with en and ja overlays")
+    _timestamp(feed["generatedAt"], "personal feed v5.generatedAt", nullable=True)
+    descriptor_ids = _validate_v3_sources(feed, config)
+    if not isinstance(feed["items"], list) or len(feed["items"]) > config["policies"]["maxPublishedItems"]:
+        raise ContractError("personal feed v5 items exceed configured limit")
+    known_sources = {source["id"]: source for source in _all_sources(config)}
+    ids: set[str] = set()
+    for index, item in enumerate(feed["items"]):
+        entry = _expect_keys(
+            item,
+            {"id", "sourceId", "title", "url", "publishedDate", "updatedDate", "firstObservedAt", "lastObservedAt", "platformIds", "matchEvidence", "presentation"},
+            f"personal feed v5.items[{index}]",
+        )
+        item_id = _expect_identifier(entry["id"], f"personal feed v5.items[{index}].id")
+        if item_id in ids:
+            raise ContractError("personal feed v5 item IDs must be unique")
+        ids.add(item_id)
+        source = known_sources.get(entry["sourceId"])
+        if source is None or entry["sourceId"] not in descriptor_ids:
+            raise ContractError("personal feed v5 item references an unavailable source")
+        _text(entry["title"], "personal feed v5 item.title")
+        url = _expect_https_url(entry["url"], "personal feed v5 item.url")
+        if urlsplit(url).hostname not in source["transport"]["allowedContentHosts"]:
+            raise ContractError("personal feed v5 item URL must stay on its configured content host")
+        _date(entry["publishedDate"], "personal feed v5 item.publishedDate", nullable=True)
+        _date(entry["updatedDate"], "personal feed v5 item.updatedDate", nullable=True)
+        _timestamp(entry["firstObservedAt"], "personal feed v5 item.firstObservedAt")
+        _timestamp(entry["lastObservedAt"], "personal feed v5 item.lastObservedAt")
+        if entry["platformIds"] != source["platformIds"]:
+            raise ContractError("personal feed v5 item platformIds must match its source")
+        if not isinstance(entry["matchEvidence"], list) or not all(isinstance(value, str) for value in entry["matchEvidence"]):
+            raise ContractError("personal feed v5 item.matchEvidence must be a string array")
+        _validate_bilingual_presentation(entry["presentation"], None, f"personal feed v5.items[{index}].presentation")
+    return feed
+
+
 def validate_feed(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
+    if isinstance(payload, dict) and payload.get("schemaVersion") == FEED_V5_SCHEMA_VERSION:
+        return _validate_feed_v5(payload, config)
     if isinstance(payload, dict) and payload.get("schemaVersion") == FEED_V4_SCHEMA_VERSION:
         return _validate_feed_v4(payload, config)
     if isinstance(payload, dict) and payload.get("schemaVersion") == FEED_V3_SCHEMA_VERSION:
@@ -2276,6 +2378,8 @@ def collect(
         state = migrate_state_v2_to_v3(state, config)
     if state["schemaVersion"] == STATE_V3_SCHEMA_VERSION:
         state = migrate_state_v3_to_v4(state, config)
+    if state["schemaVersion"] == STATE_V4_SCHEMA_VERSION:
+        state = migrate_state_v4_to_v5(state, config)
     retry_queue = _retry_queue_map(_migrate_presentation_retry_queue(state.get("presentationRetryQueue")))
     if retry_failed and (retry_json_validate_failed or retry_legacy_http_400):
         raise ContractError("retry-failed cannot be combined with targeted retry options")
@@ -2392,7 +2496,7 @@ def collect(
     # Build state only after every candidate has been parsed and screened.
     # sourceContext, release notes, markup, and any model response remain local
     # variables and are deliberately excluded from this structure.
-    next_state: dict[str, Any] = {"schemaVersion": STATE_V4_SCHEMA_VERSION, "updatedAt": generated_at, "sources": {}}
+    next_state: dict[str, Any] = {"schemaVersion": STATE_V5_SCHEMA_VERSION, "updatedAt": generated_at, "sources": {}}
     presentation_candidates: list[tuple[str, dict[str, Any], dict[str, Any], list[str]]] = []
     for source in _all_sources(config):
         prior = state["sources"].get(source["id"], {"items": {}})["items"]
@@ -2407,8 +2511,8 @@ def collect(
                         "publishedDate": record["publishedDate"],
                         "updatedDate": record["updatedDate"],
                         "matchEvidence": record["matchEvidence"],
-                        "lane": record["lane"],
-                        "laneEvidence": record["laneEvidence"],
+                        "publicationStatus": record["publicationStatus"],
+                        "publicationEvidence": record["publicationEvidence"],
                         "fingerprint": record["fingerprint"],
                         "firstObservedAt": record["firstObservedAt"],
                         "lastObservedAt": record["lastObservedAt"],
@@ -2421,15 +2525,15 @@ def collect(
         for raw in raw_by_source[source["id"]]:
             existing = prior.get(raw["key"])
             cached = existing.get("presentation") if existing and existing.get("fingerprint") == raw["fingerprint"] else None
-            lane, lane_evidence = _classify_lane(source, raw)
+            publication_status, publication_evidence = _classify_publication(source, raw)
             record = {
                 "url": raw["url"],
                 "title": raw["title"],
                 "publishedDate": raw["publishedDate"],
                 "updatedDate": raw["updatedDate"],
                 "matchEvidence": raw["matchEvidence"],
-                "lane": lane,
-                "laneEvidence": lane_evidence,
+                "publicationStatus": publication_status,
+                "publicationEvidence": publication_evidence,
                 "fingerprint": raw["fingerprint"],
                 "firstObservedAt": existing["firstObservedAt"] if existing else generated_at,
                 "lastObservedAt": generated_at,
@@ -2437,7 +2541,7 @@ def collect(
             }
             current[raw["key"]] = record
             carried_forward_keys.discard(raw["key"])
-            pending_locales = _pending_presentation_locales(record["presentation"]) if lane in PUBLIC_LANES else []
+            pending_locales = _pending_presentation_locales(record["presentation"]) if publication_status == PUBLICATION_INCLUDED else []
             due_locales = [
                 locale
                 for locale in pending_locales
@@ -2465,17 +2569,17 @@ def collect(
         pipeline["sources"][source["id"]]["retainedItems"] = len(retained)
         pipeline["sources"][source["id"]]["carriedForwardItems"] = sum(key in carried_forward_keys for key in retained)
 
-    # Remove queue entries for expired, replaced, completed, or non-public
+    # Remove queue entries for expired, replaced, completed, or excluded
     # records before the next state is validated and persisted. DROP records
-    # remain in state for future classification changes, but must not retain a
-    # presentation retry lifecycle after leaving the public feed.
+    # remain in state for a future rule revision, but never retain presentation
+    # work while excluded from the public feed.
     for queue_key, entry in list(retry_queue.items()):
         source_id, item_key, locale = queue_key
         record = next_state["sources"].get(source_id, {"items": {}})["items"].get(item_key)
         if (
             record is None
             or record["fingerprint"] != entry["fingerprint"]
-            or record["lane"] not in PUBLIC_LANES
+            or record["publicationStatus"] != PUBLICATION_INCLUDED
             or record["presentation"]["locales"][locale]["status"] in {"machine", "reviewed"}
         ):
             del retry_queue[queue_key]

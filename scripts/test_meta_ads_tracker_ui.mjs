@@ -32,6 +32,27 @@ const demoReport = JSON.parse(await fs.readFile(path.join(repositoryRoot, "meta-
 const personalFeedReport = JSON.parse(await fs.readFile(path.join(repositoryRoot, "meta-ads-updates/personal-feed.json"), "utf8"));
 const personalFeedV3Report = JSON.parse(await fs.readFile(path.join(repositoryRoot, "scripts/fixtures/meta_ads_personal_feed_v3.json"), "utf8"));
 const personalFeedV4Report = JSON.parse(await fs.readFile(path.join(repositoryRoot, "scripts/fixtures/meta_ads_personal_feed_v4.json"), "utf8"));
+const personalFeedV5Report = {
+  ...personalFeedV4Report,
+  schemaVersion: "meta-ads-personal-feed/v5",
+  sources: [
+    ...personalFeedV4Report.sources,
+    { id: "meta-business-sdk-releases", name: "Meta Business SDK Releases", classification: "official", sourceUrl: "https://github.com/facebook/facebook-nodejs-business-sdk/releases", contentLanguage: "en", platformIds: ["meta-business-sdk", "marketing-api"] }
+  ],
+  items: [
+    ...personalFeedV4Report.items.map(({ lane, laneEvidence, ...item }) => item),
+    {
+      ...personalFeedV4Report.items[0],
+      id: "meta-business-sdk-releases-cccccccccccccccccccc",
+      sourceId: "meta-business-sdk-releases",
+      title: "Facebook Node.js Business SDK v27.0.0 released",
+      url: "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v27.0.0",
+      platformIds: ["meta-business-sdk", "marketing-api"],
+      lane: undefined,
+      laneEvidence: undefined
+    }
+  ].map(({ lane, laneEvidence, ...item }) => item)
+};
 const axeSource = await fs.readFile(require.resolve("axe-core/axe.min.js"), "utf8");
 const artifactDirectory = process.env.META_ADS_UI_ARTIFACT_DIR
   ? path.resolve(process.env.META_ADS_UI_ARTIFACT_DIR)
@@ -119,6 +140,10 @@ async function startServer() {
         if (referer.searchParams.get("personal-fixture") === "v4") {
           response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
           return response.end(JSON.stringify(personalFeedV4Report));
+        }
+        if (referer.searchParams.get("personal-fixture") === "v5") {
+          response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
+          return response.end(JSON.stringify(personalFeedV5Report));
         }
       }
       let filePath = path.resolve(repositoryRoot, `.${decodeURIComponent(url.pathname)}`);
@@ -256,15 +281,9 @@ try {
   productionPage.on("console", (message) => { if (message.type() === "error") productionConsoleErrors.push(message.text()); });
   productionPage.on("pageerror", (error) => productionPageErrors.push(error.message));
   await productionPage.goto(`${server.origin}/meta-ads-updates/index.html`, { waitUntil: "networkidle" });
-  const productionActionCards = await productionPage.locator("#update-list .update-card").count();
-  const productionWatchCards = await productionPage.locator("#watch-list .update-card").count();
-  assert(productionActionCards + productionWatchCards === personalFeedReport.items.length, `production route did not read personal-feed.json: ${[...productionConsoleErrors, ...productionPageErrors].join("; ")}`);
-  if (personalFeedReport.schemaVersion === "meta-ads-personal-feed/v4") {
-    const expectedActionCards = personalFeedReport.items.filter((item) => item.lane === "action").length;
-    const expectedWatchCards = personalFeedReport.items.filter((item) => item.lane === "watch").length;
-    assert(productionActionCards === expectedActionCards, "production ACTION lane count does not match personal-feed.json");
-    assert(productionWatchCards === expectedWatchCards, "production WATCH lane count does not match personal-feed.json");
-  }
+  const productionCards = await productionPage.locator(".update-card").count();
+  assert(productionCards === personalFeedReport.items.length, `production route did not read personal-feed.json: ${[...productionConsoleErrors, ...productionPageErrors].join("; ")}`);
+  assert(await productionPage.locator(".lane-label").count() === 0, "production route must not expose ACTION or WATCH labels");
   assert(!(await productionPage.locator("#demo-banner").isVisible()), "production route must not show the demo banner");
   assert(!(await productionPage.locator("#recovery-banner").isVisible()), "ordinary production route must not show the delayed-recovery banner");
   assert(await productionPage.locator("#unofficial-notice").isVisible(), "Personal Feed must show the non-official-source notice");
@@ -282,12 +301,12 @@ try {
     const label = `personal-feed/${viewport.name}`;
     await page.goto(`${server.origin}/meta-ads-updates/ja/?personal-fixture=1`, { waitUntil: "networkidle" });
     assert(await page.locator("#unofficial-notice").isVisible(), `${label}: non-official notice is missing`);
-    assert(await page.locator("#update-list .update-card").count() === 3, `${label}: personal feed cards are missing`);
+    assert(await page.locator(".update-card").count() === 3, `${label}: personal feed cards are missing`);
     assert(await page.locator(".origin-label--official").count() === 1, `${label}: official badge is missing`);
     assert(await page.locator(".origin-label--unofficial").count() === 2, `${label}: non-official badge is missing`);
     assert(await page.locator(".detail-link").count() === 3, `${label}: detail links are missing`);
     assert(await page.locator(".source-link").count() === 0, `${label}: Personal Feed list must not expose article links directly`);
-    assert((await page.locator("#update-list h2").allTextContents()).includes("Meta Ads APIの観測"), `${label}: generated Japanese headline is missing from the list`);
+    assert((await page.locator(".update-card h2").allTextContents()).includes("Meta Ads APIの観測"), `${label}: generated Japanese headline is missing from the list`);
     assert(await page.locator(".unofficial-copy").count() === 0, `${label}: per-card non-official warning must not be rendered`);
     assert((await page.locator(".fact-label").allTextContents()).filter((label) => label === "最終更新日").length === 3, `${label}: final update date label is missing`);
     assert(!(await page.locator(".fact-label").allTextContents()).includes("対象"), `${label}: target platform must not be shown on the Personal Feed list`);
@@ -297,7 +316,7 @@ try {
       .every((node) => getComputedStyle(node.querySelector("dd")).fontStyle === "normal")), `${label}: unknown final update date must use normal typography`);
     assert(!(await page.locator(".fact-label").allTextContents()).includes("最終確認"), `${label}: automated observation timestamp must not be shown as human confirmation`);
     assert(await page.locator(".masthead").textContent().then((text) => !text.includes("Personal information feed") && !text.includes("個人・同僚向けフィード")), `${label}: removed personal-feed copy is still visible`);
-    const personalColumns = await page.locator("#update-list").evaluate((node) => getComputedStyle(node).gridTemplateColumns.trim().split(/\s+/).length);
+    const personalColumns = await page.locator("#unofficial-list").evaluate((node) => getComputedStyle(node).gridTemplateColumns.trim().split(/\s+/).length);
     const expectedColumns = viewport.name === "desktop" ? 3 : viewport.name === "tablet" ? 2 : 1;
     assert(personalColumns === expectedColumns, `${label}: expected ${expectedColumns} personal-feed column(s), found ${personalColumns}`);
     assert(await page.locator(".source-link").evaluateAll((links) => links.every((link) => link.href.startsWith("https://") && link.target === "_blank" && link.rel.includes("noreferrer"))), `${label}: source links are unsafe`);
@@ -306,13 +325,13 @@ try {
     await assertAccessibilityAndLayout(page, label);
     if (viewport.name === "desktop") {
       await page.selectOption("#priority-filter", "unofficial");
-      assert(await page.locator("#update-list .update-card").count() === 2, "personal feed non-official filter failed");
+      assert(await page.locator(".update-card").count() === 2, "personal feed non-official filter failed");
       await page.selectOption("#source-filter", "search-engine-land-meta-rss");
-      assert(await page.locator("#update-list .update-card").count() === 2, "personal feed source filter failed");
+      assert(await page.locator(".update-card").count() === 2, "personal feed source filter failed");
       await page.fill("#query-filter", "表示変更");
-      assert(await page.locator("#update-list .update-card").count() === 1, "personal feed query filter failed");
+      assert(await page.locator(".update-card").count() === 1, "personal feed query filter failed");
       await page.click("#reset-button");
-      assert(await page.locator("#update-list .update-card").count() === 3, "personal feed reset failed");
+      assert(await page.locator(".update-card").count() === 3, "personal feed reset failed");
     }
     if (artifactDirectory) {
       await page.screenshot({ path: path.join(artifactDirectory, `personal-feed-${viewport.name}-viewport.png`) });
@@ -327,12 +346,12 @@ try {
   v3List.on("console", (message) => { if (message.type() === "error") v3ListConsoleErrors.push(message.text()); });
   v3List.on("pageerror", (error) => v3ListPageErrors.push(error.message));
   await v3List.goto(`${server.origin}/meta-ads-updates/ja/?personal-fixture=v3`, { waitUntil: "networkidle" });
-  assert(await v3List.locator("#update-list .update-card").count() === personalFeedV3Report.items.length, "v3 Personal Feed list did not render");
-  assert((await v3List.locator("#update-list h2").allTextContents()).includes("Meta広告の計測機能を更新"), "v3 list did not use its Japanese locale overlay");
+  assert(await v3List.locator(".update-card").count() === personalFeedV3Report.items.length, "v3 Personal Feed list did not render");
+  assert((await v3List.locator(".update-card h2").allTextContents()).includes("Meta広告の計測機能を更新"), "v3 list did not use its Japanese locale overlay");
   assert(await v3List.locator(".lane-label").count() === 0, "v3 items must not be labelled as ACTION or WATCH");
-  assert(await v3List.locator("#action-lane .feed-lane-heading").isHidden(), "v3 list must not show an ACTION lane heading");
+  assert(await v3List.locator("#official-group").isVisible(), "v3 list must group official items without an ACTION heading");
   assert(await v3List.locator(".detail-link").first().getAttribute("href").then((href) => href?.includes("personal-fixture=v3")), "v3 detail links did not retain the fixed fixture selector");
-  assert(await v3List.locator("#update-list").textContent().then((text) => !text.includes("machine") && !text.includes("missing")), "v3 list must not expose presentation status");
+  assert(await v3List.locator(".update-card").allTextContents().then((cards) => !cards.join(" ").includes("machine") && !cards.join(" ").includes("missing")), "v3 list must not expose presentation status");
   assert(v3ListConsoleErrors.length === 0 && v3ListPageErrors.length === 0, `v3 Personal Feed list runtime errors: ${[...v3ListConsoleErrors, ...v3ListPageErrors].join("; ")}`);
   await assertTokens(v3List);
   await assertAccessibilityAndLayout(v3List, "personal-feed-v3/desktop");
@@ -344,21 +363,24 @@ try {
 
   const v4List = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await v4List.goto(`${server.origin}/meta-ads-updates/ja/?personal-fixture=v4`, { waitUntil: "networkidle" });
-  assert(await v4List.locator("#update-list .update-card").count() === 1, "v4 ACTION lane must render one direct-impact card");
-  assert(await v4List.locator("#watch-list .update-card").count() === 1, "v4 WATCH lane must render one strategic-signal card");
-  assert(await v4List.locator("#action-lane").isVisible(), "v4 ACTION lane is missing");
-  assert(await v4List.locator("#watch-lane").isVisible(), "v4 WATCH lane is missing");
-  assert((await v4List.locator("#action-lane").textContent()).includes("直接影響"), "v4 ACTION lane label is missing");
-  assert((await v4List.locator("#watch-lane").textContent()).includes("戦略的シグナル"), "v4 WATCH lane label is missing");
-  assert(await v4List.locator(".lane-label--action").count() === 1, "v4 direct-impact badge is missing");
-  assert(await v4List.locator(".lane-label--watch").count() === 1, "v4 strategic-signal badge is missing");
-  assert((await v4List.locator("#result-summary").textContent()).includes("直接影響 1件") && (await v4List.locator("#result-summary").textContent()).includes("戦略的シグナル 1件"), "v4 lane counts are misleading");
+  assert(await v4List.locator(".update-card").count() === 2, "v4 items must remain readable after the v5 UI update");
+  assert(await v4List.locator("#official-group").isVisible(), "v4 official group is missing");
+  assert(await v4List.locator("#unofficial-group").isVisible(), "v4 unofficial group is missing");
+  assert(await v4List.locator(".lane-label").count() === 0, "v4 must not expose legacy lane labels");
   await assertAccessibilityAndLayout(v4List, "personal-feed-v4/desktop");
-  await v4List.locator("#watch-list .detail-link").click();
+  await v4List.locator("#unofficial-list .detail-link").click();
   await v4List.waitForURL(/detail\.html\?/);
-  assert((await v4List.locator(".lane-label").textContent()) === "戦略的シグナル", "v4 detail did not retain its lane");
-  assert((await v4List.locator(".fact-label").allTextContents()).includes("レーン"), "v4 detail is missing the lane fact");
+  assert(await v4List.locator(".lane-label").count() === 0, "v4 detail must not expose legacy lane labels");
+  assert(!(await v4List.locator(".fact-label").allTextContents()).includes("レーン"), "v4 detail must not expose a legacy lane fact");
   await v4List.close();
+
+  const v5List = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await v5List.goto(`${server.origin}/meta-ads-updates/ja/?personal-fixture=v5`, { waitUntil: "networkidle" });
+  assert(await v5List.locator(".update-card").count() === personalFeedV5Report.items.length, "v5 Personal Feed list did not render");
+  assert(await v5List.locator("#sdk-group").isVisible(), "v5 SDK releases must be an independent group");
+  assert((await v5List.locator("#sdk-group").textContent()).includes("Meta Business SDK Releases"), "v5 SDK group did not contain the SDK release");
+  assert(await v5List.locator(".lane-label").count() === 0, "v5 list must not expose a lane label");
+  await v5List.close();
 
   for (const viewport of [viewports[0], viewports[2]]) {
     const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });
@@ -523,8 +545,8 @@ try {
   const englishList = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await englishList.goto(`${server.origin}/meta-ads-updates/?personal-fixture=v3&source=meta-product-news-rss&type=official&q=measurement`, { waitUntil: "networkidle" });
   assert(await englishList.locator("html").getAttribute("lang") === "en", "root route must be English");
-  assert((await englishList.locator("#update-list h2").textContent()) === "Meta Ads measurement update", "English route must use the English overlay");
-  assert(await englishList.locator("#update-list").textContent().then((text) => !text.includes("machine") && !text.includes("missing")), "list cards must not expose generation status");
+  assert((await englishList.locator("#official-list h2").textContent()) === "Meta Ads measurement update", "English route must use the English overlay");
+  assert(await englishList.locator(".update-card").allTextContents().then((cards) => !cards.join(" ").includes("machine") && !cards.join(" ").includes("missing")), "list cards must not expose generation status");
   assert(await englishList.locator("#locale-ja").getAttribute("href").then((href) => href === "/meta-ads-updates/ja/?source=meta-product-news-rss&type=official&q=measurement&personal-fixture=v3"), "language switch must retain supported list filters");
   assert(await englishList.locator("#canonical-link").getAttribute("href") === "https://ysmsnsmr.github.io/meta-ads-updates/", "English list canonical is incorrect");
   assert(await englishList.locator("#alternate-ja").getAttribute("href") === "https://ysmsnsmr.github.io/meta-ads-updates/ja/", "English list hreflang is incorrect");

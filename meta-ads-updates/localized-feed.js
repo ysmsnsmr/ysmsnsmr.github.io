@@ -6,15 +6,15 @@
   const demoMode = params.get("demo") === "1";
   const fixtureMode = params.has("fixture");
   const root = locale === "ja" ? "../" : "./";
-  const personalVersions = new Set(["meta-ads-personal-feed/v1", "meta-ads-personal-feed/v2", "meta-ads-personal-feed/v3", "meta-ads-personal-feed/v4"]);
+  const personalVersions = new Set(["meta-ads-personal-feed/v1", "meta-ads-personal-feed/v2", "meta-ads-personal-feed/v3", "meta-ads-personal-feed/v4", "meta-ads-personal-feed/v5"]);
   const words = locale === "ja" ? {
-    allSources: "すべてのソース", allTypes: "すべて", official: "Meta公式", unofficial: "非公式・未確認",
+    allSources: "すべてのソース", allTypes: "すべて", official: "Meta公式", unofficial: "非公式",
     retrieved: "最終取得", waiting: "初回取得待ち", shown: "表示中：", automatic: "件（自動取得・要確認）",
     published: "発表日", updated: "最終更新日", unknown: "確認できず", details: "詳細を見る",
     noMatches: "条件に一致する更新はありません", noMatchesCopy: "検索語または絞り込み条件を変更してください。",
     noItems: "取得済みの情報はありません", noItemsCopy: "初回取得後にソースからの情報を表示します。",
     error: "公開フィードを読み込めません", errorTitle: "現在の公開内容を表示できません", errorCopy: "公開フィードを読み込めませんでした。しばらくしてからもう一度お試しください。",
-    action: "直接影響", watch: "戦略的シグナル", actionCount: "直接影響 {count}件", watchCount: "戦略的シグナル {count}件",
+    officialGroup: "Meta公式", sdkGroup: "Meta Business SDK Releases", unofficialGroup: "非公式", groupCount: "{count}件",
     demoFooter: "この画面は架空データによるデモです。実運用の承認・判断には使用しないでください。", demoResult: "（デモ用の架空更新）", demoLink: "公式ソース例を開く"
   } : {
     allSources: "All sources", allTypes: "All", official: "Official", unofficial: "Unofficial",
@@ -23,14 +23,14 @@
     noMatches: "No updates match these filters", noMatchesCopy: "Change the keyword or filters and try again.",
     noItems: "No collected updates yet", noItemsCopy: "Items will appear after the first successful collection.",
     error: "Unable to load the published feed", errorTitle: "The current published content is unavailable", errorCopy: "Please try again later.",
-    action: "Direct impact", watch: "Strategic signal", actionCount: "{count} direct impact items", watchCount: "{count} strategic signals",
+    officialGroup: "Official updates", sdkGroup: "Meta Business SDK Releases", unofficialGroup: "Unofficial", groupCount: "{count} items",
     demoFooter: "This screen contains fictional data and must not be used for operational decisions.", demoResult: " (fictional demo updates)", demoLink: "Open official source example"
   };
   const el = {
     demo: document.querySelector("#demo-banner"), recovery: document.querySelector("#recovery-banner"), recoveryCopy: document.querySelector("#recovery-banner-copy"),
     notice: document.querySelector("#unofficial-notice"), stamp: document.querySelector("#week-stamp"), form: document.querySelector("#filter-form"),
     source: document.querySelector("#source-filter"), type: document.querySelector("#priority-filter"), typeLabel: document.querySelector("#priority-filter-label"), query: document.querySelector("#query-filter"), reset: document.querySelector("#reset-button"),
-    summary: document.querySelector("#result-summary"), actionLane: document.querySelector("#action-lane"), actionCount: document.querySelector("#action-lane-count"), list: document.querySelector("#update-list"), watchLane: document.querySelector("#watch-lane"), watchCount: document.querySelector("#watch-lane-count"), watchList: document.querySelector("#watch-list"), empty: document.querySelector("#empty-state"), emptyTitle: document.querySelector("#empty-title"), emptyCopy: document.querySelector("#empty-copy"),
+    summary: document.querySelector("#result-summary"), legacy: document.querySelector("#legacy-list-section"), list: document.querySelector("#update-list"), officialGroup: document.querySelector("#official-group"), officialCount: document.querySelector("#official-group-count"), officialList: document.querySelector("#official-list"), sdkGroup: document.querySelector("#sdk-group"), sdkCount: document.querySelector("#sdk-group-count"), sdkList: document.querySelector("#sdk-list"), unofficialGroup: document.querySelector("#unofficial-group"), unofficialCount: document.querySelector("#unofficial-group-count"), unofficialList: document.querySelector("#unofficial-list"), empty: document.querySelector("#empty-state"), emptyTitle: document.querySelector("#empty-title"), emptyCopy: document.querySelector("#empty-copy"),
     footer: document.querySelector("#tracker-footer"), en: document.querySelector("#locale-en"), ja: document.querySelector("#locale-ja")
   };
   const state = { source: "all", type: "all", q: "" };
@@ -94,8 +94,6 @@
 
   function headline(item) { return presentation(item).shortHeadline || item.title; }
 
-  function lane(item) { return item.lane === "action" || item.lane === "watch" ? item.lane : null; }
-
   function countLabel(template, count) { return template.replace("{count}", String(count)); }
 
   function fact(label, value, fallback = words.unknown) {
@@ -110,7 +108,7 @@
     if (state.type !== "all") query.set("type", state.type);
     if (state.q.trim()) query.set("q", state.q.trim());
     const fixture = params.get("personal-fixture");
-    if (["1", "v3", "v4"].includes(fixture)) query.set("personal-fixture", fixture);
+    if (["1", "v3", "v4", "v5"].includes(fixture)) query.set("personal-fixture", fixture);
     return `./detail.html?${query.toString()}`;
   }
 
@@ -119,8 +117,6 @@
     const card = make("article", `update-card update-card--${source.classification}`);
     const heading = make("div", "card-heading");
     const official = source.classification === "official";
-    const itemLane = lane(item);
-    if (itemLane) heading.append(make("span", `lane-label lane-label--${itemLane}`, itemLane === "action" ? words.action : words.watch));
     heading.append(make("span", official ? "origin-label origin-label--official" : "origin-label origin-label--unofficial", official ? words.official : words.unofficial), make("p", "source-name", source.name));
     const facts = make("dl", "fact-grid");
     facts.append(fact(words.published, item.publishedDate), fact(words.updated, item.updatedDate));
@@ -153,10 +149,11 @@
     if (!response.ok) throw new Error(`report HTTP ${response.status}`);
     const report = await response.json();
     const personal = personalVersions.has(report.schemaVersion);
-    const laneAware = report.schemaVersion === "meta-ads-personal-feed/v4";
     const sources = new Map((report.sources || []).map((source) => [source.id, source]));
     el.list.classList.toggle("update-list--personal", personal);
-    el.watchList.classList.toggle("update-list--personal", personal);
+    el.officialList.classList.toggle("update-list--personal", personal);
+    el.sdkList.classList.toggle("update-list--personal", personal);
+    el.unofficialList.classList.toggle("update-list--personal", personal);
     const delayedRecovery = !personal && report.publication?.mode === "delayed_recovery";
     el.demo.hidden = !demoMode;
     el.recovery.hidden = !delayedRecovery;
@@ -199,7 +196,7 @@
       if (state.type !== "all") next.set("type", state.type);
       if (state.q.trim()) next.set("q", state.q.trim());
       const fixture = params.get("personal-fixture");
-      if (["1", "v3", "v4"].includes(fixture)) next.set("personal-fixture", fixture);
+      if (["1", "v3", "v4", "v5"].includes(fixture)) next.set("personal-fixture", fixture);
       window.history.replaceState(null, "", `${window.location.pathname}${next.size ? `?${next}` : ""}`);
       for (const key of ["source", "type", "q"]) params.delete(key);
       next.forEach((value, key) => params.set(key, value));
@@ -211,28 +208,45 @@
         const source = sources.get(item.sourceId);
         const text = personal ? `${item.title} ${headline(item)}` : item.title;
         return (state.source === "all" || item.sourceId === state.source) && (state.type === "all" || (personal ? source?.classification : item.priority) === state.type) && (!needle || text.toLocaleLowerCase(locale).includes(needle));
+      }).sort((left, right) => {
+        const newest = (item) => [item.publishedDate, item.updatedDate].filter(Boolean).sort().pop() || item.firstObservedAt || "";
+        return newest(right).localeCompare(newest(left)) || String(right.id).localeCompare(String(left.id));
       });
     }
     function render() {
       const items = visible();
-      const actionItems = laneAware ? items.filter((item) => lane(item) === "action") : items;
-      const watchItems = laneAware ? items.filter((item) => lane(item) === "watch") : [];
-      el.list.replaceChildren(...actionItems.map((item) => personal ? personalCard(item, sources.get(item.sourceId)) : legacyCard(item)));
-      el.watchList.replaceChildren(...watchItems.map((item) => personalCard(item, sources.get(item.sourceId))));
-      el.actionLane.hidden = laneAware && actionItems.length === 0;
-      el.actionLane.classList.toggle("feed-lane--unlaned", !laneAware);
-      el.watchLane.hidden = !laneAware || watchItems.length === 0;
-      el.actionCount.textContent = laneAware ? countLabel(words.actionCount, actionItems.length) : "";
-      el.watchCount.textContent = laneAware ? countLabel(words.watchCount, watchItems.length) : "";
+      const groups = { official: [], sdk: [], unofficial: [] };
+      if (personal) {
+        for (const item of items) {
+          const source = sources.get(item.sourceId);
+          if (item.sourceId === "meta-business-sdk-releases") groups.sdk.push(item);
+          else if (source?.classification === "unofficial") groups.unofficial.push(item);
+          else groups.official.push(item);
+        }
+        for (const [name, list, section, count, target] of [
+          ["official", groups.official, el.officialGroup, el.officialCount, el.officialList],
+          ["sdk", groups.sdk, el.sdkGroup, el.sdkCount, el.sdkList],
+          ["unofficial", groups.unofficial, el.unofficialGroup, el.unofficialCount, el.unofficialList],
+        ]) {
+          target.replaceChildren(...list.map((item) => personalCard(item, sources.get(item.sourceId))));
+          section.hidden = list.length === 0;
+          count.textContent = countLabel(words.groupCount, list.length);
+        }
+        el.legacy.hidden = true;
+      } else {
+        el.list.replaceChildren(...items.map((item) => legacyCard(item)));
+        el.legacy.hidden = false;
+        el.officialGroup.hidden = true;
+        el.sdkGroup.hidden = true;
+        el.unofficialGroup.hidden = true;
+      }
       el.empty.hidden = items.length > 0;
       if (!items.length) {
         const filtered = state.source !== "all" || state.type !== "all" || Boolean(state.q.trim());
         el.emptyTitle.textContent = filtered ? words.noMatches : personal ? words.noItems : "No updates";
         el.emptyCopy.textContent = filtered ? words.noMatchesCopy : personal ? words.noItemsCopy : "";
       }
-      el.summary.textContent = personal && laneAware
-        ? `${words.shown}${items.length}${words.automatic} · ${countLabel(words.actionCount, actionItems.length)} · ${countLabel(words.watchCount, watchItems.length)}`
-        : personal
+      el.summary.textContent = personal
           ? `${words.shown}${items.length}${words.automatic}`
           : `${words.shown}${items.length}${demoMode ? words.demoResult : ""}`;
     }

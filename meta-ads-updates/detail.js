@@ -117,7 +117,7 @@
     }
 
     const isOfficial = source.classification === "official";
-    const badge = element("span", isOfficial ? "origin-label origin-label--official" : "origin-label origin-label--unofficial", isOfficial ? "Meta公式" : "非公式・未確認");
+    const badge = element("span", isOfficial ? "origin-label origin-label--official" : "origin-label origin-label--unofficial", isOfficial ? "Meta公式" : "非公式");
     elements.heading.append(badge, element("p", "source-name", source.name));
     elements.title.textContent = personalHeadline(item);
     elements.summary.textContent = personalSummary(item)

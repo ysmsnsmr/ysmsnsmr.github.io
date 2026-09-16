@@ -32,11 +32,11 @@ Meta公式ページはRSSや公開APIではなくHTMLから限定的なmetadata�
 
 ```text
 安全な取得 → 形式検査・解析 → 鮮度判定 → 関連性判定
-→ ACTION / WATCH / DROP分類 → state構築 → 英日表示データ生成 → feed検証 → 原子的公開
+→ 掲載対象 / DROP判定 → state構築 → 英日表示データ生成 → feed検証 → 原子的公開
 ```
 
-- `data/meta_ads_personal_feed_state.json` — URL、タイトル、日付、fingerprint、取得日時、lane、英語正本・日本語overlayの表示データキャッシュを保持する状態。`DROP`も後日の再評価用にここへ残す
-- `meta-ads-updates/personal-feed.json` — GitHub Pagesで表示する公開フィード。`ACTION`と`WATCH`だけを含める
+- `data/meta_ads_personal_feed_state.json` — URL、タイトル、日付、fingerprint、取得日時、内部の掲載可否、英語正本・日本語overlayの表示データキャッシュを保持する状態。`DROP`も後日の再評価用にここへ残す
+- `meta-ads-updates/personal-feed.json` — GitHub Pagesで表示する公開フィード。内部で掲載対象と判定した記事だけを含める
 
 生HTML、記事本文、画像、認証情報、Cookieは保存しません。いずれかのソースで失敗したrunは既存の公開フィードを更新しません。
 
@@ -44,9 +44,9 @@ Meta公式ページはRSSや公開APIではなくHTMLから限定的なmetadata�
 
 発表日または最終更新日の新しい方が365日より前の記事は、表示データ生成の前に除外します。どちらの日付もない記事だけは初回観測日を使います。再観測日時で期限を延長することはありません。期限切れの記事はstate、公開feed、artifactに残しません。
 
-Meta Newsroom Product News RSSは候補を広く保存し、広告運用の具体的な機構がある記事を`ACTION`、MetaのAI・購入・決済・事業導線など将来の広告接点になり得る記事を`WATCH`、直接・戦略のどちらにも該当しない記事を`DROP`へ分けます。`ACTION`はAds Manager、placement、targeting、measurement、Marketing APIなどの具体的な変更を必要とします。`WATCH`は即時対応が必要という意味ではありません。Business SDK releaseは`WATCH`、Jon LoomerとSocial Media Todayは既存のソース別候補条件を通過した後に同じlane基準で分類します。`DROP`は公開せず、本文を保存せずにstateだけへ残します。
+Meta Newsroom Product News RSSは候補を広く取得し、広告・計測・API・事業導線に関する具体的な関連語がある記事を掲載対象にします。Business SDK releaseは常に掲載対象です。Jon LoomerとSocial Media Todayは、既存のソース固有候補条件を通過した記事を掲載対象にします。セキュリティ、訴訟、年齢制限など広告利用と関係しない候補は`DROP`へ置きます。`DROP`は公開せず、本文を保存せずにstateだけへ残します。
 
-この分類は事実認定ではなく、読む順番を決めるための運用ラベルです。広告主がすぐ対応すべき記事を`ACTION`へ、現時点の対応は不要でも将来の面・計測・購買導線に関係し得る記事を`WATCH`へ置きます。`WATCH`が後日`ACTION`になった例、または`ACTION`に`DROP`相当の記事が混じった例は、URLと理由を残して人間承認のうえで分類規則を見直します。
+この判定は記事の重要度や、読者が取るべき対応を示すものではありません。掲載対象は、ソースと日付で並べて表示します。明らかに広告との関係がない記事が混じった場合は、URLと理由を残して人間確認のうえで除外規則を見直します。
 
 `workflow_dispatch`で`reseed_source_id`に設定済みのソースIDを指定すると、そのソースだけを現行の鮮度・関連性条件で再構築します。同じURLが引き続き採用される場合、`firstObservedAt`は維持されます。未登録IDはcollectorが失敗して既存公開物を保持します。
 
@@ -59,7 +59,7 @@ Meta Newsroom Product News RSSは候補を広く保存し、広告運用の具�
 3. PR headを更新後、CIの`--require-current-relevance-revisions`をPASSさせる。これはconfigの`relevanceRevision`と全sourceのstate値が一致しない限り失敗する。
 4. PR本文またはreview記録に、変更source ID、reseed run URL、runが確認したPR head SHAを残す。
 
-これにより、関連性ルールと保存済みstateの不一致を`main`へ持ち込めません。今回のlane導入では、**最初に`meta-product-news-rss`を指定して手動実行**します。Social Media TodayのFacebook RSS移行時は`social-media-today-meta-ads`を指定します。Jon Loomerのv3契約へ移行するときは`jon-loomer-meta-ads`を指定します。
+これにより、関連性ルールと保存済みstateの不一致を`main`へ持ち込めません。掲載対象ルールを実際に変更したPRは、対象ソースのsource-local reseedを成功させてからマージします。v5移行は既存の`ACTION`と`WATCH`をどちらも掲載対象として機械的に移すだけなので、source-local reseedは不要です。次の通常収集がv4 stateをv5へ移行します。
 
 ## 英語・日本語の短見出し・要約
 
@@ -89,7 +89,7 @@ GroqのAPIキーがない、生成に失敗する、または出力契約に合�
 
 ## 画面の使い方
 
-一覧は`ACTION`の直接影響を先に、`WATCH`の戦略的シグナルを別レーンで表示します。各カードは短見出し、lane、ソース区分、発表日・最終更新日を表示します。`詳細を見る`を選ぶと、同じ公開feedから該当記事を読み込み、短見出し、日本語要約、lane、原文タイトル、対象プラットフォーム、元記事リンクを表示します。
+一覧は、Meta公式、Meta Business SDK Releases、非公式の3グループで表示します。記事の掲載順は発表日または最終更新日の新しい順です。内部では`included`と`DROP`だけを保持し、`DROP`は公開せず後日の再評価用に状態データへ残します。各カードは短見出し、ソース区分、発表日・最終更新日を表示します。`詳細を見る`を選ぶと、同じ公開feedから該当記事を読み込み、短見出し、日本語要約、原文タイトル、対象プラットフォーム、元記事リンクを表示します。
 
 日本語要約が未生成の間も詳細画面は利用でき、原文タイトルと元記事リンクを表示します。一覧のソース・区分・キーワード条件は、詳細画面から一覧へ戻ったときに維持されます。保存期間の終了などで記事が消えたURLは、安全な「記事が見つかりません」画面になります。
 
