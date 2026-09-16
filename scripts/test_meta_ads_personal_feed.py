@@ -81,6 +81,17 @@ JON_WITH_OFFICIAL_LINK = """<rss><channel>
   <pubDate>Thu, 14 May 2026 11:30:51 +0000</pubDate>
 </item>
 </channel></rss>"""
+SOCIAL_MEDIA_TODAY_WITH_OFFICIAL_LINK = """<rss><channel>
+<item>
+  <title>Meta adds more creator partnership tools for advertisers</title>
+  <link>https://www.socialmediatoday.com/news/meta-adds-more-creator-partnership-tools/830480/</link>
+  <description><![CDATA[
+    <p>Meta has added new campaign tools for advertiser partnerships.</p>
+    <p><a href="https://www.facebook.com/business/news/pixel-conversionsapi-updates?utm_source=social">Official announcement</a></p>
+  ]]></description>
+  <pubDate>Tue, 15 Sep 2026 12:00:00 -0400</pubDate>
+</item>
+</channel></rss>"""
 META_BUSINESS_NEWS = """<!doctype html><html><head>
 <meta property="og:url" content="https://www.facebook.com/business/news/pixel-conversionsapi-updates">
 <meta property="og:type" content="article">
@@ -135,7 +146,11 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(sources["jon-loomer-meta-ads"]["relevanceRevision"], "jon-loomer-v3")
         self.assertEqual(sources["meta-business-sdk-releases"]["parser"], "github_releases")
         self.assertEqual(discovered["meta-business-news-discovered"]["classification"], "official")
-        self.assertEqual(discovered["meta-business-news-discovered"]["discovery"]["fromSourceId"], "jon-loomer-meta-ads")
+        self.assertEqual(
+            discovered["meta-business-news-discovered"]["discovery"]["fromSourceIds"],
+            ["jon-loomer-meta-ads", "social-media-today-meta-ads"],
+        )
+        self.assertEqual(discovered["meta-business-news-discovered"]["relevanceRevision"], "meta-business-news-discovered-v2")
         self.assertEqual(discovered["meta-business-news-discovered"]["transport"]["allowedFetchHosts"], ["www.facebook.com"])
         self.assertFalse(self.config["policies"]["persistRawResponseBody"])
         self.assertEqual(sources["meta-product-news-rss"]["match"]["kind"], "all")
@@ -163,6 +178,11 @@ class PersonalFeedTest(unittest.TestCase):
         stale = copy.deepcopy(state)
         stale["sources"]["meta-product-news-rss"]["relevanceRevision"] = "legacy-v2"
         with self.assertRaisesRegex(ContractError, "source-local reseed.*meta-product-news-rss"):
+            validate_current_relevance_revisions(stale, self.config)
+
+        stale = copy.deepcopy(state)
+        stale["sources"]["meta-business-news-discovered"]["relevanceRevision"] = "legacy-v2"
+        with self.assertRaisesRegex(ContractError, "source-local reseed.*meta-business-news-discovered"):
             validate_current_relevance_revisions(stale, self.config)
 
     def test_included_drop_publication_matches_the_reviewed_fifteen_item_set(self) -> None:
@@ -239,6 +259,21 @@ class PersonalFeedTest(unittest.TestCase):
         invalid = copy.deepcopy(self.config)
         invalid["discoveredSources"][0]["discovery"]["allowedPathPrefix"] = "/business/"
         with self.assertRaisesRegex(ContractError, "allowedPathPrefix"):
+            validate_config(invalid)
+
+        invalid = copy.deepcopy(self.config)
+        invalid["discoveredSources"][0]["discovery"]["fromSourceIds"] = []
+        with self.assertRaisesRegex(ContractError, "fromSourceIds.*non-empty"):
+            validate_config(invalid)
+
+        invalid = copy.deepcopy(self.config)
+        invalid["discoveredSources"][0]["discovery"]["fromSourceIds"] = ["jon-loomer-meta-ads", "jon-loomer-meta-ads"]
+        with self.assertRaisesRegex(ContractError, "fromSourceIds.*duplicates"):
+            validate_config(invalid)
+
+        invalid = copy.deepcopy(self.config)
+        invalid["discoveredSources"][0]["discovery"]["fromSourceIds"] = ["meta-product-news-rss"]
+        with self.assertRaisesRegex(ContractError, "unofficial RSS"):
             validate_config(invalid)
 
         invalid = copy.deepcopy(self.config)
@@ -779,12 +814,15 @@ class PersonalFeedTest(unittest.TestCase):
         validate_state(state, self.config)
         validate_feed(feed, self.config)
 
-    def test_jon_rss_extracts_only_canonical_meta_business_news_links(self) -> None:
+    def test_discovery_origin_rss_extracts_only_canonical_meta_business_news_links(self) -> None:
         sources = {source["id"]: source for source in self.config["sources"]}
         discovery = self.config["discoveredSources"][0]
         jon = extract_items(sources["jon-loomer-meta-ads"], JON_WITH_OFFICIAL_LINK, discovery_source=discovery)
+        social = extract_items(sources["social-media-today-meta-ads"], SOCIAL_MEDIA_TODAY_WITH_OFFICIAL_LINK, discovery_source=discovery)
         self.assertEqual(len(jon), 1)
+        self.assertEqual(len(social), 1)
         self.assertIn("pixel-conversionsapi-updates", jon[0]["sourceContextMarkup"])
+        self.assertIn("pixel-conversionsapi-updates", social[0]["sourceContextMarkup"])
 
     def test_meta_business_news_date_accepts_observed_label_variants(self) -> None:
         cases = {
@@ -838,11 +876,50 @@ class PersonalFeedTest(unittest.TestCase):
         validate_feed(feed, self.config)
         validate_state(next_state, self.config)
 
+    def test_duplicate_discovered_official_url_is_fetched_once_with_all_origins_recorded(self) -> None:
+        bodies = {
+            "meta-product-news-rss": META,
+            "meta-business-sdk-releases": SDK,
+            "social-media-today-meta-ads": SOCIAL_MEDIA_TODAY_WITH_OFFICIAL_LINK,
+            "jon-loomer-meta-ads": JON_WITH_OFFICIAL_LINK,
+            "meta-business-news-discovered": META_BUSINESS_NEWS,
+        }
+        fetch_count = 0
+
+        def fetch(source: dict, timeout: float) -> tuple[str, str]:
+            nonlocal fetch_count
+            if source["id"] == "meta-business-news-discovered":
+                fetch_count += 1
+            return self.fetcher(bodies=bodies)(source, timeout)
+
+        pipeline: dict[str, Any] = {}
+        feed, next_state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            fetch,
+            source_pipeline_stats=pipeline,
+        )
+        promoted = [item for item in feed["items"] if item["sourceId"] == "meta-business-news-discovered"]
+        self.assertEqual(len(promoted), 1)
+        self.assertEqual(fetch_count, 1)
+        self.assertEqual(
+            promoted[0]["matchEvidence"],
+            ["discovered-via:jon-loomer-meta-ads", "discovered-via:social-media-today-meta-ads"],
+        )
+        retained = next(iter(next_state["sources"]["meta-business-news-discovered"]["items"].values()))
+        self.assertEqual(retained["matchEvidence"], promoted[0]["matchEvidence"])
+        counts = pipeline["sources"]["meta-business-news-discovered"]
+        self.assertEqual((counts["discoveredLinks"], counts["attemptedLinks"], counts["rejectedLinks"], counts["retainedItems"]), (1, 1, 0, 1))
+        validate_feed(feed, self.config)
+        validate_state(next_state, self.config)
+
     def test_discovered_page_failure_isolated_without_leaking_details(self) -> None:
         bodies = {
             "meta-product-news-rss": META,
             "meta-business-sdk-releases": SDK,
-            "social-media-today-meta-ads": SOCIAL_MEDIA_TODAY,
+            "social-media-today-meta-ads": SOCIAL_MEDIA_TODAY_WITH_OFFICIAL_LINK,
             "jon-loomer-meta-ads": JON_WITH_OFFICIAL_LINK,
         }
 
@@ -1031,7 +1108,7 @@ class PersonalFeedTest(unittest.TestCase):
             source_pipeline_stats=pipeline,
         )
         social = pipeline["sources"]["social-media-today-meta-ads"]
-        self.assertEqual(pipeline["parserVersion"], "meta-ads-personal-feed-parser/v2")
+        self.assertEqual(pipeline["parserVersion"], "meta-ads-personal-feed-parser/v3")
         self.assertTrue(all(pipeline["sources"][source["id"]]["fetched"] for source in self.config["sources"]))
         self.assertFalse(pipeline["sources"]["meta-business-news-discovered"]["fetched"])
         self.assertEqual(

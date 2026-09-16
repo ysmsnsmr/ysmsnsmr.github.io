@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "meta-ads-personal-feed-sources/v6",
+  "schemaVersion": "meta-ads-personal-feed-sources/v7",
   "policies": {
     "persistRawResponseBody": false,
     "historyRetentionDays": 180,
@@ -144,7 +144,7 @@
       "contentLanguage": "en",
       "platforms": ["Meta Ads"],
       "platformIds": ["meta-ads"],
-      "relevanceRevision": "legacy-v2",
+      "relevanceRevision": "meta-business-news-discovered-v2",
       "transport": {
         "allowedFetchHosts": ["www.facebook.com"],
         "allowedContentHosts": ["www.facebook.com"],
@@ -153,7 +153,10 @@
         "maxItems": 20
       },
       "discovery": {
-        "fromSourceId": "jon-loomer-meta-ads",
+        "fromSourceIds": [
+          "jon-loomer-meta-ads",
+          "social-media-today-meta-ads"
+        ],
         "allowedPathPrefix": "/business/news/",
         "maxLinksPerSourceItem": 10
       }

@@ -402,3 +402,156 @@ must use `supersedes` instead of editing an earlier entry.
 - Override: applied by yas at 2026-09-16T19:49:14+08:00
 - Override reason: カード形式へ変更してからSDKカードへの不要感が継続しており、SDKをfilterだけに隠すと更新を見逃すリスクがあるため、個人・同僚向けの認知負荷を下げつつ更新を残す。
 - Override constraints: SDKの取得、state、公開JSON、source filter、原典URLは維持する。; 通常ニュースカードからのみ除外し、既存TOP末尾のコンパクトな更新ログに限定する。; ログは版、日付、原典リンクのみとし、Groq生成・新規詳細ページ・新規workflowは追加しない。
+
+<!-- idea-gate:20260916t205514-meta-ads-official-discovery-multi-origin -->
+## Social Media Todayを含む複数の非公式sourceからMeta公式Business Newsを発見・昇格する
+
+- Record ID: `20260916t205514-meta-ads-official-discovery-multi-origin`
+- Evaluated: 2026-09-16T20:55:14+08:00
+- Project: Meta Ads Personal Feed
+- Rubric: 1.0.0
+- Decision: **EXPERIMENT_ONLY**
+- Score: 62/100
+- Confidence: medium - 既存のJon Loomer昇格経路は検証済みだが、Social Media Todayでの有効リンク件数と利用効果は未測定
+
+### Problem Card
+
+- Who: Meta Ads Personal Feedを使う個人運用者と同僚
+- When: 非公式RSS記事の中でMeta公式Business Newsへのリンクが示されたとき
+- Problem: 現在はJon Loomer Digitalだけが公式リンクの抽出・検証・昇格対象であり、Social Media Today経由で見つかる同種の公式発表は公式として独立表示されない
+- Current behavior: 利用者は非公式記事を読み、公式リンクがあれば手動で開く。Jon Loomer由来だけは既存の昇格機能により公式記事として表示される
+
+### Evidence
+
+- Tier: 1
+- 既存mainにはJon Loomer DigitalをfromSourceIdとしてMeta for Business Newsを検証・公式昇格する実装と固定テストがある
+- 2026-08の運用で、非公式記事から見つかるMeta for Business News原本は価値が高いと利用者が確認した
+- Social Media TodayのRSS本文に同じ形式の有効リンクが含まれる頻度は未観測
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 10/20 |
+| `current_workaround_gap` | 8/20 |
+| `evidence_strength` | 10/20 |
+| `behavior_outcome_impact` | 9/15 |
+| `strategic_fit_reuse` | 10/10 |
+| `ui_operational_lightness` | 15/15 |
+| **Total** | **62/100** |
+
+### Alternatives
+
+- **SHRINK - Social Media TodayだけをJon Loomerと同じ単一発見元として追加する:** STOP (56/100). 複数sourceの汎用契約にはせず、Social Media Today向けの専用発見元を追加する。
+- **INTEGRATE - 複数originを宣言できる既存の公式発見経路へ統合する:** EXPERIMENT_ONLY (62/100). 発見元を配列で宣言し、同一公式URLを一度だけ取得・表示し、すべての発見元を証跡として保持する。
+- **NO_FEATURE - Social Media Todayの公式リンクを手動確認する:** STOP (49/100). RSS記事からの公式リンク昇格は増やさず、利用者が非公式記事を開いて必要時だけ原本を確認する。
+
+### Next Step
+
+- Allowed action: Social Media Todayの固定RSS fixtureを用い、公式Business Newsリンクを安全に抽出でき、重複URLが一度だけ検証・表示されることを確認する読み取り専用の実証を1回行う。
+- Revisit when: Social Media Today RSSから有効な公式Business Newsリンクを少なくとも1件確認する; 同一公式URLがJon LoomerとSocial Media Todayの両方から検出されるfixtureで、重複なし・証跡保持を確認する; 公式原本を独立表示したことが利用者の確認手順を短縮した事例を確認する
+- Override: not applied
+
+<!-- idea-gate:20260916t205709-meta-ads-official-discovery-multi-origin-probe -->
+## Social Media Todayを含む複数の非公式sourceからMeta公式Business Newsを発見・昇格する
+
+- Record ID: `20260916t205709-meta-ads-official-discovery-multi-origin-probe`
+- Evaluated: 2026-09-16T20:57:09+08:00
+- Project: Meta Ads Personal Feed
+- Rubric: 1.0.0
+- Decision: **EXPERIMENT_ONLY**
+- Score: 72/100
+- Confidence: medium - Social Media Today RSSで有効な公式リンク5件を確認できたが、継続的な検出頻度と利用者の確認手順短縮は未測定
+
+### Problem Card
+
+- Who: Meta Ads Personal Feedを使う個人運用者と同僚
+- When: 非公式RSS記事の中でMeta公式Business Newsへのリンクが示されたとき
+- Problem: 現在はJon Loomer Digitalだけが公式リンクの抽出・検証・昇格対象であり、Social Media Today経由で見つかる同種の公式発表は公式として独立表示されない
+- Current behavior: 利用者は非公式記事を読み、公式リンクがあれば手動で開く。Jon Loomer由来だけは既存の昇格機能により公式記事として表示される
+
+### Evidence
+
+- Tier: 2
+- 既存mainにはJon Loomer DigitalをfromSourceIdとしてMeta for Business Newsを検証・公式昇格する実装と固定テストがある
+- 2026-08の運用で、非公式記事から見つかるMeta for Business News原本は価値が高いと利用者が確認した
+- 2026-09-16の読み取り専用probeで、Social Media TodayのRSSは20記事を解析し、許可host・HTTPS・/business/news/の制約を満たす重複なしのMeta公式Business Newsリンクを5件検出した
+- このprobeはstate、公開feed、artifactを更新していない
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 12/20 |
+| `current_workaround_gap` | 10/20 |
+| `evidence_strength` | 15/20 |
+| `behavior_outcome_impact` | 10/15 |
+| `strategic_fit_reuse` | 10/10 |
+| `ui_operational_lightness` | 15/15 |
+| **Total** | **72/100** |
+
+### Alternatives
+
+- **SHRINK - Social Media Todayだけを個別の公式発見元として追加する:** EXPERIMENT_ONLY (66/100). 複数origin契約にせず、Social Media Today用の個別経路を追加する。
+- **INTEGRATE - 複数originを宣言できる既存の公式発見経路へ統合する:** EXPERIMENT_ONLY (72/100). 発見元を配列で宣言し、同一公式URLを一度だけ取得・表示し、発見元を証跡として保持する。
+- **NO_FEATURE - Social Media Todayの公式リンクを手動確認する:** STOP (56/100). RSS記事からの公式リンク昇格は増やさず、利用者が非公式記事を開いて必要時だけ原本を確認する。
+
+### Next Step
+
+- Allowed action: 明示overrideがある場合に限り、複数origin宣言・URL単位の重複排除・発見元証跡の保持を実装し、固定fixtureとsource-local reseedで検証する。
+- Revisit when: 公式原本を独立表示したことで利用者の確認手順が短縮した事例を確認する; Social Media Todayの有効リンク検出が複数回継続する; 同一公式URLを複数originが示した際に発見元証跡が有用だと確認する
+- Supersedes: `20260916t205514-meta-ads-official-discovery-multi-origin`
+- Override: not applied
+
+<!-- idea-gate:20260916t210000-meta-ads-official-discovery-multi-origin-override -->
+## Social Media Todayを含む複数の非公式sourceからMeta公式Business Newsを発見・昇格する
+
+- Record ID: `20260916t210000-meta-ads-official-discovery-multi-origin-override`
+- Evaluated: 2026-09-16T21:00:00+08:00
+- Project: Meta Ads Personal Feed
+- Rubric: 1.0.0
+- Decision: **EXPERIMENT_ONLY**
+- Score: 72/100
+- Confidence: medium - Social Media Today RSSで有効な公式リンクを繰り返し確認できたが、公式原本の独立表示による確認手順短縮は未測定
+
+### Problem Card
+
+- Who: Meta Ads Personal Feedを使う個人運用者と同僚
+- When: 非公式RSS記事の中でMeta公式Business Newsへのリンクが示されたとき
+- Problem: 現在はJon Loomer Digitalだけが公式リンクの抽出・検証・昇格対象であり、Social Media Today経由で見つかる同種の公式発表は公式として独立表示されない
+- Current behavior: 利用者は非公式記事を読み、公式リンクがあれば手動で開く。Jon Loomer由来だけは既存の昇格機能により公式記事として表示される
+
+### Evidence
+
+- Tier: 2
+- 既存mainにはJon Loomer DigitalをfromSourceIdとしてMeta for Business Newsを検証・公式昇格する実装と固定テストがある
+- 2026-08の運用で、非公式記事から見つかるMeta for Business News原本は価値が高いと利用者が確認した
+- 2026-09-16の読み取り専用probeで、Social Media TodayのRSSは20記事を解析し、許可host・HTTPS・/business/news/の制約を満たす重複なしのMeta公式Business Newsリンクを5件検出した
+- 指定されたCreator partnership記事に含まれる公式URLは、Social Media TodayのRSS本文でも1件から検出できた
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 12/20 |
+| `current_workaround_gap` | 10/20 |
+| `evidence_strength` | 15/20 |
+| `behavior_outcome_impact` | 10/15 |
+| `strategic_fit_reuse` | 10/10 |
+| `ui_operational_lightness` | 15/15 |
+| **Total** | **72/100** |
+
+### Alternatives
+
+- **SHRINK - Social Media Todayだけを個別の公式発見元として追加する:** EXPERIMENT_ONLY (66/100). 複数origin契約にせず、Social Media Today用の個別経路を追加する。
+- **INTEGRATE - 複数originを宣言できる既存の公式発見経路へ統合する:** EXPERIMENT_ONLY (72/100). 発見元を配列で宣言し、同一公式URLを一度だけ取得・表示し、発見元を証跡として保持する。
+- **NO_FEATURE - Social Media Todayの公式リンクを手動確認する:** STOP (56/100). RSS記事からの公式リンク昇格は増やさず、利用者が非公式記事を開いて必要時だけ原本を確認する。
+
+### Next Step
+
+- Allowed action: overrideの制約内で、複数origin宣言・URL単位の重複排除・発見元証跡の保持を実装し、固定fixtureとsource-local reseedで検証する。
+- Revisit when: 公式原本の独立表示による確認手順の短縮を観察する; Social Media Todayの有効リンク検出を複数回観察する
+- Supersedes: `20260916t205709-meta-ads-official-discovery-multi-origin-probe`
+- Override: applied by yas at 2026-09-16T21:00:00+08:00
+- Override reason: 個人・同僚向けの実用性を優先して実装する
+- Override constraints: 既存のHTTPS・許可host・/business/news/・canonical metadata・日付検証を弱めない。; 新しいUI、source、外部API、定期workflowを追加しない。; 同一の公式URLは1回だけ取得・state・feedへ保存し、発見元はmatchEvidenceへすべて残す。; Social Media TodayとJon Loomerの固定fixture、重複URL、片方の公式ページ取得失敗を検証する。

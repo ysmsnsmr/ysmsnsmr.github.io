@@ -40,7 +40,7 @@ from meta_ads_personal_feed_presentation import (
 )
 
 
-SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v6"
+SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v7"
 STATE_SCHEMA_VERSION = "meta-ads-personal-feed-state/v2"
 LEGACY_STATE_SCHEMA_VERSION = "meta-ads-personal-feed-state/v1"
 STATE_V3_SCHEMA_VERSION = "meta-ads-personal-feed-state/v3"
@@ -83,7 +83,7 @@ PRESENTATION_RETRY_MAX_FAILURES = 5
 PRESENTATION_RETRY_BASE_DELAY_SECONDS = 3600
 PRESENTATION_RETRY_MAX_DELAY_SECONDS = 7 * 24 * 3600
 PLATFORM_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-PARSER_VERSION = "meta-ads-personal-feed-parser/v2"
+PARSER_VERSION = "meta-ads-personal-feed-parser/v3"
 PUBLICATION_STATUSES = {"included", "drop"}
 PUBLICATION_INCLUDED = "included"
 # v4 remains readable while existing public files and state are migrated.
@@ -357,17 +357,24 @@ def validate_config(payload: Any) -> dict[str, Any]:
             raise ContractError(f"{label}.sourceUrl host must be allowed")
         discovery = _expect_keys(
             source["discovery"],
-            {"fromSourceId", "allowedPathPrefix", "maxLinksPerSourceItem"},
+            {"fromSourceIds", "allowedPathPrefix", "maxLinksPerSourceItem"},
             f"{label}.discovery",
         )
-        if discovery["fromSourceId"] not in direct_ids:
-            raise ContractError(f"{label}.discovery.fromSourceId must reference a direct source")
-        if discovery["fromSourceId"] in discovery_origins:
-            raise ContractError(f"{label}.discovery.fromSourceId must be unique")
-        discovery_origins.add(discovery["fromSourceId"])
-        origin = next(item for item in config["sources"] if item["id"] == discovery["fromSourceId"])
-        if origin["parser"] != "rss" or origin["classification"] != "unofficial":
-            raise ContractError(f"{label}.discovery.fromSourceId must reference an unofficial RSS source")
+        origin_ids = discovery["fromSourceIds"]
+        if not isinstance(origin_ids, list) or not origin_ids:
+            raise ContractError(f"{label}.discovery.fromSourceIds must be a non-empty array")
+        if len(origin_ids) != len(set(origin_ids)):
+            raise ContractError(f"{label}.discovery.fromSourceIds must not contain duplicates")
+        for origin_id in origin_ids:
+            _expect_identifier(origin_id, f"{label}.discovery.fromSourceIds[]")
+            if origin_id not in direct_ids:
+                raise ContractError(f"{label}.discovery.fromSourceIds must reference direct sources")
+            if origin_id in discovery_origins:
+                raise ContractError(f"{label}.discovery.fromSourceIds must be unique across discovered sources")
+            discovery_origins.add(origin_id)
+            origin = next(item for item in config["sources"] if item["id"] == origin_id)
+            if origin["parser"] != "rss" or origin["classification"] != "unofficial":
+                raise ContractError(f"{label}.discovery.fromSourceIds must reference unofficial RSS sources")
         if discovery["allowedPathPrefix"] != "/business/news/":
             raise ContractError(f"{label}.discovery.allowedPathPrefix is unsupported")
         _limit(discovery["maxLinksPerSourceItem"], f"{label}.discovery.maxLinksPerSourceItem", 1, 25)
@@ -524,7 +531,7 @@ def _meta_business_news_date(text: str) -> str:
         raise ContractError("Meta for Business News article has an invalid announcement date") from error
 
 
-def _meta_business_news_item(source: dict[str, Any], url: str, body: str) -> dict[str, Any]:
+def _meta_business_news_item(source: dict[str, Any], url: str, body: str, origin_ids: list[str]) -> dict[str, Any]:
     parser = _MetaBusinessNewsParser()
     parser.feed(body)
     canonical = _canonical_official_news_url(parser.metadata.get("og:url", ""), source)
@@ -533,14 +540,13 @@ def _meta_business_news_item(source: dict[str, Any], url: str, body: str) -> dic
     title = _text(parser.metadata.get("og:title"), "Meta for Business News article title")[:280]
     description = _text(parser.metadata.get("og:description"), "Meta for Business News article description")[:3500]
     published = _meta_business_news_date(_normalise(" ".join(parser.text)))
-    origin_id = source["discovery"]["fromSourceId"]
     return {
         "key": url,
         "url": url,
         "title": title,
         "publishedDate": published,
         "updatedDate": None,
-        "matchEvidence": [f"discovered-via:{origin_id}"],
+        "matchEvidence": [f"discovered-via:{origin_id}" for origin_id in origin_ids],
         "sourceContext": description,
         "presentationContext": description,
         "presentationContextKind": "plain",
@@ -2312,8 +2318,9 @@ def collect(
     raw_by_source: dict[str, list[dict[str, Any]]] = {}
     rejected_by_source: dict[str, set[str]] = {}
     discovery_by_origin = {
-        source["discovery"]["fromSourceId"]: source
+        origin_id: source
         for source in config["discoveredSources"]
+        for origin_id in source["discovery"]["fromSourceIds"]
     }
     for source in config["sources"]:
         body, content_type = fetch_body(source, timeout)
@@ -2350,16 +2357,19 @@ def collect(
     # source.  It still passes freshness before becoming state or model input.
     for source in config["discoveredSources"]:
         source_pipeline = pipeline["sources"][source["id"]]
-        origin_items = raw_by_source[source["discovery"]["fromSourceId"]]
+        candidate_origins: dict[str, list[str]] = {}
         candidates: list[str] = []
-        seen: set[str] = set()
         per_item_deferred = 0
-        for item in origin_items:
-            per_item_deferred += item.get("deferredDiscoveredLinks", 0)
-            for url in item.get("discoveredLinks", []):
-                if url not in seen:
-                    seen.add(url)
-                    candidates.append(url)
+        for origin_id in source["discovery"]["fromSourceIds"]:
+            for item in raw_by_source[origin_id]:
+                per_item_deferred += item.get("deferredDiscoveredLinks", 0)
+                for url in item.get("discoveredLinks", []):
+                    is_new_candidate = url not in candidate_origins
+                    origins = candidate_origins.setdefault(url, [])
+                    if origin_id not in origins:
+                        origins.append(origin_id)
+                    if is_new_candidate:
+                        candidates.append(url)
         source_pipeline["discoveredLinks"] = len(candidates) + per_item_deferred
         maximum = source["transport"]["maxItems"]
         source_pipeline["deferredLinks"] = per_item_deferred + max(0, len(candidates) - maximum)
@@ -2375,7 +2385,7 @@ def collect(
                 if not isinstance(body, str) or normalized_content_type not in source["expectedContentTypes"]:
                     raise ContractError("Meta for Business News article returned an unexpected response")
                 source_pipeline["parsedItems"] += 1
-                promoted.append(_meta_business_news_item(source, url, body))
+                promoted.append(_meta_business_news_item(source, url, body, candidate_origins[url]))
                 source_pipeline["validItems"] += 1
             except (ContractError, OSError, ValueError, urllib.error.URLError):
                 # Discovery is optional. Reject only this candidate without logging its URL,
