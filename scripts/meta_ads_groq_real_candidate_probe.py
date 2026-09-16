@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run one bilingual Groq request using one current Personal Feed candidate.
+"""Run one locale-specific Groq request using one current Personal Feed candidate.
 
 The candidate title and source context are read only for this request.  Raw
 source content, the model response, exceptions, feed, and state are never
@@ -16,7 +16,11 @@ from pathlib import Path
 from typing import Any
 
 from meta_ads_personal_feed import _all_sources, extract_items, load_config
-from meta_ads_personal_feed_presentation import PresentationError, request_bilingual_presentation
+from meta_ads_personal_feed_presentation import (
+    PresentationError,
+    request_english_presentation_json_object,
+    request_presentation,
+)
 from meta_ads_tracker_collect import SourceFetchError, _request as bounded_request
 
 
@@ -73,11 +77,14 @@ def run_probe(
     config_path: Path = DEFAULT_POLICY,
     timeout: float = 30.0,
     max_input_chars: int | None = None,
+    locale: str = "en",
     require_missing: bool = False,
     candidate_id: str | None = None,
 ) -> dict[str, Any]:
     if not api_key.strip():
         raise PresentationError("api_key_unavailable")
+    if locale not in {"en", "ja"}:
+        raise ValueError("locale must be en or ja")
     config = load_config(config_path)
     feed = _read_json(feed_path)
     candidate = _candidate(
@@ -93,11 +100,12 @@ def run_probe(
     if not isinstance(matching, dict) or not isinstance(matching.get("sourceContext"), str):
         raise ValueError("candidate was not present in the current source response")
     policy = config["policies"]["bilingualPresentation"]
-    # Exactly one request: retries are disabled for this diagnostic.
+    # Exactly one locale-specific request: retries are disabled for this diagnostic.
     source_context = matching["sourceContext"]
     if max_input_chars is not None:
         source_context = source_context[:max_input_chars] if max_input_chars > 0 else ""
-    generated = request_bilingual_presentation(
+    request = request_english_presentation_json_object if locale == "en" else request_presentation
+    generated = request(
         api_key=api_key,
         model=model,
         title=matching["title"],
@@ -112,6 +120,7 @@ def run_probe(
         "sourceId": source_id,
         "candidateFound": True,
         "contextLimit": max_input_chars if max_input_chars is not None else policy["maxInputChars"],
+        "locale": locale,
         "status": "success",
     }
 
@@ -120,6 +129,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-id", default=DEFAULT_SOURCE_ID)
     parser.add_argument("--max-input-chars", type=int, choices=(0, 1000, 2000, 4000))
+    parser.add_argument("--locale", choices=("en", "ja"), default="en")
     parser.add_argument("--require-missing", action="store_true")
     parser.add_argument("--candidate-id")
     parser.add_argument("--timeout", type=float, default=30.0)
@@ -132,6 +142,7 @@ def main() -> int:
             source_id=args.source_id,
             timeout=args.timeout,
             max_input_chars=args.max_input_chars,
+            locale=args.locale,
             require_missing=args.require_missing,
             candidate_id=args.candidate_id,
         )
@@ -140,7 +151,7 @@ def main() -> int:
         provider_code = error.provider_error_code or "none"
         print(
             "GROQ_REAL_CANDIDATE_PROBE: "
-            f"source_id={args.source_id} context_limit={args.max_input_chars if args.max_input_chars is not None else 'policy'} "
+            f"source_id={args.source_id} locale={args.locale} context_limit={args.max_input_chars if args.max_input_chars is not None else 'policy'} "
             f"model={model} status=failed "
             f"failure_code={error.code} error_type={provider_type} "
             f"error_code={provider_code} attempts={error.attempts}"
@@ -149,7 +160,7 @@ def main() -> int:
     except SourceFetchError as error:
         print(
             "GROQ_REAL_CANDIDATE_PROBE: "
-            f"source_id={args.source_id} model={model} status=failed "
+            f"source_id={args.source_id} locale={args.locale} model={model} status=failed "
             f"failure_code=source_fetch_{error.reason}"
         )
         return 1
@@ -157,13 +168,13 @@ def main() -> int:
         # Do not print exception text: it could contain source content.
         print(
             "GROQ_REAL_CANDIDATE_PROBE: "
-            f"source_id={args.source_id} context_limit={args.max_input_chars if args.max_input_chars is not None else 'policy'} "
+            f"source_id={args.source_id} locale={args.locale} context_limit={args.max_input_chars if args.max_input_chars is not None else 'policy'} "
             f"model={model} status=failed failure_code=local_error"
         )
         return 1
     print(
         "GROQ_REAL_CANDIDATE_PROBE: "
-        f"source_id={result['sourceId']} context_limit={result['contextLimit']} model={model} "
+        f"source_id={result['sourceId']} locale={result['locale']} context_limit={result['contextLimit']} model={model} "
         f"candidate_found={str(result['candidateFound']).lower()} status={result['status']}"
     )
     return 0

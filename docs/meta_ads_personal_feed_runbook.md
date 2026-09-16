@@ -63,7 +63,7 @@ Meta Newsroom Product News RSSは候補を広く取得し、広告・計測・AP
 
 ## 英語・日本語の短見出し・要約
 
-収集時には、RSSの説明文またはSDK release notesを**そのrunの一時入力だけ**として、英語の短見出し・要約と、その日本語訳を**1記事につきGroqへ1回**要求します。GroqにはJSON Object形式を要求し、返答は保存前にPythonが4項目（またはfallback時の英語／日本語2項目）のキー完全一致、文字列型、空文字、文字数上限を検証します。これはGroqのstrict JSON Schema判定による`json_validate_failed`を避けつつ、保存契約を緩めないためです。4項目の応答が失敗した場合は、英語2項目、続いて日本語2項目を各1回だけ再試行します。元の本文・説明文・release notes、Groq応答はstate、公開JSON、artifact、ログへ保存しません。
+収集時には、RSSの説明文またはSDK release notesを**そのrunの一時入力だけ**として、欠けているlocaleごとにGroqへ独立して要求します。英語は英語の短見出し・要約の2項目、日本語は日本語の短見出し・要約の2項目です。英日4項目を同時に生成するリクエストや、その失敗後のfallback経路は使いません。GroqにはJSON Object形式を要求し、返答は保存前にPythonが対象localeのキー完全一致、文字列型、空文字、文字数上限を検証します。これにより`json_validate_failed`を避けつつ、保存契約を緩めず、片方のlocaleの失敗がもう片方を巻き込まないようにします。元の本文・説明文・release notes、Groq応答はstate、公開JSON、artifact、ログへ保存しません。
 
 生成済みの表示データは記事内容のfingerprintに結び付けて再利用します。同じ内容には再課金しません。英語と日本語はlocaleごとに`machine`または`missing`を保持し、片方の生成失敗で成功済みのもう片方を消しません。内容が変わった記事、または未生成localeのある記事だけを新しい順に1 runあたり最大50件処理します。英語を再生成した場合、日本語は新しい英語に基づくoverlayとして再生成対象になります。
 
