@@ -203,3 +203,52 @@ must use `supersedes` instead of editing an earlier entry.
 - Revisit when: コンパクト行で6日分が現在より短い縦幅に収まる; 26文字の短見出し3件が主体・方向を読み取れる状態で折り返す; 日付から日別ページを開く操作が現行カードより分かりにくくならない
 - Supersedes: `20260905t183134-malaysia-recent-summary-density`
 - Override: not applied
+
+<!-- idea-gate:20260916t101916-malaysia-selection-observation -->
+## 選定前から最終決定までのselection observation artifact
+
+- Record ID: `20260916t101916-malaysia-selection-observation`
+- Evaluated: 2026-09-16T10:19:16+08:00
+- Project: ysmsnsmr.github.io / Malaysia News
+- Rubric: 1.0.0
+- Decision: **GO**
+- Score: 89/100
+- Confidence: high - 直近3日分の本番artifactと選定コードを突き合わせ、情報が失われる位置と既存artifact経路を確認した
+
+### Problem Card
+
+- Who: Malaysia Newsの品質を日常的に確認する運用者
+- When: scheduled run後に特定テーマの記事が選定されなかった理由を確認するとき
+- Problem: artifactには最終選定記事しか残らず、選定前候補の有無と除外段階を後から検証できない
+- Current behavior: selected_itemsと生成結果だけを確認し、未選定の記事は当時のRSSを再現できないため調査を断念する
+
+### Evidence
+
+- Tier: 3
+- 2026-09-14から16日の3件のscheduled artifactで、選定済みヘイズ記事は確認できたが未選定ヘイズ記事の有無は復元できなかった
+- 現行select_itemsはscore、重複、除外、noise gate、各capをメモリ上で処理し、selected_items.jsonには最終selectedだけを書き出している
+- artifact uploadはrun directory全体を保存するため、追加JSONは既存のartifact経路へ自然に統合できる
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 16/20 |
+| `current_workaround_gap` | 17/20 |
+| `evidence_strength` | 18/20 |
+| `behavior_outcome_impact` | 13/15 |
+| `strategic_fit_reuse` | 10/10 |
+| `ui_operational_lightness` | 15/15 |
+| **Total** | **89/100** |
+
+### Alternatives
+
+- **SHRINK - 除外記事だけを観察するJSON:** GO (81/100). 最終selected以外の記事と最初の除外理由だけを保存する
+- **INTEGRATE - 既存run directoryへ全選定段階の観察JSONを統合:** GO (89/100). RSS記事ごとに最終結果と決定段階を保存し、既存artifact uploadへ含める
+- **NO_FEATURE - 必要時にRSSを再取得して手動比較:** STOP (56/100). artifactは増やさず、後日RSSを再取得して候補を推定する
+
+### Next Step
+
+- Allowed action: 既存select_itemsの決定を観察専用で記録し、selection_observation.jsonをrun directoryへ出力する
+- Revisit when: artifactサイズまたはGitHub Actionsの実行時間が実用上問題になる; 候補数が増えても除外理由が運用判断に使われない; 選定ロジック変更なしに観察JSONが選定結果を変える
+- Override: not applied
