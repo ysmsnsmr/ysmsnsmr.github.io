@@ -27,8 +27,6 @@ from meta_ads_personal_feed import (
     STATE_V5_SCHEMA_VERSION,
     _classify_publication,
     _meta_business_news_date,
-    _bilingual_presentation_from_environment,
-    _bilingual_fallback_from_environment,
     _locale_presentation_from_environment,
     _presentation_from_environment,
     _print_presentation_stats,
@@ -258,42 +256,33 @@ class PersonalFeedTest(unittest.TestCase):
         with self.assertRaisesRegex(ContractError, "platformIds"):
             validate_config(invalid)
 
-    def test_bilingual_presenter_spaces_requests_using_the_configured_rate_limit(self) -> None:
-        policy = self.config["policies"]["bilingualPresentation"]
-        with patch.dict(os.environ, {"GROQ_API_KEY": "test-key", "META_ADS_PERSONAL_FEED_JA_ENABLED": "true"}, clear=True), patch(
-            "meta_ads_personal_feed.request_bilingual_presentation",
-            return_value={"shortHeadlineEn": "One", "summaryEn": "Two", "shortHeadlineJa": "一", "summaryJa": "二"},
-        ) as request, patch("meta_ads_personal_feed.time.monotonic", side_effect=[100.0, 100.0, 100.0, 112.0]), patch(
-            "meta_ads_personal_feed.time.sleep"
-        ) as sleep:
-            presenter = _bilingual_presentation_from_environment(1)
-            assert presenter is not None
-            presenter("First", "Context", policy)
-            presenter("Second", "Context", policy)
-        self.assertEqual(request.call_count, 2)
-        sleep.assert_called_once_with(12.0)
-
-    def test_environment_fallback_requests_english_then_japanese_once_each(self) -> None:
+    def test_locale_presenter_spaces_requests_using_the_configured_rate_limit(self) -> None:
         policy = self.config["policies"]["bilingualPresentation"]
         with patch.dict(os.environ, {"GROQ_API_KEY": "test-key", "META_ADS_PERSONAL_FEED_JA_ENABLED": "true"}, clear=True), patch(
             "meta_ads_personal_feed.request_english_presentation_json_object",
-            side_effect=PresentationError("http_400"),
+            return_value={"shortHeadlineEn": "One", "summaryEn": "Two"},
         ) as english, patch(
             "meta_ads_personal_feed.request_presentation",
-            return_value={"shortHeadlineJa": "日本語の見出し", "summaryJa": "日本語の要約"},
-        ) as japanese, patch("meta_ads_personal_feed.time.sleep") as sleep:
-            fallback = _bilingual_fallback_from_environment(1)
-            self.assertIsNotNone(fallback)
-            assert fallback is not None
-            generated, failures = fallback("Title", "Context", policy)
-
-        self.assertEqual(generated, {"shortHeadlineJa": "日本語の見出し", "summaryJa": "日本語の要約"})
-        self.assertEqual(list(failures), ["en"])
+            return_value={"shortHeadlineJa": "一", "summaryJa": "二"},
+        ) as japanese, patch("meta_ads_personal_feed.time.monotonic", side_effect=[100.0, 100.0, 100.0, 112.0]), patch(
+            "meta_ads_personal_feed.time.sleep"
+        ) as sleep:
+            presenter = _locale_presentation_from_environment(1)
+            assert presenter is not None
+            presenter("First", "Context", policy, "en")
+            presenter("Second", "Context", policy, "ja")
         english.assert_called_once()
-        self.assertEqual(english.call_args.kwargs["max_attempts"], 1)
         japanese.assert_called_once()
-        self.assertEqual(japanese.call_args.kwargs["max_attempts"], 1)
-        self.assertEqual(sleep.call_args_list, [call(12), call(12), call(12)])
+        sleep.assert_called_once_with(12.0)
+
+    def test_environment_locale_presenter_rejects_unknown_locale(self) -> None:
+        policy = self.config["policies"]["bilingualPresentation"]
+        with patch.dict(os.environ, {"GROQ_API_KEY": "test-key", "META_ADS_PERSONAL_FEED_JA_ENABLED": "true"}, clear=True):
+            presenter = _locale_presentation_from_environment(1)
+            self.assertIsNotNone(presenter)
+            assert presenter is not None
+            with self.assertRaisesRegex(PresentationError, "response_invalid_shape"):
+                presenter("Title", "Context", policy, "fr")
 
     def test_environment_english_locale_retry_uses_json_object_mode(self) -> None:
         policy = self.config["policies"]["bilingualPresentation"]
@@ -320,13 +309,13 @@ class PersonalFeedTest(unittest.TestCase):
             },
             clear=False,
         ):
-            renderer = _bilingual_presentation_from_environment(1)
+            renderer = _locale_presentation_from_environment(1)
         self.assertIsNotNone(renderer)
         with patch.dict(os.environ, {"META_ADS_PERSONAL_FEED_JA_ENABLED": "false"}, clear=False):
-            self.assertIsNone(_bilingual_presentation_from_environment(1))
+            self.assertIsNone(_locale_presentation_from_environment(1))
         with patch.dict(os.environ, {"META_ADS_PERSONAL_FEED_JA_ENABLED": "invalid"}, clear=False):
             with self.assertRaisesRegex(ContractError, "true, false"):
-                _bilingual_presentation_from_environment(1)
+                _locale_presentation_from_environment(1)
 
     def test_unofficial_rss_filters_only_admit_relevant_items(self) -> None:
         sources = {source["id"]: source for source in self.config["sources"]}
@@ -533,6 +522,73 @@ class PersonalFeedTest(unittest.TestCase):
                 unexpected_fetch,
                 reseed_source_id="not-a-source",
             )
+
+    def test_locale_generation_is_used_from_the_first_attempt(self) -> None:
+        calls: list[str] = []
+
+        def unexpected_bilingual(_title: str, _context: str, _policy: dict) -> dict[str, str]:
+            raise AssertionError("combined bilingual generation must not run")
+
+        def unexpected_fallback(_title: str, _context: str, _policy: dict) -> tuple[dict[str, str], dict[str, Exception]]:
+            raise AssertionError("bilingual fallback must not run")
+
+        def locale_presenter(_title: str, _context: str, _policy: dict, locale: str) -> dict[str, str]:
+            calls.append(locale)
+            if locale == "en":
+                return {"shortHeadlineEn": "English headline", "summaryEn": "English summary"}
+            return {"shortHeadlineJa": "日本語の見出し", "summaryJa": "日本語の要約"}
+
+        stats: dict[str, Any] = {}
+        feed, state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+            unexpected_bilingual,
+            unexpected_fallback,
+            locale_item=locale_presenter,
+            presentation_stats=stats,
+        )
+
+        self.assertEqual(calls, ["en", "ja"] * 4)
+        self.assertEqual(stats["fallbackAttempts"], 0)
+        self.assertEqual((stats["localeAttempted"], stats["localeGenerated"], stats["localeFailed"]), (8, 8, 0))
+        self.assertTrue(
+            all(
+                item["presentation"]["locales"]["en"]["status"] == "machine"
+                and item["presentation"]["locales"]["ja"]["status"] == "machine"
+                for item in feed["items"]
+            )
+        )
+        validate_state(state, self.config)
+        validate_feed(feed, self.config)
+
+    def test_collect_and_write_uses_only_locale_specific_presenter(self) -> None:
+        calls: list[str] = []
+
+        def locale_presenter(_title: str, _context: str, _policy: dict, locale: str) -> dict[str, str]:
+            calls.append(locale)
+            if locale == "en":
+                return {"shortHeadlineEn": "English headline", "summaryEn": "English summary"}
+            return {"shortHeadlineJa": "日本語の見出し", "summaryJa": "日本語の要約"}
+
+        with tempfile.TemporaryDirectory() as directory, patch(
+            "meta_ads_personal_feed._locale_presentation_from_environment", return_value=locale_presenter
+        ):
+            state_path = Path(directory) / "state.json"
+            output_path = Path(directory) / "feed.json"
+            feed = collect_and_write(
+                DEFAULT_CONFIG,
+                state_path,
+                output_path,
+                1,
+                now=NOW,
+                fetch_body=self.fetcher(),
+        )
+
+        self.assertEqual(calls, ["en", "ja"] * 4)
+        self.assertEqual(len(feed["items"]), 4)
 
     def test_bilingual_failure_marks_both_locales_missing_without_blocking_feed(self) -> None:
         def failing_presenter(_title: str, _context: str, _policy: dict) -> dict[str, str]:

@@ -8,13 +8,13 @@ on:
         required: true
         default: "1"
         type: choice
-        options: ["1", "2", "4"]
+        options: ["1", "2"]
       locale:
-        description: "Diagnostic mode (2-ja probes Japanese fields; 4-en isolates field count; 4-bilingual matches production prompt)"
+        description: "Diagnostic locale (2-ja probes the Japanese two-field contract)"
         required: true
         default: "en"
         type: choice
-        options: ["en", "ja", "bilingual"]
+        options: ["en", "ja"]
 
 permissions:
   contents: read

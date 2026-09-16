@@ -56,12 +56,10 @@ class GroqRealCandidateProbeTest(unittest.TestCase):
                 patch("meta_ads_groq_real_candidate_probe.bounded_request", return_value=("ignored", "application/rss+xml")),
                 patch("meta_ads_groq_real_candidate_probe.extract_items", return_value=[source_item]),
                 patch(
-                    "meta_ads_groq_real_candidate_probe.request_bilingual_presentation",
+                    "meta_ads_groq_real_candidate_probe.request_english_presentation_json_object",
                     return_value={
                         "shortHeadlineEn": "discarded",
                         "summaryEn": "discarded",
-                        "shortHeadlineJa": "discarded",
-                        "summaryJa": "discarded",
                     },
                 ) as present,
             ):
@@ -74,7 +72,7 @@ class GroqRealCandidateProbeTest(unittest.TestCase):
                 )
             self.assertEqual(
                 result,
-                {"sourceId": "test-source", "candidateFound": True, "contextLimit": 12000, "status": "success"},
+                {"sourceId": "test-source", "candidateFound": True, "contextLimit": 12000, "locale": "en", "status": "success"},
             )
             kwargs = present.call_args.kwargs
             self.assertEqual(kwargs["title"], "Fetched title")
@@ -124,7 +122,7 @@ class GroqRealCandidateProbeTest(unittest.TestCase):
                 patch("meta_ads_groq_real_candidate_probe._all_sources", return_value=config["sources"]),
                 patch("meta_ads_groq_real_candidate_probe.bounded_request", return_value=("ignored", "application/rss+xml")),
                 patch("meta_ads_groq_real_candidate_probe.extract_items", return_value=[source_item]),
-                patch("meta_ads_groq_real_candidate_probe.request_bilingual_presentation", return_value={"ok": "discarded"}) as present,
+                patch("meta_ads_groq_real_candidate_probe.request_english_presentation_json_object", return_value={"ok": "discarded"}) as present,
             ):
                 result = run_probe(
                     api_key="test-key",

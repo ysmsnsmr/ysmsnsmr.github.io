@@ -35,7 +35,6 @@ from meta_ads_tracker_contract import ContractError, _expect_hostname, _expect_h
 from meta_ads_tracker_publication import write_json
 from meta_ads_personal_feed_presentation import (
     PresentationError,
-    request_bilingual_presentation,
     request_english_presentation_json_object,
     request_presentation,
 )
@@ -1781,42 +1780,6 @@ def _presentation_from_environment(timeout: float) -> Callable[[str, str, dict[s
     return present
 
 
-def _bilingual_presentation_from_environment(timeout: float) -> Callable[[str, str, dict[str, Any]], dict[str, str]] | None:
-    """Return the one-request English-plus-Japanese presenter when enabled."""
-    setting = os.environ.get("META_ADS_PERSONAL_FEED_JA_ENABLED", "").strip().lower() or "true"
-    if setting not in {"true", "false"}:
-        raise ContractError("META_ADS_PERSONAL_FEED_JA_ENABLED must be true, false, or unset")
-    api_key = os.environ.get("GROQ_API_KEY", "").strip()
-    if setting == "false" or not api_key:
-        return None
-    model = os.environ.get("META_ADS_PERSONAL_FEED_GROQ_MODEL", "").strip() or "openai/gpt-oss-120b"
-    next_request_at = 0.0
-
-    def present(title: str, source_context: str, policy: dict[str, Any]) -> dict[str, str]:
-        nonlocal next_request_at
-        delay = max(0.0, next_request_at - time.monotonic())
-        if delay:
-            time.sleep(delay)
-        try:
-            return request_bilingual_presentation(
-                api_key=api_key,
-                model=model,
-                title=title,
-                source_context=source_context[:policy["maxInputChars"]],
-                short_headline_max_chars=policy["shortHeadlineMaxChars"],
-                summary_max_chars=policy["summaryMaxChars"],
-                timeout=timeout,
-                max_attempts=policy["maxAttempts"],
-                max_retry_delay_seconds=policy["maxRetryDelaySeconds"],
-            )
-        finally:
-            # This is deliberately applied after both success and failure so a
-            # bad batch cannot turn into a tight retry loop across items.
-            next_request_at = time.monotonic() + policy["minRequestIntervalSeconds"]
-
-    return present
-
-
 def _locale_presentation_from_environment(
     timeout: float,
 ) -> Callable[[str, str, dict[str, Any], str], dict[str, str]] | None:
@@ -1865,70 +1828,6 @@ def _locale_presentation_from_environment(
             next_request_at = time.monotonic() + policy["minRequestIntervalSeconds"]
 
     return present
-
-
-def _bilingual_fallback_from_environment(
-    timeout: float,
-) -> Callable[[str, str, dict[str, Any]], tuple[dict[str, str], dict[str, Exception]]] | None:
-    """Return bounded English-then-Japanese fallback requests.
-
-    Each locale gets at most one request after the four-field request fails.
-    The returned error map contains exception objects only in memory so the
-    collector can record safe reason codes without exposing response content.
-    """
-    setting = os.environ.get("META_ADS_PERSONAL_FEED_JA_ENABLED", "").strip().lower() or "true"
-    if setting not in {"true", "false"}:
-        raise ContractError("META_ADS_PERSONAL_FEED_JA_ENABLED must be true, false, or unset")
-    api_key = os.environ.get("GROQ_API_KEY", "").strip()
-    if setting == "false" or not api_key:
-        return None
-    model = os.environ.get("META_ADS_PERSONAL_FEED_GROQ_MODEL", "").strip() or "openai/gpt-oss-120b"
-
-    def fallback(title: str, source_context: str, policy: dict[str, Any]) -> tuple[dict[str, str], dict[str, Exception]]:
-        generated: dict[str, str] = {}
-        failures: dict[str, Exception] = {}
-        try:
-            for locale in ("en", "ja"):
-                # Keep a full policy interval between the primary request and
-                # each fallback request, and between the two locale requests.
-                time.sleep(policy["minRequestIntervalSeconds"])
-                try:
-                    if locale == "en":
-                        generated.update(
-                            request_english_presentation_json_object(
-                                api_key=api_key,
-                                model=model,
-                                title=title,
-                                source_context=source_context[:policy["maxInputChars"]],
-                                short_headline_max_chars=policy["shortHeadlineMaxChars"],
-                                summary_max_chars=policy["summaryMaxChars"],
-                                timeout=timeout,
-                                max_attempts=1,
-                            )
-                        )
-                    else:
-                        generated.update(
-                            request_presentation(
-                                api_key=api_key,
-                                model=model,
-                                title=title,
-                                source_context=source_context[:policy["maxInputChars"]],
-                                short_headline_max_chars=policy["shortHeadlineMaxChars"],
-                                summary_max_chars=policy["summaryMaxChars"],
-                                timeout=timeout,
-                                max_attempts=1,
-                            )
-                        )
-                except (PresentationError, OSError, ValueError) as error:
-                    failures[locale] = error
-        finally:
-            # The primary presenter owns its own rate gate. Leave one full
-            # interval after the last fallback request before the next item can
-            # start, so the two independent callbacks cannot make a tight loop.
-            time.sleep(policy["minRequestIntervalSeconds"])
-        return generated, failures
-
-    return fallback
 
 
 def _presentation_request_limit(value: int | None, policy: dict[str, Any]) -> int:
@@ -2602,6 +2501,7 @@ def collect(
             }
             full_attempt = (
                 present_item is not None
+                and locale_item is None
                 and len(pending) == len(SUPPORTED_LOCALES)
                 and set(due_locales) == set(SUPPORTED_LOCALES)
             )
@@ -2757,8 +2657,6 @@ def collect_and_write(
     *,
     now: datetime | None = None,
     fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = bounded_request,
-    present_item: Callable[[str, str, dict[str, Any]], dict[str, str]] | None = None,
-    fallback_item: Callable[[str, str, dict[str, Any]], tuple[dict[str, str], dict[str, Exception]]] | None = None,
     locale_item: Callable[[str, str, dict[str, Any], str], dict[str, str]] | None = None,
     presentation_limit: int | None = None,
     presentation_stats: dict[str, Any] | None = None,
@@ -2770,8 +2668,6 @@ def collect_and_write(
 ) -> dict[str, Any]:
     config = load_config(config_path)
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
-    renderer = present_item if present_item is not None else _bilingual_presentation_from_environment(timeout)
-    fallback_renderer = fallback_item if fallback_item is not None else _bilingual_fallback_from_environment(timeout)
     locale_renderer = locale_item if locale_item is not None else _locale_presentation_from_environment(timeout)
     feed, next_state = collect(
         config,
@@ -2779,8 +2675,6 @@ def collect_and_write(
         timeout,
         now or datetime.now(timezone.utc),
         fetch_body,
-        renderer,
-        fallback_renderer,
         locale_item=locale_renderer,
         presentation_limit=presentation_limit,
         presentation_stats=presentation_stats,
