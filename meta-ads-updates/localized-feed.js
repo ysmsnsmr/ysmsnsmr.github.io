@@ -14,7 +14,7 @@
     noMatches: "条件に一致する更新はありません", noMatchesCopy: "検索語または絞り込み条件を変更してください。",
     noItems: "取得済みの情報はありません", noItemsCopy: "初回取得後にソースからの情報を表示します。",
     error: "公開フィードを読み込めません", errorTitle: "現在の公開内容を表示できません", errorCopy: "公開フィードを読み込めませんでした。しばらくしてからもう一度お試しください。",
-    officialGroup: "Meta公式", sdkGroup: "Meta Business SDK Releases", unofficialGroup: "非公式", groupCount: "{count}件",
+    officialGroup: "Meta公式", sdkGroup: "SDK更新ログ", sdkLink: "GitHub Releaseを開く", unofficialGroup: "非公式", groupCount: "{count}件",
     demoFooter: "この画面は架空データによるデモです。実運用の承認・判断には使用しないでください。", demoResult: "（デモ用の架空更新）", demoLink: "公式ソース例を開く"
   } : {
     allSources: "All sources", allTypes: "All", official: "Official", unofficial: "Unofficial",
@@ -23,14 +23,14 @@
     noMatches: "No updates match these filters", noMatchesCopy: "Change the keyword or filters and try again.",
     noItems: "No collected updates yet", noItemsCopy: "Items will appear after the first successful collection.",
     error: "Unable to load the published feed", errorTitle: "The current published content is unavailable", errorCopy: "Please try again later.",
-    officialGroup: "Official updates", sdkGroup: "Meta Business SDK Releases", unofficialGroup: "Unofficial", groupCount: "{count} items",
+    officialGroup: "Official updates", sdkGroup: "SDK update log", sdkLink: "Open GitHub Release", unofficialGroup: "Unofficial", groupCount: "{count} items",
     demoFooter: "This screen contains fictional data and must not be used for operational decisions.", demoResult: " (fictional demo updates)", demoLink: "Open official source example"
   };
   const el = {
     demo: document.querySelector("#demo-banner"), recovery: document.querySelector("#recovery-banner"), recoveryCopy: document.querySelector("#recovery-banner-copy"),
     notice: document.querySelector("#unofficial-notice"), stamp: document.querySelector("#week-stamp"), form: document.querySelector("#filter-form"),
     source: document.querySelector("#source-filter"), type: document.querySelector("#priority-filter"), typeLabel: document.querySelector("#priority-filter-label"), query: document.querySelector("#query-filter"), reset: document.querySelector("#reset-button"),
-    summary: document.querySelector("#result-summary"), legacy: document.querySelector("#legacy-list-section"), list: document.querySelector("#update-list"), officialGroup: document.querySelector("#official-group"), officialCount: document.querySelector("#official-group-count"), officialList: document.querySelector("#official-list"), sdkGroup: document.querySelector("#sdk-group"), sdkCount: document.querySelector("#sdk-group-count"), sdkList: document.querySelector("#sdk-list"), unofficialGroup: document.querySelector("#unofficial-group"), unofficialCount: document.querySelector("#unofficial-group-count"), unofficialList: document.querySelector("#unofficial-list"), empty: document.querySelector("#empty-state"), emptyTitle: document.querySelector("#empty-title"), emptyCopy: document.querySelector("#empty-copy"),
+    summary: document.querySelector("#result-summary"), legacy: document.querySelector("#legacy-list-section"), list: document.querySelector("#update-list"), officialGroup: document.querySelector("#official-group"), officialCount: document.querySelector("#official-group-count"), officialList: document.querySelector("#official-list"), sdkGroup: document.querySelector("#sdk-group"), sdkHeading: document.querySelector("#sdk-group-heading"), sdkList: document.querySelector("#sdk-list"), unofficialGroup: document.querySelector("#unofficial-group"), unofficialCount: document.querySelector("#unofficial-group-count"), unofficialList: document.querySelector("#unofficial-list"), empty: document.querySelector("#empty-state"), emptyTitle: document.querySelector("#empty-title"), emptyCopy: document.querySelector("#empty-copy"),
     footer: document.querySelector("#tracker-footer"), en: document.querySelector("#locale-en"), ja: document.querySelector("#locale-ja")
   };
   const state = { source: "all", type: "all", q: "" };
@@ -128,6 +128,21 @@
     return li;
   }
 
+  function sdkLogItem(item) {
+    const li = make("li", "sdk-update-log-item");
+    const date = item.updatedDate || item.publishedDate;
+    const version = make("span", "sdk-update-log-version", item.title);
+    const timestamp = make("time", "sdk-update-log-date", date || words.unknown);
+    if (date) timestamp.dateTime = date;
+    const link = make("a", "sdk-update-log-link", words.sdkLink);
+    link.href = item.url;
+    link.target = "_blank";
+    link.rel = "noreferrer";
+    link.setAttribute("aria-label", `${item.title} — ${words.sdkLink}`);
+    li.append(version, timestamp, link);
+    return li;
+  }
+
   function legacyCard(item) {
     const li = make("li");
     const card = make("article", "update-card");
@@ -152,7 +167,6 @@
     const sources = new Map((report.sources || []).map((source) => [source.id, source]));
     el.list.classList.toggle("update-list--personal", personal);
     el.officialList.classList.toggle("update-list--personal", personal);
-    el.sdkList.classList.toggle("update-list--personal", personal);
     el.unofficialList.classList.toggle("update-list--personal", personal);
     const delayedRecovery = !personal && report.publication?.mode === "delayed_recovery";
     el.demo.hidden = !demoMode;
@@ -167,6 +181,7 @@
     if (personal) {
       el.stamp.textContent = report.generatedAt ? `${words.retrieved}: ${report.generatedAt.replace("T", " ").replace("Z", " UTC")}` : words.waiting;
       el.typeLabel.textContent = locale === "ja" ? "ソース区分" : "Source type";
+      el.sdkHeading.textContent = words.sdkGroup;
       setOptions(el.source, [{ value: "all", label: words.allSources }, ...report.sources.map((source) => ({ value: source.id, label: source.name }))], "all");
       setOptions(el.type, [{ value: "all", label: words.allTypes }, { value: "official", label: words.official }, { value: "unofficial", label: words.unofficial }], "all");
       state.source = sources.has(params.get("source")) ? params.get("source") : "all";
@@ -206,7 +221,7 @@
       const needle = state.q.trim().toLocaleLowerCase(locale);
       return (report.items || []).filter((item) => {
         const source = sources.get(item.sourceId);
-        const text = personal ? `${item.title} ${headline(item)}` : item.title;
+        const text = personal && item.sourceId !== "meta-business-sdk-releases" ? `${item.title} ${headline(item)}` : item.title;
         return (state.source === "all" || item.sourceId === state.source) && (state.type === "all" || (personal ? source?.classification : item.priority) === state.type) && (!needle || text.toLocaleLowerCase(locale).includes(needle));
       }).sort((left, right) => {
         const newest = (item) => [item.publishedDate, item.updatedDate].filter(Boolean).sort().pop() || item.firstObservedAt || "";
@@ -223,15 +238,16 @@
           else if (source?.classification === "unofficial") groups.unofficial.push(item);
           else groups.official.push(item);
         }
-        for (const [name, list, section, count, target] of [
-          ["official", groups.official, el.officialGroup, el.officialCount, el.officialList],
-          ["sdk", groups.sdk, el.sdkGroup, el.sdkCount, el.sdkList],
-          ["unofficial", groups.unofficial, el.unofficialGroup, el.unofficialCount, el.unofficialList],
+        for (const [list, section, count, target] of [
+          [groups.official, el.officialGroup, el.officialCount, el.officialList],
+          [groups.unofficial, el.unofficialGroup, el.unofficialCount, el.unofficialList],
         ]) {
           target.replaceChildren(...list.map((item) => personalCard(item, sources.get(item.sourceId))));
           section.hidden = list.length === 0;
           count.textContent = countLabel(words.groupCount, list.length);
         }
+        el.sdkList.replaceChildren(...groups.sdk.map(sdkLogItem));
+        el.sdkGroup.hidden = groups.sdk.length === 0;
         el.legacy.hidden = true;
       } else {
         el.list.replaceChildren(...items.map((item) => legacyCard(item)));
