@@ -302,3 +302,103 @@ must use `supersedes` instead of editing an earlier entry.
 - Override: applied by yas at 2026-09-16T11:39:00+08:00
 - Override reason: 個人・同僚向けで、主観的分類と維持負担を今すぐ減らすことを優先する
 - Override constraints: No new screen, external source, or recurring workflow.; Keep source provenance, existing source/classification/keyword filters, and detailed-page unofficial-information notice.; Keep binary relevance exclusion so DROP items remain non-public.
+
+<!-- idea-gate:20260916t192716-meta-ads-sdk-update-log -->
+## Meta Business SDK Releasesを通常ニュースカードから独立した更新ログへ移す
+
+- Record ID: `20260916t192716-meta-ads-sdk-update-log`
+- Evaluated: 2026-09-16T19:27:16+08:00
+- Project: Meta Ads Personal Feed
+- Rubric: 1.0.0
+- Decision: **STOP**
+- Score: 43/100
+- Confidence: low - 個人運用者の具体的な観察はあるが、SDKカードが閲覧を妨げた回数、SDK利用者の需要、代替表示の行動変化は未測定
+
+### Problem Card
+
+- Who: Meta Ads Personal Feedを利用する個人運用者と職場の同僚
+- When: TOPページで公式・非公式の広告運用ニュースを確認するとき
+- Problem: SDK releaseが通常ニュースカードに混在し、広告運用ニュースを素早く読む画面でSDK更新を同じ重みで読む必要があるように見える
+- Current behavior: SDK releaseも通常ニュースと同じカードとして表示し、利用者がカードを見てSDK情報かどうかを判断する
+
+### Evidence
+
+- Tier: 1
+- 2026-09-16に個人運用者がMeta Business SDK ReleasesはTOPページのカード形式でなくてもよいと観察した
+- 現行Personal FeedはSDK Releasesを通常ニュースとは別カテゴリとして収集しているが、TOP表示での閲覧・クリック・混乱の件数は未計測
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 6/20 |
+| `current_workaround_gap` | 5/20 |
+| `evidence_strength` | 10/20 |
+| `behavior_outcome_impact` | 5/15 |
+| `strategic_fit_reuse` | 7/10 |
+| `ui_operational_lightness` | 10/15 |
+| **Total** | **43/100** |
+
+### Alternatives
+
+- **SHRINK - SDKを通常カードから除外し、既存のsource filterでのみ見つけられるようにする:** STOP (45/100). 新しい更新ログを作らず、SDK itemは保持するが通常のカード一覧には表示しない。
+- **INTEGRATE - 既存TOPの末尾にSDKのコンパクトな更新ログを置く:** STOP (43/100). カードではなく、バージョン・日付・原典リンクだけの小さな一覧にする。
+- **NO_FEATURE - 現行カード表示を維持する:** STOP (46/100). SDKカードの閲覧・クリック・不要感を短期間記録してから表示変更を判断する。
+
+### Next Step
+
+- Allowed action: SDK itemのcard表示回数、SDK原典リンクの利用、通常ニュースの閲覧阻害を7日間読み取り専用で記録する。
+- Revisit when: SDKカードが通常ニュースの閲覧を妨げた具体例を3件以上確認する; SDK利用者がSDK原典リンクまたはcompact logを必要とした事例を確認する; SDKを通常カードから除外しても見逃しがないことを短期観察で確認する
+- Override: not applied
+
+<!-- idea-gate:20260916t194914-meta-ads-sdk-update-log-override -->
+## Meta Business SDK Releasesを通常ニュースカードから独立した更新ログへ移す（個人運用override）
+
+- Record ID: `20260916t194914-meta-ads-sdk-update-log-override`
+- Evaluated: 2026-09-16T19:49:14+08:00
+- Project: Meta Ads Personal Feed
+- Rubric: 1.0.0
+- Decision: **STOP**
+- Score: 43/100
+- Confidence: low - 継続した個人観察と明確なトレードオフ選択はあるが、他利用者の需要と効果測定は未実施
+
+### Problem Card
+
+- Who: Meta Ads Personal Feedを利用する個人運用者と職場の同僚
+- When: TOPページで公式・非公式の広告運用ニュースを確認するとき
+- Problem: SDK releaseが通常ニュースカードに混在し、広告運用ニュースを素早く読む画面でSDK更新を同じ重みで読む必要があるように見える
+- Current behavior: SDK releaseも通常ニュースと同じカードとして表示し、利用者がカードを見てSDK情報かどうかを判断する
+
+### Evidence
+
+- Tier: 1
+- 2026-09-16に個人運用者が、カード形式へ変更してからSDKカードへの不要感を継続して持っていると明示した
+- SDKを既存filterだけに隠すと更新を見逃すリスクがあるため、TOP末尾のコンパクトな更新ログを選択した
+- TOP表示での閲覧・クリック・混乱の件数は未計測
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 6/20 |
+| `current_workaround_gap` | 5/20 |
+| `evidence_strength` | 10/20 |
+| `behavior_outcome_impact` | 5/15 |
+| `strategic_fit_reuse` | 7/10 |
+| `ui_operational_lightness` | 10/15 |
+| **Total** | **43/100** |
+
+### Alternatives
+
+- **SHRINK - SDKを通常カードから除外し、既存のsource filterでのみ見つけられるようにする:** STOP (45/100). 新しい更新ログを作らず、SDK itemは保持するが通常のカード一覧には表示しない。
+- **INTEGRATE - 既存TOPの末尾にSDKのコンパクトな更新ログを置く:** STOP (43/100). カードではなく、バージョン・日付・原典リンクだけの小さな一覧にする。
+- **NO_FEATURE - 現行カード表示を維持する:** STOP (46/100). SDKカードの閲覧・クリック・不要感を短期間記録してから表示変更を判断する。
+
+### Next Step
+
+- Allowed action: overrideの制約内で、SDK itemを通常カードから除外し、既存TOP末尾に版・日付・原典リンクだけのコンパクトな更新ログを実装する。
+- Revisit when: SDK原典リンクの利用またはSDK更新の見逃しを7日間観察する; SDK利用者が追加の詳細表示を要望する; 通常ニュースの閲覧性が改善しない
+- Supersedes: `20260916t192716-meta-ads-sdk-update-log`
+- Override: applied by yas at 2026-09-16T19:49:14+08:00
+- Override reason: カード形式へ変更してからSDKカードへの不要感が継続しており、SDKをfilterだけに隠すと更新を見逃すリスクがあるため、個人・同僚向けの認知負荷を下げつつ更新を残す。
+- Override constraints: SDKの取得、state、公開JSON、source filter、原典URLは維持する。; 通常ニュースカードからのみ除外し、既存TOP末尾のコンパクトな更新ログに限定する。; ログは版、日付、原典リンクのみとし、Groq生成・新規詳細ページ・新規workflowは追加しない。

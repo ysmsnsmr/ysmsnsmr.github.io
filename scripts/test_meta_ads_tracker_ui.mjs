@@ -204,7 +204,7 @@ async function assertTokens(page) {
 async function assertAccessibilityAndLayout(page, label) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   assert(overflow <= 1, `${label}: horizontal overflow ${overflow}px`);
-  const undersized = await page.locator("button, select, input, .source-link, .detail-link, .back-link, .locale-switch a").evaluateAll((nodes) =>
+  const undersized = await page.locator("button, select, input, .source-link, .detail-link, .sdk-update-log-link, .back-link, .locale-switch a").evaluateAll((nodes) =>
     nodes.map((node) => ({ text: node.textContent || node.getAttribute("placeholder"), rect: node.getBoundingClientRect() }))
       .filter(({ rect }) => rect.width > 0 && rect.height > 0 && (rect.height < 44 || rect.width < 44))
       .map(({ text, rect }) => `${text}:${rect.width}x${rect.height}`)
@@ -282,7 +282,11 @@ try {
   productionPage.on("pageerror", (error) => productionPageErrors.push(error.message));
   await productionPage.goto(`${server.origin}/meta-ads-updates/index.html`, { waitUntil: "networkidle" });
   const productionCards = await productionPage.locator(".update-card").count();
-  assert(productionCards === personalFeedReport.items.length, `production route did not read personal-feed.json: ${[...productionConsoleErrors, ...productionPageErrors].join("; ")}`);
+  const productionRegularItems = personalFeedReport.items.filter((item) => item.sourceId !== "meta-business-sdk-releases").length;
+  const productionSdkItems = personalFeedReport.items.filter((item) => item.sourceId === "meta-business-sdk-releases").length;
+  assert(productionCards === productionRegularItems, `production route did not read regular personal-feed items: ${[...productionConsoleErrors, ...productionPageErrors].join("; ")}`);
+  assert(await productionPage.locator("#sdk-list .sdk-update-log-item").count() === productionSdkItems, "production route did not render SDK releases in the update log");
+  assert(await productionPage.locator("#sdk-list .update-card").count() === 0, "SDK releases must not use ordinary news cards");
   assert(await productionPage.locator(".lane-label").count() === 0, "production route must not expose ACTION or WATCH labels");
   assert(!(await productionPage.locator("#demo-banner").isVisible()), "production route must not show the demo banner");
   assert(!(await productionPage.locator("#recovery-banner").isVisible()), "ordinary production route must not show the delayed-recovery banner");
@@ -376,11 +380,38 @@ try {
 
   const v5List = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await v5List.goto(`${server.origin}/meta-ads-updates/ja/?personal-fixture=v5`, { waitUntil: "networkidle" });
-  assert(await v5List.locator(".update-card").count() === personalFeedV5Report.items.length, "v5 Personal Feed list did not render");
+  assert(await v5List.locator(".update-card").count() === personalFeedV5Report.items.length - 1, "v5 regular Personal Feed cards did not render");
   assert(await v5List.locator("#sdk-group").isVisible(), "v5 SDK releases must be an independent group");
-  assert((await v5List.locator("#sdk-group").textContent()).includes("Meta Business SDK Releases"), "v5 SDK group did not contain the SDK release");
+  assert((await v5List.locator("#sdk-group").textContent()).includes("SDK更新ログ"), "v5 SDK group heading is missing");
+  assert(await v5List.locator("#sdk-list .sdk-update-log-item").count() === 1, "v5 SDK release log item is missing");
+  assert(await v5List.locator("#sdk-list .update-card, #sdk-list .detail-link, #sdk-list .origin-label, #sdk-list .fact-grid").count() === 0, "v5 SDK release must only expose the compact log fields");
+  assert(await v5List.locator("#sdk-list .sdk-update-log-link").evaluate((link) => link.href.startsWith("https://") && link.target === "_blank" && link.rel.includes("noreferrer")), "v5 SDK log link is unsafe");
+  assert(await v5List.evaluate(() => document.querySelector("#unofficial-group").compareDocumentPosition(document.querySelector("#sdk-group")) & Node.DOCUMENT_POSITION_FOLLOWING), "v5 SDK log must follow the regular news groups");
+  await v5List.selectOption("#priority-filter", "official");
+  assert(await v5List.locator("#sdk-list .sdk-update-log-item").count() === 1, "v5 official filter must preserve the SDK update log");
+  await v5List.selectOption("#source-filter", "meta-business-sdk-releases");
+  assert(await v5List.locator(".update-card").count() === 0 && await v5List.locator("#sdk-list .sdk-update-log-item").count() === 1, "v5 SDK source filter must preserve the SDK update log");
+  await v5List.fill("#query-filter", "v27.0.0");
+  assert(await v5List.locator("#sdk-list .sdk-update-log-item").count() === 1, "v5 SDK query filter must search release titles");
+  await v5List.click("#reset-button");
+  assert(await v5List.locator(".update-card").count() === personalFeedV5Report.items.length - 1 && await v5List.locator("#sdk-list .sdk-update-log-item").count() === 1, "v5 reset must restore cards and the SDK update log");
   assert(await v5List.locator(".lane-label").count() === 0, "v5 list must not expose a lane label");
+  await assertAccessibilityAndLayout(v5List, "personal-feed-v5/desktop");
+  if (artifactDirectory) {
+    await v5List.screenshot({ path: path.join(artifactDirectory, "personal-feed-v5-desktop-viewport.png") });
+    await v5List.screenshot({ path: path.join(artifactDirectory, "personal-feed-v5-desktop-full-page.png"), fullPage: true });
+  }
   await v5List.close();
+
+  const v5Mobile = await browser.newPage({ viewport: { width: 375, height: 667 } });
+  await v5Mobile.goto(`${server.origin}/meta-ads-updates/ja/?personal-fixture=v5`, { waitUntil: "networkidle" });
+  assert(await v5Mobile.locator("#sdk-list .sdk-update-log-item").count() === 1, "v5 mobile SDK update log item is missing");
+  await assertAccessibilityAndLayout(v5Mobile, "personal-feed-v5/mobile");
+  if (artifactDirectory) {
+    await v5Mobile.screenshot({ path: path.join(artifactDirectory, "personal-feed-v5-mobile-viewport.png") });
+    await v5Mobile.screenshot({ path: path.join(artifactDirectory, "personal-feed-v5-mobile-full-page.png"), fullPage: true });
+  }
+  await v5Mobile.close();
 
   for (const viewport of [viewports[0], viewports[2]]) {
     const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });

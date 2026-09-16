@@ -55,6 +55,7 @@ select,
 input,
 .source-link,
 .detail-link,
+.sdk-update-log-link,
 .back-link {
   min-height: var(--tracker-target-min);
 }
@@ -342,6 +343,50 @@ h1 {
   margin-top: auto;
 }
 
+.sdk-update-log {
+  display: grid;
+  margin: var(--tracker-space-3) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--tracker-line);
+}
+
+.sdk-update-log-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: var(--tracker-space-3);
+  align-items: center;
+  padding: var(--tracker-space-3) 0;
+  border-bottom: 1px solid var(--tracker-line);
+}
+
+.sdk-update-log-version {
+  min-width: 0;
+  color: var(--tracker-ink);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.sdk-update-log-date {
+  color: var(--tracker-muted);
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.sdk-update-log-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tracker-navy);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.sdk-update-log-link:hover {
+  text-decoration: underline;
+}
+
 @media (min-width: 761px) and (max-width: 1099px) {
   .update-list--personal {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -520,6 +565,7 @@ h1 {
 
 .source-link,
 .detail-link,
+.sdk-update-log-link,
 .back-link {
   display: inline-flex;
   width: fit-content;
@@ -536,6 +582,7 @@ h1 {
 
 .source-link:hover,
 .detail-link:hover,
+.sdk-update-log-link:hover,
 .back-link:hover {
   background: var(--tracker-blue-soft);
 }
@@ -697,6 +744,15 @@ h1 {
 
   .fact-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sdk-update-log-item {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .sdk-update-log-date {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
 
   .detail-facts {
