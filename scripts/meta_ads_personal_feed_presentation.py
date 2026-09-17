@@ -118,15 +118,27 @@ def _retry_delay(headers: Any, attempt: int, maximum: float) -> float:
     return min(float(2 ** (attempt - 1)), maximum)
 
 
-def _json_object_format() -> dict[str, str]:
-    """Return Groq JSON Object mode for locally validated display text.
+def _strict_json_schema_format(name: str, fields: tuple[str, str]) -> dict[str, Any]:
+    """Return the smallest Groq Strict Mode schema for one locale.
 
-    Groq's strict JSON Schema validation has rejected valid presentation
-    requests with ``json_validate_failed``. JSON Object mode avoids that
-    provider-side schema gate. The exact keys, types, non-empty values, and
-    length limits remain enforced by this module before anything is persisted.
+    Strict Mode requires every field to be required and every object to reject
+    additional properties.  Length, content, and non-empty checks deliberately
+    stay in local validation: they are product rules, not provider-side schema
+    constraints.
     """
-    return {"type": "json_object"}
+    return {
+        "type": "json_schema",
+        "json_schema": {
+            "name": name,
+            "strict": True,
+            "schema": {
+                "type": "object",
+                "properties": {field: {"type": "string"} for field in fields},
+                "required": list(fields),
+                "additionalProperties": False,
+            },
+        },
+    }
 
 
 def _completion_content(
@@ -240,7 +252,10 @@ def request_presentation(
         "temperature": 0,
         "max_tokens": 700,
         "stream": False,
-        "response_format": _json_object_format(),
+        "response_format": _strict_json_schema_format(
+            "meta_ads_personal_feed_ja",
+            ("shortHeadlineJa", "summaryJa"),
+        ),
     }
     request = urllib.request.Request(
         GROQ_URL,
@@ -317,7 +332,10 @@ def request_english_presentation(
         "temperature": 0,
         "max_tokens": 700,
         "stream": False,
-        "response_format": _json_object_format(),
+        "response_format": _strict_json_schema_format(
+            "meta_ads_personal_feed_en",
+            ("shortHeadlineEn", "summaryEn"),
+        ),
     }
     request = urllib.request.Request(
         GROQ_URL,
@@ -345,7 +363,7 @@ def request_english_presentation(
     }
 
 
-def request_english_presentation_json_object(
+def request_english_presentation_strict(
     *,
     api_key: str,
     model: str,
@@ -358,12 +376,7 @@ def request_english_presentation_json_object(
     max_retry_delay_seconds: float = MAX_GROQ_RETRY_DELAY_SECONDS,
     sleep: Any = time.sleep,
 ) -> dict[str, str]:
-    """Request English display text in JSON Object mode and validate locally.
-
-    This is not a weaker persistence contract: the response still must contain
-    exactly the two expected non-empty strings within the configured limits.
-    It avoids a provider-side strict-schema validation failure.
-    """
+    """Request English display text in Strict Mode and validate locally."""
     if not api_key.strip():
         raise PresentationError("api_key_unavailable")
     payload = {
@@ -372,7 +385,10 @@ def request_english_presentation_json_object(
         "temperature": 0,
         "max_tokens": 700,
         "stream": False,
-        "response_format": _json_object_format(),
+        "response_format": _strict_json_schema_format(
+            "meta_ads_personal_feed_en",
+            ("shortHeadlineEn", "summaryEn"),
+        ),
     }
     request = urllib.request.Request(
         GROQ_URL,

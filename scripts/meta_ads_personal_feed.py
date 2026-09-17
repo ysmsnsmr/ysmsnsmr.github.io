@@ -35,7 +35,7 @@ from meta_ads_tracker_contract import ContractError, _expect_hostname, _expect_h
 from meta_ads_tracker_publication import write_json
 from meta_ads_personal_feed_presentation import (
     PresentationError,
-    request_english_presentation_json_object,
+    request_english_presentation_strict,
     request_presentation,
 )
 
@@ -1808,7 +1808,7 @@ def _locale_presentation_from_environment(
             time.sleep(delay)
         try:
             if locale == "en":
-                return request_english_presentation_json_object(
+                return request_english_presentation_strict(
                     api_key=api_key,
                     model=model,
                     title=title,

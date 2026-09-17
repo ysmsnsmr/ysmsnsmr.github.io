@@ -18,7 +18,7 @@ from typing import Any
 from meta_ads_personal_feed import _all_sources, extract_items, load_config
 from meta_ads_personal_feed_presentation import (
     PresentationError,
-    request_english_presentation_json_object,
+    request_english_presentation_strict,
     request_presentation,
 )
 from meta_ads_tracker_collect import SourceFetchError, _request as bounded_request
@@ -27,6 +27,10 @@ from meta_ads_tracker_collect import SourceFetchError, _request as bounded_reque
 DEFAULT_FEED = Path("meta-ads-updates/personal-feed.json")
 DEFAULT_POLICY = Path("config/meta_ads_personal_feed_sources.json")
 DEFAULT_SOURCE_ID = "jon-loomer-meta-ads"
+
+
+class CandidateNotInCurrentSourceError(ValueError):
+    """The saved feed candidate is outside the source's current response window."""
 
 
 def _read_json(path: Path) -> dict[str, Any]:
@@ -98,13 +102,13 @@ def run_probe(
     parsed = extract_items(source, body)
     matching = next((item for item in parsed if item.get("url") == candidate["url"]), None)
     if not isinstance(matching, dict) or not isinstance(matching.get("sourceContext"), str):
-        raise ValueError("candidate was not present in the current source response")
+        raise CandidateNotInCurrentSourceError("candidate was not present in the current source response")
     policy = config["policies"]["bilingualPresentation"]
     # Exactly one locale-specific request: retries are disabled for this diagnostic.
     source_context = matching["sourceContext"]
     if max_input_chars is not None:
         source_context = source_context[:max_input_chars] if max_input_chars > 0 else ""
-    request = request_english_presentation_json_object if locale == "en" else request_presentation
+    request = request_english_presentation_strict if locale == "en" else request_presentation
     generated = request(
         api_key=api_key,
         model=model,
@@ -162,6 +166,15 @@ def main() -> int:
             "GROQ_REAL_CANDIDATE_PROBE: "
             f"source_id={args.source_id} locale={args.locale} model={model} status=failed "
             f"failure_code=source_fetch_{error.reason}"
+        )
+        return 1
+    except CandidateNotInCurrentSourceError:
+        # A saved candidate can naturally fall outside a bounded RSS/API response.
+        # Keep the distinction without exposing titles, URLs, or source content.
+        print(
+            "GROQ_REAL_CANDIDATE_PROBE: "
+            f"source_id={args.source_id} locale={args.locale} context_limit={args.max_input_chars if args.max_input_chars is not None else 'policy'} "
+            f"model={model} status=failed failure_code=candidate_not_in_current_source"
         )
         return 1
     except (OSError, ValueError):
