@@ -54,6 +54,7 @@ FEED_V4_SCHEMA_VERSION = "meta-ads-personal-feed/v4"
 FEED_V5_SCHEMA_VERSION = "meta-ads-personal-feed/v5"
 PRESENTATION_SCHEMA_VERSION = "meta-ads-personal-feed-presentation/v1"
 BILINGUAL_PRESENTATION_SCHEMA_VERSION = "meta-ads-personal-feed-presentation/v2"
+BILINGUAL_PRESENTATION_FIELDS_SCHEMA_VERSION = "meta-ads-personal-feed-presentation/v3"
 DEFAULT_PRESENTATION_GENERATOR_REVISION = "bilingual-v1"
 LEGACY_RELEVANCE_REVISION = "legacy-v2"
 DEFAULT_V3_SCHEMA = Path(__file__).resolve().parent / "schemas/meta_ads_personal_feed_v3.schema.json"
@@ -75,6 +76,8 @@ CONTENT_TYPES = {
 }
 PRESENTATION_STATUSES = {"generated", "pending"}
 BILINGUAL_PRESENTATION_STATUSES = {"machine", "missing", "reviewed"}
+PRESENTATION_FIELDS = ("shortHeadline", "summary")
+PRESENTATION_PATHS = {"strict_json_schema", "plaintext_fallback", "legacy"}
 SUPPORTED_LOCALES = ("en", "ja")
 PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION = "meta-ads-personal-feed-presentation-retry/v2"
 LEGACY_PRESENTATION_RETRY_QUEUE_SCHEMA_VERSION = "meta-ads-personal-feed-presentation-retry/v1"
@@ -872,7 +875,65 @@ def _sha256_text(*parts: str) -> str:
     return hashlib.sha256("\n".join(parts).encode("utf-8")).hexdigest()
 
 
+class PresentationOutput(dict[str, str]):
+    """Generated fields with a non-persisted, log-safe generation path."""
+
+    def __init__(self, values: dict[str, str], path: str) -> None:
+        super().__init__(values)
+        self.path = path if path in PRESENTATION_PATHS else "legacy"
+
+
+def _presentation_path(value: dict[str, str]) -> str:
+    return value.path if isinstance(value, PresentationOutput) else "legacy"
+
+
+def _missing_presentation_field(input_hash: str) -> dict[str, Any]:
+    return {"status": "missing", "value": None, "inputHash": input_hash, "generatedAt": None, "reviewedAt": None}
+
+
+def _machine_presentation_field(value: str, input_hash: str, generated_at: str) -> dict[str, Any]:
+    return {"status": "machine", "value": value, "inputHash": input_hash, "generatedAt": generated_at, "reviewedAt": None}
+
+
+def _locale_from_fields(fields: dict[str, Any]) -> dict[str, Any]:
+    """Expose derived legacy keys while `fields` remains the persistence unit."""
+    headline = fields["shortHeadline"]
+    summary = fields["summary"]
+    completed = all(field["status"] in {"machine", "reviewed"} for field in (headline, summary))
+    reviewed = completed and all(field["status"] == "reviewed" for field in (headline, summary))
+    return {
+        "status": "reviewed" if reviewed else "machine" if completed else "missing",
+        "shortHeadline": headline["value"],
+        "summary": summary["value"],
+        "inputHash": headline["inputHash"],
+        "generatedAt": max((field["generatedAt"] for field in (headline, summary) if field["generatedAt"]), default=None) if completed else None,
+        "reviewedAt": max((field["reviewedAt"] for field in (headline, summary) if field["reviewedAt"]), default=None) if reviewed else None,
+        "fields": fields,
+    }
+
+
 def _missing_bilingual_presentation(fingerprint: str, generator_revision: str) -> dict[str, Any]:
+    english_input_hash = _sha256_text(fingerprint, generator_revision)
+    japanese_input_hash = _sha256_text("missing", "missing", generator_revision)
+    return {
+        "schemaVersion": BILINGUAL_PRESENTATION_FIELDS_SCHEMA_VERSION,
+        "sourceFingerprint": fingerprint,
+        "generatorRevision": generator_revision,
+        "locales": {
+            "en": _locale_from_fields({
+                    "shortHeadline": _missing_presentation_field(english_input_hash),
+                    "summary": _missing_presentation_field(english_input_hash),
+                }),
+            "ja": _locale_from_fields({
+                    "shortHeadline": _missing_presentation_field(japanese_input_hash),
+                    "summary": _missing_presentation_field(japanese_input_hash),
+                }),
+        },
+    }
+
+
+def _missing_bilingual_presentation_v2(fingerprint: str, generator_revision: str) -> dict[str, Any]:
+    """Retain the historic v3 public-feed migration contract."""
     english_input_hash = _sha256_text(fingerprint, generator_revision)
     japanese_input_hash = _sha256_text("missing", "missing", generator_revision)
     return {
@@ -880,22 +941,8 @@ def _missing_bilingual_presentation(fingerprint: str, generator_revision: str) -
         "sourceFingerprint": fingerprint,
         "generatorRevision": generator_revision,
         "locales": {
-            "en": {
-                "status": "missing",
-                "shortHeadline": None,
-                "summary": None,
-                "inputHash": english_input_hash,
-                "generatedAt": None,
-                "reviewedAt": None,
-            },
-            "ja": {
-                "status": "missing",
-                "shortHeadline": None,
-                "summary": None,
-                "inputHash": japanese_input_hash,
-                "generatedAt": None,
-                "reviewedAt": None,
-            },
+            "en": {"status": "missing", "shortHeadline": None, "summary": None, "inputHash": english_input_hash, "generatedAt": None, "reviewedAt": None},
+            "ja": {"status": "missing", "shortHeadline": None, "summary": None, "inputHash": japanese_input_hash, "generatedAt": None, "reviewedAt": None},
         },
     }
 
@@ -936,14 +983,49 @@ def _validate_bilingual_locale(
     return locale
 
 
+def _validate_presentation_field(value: Any, label: str, maximum: int, *, expected_input_hash: str | None = None) -> dict[str, Any]:
+    field = _expect_keys(value, {"status", "value", "inputHash", "generatedAt", "reviewedAt"}, label)
+    if field["status"] not in BILINGUAL_PRESENTATION_STATUSES:
+        raise ContractError(f"{label}.status is unsupported")
+    if not isinstance(field["inputHash"], str) or not re.fullmatch(r"[a-f0-9]{64}", field["inputHash"]):
+        raise ContractError(f"{label}.inputHash must be a SHA-256 hash")
+    if expected_input_hash is not None and field["inputHash"] != expected_input_hash:
+        raise ContractError(f"{label}.inputHash does not match its immutable input")
+    if field["status"] == "missing":
+        if field["value"] is not None or field["generatedAt"] is not None or field["reviewedAt"] is not None:
+            raise ContractError(f"{label} missing values must not contain text or timestamps")
+        return field
+    if len(_text(field["value"], f"{label}.value")) > maximum:
+        raise ContractError(f"{label}.value exceeds its maximum length")
+    _timestamp(field["generatedAt"], f"{label}.generatedAt")
+    if field["status"] == "machine":
+        if field["reviewedAt"] is not None:
+            raise ContractError(f"{label}.reviewedAt must be null for machine output")
+    else:
+        _timestamp(field["reviewedAt"], f"{label}.reviewedAt")
+    return field
+
+
+def _validate_bilingual_fields_locale(value: Any, label: str, *, expected_input_hash: str) -> dict[str, Any]:
+    locale = _expect_keys(value, {"status", "shortHeadline", "summary", "inputHash", "generatedAt", "reviewedAt", "fields"}, label)
+    fields = _expect_keys(locale["fields"], set(PRESENTATION_FIELDS), f"{label}.fields")
+    _validate_presentation_field(fields["shortHeadline"], f"{label}.fields.shortHeadline", 240, expected_input_hash=expected_input_hash)
+    _validate_presentation_field(fields["summary"], f"{label}.fields.summary", 1600, expected_input_hash=expected_input_hash)
+    expected = _locale_from_fields(fields)
+    for key in ("status", "shortHeadline", "summary", "inputHash", "generatedAt", "reviewedAt"):
+        if locale[key] != expected[key]:
+            raise ContractError(f"{label}.{key} must match its fields")
+    return locale
+
+
 def _validate_bilingual_presentation(value: Any, fingerprint: str | None, label: str) -> dict[str, Any]:
     presentation = _expect_keys(
         value,
         {"schemaVersion", "sourceFingerprint", "generatorRevision", "locales"},
         label,
     )
-    if presentation["schemaVersion"] != BILINGUAL_PRESENTATION_SCHEMA_VERSION:
-        raise ContractError(f"{label}.schemaVersion must be {BILINGUAL_PRESENTATION_SCHEMA_VERSION}")
+    if presentation["schemaVersion"] not in {BILINGUAL_PRESENTATION_SCHEMA_VERSION, BILINGUAL_PRESENTATION_FIELDS_SCHEMA_VERSION}:
+        raise ContractError(f"{label}.schemaVersion is unsupported")
     if not isinstance(presentation["sourceFingerprint"], str) or not re.fullmatch(r"[a-f0-9]{64}", presentation["sourceFingerprint"]):
         raise ContractError(f"{label}.sourceFingerprint must be a SHA-256 hash")
     if fingerprint is not None and presentation["sourceFingerprint"] != fingerprint:
@@ -951,14 +1033,57 @@ def _validate_bilingual_presentation(value: Any, fingerprint: str | None, label:
     generator_revision = _expect_identifier(presentation["generatorRevision"], f"{label}.generatorRevision")
     locales = _expect_keys(presentation["locales"], set(SUPPORTED_LOCALES), f"{label}.locales")
     english_expected = _sha256_text(presentation["sourceFingerprint"], generator_revision)
-    english = _validate_bilingual_locale(locales["en"], f"{label}.locales.en", expected_input_hash=english_expected)
+    if presentation["schemaVersion"] == BILINGUAL_PRESENTATION_SCHEMA_VERSION:
+        english = _validate_bilingual_locale(locales["en"], f"{label}.locales.en", expected_input_hash=english_expected)
+        japanese_expected = _sha256_text(english["shortHeadline"] or "missing", english["summary"] or "missing", generator_revision)
+        _validate_bilingual_locale(locales["ja"], f"{label}.locales.ja", expected_input_hash=japanese_expected)
+        return presentation
+    english = _validate_bilingual_fields_locale(locales["en"], f"{label}.locales.en", expected_input_hash=english_expected)
+    english_fields = english["fields"]
     japanese_expected = _sha256_text(
-        english["shortHeadline"] or "missing",
-        english["summary"] or "missing",
+        english_fields["shortHeadline"]["value"] or "missing",
+        english_fields["summary"]["value"] or "missing",
         generator_revision,
     )
-    _validate_bilingual_locale(locales["ja"], f"{label}.locales.ja", expected_input_hash=japanese_expected)
+    _validate_bilingual_fields_locale(locales["ja"], f"{label}.locales.ja", expected_input_hash=japanese_expected)
     return presentation
+
+
+def _migrate_bilingual_presentation_v2_to_v3(value: dict[str, Any]) -> dict[str, Any]:
+    """Split an already-validated locale pair into independently stored fields."""
+    if value.get("schemaVersion") == BILINGUAL_PRESENTATION_FIELDS_SCHEMA_VERSION:
+        return value
+    if value.get("schemaVersion") != BILINGUAL_PRESENTATION_SCHEMA_VERSION:
+        raise ContractError("presentation migration accepts only v2")
+    result = copy.deepcopy(value)
+    result["schemaVersion"] = BILINGUAL_PRESENTATION_FIELDS_SCHEMA_VERSION
+    for locale in SUPPORTED_LOCALES:
+        old = value["locales"][locale]
+        fields: dict[str, Any] = {}
+        for field in PRESENTATION_FIELDS:
+            field_value = old[field]
+            if old["status"] == "missing":
+                fields[field] = _missing_presentation_field(old["inputHash"])
+            else:
+                fields[field] = {
+                    "status": old["status"],
+                    "value": field_value,
+                    "inputHash": old["inputHash"],
+                    "generatedAt": old["generatedAt"],
+                    "reviewedAt": old["reviewedAt"],
+                }
+        result["locales"][locale] = _locale_from_fields(fields)
+    return result
+
+
+def _migrate_presentation_fields_in_state(state: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
+    """Upgrade cached presentation values without changing feed/state provenance."""
+    migrated = copy.deepcopy(state)
+    for source_state in migrated["sources"].values():
+        for record in source_state["items"].values():
+            record["presentation"] = _migrate_bilingual_presentation_v2_to_v3(record["presentation"])
+    validate_state(migrated, config)
+    return migrated
 
 
 def validate_v3_json_schema(payload: Any, schema_path: Path = DEFAULT_V3_SCHEMA) -> None:
@@ -1110,7 +1235,13 @@ def _validate_presentation_retry_queue(
             raise ContractError(f"{label} cannot reference a non-public item")
         if item.get("lane") is not None and item["lane"] not in {"action", "watch"}:
             raise ContractError(f"{label} cannot reference a non-public lane")
-        if item["presentation"]["locales"][locale]["status"] in {"machine", "reviewed"}:
+        presentation = item["presentation"]
+        completed = (
+            presentation["locales"][locale]["status"] in {"machine", "reviewed"}
+            if presentation["schemaVersion"] == BILINGUAL_PRESENTATION_SCHEMA_VERSION
+            else _locale_presentation_complete(presentation, locale)
+        )
+        if completed:
             raise ContractError(f"{label} cannot queue a completed locale")
     return queue
 
@@ -1519,7 +1650,7 @@ def migrate_feed_v2_to_v3(
             for key in ("id", "sourceId", "title", "url", "publishedDate", "updatedDate", "firstObservedAt", "lastObservedAt", "matchEvidence")
         } | {
             "platformIds": source["platformIds"],
-            "presentation": _missing_bilingual_presentation(fingerprint, revision),
+            "presentation": _missing_bilingual_presentation_v2(fingerprint, revision),
         })
     migrated = {
         "schemaVersion": FEED_V3_SCHEMA_VERSION,
@@ -1810,7 +1941,7 @@ def _locale_presentation_from_environment(
         try:
             try:
                 if locale == "en":
-                    return request_english_presentation_strict(
+                    return PresentationOutput(request_english_presentation_strict(
                         api_key=api_key,
                         model=model,
                         title=title,
@@ -1820,8 +1951,8 @@ def _locale_presentation_from_environment(
                         timeout=timeout,
                         max_attempts=policy["maxAttempts"],
                         max_retry_delay_seconds=policy["maxRetryDelaySeconds"],
-                    )
-                return request_presentation(
+                    ), "strict_json_schema")
+                return PresentationOutput(request_presentation(
                     api_key=api_key,
                     model=model,
                     title=title,
@@ -1831,13 +1962,13 @@ def _locale_presentation_from_environment(
                     timeout=timeout,
                     max_attempts=policy["maxAttempts"],
                     max_retry_delay_seconds=policy["maxRetryDelaySeconds"],
-                )
+                ), "strict_json_schema")
             except PresentationError as error:
                 if error.provider_error_code != "json_validate_failed":
                     raise
                 # Strict Mode remains the default. Only Groq's known schema
                 # rejection gets one response_format-free, locally parsed try.
-                return request_plaintext_presentation(
+                return PresentationOutput(request_plaintext_presentation(
                     api_key=api_key,
                     model=model,
                     title=title,
@@ -1846,7 +1977,7 @@ def _locale_presentation_from_environment(
                     summary_max_chars=policy["summaryMaxChars"],
                     timeout=timeout,
                     locale=locale,
-                )
+                ), "plaintext_fallback")
         finally:
             next_request_at = time.monotonic() + policy["minRequestIntervalSeconds"]
 
@@ -1892,6 +2023,7 @@ def _presentation_stats(
         "fallbackFailureReasons": {},
         "providerErrorTypes": {},
         "providerErrorCodes": {},
+        "generationPaths": {path: 0 for path in sorted(PRESENTATION_PATHS)},
         "sources": {
             source["id"]: {
                 "eligible": 0,
@@ -1912,6 +2044,7 @@ def _presentation_stats(
                 "fallbackFailureReasons": {},
                 "providerErrorTypes": {},
                 "providerErrorCodes": {},
+                "generationPaths": {path: 0 for path in sorted(PRESENTATION_PATHS)},
             }
             for source in _all_sources(config)
         },
@@ -1956,6 +2089,12 @@ def _write_source_pipeline_stats(target: dict[str, Any] | None, value: dict[str,
     if target is not None:
         target.clear()
         target.update(value)
+
+
+def _record_generation_path(stats: dict[str, Any], source_id: str, value: dict[str, str]) -> None:
+    path = _presentation_path(value)
+    stats["generationPaths"][path] += 1
+    stats["sources"][source_id]["generationPaths"][path] += 1
 
 
 def _presentation_failure_code(error: Exception) -> str:
@@ -2042,6 +2181,8 @@ def _print_presentation_stats(stats: dict[str, Any]) -> None:
             print(f"PRESENTATION_SOURCE_ERROR_TYPE: id={source_id} error_type={error_type} count={count}")
         for error_code, count in sorted(counts["providerErrorCodes"].items()):
             print(f"PRESENTATION_SOURCE_ERROR_CODE: id={source_id} error_code={error_code} count={count}")
+        for path, count in sorted(counts["generationPaths"].items()):
+            print(f"PRESENTATION_SOURCE_PATH: id={source_id} path={path} count={count}")
     for code, count in sorted(stats["failureReasons"].items()):
         print(f"PRESENTATION_FAILURE: code={code} count={count}")
     for key, count in sorted(stats["fallbackFailureReasons"].items()):
@@ -2051,6 +2192,8 @@ def _print_presentation_stats(stats: dict[str, Any]) -> None:
         print(f"PRESENTATION_ERROR_TYPE: error_type={error_type} count={count}")
     for error_code, count in sorted(stats["providerErrorCodes"].items()):
         print(f"PRESENTATION_ERROR_CODE: error_code={error_code} count={count}")
+    for path, count in sorted(stats["generationPaths"].items()):
+        print(f"PRESENTATION_PATH: path={path} count={count}")
 
 
 def _print_source_pipeline_stats(stats: dict[str, Any]) -> None:
@@ -2076,44 +2219,10 @@ def _machine_bilingual_presentation(
     generated_at: str,
     generator_revision: str = DEFAULT_PRESENTATION_GENERATOR_REVISION,
 ) -> dict[str, Any]:
-    """Build one validated bilingual cache entry from one model response."""
-    try:
-        revision = _expect_identifier(generator_revision, "generator_revision")
-        english_headline = _text(generated["shortHeadlineEn"], "english short headline")
-        english_summary = _text(generated["summaryEn"], "english summary")
-        japanese_headline = _text(generated["shortHeadlineJa"], "Japanese short headline")
-        japanese_summary = _text(generated["summaryJa"], "Japanese summary")
-    except (ContractError, KeyError) as error:
-        raise PresentationError("response_invalid_shape") from error
-    if len(english_headline) > 240 or len(japanese_headline) > 240:
-        raise PresentationError("short_headline_invalid")
-    if len(english_summary) > 1600 or len(japanese_summary) > 1600:
-        raise PresentationError("summary_invalid")
-    english_input_hash = _sha256_text(fingerprint, revision)
-    japanese_input_hash = _sha256_text(english_headline, english_summary, revision)
-    return {
-        "schemaVersion": BILINGUAL_PRESENTATION_SCHEMA_VERSION,
-        "sourceFingerprint": fingerprint,
-        "generatorRevision": revision,
-        "locales": {
-            "en": {
-                "status": "machine",
-                "shortHeadline": english_headline,
-                "summary": english_summary,
-                "inputHash": english_input_hash,
-                "generatedAt": generated_at,
-                "reviewedAt": None,
-            },
-            "ja": {
-                "status": "machine",
-                "shortHeadline": japanese_headline,
-                "summary": japanese_summary,
-                "inputHash": japanese_input_hash,
-                "generatedAt": generated_at,
-                "reviewedAt": None,
-            },
-        },
-    }
+    """Build field-level cache entries from a legacy four-field response."""
+    presentation = _missing_bilingual_presentation(fingerprint, generator_revision)
+    presentation = _merge_locale_presentation(presentation, fingerprint, "en", generated, generated_at, generator_revision)
+    return _merge_locale_presentation(presentation, fingerprint, "ja", generated, generated_at, generator_revision)
 
 
 def _partial_bilingual_presentation(
@@ -2122,67 +2231,25 @@ def _partial_bilingual_presentation(
     generated_at: str,
     generator_revision: str = DEFAULT_PRESENTATION_GENERATOR_REVISION,
 ) -> dict[str, Any]:
-    """Build a valid bilingual entry when fallback generated one locale only."""
-    revision = _expect_identifier(generator_revision, "generator_revision")
-    locale_values: dict[str, tuple[str, str]] = {
-        "en": ("shortHeadlineEn", "summaryEn"),
-        "ja": ("shortHeadlineJa", "summaryJa"),
-    }
-    locales: dict[str, dict[str, Any]] = {}
-    for locale, (headline_key, summary_key) in locale_values.items():
-        headline = generated.get(headline_key)
-        summary = generated.get(summary_key)
-        if headline is None and summary is None:
-            japanese_input = (
-                generated.get("shortHeadlineEn") or "missing",
-                generated.get("summaryEn") or "missing",
-            )
-            locales[locale] = {
-                "status": "missing",
-                "shortHeadline": None,
-                "summary": None,
-                "inputHash": _sha256_text(*japanese_input, revision) if locale == "ja" else _sha256_text(fingerprint, revision),
-                "generatedAt": None,
-                "reviewedAt": None,
-            }
-            continue
-        if not isinstance(headline, str) or not isinstance(summary, str):
-            raise PresentationError("response_invalid_shape")
-        headline = _text(headline, f"{locale} short headline")
-        summary = _text(summary, f"{locale} summary")
-        if len(headline) > 240:
-            raise PresentationError("short_headline_invalid")
-        if len(summary) > 1600:
-            raise PresentationError("summary_invalid")
-        locales[locale] = {
-            "status": "machine",
-            "shortHeadline": headline,
-            "summary": summary,
-            "inputHash": _sha256_text(fingerprint, revision)
-            if locale == "en"
-            else _sha256_text(
-                generated.get("shortHeadlineEn") or "missing",
-                generated.get("summaryEn") or "missing",
-                revision,
-            ),
-            "generatedAt": generated_at,
-            "reviewedAt": None,
-        }
-    return {
-        "schemaVersion": BILINGUAL_PRESENTATION_SCHEMA_VERSION,
-        "sourceFingerprint": fingerprint,
-        "generatorRevision": revision,
-        "locales": locales,
-    }
+    """Build a field-level entry when a legacy fallback generated full locales."""
+    presentation = _missing_bilingual_presentation(fingerprint, generator_revision)
+    for locale, keys in {"en": ("shortHeadlineEn", "summaryEn"), "ja": ("shortHeadlineJa", "summaryJa")}.items():
+        if all(isinstance(generated.get(key), str) for key in keys):
+            presentation = _merge_locale_presentation(presentation, fingerprint, locale, generated, generated_at, generator_revision)
+    return presentation
 
 
 def _pending_presentation_locales(presentation: dict[str, Any]) -> list[str]:
-    """Return locales that still need display text, preserving locale independence."""
+    """Return locales with at least one missing field."""
     return [
         locale
         for locale in SUPPORTED_LOCALES
-        if presentation["locales"][locale]["status"] not in {"machine", "reviewed"}
+        if any(presentation["locales"][locale]["fields"][field]["status"] == "missing" for field in PRESENTATION_FIELDS)
     ]
+
+
+def _locale_presentation_complete(presentation: dict[str, Any], locale: str) -> bool:
+    return all(presentation["locales"][locale]["fields"][field]["status"] in {"machine", "reviewed"} for field in PRESENTATION_FIELDS)
 
 
 def _merge_locale_presentation(
@@ -2193,66 +2260,44 @@ def _merge_locale_presentation(
     generated_at: str,
     generator_revision: str = DEFAULT_PRESENTATION_GENERATOR_REVISION,
 ) -> dict[str, Any]:
-    """Persist one locale without incorrectly claiming the other is generated.
-
-    Japanese text is derived from the English fields.  Therefore a newly
-    generated English locale invalidates any older Japanese locale and leaves
-    it explicitly ``missing`` until it is regenerated from the new English.
-    """
+    """Persist only missing fields for one locale, preserving completed fields."""
     if locale not in SUPPORTED_LOCALES:
         raise PresentationError("response_invalid_shape")
     revision = _expect_identifier(generator_revision, "generator_revision")
-    headline_key = "shortHeadlineEn" if locale == "en" else "shortHeadlineJa"
-    summary_key = "summaryEn" if locale == "en" else "summaryJa"
-    try:
-        headline = _text(generated[headline_key], f"{locale} short headline")
-        summary = _text(generated[summary_key], f"{locale} summary")
-    except (ContractError, KeyError) as error:
-        raise PresentationError("response_invalid_shape") from error
-    if len(headline) > 240:
-        raise PresentationError("short_headline_invalid")
-    if len(summary) > 1600:
-        raise PresentationError("summary_invalid")
-
-    presentation = copy.deepcopy(existing)
-    presentation["schemaVersion"] = BILINGUAL_PRESENTATION_SCHEMA_VERSION
+    presentation = copy.deepcopy(_migrate_bilingual_presentation_v2_to_v3(existing))
+    presentation["schemaVersion"] = BILINGUAL_PRESENTATION_FIELDS_SCHEMA_VERSION
     presentation["sourceFingerprint"] = fingerprint
     presentation["generatorRevision"] = revision
-    english = presentation["locales"]["en"]
-    japanese = presentation["locales"]["ja"]
+    keys = ("shortHeadlineEn", "summaryEn") if locale == "en" else ("shortHeadlineJa", "summaryJa")
+    maxima = {"shortHeadline": 240, "summary": 1600}
+    target = presentation["locales"][locale]["fields"]
+    updated = False
+    input_hash = _sha256_text(fingerprint, revision) if locale == "en" else _sha256_text(
+        presentation["locales"]["en"]["fields"]["shortHeadline"]["value"] or "missing",
+        presentation["locales"]["en"]["fields"]["summary"]["value"] or "missing",
+        revision,
+    )
+    for field, key in zip(PRESENTATION_FIELDS, keys):
+        if target[field]["status"] != "missing":
+            continue
+        try:
+            text = _text(generated[key], f"{locale} {field}")
+        except (ContractError, KeyError) as error:
+            raise PresentationError("response_invalid_shape") from error
+        if len(text) > maxima[field]:
+            raise PresentationError("short_headline_invalid" if field == "shortHeadline" else "summary_invalid")
+        target[field] = _machine_presentation_field(text, input_hash, generated_at)
+        updated = True
+    if not updated:
+        return presentation
+    presentation["locales"][locale] = _locale_from_fields(target)
     if locale == "en":
-        english = {
-            "status": "machine",
-            "shortHeadline": headline,
-            "summary": summary,
-            "inputHash": _sha256_text(fingerprint, revision),
-            "generatedAt": generated_at,
-            "reviewedAt": None,
-        }
-        # The Japanese input hash is tied to the English text.  Do not retain
-        # a translation that was produced from an earlier/missing English value.
-        japanese = {
-            "status": "missing",
-            "shortHeadline": None,
-            "summary": None,
-            "inputHash": _sha256_text(headline, summary, revision),
-            "generatedAt": None,
-            "reviewedAt": None,
-        }
-    else:
-        english_values = (
-            english.get("shortHeadline") or "missing",
-            english.get("summary") or "missing",
-        )
-        japanese = {
-            "status": "machine",
-            "shortHeadline": headline,
-            "summary": summary,
-            "inputHash": _sha256_text(*english_values, revision),
-            "generatedAt": generated_at,
-            "reviewedAt": None,
-        }
-    presentation["locales"] = {"en": english, "ja": japanese}
+        english = presentation["locales"]["en"]["fields"]
+        japanese_hash = _sha256_text(english["shortHeadline"]["value"] or "missing", english["summary"]["value"] or "missing", revision)
+        presentation["locales"]["ja"] = _locale_from_fields({
+                field: _missing_presentation_field(japanese_hash)
+                for field in PRESENTATION_FIELDS
+            })
     return presentation
 
 
@@ -2302,6 +2347,7 @@ def collect(
         state = migrate_state_v3_to_v4(state, config)
     if state["schemaVersion"] == STATE_V4_SCHEMA_VERSION:
         state = migrate_state_v4_to_v5(state, config)
+    state = _migrate_presentation_fields_in_state(state, config)
     retry_queue = _retry_queue_map(_migrate_presentation_retry_queue(state.get("presentationRetryQueue")))
     if retry_failed and (retry_json_validate_failed or retry_legacy_http_400):
         raise ContractError("retry-failed cannot be combined with targeted retry options")
@@ -2506,7 +2552,7 @@ def collect(
             record is None
             or record["fingerprint"] != entry["fingerprint"]
             or record["publicationStatus"] != PUBLICATION_INCLUDED
-            or record["presentation"]["locales"][locale]["status"] in {"machine", "reviewed"}
+            or _locale_presentation_complete(record["presentation"], locale)
         ):
             del retry_queue[queue_key]
 
@@ -2523,7 +2569,7 @@ def collect(
             stats["sources"][source_id]["attempted"] += 1
             pending = _pending_presentation_locales(record["presentation"])
             initial_statuses = {
-                locale: record["presentation"]["locales"][locale]["status"]
+                locale: "machine" if _locale_presentation_complete(record["presentation"], locale) else "missing"
                 for locale in SUPPORTED_LOCALES
             }
             full_attempt = (
@@ -2538,6 +2584,7 @@ def collect(
                 try:
                     generated = present_item(record["title"], _presentation_context_for_model(raw, presentation_policy), presentation_policy)
                     record["presentation"] = _machine_bilingual_presentation(record["fingerprint"], generated, generated_at)
+                    _record_generation_path(stats, source_id, generated)
                     for locale in SUPPORTED_LOCALES:
                         retry_queue.pop(_retry_queue_key(source_id, raw["key"], locale), None)
                     stats["localeGenerated"] += len(SUPPORTED_LOCALES)
@@ -2641,6 +2688,7 @@ def collect(
                         record["presentation"] = _merge_locale_presentation(
                             record["presentation"], record["fingerprint"], locale, generated, generated_at
                         )
+                        _record_generation_path(stats, source_id, generated)
                         retry_queue.pop(_retry_queue_key(source_id, raw["key"], locale), None)
                         stats["localeGenerated"] += 1
                         stats["sources"][source_id]["localeGenerated"] += 1
@@ -2659,7 +2707,7 @@ def collect(
                         )
                         stats["localeFailed"] += 1
                         stats["sources"][source_id]["localeFailed"] += 1
-            if any(locale["status"] in {"machine", "reviewed"} for locale in record["presentation"]["locales"].values()):
+            if any(_locale_presentation_complete(record["presentation"], locale) for locale in SUPPORTED_LOCALES):
                 stats["generated"] += 1
                 stats["sources"][source_id]["generated"] += 1
             else:

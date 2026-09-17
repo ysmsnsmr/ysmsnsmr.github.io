@@ -36,16 +36,20 @@
         {"type": "object", "additionalProperties": false, "required": ["status", "shortHeadline", "summary", "inputHash", "generatedAt", "reviewedAt"], "properties": {"status": {"const": "reviewed"}, "shortHeadline": {"type": "string", "minLength": 1, "maxLength": 240}, "summary": {"type": "string", "minLength": 1, "maxLength": 1600}, "inputHash": {"$ref": "#/$defs/hash"}, "generatedAt": {"$ref": "#/$defs/timestamp"}, "reviewedAt": {"$ref": "#/$defs/timestamp"}}}
       ]
     },
-    "presentation": {
-      "type": "object", "additionalProperties": false,
-      "required": ["schemaVersion", "sourceFingerprint", "generatorRevision", "locales"],
-      "properties": {
-        "schemaVersion": {"const": "meta-ads-personal-feed-presentation/v2"},
-        "sourceFingerprint": {"$ref": "#/$defs/hash"},
-        "generatorRevision": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
-        "locales": {"type": "object", "additionalProperties": false, "required": ["en", "ja"], "properties": {"en": {"$ref": "#/$defs/locale"}, "ja": {"$ref": "#/$defs/locale"}}}
-      }
+    "field": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["status", "value", "inputHash", "generatedAt", "reviewedAt"], "properties": {"status": {"const": "missing"}, "value": {"type": "null"}, "inputHash": {"$ref": "#/$defs/hash"}, "generatedAt": {"type": "null"}, "reviewedAt": {"type": "null"}}},
+        {"type": "object", "additionalProperties": false, "required": ["status", "value", "inputHash", "generatedAt", "reviewedAt"], "properties": {"status": {"const": "machine"}, "value": {"type": "string", "minLength": 1, "maxLength": 1600}, "inputHash": {"$ref": "#/$defs/hash"}, "generatedAt": {"$ref": "#/$defs/timestamp"}, "reviewedAt": {"type": "null"}}},
+        {"type": "object", "additionalProperties": false, "required": ["status", "value", "inputHash", "generatedAt", "reviewedAt"], "properties": {"status": {"const": "reviewed"}, "value": {"type": "string", "minLength": 1, "maxLength": 1600}, "inputHash": {"$ref": "#/$defs/hash"}, "generatedAt": {"$ref": "#/$defs/timestamp"}, "reviewedAt": {"$ref": "#/$defs/timestamp"}}}
+      ]
     },
+    "presentation": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["schemaVersion", "sourceFingerprint", "generatorRevision", "locales"], "properties": {"schemaVersion": {"const": "meta-ads-personal-feed-presentation/v2"}, "sourceFingerprint": {"$ref": "#/$defs/hash"}, "generatorRevision": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}, "locales": {"type": "object", "additionalProperties": false, "required": ["en", "ja"], "properties": {"en": {"$ref": "#/$defs/locale"}, "ja": {"$ref": "#/$defs/locale"}}}}},
+        {"type": "object", "additionalProperties": false, "required": ["schemaVersion", "sourceFingerprint", "generatorRevision", "locales"], "properties": {"schemaVersion": {"const": "meta-ads-personal-feed-presentation/v3"}, "sourceFingerprint": {"$ref": "#/$defs/hash"}, "generatorRevision": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}, "locales": {"type": "object", "additionalProperties": false, "required": ["en", "ja"], "properties": {"en": {"$ref": "#/$defs/fieldLocale"}, "ja": {"$ref": "#/$defs/fieldLocale"}}}}}
+      ]
+    },
+    "fieldLocale": {"type": "object", "additionalProperties": false, "required": ["status", "shortHeadline", "summary", "inputHash", "generatedAt", "reviewedAt", "fields"], "properties": {"status": {"enum": ["machine", "missing", "reviewed"]}, "shortHeadline": {"type": ["string", "null"], "maxLength": 240}, "summary": {"type": ["string", "null"], "maxLength": 1600}, "inputHash": {"$ref": "#/$defs/hash"}, "generatedAt": {"type": ["string", "null"], "format": "date-time"}, "reviewedAt": {"type": ["string", "null"], "format": "date-time"}, "fields": {"type": "object", "additionalProperties": false, "required": ["shortHeadline", "summary"], "properties": {"shortHeadline": {"$ref": "#/$defs/field"}, "summary": {"$ref": "#/$defs/field"}}}}},
     "item": {
       "type": "object", "additionalProperties": false,
       "required": ["id", "sourceId", "title", "url", "publishedDate", "updatedDate", "firstObservedAt", "lastObservedAt", "platformIds", "matchEvidence", "presentation"],

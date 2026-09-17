@@ -63,13 +63,13 @@ Meta Newsroom Product News RSSは候補を広く取得し、広告・計測・AP
 
 ## 英語・日本語の短見出し・要約
 
-収集時には、RSSの説明文またはSDK release notesを**そのrunの一時入力だけ**として、欠けているlocaleごとにGroqへ独立して要求します。英語は英語の短見出し・要約の2項目、日本語は日本語の短見出し・要約の2項目です。英日4項目を同時に生成するリクエストは使いません。通常はGroqにStrict JSON Schema形式を要求し、schemaは2つの必須文字列と追加field禁止だけに限定します。Groqが安全に分類した`json_validate_failed`を返した**場合だけ**、同じlocaleへ`response_format`なしの定型プレーンテキストを1回要求します。このfallbackは`SHORT_HEADLINE:`と`SUMMARY:`の2行以外を受け付けず、JSONも受け付けません。返答は保存前にPythonが対象localeの項目完全一致、文字列型、空文字、文字数上限を検証します。文字数などの製品契約をGroq schemaへ移さず、片方のlocaleの失敗がもう片方を巻き込まないようにします。元の本文・説明文・release notes、Groq応答はstate、公開JSON、artifact、ログへ保存しません。
+収集時には、RSSの説明文またはSDK release notesを**そのrunの一時入力だけ**として、欠けているlocaleごとにGroqへ独立して要求します。英語は英語の短見出し・要約の2項目、日本語は日本語の短見出し・要約の2項目です。英日4項目を同時に生成するリクエストは使いません。保存は`英語/日本語 × 短見出し/要約`の4項目が独立単位です。再生成時にすでに成功した同じlocaleの項目を上書きせず、英語のいずれかが更新された場合だけ、それを入力とする日本語の2項目を再生成対象へ戻します。通常はGroqにStrict JSON Schema形式を要求し、schemaは2つの必須文字列と追加field禁止だけに限定します。Groqが安全に分類した`json_validate_failed`を返した**場合だけ**、同じlocaleへ`response_format`なしの定型プレーンテキストを1回要求します。このfallbackは`SHORT_HEADLINE:`と`SUMMARY:`の2行以外を受け付けず、JSONも受け付けません。返答は保存前にPythonが対象localeの項目完全一致、文字列型、空文字、文字数上限を検証します。文字数などの製品契約をGroq schemaへ移さず、片方のlocaleや項目の失敗が他の成功済み値を巻き込まないようにします。元の本文・説明文・release notes、Groq応答はstate、公開JSON、artifact、ログへ保存しません。
 
 生成済みの表示データは記事内容のfingerprintに結び付けて再利用します。同じ内容には再課金しません。英語と日本語はlocaleごとに`machine`または`missing`を保持し、片方の生成失敗で成功済みのもう片方を消しません。内容が変わった記事、または未生成localeのある記事だけを新しい順に1 runあたり最大50件処理します。英語を再生成した場合、日本語は新しい英語に基づくoverlayとして再生成対象になります。
 
 GroqのAPIキーがない、生成に失敗する、または出力契約に合わない場合でも、収集と公開は継続します。失敗したlocaleだけを`missing`として記録し、原文タイトルのまま表示できます。両localeが失敗した場合も同様です。表示データは事実確認や運用判断を代替しません。
 
-各runは本文を出さずに `PRESENTATION` と `PRESENTATION_SOURCE` の行を出力します。ここでは記事候補数、記事単位の試行数、locale単位の試行・成功・失敗数、次回以降へ繰り越した数を確認します。失敗がある場合は、全体の `PRESENTATION_FAILURE` / `PRESENTATION_FALLBACK_FAILURE` とソース別の同名ログに安全な理由コードと件数を出します。
+各runは本文を出さずに `PRESENTATION` と `PRESENTATION_SOURCE` の行を出力します。ここでは記事候補数、記事単位の試行数、locale単位の試行・成功・失敗数、次回以降へ繰り越した数を確認します。`PRESENTATION_PATH` と `PRESENTATION_SOURCE_PATH` は `strict_json_schema`、`plaintext_fallback`、`legacy` ごとの成功件数だけを示します。失敗がある場合は、全体の `PRESENTATION_FAILURE` / `PRESENTATION_FALLBACK_FAILURE` とソース別の同名ログに安全な理由コードと件数を出します。
 
 表示生成の失敗は、公開feedとは分離したstate内の `presentationRetryQueue` にlocale単位で隔離します。各エントリはsource、item fingerprint、locale、`failureCount`、`lastFailureAt`、`nextRetryAt`、安全な失敗コード、Groqが安全に返したprovider error code、`quarantined`だけを持ち、本文やGroq応答は保存しません。再試行間隔は1時間、2時間、4時間…と指数バックオフし、5回目の失敗で隔離して自動再試行を止めます。再試行時刻前のrunは外部モデルを呼ばず、公開feedはそのまま更新できます。
 

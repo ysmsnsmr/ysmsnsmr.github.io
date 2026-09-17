@@ -53,6 +53,31 @@ const personalFeedV5Report = {
     }
   ].map(({ lane, laneEvidence, ...item }) => item)
 };
+function presentationV3WithMissingJapaneseSummary(presentation) {
+  const locale = (value) => {
+    const field = (name) => ({
+      status: value.status,
+      value: value[name],
+      inputHash: value.inputHash,
+      generatedAt: value.generatedAt,
+      reviewedAt: value.reviewedAt
+    });
+    return { ...value, fields: { shortHeadline: field("shortHeadline"), summary: field("summary") } };
+  };
+  const locales = { en: locale(presentation.locales.en), ja: locale(presentation.locales.ja) };
+  locales.ja.status = "missing";
+  locales.ja.summary = null;
+  locales.ja.generatedAt = null;
+  locales.ja.fields.summary = { status: "missing", value: null, inputHash: locales.ja.inputHash, generatedAt: null, reviewedAt: null };
+  return { ...presentation, schemaVersion: "meta-ads-personal-feed-presentation/v3", locales };
+}
+const personalFeedV5FieldsReport = {
+  ...personalFeedV5Report,
+  items: personalFeedV5Report.items.map((item) => ({
+    ...item,
+    presentation: presentationV3WithMissingJapaneseSummary(item.presentation)
+  }))
+};
 const axeSource = await fs.readFile(require.resolve("axe-core/axe.min.js"), "utf8");
 const artifactDirectory = process.env.META_ADS_UI_ARTIFACT_DIR
   ? path.resolve(process.env.META_ADS_UI_ARTIFACT_DIR)
@@ -144,6 +169,10 @@ async function startServer() {
         if (referer.searchParams.get("personal-fixture") === "v5") {
           response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
           return response.end(JSON.stringify(personalFeedV5Report));
+        }
+        if (referer.searchParams.get("personal-fixture") === "fields") {
+          response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
+          return response.end(JSON.stringify(personalFeedV5FieldsReport));
         }
       }
       let filePath = path.resolve(repositoryRoot, `.${decodeURIComponent(url.pathname)}`);
@@ -402,6 +431,19 @@ try {
     await v5List.screenshot({ path: path.join(artifactDirectory, "personal-feed-v5-desktop-full-page.png"), fullPage: true });
   }
   await v5List.close();
+
+  const fieldsList = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  const fieldsItem = personalFeedV5FieldsReport.items[0];
+  const fieldsHeadline = fieldsItem.presentation.locales.ja.fields.shortHeadline.value;
+  await fieldsList.goto(`${server.origin}/meta-ads-updates/ja/?personal-fixture=fields`, { waitUntil: "networkidle" });
+  assert((await fieldsList.locator(".update-card h2").allTextContents()).includes(fieldsHeadline), "v3 fields list must retain a completed headline when the sibling summary is missing");
+  await assertAccessibilityAndLayout(fieldsList, "personal-feed-v3-fields/desktop");
+  await fieldsList.locator(`.detail-link[href*="id=${fieldsItem.id}"]`).click();
+  await fieldsList.waitForURL(/detail\.html\?/);
+  assert(await fieldsList.locator("#detail-title").textContent() === fieldsHeadline, "v3 fields detail must use the completed headline");
+  assert((await fieldsList.locator("#detail-summary").textContent()).includes("要約は利用できません"), "v3 fields detail must show the missing summary fallback only for that field");
+  assert((await fieldsList.locator("#detail-presentation-status").textContent()).includes("要約なし"), "v3 fields detail must expose the incomplete presentation status");
+  await fieldsList.close();
 
   const v5Mobile = await browser.newPage({ viewport: { width: 375, height: 667 } });
   await v5Mobile.goto(`${server.origin}/meta-ads-updates/ja/?personal-fixture=v5`, { waitUntil: "networkidle" });
