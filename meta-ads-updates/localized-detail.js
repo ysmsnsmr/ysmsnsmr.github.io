@@ -39,6 +39,13 @@
   }
   function presentation(item) {
     const value = item.presentation;
+    if (value?.schemaVersion === "meta-ads-personal-feed-presentation/v3") {
+      const fields = value.locales?.[locale]?.fields;
+      const headline = fields?.shortHeadline;
+      const summary = fields?.summary;
+      const complete = [headline, summary].every((field) => field?.status === "machine" || field?.status === "reviewed");
+      return { status: complete ? "machine" : "missing", shortHeadline: headline?.value || null, summary: summary?.value || null };
+    }
     if (value?.schemaVersion === "meta-ads-personal-feed-presentation/v2") {
       const result = value.locales?.[locale];
       if ((result?.status === "machine" || result?.status === "reviewed") && result.shortHeadline && result.summary) return result;

@@ -34,6 +34,11 @@ from meta_ads_personal_feed import (
     _rss_presentation_text,
     _shorten_rss_presentation_context,
     _missing_bilingual_presentation,
+    _locale_from_fields,
+    _merge_locale_presentation,
+    _presentation_stats,
+    _record_generation_path,
+    PresentationOutput,
     collect,
     collect_and_write,
     extract_items,
@@ -106,6 +111,37 @@ SDK = json.dumps([{
 
 
 class PersonalFeedTest(unittest.TestCase):
+    def test_presentation_v3_preserves_a_completed_field_when_its_sibling_is_retried(self) -> None:
+        fingerprint = "a" * 64
+        initial = _missing_bilingual_presentation(fingerprint, "bilingual-v1")
+        initial["locales"]["en"]["fields"]["shortHeadline"] = {
+            "status": "machine", "value": "Existing headline", "inputHash": initial["locales"]["en"]["fields"]["shortHeadline"]["inputHash"], "generatedAt": "2026-09-01T00:00:00Z", "reviewedAt": None,
+        }
+        initial["locales"]["en"] = _locale_from_fields(initial["locales"]["en"]["fields"])
+        # Rebuild the derived envelope through a normal merge. The existing
+        # headline must not be overwritten when only the summary was missing.
+        merged = _merge_locale_presentation(
+            initial,
+            fingerprint,
+            "en",
+            {"shortHeadlineEn": "Replacement headline", "summaryEn": "New summary"},
+            "2026-09-02T00:00:00Z",
+        )
+        fields = merged["locales"]["en"]["fields"]
+        self.assertEqual(fields["shortHeadline"]["value"], "Existing headline")
+        self.assertEqual(fields["summary"]["value"], "New summary")
+        self.assertEqual(merged["locales"]["en"]["status"], "machine")
+
+    def test_presentation_path_log_contains_only_safe_path_counts(self) -> None:
+        policy = self.config["policies"]["bilingualPresentation"]
+        stats = _presentation_stats(self.config, True, 1, policy)
+        _record_generation_path(stats, "meta-product-news-rss", PresentationOutput({"shortHeadlineEn": "Headline", "summaryEn": "Summary"}, "plaintext_fallback"))
+        output = io.StringIO()
+        with redirect_stdout(output):
+            _print_presentation_stats(stats)
+        self.assertIn("PRESENTATION_PATH: path=plaintext_fallback count=1", output.getvalue())
+        self.assertIn("PRESENTATION_SOURCE_PATH: id=meta-product-news-rss path=plaintext_fallback count=1", output.getvalue())
+
     def setUp(self) -> None:
         self.config = load_config()
 
@@ -331,6 +367,7 @@ class PersonalFeedTest(unittest.TestCase):
             result = presenter("Title", "Context", policy, "en")
 
         self.assertEqual(result, {"shortHeadlineEn": "English headline", "summaryEn": "English summary"})
+        self.assertEqual(result.path, "strict_json_schema")
         english.assert_called_once()
         self.assertEqual(english.call_args.kwargs["max_attempts"], policy["maxAttempts"])
 
@@ -353,6 +390,7 @@ class PersonalFeedTest(unittest.TestCase):
             result = presenter("Title", "Context", policy, "en")
 
         self.assertEqual(result, {"shortHeadlineEn": "English headline", "summaryEn": "English summary"})
+        self.assertEqual(result.path, "plaintext_fallback")
         strict.assert_called_once()
         plaintext.assert_called_once()
         self.assertEqual(plaintext.call_args.kwargs["locale"], "en")
@@ -607,8 +645,8 @@ class PersonalFeedTest(unittest.TestCase):
         def locale_presenter(_title: str, _context: str, _policy: dict, locale: str) -> dict[str, str]:
             calls.append(locale)
             if locale == "en":
-                return {"shortHeadlineEn": "English headline", "summaryEn": "English summary"}
-            return {"shortHeadlineJa": "日本語の見出し", "summaryJa": "日本語の要約"}
+                return PresentationOutput({"shortHeadlineEn": "English headline", "summaryEn": "English summary"}, "strict_json_schema")
+            return PresentationOutput({"shortHeadlineJa": "日本語の見出し", "summaryJa": "日本語の要約"}, "plaintext_fallback")
 
         stats: dict[str, Any] = {}
         feed, state = collect(
@@ -626,6 +664,7 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(calls, ["en", "ja"] * 4)
         self.assertEqual(stats["fallbackAttempts"], 0)
         self.assertEqual((stats["localeAttempted"], stats["localeGenerated"], stats["localeFailed"]), (8, 8, 0))
+        self.assertEqual(stats["generationPaths"], {"legacy": 0, "plaintext_fallback": 4, "strict_json_schema": 4})
         self.assertTrue(
             all(
                 item["presentation"]["locales"]["en"]["status"] == "machine"

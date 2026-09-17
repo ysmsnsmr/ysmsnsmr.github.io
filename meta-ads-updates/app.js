@@ -81,6 +81,12 @@
 
   function japanesePresentation(item) {
     const presentation = item.presentation;
+    if (presentation?.schemaVersion === "meta-ads-personal-feed-presentation/v3") {
+      const fields = presentation.locales?.ja?.fields;
+      const headline = fields?.shortHeadline?.value;
+      const summary = fields?.summary?.value;
+      return headline || summary ? { shortHeadline: headline || null, summary: summary || null } : null;
+    }
     if (presentation?.schemaVersion === "meta-ads-personal-feed-presentation/v2") {
       const locale = presentation.locales?.ja;
       return (locale?.status === "machine" || locale?.status === "reviewed") && locale.shortHeadline && locale.summary
