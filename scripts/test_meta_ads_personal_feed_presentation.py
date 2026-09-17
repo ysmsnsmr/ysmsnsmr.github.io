@@ -10,7 +10,7 @@ from meta_ads_personal_feed_presentation import (
     PresentationError,
     _messages,
     request_english_presentation,
-    request_english_presentation_json_object,
+    request_english_presentation_strict,
     request_presentation,
 )
 
@@ -67,7 +67,25 @@ class PersonalFeedPresentationTest(unittest.TestCase):
         )
         request_body = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
         self.assertEqual(request_body["temperature"], 0)
-        self.assertEqual(request_body["response_format"], {"type": "json_object"})
+        self.assertEqual(
+            request_body["response_format"],
+            {
+                "type": "json_schema",
+                "json_schema": {
+                    "name": "meta_ads_personal_feed_ja",
+                    "strict": True,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "shortHeadlineJa": {"type": "string"},
+                            "summaryJa": {"type": "string"},
+                        },
+                        "required": ["shortHeadlineJa", "summaryJa"],
+                        "additionalProperties": False,
+                    },
+                },
+            },
+        )
 
     @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
     def test_rejects_extra_fields_and_overlong_output(self, urlopen) -> None:
@@ -111,14 +129,26 @@ class PersonalFeedPresentationTest(unittest.TestCase):
         )
         self.assertEqual(result["shortHeadlineEn"], "Meta Ads update")
         request_body = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
-        self.assertEqual(request_body["response_format"], {"type": "json_object"})
+        self.assertEqual(
+            request_body["response_format"]["json_schema"]["schema"],
+            {
+                "type": "object",
+                "properties": {
+                    "shortHeadlineEn": {"type": "string"},
+                    "summaryEn": {"type": "string"},
+                },
+                "required": ["shortHeadlineEn", "summaryEn"],
+                "additionalProperties": False,
+            },
+        )
+        self.assertTrue(request_body["response_format"]["json_schema"]["strict"])
 
     @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
-    def test_english_json_object_mode_still_enforces_the_exact_local_contract(self, urlopen) -> None:
+    def test_english_strict_mode_still_enforces_the_exact_local_contract(self, urlopen) -> None:
         urlopen.return_value = _Response(
             {"choices": [{"message": {"content": json.dumps({"shortHeadlineEn": "Meta Ads update", "summaryEn": "A Meta Ads update was announced."})}}]}
         )
-        result = request_english_presentation_json_object(
+        result = request_english_presentation_strict(
             api_key="test-key",
             model="test-model",
             title="Meta Ads update",
@@ -129,13 +159,15 @@ class PersonalFeedPresentationTest(unittest.TestCase):
         )
         self.assertEqual(result, {"shortHeadlineEn": "Meta Ads update", "summaryEn": "A Meta Ads update was announced."})
         request_body = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
-        self.assertEqual(request_body["response_format"], {"type": "json_object"})
+        self.assertEqual(request_body["response_format"]["type"], "json_schema")
+        self.assertEqual(request_body["response_format"]["json_schema"]["name"], "meta_ads_personal_feed_en")
+        self.assertTrue(request_body["response_format"]["json_schema"]["strict"])
 
         urlopen.return_value = _Response(
             {"choices": [{"message": {"content": json.dumps({"shortHeadlineEn": "Meta Ads update", "summaryEn": "Summary", "extra": "reject"})}}]}
         )
         with self.assertRaisesRegex(PresentationError, "response_invalid_shape"):
-            request_english_presentation_json_object(
+            request_english_presentation_strict(
                 api_key="test-key",
                 model="test-model",
                 title="Meta Ads update",

@@ -294,7 +294,7 @@ class PersonalFeedTest(unittest.TestCase):
     def test_locale_presenter_spaces_requests_using_the_configured_rate_limit(self) -> None:
         policy = self.config["policies"]["bilingualPresentation"]
         with patch.dict(os.environ, {"GROQ_API_KEY": "test-key", "META_ADS_PERSONAL_FEED_JA_ENABLED": "true"}, clear=True), patch(
-            "meta_ads_personal_feed.request_english_presentation_json_object",
+            "meta_ads_personal_feed.request_english_presentation_strict",
             return_value={"shortHeadlineEn": "One", "summaryEn": "Two"},
         ) as english, patch(
             "meta_ads_personal_feed.request_presentation",
@@ -319,10 +319,10 @@ class PersonalFeedTest(unittest.TestCase):
             with self.assertRaisesRegex(PresentationError, "response_invalid_shape"):
                 presenter("Title", "Context", policy, "fr")
 
-    def test_environment_english_locale_retry_uses_json_object_mode(self) -> None:
+    def test_environment_english_locale_retry_uses_strict_mode_request_path(self) -> None:
         policy = self.config["policies"]["bilingualPresentation"]
         with patch.dict(os.environ, {"GROQ_API_KEY": "test-key", "META_ADS_PERSONAL_FEED_JA_ENABLED": "true"}, clear=True), patch(
-            "meta_ads_personal_feed.request_english_presentation_json_object",
+            "meta_ads_personal_feed.request_english_presentation_strict",
             return_value={"shortHeadlineEn": "English headline", "summaryEn": "English summary"},
         ) as english:
             presenter = _locale_presentation_from_environment(1)

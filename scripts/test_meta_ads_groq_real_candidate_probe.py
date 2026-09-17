@@ -56,7 +56,7 @@ class GroqRealCandidateProbeTest(unittest.TestCase):
                 patch("meta_ads_groq_real_candidate_probe.bounded_request", return_value=("ignored", "application/rss+xml")),
                 patch("meta_ads_groq_real_candidate_probe.extract_items", return_value=[source_item]),
                 patch(
-                    "meta_ads_groq_real_candidate_probe.request_english_presentation_json_object",
+                    "meta_ads_groq_real_candidate_probe.request_english_presentation_strict",
                     return_value={
                         "shortHeadlineEn": "discarded",
                         "summaryEn": "discarded",
@@ -122,7 +122,7 @@ class GroqRealCandidateProbeTest(unittest.TestCase):
                 patch("meta_ads_groq_real_candidate_probe._all_sources", return_value=config["sources"]),
                 patch("meta_ads_groq_real_candidate_probe.bounded_request", return_value=("ignored", "application/rss+xml")),
                 patch("meta_ads_groq_real_candidate_probe.extract_items", return_value=[source_item]),
-                patch("meta_ads_groq_real_candidate_probe.request_english_presentation_json_object", return_value={"ok": "discarded"}) as present,
+                patch("meta_ads_groq_real_candidate_probe.request_english_presentation_strict", return_value={"ok": "discarded"}) as present,
             ):
                 result = run_probe(
                     api_key="test-key",
