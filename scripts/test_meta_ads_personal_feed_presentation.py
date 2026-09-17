@@ -11,6 +11,7 @@ from meta_ads_personal_feed_presentation import (
     _messages,
     request_english_presentation,
     request_english_presentation_strict,
+    request_plaintext_presentation,
     request_presentation,
 )
 
@@ -175,6 +176,40 @@ class PersonalFeedPresentationTest(unittest.TestCase):
                 short_headline_max_chars=80,
                 summary_max_chars=360,
                 timeout=1,
+            )
+
+    @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
+    def test_plaintext_fallback_has_no_response_format_and_requires_exactly_two_labels(self, urlopen) -> None:
+        urlopen.return_value = _Response(
+            {"choices": [{"message": {"content": "SHORT_HEADLINE: Meta Ads update\nSUMMARY: A Meta Ads update was announced."}}]}
+        )
+        result = request_plaintext_presentation(
+            api_key="test-key",
+            model="test-model",
+            title="Meta Ads update",
+            source_context="Context",
+            short_headline_max_chars=80,
+            summary_max_chars=360,
+            timeout=1,
+            locale="en",
+        )
+        self.assertEqual(result, {"shortHeadlineEn": "Meta Ads update", "summaryEn": "A Meta Ads update was announced."})
+        request_body = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
+        self.assertNotIn("response_format", request_body)
+
+        urlopen.return_value = _Response(
+            {"choices": [{"message": {"content": '{"shortHeadlineEn":"Meta Ads update","summaryEn":"Summary"}'}}]}
+        )
+        with self.assertRaisesRegex(PresentationError, "response_invalid_shape"):
+            request_plaintext_presentation(
+                api_key="test-key",
+                model="test-model",
+                title="Meta Ads update",
+                source_context="Context",
+                short_headline_max_chars=80,
+                summary_max_chars=360,
+                timeout=1,
+                locale="en",
             )
 
     @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")

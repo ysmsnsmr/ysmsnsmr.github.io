@@ -334,6 +334,43 @@ class PersonalFeedTest(unittest.TestCase):
         english.assert_called_once()
         self.assertEqual(english.call_args.kwargs["max_attempts"], policy["maxAttempts"])
 
+    def test_locale_presenter_uses_plaintext_only_for_json_validate_failed(self) -> None:
+        policy = self.config["policies"]["bilingualPresentation"]
+        schema_error = PresentationError(
+            "http_400",
+            provider_error_type="invalid_request_error",
+            provider_error_code="json_validate_failed",
+        )
+        with patch.dict(os.environ, {"GROQ_API_KEY": "test-key", "META_ADS_PERSONAL_FEED_JA_ENABLED": "true"}, clear=True), patch(
+            "meta_ads_personal_feed.request_english_presentation_strict",
+            side_effect=schema_error,
+        ) as strict, patch(
+            "meta_ads_personal_feed.request_plaintext_presentation",
+            return_value={"shortHeadlineEn": "English headline", "summaryEn": "English summary"},
+        ) as plaintext:
+            presenter = _locale_presentation_from_environment(1)
+            assert presenter is not None
+            result = presenter("Title", "Context", policy, "en")
+
+        self.assertEqual(result, {"shortHeadlineEn": "English headline", "summaryEn": "English summary"})
+        strict.assert_called_once()
+        plaintext.assert_called_once()
+        self.assertEqual(plaintext.call_args.kwargs["locale"], "en")
+        self.assertNotIn("max_attempts", plaintext.call_args.kwargs)
+
+    def test_locale_presenter_does_not_use_plaintext_for_other_provider_errors(self) -> None:
+        policy = self.config["policies"]["bilingualPresentation"]
+        other_error = PresentationError("http_400", provider_error_code="other_provider_error")
+        with patch.dict(os.environ, {"GROQ_API_KEY": "test-key", "META_ADS_PERSONAL_FEED_JA_ENABLED": "true"}, clear=True), patch(
+            "meta_ads_personal_feed.request_english_presentation_strict",
+            side_effect=other_error,
+        ), patch("meta_ads_personal_feed.request_plaintext_presentation") as plaintext:
+            presenter = _locale_presentation_from_environment(1)
+            assert presenter is not None
+            with self.assertRaisesRegex(PresentationError, "http_400"):
+                presenter("Title", "Context", policy, "en")
+        plaintext.assert_not_called()
+
     def test_empty_workflow_variables_use_the_documented_presentation_defaults(self) -> None:
         with patch.dict(
             os.environ,

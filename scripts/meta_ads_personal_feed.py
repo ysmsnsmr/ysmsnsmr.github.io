@@ -36,6 +36,7 @@ from meta_ads_tracker_publication import write_json
 from meta_ads_personal_feed_presentation import (
     PresentationError,
     request_english_presentation_strict,
+    request_plaintext_presentation,
     request_presentation,
 )
 
@@ -1807,8 +1808,20 @@ def _locale_presentation_from_environment(
         if delay:
             time.sleep(delay)
         try:
-            if locale == "en":
-                return request_english_presentation_strict(
+            try:
+                if locale == "en":
+                    return request_english_presentation_strict(
+                        api_key=api_key,
+                        model=model,
+                        title=title,
+                        source_context=source_context[:policy["maxInputChars"]],
+                        short_headline_max_chars=policy["shortHeadlineMaxChars"],
+                        summary_max_chars=policy["summaryMaxChars"],
+                        timeout=timeout,
+                        max_attempts=policy["maxAttempts"],
+                        max_retry_delay_seconds=policy["maxRetryDelaySeconds"],
+                    )
+                return request_presentation(
                     api_key=api_key,
                     model=model,
                     title=title,
@@ -1819,17 +1832,21 @@ def _locale_presentation_from_environment(
                     max_attempts=policy["maxAttempts"],
                     max_retry_delay_seconds=policy["maxRetryDelaySeconds"],
                 )
-            return request_presentation(
-                api_key=api_key,
-                model=model,
-                title=title,
-                source_context=source_context[:policy["maxInputChars"]],
-                short_headline_max_chars=policy["shortHeadlineMaxChars"],
-                summary_max_chars=policy["summaryMaxChars"],
-                timeout=timeout,
-                max_attempts=policy["maxAttempts"],
-                max_retry_delay_seconds=policy["maxRetryDelaySeconds"],
-            )
+            except PresentationError as error:
+                if error.provider_error_code != "json_validate_failed":
+                    raise
+                # Strict Mode remains the default. Only Groq's known schema
+                # rejection gets one response_format-free, locally parsed try.
+                return request_plaintext_presentation(
+                    api_key=api_key,
+                    model=model,
+                    title=title,
+                    source_context=source_context[:policy["maxInputChars"]],
+                    short_headline_max_chars=policy["shortHeadlineMaxChars"],
+                    summary_max_chars=policy["summaryMaxChars"],
+                    timeout=timeout,
+                    locale=locale,
+                )
         finally:
             next_request_at = time.monotonic() + policy["minRequestIntervalSeconds"]
 
