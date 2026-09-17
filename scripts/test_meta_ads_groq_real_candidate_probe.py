@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from meta_ads_groq_real_candidate_probe import run_probe
+from meta_ads_groq_real_candidate_probe import CandidateNotInCurrentSourceError, run_probe
 
 
 class GroqRealCandidateProbeTest(unittest.TestCase):
@@ -136,6 +136,47 @@ class GroqRealCandidateProbeTest(unittest.TestCase):
                 )
             self.assertEqual(result["contextLimit"], 0)
             self.assertEqual(present.call_args.kwargs["source_context"], "")
+
+    def test_marks_candidate_outside_current_source_window_without_requesting_groq(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            feed_path = Path(directory) / "feed.json"
+            feed_path.write_text(
+                json.dumps(
+                    {
+                        "items": [
+                            {
+                                "id": "item-missing",
+                                "sourceId": "test-source",
+                                "title": "Stored title",
+                                "url": "https://example.test/no-longer-in-feed",
+                                "publishedDate": "2026-09-01",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            config = {
+                "policies": {"bilingualPresentation": {"maxInputChars": 12000, "shortHeadlineMaxChars": 240, "summaryMaxChars": 1600}},
+                "sources": [{"id": "test-source", "fetchUrl": "https://example.test/feed.xml"}],
+                "discoveredSources": [],
+            }
+            with (
+                patch("meta_ads_groq_real_candidate_probe.load_config", return_value=config),
+                patch("meta_ads_groq_real_candidate_probe._all_sources", return_value=config["sources"]),
+                patch("meta_ads_groq_real_candidate_probe.bounded_request", return_value=("ignored", "application/rss+xml")),
+                patch("meta_ads_groq_real_candidate_probe.extract_items", return_value=[]),
+                patch("meta_ads_groq_real_candidate_probe.request_english_presentation_strict") as present,
+            ):
+                with self.assertRaises(CandidateNotInCurrentSourceError):
+                    run_probe(
+                        api_key="test-key",
+                        model="test-model",
+                        source_id="test-source",
+                        feed_path=feed_path,
+                        config_path=Path(directory) / "config.json",
+                    )
+            present.assert_not_called()
 
 
 if __name__ == "__main__":
