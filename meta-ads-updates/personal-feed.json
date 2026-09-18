@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-09-17T04:55:10Z",
+  "generatedAt": "2026-09-18T11:07:09Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -61,6 +61,78 @@
   ],
   "items": [
     {
+      "id": "social-media-today-meta-ads-ff23184ef3220928736c",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta shares holiday 2026 planning guides",
+      "url": "https://www.socialmediatoday.com/news/meta-shares-holiday-2026-planning-guides/830741/",
+      "publishedDate": "2026-09-17",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-18T11:07:09Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "keyword:meta",
+        "keyword:ad"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "ff23184ef3220928736c800efa6e9314e8a7760550fa387687cf9e2f0f7c072b",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta releases holiday planning guides for marketers",
+            "summary": "Meta published a set of holiday planning guides for marketers, covering AI‑focused overviews, agency and creative explainers, an SMB guide with stats and a checklist, ad creation tips, an advanced advertiser playbook with shopping behavior data, ad‑setup priorities, product‑listing checklist, and features in its Festive Season Insights Center.",
+            "inputHash": "7ee54e45b4b24a81a43bf99f5e9aed9a6dbc5fd7f964b8b712dccd1f7e85d24c",
+            "generatedAt": "2026-09-18T11:07:09Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta releases holiday planning guides for marketers",
+                "inputHash": "7ee54e45b4b24a81a43bf99f5e9aed9a6dbc5fd7f964b8b712dccd1f7e85d24c",
+                "generatedAt": "2026-09-18T11:07:09Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta published a set of holiday planning guides for marketers, covering AI‑focused overviews, agency and creative explainers, an SMB guide with stats and a checklist, ad creation tips, an advanced advertiser playbook with shopping behavior data, ad‑setup priorities, product‑listing checklist, and features in its Festive Season Insights Center.",
+                "inputHash": "7ee54e45b4b24a81a43bf99f5e9aed9a6dbc5fd7f964b8b712dccd1f7e85d24c",
+                "generatedAt": "2026-09-18T11:07:09Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、2026年ホリデー向けマーケティングガイドを公開",
+            "summary": "Metaはマーケター向けに2026年ホリデーシーズンの計画支援ガイドを複数公開した。AI特化概要、エージェンシー向け、クリエイティブ解説に加え、SMB向けの統計データとチェックリスト、広告作成のポイント、上級広告主向けの購買行動統計と設定優先順位、商品リスティング最適化チェックリストを提供している。これらは同社のFestive Season Insights Centerに掲載され、プラットフォーム活用の最新トレンド情報を示す。",
+            "inputHash": "8027279a85b534fceb5baf19673545e86aec5ae9521d07716a8c428950c9438a",
+            "generatedAt": "2026-09-18T11:07:09Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、2026年ホリデー向けマーケティングガイドを公開",
+                "inputHash": "8027279a85b534fceb5baf19673545e86aec5ae9521d07716a8c428950c9438a",
+                "generatedAt": "2026-09-18T11:07:09Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaはマーケター向けに2026年ホリデーシーズンの計画支援ガイドを複数公開した。AI特化概要、エージェンシー向け、クリエイティブ解説に加え、SMB向けの統計データとチェックリスト、広告作成のポイント、上級広告主向けの購買行動統計と設定優先順位、商品リスティング最適化チェックリストを提供している。これらは同社のFestive Season Insights Centerに掲載され、プラットフォーム活用の最新トレンド情報を示す。",
+                "inputHash": "8027279a85b534fceb5baf19673545e86aec5ae9521d07716a8c428950c9438a",
+                "generatedAt": "2026-09-18T11:07:09Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "meta-product-news-rss-e034320b81aba92d5529",
       "sourceId": "meta-product-news-rss",
       "title": "Threads Expands Podcast Toolkit for Creators and Listeners",
@@ -68,31 +140,63 @@
       "publishedDate": "2026-09-16",
       "updatedDate": null,
       "firstObservedAt": "2026-09-17T04:55:10Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-platforms"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Threads adds new podcast tools for creators and listeners",
+            "summary": "Threads introduces podcast features: creators can show banners on profiles, feature episodes with a picker and tappable cards, share highlights via transcript, video and guest cards, and view insights on reach, clicks and saves. Listeners can save episodes, receive auto‑notifications to share new episodes, and join conversations.",
             "inputHash": "dd770c52d5fdf34709326c136d72cb8b7f3f3b03bba2d3faad742658df6c6f47",
-            "generatedAt": null,
-            "reviewedAt": null
+            "generatedAt": "2026-09-18T11:07:09Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Threads adds new podcast tools for creators and listeners",
+                "inputHash": "dd770c52d5fdf34709326c136d72cb8b7f3f3b03bba2d3faad742658df6c6f47",
+                "generatedAt": "2026-09-18T11:07:09Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Threads introduces podcast features: creators can show banners on profiles, feature episodes with a picker and tappable cards, share highlights via transcript, video and guest cards, and view insights on reach, clicks and saves. Listeners can save episodes, receive auto‑notifications to share new episodes, and join conversations.",
+                "inputHash": "dd770c52d5fdf34709326c136d72cb8b7f3f3b03bba2d3faad742658df6c6f47",
+                "generatedAt": "2026-09-18T11:07:09Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
-            "shortHeadline": "Threads、ポッドキャスト向け新ツールを提供",
-            "summary": "Threadsはポッドキャスト制作者とリスナー向けに新機能を追加した。プロフィールや投稿にバナーを表示でき、エピソードピッカーで好きな回をカード化して共有可能。ハイライトは文字起こしや動画、ゲストカード付きで投稿でき、フィード上のエピソードを保存できる。新エピソードのシェアを促す自動通知や、再生回数・クリック・保存数などのリーチ・エンゲージメントを示すインサイトも提供される。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-17T04:55:10Z",
-            "reviewedAt": null
+            "shortHeadline": "Threads、ポッドキャスト向けツールを拡充",
+            "summary": "Threadsはポッドキャスト制作者とリスナー向けに新機能を追加した。プロフィールや投稿にバナーを表示でき、エピソードピッカーで好きな回をカード化して共有できる。ハイライトやゲスト情報を文字起こしや動画、ゲストカード付きで投稿可能。フィード上でエピソードを保存し、通知設定で新エピソードのシェアをリマインドできる。インサイトではリーチやエンゲージメント、クリック・保存数が確認できる。",
+            "inputHash": "28042457718948478fdcd08d17e58a74ff11acce78e4a788410ab984002f5c7e",
+            "generatedAt": "2026-09-18T11:07:09Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Threads、ポッドキャスト向けツールを拡充",
+                "inputHash": "28042457718948478fdcd08d17e58a74ff11acce78e4a788410ab984002f5c7e",
+                "generatedAt": "2026-09-18T11:07:09Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Threadsはポッドキャスト制作者とリスナー向けに新機能を追加した。プロフィールや投稿にバナーを表示でき、エピソードピッカーで好きな回をカード化して共有できる。ハイライトやゲスト情報を文字起こしや動画、ゲストカード付きで投稿可能。フィード上でエピソードを保存し、通知設定で新エピソードのシェアをリマインドできる。インサイトではリーチやエンゲージメント、クリック・保存数が確認できる。",
+                "inputHash": "28042457718948478fdcd08d17e58a74ff11acce78e4a788410ab984002f5c7e",
+                "generatedAt": "2026-09-18T11:07:09Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -105,7 +209,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -114,7 +218,7 @@
         "keyword:ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "458f353eef407444549b3ec68b6489d82873f8642f1707db100854945d78bcbc",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -124,7 +228,23 @@
             "summary": null,
             "inputHash": "f7b0adb369ffcbd619c21c1721253078848aebcfffea27ff75c065de35b1c750",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "f7b0adb369ffcbd619c21c1721253078848aebcfffea27ff75c065de35b1c750",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "f7b0adb369ffcbd619c21c1721253078848aebcfffea27ff75c065de35b1c750",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -132,7 +252,23 @@
             "summary": "Metaは新たにCreator Marketing Hubを公開し、ブランドがクリエイターを検索・提携できる機能を統合したUIを提供した。予測アフィリエイト検索や目的別コンテンツ推奨、ワンクリック広告作成、コンテンツ権限管理、音楽・スタンプ除去などの広告編集機能を搭載。提携メッセージングやCreator Marketplace API・Messaging APIの拡充、Content Discovery APIで上位オーガニックコンテンツ推奨や高度なフィルタ検索が可能に。Meta AIビジネスアシスタントもHubに統合され、Instagram向けライブ動画広告が9月29日から開始される。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": "2026-09-17T04:55:10Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、クリエイターパートナーシップ向けツールを拡充",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-17T04:55:10Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは新たにCreator Marketing Hubを公開し、ブランドがクリエイターを検索・提携できる機能を統合したUIを提供した。予測アフィリエイト検索や目的別コンテンツ推奨、ワンクリック広告作成、コンテンツ権限管理、音楽・スタンプ除去などの広告編集機能を搭載。提携メッセージングやCreator Marketplace API・Messaging APIの拡充、Content Discovery APIで上位オーガニックコンテンツ推奨や高度なフィルタ検索が可能に。Meta AIビジネスアシスタントもHubに統合され、Instagram向けライブ動画広告が9月29日から開始される。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-17T04:55:10Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -145,13 +281,13 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-platforms"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "7ec28c89eba18f71014806f8761c9662a7068ae8ed01ebd3e8b28d182c8a14ea",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -161,7 +297,23 @@
             "summary": null,
             "inputHash": "5c41c554fe0b0638450efe0176a2a866abd1bf60f0a97075524662431d80d0be",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "5c41c554fe0b0638450efe0176a2a866abd1bf60f0a97075524662431d80d0be",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "5c41c554fe0b0638450efe0176a2a866abd1bf60f0a97075524662431d80d0be",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "missing",
@@ -169,7 +321,23 @@
             "summary": null,
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -182,7 +350,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -191,7 +359,7 @@
         "keyword:placement"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -201,15 +369,47 @@
             "summary": "Using Meta’s new AI agent Muse (named Frank), the author built a Value Rules Decision Tool that guides advertisers through age, gender, and placement restrictions to decide on using value rules. The tool was created in one evening without writing code, is live, and showcases Muse’s ability to research, build, and remember context.",
             "inputHash": "ff576860c8135f74cc1809873ac1a867abc1b295b583e49b9817850dd98a9d35",
             "generatedAt": "2026-09-17T04:55:10Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Built a Value Rules Decision Tool using Meta’s Muse AI agent",
+                "inputHash": "ff576860c8135f74cc1809873ac1a867abc1b295b583e49b9817850dd98a9d35",
+                "generatedAt": "2026-09-17T04:55:10Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Using Meta’s new AI agent Muse (named Frank), the author built a Value Rules Decision Tool that guides advertisers through age, gender, and placement restrictions to decide on using value rules. The tool was created in one evening without writing code, is live, and showcases Muse’s ability to research, build, and remember context.",
+                "inputHash": "ff576860c8135f74cc1809873ac1a867abc1b295b583e49b9817850dd98a9d35",
+                "generatedAt": "2026-09-17T04:55:10Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Metaの新AIエージェントMuseを使って作ったツール紹介",
+            "summary": "Metaは先週、個人向けAIエージェントMuseを公開した。iOS・Android・WhatsAppやデスクトップで利用でき、名前を付けてタスクを自動実行し、会話の文脈を保持する。筆者はエージェントを「Frank」と名付け、コンテンツ分析やツール作成に活用し、コード不要で「Value Rules Decision Tool」を構築した。現在も機能を検証中で、他のユーザーにも試用を呼びかけている。",
             "inputHash": "3e844f3f37d0cd2c44aae0d57d977ea2366187b6760f1c7f274aaf13238447a6",
-            "generatedAt": null,
-            "reviewedAt": null
+            "generatedAt": "2026-09-18T11:07:09Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Metaの新AIエージェントMuseを使って作ったツール紹介",
+                "inputHash": "3e844f3f37d0cd2c44aae0d57d977ea2366187b6760f1c7f274aaf13238447a6",
+                "generatedAt": "2026-09-18T11:07:09Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは先週、個人向けAIエージェントMuseを公開した。iOS・Android・WhatsAppやデスクトップで利用でき、名前を付けてタスクを自動実行し、会話の文脈を保持する。筆者はエージェントを「Frank」と名付け、コンテンツ分析やツール作成に活用し、コード不要で「Value Rules Decision Tool」を構築した。現在も機能を検証中で、他のユーザーにも試用を呼びかけている。",
+                "inputHash": "3e844f3f37d0cd2c44aae0d57d977ea2366187b6760f1c7f274aaf13238447a6",
+                "generatedAt": "2026-09-18T11:07:09Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -222,7 +422,7 @@
       "publishedDate": "2026-09-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-11T04:43:19Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -231,7 +431,7 @@
         "keyword:promotion"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "b35a1f5bd3df45609ea7344b16e5d345202e2951c5f6d1ffa6a0c6ed22ad3509",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -241,7 +441,23 @@
             "summary": "Instagram chief Adam Mosseri told Australian journalists that eliminating content‑ranking algorithms would make Instagram less engaging, reduce creator reach, and shift the feed toward businesses and news publishers. He said only a vocal minority want a chronological timeline.",
             "inputHash": "0ff6f956be28f0cda4fed48a02f1dfb80ff4db0feb2796a9ec5b39232fafe14d",
             "generatedAt": "2026-09-17T04:55:10Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Instagram chief warns against removing algorithms",
+                "inputHash": "0ff6f956be28f0cda4fed48a02f1dfb80ff4db0feb2796a9ec5b39232fafe14d",
+                "generatedAt": "2026-09-17T04:55:10Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Instagram chief Adam Mosseri told Australian journalists that eliminating content‑ranking algorithms would make Instagram less engaging, reduce creator reach, and shift the feed toward businesses and news publishers. He said only a vocal minority want a chronological timeline.",
+                "inputHash": "0ff6f956be28f0cda4fed48a02f1dfb80ff4db0feb2796a9ec5b39232fafe14d",
+                "generatedAt": "2026-09-17T04:55:10Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "missing",
@@ -249,7 +465,23 @@
             "summary": null,
             "inputHash": "cb5fe21a9ac90dc25787923abd6ee351aed6b0e6ee0a331d5fe8c2b2729d844d",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "cb5fe21a9ac90dc25787923abd6ee351aed6b0e6ee0a331d5fe8c2b2729d844d",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "cb5fe21a9ac90dc25787923abd6ee351aed6b0e6ee0a331d5fe8c2b2729d844d",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -262,13 +494,13 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-14T11:20:59Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-platforms"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -278,7 +510,23 @@
             "summary": null,
             "inputHash": "484f050a14964a0aa87da9b54afc599a1101416338cf1426b8d6a11f1901ce36",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "484f050a14964a0aa87da9b54afc599a1101416338cf1426b8d6a11f1901ce36",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "484f050a14964a0aa87da9b54afc599a1101416338cf1426b8d6a11f1901ce36",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "missing",
@@ -286,7 +534,23 @@
             "summary": null,
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -299,7 +563,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T04:45:10Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -308,7 +572,7 @@
         "keyword:campaign"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -318,7 +582,23 @@
             "summary": "The post outlines how to manage control settings in Meta ads, covering age, gender, custom audiences, detailed targeting, lookalike audiences, and placements. It describes a primary hands‑off approach, optional audience suggestions, secondary value‑rule adjustments, and last‑resort restrictions, especially for age targeting.",
             "inputHash": "7a22ec6fe56ed9ebfa5b5364c5c46e929882ccaec3d440ea7558f07e985e3441",
             "generatedAt": "2026-09-09T04:45:10Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Advertising Control: Age Targeting Approaches",
+                "inputHash": "7a22ec6fe56ed9ebfa5b5364c5c46e929882ccaec3d440ea7558f07e985e3441",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The post outlines how to manage control settings in Meta ads, covering age, gender, custom audiences, detailed targeting, lookalike audiences, and placements. It describes a primary hands‑off approach, optional audience suggestions, secondary value‑rule adjustments, and last‑resort restrictions, especially for age targeting.",
+                "inputHash": "7a22ec6fe56ed9ebfa5b5364c5c46e929882ccaec3d440ea7558f07e985e3441",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -326,7 +606,23 @@
             "summary": "この投稿では、Meta広告のコントロール設定の管理方法を説明し、年齢、性別、カスタムオーディエンス、詳細ターゲティング、類似オーディエンス、配置について取り上げています。主にハンズオフのアプローチ、オーディエンス提案のオプション、価値ルールによる調整、年齢ターゲティングの最終的な制限について述べています。",
             "inputHash": "5b6eeaaa0f1701e8e6863dd0210e13a5979f4dab90360d7a9bb5207e81244fec",
             "generatedAt": "2026-09-09T04:45:10Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告のコントロール：年齢ターゲティングのアプローチ",
+                "inputHash": "5b6eeaaa0f1701e8e6863dd0210e13a5979f4dab90360d7a9bb5207e81244fec",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "この投稿では、Meta広告のコントロール設定の管理方法を説明し、年齢、性別、カスタムオーディエンス、詳細ターゲティング、類似オーディエンス、配置について取り上げています。主にハンズオフのアプローチ、オーディエンス提案のオプション、価値ルールによる調整、年齢ターゲティングの最終的な制限について述べています。",
+                "inputHash": "5b6eeaaa0f1701e8e6863dd0210e13a5979f4dab90360d7a9bb5207e81244fec",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -339,7 +635,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -348,7 +644,7 @@
         "keyword:pixel"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -358,7 +654,23 @@
             "summary": "Meta has added a new Automatic Events option in the Settings tab of Events Manager. The feature automatically creates standard events when related actions are detected, similar to the older “Track Events Automatically Without Code” tool, but is described as using AI and includes a dashboard for managing the generated events.",
             "inputHash": "05642d48534c8f714f04678a41db5b9a2ee045b43b40ef04a4b1805f816ba460",
             "generatedAt": "2026-09-03T04:35:39Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta launches new Automatic Events feature in Events Manager",
+                "inputHash": "05642d48534c8f714f04678a41db5b9a2ee045b43b40ef04a4b1805f816ba460",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta has added a new Automatic Events option in the Settings tab of Events Manager. The feature automatically creates standard events when related actions are detected, similar to the older “Track Events Automatically Without Code” tool, but is described as using AI and includes a dashboard for managing the generated events.",
+                "inputHash": "05642d48534c8f714f04678a41db5b9a2ee045b43b40ef04a4b1805f816ba460",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -366,7 +678,23 @@
             "summary": "MetaはEvents Managerの設定タブに新しい自動イベントオプションを追加しました。この機能は関連するアクションを検出すると標準イベントを自動的に作成し、以前の「コードなしでイベントを自動的に追跡」ツールと同様ですが、AIを使用すると説明され、生成されたイベントを管理するダッシュボードが含まれています。",
             "inputHash": "9477a7f84224c7b3326fbbfc5167c2a8cb7b877cd4b23fc92cbd3950003c8928",
             "generatedAt": "2026-09-03T04:35:39Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "MetaがEvents Managerに新しい自動イベント機能を導入",
+                "inputHash": "9477a7f84224c7b3326fbbfc5167c2a8cb7b877cd4b23fc92cbd3950003c8928",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "MetaはEvents Managerの設定タブに新しい自動イベントオプションを追加しました。この機能は関連するアクションを検出すると標準イベントを自動的に作成し、以前の「コードなしでイベントを自動的に追跡」ツールと同様ですが、AIを使用すると説明され、生成されたイベントを管理するダッシュボードが含まれています。",
+                "inputHash": "9477a7f84224c7b3326fbbfc5167c2a8cb7b877cd4b23fc92cbd3950003c8928",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -379,14 +707,14 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -396,7 +724,23 @@
             "summary": "The Facebook Node.js Business SDK has been updated to version v26.0.1.",
             "inputHash": "6048a24b2f27a322478bd36981f16817d22c47fc6a2a11705024cb17ccbfe367",
             "generatedAt": "2026-09-02T11:59:49Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Version v26.0.1 released",
+                "inputHash": "6048a24b2f27a322478bd36981f16817d22c47fc6a2a11705024cb17ccbfe367",
+                "generatedAt": "2026-09-02T11:59:49Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The Facebook Node.js Business SDK has been updated to version v26.0.1.",
+                "inputHash": "6048a24b2f27a322478bd36981f16817d22c47fc6a2a11705024cb17ccbfe367",
+                "generatedAt": "2026-09-02T11:59:49Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -404,7 +748,23 @@
             "summary": "Facebook の Node.js Business SDK がバージョン v26.0.1 に更新されました。",
             "inputHash": "4dd947980137e05819079425ac0d59ce5ed951cd467bfd0439292b4395e9a835",
             "generatedAt": "2026-09-02T11:59:49Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "バージョン v26.0.1 がリリースされました",
+                "inputHash": "4dd947980137e05819079425ac0d59ce5ed951cd467bfd0439292b4395e9a835",
+                "generatedAt": "2026-09-02T11:59:49Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebook の Node.js Business SDK がバージョン v26.0.1 に更新されました。",
+                "inputHash": "4dd947980137e05819079425ac0d59ce5ed951cd467bfd0439292b4395e9a835",
+                "generatedAt": "2026-09-02T11:59:49Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -417,7 +777,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -426,7 +786,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -436,7 +796,23 @@
             "summary": "Meta introduced a feature for Instagram ads that lets advertisers define up to five keywords; when a comment contains one, an automated private message (DM) is sent, which can include a link, phone number, or email. It shows previews and is aimed at high comment volume or comment‑to‑DM strategies. Currently Instagram‑only, may expand later.",
             "inputHash": "ef1ec47afa854c922dceb1c565f598ff2ce7e5647bb4464564ffa0a98234d0b0",
             "generatedAt": "2026-09-02T11:59:49Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta's Reply to Keywords automates Instagram comment DMs",
+                "inputHash": "ef1ec47afa854c922dceb1c565f598ff2ce7e5647bb4464564ffa0a98234d0b0",
+                "generatedAt": "2026-09-02T11:59:49Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta introduced a feature for Instagram ads that lets advertisers define up to five keywords; when a comment contains one, an automated private message (DM) is sent, which can include a link, phone number, or email. It shows previews and is aimed at high comment volume or comment‑to‑DM strategies. Currently Instagram‑only, may expand later.",
+                "inputHash": "ef1ec47afa854c922dceb1c565f598ff2ce7e5647bb4464564ffa0a98234d0b0",
+                "generatedAt": "2026-09-02T11:59:49Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -444,7 +820,23 @@
             "summary": "MetaはInstagram広告向けに「Reply to Keywords」機能を提供し、最大5つのキーワードを設定できる。コメントにキーワードが含まれると自動でプライベートメッセージ（DM）が送信され、リンクや電話番号、メールを含められる。プレビューが表示され、コメントが多い場合やコメント→DMマーケティングに利用できるが、現時点ではInstagramのみで、将来的に他プラットフォームへ拡大する可能性がある。",
             "inputHash": "1d38a8645e13c0bd0816a17da16d99c5a0add7e576bb336718a919046834b85b",
             "generatedAt": "2026-09-02T11:59:49Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Metaの「キーワード返信」機能でInstagramコメントを自動DM",
+                "inputHash": "1d38a8645e13c0bd0816a17da16d99c5a0add7e576bb336718a919046834b85b",
+                "generatedAt": "2026-09-02T11:59:49Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "MetaはInstagram広告向けに「Reply to Keywords」機能を提供し、最大5つのキーワードを設定できる。コメントにキーワードが含まれると自動でプライベートメッセージ（DM）が送信され、リンクや電話番号、メールを含められる。プレビューが表示され、コメントが多い場合やコメント→DMマーケティングに利用できるが、現時点ではInstagramのみで、将来的に他プラットフォームへ拡大する可能性がある。",
+                "inputHash": "1d38a8645e13c0bd0816a17da16d99c5a0add7e576bb336718a919046834b85b",
+                "generatedAt": "2026-09-02T11:59:49Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -457,7 +849,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T22:29:27Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -466,7 +858,7 @@
         "keyword:advertising"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "7acf956231436a87c7b7a9015db094361a079af2b65baf71f7b29d23f773fa11",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -476,7 +868,23 @@
             "summary": "Meta announced it will soon remove the Placements option that lets advertisers exclude specific ad placements and also the ability to exclude platforms, requiring ads to run across all Meta apps. No timeline was given. The change is part of Meta’s push toward fully automated, AI‑driven ad campaigns.",
             "inputHash": "95d2a3dc5fc4207feba2def37ef82a16aecdce00d67dc7d945e198b12b68e6a5",
             "generatedAt": "2026-09-09T22:29:27Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta to eliminate ad placement exclusion option",
+                "inputHash": "95d2a3dc5fc4207feba2def37ef82a16aecdce00d67dc7d945e198b12b68e6a5",
+                "generatedAt": "2026-09-09T22:29:27Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta announced it will soon remove the Placements option that lets advertisers exclude specific ad placements and also the ability to exclude platforms, requiring ads to run across all Meta apps. No timeline was given. The change is part of Meta’s push toward fully automated, AI‑driven ad campaigns.",
+                "inputHash": "95d2a3dc5fc4207feba2def37ef82a16aecdce00d67dc7d945e198b12b68e6a5",
+                "generatedAt": "2026-09-09T22:29:27Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -484,7 +892,23 @@
             "summary": "Metaは、広告主が特定の広告配置やプラットフォームを除外できる「Placements」オプションを近日中に廃止し、すべてのMetaアプリで広告を配信するよう求めると発表した。具体的な時期は示されていない。この変更は、完全に自動化されたAI駆動の広告キャンペーンへの移行の一環である。",
             "inputHash": "11f8c70826855ec4092ac9a382f103714e0430096ea9faecfa4750a6c1f53dcf",
             "generatedAt": "2026-09-09T22:29:27Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、広告配置除外オプションを廃止",
+                "inputHash": "11f8c70826855ec4092ac9a382f103714e0430096ea9faecfa4750a6c1f53dcf",
+                "generatedAt": "2026-09-09T22:29:27Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは、広告主が特定の広告配置やプラットフォームを除外できる「Placements」オプションを近日中に廃止し、すべてのMetaアプリで広告を配信するよう求めると発表した。具体的な時期は示されていない。この変更は、完全に自動化されたAI駆動の広告キャンペーンへの移行の一環である。",
+                "inputHash": "11f8c70826855ec4092ac9a382f103714e0430096ea9faecfa4750a6c1f53dcf",
+                "generatedAt": "2026-09-09T22:29:27Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -497,7 +921,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -506,7 +930,7 @@
         "keyword:ad set"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -516,7 +940,23 @@
             "summary": "Meta is removing the ability to exclude individual placements, platforms, devices, and operating systems from ad sets. The change is currently a test, applies only to Sales and Leads objectives, and excludes sensitive verticals. Advertisers can instead use placement value rules or account‑wide placement controls.",
             "inputHash": "b91c8d5f960b9ffc9a1dd755e96072b8184dae5526af62c5f1d69d321183ec07",
             "generatedAt": "2026-09-04T04:36:33Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta eliminates placement removal options for ad sets",
+                "inputHash": "b91c8d5f960b9ffc9a1dd755e96072b8184dae5526af62c5f1d69d321183ec07",
+                "generatedAt": "2026-09-04T04:36:33Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta is removing the ability to exclude individual placements, platforms, devices, and operating systems from ad sets. The change is currently a test, applies only to Sales and Leads objectives, and excludes sensitive verticals. Advertisers can instead use placement value rules or account‑wide placement controls.",
+                "inputHash": "b91c8d5f960b9ffc9a1dd755e96072b8184dae5526af62c5f1d69d321183ec07",
+                "generatedAt": "2026-09-04T04:36:33Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -524,7 +964,23 @@
             "summary": "Metaは広告セットから個別の配置、プラットフォーム、デバイス、OSを除外する機能を廃止します。この変更は現在テスト段階で、Sales と Leads の目的にのみ適用され、機密性の高い業種は除外されています。広告主は代わりに配置価値ルールやアカウント全体の配置コントロールを使用できます。",
             "inputHash": "01d8e222dd1930a40932852193a2a632a1bd226633fa366040b22533d7acd9f3",
             "generatedAt": "2026-09-04T04:36:33Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、広告セットの配置除外機能を廃止",
+                "inputHash": "01d8e222dd1930a40932852193a2a632a1bd226633fa366040b22533d7acd9f3",
+                "generatedAt": "2026-09-04T04:36:33Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは広告セットから個別の配置、プラットフォーム、デバイス、OSを除外する機能を廃止します。この変更は現在テスト段階で、Sales と Leads の目的にのみ適用され、機密性の高い業種は除外されています。広告主は代わりに配置価値ルールやアカウント全体の配置コントロールを使用できます。",
+                "inputHash": "01d8e222dd1930a40932852193a2a632a1bd226633fa366040b22533d7acd9f3",
+                "generatedAt": "2026-09-04T04:36:33Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -546,7 +1002,7 @@
         "keyword:ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "caba183d8fc7ae1644b298b799c9cc7f087140275704cc3da5246f72209d9161",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -556,7 +1012,23 @@
             "summary": "Meta introduced an AI‑powered assistant for small‑business owners that links Facebook, Instagram, Meta Ads and Google Workspace data to Meta AI. The assistant can answer questions, give recommendations, create documents, spreadsheets, tasks and reminders, and is free to start with optional paid subscription for expanded use.",
             "inputHash": "c3a2038dbd9ac838ac5cad19ea0b763fc9d6ab1b3880d3a41076684b6f409a57",
             "generatedAt": "2026-09-09T22:29:27Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta adds AI-powered assistant for SMB owners",
+                "inputHash": "c3a2038dbd9ac838ac5cad19ea0b763fc9d6ab1b3880d3a41076684b6f409a57",
+                "generatedAt": "2026-09-09T22:29:27Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta introduced an AI‑powered assistant for small‑business owners that links Facebook, Instagram, Meta Ads and Google Workspace data to Meta AI. The assistant can answer questions, give recommendations, create documents, spreadsheets, tasks and reminders, and is free to start with optional paid subscription for expanded use.",
+                "inputHash": "c3a2038dbd9ac838ac5cad19ea0b763fc9d6ab1b3880d3a41076684b6f409a57",
+                "generatedAt": "2026-09-09T22:29:27Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -564,7 +1036,23 @@
             "summary": "Metaは、Facebook、Instagram、Meta Ads、Google WorkspaceのデータをMeta AIに連携させるAIアシスタントを小規模事業者向けに導入した。このアシスタントは質問に回答し、推奨事項を提示し、文書やスプレッドシート、タスクやリマインダーを作成でき、無料で開始でき、拡張利用には有料サブスクリプションが用意されている。",
             "inputHash": "83ce2c938add4e65ad1aee27dec9b32832d68e11d82984465c7c5575f6ef44ea",
             "generatedAt": "2026-09-09T22:29:27Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、SMB向けAIアシスタントを追加",
+                "inputHash": "83ce2c938add4e65ad1aee27dec9b32832d68e11d82984465c7c5575f6ef44ea",
+                "generatedAt": "2026-09-09T22:29:27Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは、Facebook、Instagram、Meta Ads、Google WorkspaceのデータをMeta AIに連携させるAIアシスタントを小規模事業者向けに導入した。このアシスタントは質問に回答し、推奨事項を提示し、文書やスプレッドシート、タスクやリマインダーを作成でき、無料で開始でき、拡張利用には有料サブスクリプションが用意されている。",
+                "inputHash": "83ce2c938add4e65ad1aee27dec9b32832d68e11d82984465c7c5575f6ef44ea",
+                "generatedAt": "2026-09-09T22:29:27Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -577,7 +1065,7 @@
       "publishedDate": "2026-08-19",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T22:29:27Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -586,7 +1074,7 @@
         "keyword:ad"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "143436c34d5eef00048e1b6e3dae36a41ad7a161b317c577367a64dc953d8e2d",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -596,7 +1084,23 @@
             "summary": null,
             "inputHash": "053a54546d8828ae772a850ff354901e966c366578fb79d23b9281f7a6e6c842",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "053a54546d8828ae772a850ff354901e966c366578fb79d23b9281f7a6e6c842",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "053a54546d8828ae772a850ff354901e966c366578fb79d23b9281f7a6e6c842",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -604,7 +1108,23 @@
             "summary": "MetaはMac向けにMeta AIアプリを提供開始した。モバイル版と同様の機能に加え、ウィンドウ共有や全アプリ対応の音声入力が可能で、デスクトップ作業にAIアシスタントを組み込める。ビジネスユーザーは自社の広告実績やアカウント情報、公開されている同業他社のデータを元に質問でき、資料作成やタスク設定も支援する。基本は無料だが、より高度な利用には有料サブスクリプション「Meta One」への移行が想定されている。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": "2026-09-09T22:29:27Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta AI、Mac向けアプリをリリース ビジネス向け機能も搭載",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-09T22:29:27Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "MetaはMac向けにMeta AIアプリを提供開始した。モバイル版と同様の機能に加え、ウィンドウ共有や全アプリ対応の音声入力が可能で、デスクトップ作業にAIアシスタントを組み込める。ビジネスユーザーは自社の広告実績やアカウント情報、公開されている同業他社のデータを元に質問でき、資料作成やタスク設定も支援する。基本は無料だが、より高度な利用には有料サブスクリプション「Meta One」への移行が想定されている。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-09T22:29:27Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -626,7 +1146,7 @@
         "keyword:campaign"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "c04837311b5913cc77c74ad2d4f3c03724c16e3ddb4a1e0ae315724aa9954730",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -636,7 +1156,23 @@
             "summary": null,
             "inputHash": "04eca49a508c6dc957901089100f3b389f8caf17f24375bcbfbecba043e288bf",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "04eca49a508c6dc957901089100f3b389f8caf17f24375bcbfbecba043e288bf",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "04eca49a508c6dc957901089100f3b389f8caf17f24375bcbfbecba043e288bf",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -644,7 +1180,23 @@
             "summary": "Metaは今週、ホリデーシーズンのキャンペーン計画に関するブログ記事を公開した。購買行動が複数のプラットフォームに分散していることを踏まえ、AI搭載のAdvantage+キャンペーンで適切なクリエイティブを自動配信し、早期に学習フェーズを開始することを推奨している。ショッピングは発見、ディール、ギフト、リフレッシュの4段階に分かれ、ReelsやStoriesでのインスピレーションが特に高い。Conversion Liftで効果測定も提案されている。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": "2026-09-12T04:37:37Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、ホリデー向けマーケティングガイドを公開 AI搭載Advantage+で効果的な広告配信を提案",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-12T04:37:37Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは今週、ホリデーシーズンのキャンペーン計画に関するブログ記事を公開した。購買行動が複数のプラットフォームに分散していることを踏まえ、AI搭載のAdvantage+キャンペーンで適切なクリエイティブを自動配信し、早期に学習フェーズを開始することを推奨している。ショッピングは発見、ディール、ギフト、リフレッシュの4段階に分かれ、ReelsやStoriesでのインスピレーションが特に高い。Conversion Liftで効果測定も提案されている。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-12T04:37:37Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -657,7 +1209,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -666,7 +1218,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -676,7 +1228,23 @@
             "summary": null,
             "inputHash": "79930db4677b46dede194ad4ef175a458f29ffb036f65262db2ec837dedce7f2",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "79930db4677b46dede194ad4ef175a458f29ffb036f65262db2ec837dedce7f2",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "79930db4677b46dede194ad4ef175a458f29ffb036f65262db2ec837dedce7f2",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -684,7 +1252,23 @@
             "summary": "MetaはAIコネクタ（Claude、ChatGPT、Perplexity）向けに、広告ポートフォリオへのアクセス制御を強化した。初期設定時に、すべてのFacebookページ・Instagramアカウントやビジネスポートフォリオを自動的に連携するか、現在のものだけを選択でき、個別ページやアカウントを指定できるようになった。また、約100種のツールについて「常に許可」「ブロック」「承認要請」のいずれかを設定可能。ビジネスポートフォリオ側でも、広告アカウントやカタログのAIコネクタ露出状況を確認し、デフォルトで許可されていた予算変更やキャンペーン作成などの操作を個別に制御できる。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": "2026-09-05T08:40:34Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Ads AIコネクタに新たなセキュリティ制御を追加",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "MetaはAIコネクタ（Claude、ChatGPT、Perplexity）向けに、広告ポートフォリオへのアクセス制御を強化した。初期設定時に、すべてのFacebookページ・Instagramアカウントやビジネスポートフォリオを自動的に連携するか、現在のものだけを選択でき、個別ページやアカウントを指定できるようになった。また、約100種のツールについて「常に許可」「ブロック」「承認要請」のいずれかを設定可能。ビジネスポートフォリオ側でも、広告アカウントやカタログのAIコネクタ露出状況を確認し、デフォルトで許可されていた予算変更やキャンペーン作成などの操作を個別に制御できる。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -697,7 +1281,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -706,7 +1290,7 @@
         "keyword:campaign"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -716,7 +1300,23 @@
             "summary": null,
             "inputHash": "a3d661ab5e1aae643f710df50fc01e81841b8a672366882285bdb96c53b35dbf",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "a3d661ab5e1aae643f710df50fc01e81841b8a672366882285bdb96c53b35dbf",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "a3d661ab5e1aae643f710df50fc01e81841b8a672366882285bdb96c53b35dbf",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -724,7 +1324,23 @@
             "summary": "Metaはインスタントフォームのリード品質向上を目的に、シーケンスイベント機能と優先リード回答機能の2つをテスト中です。シーケンスイベントでは、リード取得後に発生する高価値アクションを順序付けて設定し、両方が発生した場合にのみ広告が成果としてカウントされます。優先リード回答では、複数選択質問の回答にスライダーで優先度を設定し、Metaがその回答を学習してリードの質を評価します。いずれも公式ドキュメントは未公開で、利用可能かは未定です。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": "2026-09-05T08:40:34Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、リード品質向上のためのシーケンスイベントと優先回答機能をテスト",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaはインスタントフォームのリード品質向上を目的に、シーケンスイベント機能と優先リード回答機能の2つをテスト中です。シーケンスイベントでは、リード取得後に発生する高価値アクションを順序付けて設定し、両方が発生した場合にのみ広告が成果としてカウントされます。優先リード回答では、複数選択質問の回答にスライダーで優先度を設定し、Metaがその回答を学習してリードの質を評価します。いずれも公式ドキュメントは未公開で、利用可能かは未定です。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -737,7 +1353,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -746,7 +1362,7 @@
         "keyword:ad set"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -756,7 +1372,23 @@
             "summary": "Advertisers can create custom audiences from a customer list that are set to “Only exclusions”. These audiences can be added in the “Legal and operational custom audience exclusions” section of an ad set, cannot be used for inclusion, lookalike creation, or value‑rule bidding, and can be labeled for organization.",
             "inputHash": "9f1c2f1a19155e5685243c8dfc3083688b2aacbf49bc0c0161767b40576d5476",
             "generatedAt": "2026-09-03T04:35:39Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Exclusion-Only Custom Audiences Restrict Use to Exclusions",
+                "inputHash": "9f1c2f1a19155e5685243c8dfc3083688b2aacbf49bc0c0161767b40576d5476",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Advertisers can create custom audiences from a customer list that are set to “Only exclusions”. These audiences can be added in the “Legal and operational custom audience exclusions” section of an ad set, cannot be used for inclusion, lookalike creation, or value‑rule bidding, and can be labeled for organization.",
+                "inputHash": "9f1c2f1a19155e5685243c8dfc3083688b2aacbf49bc0c0161767b40576d5476",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -764,7 +1396,23 @@
             "summary": "広告主は顧客リストから「除外のみ」設定のカスタムオーディエンスを作成でき、広告セットの「法的・運用上のカスタムオーディエンス除外」セクションで追加します。このオーディエンスはインクルージョン、類似オーディエンス作成、バリュー規則による入札調整には使用できず、組織目的でラベル付けが可能です。",
             "inputHash": "8fad80393aaf515537f7b0de31876e27a812bcc68b8cc70b22871035df9a4b86",
             "generatedAt": "2026-09-03T04:35:39Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "除外専用カスタムオーディエンスは除外のみ使用可能",
+                "inputHash": "8fad80393aaf515537f7b0de31876e27a812bcc68b8cc70b22871035df9a4b86",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "広告主は顧客リストから「除外のみ」設定のカスタムオーディエンスを作成でき、広告セットの「法的・運用上のカスタムオーディエンス除外」セクションで追加します。このオーディエンスはインクルージョン、類似オーディエンス作成、バリュー規則による入札調整には使用できず、組織目的でラベル付けが可能です。",
+                "inputHash": "8fad80393aaf515537f7b0de31876e27a812bcc68b8cc70b22871035df9a4b86",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -777,14 +1425,14 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -794,7 +1442,23 @@
             "summary": null,
             "inputHash": "fc170ad2e5a3c061b7522a52c2035a643e87564774e1b06b5a6796e9c478cae5",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "fc170ad2e5a3c061b7522a52c2035a643e87564774e1b06b5a6796e9c478cae5",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "fc170ad2e5a3c061b7522a52c2035a643e87564774e1b06b5a6796e9c478cae5",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "missing",
@@ -802,7 +1466,23 @@
             "summary": null,
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -815,7 +1495,7 @@
       "publishedDate": "2026-08-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -824,7 +1504,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -834,7 +1514,23 @@
             "summary": "Jon Loomer Digital marks its 15‑year anniversary on August 29, 2026, reflecting on the evolution of Meta advertising. Since the site launched in 2011, Loomer has published over 1,400 blog posts, 1,000 videos, 750 podcast episodes and 632 weekly webinars, documenting feature updates and best practices from an advertiser’s view.",
             "inputHash": "e90bfd94079c6aed409427537c2166636018533319e78de56257b0ddc7b232c0",
             "generatedAt": "2026-09-03T04:35:39Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "15 Years of Meta Advertising – Jon Loomer’s Perspective",
+                "inputHash": "e90bfd94079c6aed409427537c2166636018533319e78de56257b0ddc7b232c0",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Jon Loomer Digital marks its 15‑year anniversary on August 29, 2026, reflecting on the evolution of Meta advertising. Since the site launched in 2011, Loomer has published over 1,400 blog posts, 1,000 videos, 750 podcast episodes and 632 weekly webinars, documenting feature updates and best practices from an advertiser’s view.",
+                "inputHash": "e90bfd94079c6aed409427537c2166636018533319e78de56257b0ddc7b232c0",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -842,7 +1538,23 @@
             "summary": "Jon Loomer Digitalは2026年8月29日に15周年を迎え、Meta広告の変遷を振り返ります。サイトは2011年に開始され、これまでに1,400件以上のブログ記事、1,000本以上の動画、750エピソードのポッドキャスト、632回の週次ウェビナーを公開し、広告主の視点から機能更新やベストプラクティスを記録してきました。",
             "inputHash": "4dcd89c08e0053440decb0da3f7cd0d315e9903e4367c708ff28cecc925cb102",
             "generatedAt": "2026-09-03T04:35:39Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "15年のMeta広告 – Jon Loomerの視点",
+                "inputHash": "4dcd89c08e0053440decb0da3f7cd0d315e9903e4367c708ff28cecc925cb102",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Jon Loomer Digitalは2026年8月29日に15周年を迎え、Meta広告の変遷を振り返ります。サイトは2011年に開始され、これまでに1,400件以上のブログ記事、1,000本以上の動画、750エピソードのポッドキャスト、632回の週次ウェビナーを公開し、広告主の視点から機能更新やベストプラクティスを記録してきました。",
+                "inputHash": "4dcd89c08e0053440decb0da3f7cd0d315e9903e4367c708ff28cecc925cb102",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -855,7 +1567,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -864,7 +1576,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -874,7 +1586,23 @@
             "summary": "Meta's Advantage+ Creative Text Generation now creates alternate ad image options that keep the original image as a template and replace only the main headline text, preserving colors, fonts, and other elements. Multiple headline and image variations are offered, and AI‑generated text quality has improved, though it can still be edited or removed if needed.",
             "inputHash": "bb3dd7e9191df14f7252d1fa66d626072dfc968bda422d4192ec86a2e1ebd54b",
             "generatedAt": "2026-09-03T04:35:39Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta adds AI headline swap for ad images",
+                "inputHash": "bb3dd7e9191df14f7252d1fa66d626072dfc968bda422d4192ec86a2e1ebd54b",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta's Advantage+ Creative Text Generation now creates alternate ad image options that keep the original image as a template and replace only the main headline text, preserving colors, fonts, and other elements. Multiple headline and image variations are offered, and AI‑generated text quality has improved, though it can still be edited or removed if needed.",
+                "inputHash": "bb3dd7e9191df14f7252d1fa66d626072dfc968bda422d4192ec86a2e1ebd54b",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -882,7 +1610,23 @@
             "summary": "Meta の Advantage+ Creative Text Generation が、元画像をテンプレートにしてメイン見出しだけを AI が生成したテキストに差し替える機能を追加しました。色やフォントなど他の要素は変更されず、複数の画像と見出しのバリエーションが提供されます。AI 生成テキストの品質は向上していますが、完全ではなく、必要に応じて編集や除外が可能です。",
             "inputHash": "1a1f5bdcbb3e26375511989e507031b21f7ef22b1e7ace5e695f662d199550a0",
             "generatedAt": "2026-09-03T04:35:39Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、広告画像の見出しをAIで置き換え",
+                "inputHash": "1a1f5bdcbb3e26375511989e507031b21f7ef22b1e7ace5e695f662d199550a0",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta の Advantage+ Creative Text Generation が、元画像をテンプレートにしてメイン見出しだけを AI が生成したテキストに差し替える機能を追加しました。色やフォントなど他の要素は変更されず、複数の画像と見出しのバリエーションが提供されます。AI 生成テキストの品質は向上していますが、完全ではなく、必要に応じて編集や除外が可能です。",
+                "inputHash": "1a1f5bdcbb3e26375511989e507031b21f7ef22b1e7ace5e695f662d199550a0",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -895,13 +1639,13 @@
       "publishedDate": "2026-07-24",
       "updatedDate": null,
       "firstObservedAt": "2026-09-14T11:20:59Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-platforms"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "f891db2becaa267972f9c207eb3243f28729d0f14b11fde71e1250717412aae6",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -911,7 +1655,23 @@
             "summary": null,
             "inputHash": "994b277bb2d3ede5d497c6709d68c6e515c0d84a7640723f35f119f94c99cf48",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "994b277bb2d3ede5d497c6709d68c6e515c0d84a7640723f35f119f94c99cf48",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "994b277bb2d3ede5d497c6709d68c6e515c0d84a7640723f35f119f94c99cf48",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -919,7 +1679,23 @@
             "summary": "Metaは新モデルMuse Spark 1.1をMeta AIアプリとmeta.aiに導入し、計画立案やタスク実行、進捗管理などを自動で行う機能を追加した。キッチンリフォームやマラソン練習、誕生日ディナーの予約など具体的なシナリオで提案・実行し、日々のブリーフィングや情報検索、スライド作成も可能になる。リアルタイムで指示を変更でき、生成物は一元管理される。これらの機能は本日一部地域で配信開始し、数週間以内にWhatsAppなど他サービスへ拡大する予定である。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": "2026-09-16T07:17:13Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta AI、計画・実行機能を搭載したMuse Spark 1.1で行動開始",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-16T07:17:13Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは新モデルMuse Spark 1.1をMeta AIアプリとmeta.aiに導入し、計画立案やタスク実行、進捗管理などを自動で行う機能を追加した。キッチンリフォームやマラソン練習、誕生日ディナーの予約など具体的なシナリオで提案・実行し、日々のブリーフィングや情報検索、スライド作成も可能になる。リアルタイムで指示を変更でき、生成物は一元管理される。これらの機能は本日一部地域で配信開始し、数週間以内にWhatsAppなど他サービスへ拡大する予定である。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-16T07:17:13Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -932,13 +1708,13 @@
       "publishedDate": "2026-07-24",
       "updatedDate": null,
       "firstObservedAt": "2026-09-14T11:20:59Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-platforms"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "933196690767de83451e164a7225a992dba2d0360859caeb4cb74b831a72b55a",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -948,7 +1724,23 @@
             "summary": null,
             "inputHash": "15e8f192c28d3b828da44cf4e1f1592c64631c61edf2d5c448bf577c09af6105",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "15e8f192c28d3b828da44cf4e1f1592c64631c61edf2d5c448bf577c09af6105",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "15e8f192c28d3b828da44cf4e1f1592c64631c61edf2d5c448bf577c09af6105",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -956,7 +1748,23 @@
             "summary": "Facebook Marketplaceは誕生10年で、米国の若年層の3人に1人が日常的に利用し、月間で全世界430億件のアイテムと4400万件の車が出品されている。新アプリ「Seller」やグループ向け「Forum」など目的別アプリを展開し、AIで出品作成や価格提案、タグ付けを支援。さらに本人確認バッジ「Facebook Verified」を無料で提供し、実在する相手との取引の信頼性を高める。動画中心の没入型体験にも注力している。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": "2026-09-16T07:17:13Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook Marketplace10周年とAI活用で実在ユーザーをつなぐ新機能",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-16T07:17:13Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebook Marketplaceは誕生10年で、米国の若年層の3人に1人が日常的に利用し、月間で全世界430億件のアイテムと4400万件の車が出品されている。新アプリ「Seller」やグループ向け「Forum」など目的別アプリを展開し、AIで出品作成や価格提案、タグ付けを支援。さらに本人確認バッジ「Facebook Verified」を無料で提供し、実在する相手との取引の信頼性を高める。動画中心の没入型体験にも注力している。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-16T07:17:13Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -969,13 +1777,13 @@
       "publishedDate": "2026-07-24",
       "updatedDate": null,
       "firstObservedAt": "2026-09-14T11:20:59Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-platforms"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "6c4e6a14c1a542cc0112f8b7686310340fbaeb03f215bed533a6c7eceb99fa11",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -985,7 +1793,23 @@
             "summary": "Seller is a dedicated app for Facebook Marketplace sellers in the United States (18+). It syncs with existing listings, provides a home view for tasks, AI‑filled listing creation, bulk listings, inventory management, a unified inbox, and performance insights. Available now on the App Store with a web experience; iOS and Android testing underway.",
             "inputHash": "c70b243168b4d85da72eae5c1541b7d4ec496aa66fb99971482520f3087c8254",
             "generatedAt": "2026-09-16T07:17:13Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta launches Seller app for Facebook Marketplace sellers",
+                "inputHash": "c70b243168b4d85da72eae5c1541b7d4ec496aa66fb99971482520f3087c8254",
+                "generatedAt": "2026-09-16T07:17:13Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Seller is a dedicated app for Facebook Marketplace sellers in the United States (18+). It syncs with existing listings, provides a home view for tasks, AI‑filled listing creation, bulk listings, inventory management, a unified inbox, and performance insights. Available now on the App Store with a web experience; iOS and Android testing underway.",
+                "inputHash": "c70b243168b4d85da72eae5c1541b7d4ec496aa66fb99971482520f3087c8254",
+                "generatedAt": "2026-09-16T07:17:13Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -993,7 +1817,23 @@
             "summary": "Facebook Marketplaceは創設10周年を迎え、月間掲載商品数は4億3000万件に達しています。このたび、米国在住の18歳以上を対象にApp Storeで「Seller」アプリが配信されました。SellerはMarketplaceと同期し、既存の出品やメッセージ、販売履歴を引き継ぎ、アプリ内で作成した出品は自動的にMarketplaceに反映されます。主な機能は、出品管理や在庫一括登録、AIによるタイトル・説明・価格提案、統合インボックス、販売データのインサイト表示などです。iOSとAndroid向けのテスト版も進行中で、Webでも利用可能です。",
             "inputHash": "06216202b8e75a5a7f87973b70972b34a236f3fd6e969f0040d03ba370b37d8f",
             "generatedAt": "2026-09-16T13:14:08Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook Marketplace向け新アプリ「Seller」米国で配信開始",
+                "inputHash": "06216202b8e75a5a7f87973b70972b34a236f3fd6e969f0040d03ba370b37d8f",
+                "generatedAt": "2026-09-16T13:14:08Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebook Marketplaceは創設10周年を迎え、月間掲載商品数は4億3000万件に達しています。このたび、米国在住の18歳以上を対象にApp Storeで「Seller」アプリが配信されました。SellerはMarketplaceと同期し、既存の出品やメッセージ、販売履歴を引き継ぎ、アプリ内で作成した出品は自動的にMarketplaceに反映されます。主な機能は、出品管理や在庫一括登録、AIによるタイトル・説明・価格提案、統合インボックス、販売データのインサイト表示などです。iOSとAndroid向けのテスト版も進行中で、Webでも利用可能です。",
+                "inputHash": "06216202b8e75a5a7f87973b70972b34a236f3fd6e969f0040d03ba370b37d8f",
+                "generatedAt": "2026-09-16T13:14:08Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1006,7 +1846,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1015,7 +1855,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1025,7 +1865,23 @@
             "summary": "Meta ads can be used for lead generation. Instant forms let you create ads without a website, pull user info from profiles, and keep users within Meta apps, but require third‑party syncing to your CRM. Website forms give more control and allow custom post‑submission steps, but depend on a well‑optimized landing page and should stay simple.",
             "inputHash": "d8c5a5547baaf91873d6822b52a17a957986b96471124c7b8aecfa16f3d2497b",
             "generatedAt": "2026-09-03T04:35:39Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Ads Lead Generation: Instant Forms vs Website Leads",
+                "inputHash": "d8c5a5547baaf91873d6822b52a17a957986b96471124c7b8aecfa16f3d2497b",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta ads can be used for lead generation. Instant forms let you create ads without a website, pull user info from profiles, and keep users within Meta apps, but require third‑party syncing to your CRM. Website forms give more control and allow custom post‑submission steps, but depend on a well‑optimized landing page and should stay simple.",
+                "inputHash": "d8c5a5547baaf91873d6822b52a17a957986b96471124c7b8aecfa16f3d2497b",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1033,7 +1889,23 @@
             "summary": "Meta広告はリード獲得に利用できる。インスタントフォームはウェブサイト不要で、ユーザー情報をプロフィールから取得し、Metaアプリ内に留められるが、CRMへの自動同期にサードパーティー連携が必要。ウェブフォームは制御が高く、送信後のカスタムステップが設定できるが、最適化されたランディングページが必要で、シンプルに保つべきである。",
             "inputHash": "8338ddc503b57db40befcfee986f999c09515f57df28b96172f26d0daf56b0d8",
             "generatedAt": "2026-09-03T04:35:39Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告のリード獲得：インスタントフォームとウェブリードの比較",
+                "inputHash": "8338ddc503b57db40befcfee986f999c09515f57df28b96172f26d0daf56b0d8",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta広告はリード獲得に利用できる。インスタントフォームはウェブサイト不要で、ユーザー情報をプロフィールから取得し、Metaアプリ内に留められるが、CRMへの自動同期にサードパーティー連携が必要。ウェブフォームは制御が高く、送信後のカスタムステップが設定できるが、最適化されたランディングページが必要で、シンプルに保つべきである。",
+                "inputHash": "8338ddc503b57db40befcfee986f999c09515f57df28b96172f26d0daf56b0d8",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1046,14 +1918,14 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1063,7 +1935,23 @@
             "summary": "The Facebook Node.js Business SDK has been updated to version 25.0.3, introducing changes listed in the changelog.",
             "inputHash": "aaf497da0486bd968aa3f979f5ff12b8118982212d34ed279f8d705c5270a3d8",
             "generatedAt": "2026-09-03T04:35:39Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Release v25.0.3 of Facebook Node.js Business SDK",
+                "inputHash": "aaf497da0486bd968aa3f979f5ff12b8118982212d34ed279f8d705c5270a3d8",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The Facebook Node.js Business SDK has been updated to version 25.0.3, introducing changes listed in the changelog.",
+                "inputHash": "aaf497da0486bd968aa3f979f5ff12b8118982212d34ed279f8d705c5270a3d8",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1071,7 +1959,23 @@
             "summary": "Facebook Node.js Business SDK がバージョン 25.0.3 に更新され、変更点は changelog に記載されています。",
             "inputHash": "182e0895cb01a711ab4db1ff47b09e8134b41b18ec2e9cc684bb719329ae3489",
             "generatedAt": "2026-09-03T04:35:39Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook Node.js Business SDK バージョン v25.0.3 のリリース",
+                "inputHash": "182e0895cb01a711ab4db1ff47b09e8134b41b18ec2e9cc684bb719329ae3489",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebook Node.js Business SDK がバージョン 25.0.3 に更新され、変更点は changelog に記載されています。",
+                "inputHash": "182e0895cb01a711ab4db1ff47b09e8134b41b18ec2e9cc684bb719329ae3489",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1084,7 +1988,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1093,7 +1997,7 @@
         "keyword:custom audience"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1103,7 +2007,23 @@
             "summary": "Meta has introduced a major redesign of the Audiences section, grouping custom, lookalike and saved audiences by label categories such as Customers, Engaged, Unlabeled, Lookalikes and Saved. Labels are now required for value‑rule bidding, can be added or changed via dropdowns, and only one label per custom audience is allowed.",
             "inputHash": "c5e9be7f91d3ee8234790b766fa21558162d2bcb2ce53759734d13749386801d",
             "generatedAt": "2026-09-03T04:35:39Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta revamps Audiences UI with label‑focused organization",
+                "inputHash": "c5e9be7f91d3ee8234790b766fa21558162d2bcb2ce53759734d13749386801d",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta has introduced a major redesign of the Audiences section, grouping custom, lookalike and saved audiences by label categories such as Customers, Engaged, Unlabeled, Lookalikes and Saved. Labels are now required for value‑rule bidding, can be added or changed via dropdowns, and only one label per custom audience is allowed.",
+                "inputHash": "c5e9be7f91d3ee8234790b766fa21558162d2bcb2ce53759734d13749386801d",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1111,7 +2031,23 @@
             "summary": "MetaはAudiencesセクションを大幅に再設計し、カスタム、類似、保存済みオーディエンスを「顧客」「エンゲージド」「未ラベル」「類似」「保存済み」などのラベルカテゴリでグループ化しました。ラベルは価値ルールによる入札に必須となり、ドロップダウンで追加・変更でき、カスタムオーディエンスにつき1つのラベルしか付けられません。",
             "inputHash": "bec4171778d89c31f26049d9a9cbd26bc6049062b38d3f897be2cd3c38221fdf",
             "generatedAt": "2026-09-03T04:35:39Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、ラベル重視の新Audiences UIに刷新",
+                "inputHash": "bec4171778d89c31f26049d9a9cbd26bc6049062b38d3f897be2cd3c38221fdf",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "MetaはAudiencesセクションを大幅に再設計し、カスタム、類似、保存済みオーディエンスを「顧客」「エンゲージド」「未ラベル」「類似」「保存済み」などのラベルカテゴリでグループ化しました。ラベルは価値ルールによる入札に必須となり、ドロップダウンで追加・変更でき、カスタムオーディエンスにつき1つのラベルしか付けられません。",
+                "inputHash": "bec4171778d89c31f26049d9a9cbd26bc6049062b38d3f897be2cd3c38221fdf",
+                "generatedAt": "2026-09-03T04:35:39Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1124,7 +2060,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1133,7 +2069,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1143,7 +2079,23 @@
             "summary": "The post outlines core Meta ads principles: no magical strategies exist, always ask what problem you’re solving, prioritize simple campaign structures, let the algorithm run literally, avoid illusion of control, start and finish with your ads, evaluate performance in aggregate, and let meaningful results guide decisions.",
             "inputHash": "4ee45b82d611a4f8c3d300d43ab9760eab84bde63580257cb6812b61f115f951",
             "generatedAt": "2026-09-04T04:36:33Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Key Principles for Effective Meta Ads Strategy",
+                "inputHash": "4ee45b82d611a4f8c3d300d43ab9760eab84bde63580257cb6812b61f115f951",
+                "generatedAt": "2026-09-04T04:36:33Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The post outlines core Meta ads principles: no magical strategies exist, always ask what problem you’re solving, prioritize simple campaign structures, let the algorithm run literally, avoid illusion of control, start and finish with your ads, evaluate performance in aggregate, and let meaningful results guide decisions.",
+                "inputHash": "4ee45b82d611a4f8c3d300d43ab9760eab84bde63580257cb6812b61f115f951",
+                "generatedAt": "2026-09-04T04:36:33Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1151,7 +2103,23 @@
             "summary": "この投稿では、Meta広告の基本原則を示しています。魔法のような戦略は存在せず、常に解決すべき課題を問うこと、シンプルなキャンペーン構造を優先すること、アルゴリズムを文字通りに任せること、コントロールの幻想を捨てること、広告の作成から完了までを徹底すること、パフォーマンスを総合的に評価すること、そして有意義な結果を指針とすることが強調されています。",
             "inputHash": "32de430d0d44f712742d9ab00328082fc4c9ea0f417da41d743d14848c4b4072",
             "generatedAt": "2026-09-04T04:36:33Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "効果的なMeta広告戦略の主要原則",
+                "inputHash": "32de430d0d44f712742d9ab00328082fc4c9ea0f417da41d743d14848c4b4072",
+                "generatedAt": "2026-09-04T04:36:33Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "この投稿では、Meta広告の基本原則を示しています。魔法のような戦略は存在せず、常に解決すべき課題を問うこと、シンプルなキャンペーン構造を優先すること、アルゴリズムを文字通りに任せること、コントロールの幻想を捨てること、広告の作成から完了までを徹底すること、パフォーマンスを総合的に評価すること、そして有意義な結果を指針とすることが強調されています。",
+                "inputHash": "32de430d0d44f712742d9ab00328082fc4c9ea0f417da41d743d14848c4b4072",
+                "generatedAt": "2026-09-04T04:36:33Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1164,7 +2132,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1173,7 +2141,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1183,7 +2151,23 @@
             "summary": null,
             "inputHash": "ea1c9f60b9f08496fa5351741aa756e507c43ff6afbcacda16060927ca8c13d7",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "ea1c9f60b9f08496fa5351741aa756e507c43ff6afbcacda16060927ca8c13d7",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "ea1c9f60b9f08496fa5351741aa756e507c43ff6afbcacda16060927ca8c13d7",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "missing",
@@ -1191,7 +2175,23 @@
             "summary": null,
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1210,7 +2210,7 @@
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "87932d2acdd42983aa7d5e1d5d805f68da0efe998c8ea58dce18665d343aa3a1",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1220,7 +2220,23 @@
             "summary": null,
             "inputHash": "817c3672499378c0ffe09dd6075147d327800b21bc58fe3e32645e573e45141a",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "817c3672499378c0ffe09dd6075147d327800b21bc58fe3e32645e573e45141a",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "817c3672499378c0ffe09dd6075147d327800b21bc58fe3e32645e573e45141a",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1228,7 +2244,23 @@
             "summary": "MetaはMeta AIに新たな画像生成モデル「Muse Image」を導入した。ユーザーは会話形式の簡単な指示で高品質な画像を作成でき、InstagramストーリーやWhatsAppのチャットなど複数のアプリで利用可能。30以上のAIエフェクトやプリセットが用意され、写真の修正や部屋のリデザイン、テキスト入りインフォグラフィックの生成もできる。現在は限定的な国で提供され、今後はFacebookやMessengerなど他のサービスへ拡大予定。また、以前のInstagramアカウントへのメンション機能は廃止された。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": "2026-09-05T08:40:34Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta AI、画像生成モデル「Muse Image」を提供開始 ― 簡単プロンプトで高品質画像を生成",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "MetaはMeta AIに新たな画像生成モデル「Muse Image」を導入した。ユーザーは会話形式の簡単な指示で高品質な画像を作成でき、InstagramストーリーやWhatsAppのチャットなど複数のアプリで利用可能。30以上のAIエフェクトやプリセットが用意され、写真の修正や部屋のリデザイン、テキスト入りインフォグラフィックの生成もできる。現在は限定的な国で提供され、今後はFacebookやMessengerなど他のサービスへ拡大予定。また、以前のInstagramアカウントへのメンション機能は廃止された。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1241,7 +2273,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1249,7 +2281,7 @@
         "discovered-via:jon-loomer-meta-ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1259,7 +2291,23 @@
             "summary": "Over 8 million advertisers are using Meta's AI creative tools, which have just received a major upgrade. The Muse Image from Meta Superintelligence Labs adds agentic reasoning to ad creative and introduces AI-powered room restyling, allowing shoppers to visualize products in their own spaces.",
             "inputHash": "0cdcbf18960a5c05b1b73db8217385abdf5e163c76d0a7a9e66abd3213355a7a",
             "generatedAt": "2026-09-05T08:40:34Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta AI Creative Tools Reach 8M+ Advertisers with Major Upgrade",
+                "inputHash": "0cdcbf18960a5c05b1b73db8217385abdf5e163c76d0a7a9e66abd3213355a7a",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Over 8 million advertisers are using Meta's AI creative tools, which have just received a major upgrade. The Muse Image from Meta Superintelligence Labs adds agentic reasoning to ad creative and introduces AI-powered room restyling, allowing shoppers to visualize products in their own spaces.",
+                "inputHash": "0cdcbf18960a5c05b1b73db8217385abdf5e163c76d0a7a9e66abd3213355a7a",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1267,7 +2315,23 @@
             "summary": "800万人以上の広告主がMetaのAIクリエイティブツールを使用しており、ツールは最近大幅にアップグレードされました。Meta Superintelligence LabsのMuse Imageは広告クリエイティブにエージェント推論を導入し、AI搭載の部屋リスタイリング機能で、購入者が自分の空間で製品を視覚化できるようにします。",
             "inputHash": "92efbb65819dc5baf2c9abefce32f9f19dea422193e5b93fff7cd1fedf1281d9",
             "generatedAt": "2026-09-05T08:40:34Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta AIクリエイティブツール、800万人以上の広告主が利用、主要アップグレード実施",
+                "inputHash": "92efbb65819dc5baf2c9abefce32f9f19dea422193e5b93fff7cd1fedf1281d9",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "800万人以上の広告主がMetaのAIクリエイティブツールを使用しており、ツールは最近大幅にアップグレードされました。Meta Superintelligence LabsのMuse Imageは広告クリエイティブにエージェント推論を導入し、AI搭載の部屋リスタイリング機能で、購入者が自分の空間で製品を視覚化できるようにします。",
+                "inputHash": "92efbb65819dc5baf2c9abefce32f9f19dea422193e5b93fff7cd1fedf1281d9",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1280,14 +2344,14 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1297,7 +2361,23 @@
             "summary": "Version 25.0.2 introduces a Conversions API Parameter Builder integration. Server‑side Event objects can auto‑fill empty fbc, fbp, event_source_url, referrer_url, client_ip_address and apply automatic PII normalization/hashing on PHP and NodeJS when setRequestContext is called, respecting Preference allowlists and never overwriting existing values.",
             "inputHash": "46236d8686f80cc75347eca8d3fd175a2def47cd23489a222d1d8d5e998ab9f4",
             "generatedAt": "2026-09-05T08:40:34Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "v25.0.2 adds Conversions API Parameter Builder integration",
+                "inputHash": "46236d8686f80cc75347eca8d3fd175a2def47cd23489a222d1d8d5e998ab9f4",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Version 25.0.2 introduces a Conversions API Parameter Builder integration. Server‑side Event objects can auto‑fill empty fbc, fbp, event_source_url, referrer_url, client_ip_address and apply automatic PII normalization/hashing on PHP and NodeJS when setRequestContext is called, respecting Preference allowlists and never overwriting existing values.",
+                "inputHash": "46236d8686f80cc75347eca8d3fd175a2def47cd23489a222d1d8d5e998ab9f4",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1305,7 +2385,23 @@
             "summary": "このリリース v25.0.2 では、Conversions API Parameter Builder の統合が追加されました。サーバーサイドの Event/ServerEvent は setRequestContext(request) を呼び出すことで、受信した HTTP リクエストから fbc、fbp、event_source_url、referrer_url などの空欄パラメータを自動的に埋めます。PHP と NodeJS では client_ip_address の取得や PII の正規化・ハッシュ化も自動で行われます。自動入力は Preference により制御され、設定した値は上書きされず、呼び出しを行わなければ動作は変わりません。",
             "inputHash": "5c831d182724a95616f262e352d92b68fb47223a32ba92c063a7e3ef7d45b779",
             "generatedAt": "2026-09-09T04:45:10Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "v25.0.2 リリース：Conversions API パラメータビルダー統合で自動入力機能を追加",
+                "inputHash": "5c831d182724a95616f262e352d92b68fb47223a32ba92c063a7e3ef7d45b779",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "このリリース v25.0.2 では、Conversions API Parameter Builder の統合が追加されました。サーバーサイドの Event/ServerEvent は setRequestContext(request) を呼び出すことで、受信した HTTP リクエストから fbc、fbp、event_source_url、referrer_url などの空欄パラメータを自動的に埋めます。PHP と NodeJS では client_ip_address の取得や PII の正規化・ハッシュ化も自動で行われます。自動入力は Preference により制御され、設定した値は上書きされず、呼び出しを行わなければ動作は変わりません。",
+                "inputHash": "5c831d182724a95616f262e352d92b68fb47223a32ba92c063a7e3ef7d45b779",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1318,7 +2414,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1327,7 +2423,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1337,7 +2433,23 @@
             "summary": "The Master Brief is a single document that merges 24 ad briefs into a comprehensive guide on Meta ads, covering targeting, value rules, campaign structure, attribution, creative, tracking, and more. It was generated by a tool, reviewed and approved by the author, and serves as a core resource for the PHC‑Elite community.",
             "inputHash": "5786dd554f4b3d350139b6b46e88e1464d3697ad01b3e0ec889f40c6ea3ce93a",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "The Master Brief: Consolidated Meta Ads Strategy",
+                "inputHash": "5786dd554f4b3d350139b6b46e88e1464d3697ad01b3e0ec889f40c6ea3ce93a",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The Master Brief is a single document that merges 24 ad briefs into a comprehensive guide on Meta ads, covering targeting, value rules, campaign structure, attribution, creative, tracking, and more. It was generated by a tool, reviewed and approved by the author, and serves as a core resource for the PHC‑Elite community.",
+                "inputHash": "5786dd554f4b3d350139b6b46e88e1464d3697ad01b3e0ec889f40c6ea3ce93a",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1345,7 +2457,23 @@
             "summary": "The Master Briefは、Meta広告に対する著者の推奨アプローチをまとめた文書で、ターゲティング、価値ルール、キャンペーン構造、アトリビューション、クリエイティブ、トラッキングなどを網羅しています。ブログ記事や動画、ポッドキャストの内容をツールで広告ブリーフに変換し、著者がレビュー・承認したものです。アルゴリズム配信を重視し、Advantage+ Audienceを前提に手動ターゲティングは最小限に抑える方針を示しています。詳細ターゲティングや類似オーディエンスは提案レベルに留め、実質的な効果は限定的としています。文書は会員向けに毎月更新され、2026年7月時点のスナップショットが示されています。",
             "inputHash": "a9fc2e9052016a45110ac47b502be1cb20dc94e8481acf5d37861f4e995f055c",
             "generatedAt": "2026-09-09T22:29:27Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告の包括的ガイド「The Master Brief」概要",
+                "inputHash": "a9fc2e9052016a45110ac47b502be1cb20dc94e8481acf5d37861f4e995f055c",
+                "generatedAt": "2026-09-09T22:29:27Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The Master Briefは、Meta広告に対する著者の推奨アプローチをまとめた文書で、ターゲティング、価値ルール、キャンペーン構造、アトリビューション、クリエイティブ、トラッキングなどを網羅しています。ブログ記事や動画、ポッドキャストの内容をツールで広告ブリーフに変換し、著者がレビュー・承認したものです。アルゴリズム配信を重視し、Advantage+ Audienceを前提に手動ターゲティングは最小限に抑える方針を示しています。詳細ターゲティングや類似オーディエンスは提案レベルに留め、実質的な効果は限定的としています。文書は会員向けに毎月更新され、2026年7月時点のスナップショットが示されています。",
+                "inputHash": "a9fc2e9052016a45110ac47b502be1cb20dc94e8481acf5d37861f4e995f055c",
+                "generatedAt": "2026-09-09T22:29:27Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1358,7 +2486,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1367,7 +2495,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1377,7 +2505,23 @@
             "summary": "The article offers a working checklist to troubleshoot Meta ads that aren’t converting, covering reasons people may not click (budget, CPM, ad creative, ad copy, offer) and why clicks may not convert (performance goal).",
             "inputHash": "4d68d0129897bdd76253b454873c69b42279e1c84141199ef95ca86b334e4c51",
             "generatedAt": "2026-09-05T08:40:34Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Checklist for Troubleshooting Non-Converting Meta Ads",
+                "inputHash": "4d68d0129897bdd76253b454873c69b42279e1c84141199ef95ca86b334e4c51",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The article offers a working checklist to troubleshoot Meta ads that aren’t converting, covering reasons people may not click (budget, CPM, ad creative, ad copy, offer) and why clicks may not convert (performance goal).",
+                "inputHash": "4d68d0129897bdd76253b454873c69b42279e1c84141199ef95ca86b334e4c51",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1385,7 +2529,23 @@
             "summary": "この記事は、コンバートしないMeta広告をトラブルシュートするための実用的なチェックリストを提供し、クリックされない理由（予算、CPM、広告クリエイティブ、広告文、オファー）と、クリックしてもコンバートしない理由（パフォーマンス目標）をカバーしています。",
             "inputHash": "26c78317aa6c82db093f077525b6c13250d05a70bdb7d2977788152eff7f89d9",
             "generatedAt": "2026-09-05T08:40:34Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告がコンバートしない時のチェックリスト",
+                "inputHash": "26c78317aa6c82db093f077525b6c13250d05a70bdb7d2977788152eff7f89d9",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "この記事は、コンバートしないMeta広告をトラブルシュートするための実用的なチェックリストを提供し、クリックされない理由（予算、CPM、広告クリエイティブ、広告文、オファー）と、クリックしてもコンバートしない理由（パフォーマンス目標）をカバーしています。",
+                "inputHash": "26c78317aa6c82db093f077525b6c13250d05a70bdb7d2977788152eff7f89d9",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1398,7 +2558,7 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1407,7 +2567,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1417,7 +2577,23 @@
             "summary": null,
             "inputHash": "dd93a62093ac2286ff3020021b447cabf279eb6f6d5bb84b260c8d43b5601e51",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "dd93a62093ac2286ff3020021b447cabf279eb6f6d5bb84b260c8d43b5601e51",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "dd93a62093ac2286ff3020021b447cabf279eb6f6d5bb84b260c8d43b5601e51",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1425,7 +2601,23 @@
             "summary": "Metaはリード広告のインスタントフォームに「Book time」アクションを追加し、CalendlyやHighLevelなどのスケジューラリンクを埋め込んで予約を自動的にカレンダーへ転送できるようにした。また、ChatGPT広告でコンバージョン最適化キャンペーンが利用可能となり、コンバージョン目標と入札上限を設定できるが課金はクリック単位のまま。さらに、Creative Exploration Toolが発表されたが詳細は不明。加えて、Customer Lifecycle Strategyの除外対象やターゲティングラベル変更、Events Manager設定のバグ情報も含まれる。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": "2026-09-06T04:41:48Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告の新機能：インスタントフォームで予約、ChatGPT広告のコンバージョン最適化、クリエイティブ探索ツールなど",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaはリード広告のインスタントフォームに「Book time」アクションを追加し、CalendlyやHighLevelなどのスケジューラリンクを埋め込んで予約を自動的にカレンダーへ転送できるようにした。また、ChatGPT広告でコンバージョン最適化キャンペーンが利用可能となり、コンバージョン目標と入札上限を設定できるが課金はクリック単位のまま。さらに、Creative Exploration Toolが発表されたが詳細は不明。加えて、Customer Lifecycle Strategyの除外対象やターゲティングラベル変更、Events Manager設定のバグ情報も含まれる。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1438,7 +2630,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1446,7 +2638,7 @@
         "discovered-via:jon-loomer-meta-ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1456,7 +2648,23 @@
             "summary": "At Cannes Lions 2026, Meta announced AI-powered creative tools, a unified Creator Marketing Hub, and updates to its Business Agent, designed to help every marketer create better ads more quickly.",
             "inputHash": "3ccea9eee351c57bf9bd57fa42ebdf1d95eff9d43549f6a557272417ba4e4db1",
             "generatedAt": "2026-09-06T04:41:48Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta unveils AI creative tools and Creator Hub at Cannes Lions 2026",
+                "inputHash": "3ccea9eee351c57bf9bd57fa42ebdf1d95eff9d43549f6a557272417ba4e4db1",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "At Cannes Lions 2026, Meta announced AI-powered creative tools, a unified Creator Marketing Hub, and updates to its Business Agent, designed to help every marketer create better ads more quickly.",
+                "inputHash": "3ccea9eee351c57bf9bd57fa42ebdf1d95eff9d43549f6a557272417ba4e4db1",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1464,7 +2672,23 @@
             "summary": "Cannes Lions 2026でMetaは、AI搭載のクリエイティブツール、統合Creator Marketing Hub、Business Agentの更新を発表し、すべてのマーケターがより速く、より良い広告を作成できるよう支援することを目的とした。",
             "inputHash": "e17323a80fb94549d8704db751d10db5835ecf842dba56f12d7edd4f26c13b3f",
             "generatedAt": "2026-09-06T04:41:48Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "MetaがCannes Lions 2026でAIクリエイティブツールとCreator Hubを発表",
+                "inputHash": "e17323a80fb94549d8704db751d10db5835ecf842dba56f12d7edd4f26c13b3f",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Cannes Lions 2026でMetaは、AI搭載のクリエイティブツール、統合Creator Marketing Hub、Business Agentの更新を発表し、すべてのマーケターがより速く、より良い広告を作成できるよう支援することを目的とした。",
+                "inputHash": "e17323a80fb94549d8704db751d10db5835ecf842dba56f12d7edd4f26c13b3f",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1477,7 +2701,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1485,7 +2709,7 @@
         "discovered-via:jon-loomer-meta-ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1495,7 +2719,23 @@
             "summary": "We are launching Embedded Appointment Booking for Lead Ads Instant Forms on Facebook. It offers a seamless, in-app booking experience that lets leads schedule an appointment the moment they express interest, without ever leaving Facebook.",
             "inputHash": "f2552f293ee01d58d188409e2c7eb674ab1f7cac75057fabd4ac868e2a2a4753",
             "generatedAt": "2026-09-06T04:41:48Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Book appointments directly from Lead Ads",
+                "inputHash": "f2552f293ee01d58d188409e2c7eb674ab1f7cac75057fabd4ac868e2a2a4753",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "We are launching Embedded Appointment Booking for Lead Ads Instant Forms on Facebook. It offers a seamless, in-app booking experience that lets leads schedule an appointment the moment they express interest, without ever leaving Facebook.",
+                "inputHash": "f2552f293ee01d58d188409e2c7eb674ab1f7cac75057fabd4ac868e2a2a4753",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1503,7 +2743,23 @@
             "summary": "Facebookでリード広告のインスタントフォーム向けに埋め込み型予約機能を開始します。シームレスなアプリ内予約体験を提供し、リードは関心を示した瞬間にFacebookを離れることなく予約できます。",
             "inputHash": "2618596af6427c62c4fe0604800b4226169f374e4bdf672386722702b38664df",
             "generatedAt": "2026-09-06T04:41:48Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "リード広告から直接予約",
+                "inputHash": "2618596af6427c62c4fe0604800b4226169f374e4bdf672386722702b38664df",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebookでリード広告のインスタントフォーム向けに埋め込み型予約機能を開始します。シームレスなアプリ内予約体験を提供し、リードは関心を示した瞬間にFacebookを離れることなく予約できます。",
+                "inputHash": "2618596af6427c62c4fe0604800b4226169f374e4bdf672386722702b38664df",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1516,7 +2772,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1525,7 +2781,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1535,7 +2791,23 @@
             "summary": "Keep ad set count low to avoid budget dilution and audience fragmentation. $100 daily in one ad set outperforms splitting across five. Aim for at least 50 optimized events per week per ad set. Separate ad sets by location, age, or gender only as exceptions when sufficient budget exists.",
             "inputHash": "7a5757a3ee8399c3783de50bff677c09192a18409486f30845625bcff83d467a",
             "generatedAt": "2026-09-06T04:41:48Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Guidelines for Number of Meta Ad Sets",
+                "inputHash": "7a5757a3ee8399c3783de50bff677c09192a18409486f30845625bcff83d467a",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Keep ad set count low to avoid budget dilution and audience fragmentation. $100 daily in one ad set outperforms splitting across five. Aim for at least 50 optimized events per week per ad set. Separate ad sets by location, age, or gender only as exceptions when sufficient budget exists.",
+                "inputHash": "7a5757a3ee8399c3783de50bff677c09192a18409486f30845625bcff83d467a",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1543,7 +2815,23 @@
             "summary": "Meta広告キャンペーンでの広告セットは、予算を分散させず効率を落とさないよう、できるだけ少なくまとめることが推奨されます。1日100ドルを5つに分けるより1つに集中した方が効果的で、週に50件の最適化イベントを確保できる規模が目安です。広告セットを増やす理由としては、地域や年齢・性別などで明確な差別化が必要で、かつ各セットに十分な予算がある場合に限ります。不要なセットは予算の希薄化やオーディエンスの分散を招くため、慎重に検討すべきです。",
             "inputHash": "ff0bde0b320666ad3a34a8f0bbcf305d42598df1cff7ebac77180f159ab6656b",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告のアクティブ広告セットは必要最小限に",
+                "inputHash": "ff0bde0b320666ad3a34a8f0bbcf305d42598df1cff7ebac77180f159ab6656b",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta広告キャンペーンでの広告セットは、予算を分散させず効率を落とさないよう、できるだけ少なくまとめることが推奨されます。1日100ドルを5つに分けるより1つに集中した方が効果的で、週に50件の最適化イベントを確保できる規模が目安です。広告セットを増やす理由としては、地域や年齢・性別などで明確な差別化が必要で、かつ各セットに十分な予算がある場合に限ります。不要なセットは予算の希薄化やオーディエンスの分散を招くため、慎重に検討すべきです。",
+                "inputHash": "ff0bde0b320666ad3a34a8f0bbcf305d42598df1cff7ebac77180f159ab6656b",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1556,7 +2844,7 @@
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1565,7 +2853,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1575,7 +2863,23 @@
             "summary": null,
             "inputHash": "f8864dd5eb9a155c2c0172ede5e884006c2d858453f5d9912d22d33d036ec0cf",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "f8864dd5eb9a155c2c0172ede5e884006c2d858453f5d9912d22d33d036ec0cf",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "f8864dd5eb9a155c2c0172ede5e884006c2d858453f5d9912d22d33d036ec0cf",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1583,7 +2887,23 @@
             "summary": "Meta Ads ManagerにAIで生成・編集した媒体を使用した場合にチェックするAI開示チェックボックスが追加されました。チェックするとAI情報ラベルが広告に表示され、地域によっては法令遵守のため目立つ形で表示されます。また、Creative Testing Toolの同時テスト可能な広告数上限が従来から7件に拡大されました。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告のAI開示チェックボックスとクリエイティブテスト上限が7件に増加",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta Ads ManagerにAIで生成・編集した媒体を使用した場合にチェックするAI開示チェックボックスが追加されました。チェックするとAI情報ラベルが広告に表示され、地域によっては法令遵守のため目立つ形で表示されます。また、Creative Testing Toolの同時テスト可能な広告数上限が従来から7件に拡大されました。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1596,7 +2916,7 @@
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1605,7 +2925,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1615,7 +2935,23 @@
             "summary": "Start with a single Meta ads campaign and consolidate budget toward one business goal. Add more campaigns only when clear exceptions exist, such as distinct daily budget limits, a primary performance goal, or separate secondary goals. Aim for about 50 optimized actions per week to exit the learning phase.",
             "inputHash": "fb728d991cda08f20f8ad33819fb29cb56702be77d94eabdac43de44abf0778d",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Guidelines for Determining Number of Meta Ads Campaigns",
+                "inputHash": "fb728d991cda08f20f8ad33819fb29cb56702be77d94eabdac43de44abf0778d",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Start with a single Meta ads campaign and consolidate budget toward one business goal. Add more campaigns only when clear exceptions exist, such as distinct daily budget limits, a primary performance goal, or separate secondary goals. Aim for about 50 optimized actions per week to exit the learning phase.",
+                "inputHash": "fb728d991cda08f20f8ad33819fb29cb56702be77d94eabdac43de44abf0778d",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1623,7 +2959,23 @@
             "summary": "Meta広告のキャンペーンは、まず1つに絞り予算を単一のビジネス目標に集約するのが基本とされる。例外がある場合のみ複数キャンペーンを作成すべきで、判断は日々の予算額と最重要目標に基づく。最適化アクションの平均コストや週50件のアクションという目安も考慮し、二次的な目標がある場合に限り追加キャンペーンを検討する。",
             "inputHash": "06e022bda96aef987a73a5ebc2328c273daaaa6efd140ce66c83765fcddffc27",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告は1つのキャンペーンから始め、予算と目的で数を決める",
+                "inputHash": "06e022bda96aef987a73a5ebc2328c273daaaa6efd140ce66c83765fcddffc27",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta広告のキャンペーンは、まず1つに絞り予算を単一のビジネス目標に集約するのが基本とされる。例外がある場合のみ複数キャンペーンを作成すべきで、判断は日々の予算額と最重要目標に基づく。最適化アクションの平均コストや週50件のアクションという目安も考慮し、二次的な目標がある場合に限り追加キャンペーンを検討する。",
+                "inputHash": "06e022bda96aef987a73a5ebc2328c273daaaa6efd140ce66c83765fcddffc27",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1636,7 +2988,7 @@
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1645,7 +2997,7 @@
         "keyword:campaign"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1655,7 +3007,23 @@
             "summary": null,
             "inputHash": "339ff94e77500b0a604849e30fc0769bc554efd252fbaeb890763196e7bce5f9",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "339ff94e77500b0a604849e30fc0769bc554efd252fbaeb890763196e7bce5f9",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "339ff94e77500b0a604849e30fc0769bc554efd252fbaeb890763196e7bce5f9",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1663,7 +3031,23 @@
             "summary": "Meta広告のテスト機能「Push Delivery to This Ad」は、広告セット内に2つ以上の広告がある場合に表示され、指定した予算の割合を一定期間（最短1日、最長30日）その広告に割り当てて配信を保証できる。設定はデフォルトでオフで、手動で予算比率と期間を入力する。キャンペーン目的や広告形式、既存・新規広告を問わず利用可能だが、同時に複数広告へ適用すると配信に影響する可能性がある。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "「Push Delivery to This Ad」機能の概要と利用方法",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta広告のテスト機能「Push Delivery to This Ad」は、広告セット内に2つ以上の広告がある場合に表示され、指定した予算の割合を一定期間（最短1日、最長30日）その広告に割り当てて配信を保証できる。設定はデフォルトでオフで、手動で予算比率と期間を入力する。キャンペーン目的や広告形式、既存・新規広告を問わず利用可能だが、同時に複数広告へ適用すると配信に影響する可能性がある。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1676,7 +3060,7 @@
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1685,7 +3069,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1695,7 +3079,23 @@
             "summary": "Meta’s Customer Lifecycle Strategy feature does not automatically exclude existing customers. When “acquire new customers” is chosen, users must manually select custom audiences to exclude; it does not pull from predefined segments or labels. A new “Legal and Operational” exclusion option is also provided, separate from the lifecycle setting.",
             "inputHash": "87eecd7da912f32427c1ce01ffb6e4e711c1dd259a93c291caa9376a1bd41efb",
             "generatedAt": "2026-09-09T04:45:10Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Customer Lifecycle Strategy uses manual audience exclusions, not AI",
+                "inputHash": "87eecd7da912f32427c1ce01ffb6e4e711c1dd259a93c291caa9376a1bd41efb",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta’s Customer Lifecycle Strategy feature does not automatically exclude existing customers. When “acquire new customers” is chosen, users must manually select custom audiences to exclude; it does not pull from predefined segments or labels. A new “Legal and Operational” exclusion option is also provided, separate from the lifecycle setting.",
+                "inputHash": "87eecd7da912f32427c1ce01ffb6e4e711c1dd259a93c291caa9376a1bd41efb",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1703,7 +3103,23 @@
             "summary": "Meta のカスタマーライフサイクル戦略機能は、既存顧客を自動で除外しません。「新規顧客を獲得」を選択すると、カスタムオーディエンスを手動で選んで除外する必要があります。事前定義されたセグメントやラベルからは取得されません。また、「法的・運用上の」除外オプションが別途提供されています。",
             "inputHash": "c65b9b8573e226c01a821a5471c7b4e139521bf378ae47c12af34d58f9ab4a10",
             "generatedAt": "2026-09-09T04:45:10Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "カスタマーライフサイクル戦略は手動でオーディエンス除外、AIなし",
+                "inputHash": "c65b9b8573e226c01a821a5471c7b4e139521bf378ae47c12af34d58f9ab4a10",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta のカスタマーライフサイクル戦略機能は、既存顧客を自動で除外しません。「新規顧客を獲得」を選択すると、カスタムオーディエンスを手動で選んで除外する必要があります。事前定義されたセグメントやラベルからは取得されません。また、「法的・運用上の」除外オプションが別途提供されています。",
+                "inputHash": "c65b9b8573e226c01a821a5471c7b4e139521bf378ae47c12af34d58f9ab4a10",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1716,7 +3132,7 @@
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1725,7 +3141,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1735,7 +3151,23 @@
             "summary": null,
             "inputHash": "77e9fd0e97035f1b3b7d749a734b17cf2de01d26357d4c82a3509ff8a6c74285",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "77e9fd0e97035f1b3b7d749a734b17cf2de01d26357d4c82a3509ff8a6c74285",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "77e9fd0e97035f1b3b7d749a734b17cf2de01d26357d4c82a3509ff8a6c74285",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1743,7 +3175,23 @@
             "summary": "Meta広告の標準属性モデルは、クリック7日、エンゲージ1日、ビュー1日のウィンドウでコンバージョンを計測します。属性設定で「属性別ブレークダウン」を使用すると、クリック（1日・2‑7日）、エンゲージ、ビューの4行が表示され、各設定でのコンバージョン数を確認できます。クリック経由のコンバージョンは広告効果が最も明確に結びつきやすく、エンゲージやビューは他のチャネルの影響も考慮する必要があります。正しくイベントを設定し重複除去すれば、デフォルトレポートに隠れた結果を把握でき、インクリメンタルな効果や長期的なリード転換も評価できます。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": "2026-09-08T04:39:15Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告の属性レポートで結果の意味を把握する方法",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-08T04:39:15Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta広告の標準属性モデルは、クリック7日、エンゲージ1日、ビュー1日のウィンドウでコンバージョンを計測します。属性設定で「属性別ブレークダウン」を使用すると、クリック（1日・2‑7日）、エンゲージ、ビューの4行が表示され、各設定でのコンバージョン数を確認できます。クリック経由のコンバージョンは広告効果が最も明確に結びつきやすく、エンゲージやビューは他のチャネルの影響も考慮する必要があります。正しくイベントを設定し重複除去すれば、デフォルトレポートに隠れた結果を把握でき、インクリメンタルな効果や長期的なリード転換も評価できます。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-08T04:39:15Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1756,7 +3204,7 @@
       "publishedDate": "2026-05-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1765,7 +3213,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1775,7 +3223,23 @@
             "summary": null,
             "inputHash": "f29dd06b691c574f5081b6cb45a9634d1f21998f49f183da66b83c853170bf28",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "f29dd06b691c574f5081b6cb45a9634d1f21998f49f183da66b83c853170bf28",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "f29dd06b691c574f5081b6cb45a9634d1f21998f49f183da66b83c853170bf28",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1783,7 +3247,23 @@
             "summary": "Meta Ads Managerに、キャンペーンや広告セットを「広告設定」「属性」「予算・入札」「ビジネス目標」の4カテゴリでまとめて表示できるグルーピングレポート機能が追加された。Breakdownsとは異なり、同一変数でグループ化する。さらに、ChatGPT広告向けにコンバージョン最適化キャンペーンが6月初旬に提供開始予定で、6月1日までにPixelまたはConversions APIを設定したアカウントは6月5日頃に先行利用できる。Instagram Live動画のコンバージョン位置に関する情報も含まれる。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": "2026-09-08T04:39:15Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告に新機能：グルーピングレポートとChatGPTのコンバージョン最適化キャンペーン",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-08T04:39:15Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta Ads Managerに、キャンペーンや広告セットを「広告設定」「属性」「予算・入札」「ビジネス目標」の4カテゴリでまとめて表示できるグルーピングレポート機能が追加された。Breakdownsとは異なり、同一変数でグループ化する。さらに、ChatGPT広告向けにコンバージョン最適化キャンペーンが6月初旬に提供開始予定で、6月1日までにPixelまたはConversions APIを設定したアカウントは6月5日頃に先行利用できる。Instagram Live動画のコンバージョン位置に関する情報も含まれる。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-08T04:39:15Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1796,7 +3276,7 @@
       "publishedDate": "2026-05-26",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1805,7 +3285,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1815,7 +3295,23 @@
             "summary": "The article lists seven frequent errors agencies make with Meta ads, such as giving agencies ownership of client assets instead of proper access, and failing to define or correctly set up audience segments, which can degrade campaign performance.",
             "inputHash": "7bd325b701c641aeaa08ad65484e50b54103a4e3b4dc7e71baf6be3dc967811f",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "7 Common Meta Ads Mistakes Agencies Make",
+                "inputHash": "7bd325b701c641aeaa08ad65484e50b54103a4e3b4dc7e71baf6be3dc967811f",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The article lists seven frequent errors agencies make with Meta ads, such as giving agencies ownership of client assets instead of proper access, and failing to define or correctly set up audience segments, which can degrade campaign performance.",
+                "inputHash": "7bd325b701c641aeaa08ad65484e50b54103a4e3b4dc7e71baf6be3dc967811f",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1823,7 +3319,23 @@
             "summary": "この記事では、エージェンシーがMeta広告で犯す7つの一般的なミスを紹介しています。例えば、クライアント資産を所有させる代わりにアクセス権だけを付与しないことや、オーディエンスセグメントを定義せず不完全なままにすることが、キャンペーンの成果を悪化させます。",
             "inputHash": "36420036e97fab7fa6cb919d25cbd41757396313fdb3b4d8a89afef1ecf40aa3",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "エージェンシーが犯す7つのMeta広告ミス",
+                "inputHash": "36420036e97fab7fa6cb919d25cbd41757396313fdb3b4d8a89afef1ecf40aa3",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "この記事では、エージェンシーがMeta広告で犯す7つの一般的なミスを紹介しています。例えば、クライアント資産を所有させる代わりにアクセス権だけを付与しないことや、オーディエンスセグメントを定義せず不完全なままにすることが、キャンペーンの成果を悪化させます。",
+                "inputHash": "36420036e97fab7fa6cb919d25cbd41757396313fdb3b4d8a89afef1ecf40aa3",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1836,7 +3348,7 @@
       "publishedDate": "2026-05-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1845,7 +3357,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "df19403656263ac9e00d4d6b0ba326faf03ae83fadc7c0ce7bfc212072f92d5d",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1855,7 +3367,23 @@
             "summary": null,
             "inputHash": "3f2afe9b6518c1f5385a7f6260600675a6331e7ed56919675a29a6408b23b086",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "3f2afe9b6518c1f5385a7f6260600675a6331e7ed56919675a29a6408b23b086",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "3f2afe9b6518c1f5385a7f6260600675a6331e7ed56919675a29a6408b23b086",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1863,7 +3391,23 @@
             "summary": "Meta広告マネージャーで、約1か月前に発表された無償のOne‑Click Conversions APIがバグ修正により有効化された。フォーマット表示オプションが更新され、シングルメディア、カルーセル、コレクションの選択状態が確認できるようになった。動画生成機能が復活し、最大5枚の静止画から自動で動画コンセプトを3つ作成し選択できる。クリエイティブワークフローにAI翻訳ステップが追加され、最大12言語への翻訳が可能となった。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": "2026-09-09T04:45:10Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告でOne-Click CAPIが有効化、フォーマット表示オプションや動画生成・AI翻訳機能が更新",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta広告マネージャーで、約1か月前に発表された無償のOne‑Click Conversions APIがバグ修正により有効化された。フォーマット表示オプションが更新され、シングルメディア、カルーセル、コレクションの選択状態が確認できるようになった。動画生成機能が復活し、最大5枚の静止画から自動で動画コンセプトを3つ作成し選択できる。クリエイティブワークフローにAI翻訳ステップが追加され、最大12言語への翻訳が可能となった。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1885,7 +3429,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "506108f10b4c1d594d43e31993c5e9e0d98a75fdf46ae71f9884e802efed039d",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1895,7 +3439,23 @@
             "summary": "Meta is moving toward fully automated ad campaigns, where advertisers set objectives and budgets and AI handles the rest. Opinions fall into two extremes: some claim AI will make advertisers obsolete, others argue AI’s flaws ensure human roles remain. Large brands like Nike may be cautious, while small businesses see AI as an “easy button” for ad management.",
             "inputHash": "14895787676ce43507ec2ea5ef5ce4c8a96759820a36a5452f831b3177ebb003",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Ads Automation: Split Opinions on AI's Future Impact",
+                "inputHash": "14895787676ce43507ec2ea5ef5ce4c8a96759820a36a5452f831b3177ebb003",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta is moving toward fully automated ad campaigns, where advertisers set objectives and budgets and AI handles the rest. Opinions fall into two extremes: some claim AI will make advertisers obsolete, others argue AI’s flaws ensure human roles remain. Large brands like Nike may be cautious, while small businesses see AI as an “easy button” for ad management.",
+                "inputHash": "14895787676ce43507ec2ea5ef5ce4c8a96759820a36a5452f831b3177ebb003",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1903,7 +3463,23 @@
             "summary": "Metaは広告主が目的と予算を設定すれば、AIが残りを自動で処理する完全自動キャンペーンを目指しています。意見は二極化し、AIが広告主を不要にすると主張する側と、AIの欠点で人間の役割は残るとする側に分かれます。Nikeのような大企業は慎重になる可能性が高く、小規模事業者はAIを広告運用の「イージーボタン」と捉えています。",
             "inputHash": "b6eff70fb675c5ff985f568864fe29173e465c47aa7faf6093bd6d6bcf72f3ef",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告自動化：AIの将来影響に分かれる見解",
+                "inputHash": "b6eff70fb675c5ff985f568864fe29173e465c47aa7faf6093bd6d6bcf72f3ef",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは広告主が目的と予算を設定すれば、AIが残りを自動で処理する完全自動キャンペーンを目指しています。意見は二極化し、AIが広告主を不要にすると主張する側と、AIの欠点で人間の役割は残るとする側に分かれます。Nikeのような大企業は慎重になる可能性が高く、小規模事業者はAIを広告運用の「イージーボタン」と捉えています。",
+                "inputHash": "b6eff70fb675c5ff985f568864fe29173e465c47aa7faf6093bd6d6bcf72f3ef",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1925,7 +3501,7 @@
         "keyword:meta ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "4bda6e29ffa378f20da5718e67adb16b2431a61aa6e3f8a8191b17f7ce7d9590",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1935,7 +3511,23 @@
             "summary": null,
             "inputHash": "617699b925a43784a93ef763ce24fe4837e6930da2b9be3209a947019e183603",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "617699b925a43784a93ef763ce24fe4837e6930da2b9be3209a947019e183603",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "617699b925a43784a93ef763ce24fe4837e6930da2b9be3209a947019e183603",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "missing",
@@ -1943,7 +3535,23 @@
             "summary": null,
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1956,7 +3564,7 @@
       "publishedDate": "2026-04-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1964,7 +3572,7 @@
         "discovered-via:jon-loomer-meta-ads"
       ],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "d2dc0dc1c4efc057c1c0191e0388749eee34a824f326f4644babbc1469695685",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -1974,7 +3582,23 @@
             "summary": "Meta announced updates to the Meta Pixel and Conversions API designed to simplify setup, keep integrations current, and help businesses of all sizes achieve stronger ad performance.",
             "inputHash": "4a00dd5090d52c6096d32429a24bb6b31830b6339857ed7086119b5680d0b85b",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta updates Pixel and Conversions API to reduce technical barriers",
+                "inputHash": "4a00dd5090d52c6096d32429a24bb6b31830b6339857ed7086119b5680d0b85b",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta announced updates to the Meta Pixel and Conversions API designed to simplify setup, keep integrations current, and help businesses of all sizes achieve stronger ad performance.",
+                "inputHash": "4a00dd5090d52c6096d32429a24bb6b31830b6339857ed7086119b5680d0b85b",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -1982,7 +3606,23 @@
             "summary": "MetaはMeta PixelとConversions APIの更新を発表し、設定を簡素化し、連携を最新に保ち、あらゆる規模の企業が広告パフォーマンスを向上させることを支援します。",
             "inputHash": "f5a39c99b364d38c501846dfbf094ce9141cee2e07077f69fe5902643b3f6c20",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "MetaがPixelとConversions APIを更新し、技術的障壁を削減",
+                "inputHash": "f5a39c99b364d38c501846dfbf094ce9141cee2e07077f69fe5902643b3f6c20",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "MetaはMeta PixelとConversions APIの更新を発表し、設定を簡素化し、連携を最新に保ち、あらゆる規模の企業が広告パフォーマンスを向上させることを支援します。",
+                "inputHash": "f5a39c99b364d38c501846dfbf094ce9141cee2e07077f69fe5902643b3f6c20",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -1995,14 +3635,14 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -2012,7 +3652,23 @@
             "summary": "The Facebook Node.js Business SDK has been updated to version v25.0.1.",
             "inputHash": "adf3c9e950136c5f407ca6da23f547b59f45324c6af83e2552cb15b04aad8a3e",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Version v25.0.1 released",
+                "inputHash": "adf3c9e950136c5f407ca6da23f547b59f45324c6af83e2552cb15b04aad8a3e",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The Facebook Node.js Business SDK has been updated to version v25.0.1.",
+                "inputHash": "adf3c9e950136c5f407ca6da23f547b59f45324c6af83e2552cb15b04aad8a3e",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -2020,7 +3676,23 @@
             "summary": "Facebook の Node.js Business SDK がバージョン v25.0.1 に更新されました。",
             "inputHash": "b4aaf6ba7f8d2f10a027cb5e8edfec1e41b849507e62df4881f551a7f5a974ac",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "バージョン v25.0.1 がリリースされました",
+                "inputHash": "b4aaf6ba7f8d2f10a027cb5e8edfec1e41b849507e62df4881f551a7f5a974ac",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebook の Node.js Business SDK がバージョン v25.0.1 に更新されました。",
+                "inputHash": "b4aaf6ba7f8d2f10a027cb5e8edfec1e41b849507e62df4881f551a7f5a974ac",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -2033,14 +3705,14 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -2050,7 +3722,23 @@
             "summary": null,
             "inputHash": "dd84baa7296305d1959166d3e0e0469311d6194357998fb1299b9dd85fc1c2b3",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "dd84baa7296305d1959166d3e0e0469311d6194357998fb1299b9dd85fc1c2b3",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "dd84baa7296305d1959166d3e0e0469311d6194357998fb1299b9dd85fc1c2b3",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -2058,7 +3746,23 @@
             "summary": "Meta Business SDK 25.0.0では、Advantage+ Shopping Campaign（ASC）とAdvantage+ App Campaign（AAC）がMarketing APIで作成・更新できなくなります。v25.0から適用され、2026年5月19日までに全バージョンで有効になります。Ads Insights Async APIはレポート失敗時に詳細エラー情報を返すようになり、Page Reach、Impressions、3秒ビューアなどの旧指標は2026年6月に廃止され、Media Views と Media Viewers に置き換えられます。Webhooks の mTLS 証明書は2026年3月31日からMeta所有の認証局へ移行します。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Business SDK 25.0.0 リリース概要",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta Business SDK 25.0.0では、Advantage+ Shopping Campaign（ASC）とAdvantage+ App Campaign（AAC）がMarketing APIで作成・更新できなくなります。v25.0から適用され、2026年5月19日までに全バージョンで有効になります。Ads Insights Async APIはレポート失敗時に詳細エラー情報を返すようになり、Page Reach、Impressions、3秒ビューアなどの旧指標は2026年6月に廃止され、Media Views と Media Viewers に置き換えられます。Webhooks の mTLS 証明書は2026年3月31日からMeta所有の認証局へ移行します。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -2071,14 +3775,14 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -2088,7 +3792,23 @@
             "summary": "Version v24.0.1 of the Facebook Node.js Business SDK has been released, updating from v24.0.0.",
             "inputHash": "732b6e6d7cbddfd0ae03762883d825c659b1c26702eb0c56d607847756953184",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Release v24.0.1 of Facebook Node.js Business SDK",
+                "inputHash": "732b6e6d7cbddfd0ae03762883d825c659b1c26702eb0c56d607847756953184",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Version v24.0.1 of the Facebook Node.js Business SDK has been released, updating from v24.0.0.",
+                "inputHash": "732b6e6d7cbddfd0ae03762883d825c659b1c26702eb0c56d607847756953184",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -2096,7 +3816,23 @@
             "summary": "Facebook Node.js Business SDK のバージョン v24.0.1 がリリースされ、v24.0.0 から更新されました。",
             "inputHash": "aa364a16f122920e5f232a5bc354cdd6ea8433ad68bdc5811581525980f1770a",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook Node.js Business SDK v24.0.1 リリース",
+                "inputHash": "aa364a16f122920e5f232a5bc354cdd6ea8433ad68bdc5811581525980f1770a",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebook Node.js Business SDK のバージョン v24.0.1 がリリースされ、v24.0.0 から更新されました。",
+                "inputHash": "aa364a16f122920e5f232a5bc354cdd6ea8433ad68bdc5811581525980f1770a",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -2109,14 +3845,14 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -2126,7 +3862,23 @@
             "summary": null,
             "inputHash": "58cc789f5f30480083cc2f0fbccd97abd5e1b1648d2fe8abfd6c409758a8598f",
             "generatedAt": null,
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "58cc789f5f30480083cc2f0fbccd97abd5e1b1648d2fe8abfd6c409758a8598f",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "58cc789f5f30480083cc2f0fbccd97abd5e1b1648d2fe8abfd6c409758a8598f",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -2134,7 +3886,23 @@
             "summary": "このリリースでは、Advantage+ カタログ広告でDynamic Mediaがデフォルトで有効化され、必要に応じて開発者が明示的にオプトアウトする必要があります。日次予算の柔軟性が25％から75％に拡大され、機会の多い日に予算を増やしつつ週次上限は維持できます。新機能として、同一キャンペーン内の他の広告セットと最大20％の日次予算を共有でき、キャンペーン予算最適化なしでパフォーマンス向上が期待されます。Marketing API v24.0ではFacebook動画フィード広告枠が利用できなくなり、使用するとエラーになります。また、サードパーティによるClick to Messenger Lead Gen広告の作成が廃止され、Ads Managerからの作成は引き続き可能です。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": "2026-09-11T04:43:19Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Business SDK v24.0.0：Dynamic Media自動有効化と予算柔軟性拡大などの主要変更",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-11T04:43:19Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "このリリースでは、Advantage+ カタログ広告でDynamic Mediaがデフォルトで有効化され、必要に応じて開発者が明示的にオプトアウトする必要があります。日次予算の柔軟性が25％から75％に拡大され、機会の多い日に予算を増やしつつ週次上限は維持できます。新機能として、同一キャンペーン内の他の広告セットと最大20％の日次予算を共有でき、キャンペーン予算最適化なしでパフォーマンス向上が期待されます。Marketing API v24.0ではFacebook動画フィード広告枠が利用できなくなり、使用するとエラーになります。また、サードパーティによるClick to Messenger Lead Gen広告の作成が廃止され、Ads Managerからの作成は引き続き可能です。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-11T04:43:19Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -2147,14 +3915,14 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -2164,7 +3932,23 @@
             "summary": "Version v23.0.3 of the Facebook Node.js Business SDK has been released.",
             "inputHash": "1bb8b316f1349084bcdb7fe7d8b73638de1265deb53ae5c2e3ae97917114c9b9",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Release v23.0.3",
+                "inputHash": "1bb8b316f1349084bcdb7fe7d8b73638de1265deb53ae5c2e3ae97917114c9b9",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Version v23.0.3 of the Facebook Node.js Business SDK has been released.",
+                "inputHash": "1bb8b316f1349084bcdb7fe7d8b73638de1265deb53ae5c2e3ae97917114c9b9",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -2172,7 +3956,23 @@
             "summary": "Facebook Node.js Business SDK のバージョン v23.0.3 がリリースされました。",
             "inputHash": "c35f2837c12b6bab551a494a31a13630fc385f64d57b7df4ddd27dbeda6009f8",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "リリース v23.0.3",
+                "inputHash": "c35f2837c12b6bab551a494a31a13630fc385f64d57b7df4ddd27dbeda6009f8",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebook Node.js Business SDK のバージョン v23.0.3 がリリースされました。",
+                "inputHash": "c35f2837c12b6bab551a494a31a13630fc385f64d57b7df4ddd27dbeda6009f8",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
@@ -2185,14 +3985,14 @@
       "publishedDate": "2025-09-26",
       "updatedDate": "2025-09-26",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-17T04:55:10Z",
+      "lastObservedAt": "2026-09-18T11:07:09Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
       ],
       "matchEvidence": [],
       "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v2",
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
         "sourceFingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
         "generatorRevision": "bilingual-v1",
         "locales": {
@@ -2202,7 +4002,23 @@
             "summary": "The software has been updated to version v23.0.2.",
             "inputHash": "26f18ae7679a2a508c3b738be6197f8735106558a0902a261ab255631a526040",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Version v23.0.2 released",
+                "inputHash": "26f18ae7679a2a508c3b738be6197f8735106558a0902a261ab255631a526040",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The software has been updated to version v23.0.2.",
+                "inputHash": "26f18ae7679a2a508c3b738be6197f8735106558a0902a261ab255631a526040",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           },
           "ja": {
             "status": "machine",
@@ -2210,7 +4026,23 @@
             "summary": "ソフトウェアがバージョン v23.0.2 に更新されました。",
             "inputHash": "5e033da59bf3a3836d457e564fb328fe0689dda2dff85da767d10ab697807500",
             "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "バージョン v23.0.2 がリリースされました",
+                "inputHash": "5e033da59bf3a3836d457e564fb328fe0689dda2dff85da767d10ab697807500",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "ソフトウェアがバージョン v23.0.2 に更新されました。",
+                "inputHash": "5e033da59bf3a3836d457e564fb328fe0689dda2dff85da767d10ab697807500",
+                "generatedAt": "2026-09-07T04:44:41Z",
+                "reviewedAt": null
+              }
+            }
           }
         }
       }
