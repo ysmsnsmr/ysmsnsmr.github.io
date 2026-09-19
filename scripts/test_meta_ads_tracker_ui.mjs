@@ -526,16 +526,17 @@ try {
   const legacyItem = personalFeedReport.items[0];
   await productionDetail.goto(`${server.origin}/meta-ads-updates/detail.html?id=${encodeURIComponent(legacyItem.id)}`, { waitUntil: "networkidle" });
   assert(await productionDetail.locator("#detail-card").isVisible(), "v1 production feed detail must render");
-  const productionEnglish = legacyItem.presentation?.schemaVersion === "meta-ads-personal-feed-presentation/v2"
-    ? legacyItem.presentation.locales?.en
-    : null;
-  const expectedProductionTitle = (productionEnglish?.status === "machine" || productionEnglish?.status === "reviewed") && productionEnglish.shortHeadline
-    ? productionEnglish.shortHeadline
-    : legacyItem.title;
+  const productionEnglish = legacyItem.presentation?.schemaVersion === "meta-ads-personal-feed-presentation/v3"
+    ? {
+        shortHeadline: legacyItem.presentation.locales?.en?.fields?.shortHeadline?.value || null,
+        summary: legacyItem.presentation.locales?.en?.fields?.summary?.value || null
+      }
+    : legacyItem.presentation?.schemaVersion === "meta-ads-personal-feed-presentation/v2"
+      ? legacyItem.presentation.locales?.en
+      : null;
+  const expectedProductionTitle = productionEnglish?.shortHeadline || legacyItem.title;
   assert((await productionDetail.locator("#detail-title").textContent()) === expectedProductionTitle, "English production detail must use the English headline or original title");
-  const expectedProductionSummary = (productionEnglish?.status === "machine" || productionEnglish?.status === "reviewed") && productionEnglish.summary
-    ? productionEnglish.summary
-    : "Summary not available. Review the original source.";
+  const expectedProductionSummary = productionEnglish?.summary || "Summary not available. Review the original source.";
   assert((await productionDetail.locator("#detail-summary").textContent()).includes(expectedProductionSummary), "English production detail must use the English summary or fallback");
   await productionDetail.close();
 
