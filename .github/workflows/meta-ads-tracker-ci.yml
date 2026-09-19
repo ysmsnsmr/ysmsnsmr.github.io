@@ -25,6 +25,7 @@ jobs:
         run: |
           python3 -m unittest discover scripts -p 'test_meta_ads_tracker*.py'
           python3 -m unittest discover scripts -p 'test_meta_ads_personal_feed*.py'
+          python3 -m unittest discover scripts -p 'test_meta_ads_jev*.py'
       - name: Validate contracts, publication, workflows, and static JavaScript
         run: |
           python3 scripts/validate_meta_ads_tracker_contract.py
