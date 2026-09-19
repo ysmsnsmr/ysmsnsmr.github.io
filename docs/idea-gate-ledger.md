@@ -605,3 +605,54 @@ must use `supersedes` instead of editing an earlier entry.
 - Allowed action: API接続とproduction変更を行わず、既存15件のhuman laneをsource ID、URL、fingerprint由来のstable item IDへ結合した固定fixtureと、その完全性を検証するテストだけを追加する
 - Revisit when: fixtureの15件すべてが元artifactのURLと既存human laneへ推測なしで結合できる; Jevの公式provider保持条件、学習利用、credential境界を確認できる; 固定model IDとversioned question setを使うartifact-only runnerの契約を別Checkpointで確定する
 - Override: not applied
+
+<!-- idea-gate:20260919t120104-meta-ads-jev-artifact-runner -->
+## 固定15件を使うJev Ads Relevance artifact-only runner
+
+- Record ID: `20260919t120104-meta-ads-jev-artifact-runner`
+- Evaluated: 2026-09-19T12:01:04+08:00
+- Project: Meta Ads Personal Feed
+- Rubric: 1.0.0
+- Decision: **EXPERIMENT_ONLY**
+- Score: 74/100
+- Confidence: medium - 比較対象と入力境界は確定したが、Jevの実測精度・障害率・providerの具体的な保持期間は未観測である
+
+### Problem Card
+
+- Who: Meta Ads Personal Feedを保守する個人運用者
+- When: 既存の15件人間分類とsemantic modelの一致・不一致を一度だけ確認したいとき
+- Problem: keywordとsource固有ruleだけでは曖昧な関連度判断の妥当性を測れず、productionへ接続する前の比較証跡もない
+- Current behavior: 固定fixtureに人間分類を保持し、semantic判定は実行せずに手動確認だけを行う
+
+### Evidence
+
+- Tier: 2
+- main上のhuman_labels.jsonはACTION/WATCH/DROP各5件の人間確認済み15件を固定している
+- 前CheckpointではAPI接続を行わないfixture-only実装に限定され、runner契約の確定が再評価条件だった
+- Jevの公開API資料は固定model IDとchoice questionを用いる回答形式を示し、providerのprivacy policyは入力を学習・fine-tuneに使わない一方、保持期間を合理的に必要な期間としか定めていない
+- fixtureに入るのは公開URL、公開タイトル、短いsourceContextと人間分類であり、credential・production state・response本文は入力に含めない
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 15/20 |
+| `current_workaround_gap` | 15/20 |
+| `evidence_strength` | 15/20 |
+| `behavior_outcome_impact` | 8/15 |
+| `strategic_fit_reuse` | 9/10 |
+| `ui_operational_lightness` | 12/15 |
+| **Total** | **74/100** |
+
+### Alternatives
+
+- **SHRINK - 既存rule-based分類だけを15件fixtureで再計測する:** EXPERIMENT_ONLY (70/100). 外部semantic providerを使わず、既存分類とhuman laneの差だけを可視化する
+- **INTEGRATE - Jevをdaily collectorの自動lane判定へ直接統合する:** DISQUALIFIED (not scored). Jevの出力をACTION/WATCH/DROPまたは公開判定に直接用いる
+- **NO_FEATURE - Jev比較を実行せず、既存の人間確認を続ける:** EXPERIMENT_ONLY (62/100). 外部providerへの送信を避け、必要な記事だけを人間が判断する
+
+### Next Step
+
+- Allowed action: 固定15件のみを読み、--live明示時だけJev APIを呼び、public入力の最小化・credential非保存・raw response非保存・production非接続を機械的に検証するartifact-only runnerを1本だけ実装する
+- Revisit when: 15件のartifactを人間laneと比較し、ACTIONからDROPへの不一致を個別に確認する; transport/validation失敗がartifactに安全な分類だけで残り、raw response・credential・fixture本文が出力されないことを確認する; production統合の検討は比較結果、provider保持条件、明示的な人間レビューを別途揃えてから再評価する
+- Supersedes: `20260919t111534-meta-ads-jev-relevance-shadow`
+- Override: not applied
