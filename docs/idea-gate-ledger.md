@@ -555,3 +555,53 @@ must use `supersedes` instead of editing an earlier entry.
 - Override: applied by yas at 2026-09-16T21:00:00+08:00
 - Override reason: 個人・同僚向けの実用性を優先して実装する
 - Override constraints: 既存のHTTPS・許可host・/business/news/・canonical metadata・日付検証を弱めない。; 新しいUI、source、外部API、定期workflowを追加しない。; 同一の公式URLは1回だけ取得・state・feedへ保存し、発見元はmatchEvidenceへすべて残す。; Social Media TodayとJon Loomerの固定fixture、重複URL、片方の公式ページ取得失敗を検証する。
+
+<!-- idea-gate:20260919t111534-meta-ads-jev-relevance-shadow -->
+## 既存の人間ラベルを使うJev Ads Relevance artifact-only shadow probe
+
+- Record ID: `20260919t111534-meta-ads-jev-relevance-shadow`
+- Evaluated: 2026-09-19T11:15:34+08:00
+- Project: Meta Ads Personal Feed
+- Rubric: 1.0.0
+- Decision: **EXPERIMENT_ONLY**
+- Score: 76/100
+- Confidence: medium - 既存ラベルとURLは再現できたが、Jevの実測結果、provider保持条件、credential境界はまだ未検証
+
+### Problem Card
+
+- Who: Meta Ads Personal Feedを保守する個人運用者
+- When: 記事のMeta広告関連度をACTION・WATCH・DROP候補へ振り分ける前に意味的な補助信号を得たいとき
+- Problem: 14日間の手動レビューは1件約15分、手戻り率ほぼ100%で中断され、意味的な関連度確認を継続できなかった
+- Current behavior: keywordとsource固有ruleでincludedまたはdropを決め、曖昧な意味判断は人間が記事ごとに確認する
+
+### Evidence
+
+- Tier: 2
+- 過去の人間レビューは1件約15分、手戻り率ほぼ100%となり途中で断念した
+- main履歴の15件golden caseにはACTION・WATCH・DROPの人間分類が残っている
+- MuseはWATCH、Jon LoomerのChatGPT Adsは訂正後DROPという既知edge caseがある
+- 現行stateで15件すべてをsource ID、URL、fingerprintへ機械的に再結合できた
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 15/20 |
+| `current_workaround_gap` | 16/20 |
+| `evidence_strength` | 15/20 |
+| `behavior_outcome_impact` | 8/15 |
+| `strategic_fit_reuse` | 9/10 |
+| `ui_operational_lightness` | 13/15 |
+| **Total** | **76/100** |
+
+### Alternatives
+
+- **SHRINK - 同じ15件で既存rule-based baselineだけを再計測する:** EXPERIMENT_ONLY (71/100). 外部semantic modelを使わず、現行keyword・source ruleの誤分類だけを固定fixtureで可視化する
+- **INTEGRATE - Jevをproduction routingへ直接統合する:** DISQUALIFIED (not scored). 収集時にJev判定を実行し、公開対象またはDROPを自動決定する
+- **NO_FEATURE - 現行ruleと人間確認だけを維持する:** STOP (56/100). semantic sensorを追加せず、必要な記事だけを都度人間が確認する
+
+### Next Step
+
+- Allowed action: API接続とproduction変更を行わず、既存15件のhuman laneをsource ID、URL、fingerprint由来のstable item IDへ結合した固定fixtureと、その完全性を検証するテストだけを追加する
+- Revisit when: fixtureの15件すべてが元artifactのURLと既存human laneへ推測なしで結合できる; Jevの公式provider保持条件、学習利用、credential境界を確認できる; 固定model IDとversioned question setを使うartifact-only runnerの契約を別Checkpointで確定する
+- Override: not applied
