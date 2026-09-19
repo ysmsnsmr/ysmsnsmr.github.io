@@ -31,6 +31,9 @@ pnpm-debug.log*
 tmp/
 temp/
 
+# Local-only Jev semantic shadow comparison artifacts
+artifacts/meta_ads_jev_ads_relevance_shadow/
+
 # Caches
 .cache/
 .parcel-cache/
