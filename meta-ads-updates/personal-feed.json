@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-09-18T11:39:03Z",
+  "generatedAt": "2026-09-19T04:39:53Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -68,7 +68,7 @@
       "publishedDate": "2026-09-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-18T11:07:09Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -140,7 +140,7 @@
       "publishedDate": "2026-09-16",
       "updatedDate": null,
       "firstObservedAt": "2026-09-17T04:55:10Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -209,7 +209,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -281,7 +281,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -316,25 +316,25 @@
             }
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta、個人・クリエイター・企業向けサブスクリプション「Meta One」開始",
+            "summary": "Metaは新たにサブスクリプションサービス「Meta One」を発表し、個人・クリエイター・企業向けにプランを提供する。Instagram Plus、Facebook Plus、WhatsApp Plusといった単体プランではカスタムフォントや通知、メッセンジャーのカスタマイズ、チャットバックアップなどの機能が追加され、Core・PremiumバンドルではAIによる画像・動画生成やRestyleなどの高度なAIツールが利用可能になる。価格は単体プランが月額2.99ドル、個人バンドルが7.99ドル、クリエイター・ビジネスバンドルが14.99ドルで、全世界で提供される。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-09-19T04:39:53Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Meta、個人・クリエイター・企業向けサブスクリプション「Meta One」開始",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-19T04:39:53Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Metaは新たにサブスクリプションサービス「Meta One」を発表し、個人・クリエイター・企業向けにプランを提供する。Instagram Plus、Facebook Plus、WhatsApp Plusといった単体プランではカスタムフォントや通知、メッセンジャーのカスタマイズ、チャットバックアップなどの機能が追加され、Core・PremiumバンドルではAIによる画像・動画生成やRestyleなどの高度なAIツールが利用可能になる。価格は単体プランが月額2.99ドル、個人バンドルが7.99ドル、クリエイター・ビジネスバンドルが14.99ドルで、全世界で提供される。",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-19T04:39:53Z",
                 "reviewedAt": null
               }
             }
@@ -350,7 +350,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -422,7 +422,7 @@
       "publishedDate": "2026-09-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-11T04:43:19Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -460,25 +460,25 @@
             }
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Instagram CEO、アルゴリズム廃止は利用低下とクリエイター影響と警告",
+            "summary": "Instagramの最高責任者アダム・モスセリ氏は、報道陣に対し、コンテンツランキングアルゴリズムを廃止すれば利用者の関心が薄れ使用頻度が下がり、クリエイターやブランドのリーチが減少すると警告した。オーストラリア政府がエンゲージメント重視のアルゴリズム使用制限を検討中で、規制",
             "inputHash": "cb5fe21a9ac90dc25787923abd6ee351aed6b0e6ee0a331d5fe8c2b2729d844d",
-            "generatedAt": null,
+            "generatedAt": "2026-09-19T04:39:53Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Instagram CEO、アルゴリズム廃止は利用低下とクリエイター影響と警告",
                 "inputHash": "cb5fe21a9ac90dc25787923abd6ee351aed6b0e6ee0a331d5fe8c2b2729d844d",
-                "generatedAt": null,
+                "generatedAt": "2026-09-19T04:39:53Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Instagramの最高責任者アダム・モスセリ氏は、報道陣に対し、コンテンツランキングアルゴリズムを廃止すれば利用者の関心が薄れ使用頻度が下がり、クリエイターやブランドのリーチが減少すると警告した。オーストラリア政府がエンゲージメント重視のアルゴリズム使用制限を検討中で、規制",
                 "inputHash": "cb5fe21a9ac90dc25787923abd6ee351aed6b0e6ee0a331d5fe8c2b2729d844d",
-                "generatedAt": null,
+                "generatedAt": "2026-09-19T04:39:53Z",
                 "reviewedAt": null
               }
             }
@@ -494,7 +494,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-14T11:20:59Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -563,7 +563,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T04:45:10Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -635,7 +635,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -707,7 +707,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -777,7 +777,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -849,7 +849,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T22:29:27Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -921,7 +921,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1065,7 +1065,7 @@
       "publishedDate": "2026-08-19",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T22:29:27Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1079,25 +1079,25 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta AI app now available for Mac",
+            "summary": "Meta released a Mac version of its Meta AI app that includes all mobile app features, window sharing, built‑in dictation, and business tools such as answering questions using account data, integrating public brand insights, creating documents, and setting recurring tasks. The app is free to start, with a paid Meta One subscription option.",
             "inputHash": "053a54546d8828ae772a850ff354901e966c366578fb79d23b9281f7a6e6c842",
-            "generatedAt": null,
+            "generatedAt": "2026-09-19T04:39:53Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Meta AI app now available for Mac",
                 "inputHash": "053a54546d8828ae772a850ff354901e966c366578fb79d23b9281f7a6e6c842",
-                "generatedAt": null,
+                "generatedAt": "2026-09-19T04:39:53Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Meta released a Mac version of its Meta AI app that includes all mobile app features, window sharing, built‑in dictation, and business tools such as answering questions using account data, integrating public brand insights, creating documents, and setting recurring tasks. The app is free to start, with a paid Meta One subscription option.",
                 "inputHash": "053a54546d8828ae772a850ff354901e966c366578fb79d23b9281f7a6e6c842",
-                "generatedAt": null,
+                "generatedAt": "2026-09-19T04:39:53Z",
                 "reviewedAt": null
               }
             }
@@ -1105,23 +1105,23 @@
           "ja": {
             "status": "machine",
             "shortHeadline": "Meta AI、Mac向けアプリをリリース ビジネス向け機能も搭載",
-            "summary": "MetaはMac向けにMeta AIアプリを提供開始した。モバイル版と同様の機能に加え、ウィンドウ共有や全アプリ対応の音声入力が可能で、デスクトップ作業にAIアシスタントを組み込める。ビジネスユーザーは自社の広告実績やアカウント情報、公開されている同業他社のデータを元に質問でき、資料作成やタスク設定も支援する。基本は無料だが、より高度な利用には有料サブスクリプション「Meta One」への移行が想定されている。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-09T22:29:27Z",
+            "summary": "MetaはMac向けにMeta AIアプリを提供開始した。モバイル版と同等の機能を備え、ウィンドウ共有や全アプリ対応の音声入力が可能だ。ビジネスユーザーは自社の広告実績やエンゲージメント情報、公開されている同業他社のデータを元に質問でき、資料作成やタスク設定もAIに依頼できる。基本は無料だが、より高度な利用には有料サブスクリプション「Meta One」の提供を予定している。",
+            "inputHash": "17eb881e5594f4ee6b00805ccb34b2870230d55c9b051cb3028d9e0df4667f91",
+            "generatedAt": "2026-09-19T04:39:53Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
                 "value": "Meta AI、Mac向けアプリをリリース ビジネス向け機能も搭載",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-09T22:29:27Z",
+                "inputHash": "17eb881e5594f4ee6b00805ccb34b2870230d55c9b051cb3028d9e0df4667f91",
+                "generatedAt": "2026-09-19T04:39:53Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
-                "value": "MetaはMac向けにMeta AIアプリを提供開始した。モバイル版と同様の機能に加え、ウィンドウ共有や全アプリ対応の音声入力が可能で、デスクトップ作業にAIアシスタントを組み込める。ビジネスユーザーは自社の広告実績やアカウント情報、公開されている同業他社のデータを元に質問でき、資料作成やタスク設定も支援する。基本は無料だが、より高度な利用には有料サブスクリプション「Meta One」への移行が想定されている。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-09T22:29:27Z",
+                "value": "MetaはMac向けにMeta AIアプリを提供開始した。モバイル版と同等の機能を備え、ウィンドウ共有や全アプリ対応の音声入力が可能だ。ビジネスユーザーは自社の広告実績やエンゲージメント情報、公開されている同業他社のデータを元に質問でき、資料作成やタスク設定もAIに依頼できる。基本は無料だが、より高度な利用には有料サブスクリプション「Meta One」の提供を予定している。",
+                "inputHash": "17eb881e5594f4ee6b00805ccb34b2870230d55c9b051cb3028d9e0df4667f91",
+                "generatedAt": "2026-09-19T04:39:53Z",
                 "reviewedAt": null
               }
             }
@@ -1209,7 +1209,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1281,7 +1281,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1353,7 +1353,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1425,7 +1425,7 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1495,7 +1495,7 @@
       "publishedDate": "2026-08-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1567,7 +1567,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1639,7 +1639,7 @@
       "publishedDate": "2026-07-24",
       "updatedDate": null,
       "firstObservedAt": "2026-09-14T11:20:59Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -1650,49 +1650,49 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
+            "status": "machine",
+            "shortHeadline": "Meta AI now plans, acts and delivers tasks for users",
+            "summary": "Meta AI’s new Muse Spark 1.1 model powers the Meta AI app and meta.ai, enabling the assistant to create plans, follow through on tasks, give daily briefings, research topics, generate slides and keep results in one place. The features begin rolling out today in select markets and will expand to more countries and surfaces, including WhatsApp.",
+            "inputHash": "994b277bb2d3ede5d497c6709d68c6e515c0d84a7640723f35f119f94c99cf48",
+            "generatedAt": "2026-09-19T04:39:53Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta AI now plans, acts and delivers tasks for users",
+                "inputHash": "994b277bb2d3ede5d497c6709d68c6e515c0d84a7640723f35f119f94c99cf48",
+                "generatedAt": "2026-09-19T04:39:53Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta AI’s new Muse Spark 1.1 model powers the Meta AI app and meta.ai, enabling the assistant to create plans, follow through on tasks, give daily briefings, research topics, generate slides and keep results in one place. The features begin rolling out today in select markets and will expand to more countries and surfaces, including WhatsApp.",
+                "inputHash": "994b277bb2d3ede5d497c6709d68c6e515c0d84a7640723f35f119f94c99cf48",
+                "generatedAt": "2026-09-19T04:39:53Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
             "status": "missing",
             "shortHeadline": null,
             "summary": null,
-            "inputHash": "994b277bb2d3ede5d497c6709d68c6e515c0d84a7640723f35f119f94c99cf48",
+            "inputHash": "80712b6f77a484ba41b4a64d4d87188dc9729f6ab1b8c551489a5e91344ea5fc",
             "generatedAt": null,
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "missing",
                 "value": null,
-                "inputHash": "994b277bb2d3ede5d497c6709d68c6e515c0d84a7640723f35f119f94c99cf48",
+                "inputHash": "80712b6f77a484ba41b4a64d4d87188dc9729f6ab1b8c551489a5e91344ea5fc",
                 "generatedAt": null,
                 "reviewedAt": null
               },
               "summary": {
                 "status": "missing",
                 "value": null,
-                "inputHash": "994b277bb2d3ede5d497c6709d68c6e515c0d84a7640723f35f119f94c99cf48",
+                "inputHash": "80712b6f77a484ba41b4a64d4d87188dc9729f6ab1b8c551489a5e91344ea5fc",
                 "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta AI、計画・実行機能を搭載したMuse Spark 1.1で行動開始",
-            "summary": "Metaは新モデルMuse Spark 1.1をMeta AIアプリとmeta.aiに導入し、計画立案やタスク実行、進捗管理などを自動で行う機能を追加した。キッチンリフォームやマラソン練習、誕生日ディナーの予約など具体的なシナリオで提案・実行し、日々のブリーフィングや情報検索、スライド作成も可能になる。リアルタイムで指示を変更でき、生成物は一元管理される。これらの機能は本日一部地域で配信開始し、数週間以内にWhatsAppなど他サービスへ拡大する予定である。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-16T07:17:13Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta AI、計画・実行機能を搭載したMuse Spark 1.1で行動開始",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-16T07:17:13Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaは新モデルMuse Spark 1.1をMeta AIアプリとmeta.aiに導入し、計画立案やタスク実行、進捗管理などを自動で行う機能を追加した。キッチンリフォームやマラソン練習、誕生日ディナーの予約など具体的なシナリオで提案・実行し、日々のブリーフィングや情報検索、スライド作成も可能になる。リアルタイムで指示を変更でき、生成物は一元管理される。これらの機能は本日一部地域で配信開始し、数週間以内にWhatsAppなど他サービスへ拡大する予定である。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-16T07:17:13Z",
                 "reviewedAt": null
               }
             }
@@ -1708,7 +1708,7 @@
       "publishedDate": "2026-07-24",
       "updatedDate": null,
       "firstObservedAt": "2026-09-14T11:20:59Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -1777,7 +1777,7 @@
       "publishedDate": "2026-07-24",
       "updatedDate": null,
       "firstObservedAt": "2026-09-14T11:20:59Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -1846,7 +1846,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1918,7 +1918,7 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1988,7 +1988,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2060,7 +2060,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2132,7 +2132,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2273,7 +2273,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2344,7 +2344,7 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -2414,7 +2414,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2486,7 +2486,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2558,7 +2558,7 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2630,7 +2630,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2701,7 +2701,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2772,7 +2772,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2844,7 +2844,7 @@
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2916,7 +2916,7 @@
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2988,7 +2988,7 @@
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3060,7 +3060,7 @@
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3132,7 +3132,7 @@
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3204,7 +3204,7 @@
       "publishedDate": "2026-05-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3276,7 +3276,7 @@
       "publishedDate": "2026-05-26",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3348,7 +3348,7 @@
       "publishedDate": "2026-05-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3564,7 +3564,7 @@
       "publishedDate": "2026-04-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3635,7 +3635,7 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -3705,7 +3705,7 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -3775,7 +3775,7 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -3845,7 +3845,7 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -3915,7 +3915,7 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -3985,7 +3985,7 @@
       "publishedDate": "2025-09-26",
       "updatedDate": "2025-09-26",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-18T11:39:03Z",
+      "lastObservedAt": "2026-09-19T04:39:53Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
