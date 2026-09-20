@@ -711,3 +711,101 @@ must use `supersedes` instead of editing an earlier entry.
 - Override: applied by yas at 2026-09-20T11:06:45+08:00
 - Override reason: 人間ラベルも15件の主観的基準であり、どちらが正しいかを追加検証する時間とプロセスの負担が価値に見合わないため、既存artifact観察を根拠に本番候補でshadow観測を続けたい
 - Override constraints: Jev結果を掲載、DROP、承認、公開停止へ使用しない; Jev失敗をcollectorと公開workflowへ伝播させない; titleとbounded sourceContext以外を送信しない; raw provider response、secret、顧客情報を保存しない; 固定model IDとquestion version、件数上限、kill switchを維持する; 自動routingは別評価なしに追加しない
+
+<!-- idea-gate:20260916t101916-malaysia-selection-observation -->
+## 選定前から最終決定までのselection observation artifact
+
+- Record ID: `20260916t101916-malaysia-selection-observation`
+- Evaluated: 2026-09-16T10:19:16+08:00
+- Project: ysmsnsmr.github.io / Malaysia News
+- Rubric: 1.0.0
+- Decision: **GO**
+- Score: 89/100
+- Confidence: high - 直近3日分の本番artifactと選定コードを突き合わせ、情報が失われる位置と既存artifact経路を確認した
+
+### Problem Card
+
+- Who: Malaysia Newsの品質を日常的に確認する運用者
+- When: scheduled run後に特定テーマの記事が選定されなかった理由を確認するとき
+- Problem: artifactには最終選定記事しか残らず、選定前候補の有無と除外段階を後から検証できない
+- Current behavior: selected_itemsと生成結果だけを確認し、未選定の記事は当時のRSSを再現できないため調査を断念する
+
+### Evidence
+
+- Tier: 3
+- 2026-09-14から16日の3件のscheduled artifactで、選定済みヘイズ記事は確認できたが未選定ヘイズ記事の有無は復元できなかった
+- 現行select_itemsはscore、重複、除外、noise gate、各capをメモリ上で処理し、selected_items.jsonには最終selectedだけを書き出している
+- artifact uploadはrun directory全体を保存するため、追加JSONは既存のartifact経路へ自然に統合できる
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 16/20 |
+| `current_workaround_gap` | 17/20 |
+| `evidence_strength` | 18/20 |
+| `behavior_outcome_impact` | 13/15 |
+| `strategic_fit_reuse` | 10/10 |
+| `ui_operational_lightness` | 15/15 |
+| **Total** | **89/100** |
+
+### Alternatives
+
+- **SHRINK - 除外記事だけを観察するJSON:** GO (81/100). 最終selected以外の記事と最初の除外理由だけを保存する
+- **INTEGRATE - 既存run directoryへ全選定段階の観察JSONを統合:** GO (89/100). RSS記事ごとに最終結果と決定段階を保存し、既存artifact uploadへ含める
+- **NO_FEATURE - 必要時にRSSを再取得して手動比較:** STOP (56/100). artifactは増やさず、後日RSSを再取得して候補を推定する
+
+### Next Step
+
+- Allowed action: 既存select_itemsの決定を観察専用で記録し、selection_observation.jsonをrun directoryへ出力する
+- Revisit when: artifactサイズまたはGitHub Actionsの実行時間が実用上問題になる; 候補数が増えても除外理由が運用判断に使われない; 選定ロジック変更なしに観察JSONが選定結果を変える
+- Override: not applied
+
+<!-- idea-gate:20260920t100000-malaysia-jev-selector-shadow -->
+## JevによるMalaysia News selector shadow評価
+
+- Record ID: `20260920t100000-malaysia-jev-selector-shadow`
+- Evaluated: 2026-09-20T10:00:00+08:00
+- Project: ysmsnsmr.github.io / Malaysia News
+- Rubric: 1.0.0
+- Decision: **GO**
+- Score: 85/100
+- Confidence: medium - 選定観察の欠落とJevの同一repository内の通信実績は確認できるが、Malaysia Newsの記事分類への適合性は未検証である
+
+### Problem Card
+
+- Who: Malaysia Newsの選定品質を確認・改善する運用者
+- When: scheduled run後に、記事が選定・除外された理由と意味上の妥当性を確認するとき
+- Problem: 現行selectorとvalidatorは決定的な規則中心で、記事の意味を要する不一致を比較・分類する仕組みがない
+- Current behavior: selected_itemsとartifactを手動で読み、未選定記事は選定時点の候補や意味判断を十分に比較できない
+
+### Evidence
+
+- Tier: 3
+- 2026-09-14から16日の3件のMalaysia News artifactで、未選定記事の有無と除外理由を後から復元できなかった
+- 2026-09-16にselection_observation.jsonを追加する実装を専用ブランチへ記録し、候補と決定段階を追跡する土台を作った
+- 同一repositoryのMeta Ads TrackerではJevをartifact-only shadowとして50件実行し、失敗0件・production effectなしを確認している
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 16/20 |
+| `current_workaround_gap` | 16/20 |
+| `evidence_strength` | 17/20 |
+| `behavior_outcome_impact` | 13/15 |
+| `strategic_fit_reuse` | 9/10 |
+| `ui_operational_lightness` | 14/15 |
+| **Total** | **85/100** |
+
+### Alternatives
+
+- **SHRINK - 選定観察JSONだけを追加して人手で候補を確認する:** GO (81/100). Jevを使わず、選定前候補と決定段階だけをartifactへ残す
+- **INTEGRATE - 既存Malaysia workflowにJev artifact-only shadowを統合する:** GO (85/100). 同一の選定候補をJevへ送り、現行selector・hard validatorとの不一致をartifactにのみ保存する
+- **NO_FEATURE - 不一致が疑われる日だけ手動でRSSと公開結果を比較する:** STOP (59/100). 新しい通信やartifactを追加せず、必要時だけ候補を再調査する
+
+### Next Step
+
+- Allowed action: 公開経路に接続しないJev selector shadowを実装し、現行selector・hard validator・Jevの決定を同一artifactへ記録する
+- Revisit when: Jev APIのMalaysia News向け通信またはJSON契約が安定しない; shadow artifactの不一致が運用判断に使われない; Jevの判定がselectorやvalidatorの改善候補を示せない; artifactのコストまたは実行時間がscheduled運用に不釣り合いになる
+- Override: not applied

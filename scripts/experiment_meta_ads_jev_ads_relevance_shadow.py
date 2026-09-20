@@ -13,30 +13,24 @@ import hashlib
 import json
 import math
 import os
-import platform
 import re
 import sys
 import tempfile
 import time
-import urllib.error
-import urllib.request
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
 
+from jev_shadow_transport import JevRequestError, _safe_http_error_detail, post_jev_request
+
 
 SCHEMA_VERSION = "meta-ads-jev-ads-relevance-shadow/v1"
 FIXTURE_SCHEMA_VERSION = "meta-ads-jev-human-label-fixture/v1"
 REQUESTED_MODEL_ID = "jev-1.13.0"
-SDK_NAME = "typesafe-sdk"
-SDK_VERSION = "artifact-runner"
 QUESTION_SET_VERSION = "meta-ads-relevance-v1"
 QUESTION_ID = "adsRelevance"
-ENDPOINT = "https://api.typesafe.ai/v1/systemone"
 MAX_SOURCE_CONTEXT_CHARS = 4_000
-MAX_RESPONSE_BYTES = 262_144
-MAX_ERROR_CLASSIFICATION_BYTES = 16_384
 EXPECTED_ITEM_COUNT = 15
 CHOICES = ("direct_impact", "strategic_signal", "unrelated", "unclear")
 LANE_BY_CHOICE = {
@@ -57,14 +51,6 @@ ARTIFACT_DIRECTORY = (
     / "meta_ads_jev_ads_relevance_shadow"
 )
 OUTPUT_NAME_RE = re.compile(r"^[a-z0-9][a-z0-9._-]{2,127}\.json$")
-
-
-class JevRequestError(RuntimeError):
-    """A safe failure category, intentionally without response content."""
-
-    def __init__(self, code: str) -> None:
-        super().__init__(code)
-        self.code = code
 
 
 # Keep the alias runtime-compatible with the macOS Python versions commonly
@@ -152,73 +138,6 @@ def build_request(item: dict[str, Any]) -> dict[str, Any]:
             }
         },
     }
-
-
-def _safe_http_error_detail(error: urllib.error.HTTPError) -> str | None:
-    """Extract only a bounded, identifier-shaped error code or type."""
-    try:
-        raw = error.read(MAX_ERROR_CLASSIFICATION_BYTES)
-        payload = json.loads(raw)
-    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
-        return None
-    if not isinstance(payload, dict):
-        return None
-    nested = payload.get("error")
-    if not isinstance(nested, dict):
-        nested = payload
-    for field in ("code", "type"):
-        value = nested.get(field)
-        if isinstance(value, str) and re.fullmatch(r"[A-Za-z0-9_.:-]{1,96}", value):
-            return value
-    return None
-
-
-def post_jev_request(payload: dict[str, Any], api_key: str, timeout_seconds: float) -> dict[str, Any]:
-    """Call Jev without environment proxies or persisted response bodies."""
-    encoded = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
-    request = urllib.request.Request(
-        ENDPOINT,
-        data=encoded,
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            # Match the first-party SDK's non-secret request metadata. These
-            # headers are useful to the gateway for routing/diagnostics and do
-            # not contain the credential or fixture content.
-            "User-Agent": f"{SDK_NAME}/{SDK_VERSION}",
-            "X-TypeSafe-SDK": f"{SDK_NAME}/{SDK_VERSION}",
-            "X-TypeSafe-Runtime": (
-                f"python/{platform.python_version()} ({sys.platform}; {platform.machine()})"
-            ),
-        },
-        method="POST",
-    )
-    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
-    try:
-        with opener.open(request, timeout=timeout_seconds) as response:
-            content_type = response.headers.get_content_type().lower()
-            if content_type != "application/json":
-                raise JevRequestError("unexpected_content_type")
-            body = response.read(MAX_RESPONSE_BYTES + 1)
-    except urllib.error.HTTPError as error:
-        detail = _safe_http_error_detail(error)
-        suffix = f"_{detail}" if detail else ""
-        raise JevRequestError(f"http_status_{error.code}{suffix}") from error
-    except urllib.error.URLError as error:
-        raise JevRequestError("network_error") from error
-    except TimeoutError as error:
-        raise JevRequestError("timeout") from error
-
-    if len(body) > MAX_RESPONSE_BYTES:
-        raise JevRequestError("response_too_large")
-    try:
-        response_json = json.loads(body)
-    except (UnicodeDecodeError, json.JSONDecodeError) as error:
-        raise JevRequestError("invalid_json_response") from error
-    if not isinstance(response_json, dict):
-        raise JevRequestError("invalid_json_response")
-    return response_json
 
 
 def extract_answer(response: dict[str, Any]) -> tuple[dict[str, Any], str | None]:

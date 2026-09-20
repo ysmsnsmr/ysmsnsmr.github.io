@@ -120,7 +120,7 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
 
         self.assertIn("<h1>マレーシア生活ニュース</h1>", page)
         self.assertIn('href="./2026-08-20.html">今日のまとめを読む</a>', page)
-        self.assertIn('href="./2026-08-20.html">10件すべて読む</a>', page)
+        self.assertIn('href="./2026-08-20.html">すべて読む</a>', page)
         self.assertIn('href="./2026-08-20.md">Markdown版</a>', page)
         self.assertIn("今日のピックアップ3件", page)
         self.assertIn("直近7日のまとめ", page)
