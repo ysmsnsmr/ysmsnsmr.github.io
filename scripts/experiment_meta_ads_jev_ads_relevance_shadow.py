@@ -13,6 +13,7 @@ import hashlib
 import json
 import math
 import os
+import platform
 import re
 import sys
 import tempfile
@@ -28,6 +29,8 @@ from typing import Any, Callable
 SCHEMA_VERSION = "meta-ads-jev-ads-relevance-shadow/v1"
 FIXTURE_SCHEMA_VERSION = "meta-ads-jev-human-label-fixture/v1"
 REQUESTED_MODEL_ID = "jev-1.13.0"
+SDK_NAME = "typesafe-sdk"
+SDK_VERSION = "artifact-runner"
 QUESTION_SET_VERSION = "meta-ads-relevance-v1"
 QUESTION_ID = "adsRelevance"
 ENDPOINT = "https://api.typesafe.ai/v1/systemone"
@@ -180,6 +183,14 @@ def post_jev_request(payload: dict[str, Any], api_key: str, timeout_seconds: flo
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
             "Accept": "application/json",
+            # Match the first-party SDK's non-secret request metadata. These
+            # headers are useful to the gateway for routing/diagnostics and do
+            # not contain the credential or fixture content.
+            "User-Agent": f"{SDK_NAME}/{SDK_VERSION}",
+            "X-TypeSafe-SDK": f"{SDK_NAME}/{SDK_VERSION}",
+            "X-TypeSafe-Runtime": (
+                f"python/{platform.python_version()} ({sys.platform}; {platform.machine()})"
+            ),
         },
         method="POST",
     )
@@ -412,8 +423,9 @@ def main() -> int:
         return 1
 
     comparison = report["comparison"]
+    outcome = "PASS" if comparison["failed"] == 0 else "FAIL"
     print(
-        "PASS: artifact-only Jev comparison written "
+        f"{outcome}: artifact-only Jev comparison written "
         f"({comparison['classified']} classified, {comparison['failed']} failed): {path}"
     )
     return 0 if comparison["failed"] == 0 else 1
