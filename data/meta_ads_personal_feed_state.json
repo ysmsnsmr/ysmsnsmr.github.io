@@ -1,6 +1,6 @@
 {
   "schemaVersion": "meta-ads-personal-feed-state/v5",
-  "updatedAt": "2026-09-19T04:39:53Z",
+  "updatedAt": "2026-09-20T04:55:38Z",
   "sources": {
     "meta-product-news-rss": {
       "relevanceRevision": "meta-ads-lanes-v1",
@@ -17,7 +17,7 @@
           ],
           "fingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
@@ -86,7 +86,7 @@
           ],
           "fingerprint": "6a3e19041f996e3c52d055589111ca61de96dffeb589c06d9a8a8c965fbee1e0",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "6a3e19041f996e3c52d055589111ca61de96dffeb589c06d9a8a8c965fbee1e0",
@@ -155,7 +155,7 @@
           ],
           "fingerprint": "3200d8fbab7ee18881fb9819af4c09217f2382e91316da2c863d8ec9d2922618",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3200d8fbab7ee18881fb9819af4c09217f2382e91316da2c863d8ec9d2922618",
@@ -224,7 +224,7 @@
           ],
           "fingerprint": "887d7edd242f173fef4a2548142caaee3ed5e2b8d0f4927635f97e194dd50b7c",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "887d7edd242f173fef4a2548142caaee3ed5e2b8d0f4927635f97e194dd50b7c",
@@ -293,7 +293,7 @@
           ],
           "fingerprint": "f891db2becaa267972f9c207eb3243f28729d0f14b11fde71e1250717412aae6",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f891db2becaa267972f9c207eb3243f28729d0f14b11fde71e1250717412aae6",
@@ -324,25 +324,25 @@
                 }
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Meta AI、Muse Spark 1.1で計画・実行支援機能を提供開始",
+                "summary": "Meta AIは新モデルMuse Spark 1.1を搭載し、計画作成やタスクの実行、カレンダー連携のデイリーブリーフィング、ウェブ調査やスライド生成などを自動で行えるようになった。ユーザーはキッチンリフォームやマラソン練習、誕生日ディナーの手配などを指示すると、AIが予算やスケジュールを考慮して提案・実行し、リアルタイムで指示変更も可能。生成物は一元管理され、プライベートな会話はインコグニートモードで利用できる。本機能は本日から一部地域の",
                 "inputHash": "80712b6f77a484ba41b4a64d4d87188dc9729f6ab1b8c551489a5e91344ea5fc",
-                "generatedAt": null,
+                "generatedAt": "2026-09-20T04:55:38Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Meta AI、Muse Spark 1.1で計画・実行支援機能を提供開始",
                     "inputHash": "80712b6f77a484ba41b4a64d4d87188dc9729f6ab1b8c551489a5e91344ea5fc",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-20T04:55:38Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Meta AIは新モデルMuse Spark 1.1を搭載し、計画作成やタスクの実行、カレンダー連携のデイリーブリーフィング、ウェブ調査やスライド生成などを自動で行えるようになった。ユーザーはキッチンリフォームやマラソン練習、誕生日ディナーの手配などを指示すると、AIが予算やスケジュールを考慮して提案・実行し、リアルタイムで指示変更も可能。生成物は一元管理され、プライベートな会話はインコグニートモードで利用できる。本機能は本日から一部地域の",
                     "inputHash": "80712b6f77a484ba41b4a64d4d87188dc9729f6ab1b8c551489a5e91344ea5fc",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-20T04:55:38Z",
                     "reviewedAt": null
                   }
                 }
@@ -362,7 +362,7 @@
           ],
           "fingerprint": "6c4e6a14c1a542cc0112f8b7686310340fbaeb03f215bed533a6c7eceb99fa11",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "6c4e6a14c1a542cc0112f8b7686310340fbaeb03f215bed533a6c7eceb99fa11",
@@ -431,7 +431,7 @@
           ],
           "fingerprint": "933196690767de83451e164a7225a992dba2d0360859caeb4cb74b831a72b55a",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "933196690767de83451e164a7225a992dba2d0360859caeb4cb74b831a72b55a",
@@ -500,7 +500,7 @@
           ],
           "fingerprint": "1b1d551a5b80a38834190fd8619d037b02c9b3889b7af9aac43e4ac0008fcb8e",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1b1d551a5b80a38834190fd8619d037b02c9b3889b7af9aac43e4ac0008fcb8e",
@@ -707,7 +707,7 @@
           ],
           "fingerprint": "7ec28c89eba18f71014806f8761c9662a7068ae8ed01ebd3e8b28d182c8a14ea",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7ec28c89eba18f71014806f8761c9662a7068ae8ed01ebd3e8b28d182c8a14ea",
@@ -776,7 +776,7 @@
           ],
           "fingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
           "firstObservedAt": "2026-09-17T04:55:10Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
@@ -850,7 +850,7 @@
           ],
           "fingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
@@ -919,7 +919,7 @@
           ],
           "fingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
@@ -988,7 +988,7 @@
           ],
           "fingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
@@ -1057,7 +1057,7 @@
           ],
           "fingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
@@ -1126,7 +1126,7 @@
           ],
           "fingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
@@ -1195,7 +1195,7 @@
           ],
           "fingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
@@ -1264,7 +1264,7 @@
           ],
           "fingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
@@ -1333,7 +1333,7 @@
           ],
           "fingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
@@ -1402,7 +1402,7 @@
           ],
           "fingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
@@ -1471,7 +1471,7 @@
           ],
           "fingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
@@ -1548,7 +1548,7 @@
           ],
           "fingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
@@ -1620,7 +1620,7 @@
           ],
           "fingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
@@ -1692,7 +1692,7 @@
           ],
           "fingerprint": "7acf956231436a87c7b7a9015db094361a079af2b65baf71f7b29d23f773fa11",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7acf956231436a87c7b7a9015db094361a079af2b65baf71f7b29d23f773fa11",
@@ -1764,7 +1764,7 @@
           ],
           "fingerprint": "143436c34d5eef00048e1b6e3dae36a41ad7a161b317c577367a64dc953d8e2d",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "143436c34d5eef00048e1b6e3dae36a41ad7a161b317c577367a64dc953d8e2d",
@@ -2052,7 +2052,7 @@
           ],
           "fingerprint": "b35a1f5bd3df45609ea7344b16e5d345202e2951c5f6d1ffa6a0c6ed22ad3509",
           "firstObservedAt": "2026-09-11T04:43:19Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b35a1f5bd3df45609ea7344b16e5d345202e2951c5f6d1ffa6a0c6ed22ad3509",
@@ -2124,7 +2124,7 @@
           ],
           "fingerprint": "458f353eef407444549b3ec68b6489d82873f8642f1707db100854945d78bcbc",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "458f353eef407444549b3ec68b6489d82873f8642f1707db100854945d78bcbc",
@@ -2196,7 +2196,7 @@
           ],
           "fingerprint": "ff23184ef3220928736c800efa6e9314e8a7760550fa387687cf9e2f0f7c072b",
           "firstObservedAt": "2026-09-18T11:07:09Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ff23184ef3220928736c800efa6e9314e8a7760550fa387687cf9e2f0f7c072b",
@@ -2273,7 +2273,7 @@
           ],
           "fingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
           "firstObservedAt": "2026-09-02T04:36:59Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
@@ -2345,7 +2345,7 @@
           ],
           "fingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
@@ -2417,7 +2417,7 @@
           ],
           "fingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
@@ -2489,7 +2489,7 @@
           ],
           "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
@@ -2561,7 +2561,7 @@
           ],
           "fingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
@@ -2633,7 +2633,7 @@
           ],
           "fingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
@@ -2705,7 +2705,7 @@
           ],
           "fingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
@@ -2777,7 +2777,7 @@
           ],
           "fingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
@@ -2849,7 +2849,7 @@
           ],
           "fingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
@@ -2921,7 +2921,7 @@
           ],
           "fingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
@@ -2993,7 +2993,7 @@
           ],
           "fingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
@@ -3065,7 +3065,7 @@
           ],
           "fingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
@@ -3137,7 +3137,7 @@
           ],
           "fingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
@@ -3209,7 +3209,7 @@
           ],
           "fingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
@@ -3281,7 +3281,7 @@
           ],
           "fingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
@@ -3353,7 +3353,7 @@
           ],
           "fingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
@@ -3425,7 +3425,7 @@
           ],
           "fingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
@@ -3497,7 +3497,7 @@
           ],
           "fingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
@@ -3569,7 +3569,7 @@
           ],
           "fingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
@@ -3641,7 +3641,7 @@
           ],
           "fingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
@@ -3713,7 +3713,7 @@
           ],
           "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
@@ -3785,7 +3785,7 @@
           ],
           "fingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
@@ -3857,7 +3857,7 @@
           ],
           "fingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
@@ -3929,7 +3929,7 @@
           ],
           "fingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
@@ -4001,7 +4001,7 @@
           ],
           "fingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
@@ -4073,7 +4073,7 @@
           ],
           "fingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
@@ -4145,7 +4145,7 @@
           ],
           "fingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
@@ -4217,7 +4217,7 @@
           ],
           "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
@@ -4289,7 +4289,7 @@
           ],
           "fingerprint": "df19403656263ac9e00d4d6b0ba326faf03ae83fadc7c0ce7bfc212072f92d5d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "df19403656263ac9e00d4d6b0ba326faf03ae83fadc7c0ce7bfc212072f92d5d",
@@ -4577,7 +4577,7 @@
           ],
           "fingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
           "firstObservedAt": "2026-09-09T04:45:10Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
@@ -4649,7 +4649,7 @@
           ],
           "fingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
@@ -4725,7 +4725,7 @@
           ],
           "fingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
@@ -4796,7 +4796,7 @@
           ],
           "fingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
@@ -4867,7 +4867,7 @@
           ],
           "fingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
@@ -4938,7 +4938,7 @@
           ],
           "fingerprint": "d2dc0dc1c4efc057c1c0191e0388749eee34a824f326f4644babbc1469695685",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-19T04:39:53Z",
+          "lastObservedAt": "2026-09-20T04:55:38Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d2dc0dc1c4efc057c1c0191e0388749eee34a824f326f4644babbc1469695685",
@@ -5006,11 +5006,11 @@
         "itemKey": "https://www.jonloomer.com/ai-disclosure-checkbox-chatgpt-attribution/",
         "fingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-19T04:39:53Z",
-        "nextRetryAt": "2026-09-19T06:39:53Z",
-        "lastFailureCode": "summary_invalid",
-        "lastProviderErrorCode": null,
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-20T04:55:38Z",
+        "nextRetryAt": "2026-09-20T08:55:38Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
       },
       {
@@ -5018,11 +5018,11 @@
         "itemKey": "https://www.jonloomer.com/hands-on-push-delivery-to-this-ad/",
         "fingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-19T04:39:53Z",
-        "nextRetryAt": "2026-09-19T06:39:53Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-20T04:55:38Z",
+        "nextRetryAt": "2026-09-20T08:55:38Z",
+        "lastFailureCode": "summary_invalid",
+        "lastProviderErrorCode": null,
         "quarantined": false
       },
       {
@@ -5102,9 +5102,9 @@
         "itemKey": "https://www.jonloomer.com/meta-ads-grouping-reports-chatgpt-conversions/",
         "fingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-19T04:39:53Z",
-        "nextRetryAt": "2026-09-19T06:39:53Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-20T04:55:38Z",
+        "nextRetryAt": "2026-09-20T08:55:38Z",
         "lastFailureCode": "summary_invalid",
         "lastProviderErrorCode": null,
         "quarantined": false
@@ -5126,9 +5126,9 @@
         "itemKey": "https://www.jonloomer.com/one-click-capi-activated-new-meta-ads-features/",
         "fingerprint": "df19403656263ac9e00d4d6b0ba326faf03ae83fadc7c0ce7bfc212072f92d5d",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-19T04:39:53Z",
-        "nextRetryAt": "2026-09-19T06:39:53Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-20T04:55:38Z",
+        "nextRetryAt": "2026-09-20T08:55:38Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -5138,9 +5138,9 @@
         "itemKey": "v24.0.0",
         "fingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-19T04:39:53Z",
-        "nextRetryAt": "2026-09-19T06:39:53Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-20T04:55:38Z",
+        "nextRetryAt": "2026-09-20T08:55:38Z",
         "lastFailureCode": "summary_invalid",
         "lastProviderErrorCode": null,
         "quarantined": false
@@ -5150,9 +5150,9 @@
         "itemKey": "v25.0.0",
         "fingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-19T04:39:53Z",
-        "nextRetryAt": "2026-09-19T06:39:53Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-20T04:55:38Z",
+        "nextRetryAt": "2026-09-20T08:55:38Z",
         "lastFailureCode": "response_invalid_shape",
         "lastProviderErrorCode": null,
         "quarantined": false
@@ -5186,11 +5186,11 @@
         "itemKey": "https://about.fb.com/news/2026/07/connecting-real-people-on-facebook/",
         "fingerprint": "933196690767de83451e164a7225a992dba2d0360859caeb4cb74b831a72b55a",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-19T04:39:53Z",
-        "nextRetryAt": "2026-09-19T06:39:53Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-20T04:55:38Z",
+        "nextRetryAt": "2026-09-20T08:55:38Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
         "quarantined": false
       },
       {
@@ -5203,18 +5203,6 @@
         "nextRetryAt": "2026-09-16T21:14:08Z",
         "lastFailureCode": "http_400",
         "lastProviderErrorCode": "json_validate_failed",
-        "quarantined": false
-      },
-      {
-        "sourceId": "meta-product-news-rss",
-        "itemKey": "https://about.fb.com/news/2026/07/meta-ai-muse-spark-doesnt-just-think-it-acts/",
-        "fingerprint": "f891db2becaa267972f9c207eb3243f28729d0f14b11fde71e1250717412aae6",
-        "locale": "ja",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-19T04:39:53Z",
-        "nextRetryAt": "2026-09-19T05:39:53Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
       },
       {
@@ -5234,9 +5222,9 @@
         "itemKey": "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/",
         "fingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-19T04:39:53Z",
-        "nextRetryAt": "2026-09-19T06:39:53Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-20T04:55:38Z",
+        "nextRetryAt": "2026-09-20T08:55:38Z",
         "lastFailureCode": "response_invalid_shape",
         "lastProviderErrorCode": null,
         "quarantined": false
@@ -5246,11 +5234,11 @@
         "itemKey": "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/",
         "fingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
         "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-19T04:39:53Z",
-        "nextRetryAt": "2026-09-19T06:39:53Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-20T04:55:38Z",
+        "nextRetryAt": "2026-09-20T08:55:38Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
         "quarantined": false
       },
       {
@@ -5258,12 +5246,12 @@
         "itemKey": "https://www.socialmediatoday.com/news/meta-adds-more-creator-partnership-tools/830480/",
         "fingerprint": "458f353eef407444549b3ec68b6489d82873f8642f1707db100854945d78bcbc",
         "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-19T04:39:53Z",
-        "nextRetryAt": "2026-09-19T12:39:53Z",
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-20T04:55:38Z",
+        "nextRetryAt": null,
         "lastFailureCode": "response_invalid_shape",
         "lastProviderErrorCode": null,
-        "quarantined": false
+        "quarantined": true
       }
     ]
   }
