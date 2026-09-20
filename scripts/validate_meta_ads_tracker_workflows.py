@@ -24,6 +24,7 @@ WORKFLOWS = {
     "presentation_backfill": ROOT / ".github/workflows/meta-ads-personal-feed-presentation-backfill.yml",
     "schema_probe": ROOT / ".github/workflows/meta-ads-personal-feed-groq-schema-probe.yml",
     "real_candidate_probe": ROOT / ".github/workflows/meta-ads-personal-feed-groq-real-candidate-probe.yml",
+    "jev_production_shadow": ROOT / ".github/workflows/meta-ads-jev-production-shadow.yml",
 }
 PINNED_ACTIONS = {
     "actions/checkout": "3d3c42e5aac5ba805825da76410c181273ba90b1",
@@ -91,6 +92,7 @@ def main() -> int:
             require_pinned_actions(name, parsed[name])
         require_pinned_actions("schema_probe", parsed["schema_probe"])
         require_pinned_actions("real_candidate_probe", parsed["real_candidate_probe"])
+        require_pinned_actions("jev_production_shadow", parsed["jev_production_shadow"])
         schema_probe = parsed["schema_probe"]
         probe_dispatch = schema_probe.get("on", {}).get("workflow_dispatch", {})
         probe_input = probe_dispatch.get("inputs", {}).get("field_count", {}) if isinstance(probe_dispatch, dict) else {}
@@ -142,6 +144,38 @@ def main() -> int:
             fail("Groq real-candidate probe must target missing candidates with an explicit context limit")
         if '--candidate-id "${PROBE_CANDIDATE_ID}"' not in real_runs:
             fail("Groq real-candidate probe must pin the candidate ID")
+        jev_shadow = parsed["jev_production_shadow"]
+        if "workflow_dispatch" not in jev_shadow.get("on", {}) or "schedule" in jev_shadow.get("on", {}):
+            fail("Jev production shadow must remain manual-only during the bounded observation")
+        if jev_shadow.get("permissions", {}).get("contents") != "read":
+            fail("Jev production shadow must be read-only")
+        jev_steps = steps(jev_shadow)
+        jev_kill_switch = next((step for step in jev_steps if step.get("id") == "kill_switch"), None)
+        if jev_kill_switch is None or "META_ADS_JEV_SHADOW_ENABLED" not in str(jev_kill_switch):
+            fail("Jev production shadow must have its own strict kill switch")
+        jev_runs = "\n".join(run_blocks(jev_shadow))
+        if "meta_ads_jev_production_shadow.py" not in jev_runs:
+            fail("Jev production shadow must run its dedicated artifact-only script")
+        if any(value in jev_runs for value in ("git add", "git commit", "git push", "meta_ads_personal_feed_state.json")):
+            fail("Jev production shadow must not write repository state")
+        jev_classify = next(
+            (step for step in jev_steps if step.get("name") == "Classify current public feed without routing effect"),
+            None,
+        )
+        jev_env = jev_classify.get("env", {}) if isinstance(jev_classify, dict) else {}
+        if not isinstance(jev_env, dict) or jev_env.get("TYPESAFE_API_KEY") != "${{ secrets.TYPESAFE_API_KEY }}":
+            fail("Jev production shadow must provide the API key through the environment")
+        if jev_env.get("JEV_SHADOW_LIMIT") != "${{ inputs.limit }}" or '--limit "${JEV_SHADOW_LIMIT}"' not in jev_runs:
+            fail("Jev production shadow must pass its bounded limit through the environment")
+        jev_artifact = next(
+            (step for step in jev_steps if step.get("name") == "Upload Jev production shadow artifact"),
+            None,
+        )
+        jev_artifact_with = jev_artifact.get("with", {}) if isinstance(jev_artifact, dict) else {}
+        if jev_artifact_with.get("path") != "${{ runner.temp }}/meta-ads-jev-production-shadow.json":
+            fail("Jev production shadow must upload only its runner-temp artifact")
+        if jev_artifact_with.get("if-no-files-found") != "error" or jev_artifact_with.get("retention-days") != "30":
+            fail("Jev production shadow artifact must fail on absence and retain exactly 30 days")
         publish_runs = "\n".join(run_blocks(parsed["publish"]))
         if "meta_ads_tracker_groq.py" in publish_runs or "GROQ_API_KEY" in str(parsed["publish"]):
             fail("publish workflow must not run Groq")

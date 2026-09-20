@@ -1,0 +1,70 @@
+name: Meta Ads Jev production shadow
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Maximum current public feed items to classify (1-50)"
+        required: false
+        default: "15"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  shadow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Jev shadow kill switch
+        id: kill_switch
+        env:
+          META_ADS_JEV_SHADOW_ENABLED: ${{ vars.META_ADS_JEV_SHADOW_ENABLED }}
+        run: |
+          setting="${META_ADS_JEV_SHADOW_ENABLED:-false}"
+          case "${setting}" in
+            true)
+              echo "enabled=true" >> "${GITHUB_OUTPUT}"
+              ;;
+            false)
+              echo "enabled=false" >> "${GITHUB_OUTPUT}"
+              echo "Jev production shadow is disabled."
+              ;;
+            *)
+              echo "::error::META_ADS_JEV_SHADOW_ENABLED must be true, false, or unset."
+              exit 1
+              ;;
+          esac
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        if: steps.kill_switch.outputs.enabled == 'true'
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        if: steps.kill_switch.outputs.enabled == 'true'
+        with:
+          python-version: "3.12"
+      - name: Classify current public feed without routing effect
+        id: classify
+        if: steps.kill_switch.outputs.enabled == 'true'
+        continue-on-error: true
+        env:
+          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+          JEV_SHADOW_LIMIT: ${{ inputs.limit }}
+        run: |
+          python3 scripts/meta_ads_jev_production_shadow.py \
+            --live \
+            --feed meta-ads-updates/personal-feed.json \
+            --artifact-directory "${RUNNER_TEMP}" \
+            --output-name meta-ads-jev-production-shadow.json \
+            --limit "${JEV_SHADOW_LIMIT}"
+      - name: Upload Jev production shadow artifact
+        if: always() && steps.kill_switch.outputs.enabled == 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: meta-ads-jev-production-shadow-${{ github.run_id }}
+          path: ${{ runner.temp }}/meta-ads-jev-production-shadow.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Report Jev shadow failure after artifact upload
+        if: always() && steps.kill_switch.outputs.enabled == 'true' && steps.classify.outcome != 'success'
+        run: |
+          echo "::error::Jev production shadow failed; collector, state and public feed were not changed."
+          exit 1

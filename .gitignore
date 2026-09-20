@@ -33,6 +33,7 @@ temp/
 
 # Local-only Jev semantic shadow comparison artifacts
 artifacts/meta_ads_jev_ads_relevance_shadow/
+artifacts/meta_ads_jev_production_shadow/
 
 # Caches
 .cache/
