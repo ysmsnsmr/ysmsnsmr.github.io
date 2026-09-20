@@ -39,6 +39,14 @@ from meta_ads_personal_feed_presentation import (
     request_plaintext_presentation,
     request_presentation,
 )
+from experiment_meta_ads_jev_ads_relevance_shadow import (
+    JevRequestError,
+    QUESTION_SET_VERSION as JEV_QUESTION_SET_VERSION,
+    REQUESTED_MODEL_ID as JEV_REQUESTED_MODEL_ID,
+    build_request as build_jev_request,
+    extract_answer as extract_jev_answer,
+    post_jev_request,
+)
 
 
 SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v7"
@@ -90,6 +98,13 @@ PLATFORM_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 PARSER_VERSION = "meta-ads-personal-feed-parser/v3"
 PUBLICATION_STATUSES = {"included", "drop"}
 PUBLICATION_INCLUDED = "included"
+JEV_RELEVANCE_CHOICES = {"direct_impact", "strategic_signal", "unrelated", "unclear"}
+JEV_PUBLICATION_STATUS = {
+    "direct_impact": PUBLICATION_INCLUDED,
+    "strategic_signal": PUBLICATION_INCLUDED,
+    "unclear": PUBLICATION_INCLUDED,
+    "unrelated": "drop",
+}
 # v4 remains readable while existing public files and state are migrated.
 LEGACY_LANES = {"action", "watch", "drop"}
 LEGACY_PUBLIC_LANES = {"action", "watch"}
@@ -617,6 +632,91 @@ def _classify_publication(source: dict[str, Any], raw: dict[str, Any]) -> tuple[
             return "drop", [f"non_ads:{drop}"]
         return PUBLICATION_INCLUDED, ["source:meta-ads-context"]
     return PUBLICATION_INCLUDED, ["source:configured-source"]
+
+
+def _write_jev_routing_stats(destination: dict[str, Any] | None, value: dict[str, Any]) -> None:
+    if destination is not None:
+        destination.clear()
+        destination.update(value)
+
+
+def _jev_publication_from_environment(
+    timeout: float,
+    stats: dict[str, Any] | None,
+) -> Callable[[dict[str, Any], dict[str, Any]], tuple[str, list[str]]] | None:
+    """Return the explicit Jev routing classifier, or the safe legacy fallback.
+
+    The model receives only transient title/context data after source, parser,
+    freshness and static eligibility checks.  Provider output and input prose are
+    never retained in state, logs, or the routing artifact.
+    """
+    setting = os.environ.get("META_ADS_JEV_ROUTING_ENABLED", "").strip().lower() or "false"
+    if setting not in {"true", "false"}:
+        raise ContractError("META_ADS_JEV_ROUTING_ENABLED must be true, false, or unset")
+    report: dict[str, Any] = {
+        "schemaVersion": "meta-ads-jev-routing/v1",
+        "enabled": setting == "true",
+        "routingEffect": setting == "true",
+        "requestedModelId": JEV_REQUESTED_MODEL_ID,
+        "questionSetVersion": JEV_QUESTION_SET_VERSION,
+        "rawProviderResponseStored": False,
+        "credentialStored": False,
+        "results": [],
+    }
+    if setting == "false":
+        report["summary"] = {"classified": 0, "choices": {}, "errors": 0}
+        _write_jev_routing_stats(stats, report)
+        return None
+    api_key = os.environ.get("TYPESAFE_API_KEY", "").strip()
+    if not api_key:
+        raise ContractError("TYPESAFE_API_KEY is required when META_ADS_JEV_ROUTING_ENABLED=true")
+
+    def classify(source: dict[str, Any], raw: dict[str, Any]) -> tuple[str, list[str]]:
+        item_id = f"{source['id']}-{raw['fingerprint'][:20]}"
+        started = time.monotonic()
+        request_item = {
+            "itemId": item_id,
+            "sourceId": source["id"],
+            "title": raw["title"],
+            "sourceContext": str(raw.get("sourceContext") or ""),
+        }
+        try:
+            response = post_jev_request(build_jev_request(request_item), api_key, timeout)
+            answer, provider_model_id = extract_jev_answer(response)
+        except JevRequestError as error:
+            report["results"].append({"itemId": item_id, "sourceId": source["id"], "outcome": "error", "errorCode": error.code})
+            raise ContractError(f"Jev relevance routing failed: {error.code}") from error
+        except Exception as error:
+            report["results"].append({"itemId": item_id, "sourceId": source["id"], "outcome": "error", "errorCode": "transport_error"})
+            raise ContractError("Jev relevance routing failed: transport_error") from error
+        choice = answer.get("choice") if isinstance(answer, dict) else None
+        if choice not in JEV_RELEVANCE_CHOICES:
+            raise ContractError("Jev relevance routing returned an unsupported choice")
+        report["results"].append({
+            "itemId": item_id,
+            "sourceId": source["id"],
+            "outcome": "classified",
+            "choice": choice,
+            "confidence": answer.get("confidence"),
+            "providerModelId": provider_model_id,
+            "latencyMs": round((time.monotonic() - started) * 1000),
+        })
+        return JEV_PUBLICATION_STATUS[choice], [f"jev:{choice}"]
+
+    return classify
+
+
+def _finalize_jev_routing_stats(stats: dict[str, Any] | None, now: str) -> None:
+    if stats is None or not stats:
+        return
+    results = stats.get("results", [])
+    choices: dict[str, int] = {}
+    for result in results:
+        if result.get("outcome") == "classified":
+            choice = result["choice"]
+            choices[choice] = choices.get(choice, 0) + 1
+    stats["generatedAt"] = now
+    stats["summary"] = {"classified": sum(choices.values()), "choices": dict(sorted(choices.items())), "errors": sum(result.get("outcome") == "error" for result in results)}
 
 
 def _match(
@@ -2338,6 +2438,8 @@ def collect(
     retry_failed: bool = False,
     retry_json_validate_failed: bool = False,
     retry_legacy_http_400: bool = False,
+    jev_classifier: Callable[[dict[str, Any], dict[str, Any]], tuple[str, list[str]]] | None = None,
+    jev_routing_stats: dict[str, Any] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     validate_config(config)
     validate_state(state, config)
@@ -2497,7 +2599,11 @@ def collect(
         for raw in raw_by_source[source["id"]]:
             existing = prior.get(raw["key"])
             cached = existing.get("presentation") if existing and existing.get("fingerprint") == raw["fingerprint"] else None
-            publication_status, publication_evidence = _classify_publication(source, raw)
+            publication_status, publication_evidence = (
+                jev_classifier(source, raw)
+                if jev_classifier is not None
+                else _classify_publication(source, raw)
+            )
             record = {
                 "url": raw["url"],
                 "title": raw["title"],
@@ -2719,6 +2825,7 @@ def collect(
     feed = build_feed(next_state, config, generated_at)
     validate_state(next_state, config)
     validate_feed(feed, config)
+    _finalize_jev_routing_stats(jev_routing_stats, generated_at)
     _write_presentation_stats(presentation_stats, stats)
     _write_source_pipeline_stats(source_pipeline_stats, pipeline)
     return feed, next_state
@@ -2740,6 +2847,8 @@ def collect_and_write(
     retry_failed: bool = False,
     retry_json_validate_failed: bool = False,
     retry_legacy_http_400: bool = False,
+    jev_classifier: Callable[[dict[str, Any], dict[str, Any]], tuple[str, list[str]]] | None = None,
+    jev_routing_stats: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     config = load_config(config_path)
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
@@ -2758,6 +2867,8 @@ def collect_and_write(
         retry_failed=retry_failed,
         retry_json_validate_failed=retry_json_validate_failed,
         retry_legacy_http_400=retry_legacy_http_400,
+        jev_classifier=jev_classifier,
+        jev_routing_stats=jev_routing_stats,
     )
     # Both payloads are fully constructed and validated before either single-file atomic write.
     write_json(output_path, feed)
@@ -2778,6 +2889,7 @@ def main() -> int:
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--timeout", type=float, default=30.0)
     parser.add_argument("--presentation-limit", type=_parse_presentation_limit, default=None)
+    parser.add_argument("--jev-routing-report", type=Path, default=None)
     parser.add_argument("--reseed-source", default=None, help="re-evaluate one configured source under its current relevance revision")
     parser.add_argument(
         "--retry-failed",
@@ -2798,6 +2910,8 @@ def main() -> int:
     try:
         stats: dict[str, Any] = {}
         pipeline: dict[str, Any] = {}
+        jev_stats: dict[str, Any] = {}
+        jev_classifier = _jev_publication_from_environment(args.timeout, jev_stats)
         feed = collect_and_write(
             args.config,
             args.state,
@@ -2810,7 +2924,12 @@ def main() -> int:
             retry_failed=args.retry_failed,
             retry_json_validate_failed=args.retry_json_validate_failed,
             retry_legacy_http_400=args.retry_legacy_http_400,
+            jev_classifier=jev_classifier,
+            jev_routing_stats=jev_stats,
         )
+        if args.jev_routing_report is not None:
+            _finalize_jev_routing_stats(jev_stats, _now(datetime.now(timezone.utc)))
+            write_json(args.jev_routing_report, jev_stats)
     except SourceFetchError as error:
         print(
             f"SOURCE_FETCH_FAILURE: id={error.source_id} code={error.reason} attempts={error.attempts}",
@@ -2824,6 +2943,13 @@ def main() -> int:
     print(f"PASS: published {len(feed['items'])} personal feed item(s) from {len(feed['sources'])} source(s)")
     _print_presentation_stats(stats)
     _print_source_pipeline_stats(pipeline)
+    if jev_stats:
+        print(
+            "JEV_ROUTING: "
+            f"enabled={str(jev_stats['enabled']).lower()} "
+            f"classified={jev_stats['summary']['classified']} "
+            f"errors={jev_stats['summary']['errors']}"
+        )
     return 0
 
 
