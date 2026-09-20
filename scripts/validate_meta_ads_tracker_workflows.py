@@ -195,6 +195,9 @@ def main() -> int:
             fail("every collecting step after the kill switch must be gated")
         if "meta_ads_personal_feed.py" not in collect_runs or "validate_meta_ads_personal_feed.py" not in collect_runs:
             fail("collect workflow must build and validate the Personal Feed")
+        collect_schedule = parsed["collect"].get("on", {}).get("schedule", [])
+        if collect_schedule != [{"cron": "15 0 * * 2,5"}]:
+            fail("Personal Feed collection must run only at the approved twice-weekly MYT schedule")
         if any(value in collect_runs for value in ("meta_ads_tracker_collect.py", "meta_ads_tracker_weekly", "meta_ads_tracker_decisions", "meta_ads_tracker_groq.py")):
             fail("Personal Feed collection must not depend on candidate, weekly, decision, or Groq stages")
         personal_collect = next((step for step in collect_steps if step.get("name") == "Collect Personal Feed sources"), None)
@@ -203,6 +206,12 @@ def main() -> int:
             fail("Personal Feed collection must provide the optional Japanese-presentation API key")
         if "META_ADS_PERSONAL_FEED_JA_ENABLED" not in personal_env or "META_ADS_PERSONAL_FEED_GROQ_MODEL" not in personal_env:
             fail("Personal Feed collection must expose Japanese-presentation controls")
+        if personal_env.get("TYPESAFE_API_KEY") != "${{ secrets.TYPESAFE_API_KEY }}":
+            fail("Personal Feed collection must provide the Jev API key through the environment")
+        if personal_env.get("META_ADS_JEV_ROUTING_ENABLED") != "${{ vars.META_ADS_JEV_ROUTING_ENABLED }}":
+            fail("Personal Feed collection must expose the separate Jev routing rollback switch")
+        if '--jev-routing-report "${RUNNER_TEMP}/meta-ads-jev-routing.json"' not in collect_runs:
+            fail("Personal Feed collection must write the private Jev routing artifact to runner temp")
         reseed_input = parsed["collect"].get("on", {}).get("workflow_dispatch", {}).get("inputs", {}).get("reseed_source_id", {})
         if not isinstance(reseed_input, dict) or reseed_input.get("type") != "string":
             fail("Personal Feed collection must expose a string-only source-local reseed input")
@@ -232,6 +241,12 @@ def main() -> int:
         artifact_with = artifact.get("with", {}) if isinstance(artifact, dict) else {}
         if artifact_with.get("if-no-files-found") != "error" or artifact_with.get("retention-days") != "30":
             fail("collect artifact must fail on absence and retain exactly 30 days")
+        jev_routing_artifact = next((step for step in collect_steps if step.get("name") == "Upload Jev routing artifact"), None)
+        jev_routing_with = jev_routing_artifact.get("with", {}) if isinstance(jev_routing_artifact, dict) else {}
+        if jev_routing_with.get("path") != "${{ runner.temp }}/meta-ads-jev-routing.json":
+            fail("Personal Feed collection must upload only its runner-temp Jev routing artifact")
+        if jev_routing_with.get("if-no-files-found") != "error" or jev_routing_with.get("retention-days") != "30":
+            fail("Jev routing artifact must fail on absence and retain exactly 30 days")
         backfill = parsed["presentation_backfill"]
         if "workflow_dispatch" not in backfill.get("on", {}):
             fail("Personal Feed presentation backfill must be manual only")

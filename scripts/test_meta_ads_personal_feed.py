@@ -25,7 +25,9 @@ from meta_ads_personal_feed import (
     STATE_V3_SCHEMA_VERSION,
     STATE_V4_SCHEMA_VERSION,
     STATE_V5_SCHEMA_VERSION,
+    JEV_PUBLICATION_STATUS,
     _classify_publication,
+    _jev_publication_from_environment,
     _meta_business_news_date,
     _locale_presentation_from_environment,
     _presentation_from_environment,
@@ -244,6 +246,61 @@ class PersonalFeedTest(unittest.TestCase):
             status, evidence = _classify_publication(sources[source_id], {"title": title, "sourceContext": source_context, "categories": []})
             self.assertEqual(status, expected_status, title)
             self.assertTrue(evidence, title)
+
+    def test_jev_routing_keeps_unclear_and_drops_only_unrelated(self) -> None:
+        self.assertEqual(JEV_PUBLICATION_STATUS["direct_impact"], "included")
+        self.assertEqual(JEV_PUBLICATION_STATUS["strategic_signal"], "included")
+        self.assertEqual(JEV_PUBLICATION_STATUS["unclear"], "included")
+        self.assertEqual(JEV_PUBLICATION_STATUS["unrelated"], "drop")
+
+    @patch.dict(os.environ, {"META_ADS_JEV_ROUTING_ENABLED": "true", "TYPESAFE_API_KEY": "secret-key"}, clear=False)
+    @patch("meta_ads_personal_feed.post_jev_request")
+    def test_jev_routing_records_only_safe_metadata(self, post_jev_request: Any) -> None:
+        post_jev_request.return_value = {
+            "model": "jev-1.13.0",
+            "answers": {"adsRelevance": {
+                "type": "choice", "choice": "unclear", "confidence": 0.4,
+                "probabilities": {"direct_impact": 0.2, "strategic_signal": 0.2, "unrelated": 0.2, "unclear": 0.4},
+            }},
+        }
+        stats: dict[str, Any] = {}
+        classifier = _jev_publication_from_environment(1, stats)
+        self.assertIsNotNone(classifier)
+        status, evidence = classifier(  # type: ignore[misc]
+            {"id": "source-a"},
+            {"fingerprint": "a" * 64, "title": "Private candidate title", "sourceContext": "Private source context"},
+        )
+        self.assertEqual((status, evidence), ("included", ["jev:unclear"]))
+        rendered = json.dumps(stats)
+        self.assertNotIn("secret-key", rendered)
+        self.assertNotIn("Private candidate title", rendered)
+        self.assertNotIn("Private source context", rendered)
+
+    def test_collect_uses_injected_jev_publication_result_before_state_is_written(self) -> None:
+        def jev_classifier(source: dict[str, Any], raw: dict[str, Any]) -> tuple[str, list[str]]:
+            if source["id"] == "meta-product-news-rss":
+                self.assertEqual(raw["title"], "Meta Ads product update")
+                return "included", ["jev:unclear"]
+            return "drop", ["jev:unrelated"]
+
+        bodies = {
+            "meta-product-news-rss": META,
+            "meta-business-sdk-releases": SDK,
+            "social-media-today-meta-ads": SOCIAL_MEDIA_TODAY,
+            "jon-loomer-meta-ads": JON,
+        }
+        feed, state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(bodies=bodies),
+            jev_classifier=jev_classifier,
+        )
+        record = state["sources"]["meta-product-news-rss"]["items"]["https://about.fb.com/news/2026/08/product-update/"]
+        self.assertEqual(record["publicationStatus"], "included")
+        self.assertEqual(record["publicationEvidence"], ["jev:unclear"])
+        self.assertTrue(any(item["sourceId"] == "meta-product-news-rss" for item in feed["items"]))
 
     def test_jon_loomer_relevance_requires_category_and_specific_ads_signal(self) -> None:
         jon = """<rss><channel>
