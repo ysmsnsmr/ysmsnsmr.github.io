@@ -95,6 +95,7 @@ jobs:
           VAR_DEBUG_GROQ: ${{ vars.MALAYSIA_NEWS_DEBUG_GROQ }}
           VAR_GROQ_MODEL: ${{ vars.MALAYSIA_NEWS_GROQ_MODEL }}
           VAR_ENABLE_JEV_SHADOW: ${{ vars.MALAYSIA_NEWS_JEV_SHADOW_ENABLED }}
+          VAR_ENABLE_JEV_ROUTING: ${{ vars.MALAYSIA_NEWS_JEV_ROUTING_ENABLED }}
         run: |
           set -euo pipefail
 
@@ -115,6 +116,7 @@ jobs:
             debug_groq="$(bool_value "${INPUT_DEBUG_GROQ:-false}")"
             model_input="${INPUT_GROQ_MODEL:-gpt-oss-120b}"
             enable_jev_shadow="$(bool_value "${VAR_ENABLE_JEV_SHADOW:-false}")"
+            enable_jev_routing="$(bool_value "${VAR_ENABLE_JEV_ROUTING:-false}")"
           else
             enable_body="$(bool_value "${VAR_ENABLE_BODY_ENRICHMENT:-false}")"
             enable_groq="$(bool_value "${VAR_ENABLE_GROQ_RENDERING:-false}")"
@@ -126,6 +128,7 @@ jobs:
             debug_groq="$(bool_value "${VAR_DEBUG_GROQ:-false}")"
             model_input="${VAR_GROQ_MODEL:-gpt-oss-120b}"
             enable_jev_shadow="$(bool_value "${VAR_ENABLE_JEV_SHADOW:-false}")"
+            enable_jev_routing="$(bool_value "${VAR_ENABLE_JEV_ROUTING:-false}")"
           fi
 
           case "${production_candidate_input,,}" in
@@ -162,6 +165,7 @@ jobs:
             echo "- groq_rate_reset_wait_max_seconds: ${model_rate_reset_wait_max_seconds}"
             echo "- groq_model_comparison: $([ "${enable_groq_model_comparison}" = "true" ] && printf 'enabled' || printf 'disabled')"
             echo "- jev_selector_shadow: $([ "${enable_jev_shadow}" = "true" ] && printf 'enabled' || printf 'disabled')"
+            echo "- jev_editorial_routing: $([ "${enable_jev_routing}" = "true" ] && printf 'enabled' || printf 'disabled')"
           } > "${run_dir}/optional_status.md"
 
           echo "run_dir=${run_dir}" >> "${GITHUB_OUTPUT}"
@@ -169,6 +173,7 @@ jobs:
           echo "enable_groq_rendering=${enable_groq}" >> "${GITHUB_OUTPUT}"
           echo "enable_groq_model_comparison=${enable_groq_model_comparison}" >> "${GITHUB_OUTPUT}"
           echo "enable_jev_selector_shadow=${enable_jev_shadow}" >> "${GITHUB_OUTPUT}"
+          echo "enable_jev_editorial_routing=${enable_jev_routing}" >> "${GITHUB_OUTPUT}"
           echo "enable_groq_production_overwrite=${enable_overwrite}" >> "${GITHUB_OUTPUT}"
           echo "groq_production_candidate=${production_candidate}" >> "${GITHUB_OUTPUT}"
           echo "force_all_groq=${force_all}" >> "${GITHUB_OUTPUT}"
@@ -189,18 +194,60 @@ jobs:
           today="$(TZ=Asia/Kuala_Lumpur date +%F)"
           output_path="news/malaysia/${today}.md"
           run_dir="${{ steps.optional.outputs.run_dir }}"
+          baseline_output="${run_dir}/rss_selector_baseline.md"
           python3 -B scripts/malaysia_rss_summary.py \
             --include-paul-tan \
             --diagnostics \
-            --output "${output_path}" \
-            --json-output "${run_dir}/selected_items.json" \
-            --selection-observation-output "${run_dir}/selection_observation.json"
-          cp "${output_path}" "${run_dir}/rss_production_fallback.md"
-          if grep -q "::inbox-item" "${output_path}"; then
+            --output "${baseline_output}" \
+            --json-output "${run_dir}/selected_items_baseline.json" \
+            --selection-observation-output "${run_dir}/selection_observation.json" \
+            --editorial-candidate-pool-output "${run_dir}/editorial_candidate_pool.json"
+          if grep -q "::inbox-item" "${baseline_output}"; then
             echo "::error::Generated Markdown must not contain ::inbox-item metadata."
             exit 1
           fi
           echo "output_path=${output_path}" >> "${GITHUB_OUTPUT}"
+
+      - name: Route Malaysia candidates with Jev editorial budget
+        id: jev_routing
+        shell: bash
+        env:
+          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+        run: |
+          set -euo pipefail
+          run_dir="${{ steps.optional.outputs.run_dir }}"
+          output_path="${{ steps.generate.outputs.output_path }}"
+          enabled="${{ steps.optional.outputs.enable_jev_editorial_routing }}"
+          args=(
+            python3 -B scripts/malaysia_jev_editorial_routing.py
+            --candidate-pool "${run_dir}/editorial_candidate_pool.json"
+            --baseline-selected "${run_dir}/selected_items_baseline.json"
+            --output "${run_dir}/selected_items.json"
+            --report-output "${run_dir}/jev_editorial_routing.json"
+          )
+          if [ "${enabled}" = "true" ]; then
+            args+=(--live)
+          else
+            args+=(--disabled)
+          fi
+
+          if "${args[@]}" > "${run_dir}/jev_editorial_routing_stdout.log" 2> "${run_dir}/jev_editorial_routing_stderr.log"; then
+            status="$(python3 -B -c 'import json, sys; print(json.load(open(sys.argv[1], encoding="utf-8"))["status"])' "${run_dir}/jev_editorial_routing.json")"
+          else
+            cp "${run_dir}/selected_items_baseline.json" "${run_dir}/selected_items.json"
+            status="runner_failed"
+            echo "::warning::Jev editorial routing failed; legacy selector baseline will be published."
+          fi
+          echo "${status}" > "${run_dir}/jev_editorial_routing_status.txt"
+          if [ "${status}" = "applied" ]; then
+            python3 -B scripts/render_malaysia_news_from_json.py \
+              --json-input "${run_dir}/selected_items.json" \
+              --output "${output_path}"
+          else
+            cp "${run_dir}/rss_selector_baseline.md" "${output_path}"
+          fi
+          cp "${output_path}" "${run_dir}/rss_production_fallback.md"
+          echo "status=${status}" >> "${GITHUB_OUTPUT}"
 
       - name: Install body enrichment dependencies
         if: steps.optional.outputs.enable_body_enrichment == 'true'
@@ -489,6 +536,12 @@ jobs:
           run_dir="${{ steps.optional.outputs.run_dir }}"
           model_short="${{ steps.optional.outputs.groq_model_short }}"
           enabled="${{ steps.optional.outputs.enable_jev_selector_shadow }}"
+          routing_enabled="${{ steps.optional.outputs.enable_jev_editorial_routing }}"
+          if [ "${routing_enabled}" = "true" ]; then
+            echo "skipped_routing_active" > "${run_dir}/jev_selector_shadow_status.txt"
+            echo "::notice::Jev selector shadow skipped because editorial routing records the same semantic decisions."
+            exit 0
+          fi
           args=(
             python3 -B scripts/malaysia_jev_selector_shadow.py
             --selection-observation "${run_dir}/selection_observation.json"
