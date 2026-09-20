@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 import tempfile
 import unittest
+import urllib.error
+from io import BytesIO
 from pathlib import Path
 from unittest.mock import patch
 
@@ -14,6 +16,7 @@ from experiment_meta_ads_jev_ads_relevance_shadow import (
     build_request,
     load_fixture,
     run_shadow,
+    _safe_http_error_detail,
     write_new_artifact,
 )
 
@@ -111,6 +114,17 @@ class JevAdsRelevanceArtifactRunnerTests(unittest.TestCase):
             {"transport_error"},
         )
         self.assertNotIn("secret provider response body", json.dumps(report))
+
+    def test_http_error_keeps_only_safe_code_or_type(self) -> None:
+        error = urllib.error.HTTPError(
+            "https://api.typesafe.ai/v1/systemone",
+            400,
+            "redacted",
+            {},
+            BytesIO(b'{"error":{"type":"invalid_request","code":"bad_shape","message":"secret"}}'),
+        )
+        self.assertEqual(_safe_http_error_detail(error), "bad_shape")
+        self.assertNotIn("secret", json.dumps({"errorCode": "bad_shape"}))
 
     def test_artifact_write_is_local_new_and_rejects_overwrite(self) -> None:
         report = {"schemaVersion": "test"}
