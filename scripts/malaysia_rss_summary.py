@@ -1164,6 +1164,13 @@ def has_practical_life_value(item: Item) -> bool:
             "housing ministry",
             "option to purchase clause",
             "public health",
+            "air quality",
+            "air pollution",
+            "unhealthy air",
+            "haze",
+            "jerebu",
+            "api readings",
+            "ipu",
             "food supply",
             "rice bowl",
             "agriculture",
@@ -2766,6 +2773,8 @@ def self_test() -> int:
         "PKPS perkukuh rangkaian jualan murah, 122 rakan strategik bantu rakyat hadapi kos sara hidup",
         "Jualan Rahmah offers barang keperluan at harga lebih rendah",
         "Kos sara hidup eased through jualan murah in Selangor",
+        "Haze: Sarawak areas dominate unhealthy API readings, IPD Serian highest at 182",
+        "Haze watch: 21 areas nationwide wake up to unhealthy air",
     ]
     for title in keep_titles:
         test_item = item(title)

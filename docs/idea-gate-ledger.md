@@ -809,3 +809,53 @@ must use `supersedes` instead of editing an earlier entry.
 - Allowed action: 公開経路に接続しないJev selector shadowを実装し、現行selector・hard validator・Jevの決定を同一artifactへ記録する
 - Revisit when: Jev APIのMalaysia News向け通信またはJSON契約が安定しない; shadow artifactの不一致が運用判断に使われない; Jevの判定がselectorやvalidatorの改善候補を示せない; artifactのコストまたは実行時間がscheduled運用に不釣り合いになる
 - Override: not applied
+
+<!-- idea-gate:20260920t160000-malaysia-haze-practical-value -->
+## 空気質・ヘイズ記事をfinal_noise_gateの一律除外から保護する
+
+- Record ID: `20260920t160000-malaysia-haze-practical-value`
+- Evaluated: 2026-09-20T16:00:00+08:00
+- Project: ysmsnsmr.github.io / Malaysia News
+- Rubric: 1.0.0
+- Decision: **GO**
+- Score: 86/100
+- Confidence: high - 同一runのselector段階、Jev判定、除外理由をartifactで照合でき、原因箇所もコードで特定できる
+
+### Problem Card
+
+- Who: Malaysia Newsを日常的に確認する個人読者
+- When: 日次選定後に生活影響のある空気質記事を読むとき
+- Problem: 実データで生活影響ありと判断できるヘイズ記事5件がfinal_noise_gateで一律除外された
+- Current behavior: selection_observationとJev shadowの不一致を確認し、必要なら出典を個別に調べている
+
+### Evidence
+
+- Tier: 3
+- 2026-09-20のJev shadow artifactでヘイズ・空気質記事5件がfinal_noise_gateから除外され、direct_life_impactと判定された
+- 同artifactで通信失敗0、selected記事のunrelated_noiseなしを確認した
+- 既存has_practical_life_valueはweather、flood、transport等を扱うがhaze・air qualityを扱っていない
+- selection_observationで5件すべてが候補段階まで到達した後にfinal_noise_gateで除外されている
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 16/20 |
+| `current_workaround_gap` | 15/20 |
+| `evidence_strength` | 18/20 |
+| `behavior_outcome_impact` | 13/15 |
+| `strategic_fit_reuse` | 10/10 |
+| `ui_operational_lightness` | 14/15 |
+| **Total** | **86/100** |
+
+### Alternatives
+
+- **SHRINK - 今回観測した5件だけを追加候補として扱う:** EXPERIMENT_ONLY (79/100). 今回のヘイズ記事だけを個別fixtureとして保護し、一般化した生活影響判定は変更しない
+- **INTEGRATE - 空気質・健康リスクを既存の生活影響判定へ統合する:** GO (87/100). 既存has_practical_life_valueに空気質・ヘイズの汎用シグナルを加え、final_noise_gateの一般判定を再利用する
+- **NO_FEATURE - Jev shadowだけ継続し、selectorは変更しない:** EXPERIMENT_ONLY (73/100). 次のartifactを待ってから判断し、現行final_noise_gateの除外を維持する
+
+### Next Step
+
+- Allowed action: 既存has_practical_life_valueへ空気質・ヘイズの汎用シグナルを追加し、golden fixtureとself-testで検証する
+- Revisit when: 空気質記事が誤って大量掲載される; 同一ヘイズ事象のcanonical deduplicationが機能しない; 非生活影響の大気・環境記事まで実質的に保護される
+- Override: not applied
