@@ -118,13 +118,12 @@ def build_request(item: dict[str, Any]) -> dict[str, Any]:
     """Build the only data that may be sent to the provider for one item."""
     return {
         "model": REQUESTED_MODEL_ID,
-        "input": {
+        "state": {
             "title": item["title"],
             "sourceContext": item["sourceContext"][:MAX_SOURCE_CONTEXT_CHARS],
         },
-        "questions": [
-            {
-                "id": QUESTION_ID,
+        "questions": {
+            QUESTION_ID: {
                 "type": "choice",
                 "instructions": (
                     "Classify the article's relationship to Meta Ads using only the "
@@ -147,7 +146,7 @@ def build_request(item: dict[str, Any]) -> dict[str, Any]:
                     "unclear": "The supplied title and source context are too weak to classify safely.",
                 },
             }
-        ],
+        },
     }
 
 

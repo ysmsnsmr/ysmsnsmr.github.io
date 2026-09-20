@@ -47,9 +47,10 @@ class JevAdsRelevanceArtifactRunnerTests(unittest.TestCase):
         item = self.fixture["items"][0]
         request = build_request(item)
         self.assertEqual(request["model"], REQUESTED_MODEL_ID)
-        self.assertEqual(set(request["input"]), {"title", "sourceContext"})
-        self.assertEqual(request["input"]["title"], item["title"])
-        self.assertEqual(request["input"]["sourceContext"], item["sourceContext"])
+        self.assertEqual(set(request["state"]), {"title", "sourceContext"})
+        self.assertEqual(request["state"]["title"], item["title"])
+        self.assertEqual(request["state"]["sourceContext"], item["sourceContext"])
+        self.assertEqual(set(request["questions"]), {"adsRelevance"})
         serialized = json.dumps(request)
         for forbidden in (item["url"], item["sourceFingerprint"], item["humanLane"], item["itemId"]):
             self.assertNotIn(forbidden, serialized)
@@ -85,7 +86,7 @@ class JevAdsRelevanceArtifactRunnerTests(unittest.TestCase):
 
     def test_unclear_and_action_to_drop_are_reported_as_observations(self) -> None:
         def post_json(payload: dict, api_key: str, timeout_seconds: float) -> dict:
-            title = payload["input"]["title"]
+            title = payload["state"]["title"]
             if title == "How to Approach Meta Advertising Control":
                 return provider_response("unrelated")
             return provider_response("unclear")
