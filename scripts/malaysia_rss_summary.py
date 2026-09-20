@@ -82,6 +82,7 @@ ALL_FLAGS = [
 
 LAST_FINALIZE_STATS: dict[str, object] = {}
 LAST_SELECTION_OBSERVATION: dict[str, object] = {}
+LAST_EDITORIAL_CANDIDATE_POOL: list["Item"] = []
 RECENT_WINDOW_HOURS = 24
 FRESHNESS_OBSERVATION_WINDOW_HOURS = 24
 FRESHNESS_REFERENCE_WINDOW_HOURS = 48
@@ -1759,8 +1760,43 @@ def build_selection_observation_json(
     }
 
 
+def build_editorial_candidate_pool_json(
+    processed_count: int,
+    failed_sources: list[str],
+    now: datetime,
+) -> dict[str, object]:
+    """Expose the cap-free, deterministic candidate pool for Jev routing.
+
+    The pool has already passed freshness, canonical-event deduplication, score,
+    static selector exclusions, final-noise policy, and source/financial
+    diversity limits.  It intentionally precedes the legacy category and total
+    caps so a later editorial policy can make that decision semantically.
+    """
+    return {
+        "schema_version": "malaysia-news-editorial-candidate-pool/v1",
+        "generated_at": now.isoformat(),
+        "date": now.date().isoformat(),
+        "timezone": "Asia/Kuala_Lumpur",
+        "candidate_policy": {
+            "fixed_category_caps_applied": False,
+            "overall_selector_cap_applied": False,
+            "source_limits_applied": True,
+            "financial_limits_applied": True,
+            "hard_static_selector_applied": True,
+            "canonical_deduplication_applied": True,
+        },
+        "counts": {
+            "processed": processed_count,
+            "candidates": len(LAST_EDITORIAL_CANDIDATE_POOL),
+            "failed_sources": len(failed_sources),
+        },
+        "failed_sources": list(failed_sources),
+        "items": [item_json(item) for item in LAST_EDITORIAL_CANDIDATE_POOL],
+    }
+
+
 def select_items(items: list[Item], now: datetime) -> list[Item]:
-    global LAST_SELECTION_OBSERVATION
+    global LAST_EDITORIAL_CANDIDATE_POOL, LAST_SELECTION_OBSERVATION
     cutoff = now - timedelta(hours=RECENT_WINDOW_HOURS)
     recent = [item for item in items if cutoff <= item.pub_date <= now]
     recent_ids = {id(item) for item in recent}
@@ -1815,6 +1851,29 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
         else:
             candidates.append(item)
     candidates.sort(key=lambda item: (item.score, item.pub_date), reverse=True)
+
+    # Keep the old selector result intact, but also expose the same candidates
+    # before category and total caps. A later Jev editorial policy can use this
+    # pool without weakening deterministic safety or diversity controls.
+    editorial_candidates: list[Item] = []
+    editorial_source_counts: Counter[str] = Counter()
+    editorial_financial_counts: Counter[str] = Counter()
+    for item in candidates:
+        category = category_for(item)
+        item.category = category
+        if is_forced_final_noise(item):
+            continue
+        financial_bucket = financial_topic_bucket(item) if category == "【知っておくと得】" else ""
+        source_limit = SOURCE_LIMITS.get(item.source, 24)
+        if editorial_source_counts[item.source] >= source_limit:
+            continue
+        if financial_bucket and editorial_financial_counts[financial_bucket] >= FINANCIAL_LIMITS[financial_bucket]:
+            continue
+        editorial_candidates.append(item)
+        editorial_source_counts[item.source] += 1
+        if financial_bucket:
+            editorial_financial_counts[financial_bucket] += 1
+    LAST_EDITORIAL_CANDIDATE_POOL = editorial_candidates
 
     selected: list[Item] = []
     source_counts: Counter[str] = Counter()
@@ -2885,6 +2944,10 @@ def main() -> int:
         "--selection-observation-output",
         help="Write an observation-only record of selected and excluded RSS items to this path.",
     )
+    parser.add_argument(
+        "--editorial-candidate-pool-output",
+        help="Write deterministic candidates before legacy category and total caps for editorial routing.",
+    )
     args = parser.parse_args()
 
     if args.self_test:
@@ -2939,6 +3002,12 @@ def main() -> int:
             build_selection_observation_json(all_items, selected, processed_count, failed_sources, now),
         )
         print(f"Wrote selection observation: {args.selection_observation_output}")
+    if args.editorial_candidate_pool_output:
+        write_json_output(
+            args.editorial_candidate_pool_output,
+            build_editorial_candidate_pool_json(processed_count, failed_sources, now),
+        )
+        print(f"Wrote editorial candidate pool: {args.editorial_candidate_pool_output}")
     return 0
 
 

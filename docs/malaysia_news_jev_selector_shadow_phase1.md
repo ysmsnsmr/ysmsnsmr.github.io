@@ -71,7 +71,8 @@ result or prevent the index from being built.
 
 ## Promotion Boundary
 
-Phase 1 does not authorize production routing. Any Phase 3 change requires a
-separate proposal, targeted tests, an explicit kill switch, and the ability to
-return immediately to the selector-only baseline. It must preserve the hard
-safety invariant above.
+Phase 1 does not itself route production. The later Phase 3 implementation is
+documented in [Malaysia News Jev Editorial Routing](malaysia_news_jev_editorial_routing.md).
+It uses a separate kill switch and returns immediately to the selector-only
+baseline on any classifier failure. It must preserve the hard-safety invariant
+above.

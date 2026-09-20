@@ -859,3 +859,55 @@ must use `supersedes` instead of editing an earlier entry.
 - Allowed action: 既存has_practical_life_valueへ空気質・ヘイズの汎用シグナルを追加し、golden fixtureとself-testで検証する
 - Revisit when: 空気質記事が誤って大量掲載される; 同一ヘイズ事象のcanonical deduplicationが機能しない; 非生活影響の大気・環境記事まで実質的に保護される
 - Override: not applied
+
+<!-- idea-gate:20260920t170519-malaysia-jev-editorial-budget -->
+## 固定カテゴリ枠を廃止し、Jev判定後の編集予算へ置き換える
+
+- Record ID: `20260920t170519-malaysia-jev-editorial-budget`
+- Evaluated: 2026-09-20T17:05:19+08:00
+- Project: ysmsnsmr.github.io / Malaysia News
+- Rubric: 1.0.0
+- Decision: **GO**
+- Score: 87/100
+- Confidence: high - 同一日のbefore/after artifact、selectorの決定段階、Jevの成功した実測が揃っており、固定枠が意味判定より先に効く原因を再現できている
+
+### Problem Card
+
+- Who: Malaysia Newsを日常的に確認する個人読者と運用者
+- When: 日次選定で、生活影響のある記事がカテゴリ上限や合計上限で押し出されるとき
+- Problem: 固定カテゴリ枠がJevの意味判定より先に働くため、生活影響記事が選定対象から外れ、記事の意味に基づく優先順位を公開結果へ反映できない
+- Current behavior: selection_observationとJev shadow artifactを手動照合し、押し出された記事を個別のdeterministic rule修正で救済している
+
+### Evidence
+
+- Tier: 3
+- 2026-09-20の初回Jev shadow artifactで、生活影響のあるヘイズ・空気質記事5件がfinal_noise_gateで除外された
+- 同日、空気質を既存生活影響判定へ統合した再実行で5件はfinal_noise_gateを通過したが、2件が知っておくと得カテゴリ上限8件でcategory_capとなった
+- 再実行ではヘイズ関連4件が選定され、残る2件はsemantic relevanceではなく固定カテゴリ枠により未選定だった
+- Phase 1 Jev shadowは30件を分類し、通信失敗0件、productionEffect=falseで記事ごとのbaseline不一致を記録できている
+- 既存selectorはcategory_limitsとoverall selector cap 15をJev実行より前に適用している
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 17/20 |
+| `current_workaround_gap` | 16/20 |
+| `evidence_strength` | 19/20 |
+| `behavior_outcome_impact` | 13/15 |
+| `strategic_fit_reuse` | 10/10 |
+| `ui_operational_lightness` | 12/15 |
+| **Total** | **87/100** |
+
+### Alternatives
+
+- **SHRINK - カテゴリ上限だけを撤廃する:** GO (83/100). 知っておくと得などの固定カテゴリ枠だけを外し、合計15件上限と既存selector順序は維持する
+- **INTEGRATE - cap前候補をJev判定後の編集予算で選定する:** GO (87/100). 既存のhard safety、鮮度、重複排除を通過した候補をJevで優先順位化し、固定カテゴリ枠ではなく後段の編集予算で公開候補を決める。Jev障害時は旧selectorへfail-openする
+- **NO_FEATURE - 現行capを維持し、個別ルール修正を続ける:** EXPERIMENT_ONLY (65/100). Jevは観察だけに留め、固定枠による除外は記事種別ごとのdeterministic rule追加で対応する
+
+### Next Step
+
+- Allowed action: 既存selectorのcap前候補をartifactへ出力し、Jev成功時だけ後段の編集予算でrouted selected JSONを生成する。Jev routing kill switchがfalseまたは通信・契約失敗なら既存selector JSONをそのまま使う
+- Revisit when: Jev routingによるselected記事数またはsource-only記事数が日次ページの可読性を明確に損なう; Jev障害時に旧selector-only JSONへfail-openできない; direct_life_impactの保護と重複排除が両立しない; Jevのunrelated_noise判定が人間確認で繰り返し誤りと分かる
+- Supersedes: `20260920t100000-malaysia-jev-selector-shadow`
+- Override: not applied
