@@ -1,10 +1,148 @@
 {
   "schemaVersion": "meta-ads-personal-feed-state/v5",
-  "updatedAt": "2026-09-20T04:55:38Z",
+  "updatedAt": "2026-09-20T08:42:53Z",
   "sources": {
     "meta-product-news-rss": {
       "relevanceRevision": "meta-ads-lanes-v1",
       "items": {
+        "https://about.fb.com/news/2026/09/threads-expands-podcast-toolkit-for-creators-and-listeners/": {
+          "url": "https://about.fb.com/news/2026/09/threads-expands-podcast-toolkit-for-creators-and-listeners/",
+          "title": "Threads Expands Podcast Toolkit for Creators and Listeners",
+          "publishedDate": "2026-09-16",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
+          "firstObservedAt": "2026-09-17T04:55:10Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Threads adds new podcast tools for creators and listeners",
+                "summary": "Threads introduces podcast features: creators can show banners on profiles, feature episodes with a picker and tappable cards, share highlights via transcript, video and guest cards, and view insights on reach, clicks and saves. Listeners can save episodes, receive auto‑notifications to share new episodes, and join conversations.",
+                "inputHash": "dd770c52d5fdf34709326c136d72cb8b7f3f3b03bba2d3faad742658df6c6f47",
+                "generatedAt": "2026-09-18T11:07:09Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Threads adds new podcast tools for creators and listeners",
+                    "inputHash": "dd770c52d5fdf34709326c136d72cb8b7f3f3b03bba2d3faad742658df6c6f47",
+                    "generatedAt": "2026-09-18T11:07:09Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Threads introduces podcast features: creators can show banners on profiles, feature episodes with a picker and tappable cards, share highlights via transcript, video and guest cards, and view insights on reach, clicks and saves. Listeners can save episodes, receive auto‑notifications to share new episodes, and join conversations.",
+                    "inputHash": "dd770c52d5fdf34709326c136d72cb8b7f3f3b03bba2d3faad742658df6c6f47",
+                    "generatedAt": "2026-09-18T11:07:09Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Threads、ポッドキャスト向けツールを拡充",
+                "summary": "Threadsはポッドキャスト制作者とリスナー向けに新機能を追加した。プロフィールや投稿にバナーを表示でき、エピソードピッカーで好きな回をカード化して共有できる。ハイライトやゲスト情報を文字起こしや動画、ゲストカード付きで投稿可能。フィード上でエピソードを保存し、通知設定で新エピソードのシェアをリマインドできる。インサイトではリーチやエンゲージメント、クリック・保存数が確認できる。",
+                "inputHash": "28042457718948478fdcd08d17e58a74ff11acce78e4a788410ab984002f5c7e",
+                "generatedAt": "2026-09-18T11:07:09Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Threads、ポッドキャスト向けツールを拡充",
+                    "inputHash": "28042457718948478fdcd08d17e58a74ff11acce78e4a788410ab984002f5c7e",
+                    "generatedAt": "2026-09-18T11:07:09Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Threadsはポッドキャスト制作者とリスナー向けに新機能を追加した。プロフィールや投稿にバナーを表示でき、エピソードピッカーで好きな回をカード化して共有できる。ハイライトやゲスト情報を文字起こしや動画、ゲストカード付きで投稿可能。フィード上でエピソードを保存し、通知設定で新エピソードのシェアをリマインドできる。インサイトではリーチやエンゲージメント、クリック・保存数が確認できる。",
+                    "inputHash": "28042457718948478fdcd08d17e58a74ff11acce78e4a788410ab984002f5c7e",
+                    "generatedAt": "2026-09-18T11:07:09Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://about.fb.com/news/2026/09/introducing-meta-one-subscription-service-more-features-ai/": {
+          "url": "https://about.fb.com/news/2026/09/introducing-meta-one-subscription-service-more-features-ai/",
+          "title": "Introducing Meta One: A Subscription Service With More Features and AI to Create, Connect, and Stand Out",
+          "publishedDate": "2026-09-15",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "7ec28c89eba18f71014806f8761c9662a7068ae8ed01ebd3e8b28d182c8a14ea",
+          "firstObservedAt": "2026-09-16T07:17:13Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "7ec28c89eba18f71014806f8761c9662a7068ae8ed01ebd3e8b28d182c8a14ea",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "5c41c554fe0b0638450efe0176a2a866abd1bf60f0a97075524662431d80d0be",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "5c41c554fe0b0638450efe0176a2a866abd1bf60f0a97075524662431d80d0be",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "5c41c554fe0b0638450efe0176a2a866abd1bf60f0a97075524662431d80d0be",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Meta、個人・クリエイター・企業向けサブスクリプション「Meta One」開始",
+                "summary": "Metaは新たにサブスクリプションサービス「Meta One」を発表し、個人・クリエイター・企業向けにプランを提供する。Instagram Plus、Facebook Plus、WhatsApp Plusといった単体プランではカスタムフォントや通知、メッセンジャーのカスタマイズ、チャットバックアップなどの機能が追加され、Core・PremiumバンドルではAIによる画像・動画生成やRestyleなどの高度なAIツールが利用可能になる。価格は単体プランが月額2.99ドル、個人バンドルが7.99ドル、クリエイター・ビジネスバンドルが14.99ドルで、全世界で提供される。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-19T04:39:53Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Meta、個人・クリエイター・企業向けサブスクリプション「Meta One」開始",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-19T04:39:53Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Metaは新たにサブスクリプションサービス「Meta One」を発表し、個人・クリエイター・企業向けにプランを提供する。Instagram Plus、Facebook Plus、WhatsApp Plusといった単体プランではカスタムフォントや通知、メッセンジャーのカスタマイズ、チャットバックアップなどの機能が追加され、Core・PremiumバンドルではAIによる画像・動画生成やRestyleなどの高度なAIツールが利用可能になる。価格は単体プランが月額2.99ドル、個人バンドルが7.99ドル、クリエイター・ビジネスバンドルが14.99ドルで、全世界で提供される。",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-19T04:39:53Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
         "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/": {
           "url": "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/",
           "title": "Introducing Muse: The World’s First Personal AI Agent Built for Everyone",
@@ -13,11 +151,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "relevance:ai agent"
+            "jev:strategic_signal"
           ],
           "fingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
@@ -82,11 +220,11 @@
           "matchEvidence": [],
           "publicationStatus": "drop",
           "publicationEvidence": [
-            "non_ads:account security"
+            "jev:unrelated"
           ],
           "fingerprint": "6a3e19041f996e3c52d055589111ca61de96dffeb589c06d9a8a8c965fbee1e0",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "6a3e19041f996e3c52d055589111ca61de96dffeb589c06d9a8a8c965fbee1e0",
@@ -151,11 +289,11 @@
           "matchEvidence": [],
           "publicationStatus": "drop",
           "publicationEvidence": [
-            "non_ads:product-news"
+            "jev:unrelated"
           ],
           "fingerprint": "3200d8fbab7ee18881fb9819af4c09217f2382e91316da2c863d8ec9d2922618",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3200d8fbab7ee18881fb9819af4c09217f2382e91316da2c863d8ec9d2922618",
@@ -220,11 +358,11 @@
           "matchEvidence": [],
           "publicationStatus": "drop",
           "publicationEvidence": [
-            "non_ads:product-news"
+            "jev:unrelated"
           ],
           "fingerprint": "887d7edd242f173fef4a2548142caaee3ed5e2b8d0f4927635f97e194dd50b7c",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "887d7edd242f173fef4a2548142caaee3ed5e2b8d0f4927635f97e194dd50b7c",
@@ -287,13 +425,13 @@
           "publishedDate": "2026-07-24",
           "updatedDate": null,
           "matchEvidence": [],
-          "publicationStatus": "included",
+          "publicationStatus": "drop",
           "publicationEvidence": [
-            "relevance:meta ai"
+            "jev:unrelated"
           ],
           "fingerprint": "f891db2becaa267972f9c207eb3243f28729d0f14b11fde71e1250717412aae6",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f891db2becaa267972f9c207eb3243f28729d0f14b11fde71e1250717412aae6",
@@ -356,13 +494,13 @@
           "publishedDate": "2026-07-24",
           "updatedDate": null,
           "matchEvidence": [],
-          "publicationStatus": "included",
+          "publicationStatus": "drop",
           "publicationEvidence": [
-            "relevance:meta ai"
+            "jev:unrelated"
           ],
           "fingerprint": "6c4e6a14c1a542cc0112f8b7686310340fbaeb03f215bed533a6c7eceb99fa11",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "6c4e6a14c1a542cc0112f8b7686310340fbaeb03f215bed533a6c7eceb99fa11",
@@ -427,11 +565,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "relevance:audience"
+            "jev:strategic_signal"
           ],
           "fingerprint": "933196690767de83451e164a7225a992dba2d0360859caeb4cb74b831a72b55a",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "933196690767de83451e164a7225a992dba2d0360859caeb4cb74b831a72b55a",
@@ -496,11 +634,11 @@
           "matchEvidence": [],
           "publicationStatus": "drop",
           "publicationEvidence": [
-            "non_ads:teen accounts"
+            "jev:unrelated"
           ],
           "fingerprint": "1b1d551a5b80a38834190fd8619d037b02c9b3889b7af9aac43e4ac0008fcb8e",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1b1d551a5b80a38834190fd8619d037b02c9b3889b7af9aac43e4ac0008fcb8e",
@@ -556,282 +694,6 @@
               }
             }
           }
-        },
-        "https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/": {
-          "url": "https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/",
-          "title": "Introducing Muse Image: Image Generation Built for Your World",
-          "publishedDate": "2026-07-07",
-          "updatedDate": null,
-          "matchEvidence": [],
-          "publicationStatus": "included",
-          "publicationEvidence": [
-            "relevance:advantage+"
-          ],
-          "fingerprint": "87932d2acdd42983aa7d5e1d5d805f68da0efe998c8ea58dce18665d343aa3a1",
-          "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-16T13:14:08Z",
-          "presentation": {
-            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-            "sourceFingerprint": "87932d2acdd42983aa7d5e1d5d805f68da0efe998c8ea58dce18665d343aa3a1",
-            "generatorRevision": "bilingual-v1",
-            "locales": {
-              "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
-                "inputHash": "817c3672499378c0ffe09dd6075147d327800b21bc58fe3e32645e573e45141a",
-                "generatedAt": null,
-                "reviewedAt": null,
-                "fields": {
-                  "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
-                    "inputHash": "817c3672499378c0ffe09dd6075147d327800b21bc58fe3e32645e573e45141a",
-                    "generatedAt": null,
-                    "reviewedAt": null
-                  },
-                  "summary": {
-                    "status": "missing",
-                    "value": null,
-                    "inputHash": "817c3672499378c0ffe09dd6075147d327800b21bc58fe3e32645e573e45141a",
-                    "generatedAt": null,
-                    "reviewedAt": null
-                  }
-                }
-              },
-              "ja": {
-                "status": "machine",
-                "shortHeadline": "Meta AI、画像生成モデル「Muse Image」を提供開始 ― 簡単プロンプトで高品質画像を生成",
-                "summary": "MetaはMeta AIに新たな画像生成モデル「Muse Image」を導入した。ユーザーは会話形式の簡単な指示で高品質な画像を作成でき、InstagramストーリーやWhatsAppのチャットなど複数のアプリで利用可能。30以上のAIエフェクトやプリセットが用意され、写真の修正や部屋のリデザイン、テキスト入りインフォグラフィックの生成もできる。現在は限定的な国で提供され、今後はFacebookやMessengerなど他のサービスへ拡大予定。また、以前のInstagramアカウントへのメンション機能は廃止された。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-05T08:40:34Z",
-                "reviewedAt": null,
-                "fields": {
-                  "shortHeadline": {
-                    "status": "machine",
-                    "value": "Meta AI、画像生成モデル「Muse Image」を提供開始 ― 簡単プロンプトで高品質画像を生成",
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": "2026-09-05T08:40:34Z",
-                    "reviewedAt": null
-                  },
-                  "summary": {
-                    "status": "machine",
-                    "value": "MetaはMeta AIに新たな画像生成モデル「Muse Image」を導入した。ユーザーは会話形式の簡単な指示で高品質な画像を作成でき、InstagramストーリーやWhatsAppのチャットなど複数のアプリで利用可能。30以上のAIエフェクトやプリセットが用意され、写真の修正や部屋のリデザイン、テキスト入りインフォグラフィックの生成もできる。現在は限定的な国で提供され、今後はFacebookやMessengerなど他のサービスへ拡大予定。また、以前のInstagramアカウントへのメンション機能は廃止された。",
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": "2026-09-05T08:40:34Z",
-                    "reviewedAt": null
-                  }
-                }
-              }
-            }
-          }
-        },
-        "https://about.fb.com/news/2026/06/its-time-to-reserve-your-whatsapp-username/": {
-          "url": "https://about.fb.com/news/2026/06/its-time-to-reserve-your-whatsapp-username/",
-          "title": "It’s Time to Reserve Your WhatsApp Username",
-          "publishedDate": "2026-06-29",
-          "updatedDate": null,
-          "matchEvidence": [],
-          "publicationStatus": "drop",
-          "publicationEvidence": [
-            "non_ads:product-news"
-          ],
-          "fingerprint": "27427f05262634669413b24de36ad8d8a731a17fa4e328e1d284ae47be611840",
-          "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-15T04:56:51Z",
-          "presentation": {
-            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-            "sourceFingerprint": "27427f05262634669413b24de36ad8d8a731a17fa4e328e1d284ae47be611840",
-            "generatorRevision": "bilingual-v1",
-            "locales": {
-              "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
-                "inputHash": "d830d0f8228a81ba60968d91e57a1dedd00e32b0539b3d1a346fabb186e381ce",
-                "generatedAt": null,
-                "reviewedAt": null,
-                "fields": {
-                  "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
-                    "inputHash": "d830d0f8228a81ba60968d91e57a1dedd00e32b0539b3d1a346fabb186e381ce",
-                    "generatedAt": null,
-                    "reviewedAt": null
-                  },
-                  "summary": {
-                    "status": "missing",
-                    "value": null,
-                    "inputHash": "d830d0f8228a81ba60968d91e57a1dedd00e32b0539b3d1a346fabb186e381ce",
-                    "generatedAt": null,
-                    "reviewedAt": null
-                  }
-                }
-              },
-              "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
-                "reviewedAt": null,
-                "fields": {
-                  "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
-                    "reviewedAt": null
-                  },
-                  "summary": {
-                    "status": "missing",
-                    "value": null,
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
-                    "reviewedAt": null
-                  }
-                }
-              }
-            }
-          }
-        },
-        "https://about.fb.com/news/2026/09/introducing-meta-one-subscription-service-more-features-ai/": {
-          "url": "https://about.fb.com/news/2026/09/introducing-meta-one-subscription-service-more-features-ai/",
-          "title": "Introducing Meta One: A Subscription Service With More Features and AI to Create, Connect, and Stand Out",
-          "publishedDate": "2026-09-15",
-          "updatedDate": null,
-          "matchEvidence": [],
-          "publicationStatus": "included",
-          "publicationEvidence": [
-            "relevance:audience"
-          ],
-          "fingerprint": "7ec28c89eba18f71014806f8761c9662a7068ae8ed01ebd3e8b28d182c8a14ea",
-          "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
-          "presentation": {
-            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-            "sourceFingerprint": "7ec28c89eba18f71014806f8761c9662a7068ae8ed01ebd3e8b28d182c8a14ea",
-            "generatorRevision": "bilingual-v1",
-            "locales": {
-              "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
-                "inputHash": "5c41c554fe0b0638450efe0176a2a866abd1bf60f0a97075524662431d80d0be",
-                "generatedAt": null,
-                "reviewedAt": null,
-                "fields": {
-                  "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
-                    "inputHash": "5c41c554fe0b0638450efe0176a2a866abd1bf60f0a97075524662431d80d0be",
-                    "generatedAt": null,
-                    "reviewedAt": null
-                  },
-                  "summary": {
-                    "status": "missing",
-                    "value": null,
-                    "inputHash": "5c41c554fe0b0638450efe0176a2a866abd1bf60f0a97075524662431d80d0be",
-                    "generatedAt": null,
-                    "reviewedAt": null
-                  }
-                }
-              },
-              "ja": {
-                "status": "machine",
-                "shortHeadline": "Meta、個人・クリエイター・企業向けサブスクリプション「Meta One」開始",
-                "summary": "Metaは新たにサブスクリプションサービス「Meta One」を発表し、個人・クリエイター・企業向けにプランを提供する。Instagram Plus、Facebook Plus、WhatsApp Plusといった単体プランではカスタムフォントや通知、メッセンジャーのカスタマイズ、チャットバックアップなどの機能が追加され、Core・PremiumバンドルではAIによる画像・動画生成やRestyleなどの高度なAIツールが利用可能になる。価格は単体プランが月額2.99ドル、個人バンドルが7.99ドル、クリエイター・ビジネスバンドルが14.99ドルで、全世界で提供される。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-19T04:39:53Z",
-                "reviewedAt": null,
-                "fields": {
-                  "shortHeadline": {
-                    "status": "machine",
-                    "value": "Meta、個人・クリエイター・企業向けサブスクリプション「Meta One」開始",
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": "2026-09-19T04:39:53Z",
-                    "reviewedAt": null
-                  },
-                  "summary": {
-                    "status": "machine",
-                    "value": "Metaは新たにサブスクリプションサービス「Meta One」を発表し、個人・クリエイター・企業向けにプランを提供する。Instagram Plus、Facebook Plus、WhatsApp Plusといった単体プランではカスタムフォントや通知、メッセンジャーのカスタマイズ、チャットバックアップなどの機能が追加され、Core・PremiumバンドルではAIによる画像・動画生成やRestyleなどの高度なAIツールが利用可能になる。価格は単体プランが月額2.99ドル、個人バンドルが7.99ドル、クリエイター・ビジネスバンドルが14.99ドルで、全世界で提供される。",
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": "2026-09-19T04:39:53Z",
-                    "reviewedAt": null
-                  }
-                }
-              }
-            }
-          }
-        },
-        "https://about.fb.com/news/2026/09/threads-expands-podcast-toolkit-for-creators-and-listeners/": {
-          "url": "https://about.fb.com/news/2026/09/threads-expands-podcast-toolkit-for-creators-and-listeners/",
-          "title": "Threads Expands Podcast Toolkit for Creators and Listeners",
-          "publishedDate": "2026-09-16",
-          "updatedDate": null,
-          "matchEvidence": [],
-          "publicationStatus": "included",
-          "publicationEvidence": [
-            "relevance:audience"
-          ],
-          "fingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
-          "firstObservedAt": "2026-09-17T04:55:10Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
-          "presentation": {
-            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-            "sourceFingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
-            "generatorRevision": "bilingual-v1",
-            "locales": {
-              "en": {
-                "status": "machine",
-                "shortHeadline": "Threads adds new podcast tools for creators and listeners",
-                "summary": "Threads introduces podcast features: creators can show banners on profiles, feature episodes with a picker and tappable cards, share highlights via transcript, video and guest cards, and view insights on reach, clicks and saves. Listeners can save episodes, receive auto‑notifications to share new episodes, and join conversations.",
-                "inputHash": "dd770c52d5fdf34709326c136d72cb8b7f3f3b03bba2d3faad742658df6c6f47",
-                "generatedAt": "2026-09-18T11:07:09Z",
-                "reviewedAt": null,
-                "fields": {
-                  "shortHeadline": {
-                    "status": "machine",
-                    "value": "Threads adds new podcast tools for creators and listeners",
-                    "inputHash": "dd770c52d5fdf34709326c136d72cb8b7f3f3b03bba2d3faad742658df6c6f47",
-                    "generatedAt": "2026-09-18T11:07:09Z",
-                    "reviewedAt": null
-                  },
-                  "summary": {
-                    "status": "machine",
-                    "value": "Threads introduces podcast features: creators can show banners on profiles, feature episodes with a picker and tappable cards, share highlights via transcript, video and guest cards, and view insights on reach, clicks and saves. Listeners can save episodes, receive auto‑notifications to share new episodes, and join conversations.",
-                    "inputHash": "dd770c52d5fdf34709326c136d72cb8b7f3f3b03bba2d3faad742658df6c6f47",
-                    "generatedAt": "2026-09-18T11:07:09Z",
-                    "reviewedAt": null
-                  }
-                }
-              },
-              "ja": {
-                "status": "machine",
-                "shortHeadline": "Threads、ポッドキャスト向けツールを拡充",
-                "summary": "Threadsはポッドキャスト制作者とリスナー向けに新機能を追加した。プロフィールや投稿にバナーを表示でき、エピソードピッカーで好きな回をカード化して共有できる。ハイライトやゲスト情報を文字起こしや動画、ゲストカード付きで投稿可能。フィード上でエピソードを保存し、通知設定で新エピソードのシェアをリマインドできる。インサイトではリーチやエンゲージメント、クリック・保存数が確認できる。",
-                "inputHash": "28042457718948478fdcd08d17e58a74ff11acce78e4a788410ab984002f5c7e",
-                "generatedAt": "2026-09-18T11:07:09Z",
-                "reviewedAt": null,
-                "fields": {
-                  "shortHeadline": {
-                    "status": "machine",
-                    "value": "Threads、ポッドキャスト向けツールを拡充",
-                    "inputHash": "28042457718948478fdcd08d17e58a74ff11acce78e4a788410ab984002f5c7e",
-                    "generatedAt": "2026-09-18T11:07:09Z",
-                    "reviewedAt": null
-                  },
-                  "summary": {
-                    "status": "machine",
-                    "value": "Threadsはポッドキャスト制作者とリスナー向けに新機能を追加した。プロフィールや投稿にバナーを表示でき、エピソードピッカーで好きな回をカード化して共有できる。ハイライトやゲスト情報を文字起こしや動画、ゲストカード付きで投稿可能。フィード上でエピソードを保存し、通知設定で新エピソードのシェアをリマインドできる。インサイトではリーチやエンゲージメント、クリック・保存数が確認できる。",
-                    "inputHash": "28042457718948478fdcd08d17e58a74ff11acce78e4a788410ab984002f5c7e",
-                    "generatedAt": "2026-09-18T11:07:09Z",
-                    "reviewedAt": null
-                  }
-                }
-              }
-            }
-          }
         }
       }
     },
@@ -846,11 +708,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:business-sdk-release"
+            "jev:strategic_signal"
           ],
           "fingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
@@ -915,11 +777,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:business-sdk-release"
+            "jev:direct_impact"
           ],
           "fingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
@@ -984,11 +846,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:business-sdk-release"
+            "jev:unclear"
           ],
           "fingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
@@ -1053,11 +915,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:business-sdk-release"
+            "jev:direct_impact"
           ],
           "fingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
@@ -1122,11 +984,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:business-sdk-release"
+            "jev:strategic_signal"
           ],
           "fingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
@@ -1191,11 +1053,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:business-sdk-release"
+            "jev:direct_impact"
           ],
           "fingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
@@ -1260,11 +1122,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:business-sdk-release"
+            "jev:strategic_signal"
           ],
           "fingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
@@ -1329,11 +1191,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:business-sdk-release"
+            "jev:direct_impact"
           ],
           "fingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
@@ -1398,11 +1260,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:business-sdk-release"
+            "jev:unclear"
           ],
           "fingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
@@ -1467,11 +1329,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:business-sdk-release"
+            "jev:strategic_signal"
           ],
           "fingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
@@ -1542,13 +1404,13 @@
             "keyword:meta",
             "keyword:advertiser"
           ],
-          "publicationStatus": "drop",
+          "publicationStatus": "included",
           "publicationEvidence": [
-            "non_ads:teen accounts"
+            "jev:strategic_signal"
           ],
           "fingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
@@ -1579,25 +1441,25 @@
                 }
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Meta、約180億ドルの和解と米国ティーン向け使用制限を発表",
+                "summary": "Metaは米国の州検事総長29州が提起した訴訟を約180億ドルで和解した。和解条件として、米国内の18歳未満ユーザーに対し、FacebookとInstagramの利用時間を合計で2時間に",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-20T08:42:53Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Meta、約180億ドルの和解と米国ティーン向け使用制限を発表",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-20T08:42:53Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Metaは米国の州検事総長29州が提起した訴訟を約180億ドルで和解した。和解条件として、米国内の18歳未満ユーザーに対し、FacebookとInstagramの利用時間を合計で2時間に",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-20T08:42:53Z",
                     "reviewedAt": null
                   }
                 }
@@ -1614,13 +1476,13 @@
             "keyword:meta",
             "keyword:ad"
           ],
-          "publicationStatus": "drop",
+          "publicationStatus": "included",
           "publicationEvidence": [
-            "non_ads:settlement"
+            "jev:strategic_signal"
           ],
           "fingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
@@ -1651,25 +1513,25 @@
                 }
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Meta、米州検察総長らと和解し18億ドル超の支払いとティーン向け使用制限を実施",
+                "summary": "Metaは米国の29州検察総長らが提起した訴訟を和解し、18億ドル超を支払うことで裁判を回避した。和解条件として、FacebookとInstagramの18歳未満ユーザーに対し、デフォ",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-20T08:42:53Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Meta、米州検察総長らと和解し18億ドル超の支払いとティーン向け使用制限を実施",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-20T08:42:53Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Metaは米国の29州検察総長らが提起した訴訟を和解し、18億ドル超を支払うことで裁判を回避した。和解条件として、FacebookとInstagramの18歳未満ユーザーに対し、デフォ",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-20T08:42:53Z",
                     "reviewedAt": null
                   }
                 }
@@ -1688,11 +1550,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-ads-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "7acf956231436a87c7b7a9015db094361a079af2b65baf71f7b29d23f773fa11",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7acf956231436a87c7b7a9015db094361a079af2b65baf71f7b29d23f773fa11",
@@ -1760,11 +1622,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-ads-context"
+            "jev:strategic_signal"
           ],
           "fingerprint": "143436c34d5eef00048e1b6e3dae36a41ad7a161b317c577367a64dc953d8e2d",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "143436c34d5eef00048e1b6e3dae36a41ad7a161b317c577367a64dc953d8e2d",
@@ -2048,11 +1910,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-ads-context"
+            "jev:strategic_signal"
           ],
           "fingerprint": "b35a1f5bd3df45609ea7344b16e5d345202e2951c5f6d1ffa6a0c6ed22ad3509",
           "firstObservedAt": "2026-09-11T04:43:19Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b35a1f5bd3df45609ea7344b16e5d345202e2951c5f6d1ffa6a0c6ed22ad3509",
@@ -2120,11 +1982,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-ads-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "458f353eef407444549b3ec68b6489d82873f8642f1707db100854945d78bcbc",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "458f353eef407444549b3ec68b6489d82873f8642f1707db100854945d78bcbc",
@@ -2192,11 +2054,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-ads-context"
+            "jev:strategic_signal"
           ],
           "fingerprint": "ff23184ef3220928736c800efa6e9314e8a7760550fa387687cf9e2f0f7c072b",
           "firstObservedAt": "2026-09-18T11:07:09Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ff23184ef3220928736c800efa6e9314e8a7760550fa387687cf9e2f0f7c072b",
@@ -2269,11 +2131,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
           "firstObservedAt": "2026-09-02T04:36:59Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
@@ -2341,11 +2203,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
@@ -2413,11 +2275,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
@@ -2483,13 +2345,13 @@
             "category:Meta Advertising",
             "keyword:facebook ads"
           ],
-          "publicationStatus": "drop",
+          "publicationStatus": "included",
           "publicationEvidence": [
-            "competitor:chatgpt ads"
+            "jev:strategic_signal"
           ],
           "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
@@ -2557,11 +2419,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
@@ -2629,11 +2491,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
@@ -2701,11 +2563,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
@@ -2773,11 +2635,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:strategic_signal"
           ],
           "fingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
@@ -2845,11 +2707,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
@@ -2917,11 +2779,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:strategic_signal"
           ],
           "fingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
@@ -2989,11 +2851,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
@@ -3061,11 +2923,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:strategic_signal"
           ],
           "fingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
@@ -3133,11 +2995,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
@@ -3203,13 +3065,13 @@
             "category:Meta Advertising",
             "keyword:meta ads"
           ],
-          "publicationStatus": "drop",
+          "publicationStatus": "included",
           "publicationEvidence": [
-            "competitor:chatgpt ads"
+            "jev:strategic_signal"
           ],
           "fingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
@@ -3277,11 +3139,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:strategic_signal"
           ],
           "fingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
@@ -3349,11 +3211,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:strategic_signal"
           ],
           "fingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
@@ -3421,11 +3283,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
@@ -3493,11 +3355,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:strategic_signal"
           ],
           "fingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
@@ -3565,11 +3427,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
@@ -3637,11 +3499,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:strategic_signal"
           ],
           "fingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
@@ -3707,13 +3569,13 @@
             "category:Meta Advertising",
             "keyword:meta ads"
           ],
-          "publicationStatus": "drop",
+          "publicationStatus": "included",
           "publicationEvidence": [
-            "competitor:chatgpt ads"
+            "jev:direct_impact"
           ],
           "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
@@ -3744,25 +3606,25 @@
                 }
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Meta広告の配信プッシュとChatGPT広告機能更新について",
+                "summary": "Meta広告では、1つのキャンペーン内で複数の広告に対して配信予算をプッシュできることが確認され、テストでは5つの広告にそれぞれ10％ずつ割り当て、予算が正確に配分された。ChatGPT広告では、キャンペーンの予算タイプを生涯予算から日次予算へ変更できる機能や、CPMキャンペーンをCPCへ変換するオプション、カスタム上限入札設定、Ads Manager上での一括編集やCSVアップロード、日次予算の柔軟な配分（週単位で平均化）、対象国の拡大（米国・カナダ・オーストラリア・ニュージーランド）が追加された。",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-20T08:42:53Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Meta広告の配信プッシュとChatGPT広告機能更新について",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-20T08:42:53Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Meta広告では、1つのキャンペーン内で複数の広告に対して配信予算をプッシュできることが確認され、テストでは5つの広告にそれぞれ10％ずつ割り当て、予算が正確に配分された。ChatGPT広告では、キャンペーンの予算タイプを生涯予算から日次予算へ変更できる機能や、CPMキャンペーンをCPCへ変換するオプション、カスタム上限入札設定、Ads Manager上での一括編集やCSVアップロード、日次予算の柔軟な配分（週単位で平均化）、対象国の拡大（米国・カナダ・オーストラリア・ニュージーランド）が追加された。",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-20T08:42:53Z",
                     "reviewedAt": null
                   }
                 }
@@ -3781,11 +3643,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
@@ -3853,11 +3715,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
@@ -3925,11 +3787,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
@@ -3997,11 +3859,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
@@ -4069,11 +3931,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
@@ -4139,13 +4001,13 @@
             "category:Meta Advertising",
             "keyword:meta ads"
           ],
-          "publicationStatus": "drop",
+          "publicationStatus": "included",
           "publicationEvidence": [
-            "competitor:chatgpt ads"
+            "jev:direct_impact"
           ],
           "fingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
@@ -4211,13 +4073,13 @@
             "category:Meta Advertising",
             "keyword:meta ads"
           ],
-          "publicationStatus": "drop",
+          "publicationStatus": "included",
           "publicationEvidence": [
-            "competitor:chatgpt ads"
+            "jev:strategic_signal"
           ],
           "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
@@ -4285,11 +4147,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "df19403656263ac9e00d4d6b0ba326faf03ae83fadc7c0ce7bfc212072f92d5d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "df19403656263ac9e00d4d6b0ba326faf03ae83fadc7c0ce7bfc212072f92d5d",
@@ -4573,11 +4435,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:direct_impact"
           ],
           "fingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
           "firstObservedAt": "2026-09-09T04:45:10Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
@@ -4645,11 +4507,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-advertising-context"
+            "jev:strategic_signal"
           ],
           "fingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
@@ -4721,11 +4583,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-business-news"
+            "jev:direct_impact"
           ],
           "fingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
@@ -4792,11 +4654,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-business-news"
+            "jev:direct_impact"
           ],
           "fingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
@@ -4863,11 +4725,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-business-news"
+            "jev:direct_impact"
           ],
           "fingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
@@ -4934,11 +4796,11 @@
           ],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "source:meta-business-news"
+            "jev:direct_impact"
           ],
           "fingerprint": "d2dc0dc1c4efc057c1c0191e0388749eee34a824f326f4644babbc1469695685",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-20T04:55:38Z",
+          "lastObservedAt": "2026-09-20T08:42:53Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d2dc0dc1c4efc057c1c0191e0388749eee34a824f326f4644babbc1469695685",
@@ -5009,6 +4871,66 @@
         "failureCount": 3,
         "lastFailureAt": "2026-09-20T04:55:38Z",
         "nextRetryAt": "2026-09-20T08:55:38Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/chatgpt-ads-automated-bidding-placements-url-parameters/",
+        "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-20T08:42:53Z",
+        "nextRetryAt": "2026-09-20T09:42:53Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/chatgpt-ads-initial-impressions/",
+        "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-20T08:42:53Z",
+        "nextRetryAt": "2026-09-20T09:42:53Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/chatgpt-ads-initial-impressions/",
+        "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-20T08:42:53Z",
+        "nextRetryAt": "2026-09-20T09:42:53Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/chatgpt-ads-limitations-ai-instant-forms/",
+        "fingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-20T08:42:53Z",
+        "nextRetryAt": "2026-09-20T09:42:53Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/chatgpt-ads-limitations-ai-instant-forms/",
+        "fingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-20T08:42:53Z",
+        "nextRetryAt": "2026-09-20T09:42:53Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -5134,6 +5056,18 @@
         "quarantined": false
       },
       {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/push-delivery-tests-chatgpt-ads-updates/",
+        "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-20T08:42:53Z",
+        "nextRetryAt": "2026-09-20T09:42:53Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
         "sourceId": "meta-business-sdk-releases",
         "itemKey": "v24.0.0",
         "fingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
@@ -5195,18 +5129,6 @@
       },
       {
         "sourceId": "meta-product-news-rss",
-        "itemKey": "https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/",
-        "fingerprint": "87932d2acdd42983aa7d5e1d5d805f68da0efe998c8ea58dce18665d343aa3a1",
-        "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-16T13:14:08Z",
-        "nextRetryAt": "2026-09-16T21:14:08Z",
-        "lastFailureCode": "http_400",
-        "lastProviderErrorCode": "json_validate_failed",
-        "quarantined": false
-      },
-      {
-        "sourceId": "meta-product-news-rss",
         "itemKey": "https://about.fb.com/news/2026/09/introducing-meta-one-subscription-service-more-features-ai/",
         "fingerprint": "7ec28c89eba18f71014806f8761c9662a7068ae8ed01ebd3e8b28d182c8a14ea",
         "locale": "en",
@@ -5243,6 +5165,18 @@
       },
       {
         "sourceId": "social-media-today-meta-ads",
+        "itemKey": "https://www.socialmediatoday.com/news/how-will-metas-settlement-impact-social-media/829033/",
+        "fingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-20T08:42:53Z",
+        "nextRetryAt": "2026-09-20T09:42:53Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
+        "sourceId": "social-media-today-meta-ads",
         "itemKey": "https://www.socialmediatoday.com/news/meta-adds-more-creator-partnership-tools/830480/",
         "fingerprint": "458f353eef407444549b3ec68b6489d82873f8642f1707db100854945d78bcbc",
         "locale": "en",
@@ -5252,6 +5186,18 @@
         "lastFailureCode": "response_invalid_shape",
         "lastProviderErrorCode": null,
         "quarantined": true
+      },
+      {
+        "sourceId": "social-media-today-meta-ads",
+        "itemKey": "https://www.socialmediatoday.com/news/meta-settles-landmark-lawsuit-for-18b/828900/",
+        "fingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-20T08:42:53Z",
+        "nextRetryAt": "2026-09-20T09:42:53Z",
+        "lastFailureCode": "summary_invalid",
+        "lastProviderErrorCode": null,
+        "quarantined": false
       }
     ]
   }
