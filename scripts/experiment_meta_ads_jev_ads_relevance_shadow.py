@@ -63,7 +63,11 @@ class JevRequestError(RuntimeError):
         self.code = code
 
 
-PostJson = Callable[[dict[str, Any], str, float], dict[str, Any]]
+# Keep the alias runtime-compatible with the macOS Python versions commonly
+# used for this manual experiment. The detailed callable shape remains in the
+# function annotations; evaluating a subscripted built-in `dict` here would
+# fail before the CLI starts on Python 3.8 and older.
+PostJson = Callable[..., Any]
 
 
 def _utc_now() -> str:
