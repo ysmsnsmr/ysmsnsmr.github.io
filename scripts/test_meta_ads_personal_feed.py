@@ -266,6 +266,8 @@ class PersonalFeedTest(unittest.TestCase):
         stats: dict[str, Any] = {}
         classifier = _jev_publication_from_environment(1, stats)
         self.assertIsNotNone(classifier)
+        self.assertEqual(stats["enabled"], True)
+        self.assertEqual(stats["results"], [])
         status, evidence = classifier(  # type: ignore[misc]
             {"id": "source-a"},
             {"fingerprint": "a" * 64, "title": "Private candidate title", "sourceContext": "Private source context"},

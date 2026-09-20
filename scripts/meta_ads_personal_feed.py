@@ -670,6 +670,7 @@ def _jev_publication_from_environment(
     api_key = os.environ.get("TYPESAFE_API_KEY", "").strip()
     if not api_key:
         raise ContractError("TYPESAFE_API_KEY is required when META_ADS_JEV_ROUTING_ENABLED=true")
+    _write_jev_routing_stats(stats, report)
 
     def classify(source: dict[str, Any], raw: dict[str, Any]) -> tuple[str, list[str]]:
         item_id = f"{source['id']}-{raw['fingerprint'][:20]}"
