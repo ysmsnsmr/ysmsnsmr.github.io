@@ -656,3 +656,58 @@ must use `supersedes` instead of editing an earlier entry.
 - Revisit when: 15件のartifactを人間laneと比較し、ACTIONからDROPへの不一致を個別に確認する; transport/validation失敗がartifactに安全な分類だけで残り、raw response・credential・fixture本文が出力されないことを確認する; production統合の検討は比較結果、provider保持条件、明示的な人間レビューを別途揃えてから再評価する
 - Supersedes: `20260919t111534-meta-ads-jev-relevance-shadow`
 - Override: not applied
+
+<!-- idea-gate:20260920t110645-meta-ads-jev-production-shadow -->
+## Jevを本番候補へ接続し、判定をartifact-onlyで継続観察する
+
+- Record ID: `20260920t110645-meta-ads-jev-production-shadow`
+- Evaluated: 2026-09-20T11:06:45+08:00
+- Project: Meta Ads Personal Feed
+- Rubric: 1.0.0
+- Decision: **EXPERIMENT_ONLY**
+- Score: 73/100
+- Confidence: medium - API実行と15件の分類は直接確認したが、実際の本番候補に対する安定性、費用、遅延、判定分布はまだ観測していない
+
+### Problem Card
+
+- Who: Meta Ads Personal Feedを個人・同僚向けに運用する本人
+- When: 本番collectorが新しい公式・非公式候補を収集し、関連性判定の挙動を確認するとき
+- Problem: 固定fixtureの手動実行だけでは実際の候補分布に対するJevの判定、失敗、遅延を継続観測できず、追加の人間ラベル検証は主観性と運用負担が大きい
+- Current behavior: deterministicなfreshness・source relevanceルールで掲載対象を決め、Jevは固定15件をローカルで一度だけartifact-only実行し、本番routingには使用していない
+
+### Evidence
+
+- Tier: 2
+- 2026-09-20に固定15件をjev-1.13.0で実行し、15/15分類成功、API失敗0件を確認した
+- 人間ラベルとの一致は8/15、不一致は7/15で、ACTIONからDROPへの重大な不一致は0件だった
+- 利用者は人間ラベル自体も小規模かつ主観的で、追加の正解判定プロセスは時間に見合わないと判断した
+- 既存Personal Feedは複数日のartifact観察を運用しており、source別relevance ruleの修正を繰り返してきた
+- Jev runnerはtitleと最大4000文字のsourceContextだけを送信し、credential・raw provider response・顧客情報をartifactへ保存しない
+- TypeSafe APIアクセスとjev-1.13.0の実行成功を確認済みである
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `problem_severity_frequency` | 14/20 |
+| `current_workaround_gap` | 15/20 |
+| `evidence_strength` | 15/20 |
+| `behavior_outcome_impact` | 10/15 |
+| `strategic_fit_reuse` | 9/10 |
+| `ui_operational_lightness` | 10/15 |
+| **Total** | **73/100** |
+
+### Alternatives
+
+- **SHRINK - 本番候補を明示指定する手動artifact-only workflow:** EXPERIMENT_ONLY (71/100). scheduleを追加せず、workflow_dispatchで本番候補を最大15件だけJevへ送り、比較なしの観測artifactを生成する
+- **INTEGRATE - 本番collectorと独立した期間限定Jev shadow workflow:** EXPERIMENT_ONLY (73/100). 既存stateまたはfeedの公開情報だけを読み、Jev結果を非公開artifactへ保存する。失敗しても収集・公開・stateを変更しない
+- **NO_FEATURE - deterministic relevance ruleと手動artifact観察を維持:** STOP (59/100). Jevを本番へ接続せず、現在のsource別ルールと必要時のローカルfixture実行だけを続ける
+
+### Next Step
+
+- Allowed action: ユーザーoverrideにより、本番routingから独立した期間限定Jev shadowを実装できる。最初はworkflow_dispatchで1回成功させ、その後もartifact-only、fail-open、件数上限、固定model/question version、kill switch、費用・遅延統計を維持する
+- Revisit when: 本番候補で少なくとも5回のartifactを生成し、API成功率、判定分布、latency、実行件数を確認する; Jev障害時もcollector、state、公開feed、Pages更新が停止しないことを確認する; 送信項目がtitleとbounded sourceContextだけで、raw provider responseとsecretが保存されないことを確認する; 自動DROP・自動掲載・Hard validator置換を検討する場合は別Idea Gateで再評価する; API費用または失敗率が個人運用で許容できない場合はkill switchで停止する
+- Supersedes: `20260919t120104-meta-ads-jev-artifact-runner`
+- Override: applied by yas at 2026-09-20T11:06:45+08:00
+- Override reason: 人間ラベルも15件の主観的基準であり、どちらが正しいかを追加検証する時間とプロセスの負担が価値に見合わないため、既存artifact観察を根拠に本番候補でshadow観測を続けたい
+- Override constraints: Jev結果を掲載、DROP、承認、公開停止へ使用しない; Jev失敗をcollectorと公開workflowへ伝播させない; titleとbounded sourceContext以外を送信しない; raw provider response、secret、顧客情報を保存しない; 固定model IDとquestion version、件数上限、kill switchを維持する; 自動routingは別評価なしに追加しない
