@@ -7,12 +7,12 @@
   const itemId = params.get("id");
   const personalVersions = new Set(["meta-ads-personal-feed/v1", "meta-ads-personal-feed/v2", "meta-ads-personal-feed/v3", "meta-ads-personal-feed/v4", "meta-ads-personal-feed/v5"]);
   const words = locale === "ja" ? {
-    official: "Meta公式", unofficial: "非公式", summaryMissing: "要約は利用できません。原文をご確認ください。", statusMachine: "AI生成の要約", statusReviewed: "レビュー済みの要約", statusMissing: "要約なし", original: "原文タイトル", published: "発表日", updated: "最終更新日", platform: "対象", unknown: "確認できず", unclassified: "未分類", sourceOfficial: "公式ソースを開く", sourceUnofficial: "非公式ソースを開く", notFound: "記事が見つかりません", notFoundCopy: "この記事は更新または保存期間の終了により、一覧から削除された可能性があります。", invalid: "記事を特定できません", invalidCopy: "一覧へ戻り、もう一度記事を選択してください。", error: "現在の公開内容を表示できません", errorCopy: "公開フィードを読み込めませんでした。しばらくしてからもう一度お試しください。"
+    official: "Meta公式", unofficial: "非公式", summaryMissing: "要約は利用できません。原文をご確認ください。", statusMachine: "AI生成の要約", statusReviewed: "レビュー済みの要約", statusMissing: "要約なし", original: "原文タイトル", published: "発表日", updated: "最終更新日", platform: "対象", unknown: "確認できず", unclassified: "未分類", sourceOfficial: "公式ソースを開く", sourceUnofficial: "非公式ソースを開く", addFavorite: "お気に入りに追加", removeFavorite: "お気に入りから削除", notFound: "記事が見つかりません", notFoundCopy: "この記事は更新または保存期間の終了により、一覧から削除された可能性があります。", invalid: "記事を特定できません", invalidCopy: "一覧へ戻り、もう一度記事を選択してください。", error: "現在の公開内容を表示できません", errorCopy: "公開フィードを読み込めませんでした。しばらくしてからもう一度お試しください。"
   } : {
-    official: "Official", unofficial: "Unofficial", summaryMissing: "Summary not available. Review the original source.", statusMachine: "Machine-generated summary", statusReviewed: "Reviewed summary", statusMissing: "Summary not available", original: "Original title", published: "Published", updated: "Updated", platform: "Platforms", unknown: "Not found", unclassified: "Unclassified", sourceOfficial: "Open official source", sourceUnofficial: "Open unofficial source", notFound: "Item not found", notFoundCopy: "This item may have been removed after an update or the end of its retention period.", invalid: "Unable to identify the item", invalidCopy: "Return to the feed and select the item again.", error: "The current published content is unavailable", errorCopy: "Please try again later."
+    official: "Official", unofficial: "Unofficial", summaryMissing: "Summary not available. Review the original source.", statusMachine: "Machine-generated summary", statusReviewed: "Reviewed summary", statusMissing: "Summary not available", original: "Original title", published: "Published", updated: "Updated", platform: "Platforms", unknown: "Not found", unclassified: "Unclassified", sourceOfficial: "Open official source", sourceUnofficial: "Open unofficial source", addFavorite: "Add to favorites", removeFavorite: "Remove from favorites", notFound: "Item not found", notFoundCopy: "This item may have been removed after an update or the end of its retention period.", invalid: "Unable to identify the item", invalidCopy: "Return to the feed and select the item again.", error: "The current published content is unavailable", errorCopy: "Please try again later."
   };
   const platformNames = locale === "ja" ? { "meta-platforms": "Metaプラットフォーム全般", "meta-business-sdk": "Meta Business SDK", "marketing-api": "Marketing API", "meta-ads": "Meta Ads" } : { "meta-platforms": "Meta platforms", "meta-business-sdk": "Meta Business SDK", "marketing-api": "Marketing API", "meta-ads": "Meta Ads" };
-  const el = { back: document.querySelector("#back-link"), en: document.querySelector("#locale-en"), ja: document.querySelector("#locale-ja"), notice: document.querySelector("#detail-unofficial-notice"), card: document.querySelector("#detail-card"), heading: document.querySelector("#detail-heading"), title: document.querySelector("#detail-title"), summary: document.querySelector("#detail-summary"), status: document.querySelector("#detail-presentation-status"), original: document.querySelector("#detail-original-title"), facts: document.querySelector("#detail-facts"), sourceLink: document.querySelector("#detail-source-link"), error: document.querySelector("#detail-error"), errorTitle: document.querySelector("#detail-error-title"), errorCopy: document.querySelector("#detail-error-copy") };
+  const el = { back: document.querySelector("#back-link"), en: document.querySelector("#locale-en"), ja: document.querySelector("#locale-ja"), notice: document.querySelector("#detail-unofficial-notice"), card: document.querySelector("#detail-card"), heading: document.querySelector("#detail-heading"), title: document.querySelector("#detail-title"), summary: document.querySelector("#detail-summary"), status: document.querySelector("#detail-presentation-status"), original: document.querySelector("#detail-original-title"), facts: document.querySelector("#detail-facts"), sourceLink: document.querySelector("#detail-source-link"), favorite: document.querySelector("#detail-favorite"), error: document.querySelector("#detail-error"), errorTitle: document.querySelector("#detail-error-title"), errorCopy: document.querySelector("#detail-error-copy") };
 
   function make(tag, className, text) { const node = document.createElement(tag); if (className) node.className = className; if (text !== undefined) node.textContent = text; return node; }
   function safeHttps(value) { try { const url = new URL(value); return url.protocol === "https:" ? url.href : null; } catch { return null; } }
@@ -54,6 +54,18 @@
     return { status: "missing", shortHeadline: null, summary: null };
   }
   function appendFact(label, value, fallback) { const wrapper = make("div"); wrapper.append(make("dt", "fact-label", label), make("dd", value ? "" : "not-stated not-stated--plain", value || fallback)); el.facts.append(wrapper); }
+  function setupFavorite(sourceUrl) {
+    if (!window.MetaAdsFavorites || !el.favorite) return;
+    const update = (isFavorite) => {
+      el.favorite.textContent = isFavorite ? "★" : "☆";
+      el.favorite.setAttribute("aria-pressed", String(isFavorite));
+      el.favorite.setAttribute("aria-label", isFavorite ? words.removeFavorite : words.addFavorite);
+      el.favorite.title = isFavorite ? words.removeFavorite : words.addFavorite;
+    };
+    update(window.MetaAdsFavorites.contains(sourceUrl));
+    el.favorite.addEventListener("click", () => update(window.MetaAdsFavorites.toggle(sourceUrl)));
+    el.favorite.hidden = false;
+  }
   function showError(title, copy) { el.card.hidden = true; el.notice.hidden = true; el.errorTitle.textContent = title; el.errorCopy.textContent = copy; el.error.hidden = false; }
 
   setupNavigation();
@@ -81,6 +93,7 @@
     appendFact(words.platform, platforms, words.unclassified);
     el.sourceLink.href = sourceUrl;
     el.sourceLink.textContent = official ? words.sourceOfficial : words.sourceUnofficial;
+    setupFavorite(sourceUrl);
     el.notice.hidden = official;
     el.card.hidden = false;
     document.title = `${el.title.textContent} | Meta Ads Update Feed`;
