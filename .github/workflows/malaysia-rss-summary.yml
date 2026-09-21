@@ -217,6 +217,7 @@ jobs:
           set -euo pipefail
           run_dir="${{ steps.optional.outputs.run_dir }}"
           output_path="${{ steps.generate.outputs.output_path }}"
+          baseline_output="${run_dir}/rss_selector_baseline.md"
           enabled="${{ steps.optional.outputs.enable_jev_editorial_routing }}"
           args=(
             python3 -B scripts/malaysia_jev_editorial_routing.py
@@ -244,9 +245,12 @@ jobs:
               --json-input "${run_dir}/selected_items.json" \
               --output "${output_path}"
           else
-            cp "${run_dir}/rss_selector_baseline.md" "${output_path}"
+            cp "${baseline_output}" "${output_path}"
           fi
-          cp "${output_path}" "${run_dir}/rss_production_fallback.md"
+          # Keep the deterministic legacy RSS output as the only document-level
+          # fallback. The routed Markdown is an optional Groq input, not a safe
+          # fallback, because its RSS-derived entry may still be generic.
+          cp "${baseline_output}" "${run_dir}/rss_production_fallback.md"
           echo "status=${status}" >> "${GITHUB_OUTPUT}"
 
       - name: Install body enrichment dependencies
