@@ -10,7 +10,7 @@
   const words = locale === "ja" ? {
     allSources: "すべてのソース", allTypes: "すべて", official: "Meta公式", unofficial: "非公式",
     retrieved: "最終取得", waiting: "初回取得待ち", shown: "表示中：", automatic: "件（自動取得・要確認）",
-    published: "発表日", updated: "最終更新日", unknown: "確認できず", details: "詳細を見る",
+    published: "発表日", updated: "最終更新日", unknown: "確認できず", details: "詳細を見る", addFavorite: "お気に入りに追加", removeFavorite: "お気に入りから削除",
     noMatches: "条件に一致する更新はありません", noMatchesCopy: "検索語または絞り込み条件を変更してください。",
     noItems: "取得済みの情報はありません", noItemsCopy: "初回取得後にソースからの情報を表示します。",
     error: "公開フィードを読み込めません", errorTitle: "現在の公開内容を表示できません", errorCopy: "公開フィードを読み込めませんでした。しばらくしてからもう一度お試しください。",
@@ -19,7 +19,7 @@
   } : {
     allSources: "All sources", allTypes: "All", official: "Official", unofficial: "Unofficial",
     retrieved: "Last retrieved", waiting: "Waiting for first retrieval", shown: "Showing ", automatic: " items · automatically collected, verify before use",
-    published: "Published", updated: "Updated", unknown: "Not found", details: "View details",
+    published: "Published", updated: "Updated", unknown: "Not found", details: "View details", addFavorite: "Add to favorites", removeFavorite: "Remove from favorites",
     noMatches: "No updates match these filters", noMatchesCopy: "Change the keyword or filters and try again.",
     noItems: "No collected updates yet", noItemsCopy: "Items will appear after the first successful collection.",
     error: "Unable to load the published feed", errorTitle: "The current published content is unavailable", errorCopy: "Please try again later.",
@@ -119,12 +119,29 @@
     return `./detail.html?${query.toString()}`;
   }
 
+  function favoriteButton(item) {
+    const key = item.url;
+    if (!window.MetaAdsFavorites || !key) return null;
+    const button = make("button", "favorite-button");
+    const update = (isFavorite) => {
+      button.textContent = isFavorite ? "★" : "☆";
+      button.setAttribute("aria-pressed", String(isFavorite));
+      button.setAttribute("aria-label", isFavorite ? words.removeFavorite : words.addFavorite);
+      button.title = isFavorite ? words.removeFavorite : words.addFavorite;
+    };
+    update(window.MetaAdsFavorites.contains(key));
+    button.addEventListener("click", () => update(window.MetaAdsFavorites.toggle(key)));
+    return button;
+  }
+
   function personalCard(item, source) {
     const li = make("li");
     const card = make("article", `update-card update-card--${source.classification}`);
     const heading = make("div", "card-heading");
     const official = source.classification === "official";
     heading.append(make("span", official ? "origin-label origin-label--official" : "origin-label origin-label--unofficial", official ? words.official : words.unofficial), make("p", "source-name", source.name));
+    const favorite = favoriteButton(item);
+    if (favorite) heading.append(favorite);
     const facts = make("dl", "fact-grid");
     facts.append(fact(words.published, item.publishedDate), fact(words.updated, item.updatedDate));
     const link = make("a", "detail-link", words.details);
