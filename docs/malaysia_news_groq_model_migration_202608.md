@@ -55,7 +55,7 @@ Semantic quality remains a manual review. Each selected article is shown with th
 
 - subject preserved;
 - attribution preserved;
-- state and certainty preserved;
+- state, time direction, and certainty preserved;
 - claims supported by the available source text;
 - natural Japanese that helps the reader decide whether to open the source.
 
@@ -88,4 +88,4 @@ Do not use Llama as the primary rollback after its shutdown date. RSS-only is th
 
 ## Golden Failures
 
-Requested production articles that fall back are appended by URL to `scripts/fixtures/malaysia_groq_model_migration_failures.json`. Existing entries are preserved. New failure reasons may be added to an existing URL, but prior articles and reasons are not removed.
+Requested production articles that fall back, and accepted entries with a manually confirmed meaning error, are appended by URL to `scripts/fixtures/malaysia_groq_model_migration_failures.json`. Existing entries are preserved. New failure reasons may be added to an existing URL, but prior articles and reasons are not removed. Before a production cutover, review each semantic observation against its saved `review_focus`; in particular, a future decision date must not be rendered as a past action by an article participant.

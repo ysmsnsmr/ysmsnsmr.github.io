@@ -37,6 +37,17 @@ class ModelComparisonTest(unittest.TestCase):
         self.assertIn("softer", item["item"]["title"])
         self.assertIn("上昇", item["observed_output"]["headline_ja"])
 
+    def test_semantic_quality_fixture_preserves_future_decision_as_past_action_error(self) -> None:
+        fixture_path = Path(__file__).resolve().parent / "fixtures/malaysia_groq_model_migration_failures.json"
+        payload = json.loads(fixture_path.read_text(encoding="utf-8"))
+        item = next(
+            row for row in payload["items"]
+            if row.get("link") == "https://www.astroawani.com/berita-malaysia/7-jan-keputusan-rayuan-majlis-peguam-berhubung-pengampunan-najib"
+        )
+        self.assertIn("keputusan rayuan", item["item"]["title"])
+        self.assertIn("scheduled for 7 January", item["review_focus"]["action"])
+        self.assertIn("2026年1月7日に", item["observed_output"]["entry_ja"])
+
     def test_force_all_policy_has_no_source_priority_override(self) -> None:
         self.assertFalse(hasattr(malaysia_groq_force_all_policy, "force_all_request_priority"))
 
