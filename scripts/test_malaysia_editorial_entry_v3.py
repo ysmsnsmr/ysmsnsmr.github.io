@@ -159,6 +159,8 @@ class EditorialEntryV3Test(unittest.TestCase):
     def test_v3_markdown_has_both_headlines_overview_and_supporting_points(self) -> None:
         data = {"counts": {"processed": 1, "selected": 1}, "failed_sources": [], "items": [item()]}
         markdown = markdown_renderer.render_editorial_entries(data)
+        self.assertIn("【暮らしに関わる更新】", markdown)
+        self.assertIn("【社会・経済の動き】", markdown)
         self.assertIn("- 見出し：交通計画1 来月開始", markdown)
         self.assertIn("- 短見出し：交通計画1開始", markdown)
         self.assertIn("- 概要：RSS概要1", markdown)

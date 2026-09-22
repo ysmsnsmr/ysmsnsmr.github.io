@@ -10,10 +10,11 @@ from pathlib import Path
 from typing import Any
 
 from malaysia_groq_output_contract import EDITORIAL_ENTRY_FORBIDDEN_PATTERNS
+from malaysia_news_display_categories import DISPLAY_CATEGORIES
 
 
 SCHEMA_VERSION = "malaysia-groq-editorial-entry-validator/v3"
-CATEGORY_HEADERS = ["【速報】", "【生活インパクト】", "【知っておくと得】"]
+CATEGORY_HEADERS = list(DISPLAY_CATEGORIES)
 REQUIRED_LINES = {
     "has_processed_count": "処理対象件数：",
     "has_selected_count": "要約対象件数：",

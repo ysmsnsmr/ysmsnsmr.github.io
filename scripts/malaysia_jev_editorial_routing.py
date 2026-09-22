@@ -26,6 +26,7 @@ from malaysia_jev_selector_shadow import (
     build_request,
     extract_answer,
 )
+from malaysia_news_display_categories import display_category_for_jev
 
 
 SCHEMA_VERSION = "malaysia-news-jev-editorial-routing/v2"
@@ -77,6 +78,12 @@ def _fingerprint(item: dict[str, Any]) -> str:
 def _publication_item(item: dict[str, Any]) -> dict[str, Any]:
     value = copy.deepcopy(item)
     value.pop("routing_metadata", None)
+    return value
+
+
+def _selected_item(item: dict[str, Any], jev_decision: str) -> dict[str, Any]:
+    value = copy.deepcopy(item)
+    value["display_category"] = display_category_for_jev(jev_decision, value.get("category"))
     return value
 
 
@@ -228,6 +235,7 @@ def route_candidates(
                 **result,
                 "outcome": "classified",
                 "jevDecision": answer["choice"],
+                "displayCategory": display_category_for_jev(answer["choice"], item.get("category")),
                 "confidence": answer["confidence"],
                 "providerModelId": provider_model_id,
                 "latencyMs": round((time.monotonic() - started) * 1000),
@@ -273,7 +281,7 @@ def route_candidates(
             if len(selected) >= policy["target_card_count"]:
                 result["publicationDecision"] = "excluded_editorial_budget"
                 continue
-            selected.append(item)
+            selected.append(_selected_item(item, choice))
             selected_fingerprints.add(fingerprint)
             result["publicationDecision"] = "selected"
             source_counts[source] += 1

@@ -102,6 +102,8 @@ class MalaysiaJevEditorialRoutingTests(unittest.TestCase):
         self.assertEqual(report["status"], "applied")
         self.assertTrue(report["routingEffect"])
         self.assertEqual([value["title"] for value in output["items"]], ["Haze affects Putrajaya", "Public policy update"])
+        self.assertEqual(output["items"][0]["display_category"], "【暮らしに関わる更新】")
+        self.assertEqual(output["items"][1]["display_category"], "【社会・経済の動き】")
         decisions = {result["jevDecision"]: result["publicationDecision"] for result in report["results"]}
         self.assertEqual(decisions["direct_life_impact"], "selected")
         self.assertEqual(decisions["public_information"], "selected")

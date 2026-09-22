@@ -6,8 +6,9 @@ import sys
 from pathlib import Path
 from typing import Any, Callable
 
+from malaysia_news_display_categories import DISPLAY_CATEGORIES, display_category_for_item
 
-CATEGORIES = ["【速報】", "【生活インパクト】", "【知っておくと得】"]
+CATEGORIES = DISPLAY_CATEGORIES
 SOURCE_ONLY_HEADER = "【原文のみ】"
 RENDER_SOURCE_KIND_FIELD = "_editorial_entry_render_source_kind"
 TOPIC_ORDER = [
@@ -547,7 +548,7 @@ def render_with_item_renderer(
         lines.append(category)
         lines.append("")
         for item in items:
-            if item.get("category") == category and (item_filter is None or item_filter(item)):
+            if display_category_for_item(item) == category and (item_filter is None or item_filter(item)):
                 lines.extend(item_renderer(item))
 
     if appendix_renderer:

@@ -81,6 +81,22 @@ V3_MARKDOWN = """【速報】
 """
 
 
+DISPLAY_CATEGORY_MARKDOWN = """【暮らしに関わる更新】
+
+- 見出し：道路工事に伴う交差点閉鎖を延期
+- 概要：交通調査のため予定されていた交差点閉鎖は延期されました。
+- 出典：Example News（2026年9月22日）
+- 出典元URL：https://example.test/road
+
+【社会・経済の動き】
+
+- 見出し：研究開発支援の方針を公表
+- 概要：政府は研究開発を支える方針を公表しました。
+- 出典：Example News（2026年9月22日）
+- 出典元URL：https://example.test/research
+"""
+
+
 SOURCE_ONLY_MARKDOWN = V3_MARKDOWN + """
 【原文のみ】
 
@@ -102,6 +118,10 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
 
         self.assertEqual(day.items[0].what_happened, "気象局が大雨警報を出しました。 対象地域では強風も予想されています。")
         self.assertEqual(day.items[0].life_impact, "移動時間に余裕が必要です。")
+        self.assertEqual(day.items[0].category, "【暮らしに関わる更新】")
+        self.assertEqual(day.items[1].category, "【暮らしに関わる更新】")
+        self.assertEqual(day.category_counts["【暮らしに関わる更新】"], 2)
+        self.assertEqual(day.category_counts["【社会・経済の動き】"], 0)
 
     def test_pickup_headline_is_semantic_and_within_15_5_width(self) -> None:
         headline = "保健省は、霧による大気汚染が広がる中で、喘息と上気道感染の患者数が急増したと発表しました。健康大臣は注意を呼びかけています。"
@@ -152,7 +172,7 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
     def test_recent_day_lists_at_most_three_full_headlines(self) -> None:
         items = [
             builder.NewsItem(
-                category="【速報】",
+                category="【暮らしに関わる更新】",
                 conclusion=f"長い要約本文 {index}",
                 headline=f"通常見出し{index}",
                 short_headline=f"短見出し{index}",
@@ -164,7 +184,7 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
             path=Path("2026-08-28.md"),
             conclusions=[item.conclusion for item in items],
             items=items,
-            category_counts={"【速報】": 6, "【生活インパクト】": 0, "【知っておくと得】": 0},
+            category_counts={"【暮らしに関わる更新】": 6, "【社会・経済の動き】": 0},
             processed_count="6",
             summarized_count="6",
             failed_sources="なし",
@@ -219,6 +239,19 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertIn(first.headline, recent)
         self.assertNotIn(first.short_headline, recent)
         self.assertIn(first.headline, builder.render_daily_page(day))
+
+    def test_parser_accepts_the_two_public_display_categories(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "2026-09-22.md"
+            path.write_text(DISPLAY_CATEGORY_MARKDOWN, encoding="utf-8")
+            day = builder.parse_markdown(path)
+
+        self.assertEqual(
+            [item.category for item in day.items],
+            ["【暮らしに関わる更新】", "【社会・経済の動き】"],
+        )
+        self.assertEqual(day.category_counts["【暮らしに関わる更新】"], 1)
+        self.assertEqual(day.category_counts["【社会・経済の動き】"], 1)
 
     def test_top_page_uses_compact_recent_day_rows(self) -> None:
         page = builder.render_html([self.parse_sample(), self.parse_sample()])

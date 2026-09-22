@@ -947,3 +947,42 @@ must use `supersedes` instead of editing an earlier entry.
 - Action: 最新origin/mainの専用branchで構造候補を生成し、Jev判定後に編集予算と偏り調整を適用する。旧selector JSONをfallbackとして保持する
 - Revisit when: Jev候補数または実行時間がscheduled運用に収まらない; unrelated_noiseまたはunclearの扱いで有用記事が繰り返し失われる; 媒体・金融トピックの後段調整でdirect_life_impactが押し出される; 旧selector fallbackと新経路の責務が再び混在する
 - Supersedes: `20260920t170519-malaysia-jev-editorial-budget`
+
+<!-- idea-gate:20260922t203000-malaysia-display-categories -->
+## Jevの関連度判断に合わせて、Malaysia Newsの公開表示を2分類へ簡素化する
+
+- Record ID: `20260922t203000-malaysia-display-categories`
+- Evaluated: 2026-09-22T20:30:00+08:00
+- Project: ysmsnsmr.github.io / Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 91/100
+- Confidence: high - 実production artifact、Jev routing結果、MarkdownとHTMLの表示コードが同じ不一致を示している
+
+### Idea Card
+
+- Purpose: 日次ニュースを読む人が、自分の暮らしへの更新と社会・経済の動きを区別して一覧できるようにする
+- First experience: Jevで直接的な生活影響と判断された記事と、公共情報と判断された記事が、日別ページとトップで別の見出しに表示される
+- Scope and cost: 既存のJev routing、Markdown renderer、HTML index parserの表示カテゴリだけを変更する。LLM呼び出し、掲載数、選定順、RSS-only rollbackは変更しない
+- Continuation boundary: 次のartifactで記事が2分類へ過不足なく表示され、過去Markdownも読め、読者が分類名を有用と感じれば継続する。分類が読解を妨げるかJevの曖昧判定が目立てば旧表示へ戻す
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 14/15 |
+| `evidence_and_learning` | 14/15 |
+| `expected_outcome` | 13/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 18/20 |
+| **Total** | **91/100** |
+
+### Alternatives
+
+- **NO_FEATURE - 旧3分類の名称だけを変更する:** 表示名だけを変え、既存の語彙ベース分類を維持する
+
+### Next Step
+
+- Action: Jev routingの判定を表示カテゴリとして保存し、rendererとindex parserを新2分類および旧Markdown互換へ更新する
+- Revisit when: Jevのdirect_life_impactとpublic_informationが読者の分類意図と繰り返し異なる; RSS-only rollbackで旧3分類を読めなくなる; 新しい表示が選定結果やURL保持を変える

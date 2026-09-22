@@ -7,12 +7,17 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from malaysia_news_design_tokens import MALAYSIA_NEWS_TOKENS_CSS
+from malaysia_news_display_categories import (
+    DISPLAY_CATEGORIES,
+    MARKDOWN_CATEGORIES,
+    display_category_for_legacy,
+)
 
 
 MYT = timezone(timedelta(hours=8))
 NEWS_DIR = Path("news/malaysia")
 OUTPUT_PATH = NEWS_DIR / "index.html"
-CATEGORIES = ("【速報】", "【生活インパクト】", "【知っておくと得】")
+CATEGORIES = DISPLAY_CATEGORIES
 SOURCE_ONLY_HEADER = "【原文のみ】"
 LEGACY_PICKUP_HEADLINE_MAX_WIDTH = 15.5
 RECENT_HEADLINE_LIMIT = 3
@@ -108,9 +113,9 @@ def parse_markdown(path: Path) -> NewsDay:
 
     for raw_line in text.splitlines():
         line = raw_line.strip()
-        if line in CATEGORIES:
+        if line in MARKDOWN_CATEGORIES:
             flush_item()
-            current_category = line
+            current_category = display_category_for_legacy(line)
             pending_headline = ""
             pending_short_headline = ""
             in_source_only = False
@@ -400,7 +405,7 @@ def render_latest_summary(day: NewsDay) -> str:
           <div>
             <p class="eyebrow">Latest</p>
             <h2>{esc(format_date(day.date))}</h2>
-            <p class="muted">カテゴリ順に、生活への影響を確認できます。</p>
+            <p class="muted">暮らしに関わる更新と社会・経済の動きを確認できます。</p>
           </div>
           <a class="primary-link" href="{daily_page_link(day)}">すべて読む</a>
         </div>
@@ -1078,7 +1083,7 @@ def render_html(days: list[NewsDay]) -> str:
     <section aria-labelledby="today-heading">
       <div class="section-head">
         <h2 id="today-heading">今日のピックアップ3件</h2>
-        <p>速報、生活インパクト、知っておくと得の順に表示</p>
+        <p>暮らしに関わる更新、社会・経済の動きの順に表示</p>
       </div>
       {latest_summary}
     </section>

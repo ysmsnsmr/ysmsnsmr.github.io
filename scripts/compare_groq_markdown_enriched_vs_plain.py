@@ -11,6 +11,8 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
+from malaysia_news_display_categories import MARKDOWN_CATEGORIES
+
 
 FORBIDDEN_PATTERNS = [
     "gsk_",
@@ -118,7 +120,7 @@ def markdown_signature(path: str) -> list[tuple[str, str, str]]:
     source = ""
     for line in Path(path).read_text(encoding="utf-8").splitlines():
         stripped = line.strip()
-        if stripped in {"【速報】", "【生活インパクト】", "【知っておくと得】"}:
+        if stripped in MARKDOWN_CATEGORIES:
             category = stripped
         elif stripped.startswith("- 出典："):
             source = stripped.removeprefix("- 出典：")
