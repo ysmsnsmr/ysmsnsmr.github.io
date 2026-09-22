@@ -3,8 +3,9 @@
 
 This is deliberately fail-open. The legacy selector JSON remains the output
 whenever the routing kill switch is off, the candidate set is too large, or any
-Jev call fails validation. Static selector checks, canonical deduplication, and
-Groq hard safety remain outside this module.
+Jev call fails validation. Freshness, URL validation, and canonical
+deduplication run before this module. Source and topic diversity run here after
+Jev relevance classification.
 """
 
 import argparse
@@ -27,8 +28,8 @@ from malaysia_jev_selector_shadow import (
 )
 
 
-SCHEMA_VERSION = "malaysia-news-jev-editorial-routing/v1"
-MAX_ROUTING_CANDIDATES = 50
+SCHEMA_VERSION = "malaysia-news-jev-editorial-routing/v2"
+MAX_ROUTING_CANDIDATES = 150
 TARGET_CARD_COUNT = 15
 CHOICE_ORDER = ("direct_life_impact", "public_information", "unclear")
 
@@ -73,6 +74,40 @@ def _fingerprint(item: dict[str, Any]) -> str:
     return hashlib.sha256("\n".join(values).encode("utf-8")).hexdigest()
 
 
+def _publication_item(item: dict[str, Any]) -> dict[str, Any]:
+    value = copy.deepcopy(item)
+    value.pop("routing_metadata", None)
+    return value
+
+
+def _positive_int(value: Any, fallback: int) -> int:
+    if isinstance(value, int) and not isinstance(value, bool) and value > 0:
+        return value
+    return fallback
+
+
+def _post_relevance_policy(candidate_pool: dict[str, Any]) -> dict[str, Any]:
+    raw = candidate_pool.get("post_relevance_policy")
+    if not isinstance(raw, dict):
+        raw = {}
+    source_limits = raw.get("source_limits")
+    financial_limits = raw.get("financial_limits")
+    return {
+        "target_card_count": _positive_int(raw.get("target_card_count"), TARGET_CARD_COUNT),
+        "default_source_limit": _positive_int(raw.get("default_source_limit"), 24),
+        "source_limits": {
+            str(name): value
+            for name, value in (source_limits.items() if isinstance(source_limits, dict) else [])
+            if isinstance(name, str) and isinstance(value, int) and not isinstance(value, bool) and value > 0
+        },
+        "financial_limits": {
+            str(name): value
+            for name, value in (financial_limits.items() if isinstance(financial_limits, dict) else [])
+            if isinstance(name, str) and isinstance(value, int) and not isinstance(value, bool) and value > 0
+        },
+    }
+
+
 def _safe_result(index: int, item: dict[str, Any], baseline_links: set[str]) -> dict[str, Any]:
     return {
         "candidateRank": index,
@@ -94,7 +129,7 @@ def _routed_output(
     routing: dict[str, Any],
 ) -> dict[str, Any]:
     output = _baseline_output(baseline, routing)
-    output["items"] = copy.deepcopy(selected)
+    output["items"] = [_publication_item(item) for item in selected]
     counts = output.get("counts")
     if not isinstance(counts, dict):
         counts = {}
@@ -154,6 +189,7 @@ def route_candidates(
     candidates = _items(candidate_pool, "candidate pool")
     baseline_items = _items(baseline, "baseline")
     baseline_links = {str(item.get("link") or "") for item in baseline_items}
+    policy = _post_relevance_policy(candidate_pool)
     report = _report_base(enabled, len(candidates), len(baseline_items))
 
     if not enabled:
@@ -204,34 +240,56 @@ def route_candidates(
 
     selected: list[dict[str, Any]] = []
     selected_fingerprints: set[str] = set()
+    source_counts: Counter[str] = Counter()
+    financial_counts: Counter[str] = Counter()
+    results_by_fingerprint = {
+        result["itemFingerprint"]: result
+        for result in report["results"]
+        if result.get("outcome") == "classified"
+    }
+    for _, item in by_choice["unrelated_noise"]:
+        results_by_fingerprint[_fingerprint(item)]["publicationDecision"] = "excluded_unrelated_noise"
+
     for choice in CHOICE_ORDER:
         for _, item in by_choice[choice]:
-            if len(selected) >= TARGET_CARD_COUNT:
-                break
             fingerprint = _fingerprint(item)
+            result = results_by_fingerprint[fingerprint]
             if fingerprint in selected_fingerprints:
+                continue
+            if choice == "unclear" and str(item.get("link") or "") not in baseline_links:
+                result["publicationDecision"] = "excluded_unclear"
+                continue
+            source = str(item.get("source") or "")
+            source_limit = policy["source_limits"].get(source, policy["default_source_limit"])
+            if source_counts[source] >= source_limit:
+                result["publicationDecision"] = "excluded_source_diversity"
+                continue
+            metadata = item.get("routing_metadata")
+            financial_bucket = metadata.get("financial_bucket") if isinstance(metadata, dict) else ""
+            financial_limit = policy["financial_limits"].get(financial_bucket) if financial_bucket else None
+            if financial_limit is not None and financial_counts[financial_bucket] >= financial_limit:
+                result["publicationDecision"] = "excluded_financial_diversity"
+                continue
+            if len(selected) >= policy["target_card_count"]:
+                result["publicationDecision"] = "excluded_editorial_budget"
                 continue
             selected.append(item)
             selected_fingerprints.add(fingerprint)
-
-    for result in report["results"]:
-        if result.get("outcome") != "classified":
-            continue
-        fingerprint = result["itemFingerprint"]
-        if fingerprint in selected_fingerprints:
             result["publicationDecision"] = "selected"
-        elif result["jevDecision"] == "unrelated_noise":
-            result["publicationDecision"] = "excluded_unrelated_noise"
-        else:
-            result["publicationDecision"] = "excluded_editorial_budget"
+            source_counts[source] += 1
+            if financial_bucket:
+                financial_counts[financial_bucket] += 1
 
     routing = {
         "status": "applied",
         "applied": True,
-        "policy": "jev_priority_then_editorial_budget",
-        "target_card_count": TARGET_CARD_COUNT,
+        "policy": "jev_relevance_then_diversity_and_editorial_budget",
+        "target_card_count": policy["target_card_count"],
         "direct_life_impact_protected": True,
         "fixed_category_caps_applied": False,
+        "source_limits_applied_after_relevance": True,
+        "financial_limits_applied_after_relevance": True,
+        "summary_validation_stage": "after_summary_generation",
         "legacy_baseline_selected_count": len(baseline_items),
         "routed_selected_count": len(selected),
     }

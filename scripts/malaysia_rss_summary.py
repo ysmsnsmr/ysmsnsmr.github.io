@@ -8,6 +8,7 @@ import ssl
 import subprocess
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from collections import Counter
@@ -475,6 +476,14 @@ def normalized(value: str) -> str:
     value = value.replace("‑", "-").replace("–", "-").replace("—", "-")
     value = re.sub(r"[-_/]+", " ", value)
     return re.sub(r"\s+", " ", value).strip()
+
+
+def valid_article_url(value: str) -> bool:
+    try:
+        parsed = urllib.parse.urlparse((value or "").strip())
+    except ValueError:
+        return False
+    return parsed.scheme in {"http", "https"} and bool(parsed.netloc)
 
 
 def item_text(item: Item) -> str:
@@ -1765,25 +1774,31 @@ def build_editorial_candidate_pool_json(
     failed_sources: list[str],
     now: datetime,
 ) -> dict[str, object]:
-    """Expose the cap-free, deterministic candidate pool for Jev routing.
-
-    The pool has already passed freshness, canonical-event deduplication, score,
-    static selector exclusions, final-noise policy, and source/financial
-    diversity limits.  It intentionally precedes the legacy category and total
-    caps so a later editorial policy can make that decision semantically.
-    """
+    """Expose structurally valid RSS items for Jev relevance routing."""
     return {
-        "schema_version": "malaysia-news-editorial-candidate-pool/v1",
+        "schema_version": "malaysia-news-editorial-candidate-pool/v2",
         "generated_at": now.isoformat(),
         "date": now.date().isoformat(),
         "timezone": "Asia/Kuala_Lumpur",
         "candidate_policy": {
+            "freshness_applied": True,
+            "valid_url_required": True,
+            "duplicate_url_removed": True,
+            "canonical_deduplication_applied": True,
+            "legacy_score_applied": False,
+            "legacy_selector_exclusions_applied": False,
+            "legacy_final_noise_applied": False,
             "fixed_category_caps_applied": False,
             "overall_selector_cap_applied": False,
-            "source_limits_applied": True,
-            "financial_limits_applied": True,
-            "hard_static_selector_applied": True,
-            "canonical_deduplication_applied": True,
+            "source_limits_applied": False,
+            "financial_limits_applied": False,
+            "summary_validation_applied": False,
+        },
+        "post_relevance_policy": {
+            "target_card_count": 15,
+            "default_source_limit": 24,
+            "source_limits": dict(SOURCE_LIMITS),
+            "financial_limits": dict(FINANCIAL_LIMITS),
         },
         "counts": {
             "processed": processed_count,
@@ -1791,14 +1806,55 @@ def build_editorial_candidate_pool_json(
             "failed_sources": len(failed_sources),
         },
         "failed_sources": list(failed_sources),
-        "items": [item_json(item) for item in LAST_EDITORIAL_CANDIDATE_POOL],
+        "items": [
+            {
+                **item_json(item),
+                "routing_metadata": {
+                    "financial_bucket": financial_topic_bucket(item),
+                },
+            }
+            for item in LAST_EDITORIAL_CANDIDATE_POOL
+        ],
     }
+
+
+def deduplicate_article_urls(items: list[Item]) -> tuple[list[Item], list[tuple[Item, Item]]]:
+    representatives: dict[str, Item] = {}
+    for item in items:
+        link_key = item.link.strip().lower()
+        current = representatives.get(link_key)
+        if current is None or item.pub_date > current.pub_date:
+            representatives[link_key] = item
+    duplicates = [
+        (item, representatives[item.link.strip().lower()])
+        for item in items
+        if representatives[item.link.strip().lower()] is not item
+    ]
+    return list(representatives.values()), duplicates
+
+
+def deduplicate_canonical_events(
+    items: list[Item],
+) -> tuple[list[Item], list[tuple[Item, Item]], dict[str, set[str]]]:
+    representatives: dict[str, Item] = {}
+    sources_by_key: dict[str, set[str]] = {}
+    for item in items:
+        key = key_for(item)
+        sources_by_key.setdefault(key, set()).add(item.source)
+        current = representatives.get(key)
+        if current is None or item.pub_date > current.pub_date:
+            representatives[key] = item
+    duplicates = [
+        (item, representatives[key_for(item)])
+        for item in items
+        if representatives[key_for(item)] is not item
+    ]
+    return list(representatives.values()), duplicates, sources_by_key
 
 
 def select_items(items: list[Item], now: datetime) -> list[Item]:
     global LAST_EDITORIAL_CANDIDATE_POOL, LAST_SELECTION_OBSERVATION
-    cutoff = now - timedelta(hours=RECENT_WINDOW_HOURS)
-    recent = [item for item in items if cutoff <= item.pub_date <= now]
+    recent = items_within_hours(items, now, RECENT_WINDOW_HOURS)
     recent_ids = {id(item) for item in recent}
     decisions: dict[int, dict[str, object]] = {}
     for item in items:
@@ -1809,30 +1865,46 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
                 "decision_reason": "outside the 24-hour selection window",
             }
 
-    by_key: dict[str, Item] = {}
-    sources_by_key: dict[str, set[str]] = {}
+    valid_url_items: list[Item] = []
     for item in recent:
         evaluate_item(item)
-        key = key_for(item)
-        sources_by_key.setdefault(key, set()).add(item.source)
-        current = by_key.get(key)
-        if current is None or (item.score, item.pub_date) > (current.score, current.pub_date):
-            by_key[key] = item
+        if not valid_article_url(item.link):
+            decisions[id(item)] = {
+                "decision": "excluded",
+                "decision_stage": "invalid_url",
+                "decision_reason": "article URL must use HTTP or HTTPS and include a host",
+            }
+            continue
+        valid_url_items.append(item)
+
+    url_unique_items, duplicate_urls = deduplicate_article_urls(valid_url_items)
+    for duplicate, representative in duplicate_urls:
+        decisions[id(duplicate)] = {
+            "decision": "excluded",
+            "decision_stage": "duplicate_url",
+            "decision_reason": "older item with the same article URL",
+            "canonical_representative_link": representative.link,
+        }
+
+    canonical_items, duplicate_events, sources_by_key = deduplicate_canonical_events(url_unique_items)
+    by_key = {key_for(item): item for item in canonical_items}
     for key, item in by_key.items():
         item.source_count = len(sources_by_key.get(key, {item.source}))
         if item.source_count > 1:
             add_unique(item.reasons, "複数媒体で同一論点を報道")
 
-    for item in recent:
-        key = key_for(item)
-        representative = by_key[key]
-        if representative is not item:
-            decisions[id(item)] = {
-                "decision": "excluded",
-                "decision_stage": "duplicate_canonical_event",
-                "decision_reason": "lower-ranked item for the same canonical event",
-                "canonical_representative_link": representative.link,
-            }
+    for duplicate, representative in duplicate_events:
+        decisions[id(duplicate)] = {
+            "decision": "excluded",
+            "decision_stage": "duplicate_canonical_event",
+            "decision_reason": "older item for the same canonical event",
+            "canonical_representative_link": representative.link,
+        }
+
+    editorial_candidates = sorted(by_key.values(), key=lambda item: item.pub_date, reverse=True)
+    for item in editorial_candidates:
+        item.category = category_for(item)
+    LAST_EDITORIAL_CANDIDATE_POOL = editorial_candidates
 
     candidates: list[Item] = []
     for item in by_key.values():
@@ -1851,29 +1923,6 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
         else:
             candidates.append(item)
     candidates.sort(key=lambda item: (item.score, item.pub_date), reverse=True)
-
-    # Keep the old selector result intact, but also expose the same candidates
-    # before category and total caps. A later Jev editorial policy can use this
-    # pool without weakening deterministic safety or diversity controls.
-    editorial_candidates: list[Item] = []
-    editorial_source_counts: Counter[str] = Counter()
-    editorial_financial_counts: Counter[str] = Counter()
-    for item in candidates:
-        category = category_for(item)
-        item.category = category
-        if is_forced_final_noise(item):
-            continue
-        financial_bucket = financial_topic_bucket(item) if category == "【知っておくと得】" else ""
-        source_limit = SOURCE_LIMITS.get(item.source, 24)
-        if editorial_source_counts[item.source] >= source_limit:
-            continue
-        if financial_bucket and editorial_financial_counts[financial_bucket] >= FINANCIAL_LIMITS[financial_bucket]:
-            continue
-        editorial_candidates.append(item)
-        editorial_source_counts[item.source] += 1
-        if financial_bucket:
-            editorial_financial_counts[financial_bucket] += 1
-    LAST_EDITORIAL_CANDIDATE_POOL = editorial_candidates
 
     selected: list[Item] = []
     source_counts: Counter[str] = Counter()

@@ -2301,6 +2301,35 @@
         "entry_ja": "米ドル安を背景に、リンギットが対米ドルで上昇した。",
         "supporting_points_ja": []
       }
+    },
+    {
+      "link": "https://www.astroawani.com/berita-malaysia/7-jan-keputusan-rayuan-majlis-peguam-berhubung-pengampunan-najib",
+      "first_observed_on": "2026-09-22",
+      "production_profile": "gpt-oss-120b",
+      "failure_reasons": [
+        "Semantic quality observation: a future court decision on the Bar Council's appeal was rendered as a past appeal filing on 7 January"
+      ],
+      "review_focus": {
+        "subject": "the court decision on the Bar Council's appeal concerning Najib's pardon",
+        "action": "a decision is scheduled for 7 January",
+        "state_and_certainty": "future scheduled decision; do not state that the Bar Council filed the appeal on 7 January"
+      },
+      "item": {
+        "category": "【知っておくと得】",
+        "source": "Astro Awani",
+        "published_date": "2026年9月22日",
+        "title": "7 Jan keputusan rayuan Majlis Peguam berhubung pengampunan Najib",
+        "description": "Majlis Peguam membuat rayuan itu selepas Mahkamah Tinggi pada November 2024 menolak permohonannya untuk mendapatkan kebenaran memulakan semakan kehakiman bagi mencabar keputusan Lembaga Pengampunan.",
+        "link": "https://www.astroawani.com/berita-malaysia/7-jan-keputusan-rayuan-majlis-peguam-berhubung-pengampunan-najib"
+      },
+      "observed_output": {
+        "headline_ja": "マレーシア最高裁が否決したナジブ恩赦に弁護士会が1月7日控訴",
+        "short_headline_ja": "ナジブ恩赦に弁護士会が控訴",
+        "entry_ja": "弁護士会は、2024年11月に高等法院が恩赦委員会の決定に対する司法審査許可を求める申請を却下したことを受け、2026年1月7日に同決定に対する控訴を行った。",
+        "supporting_points_ja": [
+          "弁護士会は高等法院の2024年11月の却下決定を受け、恩赦委員会の決定を争うための司法審査開始許可を求めた。"
+        ]
+      }
     }
   ]
 }
