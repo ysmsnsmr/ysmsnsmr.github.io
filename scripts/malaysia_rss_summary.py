@@ -17,6 +17,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional
 
+from malaysia_news_display_categories import DISPLAY_CATEGORIES, display_category_for_legacy
+
 
 UA = "Mozilla/5.0"
 SOURCES = [
@@ -2295,6 +2297,7 @@ def editorial_entry_json(item: Item) -> dict[str, object]:
 def item_json(item: Item) -> dict[str, object]:
     return {
         "category": item.category,
+        "display_category": display_category_for_legacy(item.category),
         "source": item.source,
         "published_date": f"{item.pub_date.year}年{item.pub_date.month}月{item.pub_date.day}日",
         "published_at": item.pub_date.isoformat(),
@@ -2352,9 +2355,9 @@ def write_json_output(path: str, data: dict[str, object]) -> None:
 
 def render(selected: list[Item], processed_count: int, failed_sources: list[str]) -> str:
     lines: list[str] = []
-    ordered_categories = ["【速報】", "【生活インパクト】", "【知っておくと得】"]
+    ordered_categories = DISPLAY_CATEGORIES
     for category in ordered_categories:
-        group = [item for item in selected if item.category == category]
+        group = [item for item in selected if display_category_for_legacy(item.category) == category]
         lines.append(category)
         lines.append("")
         for item in group:

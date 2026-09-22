@@ -46,7 +46,7 @@ def markdown_urls(markdown: str) -> list[str]:
 
 def markdown_has_required_lines(markdown: str) -> dict[str, bool]:
     return {
-        "has_category_headers": all(header in markdown for header in ["【速報】", "【生活インパクト】", "【知っておくと得】"]),
+        "has_category_headers": all(header in markdown for header in ["【暮らしに関わる更新】", "【社会・経済の動き】"]),
         "has_processed_count": "処理対象件数：" in markdown,
         "has_selected_count": "要約対象件数：" in markdown,
         "has_failed_sources_line": "失敗したソース一覧：" in markdown,
