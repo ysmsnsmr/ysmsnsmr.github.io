@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-09-20T08:51:33Z",
+  "generatedAt": "2026-09-22T05:01:36Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -61,6 +61,76 @@
   ],
   "items": [
     {
+      "id": "meta-business-sdk-releases-eed8ce943afb8409ed2f",
+      "sourceId": "meta-business-sdk-releases",
+      "title": "v26.0.2",
+      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v26.0.2",
+      "publishedDate": "2026-09-21",
+      "updatedDate": "2026-09-21",
+      "firstObservedAt": "2026-09-22T05:01:36Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
+      "platformIds": [
+        "meta-business-sdk",
+        "marketing-api"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "eed8ce943afb8409ed2fbdd518ba54d81c5644043e4ca8f976f188c790e98f76",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Version v26.0.2 released",
+            "summary": "A new release v26.0.2 of the Facebook Node.js Business SDK is now available.",
+            "inputHash": "4c5530127c3c8c2ff26218bb1f5ba1d799cb407ac3b20f68a72bf84d214893b9",
+            "generatedAt": "2026-09-22T05:01:36Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Version v26.0.2 released",
+                "inputHash": "4c5530127c3c8c2ff26218bb1f5ba1d799cb407ac3b20f68a72bf84d214893b9",
+                "generatedAt": "2026-09-22T05:01:36Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "A new release v26.0.2 of the Facebook Node.js Business SDK is now available.",
+                "inputHash": "4c5530127c3c8c2ff26218bb1f5ba1d799cb407ac3b20f68a72bf84d214893b9",
+                "generatedAt": "2026-09-22T05:01:36Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Facebook Node.js Business SDK v26.0.2 がリリース",
+            "summary": "Facebook の Node.js 用 Business SDK がバージョン 26.0.2 に更新されました。前バージョン 26.0.1 からの変更点や修正が含まれます。",
+            "inputHash": "beb4337907aa251cef65a3bb74274e4d5dbf02dcde101424b65e346b8c972d45",
+            "generatedAt": "2026-09-22T05:01:36Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook Node.js Business SDK v26.0.2 がリリース",
+                "inputHash": "beb4337907aa251cef65a3bb74274e4d5dbf02dcde101424b65e346b8c972d45",
+                "generatedAt": "2026-09-22T05:01:36Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebook の Node.js 用 Business SDK がバージョン 26.0.2 に更新されました。前バージョン 26.0.1 からの変更点や修正が含まれます。",
+                "inputHash": "beb4337907aa251cef65a3bb74274e4d5dbf02dcde101424b65e346b8c972d45",
+                "generatedAt": "2026-09-22T05:01:36Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "social-media-today-meta-ads-ff23184ef3220928736c",
       "sourceId": "social-media-today-meta-ads",
       "title": "Meta shares holiday 2026 planning guides",
@@ -68,7 +138,7 @@
       "publishedDate": "2026-09-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-18T11:07:09Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -140,7 +210,7 @@
       "publishedDate": "2026-09-16",
       "updatedDate": null,
       "firstObservedAt": "2026-09-17T04:55:10Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -209,7 +279,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -281,7 +351,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -350,7 +420,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -422,7 +492,7 @@
       "publishedDate": "2026-09-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-11T04:43:19Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -494,7 +564,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-14T11:20:59Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -563,7 +633,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T04:45:10Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -635,7 +705,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -707,7 +777,7 @@
       "publishedDate": "2026-08-27",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T22:29:27Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -772,6 +842,78 @@
       }
     },
     {
+      "id": "social-media-today-meta-ads-d855c2e9c79189f9b65a",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta settles landmark lawsuit for $18B",
+      "url": "https://www.socialmediatoday.com/news/meta-settles-landmark-lawsuit-for-18b/828900/",
+      "publishedDate": "2026-08-26",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-09T22:29:27Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "keyword:meta",
+        "keyword:ad"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "9cd91ccdc4729c19666731d70e895b7d301a6c4214889bfc83ee2b53d6293b84",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "9cd91ccdc4729c19666731d70e895b7d301a6c4214889bfc83ee2b53d6293b84",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "9cd91ccdc4729c19666731d70e895b7d301a6c4214889bfc83ee2b53d6293b84",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、米州検察総長らと和解し18億ドル超の支払いとティーン向け使用制限を実施",
+            "summary": "Metaは米国の29州検察総長らが提起した訴訟を和解し、18億ドル超を支払うことで裁判を回避した。和解条件として、FacebookとInstagramの18歳未満ユーザーに対し、デフォ",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-09-20T08:42:53Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、米州検察総長らと和解し18億ドル超の支払いとティーン向け使用制限を実施",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-20T08:42:53Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは米国の29州検察総長らが提起した訴訟を和解し、18億ドル超を支払うことで裁判を回避した。和解条件として、FacebookとInstagramの18歳未満ユーザーに対し、デフォ",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-20T08:42:53Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "meta-business-sdk-releases-8ada906f14c5e1731d04",
       "sourceId": "meta-business-sdk-releases",
       "title": "v26.0.1",
@@ -779,7 +921,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -849,7 +991,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -921,7 +1063,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T22:29:27Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -993,7 +1135,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1137,7 +1279,7 @@
       "publishedDate": "2026-08-19",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T22:29:27Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1281,7 +1423,7 @@
       "publishedDate": "2026-08-13",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1353,7 +1495,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1425,7 +1567,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1497,7 +1639,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1569,7 +1711,7 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1639,7 +1781,7 @@
       "publishedDate": "2026-08-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1711,7 +1853,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1783,7 +1925,7 @@
       "publishedDate": "2026-07-24",
       "updatedDate": null,
       "firstObservedAt": "2026-09-14T11:20:59Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -1852,7 +1994,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1924,7 +2066,7 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1994,7 +2136,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2066,7 +2208,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2138,7 +2280,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2210,7 +2352,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2281,7 +2423,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2353,7 +2495,7 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -2423,7 +2565,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2495,7 +2637,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2567,7 +2709,7 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2639,7 +2781,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2710,7 +2852,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2781,7 +2923,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2853,7 +2995,7 @@
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2925,7 +3067,7 @@
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2997,7 +3139,7 @@
       "publishedDate": "2026-06-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3069,7 +3211,7 @@
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3141,7 +3283,7 @@
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3213,7 +3355,7 @@
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3285,7 +3427,7 @@
       "publishedDate": "2026-05-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3357,7 +3499,7 @@
       "publishedDate": "2026-05-26",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3429,7 +3571,7 @@
       "publishedDate": "2026-05-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3467,25 +3609,25 @@
             }
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "ChatGPT広告の制限とAIインスタントフォームの概要",
+            "summary": "ChatGPT広告はヘッドラインが24文字、説明が48文字に制限され、正方形画像のみで構成される。平均CPCは約3〜5ドル、CPMは約50ドルで、コンバージョン目的はまだ提供されていない。AIインスタントフォーム機能は、ランディングページのURLを入力すると自動でフォームを生成するが、テキストは簡素で、送客先URLが元ページになるなどの課題がある。730日購入保持機能が本格稼働した。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-09-22T05:01:36Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "ChatGPT広告の制限とAIインスタントフォームの概要",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-22T05:01:36Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "ChatGPT広告はヘッドラインが24文字、説明が48文字に制限され、正方形画像のみで構成される。平均CPCは約3〜5ドル、CPMは約50ドルで、コンバージョン目的はまだ提供されていない。AIインスタントフォーム機能は、ランディングページのURLを入力すると自動でフォームを生成するが、テキストは簡素で、送客先URLが元ページになるなどの課題がある。730日購入保持機能が本格稼働した。",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-22T05:01:36Z",
                 "reviewedAt": null
               }
             }
@@ -3501,7 +3643,7 @@
       "publishedDate": "2026-05-19",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3860,7 +4002,7 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -3930,7 +4072,7 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -4000,7 +4142,7 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -4070,7 +4212,7 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -4082,49 +4224,49 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta Business SDK v24.0.0 released",
+            "summary": "Version 24.0.0 of the Meta Business SDK introduces default Dynamic Media for Advantage+ Catalog ads, raises daily budget flexibility to 75%, adds a feature to share up to 20% of an ad set’s daily budget with other ad sets, removes the Facebook video feeds placement, and ends third‑party creation of Click to Messenger Lead Gen ads via the API.",
             "inputHash": "58cc789f5f30480083cc2f0fbccd97abd5e1b1648d2fe8abfd6c409758a8598f",
-            "generatedAt": null,
+            "generatedAt": "2026-09-22T05:01:36Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Meta Business SDK v24.0.0 released",
                 "inputHash": "58cc789f5f30480083cc2f0fbccd97abd5e1b1648d2fe8abfd6c409758a8598f",
-                "generatedAt": null,
+                "generatedAt": "2026-09-22T05:01:36Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Version 24.0.0 of the Meta Business SDK introduces default Dynamic Media for Advantage+ Catalog ads, raises daily budget flexibility to 75%, adds a feature to share up to 20% of an ad set’s daily budget with other ad sets, removes the Facebook video feeds placement, and ends third‑party creation of Click to Messenger Lead Gen ads via the API.",
                 "inputHash": "58cc789f5f30480083cc2f0fbccd97abd5e1b1648d2fe8abfd6c409758a8598f",
-                "generatedAt": null,
+                "generatedAt": "2026-09-22T05:01:36Z",
                 "reviewedAt": null
               }
             }
           },
           "ja": {
             "status": "machine",
-            "shortHeadline": "Meta Business SDK v24.0.0：Dynamic Media自動有効化と予算柔軟性拡大などの主要変更",
-            "summary": "このリリースでは、Advantage+ カタログ広告でDynamic Mediaがデフォルトで有効化され、必要に応じて開発者が明示的にオプトアウトする必要があります。日次予算の柔軟性が25％から75％に拡大され、機会の多い日に予算を増やしつつ週次上限は維持できます。新機能として、同一キャンペーン内の他の広告セットと最大20％の日次予算を共有でき、キャンペーン予算最適化なしでパフォーマンス向上が期待されます。Marketing API v24.0ではFacebook動画フィード広告枠が利用できなくなり、使用するとエラーになります。また、サードパーティによるClick to Messenger Lead Gen広告の作成が廃止され、Ads Managerからの作成は引き続き可能です。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-11T04:43:19Z",
+            "shortHeadline": "Meta Business SDK v24.0.0 の主な変更点",
+            "summary": "Dynamic Media が Advantage+ カタログ広告でデフォルト有効となり、必要なら明示的にオプトアウトする必要があります。日次予算の柔軟性が 25% から 75% に拡大され、機会の多い日に予算を増やしつつ週次上限は維持できます。新機能として、同一キャンペーン内の他の広告セットへ広告セットの日次予算の最大 20% を共有でき、キャンペーン予算最適化なしでパフォーマンス向上が期待されます。Marketing API v24.0 では Facebook 動画フィード広告枠が利用できず、エラーが返ります。サードパーティによる Click to Messenger Lead Gen 広告の作成が API から廃止され、Ads Manager からの作成は引き続き可能です。",
+            "inputHash": "56e7326503aed1f423beb19c4c4e74baf09a7198688a6d70a425de81b6648655",
+            "generatedAt": "2026-09-22T05:01:36Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
-                "value": "Meta Business SDK v24.0.0：Dynamic Media自動有効化と予算柔軟性拡大などの主要変更",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-11T04:43:19Z",
+                "value": "Meta Business SDK v24.0.0 の主な変更点",
+                "inputHash": "56e7326503aed1f423beb19c4c4e74baf09a7198688a6d70a425de81b6648655",
+                "generatedAt": "2026-09-22T05:01:36Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
-                "value": "このリリースでは、Advantage+ カタログ広告でDynamic Mediaがデフォルトで有効化され、必要に応じて開発者が明示的にオプトアウトする必要があります。日次予算の柔軟性が25％から75％に拡大され、機会の多い日に予算を増やしつつ週次上限は維持できます。新機能として、同一キャンペーン内の他の広告セットと最大20％の日次予算を共有でき、キャンペーン予算最適化なしでパフォーマンス向上が期待されます。Marketing API v24.0ではFacebook動画フィード広告枠が利用できなくなり、使用するとエラーになります。また、サードパーティによるClick to Messenger Lead Gen広告の作成が廃止され、Ads Managerからの作成は引き続き可能です。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-11T04:43:19Z",
+                "value": "Dynamic Media が Advantage+ カタログ広告でデフォルト有効となり、必要なら明示的にオプトアウトする必要があります。日次予算の柔軟性が 25% から 75% に拡大され、機会の多い日に予算を増やしつつ週次上限は維持できます。新機能として、同一キャンペーン内の他の広告セットへ広告セットの日次予算の最大 20% を共有でき、キャンペーン予算最適化なしでパフォーマンス向上が期待されます。Marketing API v24.0 では Facebook 動画フィード広告枠が利用できず、エラーが返ります。サードパーティによる Click to Messenger Lead Gen 広告の作成が API から廃止され、Ads Manager からの作成は引き続き可能です。",
+                "inputHash": "56e7326503aed1f423beb19c4c4e74baf09a7198688a6d70a425de81b6648655",
+                "generatedAt": "2026-09-22T05:01:36Z",
                 "reviewedAt": null
               }
             }
@@ -4140,7 +4282,7 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -4210,7 +4352,7 @@
       "publishedDate": "2025-09-26",
       "updatedDate": "2025-09-26",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-20T08:51:33Z",
+      "lastObservedAt": "2026-09-22T05:01:36Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
