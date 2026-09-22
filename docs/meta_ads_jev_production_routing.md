@@ -29,6 +29,14 @@ published feed remains intact.
 Set the variable to `false` to roll back to the prior deterministic publication
 classifier without changing source transport or the public feed schema.
 
+## Transport boundary
+
+Jev requests use the fixed TypeSafe API endpoint with environment proxies
+disabled. Redirects are rejected before a second request is made, including
+same-host redirects, so a bearer token is never forwarded to a redirect target.
+The safe error code is `redirect_blocked`; it follows the normal fail-closed
+path and does not write a new feed or state.
+
 ## First production observation
 
 The normal workflow runs at 08:15 MYT on Tuesday and Friday.  It uploads a
