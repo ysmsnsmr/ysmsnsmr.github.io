@@ -655,6 +655,7 @@ def _jev_publication_from_environment(
         raise ContractError("META_ADS_JEV_ROUTING_ENABLED must be true, false, or unset")
     report: dict[str, Any] = {
         "schemaVersion": "meta-ads-jev-routing/v1",
+        "runStatus": "started",
         "enabled": setting == "true",
         "routingEffect": setting == "true",
         "requestedModelId": JEV_REQUESTED_MODEL_ID,
@@ -663,14 +664,14 @@ def _jev_publication_from_environment(
         "credentialStored": False,
         "results": [],
     }
+    _write_jev_routing_stats(stats, report)
     if setting == "false":
         report["summary"] = {"classified": 0, "choices": {}, "errors": 0}
-        _write_jev_routing_stats(stats, report)
         return None
     api_key = os.environ.get("TYPESAFE_API_KEY", "").strip()
     if not api_key:
+        report["failureCode"] = "missing_api_key"
         raise ContractError("TYPESAFE_API_KEY is required when META_ADS_JEV_ROUTING_ENABLED=true")
-    _write_jev_routing_stats(stats, report)
 
     def classify(source: dict[str, Any], raw: dict[str, Any]) -> tuple[str, list[str]]:
         item_id = f"{source['id']}-{raw['fingerprint'][:20]}"
@@ -686,12 +687,15 @@ def _jev_publication_from_environment(
             answer, provider_model_id = extract_jev_answer(response)
         except JevRequestError as error:
             report["results"].append({"itemId": item_id, "sourceId": source["id"], "outcome": "error", "errorCode": error.code})
+            report["failureCode"] = error.code
             raise ContractError(f"Jev relevance routing failed: {error.code}") from error
         except Exception as error:
             report["results"].append({"itemId": item_id, "sourceId": source["id"], "outcome": "error", "errorCode": "transport_error"})
+            report["failureCode"] = "transport_error"
             raise ContractError("Jev relevance routing failed: transport_error") from error
         choice = answer.get("choice") if isinstance(answer, dict) else None
         if choice not in JEV_RELEVANCE_CHOICES:
+            report["failureCode"] = "invalid_choice"
             raise ContractError("Jev relevance routing returned an unsupported choice")
         report["results"].append({
             "itemId": item_id,
@@ -707,7 +711,13 @@ def _jev_publication_from_environment(
     return classify
 
 
-def _finalize_jev_routing_stats(stats: dict[str, Any] | None, now: str) -> None:
+def _finalize_jev_routing_stats(
+    stats: dict[str, Any] | None,
+    now: str,
+    *,
+    run_status: str,
+    failure_code: str | None = None,
+) -> None:
     if stats is None or not stats:
         return
     results = stats.get("results", [])
@@ -717,6 +727,11 @@ def _finalize_jev_routing_stats(stats: dict[str, Any] | None, now: str) -> None:
             choice = result["choice"]
             choices[choice] = choices.get(choice, 0) + 1
     stats["generatedAt"] = now
+    stats["runStatus"] = run_status
+    if failure_code:
+        stats["failureCode"] = failure_code
+    else:
+        stats.pop("failureCode", None)
     stats["summary"] = {"classified": sum(choices.values()), "choices": dict(sorted(choices.items())), "errors": sum(result.get("outcome") == "error" for result in results)}
 
 
@@ -2826,7 +2841,7 @@ def collect(
     feed = build_feed(next_state, config, generated_at)
     validate_state(next_state, config)
     validate_feed(feed, config)
-    _finalize_jev_routing_stats(jev_routing_stats, generated_at)
+    _finalize_jev_routing_stats(jev_routing_stats, generated_at, run_status="succeeded")
     _write_presentation_stats(presentation_stats, stats)
     _write_source_pipeline_stats(source_pipeline_stats, pipeline)
     return feed, next_state
@@ -2908,6 +2923,8 @@ def main() -> int:
         help="with --retry-json-validate-failed, release reviewed legacy quarantined HTTP 400 entries",
     )
     args = parser.parse_args()
+    run_failed = True
+    failure_code: str | None = None
     try:
         stats: dict[str, Any] = {}
         pipeline: dict[str, Any] = {}
@@ -2928,10 +2945,9 @@ def main() -> int:
             jev_classifier=jev_classifier,
             jev_routing_stats=jev_stats,
         )
-        if args.jev_routing_report is not None:
-            _finalize_jev_routing_stats(jev_stats, _now(datetime.now(timezone.utc)))
-            write_json(args.jev_routing_report, jev_stats)
+        run_failed = False
     except SourceFetchError as error:
+        failure_code = "source_fetch_failure"
         print(
             f"SOURCE_FETCH_FAILURE: id={error.source_id} code={error.reason} attempts={error.attempts}",
             file=sys.stderr,
@@ -2939,8 +2955,31 @@ def main() -> int:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1
     except (ContractError, OSError, ValueError, urllib.error.URLError) as error:
+        failure_code = jev_stats.get("failureCode") or "collector_failure"
         print(f"FAIL: {error}", file=sys.stderr)
         return 1
+    finally:
+        if args.jev_routing_report is not None:
+            if not jev_stats:
+                setting = os.environ.get("META_ADS_JEV_ROUTING_ENABLED", "").strip().lower()
+                jev_stats = {
+                    "schemaVersion": "meta-ads-jev-routing/v1",
+                    "runStatus": "started",
+                    "enabled": setting == "true",
+                    "routingEffect": setting == "true",
+                    "requestedModelId": JEV_REQUESTED_MODEL_ID,
+                    "questionSetVersion": JEV_QUESTION_SET_VERSION,
+                    "rawProviderResponseStored": False,
+                    "credentialStored": False,
+                    "results": [],
+                }
+            _finalize_jev_routing_stats(
+                jev_stats,
+                _now(datetime.now(timezone.utc)),
+                run_status="failed" if run_failed else "succeeded",
+                failure_code=failure_code,
+            )
+            write_json(args.jev_routing_report, jev_stats)
     print(f"PASS: published {len(feed['items'])} personal feed item(s) from {len(feed['sources'])} source(s)")
     _print_presentation_stats(stats)
     _print_source_pipeline_stats(pipeline)

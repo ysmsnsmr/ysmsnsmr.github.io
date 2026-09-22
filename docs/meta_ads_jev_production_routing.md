@@ -24,7 +24,10 @@ Set the repository variable `META_ADS_JEV_ROUTING_ENABLED` to `true` after the
 workflow change reaches `main`.  The workflow then requires the existing
 `TYPESAFE_API_KEY` secret.  A missing key, provider error, timeout, or invalid
 choice fails before feed and state files are written, so the previously
-published feed remains intact.
+published feed remains intact. The collector still writes a safe routing
+artifact with `runStatus: "failed"` and a bounded `failureCode` when a report
+path is configured. It never contains article text, URLs, response bodies,
+exception text, or credentials.
 
 Set the variable to `false` to roll back to the prior deterministic publication
 classifier without changing source transport or the public feed schema.
@@ -39,13 +42,21 @@ path and does not write a new feed or state.
 
 ## First production observation
 
-The normal workflow runs at 08:15 MYT on Tuesday and Friday.  It uploads a
-runner-temp `meta-ads-jev-routing-<run id>` artifact for 30 days.  Review its
-safe per-item IDs, source IDs, choices, confidence values, latency, and error
-codes; it deliberately contains no article prose or URLs.
+The normal workflow runs at 08:15 MYT on Tuesday and Friday. It uploads a
+runner-temp `meta-ads-jev-routing-<run id>` artifact for 30 days, including
+when the collector fails after the kill switch. `runStatus: "succeeded"` means
+the Python collector completed; it does not by itself prove that the later Git
+commit/push completed. Review its safe per-item IDs, source IDs, choices,
+confidence values, latency, and error codes; it deliberately contains no
+article prose or URLs. If the report file was never created because setup or
+the kill switch stopped the job, the upload step warns and preserves the
+original failure.
 
-Existing unchanged state records retain their earlier publication decision to
-avoid unnecessary model calls.  To apply the new routing to a source's current
-fresh candidates, manually run the collector once with that source ID in
-`reseed_source_id`.  Reseed one configured source at a time; observe the
-artifact before continuing to another source.
+Currently observed records are reclassified by Jev whenever they are present
+in the current source input; only carried-forward records retain a prior
+decision. Presentation generation is cached independently. A
+`reseed_source_id` run rebuilds the selected source's current candidates but
+still fetches and routes the other configured sources; it is not an API-call
+scope limiter. Because a reseed can drop records that no longer appear in the
+source, use it for targeted source-rule changes and review the artifact before
+continuing.

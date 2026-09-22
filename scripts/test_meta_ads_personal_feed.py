@@ -14,6 +14,7 @@ from typing import Any
 from urllib.error import URLError
 
 from meta_ads_tracker_contract import ContractError
+import meta_ads_personal_feed as personal_feed
 from meta_ads_personal_feed import (
     DEFAULT_CONFIG,
     FEED_SCHEMA_VERSION,
@@ -43,6 +44,7 @@ from meta_ads_personal_feed import (
     PresentationOutput,
     collect,
     collect_and_write,
+    main,
     extract_items,
     load_config,
     migrate_feed_v2_to_v3,
@@ -1844,6 +1846,21 @@ class PersonalFeedTest(unittest.TestCase):
                 collect_and_write(DEFAULT_CONFIG, state_path, output_path, 1, now=NOW, fetch_body=self.fetcher(fail=True))
             self.assertEqual(state_path.read_bytes(), state_bytes)
             self.assertEqual(output_path.read_bytes(), output_bytes)
+
+    @patch.dict(os.environ, {"META_ADS_JEV_ROUTING_ENABLED": "true", "TYPESAFE_API_KEY": "fixture-key"}, clear=False)
+    def test_failed_main_writes_safe_jev_routing_artifact(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            report_path = Path(directory) / "jev-routing.json"
+            with patch.object(personal_feed, "collect_and_write", side_effect=ContractError("secret response body")), patch(
+                "sys.argv", ["collector", "--jev-routing-report", str(report_path)]
+            ):
+                self.assertEqual(main(), 1)
+            report = json.loads(report_path.read_text(encoding="utf-8"))
+            self.assertEqual(report["runStatus"], "failed")
+            self.assertEqual(report["failureCode"], "collector_failure")
+            rendered = json.dumps(report)
+            self.assertNotIn("secret response body", rendered)
+            self.assertNotIn("fixture-key", rendered)
 
 
 if __name__ == "__main__":
