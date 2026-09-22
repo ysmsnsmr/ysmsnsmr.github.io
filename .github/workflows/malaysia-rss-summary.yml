@@ -246,7 +246,7 @@ jobs:
           else
             cp "${run_dir}/rss_selector_baseline.md" "${output_path}"
           fi
-          cp "${output_path}" "${run_dir}/rss_production_fallback.md"
+          cp "${run_dir}/rss_selector_baseline.md" "${run_dir}/rss_production_fallback.md"
           echo "status=${status}" >> "${GITHUB_OUTPUT}"
 
       - name: Install body enrichment dependencies

@@ -105,6 +105,9 @@ class MalaysiaJevSelectorShadowTests(unittest.TestCase):
     def test_request_sends_only_public_title_and_description(self) -> None:
         request = build_request(self.selected)
         self.assertEqual(set(request["state"]), {"title", "sourceDescription"})
+        criteria = request["questions"][QUESTION_ID]["criteria"]
+        self.assertIn("eligibility", criteria["direct_life_impact"])
+        self.assertIn("isolated crime or accident", criteria["unrelated_noise"])
         serialized = json.dumps(request)
         self.assertNotIn(self.selected["link"], serialized)
         self.assertNotIn("selector_excluded", serialized)

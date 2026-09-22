@@ -8,10 +8,17 @@ import malaysia_jev_editorial_routing as routing
 from jev_shadow_transport import JevRequestError
 
 
-def item(title: str, link: str, category: str = "【知っておくと得】") -> dict[str, object]:
-    return {
+def item(
+    title: str,
+    link: str,
+    category: str = "【知っておくと得】",
+    *,
+    source: str = "Fixture Source",
+    financial_bucket: str = "",
+) -> dict[str, object]:
+    value = {
         "category": category,
-        "source": "Fixture Source",
+        "source": source,
         "published_at": "2026-09-20T10:00:00+08:00",
         "published_date": "2026年9月20日",
         "title": title,
@@ -24,15 +31,25 @@ def item(title: str, link: str, category: str = "【知っておくと得】") -
             "supporting_points_ja": [],
         },
     }
+    if financial_bucket:
+        value["routing_metadata"] = {"financial_bucket": financial_bucket}
+    return value
 
 
-def payload(items: list[dict[str, object]]) -> dict[str, object]:
-    return {
+def payload(
+    items: list[dict[str, object]],
+    *,
+    post_relevance_policy: dict[str, object] | None = None,
+) -> dict[str, object]:
+    value = {
         "schema_version": "2b0_selected_items_v1",
         "counts": {"processed": len(items), "selected": len(items), "failed_sources": 0},
         "failed_sources": [],
         "items": items,
     }
+    if post_relevance_policy is not None:
+        value["post_relevance_policy"] = post_relevance_policy
+    return value
 
 
 def response(choice: str) -> dict[str, object]:
@@ -109,6 +126,70 @@ class MalaysiaJevEditorialRoutingTests(unittest.TestCase):
         self.assertEqual(report["summary"]["selectedCount"], 2)
         self.assertEqual(report["results"][2]["publicationDecision"], "excluded_editorial_budget")
 
+    def test_unclear_item_is_kept_only_when_the_legacy_baseline_selected_it(self) -> None:
+        output, report = routing.route_candidates(
+            payload([self.unclear]),
+            payload([]),
+            enabled=True,
+            api_key="fixture-key",
+            timeout_seconds=1,
+            post_json=lambda *_: response("unclear"),
+        )
+
+        self.assertEqual(output["items"], [])
+        self.assertEqual(report["results"][0]["publicationDecision"], "excluded_unclear")
+
+    def test_source_diversity_is_applied_after_relevance(self) -> None:
+        first = item("Paul Tan transport one", "https://example.test/pt-1", source="Paul Tan")
+        second = item("Paul Tan transport two", "https://example.test/pt-2", source="Paul Tan")
+        pool = payload(
+            [first, second],
+            post_relevance_policy={
+                "target_card_count": 15,
+                "default_source_limit": 24,
+                "source_limits": {"Paul Tan": 1},
+                "financial_limits": {},
+            },
+        )
+
+        output, report = routing.route_candidates(
+            pool,
+            payload([]),
+            enabled=True,
+            api_key="fixture-key",
+            timeout_seconds=1,
+            post_json=lambda *_: response("direct_life_impact"),
+        )
+
+        self.assertEqual([value["title"] for value in output["items"]], ["Paul Tan transport one"])
+        self.assertEqual(report["results"][1]["publicationDecision"], "excluded_source_diversity")
+
+    def test_financial_diversity_is_applied_after_relevance_and_metadata_is_not_published(self) -> None:
+        first = item("Ringgit one", "https://example.test/ringgit-1", financial_bucket="ringgit")
+        second = item("Ringgit two", "https://example.test/ringgit-2", financial_bucket="ringgit")
+        pool = payload(
+            [first, second],
+            post_relevance_policy={
+                "target_card_count": 15,
+                "default_source_limit": 24,
+                "source_limits": {},
+                "financial_limits": {"ringgit": 1},
+            },
+        )
+
+        output, report = routing.route_candidates(
+            pool,
+            payload([]),
+            enabled=True,
+            api_key="fixture-key",
+            timeout_seconds=1,
+            post_json=lambda *_: response("public_information"),
+        )
+
+        self.assertEqual([value["title"] for value in output["items"]], ["Ringgit one"])
+        self.assertNotIn("routing_metadata", output["items"][0])
+        self.assertEqual(report["results"][1]["publicationDecision"], "excluded_financial_diversity")
+
     def test_disabled_routing_keeps_the_legacy_selector_items(self) -> None:
         output, report = routing.route_candidates(
             self.pool,
@@ -123,6 +204,21 @@ class MalaysiaJevEditorialRoutingTests(unittest.TestCase):
         self.assertFalse(report["routingEffect"])
         self.assertEqual(output["items"], self.baseline["items"])
         self.assertFalse(output["editorial_routing"]["applied"])
+
+    def test_candidate_safety_cap_falls_back_without_calling_jev(self) -> None:
+        candidates = [item(f"Candidate {index}", f"https://example.test/{index}") for index in range(151)]
+
+        output, report = routing.route_candidates(
+            payload(candidates),
+            self.baseline,
+            enabled=True,
+            api_key="fixture-key",
+            timeout_seconds=1,
+            post_json=lambda *_: self.fail("candidate cap must stop before Jev calls"),
+        )
+
+        self.assertEqual(report["status"], "fallback_candidate_cap")
+        self.assertEqual(output["items"], self.baseline["items"])
 
     def test_any_transport_failure_fails_open_to_the_legacy_baseline(self) -> None:
         def post_json(_: dict[str, object], __: str, ___: float) -> dict[str, object]:

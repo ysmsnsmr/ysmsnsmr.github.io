@@ -911,3 +911,39 @@ must use `supersedes` instead of editing an earlier entry.
 - Revisit when: Jev routingによるselected記事数またはsource-only記事数が日次ページの可読性を明確に損なう; Jev障害時に旧selector-only JSONへfail-openできない; direct_life_impactの保護と重複排除が両立しない; Jevのunrelated_noise判定が人間確認で繰り返し誤りと分かる
 - Supersedes: `20260920t100000-malaysia-jev-selector-shadow`
 - Override: not applied
+
+<!-- idea-gate:20260922t055419-malaysia-selector-responsibility-split -->
+## 構造整理、Jev関連度判定、編集予算、公開内容検査の責務を分離する
+
+- Record ID: `20260922t055419-malaysia-selector-responsibility-split`
+- Evaluated: 2026-09-22T05:54:19+08:00
+- Project: ysmsnsmr.github.io / Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 95/100
+- Confidence: high - 複数の実artifactで除外段階とJev判定を照合でき、原因となる処理順と復旧経路もコードで確認できる
+
+### Idea Card
+
+- Purpose: 旧selectorの多重な意味判定による取りこぼしと個別例外の増加を減らし、記事の生活関連度を一つの明示的な編集方針で判断する
+- First experience: 鮮度・URL・canonical重複だけを整理した候補をJevへ渡し、Jev判定後に件数・媒体・金融トピックの偏りを調整して公開候補を生成できる
+- Scope and cost: 既存のMalaysia News workflow内に限定し、Jev呼び出しは構造整理後の24時間候補、最大150件とする。旧selector baselineとkill switchを維持する
+- Continuation boundary: scheduled artifactでrouting成功、URL保持、validator通過、旧baselineへのfallbackを確認できれば継続する。候補上限超過、分類失敗増加、生活情報の明確な悪化があれば旧selectorへ戻す
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 15/15 |
+| `evidence_and_learning` | 15/15 |
+| `expected_outcome` | 14/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 19/20 |
+| **Total** | **95/100** |
+
+### Next Step
+
+- Action: 最新origin/mainの専用branchで構造候補を生成し、Jev判定後に編集予算と偏り調整を適用する。旧selector JSONをfallbackとして保持する
+- Revisit when: Jev候補数または実行時間がscheduled運用に収まらない; unrelated_noiseまたはunclearの扱いで有用記事が繰り返し失われる; 媒体・金融トピックの後段調整でdirect_life_impactが押し出される; 旧selector fallbackと新経路の責務が再び混在する
+- Supersedes: `20260920t170519-malaysia-jev-editorial-budget`
