@@ -255,7 +255,7 @@ async function assertAccessibilityAndLayout(page, label) {
 async function assertDetailAccessibilityAndLayout(page, label) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   assert(overflow <= 1, `${label}: horizontal overflow ${overflow}px`);
-  const undersized = await page.locator(".source-link, .back-link, .locale-switch a").evaluateAll((nodes) =>
+  const undersized = await page.locator(".source-link, .back-link, .favorite-button, .locale-switch a").evaluateAll((nodes) =>
     nodes.map((node) => ({ text: node.textContent, rect: node.getBoundingClientRect() }))
       .filter(({ rect }) => rect.width > 0 && rect.height > 0 && (rect.height < 44 || rect.width < 44))
       .map(({ text, rect }) => `${text}:${rect.width}x${rect.height}`)
@@ -506,6 +506,28 @@ try {
   assert((await generatedDetail.locator("#detail-summary").textContent()).includes("Meta Ads APIに関する観測記事です。"), "generated detail must display the Japanese summary");
   assert(await generatedDetail.locator("#detail-unofficial-notice").isVisible(), "generated non-official detail must show the notice");
   await generatedDetail.close();
+
+  const favoritesPage = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await favoritesPage.goto(`${server.origin}/meta-ads-updates/ja/?personal-fixture=1`, { waitUntil: "networkidle" });
+  await favoritesPage.evaluate(() => window.localStorage.clear());
+  await favoritesPage.reload({ waitUntil: "networkidle" });
+  const favoriteCard = favoritesPage.locator(".update-card").filter({ hasText: "Meta Ads APIの観測" });
+  const favorite = favoriteCard.locator(".favorite-button");
+  assert(await favorite.count() === 1, "personal feed cards must expose one personal favorite button");
+  assert(await favorite.getAttribute("aria-pressed") === "false", "unstarred items must expose their initial state");
+  await favorite.click();
+  assert(await favorite.getAttribute("aria-pressed") === "true", "favorite button did not add the item");
+  assert(await favorite.getAttribute("aria-label") === "お気に入りから削除", "favorite button does not explain how to remove the item");
+  await favoritesPage.reload({ waitUntil: "networkidle" });
+  const reloadedCard = favoritesPage.locator(".update-card").filter({ hasText: "Meta Ads APIの観測" });
+  assert(await reloadedCard.locator(".favorite-button").getAttribute("aria-pressed") === "true", "favorite state must persist after a reload");
+  await reloadedCard.locator(".detail-link").click();
+  await favoritesPage.waitForURL(/detail\.html\?/);
+  assert(await favoritesPage.locator("#detail-favorite").getAttribute("aria-pressed") === "true", "detail page must share the card favorite state");
+  await favoritesPage.locator("#detail-favorite").click();
+  assert(await favoritesPage.locator("#detail-favorite").getAttribute("aria-pressed") === "false", "detail favorite button did not remove the item");
+  await assertDetailAccessibilityAndLayout(favoritesPage, "personal-detail-favorites/desktop");
+  await favoritesPage.close();
 
   const v3MachineDetail = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await v3MachineDetail.goto(`${server.origin}/meta-ads-updates/ja/detail.html?id=meta-product-news-rss-aaaaaaaaaaaaaaaaaaaa&personal-fixture=v3`, { waitUntil: "networkidle" });

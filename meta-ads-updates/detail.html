@@ -12,6 +12,7 @@
     <link id="alternate-default" rel="alternate" hreflang="x-default" href="https://ysmsnsmr.github.io/meta-ads-updates/detail.html">
     <title>Item details | Meta Ads Update Feed</title>
     <link rel="stylesheet" href="./style.css">
+    <script src="./favorites.js" defer></script>
     <script src="./localized-detail.js" defer></script>
   </head>
   <body>
@@ -42,7 +43,10 @@
           <p id="detail-original-title" class="detail-original-title"></p>
         </section>
         <dl id="detail-facts" class="fact-grid detail-facts"></dl>
-        <a id="detail-source-link" class="source-link" target="_blank" rel="noreferrer">元の記事を開く</a>
+        <div class="detail-actions">
+          <a id="detail-source-link" class="source-link" target="_blank" rel="noreferrer">元の記事を開く</a>
+          <button id="detail-favorite" class="favorite-button" type="button" hidden></button>
+        </div>
       </article>
       <section id="detail-error" class="empty-state" aria-live="polite" hidden>
         <h1 id="detail-error-title"></h1>

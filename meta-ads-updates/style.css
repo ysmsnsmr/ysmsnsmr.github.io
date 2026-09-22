@@ -56,7 +56,8 @@ input,
 .source-link,
 .detail-link,
 .sdk-update-log-link,
-.back-link {
+.back-link,
+.favorite-button {
   min-height: var(--tracker-target-min);
 }
 
@@ -583,8 +584,39 @@ h1 {
 .source-link:hover,
 .detail-link:hover,
 .sdk-update-log-link:hover,
-.back-link:hover {
+.back-link:hover,
+.favorite-button:hover {
   background: var(--tracker-blue-soft);
+}
+
+.favorite-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tracker-target-min);
+  padding: 0;
+  border: 1px solid var(--tracker-line);
+  border-radius: 999px;
+  color: var(--tracker-muted);
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.favorite-button[aria-pressed="true"] {
+  border-color: #b78103;
+  background: #fff7df;
+  color: #8a5a00;
+}
+
+.card-heading .favorite-button {
+  margin-left: auto;
+}
+
+.detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--tracker-space-2);
+  align-items: center;
 }
 
 .detail-shell {
