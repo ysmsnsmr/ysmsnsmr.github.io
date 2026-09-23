@@ -933,8 +933,16 @@ def _filter_items(
     pipeline: dict[str, Any],
     discovery_source: dict[str, Any] | None = None,
     discovery_links: dict[str, tuple[list[str], int]] | None = None,
+    apply_source_relevance: bool = True,
 ) -> tuple[list[dict[str, Any]], set[str]]:
-    """Apply freshness then source relevance without retaining source bodies."""
+    """Apply freshness and optional source relevance without retaining bodies.
+
+    Jev-enabled collection deliberately supplies fresh, parsed candidates to
+    the model without the legacy source-specific keyword prefilter.  The
+    caller still controls the safety, parser, source, and freshness boundaries;
+    this flag only governs the old semantic match.  The default preserves the
+    deterministic pre-Jev path for rollback and direct unit-test callers.
+    """
     accepted: list[dict[str, Any]] = []
     rejected_keys: set[str] = set()
     for raw in raw_items:
@@ -951,7 +959,7 @@ def _filter_items(
                 discovery_links[raw["key"]] = (links, deferred)
             raw["discoveredLinks"] = links
             raw["deferredDiscoveredLinks"] = deferred
-        if "match" in source:
+        if apply_source_relevance and "match" in source:
             evidence, group_matches = _match(source, raw["title"], raw["sourceContext"], raw["categories"])
         else:
             evidence, group_matches = raw["matchEvidence"], []
@@ -2496,6 +2504,7 @@ def collect(
     request_limit = _presentation_request_limit(presentation_limit, presentation_policy)
     stats = _presentation_stats(config, present_item is not None or locale_item is not None, request_limit, presentation_policy)
     pipeline = _source_pipeline_stats(config)
+    jev_enabled = jev_classifier is not None
     if retry_json_validate_failed:
         released_keys = _release_json_validate_failed_quarantine(retry_queue)
         stats["retryReleasedJsonValidateFailed"] = len(released_keys)
@@ -2548,6 +2557,7 @@ def collect(
             source_pipeline,
             discovery_by_origin.get(source["id"]),
             discovered_links_by_source.setdefault(source["id"], {}),
+            apply_source_relevance=not jev_enabled,
         )
 
     # A discovered official source is deliberately independent: an inaccessible

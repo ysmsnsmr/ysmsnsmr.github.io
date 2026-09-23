@@ -986,3 +986,44 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Jev routingの判定を表示カテゴリとして保存し、rendererとindex parserを新2分類および旧Markdown互換へ更新する
 - Revisit when: Jevのdirect_life_impactとpublic_informationが読者の分類意図と繰り返し異なる; RSS-only rollbackで旧3分類を読めなくなる; 新しい表示が選定結果やURL保持を変える
+
+<!-- idea-gate:20260923t120000-meta-ads-jev-keyword-shrink -->
+## Jev有効時の旧キーワード除外を縮小する
+
+- Record ID: `20260923t120000-meta-ads-jev-keyword-shrink`
+- Evaluated: 2026-09-23T12:00:00+08:00
+- Project: ysmsnsmr.github.io / Meta Ads Personal Feed
+- Rubric: 1.1.0
+- Decision: **TRY**
+- Score: 91/100
+- Confidence: high - 実productionログとオフライン固定fixtureで、旧判定によるJev到達前除外を確認できている。追加候補の有用性は次回artifactで観察する
+
+### Idea Card
+
+- Purpose: Jevへ届く前の主観的なキーワード足切りによる取りこぼしを減らし、個人・同僚向けの公式リンク発見と掲載候補の実用性を高める
+- First experience: 次回のartifactで、従来キーワードに該当しないがJevが掲載対象と判断した記事を確認できる
+- Scope and cost: Jevが有効なMeta Ads Personal Feedの2ソースだけを対象とし、取得安全性・鮮度・件数上限・モデル呼出し上限・Jev無効時の旧経路は維持する
+- Continuation boundary: 追加候補が有用でノイズと費用が許容範囲なら継続し、ノイズ・API負荷・誤掲載が明確に増えればkill switchまたは旧経路へ戻す
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 14/15 |
+| `evidence_and_learning` | 14/15 |
+| `expected_outcome` | 13/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 18/20 |
+| **Total** | **91/100** |
+- Trial limit: 1つのPRと次回の1回のscheduled artifact観察。追加の長期評価や人間ラベル作成は行わない
+- Trial stop condition: 候補数・実行時間・費用が上限を超える、または明確な誤掲載が確認された時点でkill switchまたは旧経路へ戻す
+
+### Alternatives
+
+- **SHRINK - 旧キーワード判定を維持し、公式リンク探索だけを独立化する:** 変更負担は最小だが、Jevへ届かない候補の取りこぼしは解消しない
+
+### Next Step
+
+- Action: Jev有効時のみ旧キーワード条件を縮小し、Jev無効時の旧経路と安全な取得境界を維持したPRを作成する
+- Revisit when: 追加候補に対する明確な誤掲載がartifactで確認される; Jev API呼出し数、実行時間、費用が現在の運用上限を超える; Jev kill switchによる旧経路へのrollbackが必要になる

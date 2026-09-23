@@ -1,9 +1,28 @@
 # Jev production routing
 
 The Personal Feed keeps its existing source allowlists, safe fetch limits,
-parsers, freshness limits, and source-specific eligibility checks.  Jev runs
-only after those boundaries have retained a candidate, and decides whether that
-candidate appears in the public feed.
+parsers, item limits, and freshness limits. When Jev is enabled, it receives
+fresh, successfully parsed candidates from those configured feeds and decides
+whether each candidate appears in the public feed. The legacy source-specific
+keyword prefilter is retained for the Jev-disabled rollback path only.
+
+## Legacy relevance boundary
+
+Jev-enabled collection does not apply the old source-specific semantic keyword
+groups before the model call. This prevents a plausible item from being
+discarded before Jev can evaluate it, while preserving the non-semantic
+boundaries: configured source IDs and hosts, safe transport, parser and item
+limits, freshness, and fail-closed fetch/parse behavior. It does not add new
+sources or permit arbitrary URLs.
+
+When `META_ADS_JEV_ROUTING_ENABLED` is `false` (or the Jev classifier is not
+available), the previous source-specific keyword and category rules run
+unchanged. The next Jev-enabled artifact should therefore be read with the
+expectation that `relevanceExcludedItems` can fall for the RSS sources and that
+more candidates may reach Jev. Review Jev choices, runtime, request volume, and
+cost rather than treating the larger candidate set as automatically useful.
+If noise, false positives, API load, or cost is clearly unacceptable, disable
+the Jev variable to restore the prior prefilter behavior.
 
 ## Routing contract
 

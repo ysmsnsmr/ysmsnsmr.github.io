@@ -339,6 +339,56 @@ class PersonalFeedTest(unittest.TestCase):
             ["category:Meta Advertising", "keyword:ads manager"],
         )
 
+    def test_jev_enabled_bypasses_legacy_source_keyword_prefilter(self) -> None:
+        jon = """<rss><channel>
+        <item><title>New creator partnership announcement</title><link>https://www.jonloomer.com/creator-partnership-announcement/</link><description>General creator and platform news without legacy advertising keywords.</description><category>Meta Advertising</category><pubDate>Fri, 29 Aug 2026 02:00:00 +0000</pubDate></item>
+        </channel></rss>"""
+        bodies = {
+            "meta-product-news-rss": META,
+            "meta-business-sdk-releases": SDK,
+            "social-media-today-meta-ads": SOCIAL_MEDIA_TODAY,
+            "jon-loomer-meta-ads": jon,
+        }
+        seen: list[str] = []
+
+        def jev_classifier(source: dict[str, Any], raw: dict[str, Any]) -> tuple[str, list[str]]:
+            if source["id"] == "jon-loomer-meta-ads":
+                seen.append(raw["title"])
+                return "included", ["jev:strategic_signal"]
+            return "drop", ["jev:unrelated"]
+
+        pipeline: dict[str, Any] = {}
+        feed, _state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(bodies=bodies),
+            source_pipeline_stats=pipeline,
+            jev_classifier=jev_classifier,
+        )
+        self.assertEqual(seen, ["New creator partnership announcement"])
+        self.assertIn(
+            "https://www.jonloomer.com/creator-partnership-announcement/",
+            {item["url"] for item in feed["items"] if item["sourceId"] == "jon-loomer-meta-ads"},
+        )
+        self.assertEqual(pipeline["sources"]["jon-loomer-meta-ads"]["relevanceExcludedItems"], 0)
+
+        legacy_pipeline: dict[str, Any] = {}
+        legacy_feed, _legacy_state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(bodies=bodies),
+            source_pipeline_stats=legacy_pipeline,
+        )
+        self.assertNotIn(
+            "https://www.jonloomer.com/creator-partnership-announcement/",
+            {item["url"] for item in legacy_feed["items"] if item["sourceId"] == "jon-loomer-meta-ads"},
+        )
+        self.assertEqual(legacy_pipeline["sources"]["jon-loomer-meta-ads"]["relevanceExcludedItems"], 1)
+
     def test_config_rejects_insecure_source_and_invalid_source_classification(self) -> None:
         invalid = copy.deepcopy(self.config)
         invalid["sources"][0]["fetchUrl"] = "http://about.fb.com/feed"
