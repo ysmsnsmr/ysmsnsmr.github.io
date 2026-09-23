@@ -51,11 +51,13 @@ class PresentationError(ValueError):
         attempts: int = 1,
         provider_error_type: str | None = None,
         provider_error_code: str | None = None,
+        rate_limit_headers: dict[str, str] | None = None,
     ) -> None:
         self.code = code if code in FAILURE_CODES else "unknown"
         self.attempts = attempts
         self.provider_error_type = _safe_error_label(provider_error_type)
         self.provider_error_code = _safe_error_label(provider_error_code)
+        self.rate_limit_headers = _safe_rate_limit_diagnostics(rate_limit_headers)
         super().__init__(self.code)
 
 
@@ -64,6 +66,14 @@ MAX_GROQ_RETRY_DELAY_SECONDS = 60
 RETRYABLE_GROQ_CODES = frozenset({"rate_limited_429", "capacity_498", "http_server_error", "network_error"})
 MAX_ERROR_BODY_BYTES = 16_384
 _SAFE_ERROR_LABEL = re.compile(r"^[a-z0-9][a-z0-9_.:-]{0,63}$")
+_SAFE_RETRY_AFTER = re.compile(r"^\d{1,9}(?:\.\d{1,3})?$")
+_SAFE_REMAINING_TOKENS = re.compile(r"^\d{1,12}$")
+_SAFE_RESET_DURATION = re.compile(r"^(?:\d+(?:\.\d+)?(?:ms|s|m|h)){1,4}$")
+_RATE_LIMIT_HEADER_PATTERNS = {
+    "retry_after": _SAFE_RETRY_AFTER,
+    "remaining_tokens": _SAFE_REMAINING_TOKENS,
+    "reset_tokens": _SAFE_RESET_DURATION,
+}
 
 
 def _safe_error_label(value: Any) -> str | None:
@@ -72,6 +82,20 @@ def _safe_error_label(value: Any) -> str | None:
         return None
     label = value.strip().lower()
     return label if _SAFE_ERROR_LABEL.fullmatch(label) else None
+
+
+def _safe_rate_limit_diagnostics(values: Any) -> dict[str, str]:
+    """Return only known, bounded, single-line rate-limit values."""
+    if not isinstance(values, dict):
+        return {}
+    safe: dict[str, str] = {}
+    for name, pattern in _RATE_LIMIT_HEADER_PATTERNS.items():
+        value = values.get(name)
+        if isinstance(value, str):
+            normalized = value.strip()
+            if len(normalized) <= 64 and pattern.fullmatch(normalized):
+                safe[name] = normalized
+    return safe
 
 
 def _provider_error_labels(error: urllib.error.HTTPError) -> tuple[str | None, str | None]:
@@ -95,6 +119,18 @@ def _provider_error_labels(error: urllib.error.HTTPError) -> tuple[str | None, s
     if not isinstance(details, dict):
         return None, None
     return _safe_error_label(details.get("type")), _safe_error_label(details.get("code"))
+
+
+def _rate_limit_header_diagnostics(headers: Any) -> dict[str, str]:
+    """Keep only bounded numeric values from the allowlisted Groq 429 headers."""
+    if headers is None or not hasattr(headers, "get"):
+        return {}
+    values = (
+        ("retry_after", headers.get("Retry-After"), _SAFE_RETRY_AFTER),
+        ("remaining_tokens", headers.get("x-ratelimit-remaining-tokens"), _SAFE_REMAINING_TOKENS),
+        ("reset_tokens", headers.get("x-ratelimit-reset-tokens"), _SAFE_RESET_DURATION),
+    )
+    return _safe_rate_limit_diagnostics({name: value for name, value, _pattern in values})
 
 
 def _http_failure_code(status: int) -> str:
@@ -164,6 +200,9 @@ def _completion_content(
                     attempts=attempt,
                     provider_error_type=provider_error_type,
                     provider_error_code=provider_error_code,
+                    rate_limit_headers=(
+                        _rate_limit_header_diagnostics(error.headers) if code == "rate_limited_429" else None
+                    ),
                 ) from None
             sleep(_retry_delay(error.headers, attempt, max_retry_delay_seconds))
             continue
