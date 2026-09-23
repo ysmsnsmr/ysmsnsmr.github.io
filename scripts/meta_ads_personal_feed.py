@@ -2124,6 +2124,7 @@ def _presentation_stats(
         "fallbackFailureReasons": {},
         "providerErrorTypes": {},
         "providerErrorCodes": {},
+        "rateLimitDiagnostics": [],
         "generationPaths": {path: 0 for path in sorted(PRESENTATION_PATHS)},
         "sources": {
             source["id"]: {
@@ -2229,6 +2230,17 @@ def _record_presentation_failure(
         stats["providerErrorCodes"][provider_error_code] = stats["providerErrorCodes"].get(provider_error_code, 0) + 1
         source_codes = stats["sources"][source_id]["providerErrorCodes"]
         source_codes[provider_error_code] = source_codes.get(provider_error_code, 0) + 1
+    rate_limit_headers = getattr(error, "rate_limit_headers", None)
+    if code == "rate_limited_429" and isinstance(rate_limit_headers, dict):
+        stats["rateLimitDiagnostics"].append(
+            {
+                "sourceId": source_id,
+                "attempts": getattr(error, "attempts", 1),
+                "retryAfter": rate_limit_headers.get("retry_after"),
+                "remainingTokens": rate_limit_headers.get("remaining_tokens"),
+                "resetTokens": rate_limit_headers.get("reset_tokens"),
+            }
+        )
 
 
 def _record_fallback_failure(
@@ -2293,6 +2305,14 @@ def _print_presentation_stats(stats: dict[str, Any]) -> None:
         print(f"PRESENTATION_ERROR_TYPE: error_type={error_type} count={count}")
     for error_code, count in sorted(stats["providerErrorCodes"].items()):
         print(f"PRESENTATION_ERROR_CODE: error_code={error_code} count={count}")
+    for diagnostic in stats["rateLimitDiagnostics"]:
+        print(
+            "PRESENTATION_RATE_LIMIT: "
+            f"source_id={diagnostic['sourceId']} attempts={diagnostic['attempts']} "
+            f"retry_after={diagnostic['retryAfter'] or 'unavailable'} "
+            f"remaining_tokens={diagnostic['remainingTokens'] or 'unavailable'} "
+            f"reset_tokens={diagnostic['resetTokens'] or 'unavailable'}"
+        )
     for path, count in sorted(stats["generationPaths"].items()):
         print(f"PRESENTATION_PATH: path={path} count={count}")
 
