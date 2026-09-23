@@ -1,0 +1,136 @@
+{
+  "schema_version": "malaysia-jev-candidate-evidence/v1",
+  "fixture_id": "candidate-evidence-20260923",
+  "purpose": "Jev候補の話題単位重複排除を外し、清掃済み本文を話題語に依存せず要約根拠として使う変更の回帰確認",
+  "source_artifact": {
+    "workflow_run_id": 35720895801,
+    "run_date": "2026-09-22",
+    "production_effect": false
+  },
+  "candidate_pool_cases": [
+    {
+      "case_id": "same_topic_key_different_region",
+      "description": "同じweather keyでも地域と警報時間が違う記事はJev候補に残す",
+      "input_items": [
+        {
+          "source": "Source A",
+          "title": "Penang thunderstorm warning",
+          "description": "Heavy rain and strong winds expected in Penang until 6pm.",
+          "published_at": "2026-09-23T08:00:00+08:00",
+          "link": "https://example.test/weather/penang",
+          "canonical_key": "weather"
+        },
+        {
+          "source": "Source B",
+          "title": "Johor thunderstorm warning",
+          "description": "Heavy rain and strong winds expected in Johor until 10pm.",
+          "published_at": "2026-09-23T07:59:00+08:00",
+          "link": "https://example.test/weather/johor",
+          "canonical_key": "weather"
+        }
+      ],
+      "expected": {
+        "jev_candidate_links": [
+          "https://example.test/weather/penang",
+          "https://example.test/weather/johor"
+        ],
+        "legacy_baseline_representative_links": [
+          "https://example.test/weather/penang"
+        ],
+        "added_to_jev_candidate_links": [
+          "https://example.test/weather/johor"
+        ],
+        "dropped_by_topic_key": [],
+        "dropped_by_exact_url": []
+      }
+    },
+    {
+      "case_id": "same_url_keeps_newest",
+      "description": "同じURLの古いRSS行は、話題キーに関係なく除外する",
+      "input_items": [
+        {
+          "source": "Source A",
+          "title": "Same article, newest feed entry",
+          "description": "Newest copy.",
+          "published_at": "2026-09-23T08:00:00+08:00",
+          "link": "https://example.test/article/1",
+          "canonical_key": "weather"
+        },
+        {
+          "source": "Source B",
+          "title": "Same article, older feed entry",
+          "description": "Older copy.",
+          "published_at": "2026-09-23T07:00:00+08:00",
+          "link": "https://example.test/article/1",
+          "canonical_key": "policy"
+        }
+      ],
+      "expected": {
+        "jev_candidate_links": [
+          "https://example.test/article/1"
+        ],
+        "legacy_baseline_representative_links": [
+          "https://example.test/article/1"
+        ],
+        "added_to_jev_candidate_links": [],
+        "dropped_by_topic_key": [],
+        "dropped_by_exact_url": [
+          {
+            "title": "Same article, older feed entry",
+            "link": "https://example.test/article/1",
+            "reason": "exact_url_duplicate_older_entry"
+          }
+        ]
+      }
+    }
+  ],
+  "body_evidence_cases": [
+    {
+      "case_id": "dead_end_is_not_incident_block",
+      "description": "道路記事のdead endは事故語ではなく、本文根拠を使える記事として扱う",
+      "input": {
+        "source": "Malay Mail",
+        "title": "Just 40m long, new Mont Kiara road opens shortcut to Solaris and Segambut",
+        "description": "A new road has opened in Mont Kiara, creating a direct connection and an alternative route for motorists.",
+        "content_source": "article_body",
+        "body_evidence_excerpt": "Jalan Duta Kiara previously ended in a dead end, forcing motorists to take a longer route. The new link gives residents an alternative route towards Solaris Dutamas and Segambut."
+      },
+      "expected": {
+        "body_excerpt_policy": "use_body",
+        "body_excerpt_reason": "clean_article_body",
+        "selected_context_source": "article_body",
+        "summary_evidence_contains": [
+          "dead end",
+          "alternative route",
+          "Solaris Dutamas",
+          "Segambut"
+        ],
+        "hard_safety_review_required": true
+      }
+    },
+    {
+      "case_id": "empty_cleaned_body_falls_back",
+      "description": "本文取得済みでも清掃後の根拠が空なら、本文を無理に使わない",
+      "input": {
+        "source": "Malay Mail",
+        "title": "Article with no usable body evidence",
+        "description": "The article body contains only an advertisement block.",
+        "content_source": "article_body",
+        "body_evidence_excerpt": ""
+      },
+      "expected": {
+        "body_excerpt_policy": "rss_only",
+        "body_excerpt_reason": "empty_body_evidence",
+        "selected_context_source": "rss_summary",
+        "summary_evidence_contains": [],
+        "hard_safety_review_required": true
+      }
+    }
+  ],
+  "comparison_contract": {
+    "added_articles_are": "Jev候補には残るが、旧canonical key統合ではbaselineから消えていたURL",
+    "dropped_articles_are": "URL重複、構造不備、またはJev後の編集予算で除外されたURL。話題keyだけを理由にした除外は許可しない",
+    "summary_evidence_is": "selected_context_sourceがarticle_bodyの場合、body_evidence_excerptの範囲内で生成されたことを確認する",
+    "production_effect": false
+  }
+}

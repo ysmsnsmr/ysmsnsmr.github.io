@@ -42,6 +42,8 @@ class MalaysiaEditorialCandidatePoolTests(unittest.TestCase):
         self.assertFalse(payload["candidate_policy"]["legacy_score_applied"])
         self.assertFalse(payload["candidate_policy"]["legacy_selector_exclusions_applied"])
         self.assertFalse(payload["candidate_policy"]["legacy_final_noise_applied"])
+        self.assertFalse(payload["candidate_policy"]["canonical_deduplication_applied"])
+        self.assertTrue(payload["candidate_policy"]["legacy_baseline_canonical_deduplication_applied"])
         self.assertFalse(payload["candidate_policy"]["fixed_category_caps_applied"])
         self.assertFalse(payload["candidate_policy"]["overall_selector_cap_applied"])
         self.assertFalse(payload["candidate_policy"]["source_limits_applied"])
@@ -107,6 +109,30 @@ class MalaysiaEditorialCandidatePoolTests(unittest.TestCase):
         stages = {item["title"] + item["description"]: item["decision_stage"] for item in observation["items"]}
         self.assertEqual(stages["Same eventOlder URL copy"], "duplicate_url")
         self.assertEqual(stages["InvalidInvalid"], "invalid_url")
+
+    def test_candidate_pool_keeps_distinct_urls_with_the_same_legacy_canonical_key(self) -> None:
+        now = datetime.fromisoformat("2026-09-20T12:00:00+08:00")
+        penang = summary.Item(
+            "Source A", "Feed", "Penang thunderstorm warning", "Until 6pm", now, "fixture", "https://example.test/penang"
+        )
+        johor = summary.Item(
+            "Source B", "Feed", "Johor thunderstorm warning", "Until 10pm", now - timedelta(minutes=1), "fixture", "https://example.test/johor"
+        )
+
+        with (
+            patch.object(summary, "evaluate_item", lambda item: setattr(item, "score", 3)),
+            patch.object(summary, "key_for", lambda item: "weather"),
+            patch.object(summary, "should_exclude_item", lambda item: False),
+            patch.object(summary, "category_for", lambda item: "【知っておくと得】"),
+            patch.object(summary, "is_forced_final_noise", lambda item: False),
+            patch.object(summary, "financial_topic_bucket", lambda item: ""),
+        ):
+            summary.select_items([penang, johor], now)
+
+        self.assertEqual(summary.LAST_EDITORIAL_CANDIDATE_POOL, [penang, johor])
+        observation = summary.build_selection_observation_json([penang, johor], [], 2, [], now)
+        stages = {item["link"]: item["decision_stage"] for item in observation["items"]}
+        self.assertEqual(stages[johor.link], "legacy_duplicate_canonical_event")
 
 
 if __name__ == "__main__":

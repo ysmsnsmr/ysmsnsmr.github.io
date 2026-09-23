@@ -1786,7 +1786,8 @@ def build_editorial_candidate_pool_json(
             "freshness_applied": True,
             "valid_url_required": True,
             "duplicate_url_removed": True,
-            "canonical_deduplication_applied": True,
+            "canonical_deduplication_applied": False,
+            "legacy_baseline_canonical_deduplication_applied": True,
             "legacy_score_applied": False,
             "legacy_selector_exclusions_applied": False,
             "legacy_final_noise_applied": False,
@@ -1898,12 +1899,12 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
     for duplicate, representative in duplicate_events:
         decisions[id(duplicate)] = {
             "decision": "excluded",
-            "decision_stage": "duplicate_canonical_event",
-            "decision_reason": "older item for the same canonical event",
+            "decision_stage": "legacy_duplicate_canonical_event",
+            "decision_reason": "older item for the same canonical event in the legacy selector baseline",
             "canonical_representative_link": representative.link,
         }
 
-    editorial_candidates = sorted(by_key.values(), key=lambda item: item.pub_date, reverse=True)
+    editorial_candidates = sorted(url_unique_items, key=lambda item: item.pub_date, reverse=True)
     for item in editorial_candidates:
         item.category = category_for(item)
     LAST_EDITORIAL_CANDIDATE_POOL = editorial_candidates
@@ -2967,7 +2968,7 @@ def self_test() -> int:
     check("Selection observation retains selected items", observation_by_link[weather_guard.link]["decision_stage"] == "selected")
     check(
         "Selection observation retains canonical duplicates",
-        observation_by_link[observed_duplicate.link]["decision_stage"] == "duplicate_canonical_event",
+        observation_by_link[observed_duplicate.link]["decision_stage"] == "legacy_duplicate_canonical_event",
     )
     check(
         "Selection observation retains items outside the recent window",
