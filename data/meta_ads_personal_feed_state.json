@@ -1,6 +1,6 @@
 {
   "schemaVersion": "meta-ads-personal-feed-state/v5",
-  "updatedAt": "2026-09-22T05:01:36Z",
+  "updatedAt": "2026-09-23T10:27:45Z",
   "sources": {
     "meta-product-news-rss": {
       "relevanceRevision": "meta-ads-lanes-v1",
@@ -17,7 +17,7 @@
           ],
           "fingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
           "firstObservedAt": "2026-09-17T04:55:10Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
@@ -86,7 +86,7 @@
           ],
           "fingerprint": "7ec28c89eba18f71014806f8761c9662a7068ae8ed01ebd3e8b28d182c8a14ea",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7ec28c89eba18f71014806f8761c9662a7068ae8ed01ebd3e8b28d182c8a14ea",
@@ -155,7 +155,7 @@
           ],
           "fingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
@@ -224,7 +224,7 @@
           ],
           "fingerprint": "6a3e19041f996e3c52d055589111ca61de96dffeb589c06d9a8a8c965fbee1e0",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "6a3e19041f996e3c52d055589111ca61de96dffeb589c06d9a8a8c965fbee1e0",
@@ -293,7 +293,7 @@
           ],
           "fingerprint": "3200d8fbab7ee18881fb9819af4c09217f2382e91316da2c863d8ec9d2922618",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3200d8fbab7ee18881fb9819af4c09217f2382e91316da2c863d8ec9d2922618",
@@ -362,7 +362,7 @@
           ],
           "fingerprint": "887d7edd242f173fef4a2548142caaee3ed5e2b8d0f4927635f97e194dd50b7c",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "887d7edd242f173fef4a2548142caaee3ed5e2b8d0f4927635f97e194dd50b7c",
@@ -431,7 +431,7 @@
           ],
           "fingerprint": "f891db2becaa267972f9c207eb3243f28729d0f14b11fde71e1250717412aae6",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f891db2becaa267972f9c207eb3243f28729d0f14b11fde71e1250717412aae6",
@@ -500,7 +500,7 @@
           ],
           "fingerprint": "6c4e6a14c1a542cc0112f8b7686310340fbaeb03f215bed533a6c7eceb99fa11",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "6c4e6a14c1a542cc0112f8b7686310340fbaeb03f215bed533a6c7eceb99fa11",
@@ -569,7 +569,7 @@
           ],
           "fingerprint": "933196690767de83451e164a7225a992dba2d0360859caeb4cb74b831a72b55a",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "933196690767de83451e164a7225a992dba2d0360859caeb4cb74b831a72b55a",
@@ -638,7 +638,7 @@
           ],
           "fingerprint": "1b1d551a5b80a38834190fd8619d037b02c9b3889b7af9aac43e4ac0008fcb8e",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1b1d551a5b80a38834190fd8619d037b02c9b3889b7af9aac43e4ac0008fcb8e",
@@ -712,7 +712,7 @@
           ],
           "fingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
@@ -781,7 +781,7 @@
           ],
           "fingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
@@ -846,11 +846,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "jev:unclear"
+            "jev:strategic_signal"
           ],
           "fingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
@@ -919,7 +919,7 @@
           ],
           "fingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
@@ -988,7 +988,7 @@
           ],
           "fingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
@@ -1057,7 +1057,7 @@
           ],
           "fingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
@@ -1126,7 +1126,7 @@
           ],
           "fingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
@@ -1195,7 +1195,7 @@
           ],
           "fingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
@@ -1260,11 +1260,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "jev:strategic_signal"
+            "jev:unclear"
           ],
           "fingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
@@ -1333,7 +1333,7 @@
           ],
           "fingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
@@ -1402,7 +1402,7 @@
           ],
           "fingerprint": "eed8ce943afb8409ed2fbdd518ba54d81c5644043e4ca8f976f188c790e98f76",
           "firstObservedAt": "2026-09-22T05:01:36Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "eed8ce943afb8409ed2fbdd518ba54d81c5644043e4ca8f976f188c790e98f76",
@@ -1469,17 +1469,14 @@
           "title": "How will Meta’s settlement impact social media?",
           "publishedDate": "2026-08-27",
           "updatedDate": null,
-          "matchEvidence": [
-            "keyword:meta",
-            "keyword:advertiser"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:strategic_signal"
           ],
           "fingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
@@ -1541,17 +1538,14 @@
           "title": "Meta settles landmark lawsuit for $18B",
           "publishedDate": "2026-08-26",
           "updatedDate": null,
-          "matchEvidence": [
-            "keyword:meta",
-            "keyword:ad"
-          ],
-          "publicationStatus": "included",
+          "matchEvidence": [],
+          "publicationStatus": "drop",
           "publicationEvidence": [
-            "jev:strategic_signal"
+            "jev:unrelated"
           ],
           "fingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
@@ -1613,17 +1607,14 @@
           "title": "Meta removes option to exclude ad placements",
           "publishedDate": "2026-08-20",
           "updatedDate": null,
-          "matchEvidence": [
-            "keyword:meta",
-            "keyword:advertising"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "7acf956231436a87c7b7a9015db094361a079af2b65baf71f7b29d23f773fa11",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7acf956231436a87c7b7a9015db094361a079af2b65baf71f7b29d23f773fa11",
@@ -1685,17 +1676,14 @@
           "title": "Meta AI launches for Mac",
           "publishedDate": "2026-08-19",
           "updatedDate": null,
-          "matchEvidence": [
-            "keyword:meta",
-            "keyword:ad"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:strategic_signal"
           ],
           "fingerprint": "143436c34d5eef00048e1b6e3dae36a41ad7a161b317c577367a64dc953d8e2d",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "143436c34d5eef00048e1b6e3dae36a41ad7a161b317c577367a64dc953d8e2d",
@@ -1973,17 +1961,14 @@
           "title": "Instagram chief warns against eliminating algorithms",
           "publishedDate": "2026-09-10",
           "updatedDate": null,
-          "matchEvidence": [
-            "keyword:instagram",
-            "keyword:promotion"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:strategic_signal"
           ],
           "fingerprint": "b35a1f5bd3df45609ea7344b16e5d345202e2951c5f6d1ffa6a0c6ed22ad3509",
           "firstObservedAt": "2026-09-11T04:43:19Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b35a1f5bd3df45609ea7344b16e5d345202e2951c5f6d1ffa6a0c6ed22ad3509",
@@ -2045,17 +2030,14 @@
           "title": "Meta adds more creator partnership tools",
           "publishedDate": "2026-09-15",
           "updatedDate": null,
-          "matchEvidence": [
-            "keyword:meta",
-            "keyword:ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "458f353eef407444549b3ec68b6489d82873f8642f1707db100854945d78bcbc",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "458f353eef407444549b3ec68b6489d82873f8642f1707db100854945d78bcbc",
@@ -2117,17 +2099,14 @@
           "title": "Meta shares holiday 2026 planning guides",
           "publishedDate": "2026-09-17",
           "updatedDate": null,
-          "matchEvidence": [
-            "keyword:meta",
-            "keyword:ad"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:strategic_signal"
           ],
           "fingerprint": "ff23184ef3220928736c800efa6e9314e8a7760550fa387687cf9e2f0f7c072b",
           "firstObservedAt": "2026-09-18T11:07:09Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ff23184ef3220928736c800efa6e9314e8a7760550fa387687cf9e2f0f7c072b",
@@ -2183,6 +2162,903 @@
               }
             }
           }
+        },
+        "https://www.socialmediatoday.com/news/facebook-pages-get-charged-for-link-posts/830743/": {
+          "url": "https://www.socialmediatoday.com/news/facebook-pages-get-charged-for-link-posts/830743/",
+          "title": "Facebook Pages get charged for link posts",
+          "publishedDate": "2026-09-17",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "a0f66a34b7150065230b3f172aaf6ff33d3271a7625781fbec17b9badca51efe",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "a0f66a34b7150065230b3f172aaf6ff33d3271a7625781fbec17b9badca51efe",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "771c6743a7593974be5a75f68217b0bb362080044e08daa83b2e94472a7b9389",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "771c6743a7593974be5a75f68217b0bb362080044e08daa83b2e94472a7b9389",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "771c6743a7593974be5a75f68217b0bb362080044e08daa83b2e94472a7b9389",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Meta One導入でFacebookページのリンク投稿が有料化、月2件に制限",
+                "summary": "Meta One for Businessの有料プラン開始に伴い、Facebookページのリンク付き投稿が有料化され、非課金のプロアカウントは月2件までに制限されるテストが拡大された。2025年12月に開始された同様のテストは当初限定的だったが、現在は対象ページが増加。出版社ページは除外され、リンク投稿は米国で2022年の9.8%から2026年Q1",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Meta One導入でFacebookページのリンク投稿が有料化、月2件に制限",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta One for Businessの有料プラン開始に伴い、Facebookページのリンク付き投稿が有料化され、非課金のプロアカウントは月2件までに制限されるテストが拡大された。2025年12月に開始された同様のテストは当初限定的だったが、現在は対象ページが増加。出版社ページは除外され、リンク投稿は米国で2022年の9.8%から2026年Q1",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.socialmediatoday.com/news/meta-launches-meta-one-for-business-add-on-packages/830469/": {
+          "url": "https://www.socialmediatoday.com/news/meta-launches-meta-one-for-business-add-on-packages/830469/",
+          "title": "Meta launches Meta One for Business add-on packages",
+          "publishedDate": "2026-09-15",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "7a3735fa2125245b701f0403e70d5be9f38bfb2c05a2f55eb26f365c64100363",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "7a3735fa2125245b701f0403e70d5be9f38bfb2c05a2f55eb26f365c64100363",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "7de2762276cb59e3bfdc1341568a2092bc711038523c4e61fbbaea240ae00a8c",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "7de2762276cb59e3bfdc1341568a2092bc711038523c4e61fbbaea240ae00a8c",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "7de2762276cb59e3bfdc1341568a2092bc711038523c4e61fbbaea240ae00a8c",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.socialmediatoday.com/news/meta-expands-community-notes-to-latin-america/830128/": {
+          "url": "https://www.socialmediatoday.com/news/meta-expands-community-notes-to-latin-america/830128/",
+          "title": "Meta expands Community Notes to Latin America",
+          "publishedDate": "2026-09-10",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "drop",
+          "publicationEvidence": [
+            "jev:unrelated"
+          ],
+          "fingerprint": "b99bc004f19561d3b41b11db261e1c6bda71eea2a77e1fa2ffa57c0c463f7605",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "b99bc004f19561d3b41b11db261e1c6bda71eea2a77e1fa2ffa57c0c463f7605",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "9dafac6ef3d3850206d1c7f3acc8a247d89b946422cd2277a85f146ac29c62a0",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "9dafac6ef3d3850206d1c7f3acc8a247d89b946422cd2277a85f146ac29c62a0",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "9dafac6ef3d3850206d1c7f3acc8a247d89b946422cd2277a85f146ac29c62a0",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.socialmediatoday.com/news/will-removing-algorithmic-sorting-improve-social-media/829868/": {
+          "url": "https://www.socialmediatoday.com/news/will-removing-algorithmic-sorting-improve-social-media/829868/",
+          "title": "Will removing algorithmic sorting improve social media?",
+          "publishedDate": "2026-09-08",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "7710575499092c0ebde4bc14eb5f367ef0d75afa7befefcebbf176f614c5fda9",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "7710575499092c0ebde4bc14eb5f367ef0d75afa7befefcebbf176f614c5fda9",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "d127643fcf6d3915581e5ac919532c4da2e11abc3ee83c47b82b7902c4ee7558",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "d127643fcf6d3915581e5ac919532c4da2e11abc3ee83c47b82b7902c4ee7558",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "d127643fcf6d3915581e5ac919532c4da2e11abc3ee83c47b82b7902c4ee7558",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.socialmediatoday.com/news/zuckerberg-is-one-of-the-least-liked-people-in-the-us/829244/": {
+          "url": "https://www.socialmediatoday.com/news/zuckerberg-is-one-of-the-least-liked-people-in-the-us/829244/",
+          "title": "Zuckerberg is one of the least-liked people in the US",
+          "publishedDate": "2026-09-08",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "4aaf9c911d85ee247eff16f2aa13b54517bcd16bd00668ba611261e38116d198",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "4aaf9c911d85ee247eff16f2aa13b54517bcd16bd00668ba611261e38116d198",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Survey Finds Zuckerberg Least-Liked Public Figure in U.S.",
+                "summary": "A UMass Lowell Center for Public Opinion and YouGov survey found Meta CEO Mark Zuckerberg is the least‑liked public figure in the United States among both Republicans and Democrats, with low favorability shown on a Reddit‑posted image after Dolly Parton’s death.",
+                "inputHash": "91f6b1f9cd1ae8c0e67a474b901d8b911c5ee0806c798924f29e42b6d13f182f",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Survey Finds Zuckerberg Least-Liked Public Figure in U.S.",
+                    "inputHash": "91f6b1f9cd1ae8c0e67a474b901d8b911c5ee0806c798924f29e42b6d13f182f",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "A UMass Lowell Center for Public Opinion and YouGov survey found Meta CEO Mark Zuckerberg is the least‑liked public figure in the United States among both Republicans and Democrats, with low favorability shown on a Reddit‑posted image after Dolly Parton’s death.",
+                    "inputHash": "91f6b1f9cd1ae8c0e67a474b901d8b911c5ee0806c798924f29e42b6d13f182f",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Zuckerberg、米国で最も支持率が低い人物と判明",
+                "summary": "UMass Lowellの公共意見センターがYouGovと共同で実施した新たな調査で、Zuckerberg氏は米国の共和党員・民主党員双方から最も好感度が低い公共人物であることが示された。政治的立場を問わず、支持率が低いことが明らかになった。",
+                "inputHash": "1f39a4a5ac18a142890f7f0e15b7f36198bb29123060e1e2ed8fb6cc2bacf73d",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Zuckerberg、米国で最も支持率が低い人物と判明",
+                    "inputHash": "1f39a4a5ac18a142890f7f0e15b7f36198bb29123060e1e2ed8fb6cc2bacf73d",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "UMass Lowellの公共意見センターがYouGovと共同で実施した新たな調査で、Zuckerberg氏は米国の共和党員・民主党員双方から最も好感度が低い公共人物であることが示された。政治的立場を問わず、支持率が低いことが明らかになった。",
+                    "inputHash": "1f39a4a5ac18a142890f7f0e15b7f36198bb29123060e1e2ed8fb6cc2bacf73d",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.socialmediatoday.com/news/instagram-growth-continues-to-outpace-facebook-in-eu/829134/": {
+          "url": "https://www.socialmediatoday.com/news/instagram-growth-continues-to-outpace-facebook-in-eu/829134/",
+          "title": "Instagram growth continues to outpace Facebook in EU",
+          "publishedDate": "2026-08-30",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "2065f116ecd6d8ec5fd93cf1775c9164b3390a46e23ce1e1f6dfe7297ab78042",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "2065f116ecd6d8ec5fd93cf1775c9164b3390a46e23ce1e1f6dfe7297ab78042",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "ee8aa2fd3c0e98a707690c0ba6417502908b1955b98a926734dd55bb96479ce9",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "ee8aa2fd3c0e98a707690c0ba6417502908b1955b98a926734dd55bb96479ce9",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "ee8aa2fd3c0e98a707690c0ba6417502908b1955b98a926734dd55bb96479ce9",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.socialmediatoday.com/news/meta-updates-login-with-facebook/829135/": {
+          "url": "https://www.socialmediatoday.com/news/meta-updates-login-with-facebook/829135/",
+          "title": "Meta updates login with Facebook",
+          "publishedDate": "2026-08-30",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "drop",
+          "publicationEvidence": [
+            "jev:unrelated"
+          ],
+          "fingerprint": "d3fb5f3c45f341c06bab017f5c86d88dc6bcbd0e1ad985b8a2ce1a5135709e30",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "d3fb5f3c45f341c06bab017f5c86d88dc6bcbd0e1ad985b8a2ce1a5135709e30",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.socialmediatoday.com/news/new-zealand-introduces-teen-social-media-restrictions/828662/": {
+          "url": "https://www.socialmediatoday.com/news/new-zealand-introduces-teen-social-media-restrictions/828662/",
+          "title": "New Zealand introduces teen social media restrictions",
+          "publishedDate": "2026-08-24",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "8747337b0552909dab732fabc4a01657cfc6f50fdfbabaf7503970d3d9622764",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "8747337b0552909dab732fabc4a01657cfc6f50fdfbabaf7503970d3d9622764",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "ecd7344fda502e23706a57a066eaec5d5cadc06768f9a05a1eac3d5b96ae4985",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "ecd7344fda502e23706a57a066eaec5d5cadc06768f9a05a1eac3d5b96ae4985",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "ecd7344fda502e23706a57a066eaec5d5cadc06768f9a05a1eac3d5b96ae4985",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.socialmediatoday.com/news/meta-glasses-face-more-challenges/828555/": {
+          "url": "https://www.socialmediatoday.com/news/meta-glasses-face-more-challenges/828555/",
+          "title": "Meta glasses face more challenges",
+          "publishedDate": "2026-08-23",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "drop",
+          "publicationEvidence": [
+            "jev:unrelated"
+          ],
+          "fingerprint": "db241d612442e92283e0466c55eddfc3fb1c6c0e4059efa132d5e7f40115ba99",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "db241d612442e92283e0466c55eddfc3fb1c6c0e4059efa132d5e7f40115ba99",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "3b73621b996120b34ac40606ff264308b21137ccb212198688d4e8a243a39911",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "3b73621b996120b34ac40606ff264308b21137ccb212198688d4e8a243a39911",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "3b73621b996120b34ac40606ff264308b21137ccb212198688d4e8a243a39911",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.socialmediatoday.com/news/will-meta-be-found-guilty-of-driving-social-media-addiction/828553/": {
+          "url": "https://www.socialmediatoday.com/news/will-meta-be-found-guilty-of-driving-social-media-addiction/828553/",
+          "title": "Will Meta be found guilty of driving social media addiction?",
+          "publishedDate": "2026-08-23",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "f207af774f37350e35a2b8c49ca9b17ea6c1fd470f4202f794a9429e8bbcd1fd",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "f207af774f37350e35a2b8c49ca9b17ea6c1fd470f4202f794a9429e8bbcd1fd",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "1181b8475770cf3e5940b4d13e3e325320709edf277bc0aa1d11ce1f11c63745",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "1181b8475770cf3e5940b4d13e3e325320709edf277bc0aa1d11ce1f11c63745",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "1181b8475770cf3e5940b4d13e3e325320709edf277bc0aa1d11ce1f11c63745",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.socialmediatoday.com/news/edits-gets-improved-project-management-and-ai-features/828464/": {
+          "url": "https://www.socialmediatoday.com/news/edits-gets-improved-project-management-and-ai-features/828464/",
+          "title": "Edits gets improved project management and AI features",
+          "publishedDate": "2026-08-20",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "drop",
+          "publicationEvidence": [
+            "jev:unrelated"
+          ],
+          "fingerprint": "50725616e01ef75b4c2ada2657f23c2d1f96ba76454c5feec1c399fd39c39b2d",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "50725616e01ef75b4c2ada2657f23c2d1f96ba76454c5feec1c399fd39c39b2d",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "16f30282c2d2aa489e9782176826e976f063f1a55e0dd4155142165a26071871",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "16f30282c2d2aa489e9782176826e976f063f1a55e0dd4155142165a26071871",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "16f30282c2d2aa489e9782176826e976f063f1a55e0dd4155142165a26071871",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.socialmediatoday.com/news/how-social-platforms-measure-video-views/828349/": {
+          "url": "https://www.socialmediatoday.com/news/how-social-platforms-measure-video-views/828349/",
+          "title": "How social platforms measure video views",
+          "publishedDate": "2026-08-19",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "drop",
+          "publicationEvidence": [
+            "jev:unrelated"
+          ],
+          "fingerprint": "a8bfab76f93d2f1d4991da976afd8f58e84e059e9f40f4cc66c7eeb93528afde",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "a8bfab76f93d2f1d4991da976afd8f58e84e059e9f40f4cc66c7eeb93528afde",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "60bce77b9c26dc53a6f9a1032945f296a407511d81aeef7e413ca1c3a0b512f9",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "60bce77b9c26dc53a6f9a1032945f296a407511d81aeef7e413ca1c3a0b512f9",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "60bce77b9c26dc53a6f9a1032945f296a407511d81aeef7e413ca1c3a0b512f9",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.socialmediatoday.com/news/meta-highlights-rising-brand-opportunities-in-womens-sports/828348/": {
+          "url": "https://www.socialmediatoday.com/news/meta-highlights-rising-brand-opportunities-in-womens-sports/828348/",
+          "title": "Meta highlights rising brand opportunities in women’s sports",
+          "publishedDate": "2026-08-19",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "c40906d09211e86d39ab33460b54614334f5d56c28cb7d8c403bcd7456f8c6f3",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "c40906d09211e86d39ab33460b54614334f5d56c28cb7d8c403bcd7456f8c6f3",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "39c0dc3b6253335c966482b54d56b143921cef9282773482638a3993460d6e5c",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "39c0dc3b6253335c966482b54d56b143921cef9282773482638a3993460d6e5c",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "39c0dc3b6253335c966482b54d56b143921cef9282773482638a3993460d6e5c",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2194,17 +3070,14 @@
           "title": "Meta Introduces a New Automatic Events Feature",
           "publishedDate": "2026-09-01",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:pixel"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
           "firstObservedAt": "2026-09-02T04:36:59Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
@@ -2266,17 +3139,14 @@
           "title": "Reply to Keywords Meta Ads Feature",
           "publishedDate": "2026-08-25",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
@@ -2338,17 +3208,14 @@
           "title": "Meta Is Removing Placement Controls From Ad Sets",
           "publishedDate": "2026-08-20",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:ad set"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
@@ -2410,17 +3277,14 @@
           "title": "ChatGPT Ads Get Automated Bidding, Placements, and URL Parameters",
           "publishedDate": "2026-08-13",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:facebook ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:strategic_signal"
           ],
           "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
@@ -2482,17 +3346,14 @@
           "title": "Meta Ads AI Connectors Get More Security Controls",
           "publishedDate": "2026-08-11",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
@@ -2554,17 +3415,14 @@
           "title": "Meta Tests Sequenced Events and Preferred Lead Answers for Lead Quality",
           "publishedDate": "2026-08-07",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:campaign"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
@@ -2626,17 +3484,14 @@
           "title": "Exclusion-Only Custom Audiences",
           "publishedDate": "2026-08-07",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:ad set"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
@@ -2698,17 +3553,14 @@
           "title": "15 Years of Facebook and Meta Advertising",
           "publishedDate": "2026-08-05",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:strategic_signal"
           ],
           "fingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
@@ -2770,17 +3622,14 @@
           "title": "Meta Can Now Rewrite the Text on Your Ad Images",
           "publishedDate": "2026-07-28",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
@@ -2842,17 +3691,14 @@
           "title": "How to Use Meta Ads for Lead Generation",
           "publishedDate": "2026-07-21",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:strategic_signal"
           ],
           "fingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
@@ -2914,17 +3760,14 @@
           "title": "Meta Redesigns Audiences Around Labels",
           "publishedDate": "2026-07-16",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:custom audience"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
@@ -2986,17 +3829,14 @@
           "title": "The Principles Behind My Meta Ads Strategy",
           "publishedDate": "2026-07-14",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:strategic_signal"
           ],
           "fingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
@@ -3058,17 +3898,14 @@
           "title": "Lead Capture AI Agent for Instant Forms and More",
           "publishedDate": "2026-07-09",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
@@ -3130,17 +3967,14 @@
           "title": "Custom Audiences Come to ChatGPT Ads",
           "publishedDate": "2026-07-07",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:strategic_signal"
           ],
           "fingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
@@ -3202,17 +4036,14 @@
           "title": "The Master Brief: My Complete Approach to Meta Ads",
           "publishedDate": "2026-07-02",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:strategic_signal"
           ],
           "fingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
@@ -3274,17 +4105,14 @@
           "title": "What to Check When Meta Ads Aren’t Converting",
           "publishedDate": "2026-06-30",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:strategic_signal"
           ],
           "fingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
@@ -3346,17 +4174,14 @@
           "title": "Book Appointments from Instant Forms, ChatGPT Conversion Optimization, and More",
           "publishedDate": "2026-06-25",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
@@ -3418,17 +4243,14 @@
           "title": "How Many Active Ad Sets Should You Have in a Meta Ads Campaign?",
           "publishedDate": "2026-06-23",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:strategic_signal"
           ],
           "fingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
@@ -3490,17 +4312,14 @@
           "title": "AI Disclosure Checkbox, ChatGPT Attribution, and More",
           "publishedDate": "2026-06-18",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
@@ -3562,17 +4381,14 @@
           "title": "How Many Meta Ads Campaigns Should You Have at Once?",
           "publishedDate": "2026-06-16",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:strategic_signal"
           ],
           "fingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
@@ -3634,17 +4450,14 @@
           "title": "Push Delivery Tests, ChatGPT Ads Updates, and More",
           "publishedDate": "2026-06-11",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
@@ -3706,17 +4519,14 @@
           "title": "Hands-On With Push Delivery to This Ad",
           "publishedDate": "2026-06-09",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:campaign"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
@@ -3778,17 +4588,14 @@
           "title": "Customer Lifecycle Strategy Is Not What Advertisers Thought",
           "publishedDate": "2026-06-04",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
@@ -3850,17 +4657,14 @@
           "title": "Meta Ads Attribution Reporting: What Your Results Really Mean",
           "publishedDate": "2026-06-02",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
@@ -3922,17 +4726,14 @@
           "title": "Meta Ads Grouping Reports, ChatGPT Conversions, and More",
           "publishedDate": "2026-05-28",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
@@ -3994,17 +4795,14 @@
           "title": "7 Common Meta Ads Mistakes Agencies Make",
           "publishedDate": "2026-05-26",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
@@ -4066,17 +4864,14 @@
           "title": "ChatGPT Ads Limitations, AI Instant Forms, and More",
           "publishedDate": "2026-05-21",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
@@ -4138,17 +4933,14 @@
           "title": "Hands-On With ChatGPT Ads: Initial Impressions",
           "publishedDate": "2026-05-19",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:meta ads"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:strategic_signal"
           ],
           "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
@@ -4498,17 +5290,14 @@
           "title": "How to Approach Meta Advertising Control",
           "publishedDate": "2026-09-08",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:campaign"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:direct_impact"
           ],
           "fingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
           "firstObservedAt": "2026-09-09T04:45:10Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
@@ -4570,17 +5359,14 @@
           "title": "What I Built With Muse, Meta’s New AI Agent",
           "publishedDate": "2026-09-15",
           "updatedDate": null,
-          "matchEvidence": [
-            "category:Meta Advertising",
-            "keyword:placement"
-          ],
+          "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
             "jev:strategic_signal"
           ],
           "fingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
@@ -4636,6 +5422,1386 @@
               }
             }
           }
+        },
+        "https://www.jonloomer.com/meta-one-business-plans/": {
+          "url": "https://www.jonloomer.com/meta-one-business-plans/",
+          "title": "Meta One Business Plans: What You Get at Each Tier",
+          "publishedDate": "2026-09-22",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "51ae475fee2503add60ffc043dd221b0e4eb0a2795ce49a5a9cfa815dd611904",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "51ae475fee2503add60ffc043dd221b0e4eb0a2795ce49a5a9cfa815dd611904",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "51ae475fee2503add60ffc043dd221b0e4eb0a2795ce49a5a9cfa815dd611904",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Meta One ビジネス向けサブスクリプション4プランと価格",
+                "summary": "MetaはMeta Oneというビジネス向けサブスクリプションを発表し、Essential（月額14.99ドル）、Advanced（49.99ドル）、Expert（149ドル）、Max（499ドル）の4段階を提供。価格はFacebookページ、Instagramプロファイル、WhatsApp Business番号ごとに適用。Essentialは認証バッジ、なりすまし保護、Instagramリンクページ（最大20件）やMeta Business Agentの拡張アクセスなどを含む。AdvancedはEssentialの機能に加え、月1件の人間サポートと投稿・リールでのクリック可能リンクをFacebookで8件、Instagramで4件利用可能にする。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Meta One ビジネス向けサブスクリプション4プランと価格",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "MetaはMeta Oneというビジネス向けサブスクリプションを発表し、Essential（月額14.99ドル）、Advanced（49.99ドル）、Expert（149ドル）、Max（499ドル）の4段階を提供。価格はFacebookページ、Instagramプロファイル、WhatsApp Business番号ごとに適用。Essentialは認証バッジ、なりすまし保護、Instagramリンクページ（最大20件）やMeta Business Agentの拡張アクセスなどを含む。AdvancedはEssentialの機能に加え、月1件の人間サポートと投稿・リールでのクリック可能リンクをFacebookで8件、Instagramで4件利用可能にする。",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/landing-page-experience-enhancement/": {
+          "url": "https://www.jonloomer.com/qvt/landing-page-experience-enhancement/",
+          "title": "What is the Landing Page Experience Enhancement?",
+          "publishedDate": "2026-09-21",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "4aa58a1d9015c2e87532ffcf67da05612a70ab2224562cbe10a554a8efb30049",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "4aa58a1d9015c2e87532ffcf67da05612a70ab2224562cbe10a554a8efb30049",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Meta tests AI-generated visual landing pages for ads",
+                "summary": "Meta’s new test feature, Landing Page Experience, uses AI to create a visual landing page from an advertiser’s website, highlighting key services and calls to action. When enabled, users who tap an ad may see this page instead of the site. The feature can be turned off, and fewer than 5% of ad impressions use test features.",
+                "inputHash": "7b65bf9613de74a8f84257aa43bd452b3b6a4e8b208b27f7dd77bae04721fba1",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Meta tests AI-generated visual landing pages for ads",
+                    "inputHash": "7b65bf9613de74a8f84257aa43bd452b3b6a4e8b208b27f7dd77bae04721fba1",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta’s new test feature, Landing Page Experience, uses AI to create a visual landing page from an advertiser’s website, highlighting key services and calls to action. When enabled, users who tap an ad may see this page instead of the site. The feature can be turned off, and fewer than 5% of ad impressions use test features.",
+                    "inputHash": "7b65bf9613de74a8f84257aa43bd452b3b6a4e8b208b27f7dd77bae04721fba1",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Metaのテスト機能「Landing Page Experience」概要",
+                "summary": "広告設定で新AI生成機能のテストを有効にすると、Landing Page Experienceという新機能が表示される。MetaはAIでウェブサイトから視覚的なランディングページを生成し、主要サービスやCTAをハイライトして、広告タップ時にウェブサイトの代わりに表示する。テスト機能は個別または全体でオフにでき、広告インプレッションの5％未満で使用される。",
+                "inputHash": "925d4e8a8a66bf1fd30d1ef8b3b1810b1d69b79b1788a53ea21e28016971e1f8",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Metaのテスト機能「Landing Page Experience」概要",
+                    "inputHash": "925d4e8a8a66bf1fd30d1ef8b3b1810b1d69b79b1788a53ea21e28016971e1f8",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "広告設定で新AI生成機能のテストを有効にすると、Landing Page Experienceという新機能が表示される。MetaはAIでウェブサイトから視覚的なランディングページを生成し、主要サービスやCTAをハイライトして、広告タップ時にウェブサイトの代わりに表示する。テスト機能は個別または全体でオフにでき、広告インプレッションの5％未満で使用される。",
+                    "inputHash": "925d4e8a8a66bf1fd30d1ef8b3b1810b1d69b79b1788a53ea21e28016971e1f8",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/text-customization-chatgpt-ads-ai-enhancement/": {
+          "url": "https://www.jonloomer.com/qvt/text-customization-chatgpt-ads-ai-enhancement/",
+          "title": "Text Customization ChatGPT Ads AI Enhancement",
+          "publishedDate": "2026-09-14",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "7b84af3e65c26a3c2facace38301e1a3b57887ef09a34e1cfa0008852dcd1f8c",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "7b84af3e65c26a3c2facace38301e1a3b57887ef09a34e1cfa0008852dcd1f8c",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "ChatGPT Ads Add “Text Customization” Toggle",
+                "summary": "A new “Text Customization” toggle appears in ChatGPT ads campaigns. It is on by default and states that AI automatically generates personalized and translated versions of ad headlines and descriptions, which may be shown without the advertiser’s review or approval. No preview details are provided, and the feature can be turned off for each campaign.",
+                "inputHash": "3e49854b06496af94d682864398e351b2772ff47bcaddb8de6b7b4366be446fc",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "ChatGPT Ads Add “Text Customization” Toggle",
+                    "inputHash": "3e49854b06496af94d682864398e351b2772ff47bcaddb8de6b7b4366be446fc",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "A new “Text Customization” toggle appears in ChatGPT ads campaigns. It is on by default and states that AI automatically generates personalized and translated versions of ad headlines and descriptions, which may be shown without the advertiser’s review or approval. No preview details are provided, and the feature can be turned off for each campaign.",
+                    "inputHash": "3e49854b06496af94d682864398e351b2772ff47bcaddb8de6b7b4366be446fc",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "ChatGPT広告でテキストカスタマイズがデフォルトON、AIが自動で見出し・説明文を生成",
+                "summary": "ChatGPT広告のベータ版で「テキストカスタマイズ」トグルが導入され、デフォルトでオンになっています。この機能は、AIが広告の見出しや説明文を個別にパーソナライズし、翻訳版も自動生成します。生成された文は事前に確認や承認を受けずに表示される可能性があります。詳細やプレビューは提供されておらず、仕組みは不明です。必要に応じて各キャンペーンごとにオフにすることができます。",
+                "inputHash": "e79518b48b1eb84e2093c7c2fa523d9e6925e03b3f0bfed09762b013e5ab7d03",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "ChatGPT広告でテキストカスタマイズがデフォルトON、AIが自動で見出し・説明文を生成",
+                    "inputHash": "e79518b48b1eb84e2093c7c2fa523d9e6925e03b3f0bfed09762b013e5ab7d03",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "ChatGPT広告のベータ版で「テキストカスタマイズ」トグルが導入され、デフォルトでオンになっています。この機能は、AIが広告の見出しや説明文を個別にパーソナライズし、翻訳版も自動生成します。生成された文は事前に確認や承認を受けずに表示される可能性があります。詳細やプレビューは提供されておらず、仕組みは不明です。必要に応じて各キャンペーンごとにオフにすることができます。",
+                    "inputHash": "e79518b48b1eb84e2093c7c2fa523d9e6925e03b3f0bfed09762b013e5ab7d03",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/turn-off-new-creative-workflow-multimedia-experience/": {
+          "url": "https://www.jonloomer.com/qvt/turn-off-new-creative-workflow-multimedia-experience/",
+          "title": "Turn Off New Creative Workflow (Multimedia Experience)",
+          "publishedDate": "2026-09-07",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "7e118c18c9a7eafed3392219c9c930ab728955ad17119f4b83752bb90596e63a",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "7e118c18c9a7eafed3392219c9c930ab728955ad17119f4b83752bb90596e63a",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Meta's Multimedia Experience: optional multi‑media workflow with bugs",
+                "summary": "Meta rolled out a new creative workflow called Multimedia Experience in April, allowing up to ten images or videos per ad. Some advertisers report bugs in creation and reporting. The interface includes a tooltip that lets users switch back to the original single-media experience.",
+                "inputHash": "fe185186413ffd1a084beb810c5e3c554d685d3723da5979aeca261687d77c2f",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Meta's Multimedia Experience: optional multi‑media workflow with bugs",
+                    "inputHash": "fe185186413ffd1a084beb810c5e3c554d685d3723da5979aeca261687d77c2f",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta rolled out a new creative workflow called Multimedia Experience in April, allowing up to ten images or videos per ad. Some advertisers report bugs in creation and reporting. The interface includes a tooltip that lets users switch back to the original single-media experience.",
+                    "inputHash": "fe185186413ffd1a084beb810c5e3c554d685d3723da5979aeca261687d77c2f",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Metaのマルチメディア体験をオフにする方法",
+                "summary": "Metaは4月に新しいクリエイティブワークフロー（マルチメディア体験）を導入し、1つの広告で最大10枚の画像や動画を設定できるようにしました。しかし、多くの広告主がバグに悩んでおり、広告作成やメディア別レポートで問題が報告されています。広告作成画面でメディアツールチップにマウスを合わせ、表示される「元の単一メディア体験に戻す」リンクをクリックすれば、従来の単一メディア方式に切り替えられ、後で再度マルチメディアに戻すことも可能です。この切替オプションは、マルチメディア体験が正式にリリースされるまで利用できるとされています。",
+                "inputHash": "f83f19c1ff460c45a1b1e7871134b58b4bd8011c8db8abae0698ce38c97523d0",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Metaのマルチメディア体験をオフにする方法",
+                    "inputHash": "f83f19c1ff460c45a1b1e7871134b58b4bd8011c8db8abae0698ce38c97523d0",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Metaは4月に新しいクリエイティブワークフロー（マルチメディア体験）を導入し、1つの広告で最大10枚の画像や動画を設定できるようにしました。しかし、多くの広告主がバグに悩んでおり、広告作成やメディア別レポートで問題が報告されています。広告作成画面でメディアツールチップにマウスを合わせ、表示される「元の単一メディア体験に戻す」リンクをクリックすれば、従来の単一メディア方式に切り替えられ、後で再度マルチメディアに戻すことも可能です。この切替オプションは、マルチメディア体験が正式にリリースされるまで利用できるとされています。",
+                    "inputHash": "f83f19c1ff460c45a1b1e7871134b58b4bd8011c8db8abae0698ce38c97523d0",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/existing-customer-exclusions/": {
+          "url": "https://www.jonloomer.com/qvt/existing-customer-exclusions/",
+          "title": "Check Your Existing Customer Exclusions",
+          "publishedDate": "2026-08-31",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "36c97d1dd653bebefad321d32289082419452d7186bd74a6ac68a8b102dd120b",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "36c97d1dd653bebefad321d32289082419452d7186bd74a6ac68a8b102dd120b",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Check Your Existing Customer Exclusions",
+                "summary": "Meta’s Customer Lifecycle Strategy automatically adds custom audiences to the exclusion list when acquiring new customers, but the selections are often inaccurate and incomplete, requiring manual review. Engaged audiences are not auto‑excluded.",
+                "inputHash": "5ec7b60cd55ca60e3d01123ac0835e7a0d27f6e20c94893e7db7ade7e3524f20",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Check Your Existing Customer Exclusions",
+                    "inputHash": "5ec7b60cd55ca60e3d01123ac0835e7a0d27f6e20c94893e7db7ade7e3524f20",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta’s Customer Lifecycle Strategy automatically adds custom audiences to the exclusion list when acquiring new customers, but the selections are often inaccurate and incomplete, requiring manual review. Engaged audiences are not auto‑excluded.",
+                    "inputHash": "5ec7b60cd55ca60e3d01123ac0835e7a0d27f6e20c94893e7db7ade7e3524f20",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Metaの新規顧客取得設定で自動除外されるカスタムオーディエンスに注意",
+                "summary": "MetaのCustomer Lifecycle Strategyで「新規顧客取得」を選択すると、カスタムオーディエンスが自動的に除外リストに追加されるが、予測された除外対象は不正確で、既存顧客に合わないものも含まれる。エンゲージドオーディエンスは自動除外されず、手動で除外設定を確認・修正する必要がある。",
+                "inputHash": "7dc269fff64a93e9c3f26a36e059be106a248366659b1ab2793f873db6eeb0a5",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Metaの新規顧客取得設定で自動除外されるカスタムオーディエンスに注意",
+                    "inputHash": "7dc269fff64a93e9c3f26a36e059be106a248366659b1ab2793f873db6eeb0a5",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "MetaのCustomer Lifecycle Strategyで「新規顧客取得」を選択すると、カスタムオーディエンスが自動的に除外リストに追加されるが、予測された除外対象は不正確で、既存顧客に合わないものも含まれる。エンゲージドオーディエンスは自動除外されず、手動で除外設定を確認・修正する必要がある。",
+                    "inputHash": "7dc269fff64a93e9c3f26a36e059be106a248366659b1ab2793f873db6eeb0a5",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/15-discontinued-facebook-ads-features/": {
+          "url": "https://www.jonloomer.com/qvt/15-discontinued-facebook-ads-features/",
+          "title": "15 Discontinued Features From 15 Years of Facebook Ads",
+          "publishedDate": "2026-08-24",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "38ebfc6cb576b09e86830d6893187ff6185519cc5cb5417b7bab081fa1734ed4",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "38ebfc6cb576b09e86830d6893187ff6185519cc5cb5417b7bab081fa1734ed4",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "38ebfc6cb576b09e86830d6893187ff6185519cc5cb5417b7bab081fa1734ed4",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/15-years-of-jonloomer-com/": {
+          "url": "https://www.jonloomer.com/15-years-of-jonloomer-com/",
+          "title": "15 Years of jonloomer.com",
+          "publishedDate": "2026-08-18",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "2886a15c10e2cedd8b11691e5e8816f01d94ec18f12e7647ff2eb74323a93431",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "2886a15c10e2cedd8b11691e5e8816f01d94ec18f12e7647ff2eb74323a93431",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "2886a15c10e2cedd8b11691e5e8816f01d94ec18f12e7647ff2eb74323a93431",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/predicted-lifetime-value-pltv/": {
+          "url": "https://www.jonloomer.com/qvt/predicted-lifetime-value-pltv/",
+          "title": "What is Predicted Lifetime Value (pLTV)?",
+          "publishedDate": "2026-08-17",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "8b2898b7b555ea315fd69b251e08b5158d55c9638088a422b4f7da372707ac46",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "8b2898b7b555ea315fd69b251e08b5158d55c9638088a422b4f7da372707ac46",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "8b2898b7b555ea315fd69b251e08b5158d55c9638088a422b4f7da372707ac46",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Predicted Lifetime Value（pLTV）とは何か",
+                "summary": "pLTVは単一のコンバージョンイベントを基に顧客の将来価値を予測し、価値が高いと見込まれるユーザーへ配信を最適化する機能です。利用にはWeb Conversions APIの統合、検証済みのpLTVモデル、5種以上の正のpLTV値（最高が最低の3倍以上）、過去4週間で週100件以上のコンバージョンが必要です。Core Setupに含まれないデータセットは対象外です。対応イベントはPurchase、Subscribe、StartTrial、CompleteRegistration、AddPaymentInfo、カスタムイベントなどで、主に高価格商品やリードファネル向けに有用とされています。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Predicted Lifetime Value（pLTV）とは何か",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "pLTVは単一のコンバージョンイベントを基に顧客の将来価値を予測し、価値が高いと見込まれるユーザーへ配信を最適化する機能です。利用にはWeb Conversions APIの統合、検証済みのpLTVモデル、5種以上の正のpLTV値（最高が最低の3倍以上）、過去4週間で週100件以上のコンバージョンが必要です。Core Setupに含まれないデータセットは対象外です。対応イベントはPurchase、Subscribe、StartTrial、CompleteRegistration、AddPaymentInfo、カスタムイベントなどで、主に高価格商品やリードファネル向けに有用とされています。",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/custom-attribution/": {
+          "url": "https://www.jonloomer.com/qvt/custom-attribution/",
+          "title": "What is Custom Attribution?",
+          "publishedDate": "2026-08-10",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "2b92989d8e83f9d6a4e793958554dcf47ff39977e08bb8078a17f8ee2d7ca70f",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "2b92989d8e83f9d6a4e793958554dcf47ff39977e08bb8078a17f8ee2d7ca70f",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "f8028f2edce50d8a7d2deb19aee02548b02793cd112e3f023f5c48d449444df3",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "f8028f2edce50d8a7d2deb19aee02548b02793cd112e3f023f5c48d449444df3",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "f8028f2edce50d8a7d2deb19aee02548b02793cd112e3f023f5c48d449444df3",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Metaのカスタムアトリビューションはパートナー連携で配信最適化",
+                "summary": "広告主は属性モデル選択時に標準・インクリメンタルに加えて「カスタム」オプション",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Metaのカスタムアトリビューションはパートナー連携で配信最適化",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "広告主は属性モデル選択時に標準・インクリメンタルに加えて「カスタム」オプション",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/start-with-fewer-ads/": {
+          "url": "https://www.jonloomer.com/qvt/start-with-fewer-ads/",
+          "title": "Should You Start with Fewer Ads?",
+          "publishedDate": "2026-08-03",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "740954a5f394867bf9fe5eb3e01abe0ae085d6f24477c5c260af08363e10ac76",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "740954a5f394867bf9fe5eb3e01abe0ae085d6f24477c5c260af08363e10ac76",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "94464d75cc602ff9eb75e49e89ee76c710dc972833400ae3a283b0ec40f8f386",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "94464d75cc602ff9eb75e49e89ee76c710dc972833400ae3a283b0ec40f8f386",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "94464d75cc602ff9eb75e49e89ee76c710dc972833400ae3a283b0ec40f8f386",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "広告は少数から始め、品質を重視すべき",
+                "summary": "多くの広告を一度に作成すると、Meta が一部だけを選び他は無視され、リソースが無駄になる上に品質が低下しやすい。まずは2〜3本、あるいは1本の広告に絞り、顧客ペルソナの課題に合わせたクリエイティブを作成し、数週間結果を観測して効果を検証する。成果が出ればそのまま、出なければ角度やビジュアルを変えて新たに広告を作成する。必要に応じて段階的に広告数を増やすことで、無駄な広告作成を防ぎつつ効果的なキャンペーンが実現できる。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "広告は少数から始め、品質を重視すべき",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "多くの広告を一度に作成すると、Meta が一部だけを選び他は無視され、リソースが無駄になる上に品質が低下しやすい。まずは2〜3本、あるいは1本の広告に絞り、顧客ペルソナの課題に合わせたクリエイティブを作成し、数週間結果を観測して効果を検証する。成果が出ればそのまま、出なければ角度やビジュアルを変えて新たに広告を作成する。必要に応じて段階的に広告数を増やすことで、無駄な広告作成を防ぎつつ効果的なキャンペーンが実現できる。",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/bid-multipliers-chatgpt-ads/": {
+          "url": "https://www.jonloomer.com/qvt/bid-multipliers-chatgpt-ads/",
+          "title": "Bid Multipliers for ChatGPT Ads",
+          "publishedDate": "2026-07-27",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "71ba278f719424a43f5e5b3edf7b2b5db300c1033f3f3bea14595c68e91b4a8f",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "71ba278f719424a43f5e5b3edf7b2b5db300c1033f3f3bea14595c68e91b4a8f",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Bid Multipliers Added to ChatGPT Ads",
+                "summary": "Bid multipliers are now available for ChatGPT ads in the Advanced section under Audience Bid Adjustments. They let advertisers raise or lower bids for custom audiences, which must contain at least 25,000 people (down from 100,000). The feature is in early testing and may help guide delivery while OpenAI’s targeting algorithms are still unknown.",
+                "inputHash": "845383c232a4e2d7502e17b35947609a7b8f93c041d1423b88040fe604f9fbf3",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Bid Multipliers Added to ChatGPT Ads",
+                    "inputHash": "845383c232a4e2d7502e17b35947609a7b8f93c041d1423b88040fe604f9fbf3",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Bid multipliers are now available for ChatGPT ads in the Advanced section under Audience Bid Adjustments. They let advertisers raise or lower bids for custom audiences, which must contain at least 25,000 people (down from 100,000). The feature is in early testing and may help guide delivery while OpenAI’s targeting algorithms are still unknown.",
+                    "inputHash": "845383c232a4e2d7502e17b35947609a7b8f93c041d1423b88040fe604f9fbf3",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "ChatGPT広告に入札倍率機能が追加",
+                "summary": "ChatGPT広告のベータ版で入札倍率機能が提供され、広告グループの「高度」セクションに「オーディエンス入札調整」オプションが追加された。カスタムオーディエンスを用いて、対象ユーザーに応じて入札額を上下できる。カスタムオーディエンスは最低25,000人が必要である。",
+                "inputHash": "b58dea19ae69ed31e0b4ff17dec7b920b08ece9bc589afc0ca9a07abcf43de7b",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "ChatGPT広告に入札倍率機能が追加",
+                    "inputHash": "b58dea19ae69ed31e0b4ff17dec7b920b08ece9bc589afc0ca9a07abcf43de7b",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "ChatGPT広告のベータ版で入札倍率機能が提供され、広告グループの「高度」セクションに「オーディエンス入札調整」オプションが追加された。カスタムオーディエンスを用いて、対象ユーザーに応じて入札額を上下できる。カスタムオーディエンスは最低25,000人が必要である。",
+                    "inputHash": "b58dea19ae69ed31e0b4ff17dec7b920b08ece9bc589afc0ca9a07abcf43de7b",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/roas-goal-maximize-number-conversions/": {
+          "url": "https://www.jonloomer.com/qvt/roas-goal-maximize-number-conversions/",
+          "title": "ROAS Goal for Maximize Number of Conversions",
+          "publishedDate": "2026-07-20",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "bcd54ad6dad960c22cd207d1c9480c82c88d455d2161303c3ab0ea69ade9d260",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "bcd54ad6dad960c22cd207d1c9480c82c88d455d2161303c3ab0ea69ade9d260",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "ROAS Goal now available for maximize conversions bid strategy",
+                "summary": "Meta has added the ROAS Goal bid strategy to the performance goal that maximizes the number of conversions. Advertisers can now select ROAS Goal when using ABO, and when using CBO with a campaign bid strategy set to ROAS Goal, while still choosing to maximize conversions. Previously ROAS Goal was only available with the maximize value of conversions goal.",
+                "inputHash": "0a38fade0ec17b9480d9b212bd6e1f73e3f3db7cf247af038c4f2ced606b986c",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "ROAS Goal now available for maximize conversions bid strategy",
+                    "inputHash": "0a38fade0ec17b9480d9b212bd6e1f73e3f3db7cf247af038c4f2ced606b986c",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta has added the ROAS Goal bid strategy to the performance goal that maximizes the number of conversions. Advertisers can now select ROAS Goal when using ABO, and when using CBO with a campaign bid strategy set to ROAS Goal, while still choosing to maximize conversions. Previously ROAS Goal was only available with the maximize value of conversions goal.",
+                    "inputHash": "0a38fade0ec17b9480d9b212bd6e1f73e3f3db7cf247af038c4f2ced606b986c",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "9a5321816224768387f18d3fb4b334bd504e92e79e90ecfd814283ee4bb84e46",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "9a5321816224768387f18d3fb4b334bd504e92e79e90ecfd814283ee4bb84e46",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "9a5321816224768387f18d3fb4b334bd504e92e79e90ecfd814283ee4bb84e46",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/when-is-a-campaign-worth-scaling/": {
+          "url": "https://www.jonloomer.com/qvt/when-is-a-campaign-worth-scaling/",
+          "title": "When is a Campaign Worth Scaling?",
+          "publishedDate": "2026-07-13",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "ed38006cc4837fe23ac660bf174e18b9a2bd7f250705e0a27997c323cc136b53",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "ed38006cc4837fe23ac660bf174e18b9a2bd7f250705e0a27997c323cc136b53",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Identify Campaigns Worth Scaling",
+                "summary": "Scale only campaigns that show strong 1‑day click conversions and solid performance from new audience segments. Exclude view‑through, engage‑through, 7‑day click and remarketing results. Define audiences clearly (e.g., 180‑day visitors, 730‑day purchasers). If prospecting metrics are good, budget can be increased, though costs may rise slightly.",
+                "inputHash": "a7905b7a3e71a28c11c64120d1a6e59b53033f95f5e7853867f9365279b109fd",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Identify Campaigns Worth Scaling",
+                    "inputHash": "a7905b7a3e71a28c11c64120d1a6e59b53033f95f5e7853867f9365279b109fd",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Scale only campaigns that show strong 1‑day click conversions and solid performance from new audience segments. Exclude view‑through, engage‑through, 7‑day click and remarketing results. Define audiences clearly (e.g., 180‑day visitors, 730‑day purchasers). If prospecting metrics are good, budget can be increased, though costs may rise slightly.",
+                    "inputHash": "a7905b7a3e71a28c11c64120d1a6e59b53033f95f5e7853867f9365279b109fd",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "fd78ae120a3e6cf368468ac0930620a8086af183424f4490418e28482cc29571",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "fd78ae120a3e6cf368468ac0930620a8086af183424f4490418e28482cc29571",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "fd78ae120a3e6cf368468ac0930620a8086af183424f4490418e28482cc29571",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/chatgpt-conversion-campaigns/": {
+          "url": "https://www.jonloomer.com/qvt/chatgpt-conversion-campaigns/",
+          "title": "ChatGPT Conversion Campaigns",
+          "publishedDate": "2026-07-06",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "drop",
+          "publicationEvidence": [
+            "jev:unrelated"
+          ],
+          "fingerprint": "8d1d52727a5ae35c48f40a200de5b33f0ffd37a05d60b4b7c39ca83704aa8564",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "8d1d52727a5ae35c48f40a200de5b33f0ffd37a05d60b4b7c39ca83704aa8564",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "21e70bdb3419d84aec450aef951e51dd99b48e888a81271e9d6989ae56326334",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "21e70bdb3419d84aec450aef951e51dd99b48e888a81271e9d6989ae56326334",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "21e70bdb3419d84aec450aef951e51dd99b48e888a81271e9d6989ae56326334",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/i-need-a-specific-audience/": {
+          "url": "https://www.jonloomer.com/qvt/i-need-a-specific-audience/",
+          "title": "“I Need a Specific Audience”",
+          "publishedDate": "2026-06-28",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "4e803170dfe0d9450cc16523a987e6f132b598c600b1621a69d956243129a651",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "4e803170dfe0d9450cc16523a987e6f132b598c600b1621a69d956243129a651",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "8a28eefac21a5daa3ed7dec8ac37790aa3b2a27a735d4bd8d43d7ff53488bdc8",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "8a28eefac21a5daa3ed7dec8ac37790aa3b2a27a735d4bd8d43d7ff53488bdc8",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "8a28eefac21a5daa3ed7dec8ac37790aa3b2a27a735d4bd8d43d7ff53488bdc8",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Metaが広告設定のラベルを「I need a specific audience」に変更",
+                "summary": "Metaは広告セットのオーディエンス項目のボタンラベルを「Further limit the reach of your ads.」から「I need a specific audience.」に変更したが、機能的な違いはなく、詳細ターゲティングや類似オーディエンスは従来通り提案として扱われる。ラベル変更は今後の機能拡張やこの項目の利用抑制を示唆する可能性があるが、年齢・性別やカスタムオーディエンスの配信調整は既存の価値ルールで対応できる。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Metaが広告設定のラベルを「I need a specific audience」に変更",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Metaは広告セットのオーディエンス項目のボタンラベルを「Further limit the reach of your ads.」から「I need a specific audience.」に変更したが、機能的な違いはなく、詳細ターゲティングや類似オーディエンスは従来通り提案として扱われる。ラベル変更は今後の機能拡張やこの項目の利用抑制を示唆する可能性があるが、年齢・性別やカスタムオーディエンスの配信調整は既存の価値ルールで対応できる。",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/meta-restricted-my-account/": {
+          "url": "https://www.jonloomer.com/qvt/meta-restricted-my-account/",
+          "title": "Meta Restricted My Account for Sharing a Link to Meta’s Documentation",
+          "publishedDate": "2026-06-21",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "1841e5a6c23dbb8dadcd208300abd7d77a90779b41a99f0c292c579a460cf150",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "1841e5a6c23dbb8dadcd208300abd7d77a90779b41a99f0c292c579a460cf150",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "9989ca1102e64ef203b32cbd46abbc87559f6c24e9a4ba75257c61e39b014e9d",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "9989ca1102e64ef203b32cbd46abbc87559f6c24e9a4ba75257c61e39b014e9d",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "9989ca1102e64ef203b32cbd46abbc87559f6c24e9a4ba75257c61e39b014e9d",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "リンク共有でアカウントが制限され本人確認が失敗",
+                "summary": "ユーザーはプライベートFacebookグループでMetaの新機能のスクリーンショットと公式ドキュメントへのリンクを共有したところ、Metaから不審な活動とみなされ本人確認を求められた。運転免許証で確認を行ったが失敗し、グループへの参加や投稿・コメントが制限された。現在も解除手段がなく、同様の問題が報告されている。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "リンク共有でアカウントが制限され本人確認が失敗",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "ユーザーはプライベートFacebookグループでMetaの新機能のスクリーンショットと公式ドキュメントへのリンクを共有したところ、Metaから不審な活動とみなされ本人確認を求められた。運転免許証で確認を行ったが失敗し、グループへの参加や投稿・コメントが制限された。現在も解除手段がなく、同様の問題が報告されている。",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/age-gender-placement-restrictions/": {
+          "url": "https://www.jonloomer.com/qvt/age-gender-placement-restrictions/",
+          "title": "Age, Gender, and Placement Restrictions",
+          "publishedDate": "2026-06-14",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "4765d055b9b7c5886994d3a6ed2e50aa01eb3f8c1001a5c7edf377d55f906c75",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "4765d055b9b7c5886994d3a6ed2e50aa01eb3f8c1001a5c7edf377d55f906c75",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "36823b1a8156562d52c55f5c4230bc63e792c2e51c58457861949219bfec9882",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "36823b1a8156562d52c55f5c4230bc63e792c2e51c58457861949219bfec9882",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "36823b1a8156562d52c55f5c4230bc63e792c2e51c58457861949219bfec9882",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/audience-segments-failures/": {
+          "url": "https://www.jonloomer.com/qvt/audience-segments-failures/",
+          "title": "Common Audience Segments Failures",
+          "publishedDate": "2026-06-07",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "5695ecb547e935ecda99879bd723c583c879fef875a9d9cf6ef6bf1634313871",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "5695ecb547e935ecda99879bd723c583c879fef875a9d9cf6ef6bf1634313871",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "ab5b453c6d4a0163c98d64a05becbef736328fb1862bec608b43fab984fc1bf2",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "ab5b453c6d4a0163c98d64a05becbef736328fb1862bec608b43fab984fc1bf2",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "ab5b453c6d4a0163c98d64a05becbef736328fb1862bec608b43fab984fc1bf2",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/website-and-instant-forms-confusion/": {
+          "url": "https://www.jonloomer.com/qvt/website-and-instant-forms-confusion/",
+          "title": "Website and Instant Forms Confusion",
+          "publishedDate": "2026-05-31",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "f35b86ceb1facb612ff803b02e81a1641e7e48d13deec393e2a44fbb82cec060",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "f35b86ceb1facb612ff803b02e81a1641e7e48d13deec393e2a44fbb82cec060",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "b852ece32148a3f26d90b3cc14956984815a56da85c06a11dfc8ae644006c738",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "b852ece32148a3f26d90b3cc14956984815a56da85c06a11dfc8ae644006c738",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "b852ece32148a3f26d90b3cc14956984815a56da85c06a11dfc8ae644006c738",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Metaリードキャンペーンで「WebsiteとInstant Forms」がデフォルト、単一選択は隠しオプション",
+                "summary": "Metaはリード目的のキャンペーンで、デフォルトのコンバージョン先を「Website と Instant Forms」に変更した。広告作成時にウェブURLとインスタントフォームの両方を求められ、単一の場所だけを使用したい広告主は混乱した。ドロップダウンには「Website と Calls」や「Website と Messenger」もあるが、下部にある「Single」オプションを展開すると、Instant Forms または Website のみを選択できる。Metaはアルゴリズムに両方を選ばせるためにこの設定を目立たないようにしている。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Metaリードキャンペーンで「WebsiteとInstant Forms」がデフォルト、単一選択は隠しオプション",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Metaはリード目的のキャンペーンで、デフォルトのコンバージョン先を「Website と Instant Forms」に変更した。広告作成時にウェブURLとインスタントフォームの両方を求められ、単一の場所だけを使用したい広告主は混乱した。ドロップダウンには「Website と Calls」や「Website と Messenger」もあるが、下部にある「Single」オプションを展開すると、Instant Forms または Website のみを選択できる。Metaはアルゴリズムに両方を選ばせるためにこの設定を目立たないようにしている。",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.jonloomer.com/qvt/quality-traffic-percentage/": {
+          "url": "https://www.jonloomer.com/qvt/quality-traffic-percentage/",
+          "title": "How to Track Quality Traffic Percentage",
+          "publishedDate": "2026-05-24",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "f2c1c8efecb357013bb002fc2359ce41c1fbd7d1d2a434f58878f0b6e220db07",
+          "firstObservedAt": "2026-09-23T10:27:45Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "f2c1c8efecb357013bb002fc2359ce41c1fbd7d1d2a434f58878f0b6e220db07",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "25751943289e94e12a3def2e6550611177332e0ca32917effd29aecd7055ad42",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "25751943289e94e12a3def2e6550611177332e0ca32917effd29aecd7055ad42",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "25751943289e94e12a3def2e6550611177332e0ca32917effd29aecd7055ad42",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "品質トラフィック率の測定方法と活用例",
+                "summary": "広告が送るトラフィックの質を測る指標として、ページ滞在時間が15秒以上の訪問をカウントするカスタムメトリック「品質トラフィック率」を作成できる。GTMのタイマートリガーでイベントを設定し、1日クリック＋初回コンバージョンの属性設定で割合を算出する。割合自体は単体では意味が薄いが、キャンペーンや広告セット間で比較すれば、低品質トラフィックが原因で成果が出ない広告を特定できる。実測では、購入やリード最適化時の品質トラフィック率は同程度だったが、ページビュー最適化時は約7倍低かった。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "品質トラフィック率の測定方法と活用例",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "広告が送るトラフィックの質を測る指標として、ページ滞在時間が15秒以上の訪問をカウントするカスタムメトリック「品質トラフィック率」を作成できる。GTMのタイマートリガーでイベントを設定し、1日クリック＋初回コンバージョンの属性設定で割合を算出する。割合自体は単体では意味が薄いが、キャンペーンや広告セット間で比較すれば、低品質トラフィックが原因で成果が出ない広告を特定できる。実測では、購入やリード最適化時の品質トラフィック率は同程度だったが、ページビュー最適化時は約7倍低かった。",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -4656,7 +6822,7 @@
           ],
           "fingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
@@ -4727,7 +6893,7 @@
           ],
           "fingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
@@ -4798,7 +6964,7 @@
           ],
           "fingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-22T05:01:36Z",
+          "lastObservedAt": "2026-09-23T10:27:45Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
@@ -4934,26 +7100,50 @@
     "entries": [
       {
         "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/15-years-of-jonloomer-com/",
+        "fingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/15-years-of-jonloomer-com/",
+        "fingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
         "itemKey": "https://www.jonloomer.com/ai-disclosure-checkbox-chatgpt-attribution/",
         "fingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
         "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-22T05:01:36Z",
-        "nextRetryAt": "2026-09-22T13:01:36Z",
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": null,
         "lastFailureCode": "summary_invalid",
         "lastProviderErrorCode": null,
-        "quarantined": false
+        "quarantined": true
       },
       {
         "sourceId": "jon-loomer-meta-ads",
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-automated-bidding-placements-url-parameters/",
         "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-22T05:01:36Z",
-        "nextRetryAt": "2026-09-22T07:01:36Z",
-        "lastFailureCode": "summary_invalid",
-        "lastProviderErrorCode": null,
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T14:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
       },
       {
@@ -4961,9 +7151,9 @@
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-initial-impressions/",
         "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-22T05:01:36Z",
-        "nextRetryAt": "2026-09-22T07:01:36Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T14:27:45Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -4973,9 +7163,9 @@
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-initial-impressions/",
         "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
         "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-22T05:01:36Z",
-        "nextRetryAt": "2026-09-22T07:01:36Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T14:27:45Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -4985,9 +7175,9 @@
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-limitations-ai-instant-forms/",
         "fingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-22T05:01:36Z",
-        "nextRetryAt": "2026-09-22T07:01:36Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T14:27:45Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -4997,12 +7187,12 @@
         "itemKey": "https://www.jonloomer.com/hands-on-push-delivery-to-this-ad/",
         "fingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
         "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-22T05:01:36Z",
-        "nextRetryAt": "2026-09-22T13:01:36Z",
-        "lastFailureCode": "summary_invalid",
-        "lastProviderErrorCode": null,
-        "quarantined": false
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": null,
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": true
       },
       {
         "sourceId": "jon-loomer-meta-ads",
@@ -5081,11 +7271,23 @@
         "itemKey": "https://www.jonloomer.com/meta-ads-grouping-reports-chatgpt-conversions/",
         "fingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
         "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-22T05:01:36Z",
-        "nextRetryAt": "2026-09-22T13:01:36Z",
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": null,
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": true
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/meta-one-business-plans/",
+        "fingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
         "quarantined": false
       },
       {
@@ -5117,9 +7319,189 @@
         "itemKey": "https://www.jonloomer.com/push-delivery-tests-chatgpt-ads-updates/",
         "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-22T05:01:36Z",
-        "nextRetryAt": "2026-09-22T07:01:36Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T14:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/qvt/15-discontinued-facebook-ads-features/",
+        "fingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "summary_invalid",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/qvt/15-discontinued-facebook-ads-features/",
+        "fingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/qvt/age-gender-placement-restrictions/",
+        "fingerprint": "4765d055b9b7c5886994d3a6ed2e50aa01eb3f8c1001a5c7edf377d55f906c75",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/qvt/age-gender-placement-restrictions/",
+        "fingerprint": "4765d055b9b7c5886994d3a6ed2e50aa01eb3f8c1001a5c7edf377d55f906c75",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/qvt/audience-segments-failures/",
+        "fingerprint": "5695ecb547e935ecda99879bd723c583c879fef875a9d9cf6ef6bf1634313871",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/qvt/audience-segments-failures/",
+        "fingerprint": "5695ecb547e935ecda99879bd723c583c879fef875a9d9cf6ef6bf1634313871",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/qvt/custom-attribution/",
+        "fingerprint": "2b92989d8e83f9d6a4e793958554dcf47ff39977e08bb8078a17f8ee2d7ca70f",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/qvt/i-need-a-specific-audience/",
+        "fingerprint": "4e803170dfe0d9450cc16523a987e6f132b598c600b1621a69d956243129a651",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "summary_invalid",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/qvt/meta-restricted-my-account/",
+        "fingerprint": "1841e5a6c23dbb8dadcd208300abd7d77a90779b41a99f0c292c579a460cf150",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/qvt/predicted-lifetime-value-pltv/",
+        "fingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/qvt/quality-traffic-percentage/",
+        "fingerprint": "f2c1c8efecb357013bb002fc2359ce41c1fbd7d1d2a434f58878f0b6e220db07",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "summary_invalid",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/qvt/roas-goal-maximize-number-conversions/",
+        "fingerprint": "bcd54ad6dad960c22cd207d1c9480c82c88d455d2161303c3ab0ea69ade9d260",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/qvt/start-with-fewer-ads/",
+        "fingerprint": "740954a5f394867bf9fe5eb3e01abe0ae085d6f24477c5c260af08363e10ac76",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "summary_invalid",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/qvt/website-and-instant-forms-confusion/",
+        "fingerprint": "f35b86ceb1facb612ff803b02e81a1641e7e48d13deec393e2a44fbb82cec060",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/qvt/when-is-a-campaign-worth-scaling/",
+        "fingerprint": "ed38006cc4837fe23ac660bf174e18b9a2bd7f250705e0a27997c323cc136b53",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -5129,12 +7511,12 @@
         "itemKey": "v25.0.0",
         "fingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
         "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-22T05:01:36Z",
-        "nextRetryAt": "2026-09-22T13:01:36Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": null,
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
+        "quarantined": true
       },
       {
         "sourceId": "meta-business-sdk-releases",
@@ -5165,12 +7547,12 @@
         "itemKey": "https://about.fb.com/news/2026/07/connecting-real-people-on-facebook/",
         "fingerprint": "933196690767de83451e164a7225a992dba2d0360859caeb4cb74b831a72b55a",
         "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-22T05:01:36Z",
-        "nextRetryAt": "2026-09-22T13:01:36Z",
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": null,
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
+        "quarantined": true
       },
       {
         "sourceId": "meta-product-news-rss",
@@ -5189,22 +7571,34 @@
         "itemKey": "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/",
         "fingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
         "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-22T05:01:36Z",
-        "nextRetryAt": "2026-09-22T13:01:36Z",
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": null,
         "lastFailureCode": "response_invalid_shape",
         "lastProviderErrorCode": null,
-        "quarantined": false
+        "quarantined": true
       },
       {
         "sourceId": "meta-product-news-rss",
         "itemKey": "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/",
         "fingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
         "locale": "ja",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-22T05:01:36Z",
-        "nextRetryAt": "2026-09-22T13:01:36Z",
-        "lastFailureCode": "response_invalid_shape",
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": null,
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": true
+      },
+      {
+        "sourceId": "social-media-today-meta-ads",
+        "itemKey": "https://www.socialmediatoday.com/news/facebook-pages-get-charged-for-link-posts/830743/",
+        "fingerprint": "a0f66a34b7150065230b3f172aaf6ff33d3271a7625781fbec17b9badca51efe",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "summary_invalid",
         "lastProviderErrorCode": null,
         "quarantined": false
       },
@@ -5213,9 +7607,33 @@
         "itemKey": "https://www.socialmediatoday.com/news/how-will-metas-settlement-impact-social-media/829033/",
         "fingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-22T05:01:36Z",
-        "nextRetryAt": "2026-09-22T07:01:36Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T14:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "social-media-today-meta-ads",
+        "itemKey": "https://www.socialmediatoday.com/news/instagram-growth-continues-to-outpace-facebook-in-eu/829134/",
+        "fingerprint": "2065f116ecd6d8ec5fd93cf1775c9164b3390a46e23ce1e1f6dfe7297ab78042",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
+        "sourceId": "social-media-today-meta-ads",
+        "itemKey": "https://www.socialmediatoday.com/news/instagram-growth-continues-to-outpace-facebook-in-eu/829134/",
+        "fingerprint": "2065f116ecd6d8ec5fd93cf1775c9164b3390a46e23ce1e1f6dfe7297ab78042",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
         "lastFailureCode": "response_invalid_shape",
         "lastProviderErrorCode": null,
         "quarantined": false
@@ -5234,14 +7652,122 @@
       },
       {
         "sourceId": "social-media-today-meta-ads",
-        "itemKey": "https://www.socialmediatoday.com/news/meta-settles-landmark-lawsuit-for-18b/828900/",
-        "fingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
+        "itemKey": "https://www.socialmediatoday.com/news/meta-highlights-rising-brand-opportunities-in-womens-sports/828348/",
+        "fingerprint": "c40906d09211e86d39ab33460b54614334f5d56c28cb7d8c403bcd7456f8c6f3",
         "locale": "en",
         "failureCount": 1,
-        "lastFailureAt": "2026-09-22T05:01:36Z",
-        "nextRetryAt": "2026-09-22T06:01:36Z",
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "social-media-today-meta-ads",
+        "itemKey": "https://www.socialmediatoday.com/news/meta-highlights-rising-brand-opportunities-in-womens-sports/828348/",
+        "fingerprint": "c40906d09211e86d39ab33460b54614334f5d56c28cb7d8c403bcd7456f8c6f3",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
         "lastFailureCode": "response_invalid_shape",
         "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
+        "sourceId": "social-media-today-meta-ads",
+        "itemKey": "https://www.socialmediatoday.com/news/meta-launches-meta-one-for-business-add-on-packages/830469/",
+        "fingerprint": "7a3735fa2125245b701f0403e70d5be9f38bfb2c05a2f55eb26f365c64100363",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "summary_invalid",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
+        "sourceId": "social-media-today-meta-ads",
+        "itemKey": "https://www.socialmediatoday.com/news/meta-launches-meta-one-for-business-add-on-packages/830469/",
+        "fingerprint": "7a3735fa2125245b701f0403e70d5be9f38bfb2c05a2f55eb26f365c64100363",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
+        "sourceId": "social-media-today-meta-ads",
+        "itemKey": "https://www.socialmediatoday.com/news/new-zealand-introduces-teen-social-media-restrictions/828662/",
+        "fingerprint": "8747337b0552909dab732fabc4a01657cfc6f50fdfbabaf7503970d3d9622764",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "social-media-today-meta-ads",
+        "itemKey": "https://www.socialmediatoday.com/news/new-zealand-introduces-teen-social-media-restrictions/828662/",
+        "fingerprint": "8747337b0552909dab732fabc4a01657cfc6f50fdfbabaf7503970d3d9622764",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "social-media-today-meta-ads",
+        "itemKey": "https://www.socialmediatoday.com/news/will-meta-be-found-guilty-of-driving-social-media-addiction/828553/",
+        "fingerprint": "f207af774f37350e35a2b8c49ca9b17ea6c1fd470f4202f794a9429e8bbcd1fd",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "social-media-today-meta-ads",
+        "itemKey": "https://www.socialmediatoday.com/news/will-meta-be-found-guilty-of-driving-social-media-addiction/828553/",
+        "fingerprint": "f207af774f37350e35a2b8c49ca9b17ea6c1fd470f4202f794a9429e8bbcd1fd",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "social-media-today-meta-ads",
+        "itemKey": "https://www.socialmediatoday.com/news/will-removing-algorithmic-sorting-improve-social-media/829868/",
+        "fingerprint": "7710575499092c0ebde4bc14eb5f367ef0d75afa7befefcebbf176f614c5fda9",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": false
+      },
+      {
+        "sourceId": "social-media-today-meta-ads",
+        "itemKey": "https://www.socialmediatoday.com/news/will-removing-algorithmic-sorting-improve-social-media/829868/",
+        "fingerprint": "7710575499092c0ebde4bc14eb5f367ef0d75afa7befefcebbf176f614c5fda9",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-23T10:27:45Z",
+        "nextRetryAt": "2026-09-23T11:27:45Z",
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
       }
     ]
