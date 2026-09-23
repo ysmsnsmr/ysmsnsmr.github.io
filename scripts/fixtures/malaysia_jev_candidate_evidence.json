@@ -127,6 +127,136 @@
       }
     }
   ],
+  "translation_meaning_cases": [
+    {
+      "case_id": "telecom_outage_is_not_power_outage",
+      "artifact_reference": {
+        "workflow_run_id": 35849399281,
+        "generation_kind": "primary"
+      },
+      "article": {
+        "source": "Malay Mail",
+        "title": "Kelantan telecoms at risk of major outages as cable vandalism and theft soar, says says regional MCMC official",
+        "link": "https://www.malaymail.com/news/malaysia/2026/09/23/kelantan-telecoms-at-risk-of-major-outages-as-cable-vandalism-and-theft-soar-says-says-regional-mcmc-official/236236",
+        "source_evidence": "Vandalism and theft of telecommunications infrastructure in Kelantan could disrupt communication coverage and the daily activities of communities that depend on telecommunications services."
+      },
+      "observed_output": {
+        "headline_ja": "ケランタンで通信ケーブル破壊・盗難急増、重大な停電リスクが懸念される―MCMC上級官が警告",
+        "entry_ja": "通信サービスが大規模に停止する可能性があると警告した。"
+      },
+      "expected_meaning": {
+        "topic": "telecommunications service disruption",
+        "affected_system": "telecommunications networks and communication services",
+        "direction": "service disruption risk increases if shared critical infrastructure is damaged",
+        "certainty": "risk or possibility, not a confirmed outage",
+        "must_not_imply": ["electrical power outage", "outage already occurred"],
+        "preferred_japanese_terms": ["通信障害", "通信サービスの停止"]
+      },
+      "review_status": "human_confirmed_translation_error"
+    },
+    {
+      "case_id": "haze_is_not_fog",
+      "artifact_reference": {
+        "workflow_run_id": 35849399281,
+        "generation_kind": "primary"
+      },
+      "article": {
+        "source": "Malay Mail",
+        "title": "Haze eases in Lubok Antu, but Kanowit air remains ‘very unhealthy’ at midday",
+        "link": "https://www.malaymail.com/news/malaysia/2026/09/23/haze-eases-in-lubok-antu-but-kanowit-air-remains-very-unhealthy-at-midday/236221",
+        "source_evidence": "Lubok Antu's API dropped from 205 at 8am to 195 at noon, while Kanowit's API was 208, down from 244, and remained in the very unhealthy category."
+      },
+      "observed_output": {
+        "headline_ja": "ルボク・アンツの濃霧は昼前に改善、カノウィットは依然『非常に不健康』",
+        "entry_ja": "ルボク・アンツは午前8時のAPI205から正午には195に低下し、昼前に『非常に不健康』カテゴリーから外れました。"
+      },
+      "expected_meaning": {
+        "topic": "smoke haze and air pollution index readings",
+        "locations": {
+          "Lubok Antu": "improved from very unhealthy to unhealthy by noon",
+          "Kanowit": "remained very unhealthy at noon"
+        },
+        "must_not_imply": ["fog", "mist"],
+        "preferred_japanese_terms": ["ヘイズ", "煙霧"]
+      },
+      "review_status": "human_confirmed_translation_error"
+    },
+    {
+      "case_id": "uxo_mortar_is_not_mortar_belt",
+      "artifact_reference": {
+        "workflow_run_id": 35849399281,
+        "generation_kind": "primary"
+      },
+      "article": {
+        "source": "Astro Awani",
+        "title": "Pekerja landskap temukan bom lama di Kuala Nerang",
+        "link": "https://www.astroawani.com/berita-malaysia/pekerja-landskap-temukan-bom-lama-di-kuala-nerang",
+        "source_evidence": "An approximately 60 millimetre unexploded ordnance mortar was found by a landscape worker during maintenance work in Kuala Nerang."
+      },
+      "observed_output": {
+        "headline_ja": "クアラ・ネルアンで景観作業員が旧式未爆弾を発見",
+        "entry_ja": "景観作業員がクアラ・ネルアンで、約60ミリ径の旧式未爆弾（UXO）モーターベルト弾をメンテナンス作業中に発見しました。"
+      },
+      "expected_meaning": {
+        "object": "unexploded mortar shell",
+        "approximate_diameter_mm": 60,
+        "finder": "landscape worker",
+        "context": "found during maintenance work in Kuala Nerang",
+        "preferred_japanese_terms": ["迫撃砲弾", "不発弾"]
+      },
+      "review_status": "human_confirmed_translation_error"
+    }
+  ],
+  "cross_source_event_cases": [
+    {
+      "case_id": "same_tiger_attack_reported_by_two_sources",
+      "artifact_reference": {
+        "workflow_run_id": 35849399281,
+        "jev_routing_status": "selected_both"
+      },
+      "shared_event": {
+        "event_date": "2026-09-21",
+        "event_type": "fatal suspected tiger attack",
+        "victim": "Zamberi Angah, 42, an Orang Asli man",
+        "location": "Kampung Takung, Pos Perwor, Korbu Forest Reserve, Sungai Siput",
+        "shared_follow_up": "Perhilitan and Rela personnel set a tiger trap at Kampung Takung, Pos Perwor"
+      },
+      "reports": [
+        {
+          "source": "Malay Mail",
+          "title": "Perhilitan sets tiger trap in Sungai Siput village after fatal attack on Orang Asli man",
+          "link": "https://www.malaymail.com/news/malaysia/2026/09/23/perhilitan-sets-tiger-trap-in-sungai-siput-village-after-fatal-attack-on-orang-asli-man/236201",
+          "published_at": "2026-09-23T12:32:28+08:00",
+          "candidate_pool_selected": true,
+          "body_available": true
+        },
+        {
+          "source": "Astro Awani",
+          "title": "Serangan harimau: Perhilitan pasang perangkap di Pos Perwor",
+          "link": "https://www.astroawani.com/berita-malaysia/serangan-harimau-perhilitan-pasang-perangkap-di-pos-perwor",
+          "published_at": "2026-09-23T11:50:40+08:00",
+          "candidate_pool_selected": true,
+          "body_available": false
+        }
+      ],
+      "event_identity_evidence": [
+        "Both reports identify Kampung Takung and Pos Perwor.",
+        "Both reports describe the same fatal tiger attack on an Orang Asli resident and the same Perhilitan tiger-trap response.",
+        "The Malay Mail body identifies the victim as Zamberi Angah and places the attack on September 21, 2026."
+      ],
+      "expected": {
+        "event_group_count": 1,
+        "display_entry_count": 1,
+        "primary_report_link": "https://www.malaymail.com/news/malaysia/2026/09/23/perhilitan-sets-tiger-trap-in-sungai-siput-village-after-fatal-attack-on-orang-asli-man/236201",
+        "preserve_source_links": [
+          "https://www.malaymail.com/news/malaysia/2026/09/23/perhilitan-sets-tiger-trap-in-sungai-siput-village-after-fatal-attack-on-orang-asli-man/236201",
+          "https://www.astroawani.com/berita-malaysia/serangan-harimau-perhilitan-pasang-perangkap-di-pos-perwor"
+        ],
+        "reason": "same_event_reported_by_multiple_sources"
+      },
+      "review_status": "human_confirmed_same_event"
+    }
+  ],
   "comparison_contract": {
     "added_articles_are": "Jev候補には残るが、旧canonical key統合ではbaselineから消えていたURL",
     "dropped_articles_are": "URL重複、構造不備、またはJev後の編集予算で除外されたURL。話題keyだけを理由にした除外は許可しない",
