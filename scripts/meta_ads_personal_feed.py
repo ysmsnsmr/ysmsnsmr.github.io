@@ -501,7 +501,19 @@ class _MetaBusinessNewsParser(HTMLParser):
 
 
 def _canonical_official_news_url(value: str, source: dict[str, Any]) -> str | None:
-    canonical = _canonical_url(value)
+    parsed_input = urlsplit(value)
+    # `_sp` is a known Meta link decoration.  It is stripped only for this
+    # official-link discovery path; article identity URLs keep the existing
+    # conservative query handling.
+    input_pairs = [
+        (key, item)
+        for key, item in parse_qsl(parsed_input.query, keep_blank_values=True)
+        if key.casefold() != "_sp"
+    ]
+    discovery_input = urlunsplit(
+        (parsed_input.scheme, parsed_input.netloc, parsed_input.path, urlencode(input_pairs), parsed_input.fragment)
+    )
+    canonical = _canonical_url(discovery_input)
     parsed = urlsplit(canonical)
     if parsed.scheme != "https" or parsed.username or parsed.password:
         return None
@@ -920,6 +932,7 @@ def _filter_items(
     freshness_policy: dict[str, Any],
     pipeline: dict[str, Any],
     discovery_source: dict[str, Any] | None = None,
+    discovery_links: dict[str, tuple[list[str], int]] | None = None,
 ) -> tuple[list[dict[str, Any]], set[str]]:
     """Apply freshness then source relevance without retaining source bodies."""
     accepted: list[dict[str, Any]] = []
@@ -932,6 +945,12 @@ def _filter_items(
             pipeline["excludedItems"] += 1
             rejected_keys.add(raw["key"])
             continue
+        if discovery_source is not None:
+            links, deferred = _official_news_links(raw.pop("sourceContextMarkup", ""), discovery_source)
+            if discovery_links is not None:
+                discovery_links[raw["key"]] = (links, deferred)
+            raw["discoveredLinks"] = links
+            raw["deferredDiscoveredLinks"] = deferred
         if "match" in source:
             evidence, group_matches = _match(source, raw["title"], raw["sourceContext"], raw["categories"])
         else:
@@ -945,11 +964,7 @@ def _filter_items(
             rejected_keys.add(raw["key"])
             continue
         raw["matchEvidence"] = evidence
-        if discovery_source is not None:
-            links, deferred = _official_news_links(raw.pop("sourceContextMarkup", ""), discovery_source)
-            raw["discoveredLinks"] = links
-            raw["deferredDiscoveredLinks"] = deferred
-        else:
+        if discovery_source is None:
             raw.pop("sourceContextMarkup", None)
         pipeline["matchedItems"] += 1
         accepted.append(raw)
@@ -2498,6 +2513,7 @@ def collect(
     parsed_by_source: dict[str, list[dict[str, Any]]] = {}
     raw_by_source: dict[str, list[dict[str, Any]]] = {}
     rejected_by_source: dict[str, set[str]] = {}
+    discovered_links_by_source: dict[str, dict[str, tuple[list[str], int]]] = {}
     discovery_by_origin = {
         origin_id: source
         for source in config["discoveredSources"]
@@ -2531,6 +2547,7 @@ def collect(
             config["policies"]["freshness"],
             source_pipeline,
             discovery_by_origin.get(source["id"]),
+            discovered_links_by_source.setdefault(source["id"], {}),
         )
 
     # A discovered official source is deliberately independent: an inaccessible
@@ -2542,9 +2559,9 @@ def collect(
         candidates: list[str] = []
         per_item_deferred = 0
         for origin_id in source["discovery"]["fromSourceIds"]:
-            for item in raw_by_source[origin_id]:
-                per_item_deferred += item.get("deferredDiscoveredLinks", 0)
-                for url in item.get("discoveredLinks", []):
+            for links, deferred in discovered_links_by_source.get(origin_id, {}).values():
+                per_item_deferred += deferred
+                for url in links:
                     is_new_candidate = url not in candidate_origins
                     origins = candidate_origins.setdefault(url, [])
                     if origin_id not in origins:

@@ -40,6 +40,19 @@ same-host redirects, so a bearer token is never forwarded to a redirect target.
 The safe error code is `redirect_blocked`; it follows the normal fail-closed
 path and does not write a new feed or state.
 
+## Official-link discovery
+
+When a configured RSS source is parsed successfully and the item is fresh,
+official Meta Business News links are extracted independently of the parent
+article's source-specific keyword decision. The linked official page is then
+fetched and validated as its own item. A parent article is never relabeled as
+official, and an invalid promoted link does not invalidate the direct source.
+
+The discovery normalizer removes only known tracking decorations, including
+Meta's `_sp` parameter, before applying the existing HTTPS, host, path, and
+metadata checks. Unknown query parameters and unsupported page families remain
+rejected.
+
 ## First production observation
 
 The normal workflow runs at 08:15 MYT on Tuesday and Friday. It uploads a

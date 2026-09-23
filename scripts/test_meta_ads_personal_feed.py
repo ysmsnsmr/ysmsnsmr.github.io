@@ -28,6 +28,7 @@ from meta_ads_personal_feed import (
     STATE_V5_SCHEMA_VERSION,
     JEV_PUBLICATION_STATUS,
     _classify_publication,
+    _canonical_official_news_url,
     _jev_publication_from_environment,
     _meta_business_news_date,
     _locale_presentation_from_environment,
@@ -960,6 +961,44 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(len(social), 1)
         self.assertIn("pixel-conversionsapi-updates", jon[0]["sourceContextMarkup"])
         self.assertIn("pixel-conversionsapi-updates", social[0]["sourceContextMarkup"])
+
+    def test_official_discovery_strips_only_known_sp_tracking_parameter(self) -> None:
+        discovery = self.config["discoveredSources"][0]
+        base = "https://www.facebook.com/business/news/pixel-conversionsapi-updates"
+        self.assertEqual(_canonical_official_news_url(f"{base}?_sp=fixture-token", discovery), base)
+        self.assertIsNone(_canonical_official_news_url(f"{base}?unknown=keep", discovery))
+
+    def test_official_discovery_runs_even_when_parent_relevance_is_excluded(self) -> None:
+        social_without_ads_term = """<rss><channel>
+        <item><title>Meta expands creator partnerships</title>
+        <link>https://www.socialmediatoday.com/news/meta-creator-partnerships/830481/</link>
+        <description><![CDATA[<p>New collaboration tools for brands and creators.</p>
+        <a href="https://www.facebook.com/business/news/pixel-conversionsapi-updates?_sp=fixture-token">Official announcement</a>]]></description>
+        <pubDate>Tue, 15 Sep 2026 12:00:00 -0400</pubDate></item>
+        </channel></rss>"""
+        bodies = {
+            "meta-product-news-rss": META,
+            "meta-business-sdk-releases": SDK,
+            "social-media-today-meta-ads": social_without_ads_term,
+            "jon-loomer-meta-ads": JON,
+            "meta-business-news-discovered": META_BUSINESS_NEWS,
+        }
+        pipeline: dict[str, Any] = {}
+        feed, _state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(bodies=bodies),
+            source_pipeline_stats=pipeline,
+        )
+        social = pipeline["sources"]["social-media-today-meta-ads"]
+        self.assertEqual(social["relevanceExcludedItems"], 1)
+        discovered = pipeline["sources"]["meta-business-news-discovered"]
+        self.assertEqual((discovered["discoveredLinks"], discovered["attemptedLinks"], discovered["rejectedLinks"]), (1, 1, 0))
+        promoted = [item for item in feed["items"] if item["sourceId"] == "meta-business-news-discovered"]
+        self.assertEqual(len(promoted), 1)
+        self.assertEqual(promoted[0]["matchEvidence"], ["discovered-via:social-media-today-meta-ads"])
 
     def test_meta_business_news_date_accepts_observed_label_variants(self) -> None:
         cases = {
