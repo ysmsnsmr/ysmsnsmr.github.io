@@ -501,7 +501,19 @@ class _MetaBusinessNewsParser(HTMLParser):
 
 
 def _canonical_official_news_url(value: str, source: dict[str, Any]) -> str | None:
-    canonical = _canonical_url(value)
+    parsed_input = urlsplit(value)
+    # `_sp` is a known Meta link decoration.  It is stripped only for this
+    # official-link discovery path; article identity URLs keep the existing
+    # conservative query handling.
+    input_pairs = [
+        (key, item)
+        for key, item in parse_qsl(parsed_input.query, keep_blank_values=True)
+        if key.casefold() != "_sp"
+    ]
+    discovery_input = urlunsplit(
+        (parsed_input.scheme, parsed_input.netloc, parsed_input.path, urlencode(input_pairs), parsed_input.fragment)
+    )
+    canonical = _canonical_url(discovery_input)
     parsed = urlsplit(canonical)
     if parsed.scheme != "https" or parsed.username or parsed.password:
         return None
@@ -655,6 +667,7 @@ def _jev_publication_from_environment(
         raise ContractError("META_ADS_JEV_ROUTING_ENABLED must be true, false, or unset")
     report: dict[str, Any] = {
         "schemaVersion": "meta-ads-jev-routing/v1",
+        "runStatus": "started",
         "enabled": setting == "true",
         "routingEffect": setting == "true",
         "requestedModelId": JEV_REQUESTED_MODEL_ID,
@@ -663,14 +676,14 @@ def _jev_publication_from_environment(
         "credentialStored": False,
         "results": [],
     }
+    _write_jev_routing_stats(stats, report)
     if setting == "false":
         report["summary"] = {"classified": 0, "choices": {}, "errors": 0}
-        _write_jev_routing_stats(stats, report)
         return None
     api_key = os.environ.get("TYPESAFE_API_KEY", "").strip()
     if not api_key:
+        report["failureCode"] = "missing_api_key"
         raise ContractError("TYPESAFE_API_KEY is required when META_ADS_JEV_ROUTING_ENABLED=true")
-    _write_jev_routing_stats(stats, report)
 
     def classify(source: dict[str, Any], raw: dict[str, Any]) -> tuple[str, list[str]]:
         item_id = f"{source['id']}-{raw['fingerprint'][:20]}"
@@ -686,12 +699,15 @@ def _jev_publication_from_environment(
             answer, provider_model_id = extract_jev_answer(response)
         except JevRequestError as error:
             report["results"].append({"itemId": item_id, "sourceId": source["id"], "outcome": "error", "errorCode": error.code})
+            report["failureCode"] = error.code
             raise ContractError(f"Jev relevance routing failed: {error.code}") from error
         except Exception as error:
             report["results"].append({"itemId": item_id, "sourceId": source["id"], "outcome": "error", "errorCode": "transport_error"})
+            report["failureCode"] = "transport_error"
             raise ContractError("Jev relevance routing failed: transport_error") from error
         choice = answer.get("choice") if isinstance(answer, dict) else None
         if choice not in JEV_RELEVANCE_CHOICES:
+            report["failureCode"] = "invalid_choice"
             raise ContractError("Jev relevance routing returned an unsupported choice")
         report["results"].append({
             "itemId": item_id,
@@ -707,7 +723,13 @@ def _jev_publication_from_environment(
     return classify
 
 
-def _finalize_jev_routing_stats(stats: dict[str, Any] | None, now: str) -> None:
+def _finalize_jev_routing_stats(
+    stats: dict[str, Any] | None,
+    now: str,
+    *,
+    run_status: str,
+    failure_code: str | None = None,
+) -> None:
     if stats is None or not stats:
         return
     results = stats.get("results", [])
@@ -717,6 +739,11 @@ def _finalize_jev_routing_stats(stats: dict[str, Any] | None, now: str) -> None:
             choice = result["choice"]
             choices[choice] = choices.get(choice, 0) + 1
     stats["generatedAt"] = now
+    stats["runStatus"] = run_status
+    if failure_code:
+        stats["failureCode"] = failure_code
+    else:
+        stats.pop("failureCode", None)
     stats["summary"] = {"classified": sum(choices.values()), "choices": dict(sorted(choices.items())), "errors": sum(result.get("outcome") == "error" for result in results)}
 
 
@@ -905,8 +932,17 @@ def _filter_items(
     freshness_policy: dict[str, Any],
     pipeline: dict[str, Any],
     discovery_source: dict[str, Any] | None = None,
+    discovery_links: dict[str, tuple[list[str], int]] | None = None,
+    apply_source_relevance: bool = True,
 ) -> tuple[list[dict[str, Any]], set[str]]:
-    """Apply freshness then source relevance without retaining source bodies."""
+    """Apply freshness and optional source relevance without retaining bodies.
+
+    Jev-enabled collection deliberately supplies fresh, parsed candidates to
+    the model without the legacy source-specific keyword prefilter.  The
+    caller still controls the safety, parser, source, and freshness boundaries;
+    this flag only governs the old semantic match.  The default preserves the
+    deterministic pre-Jev path for rollback and direct unit-test callers.
+    """
     accepted: list[dict[str, Any]] = []
     rejected_keys: set[str] = set()
     for raw in raw_items:
@@ -917,7 +953,13 @@ def _filter_items(
             pipeline["excludedItems"] += 1
             rejected_keys.add(raw["key"])
             continue
-        if "match" in source:
+        if discovery_source is not None:
+            links, deferred = _official_news_links(raw.pop("sourceContextMarkup", ""), discovery_source)
+            if discovery_links is not None:
+                discovery_links[raw["key"]] = (links, deferred)
+            raw["discoveredLinks"] = links
+            raw["deferredDiscoveredLinks"] = deferred
+        if apply_source_relevance and "match" in source:
             evidence, group_matches = _match(source, raw["title"], raw["sourceContext"], raw["categories"])
         else:
             evidence, group_matches = raw["matchEvidence"], []
@@ -930,11 +972,7 @@ def _filter_items(
             rejected_keys.add(raw["key"])
             continue
         raw["matchEvidence"] = evidence
-        if discovery_source is not None:
-            links, deferred = _official_news_links(raw.pop("sourceContextMarkup", ""), discovery_source)
-            raw["discoveredLinks"] = links
-            raw["deferredDiscoveredLinks"] = deferred
-        else:
+        if discovery_source is None:
             raw.pop("sourceContextMarkup", None)
         pipeline["matchedItems"] += 1
         accepted.append(raw)
@@ -2486,6 +2524,7 @@ def collect(
     request_limit = _presentation_request_limit(presentation_limit, presentation_policy)
     stats = _presentation_stats(config, present_item is not None or locale_item is not None, request_limit, presentation_policy)
     pipeline = _source_pipeline_stats(config)
+    jev_enabled = jev_classifier is not None
     if retry_json_validate_failed:
         released_keys = _release_json_validate_failed_quarantine(retry_queue)
         stats["retryReleasedJsonValidateFailed"] = len(released_keys)
@@ -2503,6 +2542,7 @@ def collect(
     parsed_by_source: dict[str, list[dict[str, Any]]] = {}
     raw_by_source: dict[str, list[dict[str, Any]]] = {}
     rejected_by_source: dict[str, set[str]] = {}
+    discovered_links_by_source: dict[str, dict[str, tuple[list[str], int]]] = {}
     discovery_by_origin = {
         origin_id: source
         for source in config["discoveredSources"]
@@ -2536,6 +2576,8 @@ def collect(
             config["policies"]["freshness"],
             source_pipeline,
             discovery_by_origin.get(source["id"]),
+            discovered_links_by_source.setdefault(source["id"], {}),
+            apply_source_relevance=not jev_enabled,
         )
 
     # A discovered official source is deliberately independent: an inaccessible
@@ -2547,9 +2589,9 @@ def collect(
         candidates: list[str] = []
         per_item_deferred = 0
         for origin_id in source["discovery"]["fromSourceIds"]:
-            for item in raw_by_source[origin_id]:
-                per_item_deferred += item.get("deferredDiscoveredLinks", 0)
-                for url in item.get("discoveredLinks", []):
+            for links, deferred in discovered_links_by_source.get(origin_id, {}).values():
+                per_item_deferred += deferred
+                for url in links:
                     is_new_candidate = url not in candidate_origins
                     origins = candidate_origins.setdefault(url, [])
                     if origin_id not in origins:
@@ -2846,7 +2888,7 @@ def collect(
     feed = build_feed(next_state, config, generated_at)
     validate_state(next_state, config)
     validate_feed(feed, config)
-    _finalize_jev_routing_stats(jev_routing_stats, generated_at)
+    _finalize_jev_routing_stats(jev_routing_stats, generated_at, run_status="succeeded")
     _write_presentation_stats(presentation_stats, stats)
     _write_source_pipeline_stats(source_pipeline_stats, pipeline)
     return feed, next_state
@@ -2928,6 +2970,8 @@ def main() -> int:
         help="with --retry-json-validate-failed, release reviewed legacy quarantined HTTP 400 entries",
     )
     args = parser.parse_args()
+    run_failed = True
+    failure_code: str | None = None
     try:
         stats: dict[str, Any] = {}
         pipeline: dict[str, Any] = {}
@@ -2948,10 +2992,9 @@ def main() -> int:
             jev_classifier=jev_classifier,
             jev_routing_stats=jev_stats,
         )
-        if args.jev_routing_report is not None:
-            _finalize_jev_routing_stats(jev_stats, _now(datetime.now(timezone.utc)))
-            write_json(args.jev_routing_report, jev_stats)
+        run_failed = False
     except SourceFetchError as error:
+        failure_code = "source_fetch_failure"
         print(
             f"SOURCE_FETCH_FAILURE: id={error.source_id} code={error.reason} attempts={error.attempts}",
             file=sys.stderr,
@@ -2959,8 +3002,31 @@ def main() -> int:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1
     except (ContractError, OSError, ValueError, urllib.error.URLError) as error:
+        failure_code = jev_stats.get("failureCode") or "collector_failure"
         print(f"FAIL: {error}", file=sys.stderr)
         return 1
+    finally:
+        if args.jev_routing_report is not None:
+            if not jev_stats:
+                setting = os.environ.get("META_ADS_JEV_ROUTING_ENABLED", "").strip().lower()
+                jev_stats = {
+                    "schemaVersion": "meta-ads-jev-routing/v1",
+                    "runStatus": "started",
+                    "enabled": setting == "true",
+                    "routingEffect": setting == "true",
+                    "requestedModelId": JEV_REQUESTED_MODEL_ID,
+                    "questionSetVersion": JEV_QUESTION_SET_VERSION,
+                    "rawProviderResponseStored": False,
+                    "credentialStored": False,
+                    "results": [],
+                }
+            _finalize_jev_routing_stats(
+                jev_stats,
+                _now(datetime.now(timezone.utc)),
+                run_status="failed" if run_failed else "succeeded",
+                failure_code=failure_code,
+            )
+            write_json(args.jev_routing_report, jev_stats)
     print(f"PASS: published {len(feed['items'])} personal feed item(s) from {len(feed['sources'])} source(s)")
     _print_presentation_stats(stats)
     _print_source_pipeline_stats(pipeline)

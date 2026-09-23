@@ -14,6 +14,7 @@ from typing import Any
 from urllib.error import URLError
 
 from meta_ads_tracker_contract import ContractError
+import meta_ads_personal_feed as personal_feed
 from meta_ads_personal_feed import (
     DEFAULT_CONFIG,
     FEED_SCHEMA_VERSION,
@@ -27,6 +28,7 @@ from meta_ads_personal_feed import (
     STATE_V5_SCHEMA_VERSION,
     JEV_PUBLICATION_STATUS,
     _classify_publication,
+    _canonical_official_news_url,
     _jev_publication_from_environment,
     _meta_business_news_date,
     _locale_presentation_from_environment,
@@ -43,6 +45,7 @@ from meta_ads_personal_feed import (
     PresentationOutput,
     collect,
     collect_and_write,
+    main,
     extract_items,
     load_config,
     migrate_feed_v2_to_v3,
@@ -335,6 +338,56 @@ class PersonalFeedTest(unittest.TestCase):
             next(iter(state["sources"]["jon-loomer-meta-ads"]["items"].values()))["matchEvidence"],
             ["category:Meta Advertising", "keyword:ads manager"],
         )
+
+    def test_jev_enabled_bypasses_legacy_source_keyword_prefilter(self) -> None:
+        jon = """<rss><channel>
+        <item><title>New creator partnership announcement</title><link>https://www.jonloomer.com/creator-partnership-announcement/</link><description>General creator and platform news without legacy advertising keywords.</description><category>Meta Advertising</category><pubDate>Fri, 29 Aug 2026 02:00:00 +0000</pubDate></item>
+        </channel></rss>"""
+        bodies = {
+            "meta-product-news-rss": META,
+            "meta-business-sdk-releases": SDK,
+            "social-media-today-meta-ads": SOCIAL_MEDIA_TODAY,
+            "jon-loomer-meta-ads": jon,
+        }
+        seen: list[str] = []
+
+        def jev_classifier(source: dict[str, Any], raw: dict[str, Any]) -> tuple[str, list[str]]:
+            if source["id"] == "jon-loomer-meta-ads":
+                seen.append(raw["title"])
+                return "included", ["jev:strategic_signal"]
+            return "drop", ["jev:unrelated"]
+
+        pipeline: dict[str, Any] = {}
+        feed, _state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(bodies=bodies),
+            source_pipeline_stats=pipeline,
+            jev_classifier=jev_classifier,
+        )
+        self.assertEqual(seen, ["New creator partnership announcement"])
+        self.assertIn(
+            "https://www.jonloomer.com/creator-partnership-announcement/",
+            {item["url"] for item in feed["items"] if item["sourceId"] == "jon-loomer-meta-ads"},
+        )
+        self.assertEqual(pipeline["sources"]["jon-loomer-meta-ads"]["relevanceExcludedItems"], 0)
+
+        legacy_pipeline: dict[str, Any] = {}
+        legacy_feed, _legacy_state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(bodies=bodies),
+            source_pipeline_stats=legacy_pipeline,
+        )
+        self.assertNotIn(
+            "https://www.jonloomer.com/creator-partnership-announcement/",
+            {item["url"] for item in legacy_feed["items"] if item["sourceId"] == "jon-loomer-meta-ads"},
+        )
+        self.assertEqual(legacy_pipeline["sources"]["jon-loomer-meta-ads"]["relevanceExcludedItems"], 1)
 
     def test_config_rejects_insecure_source_and_invalid_source_classification(self) -> None:
         invalid = copy.deepcopy(self.config)
@@ -958,6 +1011,44 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(len(social), 1)
         self.assertIn("pixel-conversionsapi-updates", jon[0]["sourceContextMarkup"])
         self.assertIn("pixel-conversionsapi-updates", social[0]["sourceContextMarkup"])
+
+    def test_official_discovery_strips_only_known_sp_tracking_parameter(self) -> None:
+        discovery = self.config["discoveredSources"][0]
+        base = "https://www.facebook.com/business/news/pixel-conversionsapi-updates"
+        self.assertEqual(_canonical_official_news_url(f"{base}?_sp=fixture-token", discovery), base)
+        self.assertIsNone(_canonical_official_news_url(f"{base}?unknown=keep", discovery))
+
+    def test_official_discovery_runs_even_when_parent_relevance_is_excluded(self) -> None:
+        social_without_ads_term = """<rss><channel>
+        <item><title>Meta expands creator partnerships</title>
+        <link>https://www.socialmediatoday.com/news/meta-creator-partnerships/830481/</link>
+        <description><![CDATA[<p>New collaboration tools for brands and creators.</p>
+        <a href="https://www.facebook.com/business/news/pixel-conversionsapi-updates?_sp=fixture-token">Official announcement</a>]]></description>
+        <pubDate>Tue, 15 Sep 2026 12:00:00 -0400</pubDate></item>
+        </channel></rss>"""
+        bodies = {
+            "meta-product-news-rss": META,
+            "meta-business-sdk-releases": SDK,
+            "social-media-today-meta-ads": social_without_ads_term,
+            "jon-loomer-meta-ads": JON,
+            "meta-business-news-discovered": META_BUSINESS_NEWS,
+        }
+        pipeline: dict[str, Any] = {}
+        feed, _state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(bodies=bodies),
+            source_pipeline_stats=pipeline,
+        )
+        social = pipeline["sources"]["social-media-today-meta-ads"]
+        self.assertEqual(social["relevanceExcludedItems"], 1)
+        discovered = pipeline["sources"]["meta-business-news-discovered"]
+        self.assertEqual((discovered["discoveredLinks"], discovered["attemptedLinks"], discovered["rejectedLinks"]), (1, 1, 0))
+        promoted = [item for item in feed["items"] if item["sourceId"] == "meta-business-news-discovered"]
+        self.assertEqual(len(promoted), 1)
+        self.assertEqual(promoted[0]["matchEvidence"], ["discovered-via:social-media-today-meta-ads"])
 
     def test_meta_business_news_date_accepts_observed_label_variants(self) -> None:
         cases = {
@@ -1885,6 +1976,21 @@ class PersonalFeedTest(unittest.TestCase):
                 collect_and_write(DEFAULT_CONFIG, state_path, output_path, 1, now=NOW, fetch_body=self.fetcher(fail=True))
             self.assertEqual(state_path.read_bytes(), state_bytes)
             self.assertEqual(output_path.read_bytes(), output_bytes)
+
+    @patch.dict(os.environ, {"META_ADS_JEV_ROUTING_ENABLED": "true", "TYPESAFE_API_KEY": "fixture-key"}, clear=False)
+    def test_failed_main_writes_safe_jev_routing_artifact(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            report_path = Path(directory) / "jev-routing.json"
+            with patch.object(personal_feed, "collect_and_write", side_effect=ContractError("secret response body")), patch(
+                "sys.argv", ["collector", "--jev-routing-report", str(report_path)]
+            ):
+                self.assertEqual(main(), 1)
+            report = json.loads(report_path.read_text(encoding="utf-8"))
+            self.assertEqual(report["runStatus"], "failed")
+            self.assertEqual(report["failureCode"], "collector_failure")
+            rendered = json.dumps(report)
+            self.assertNotIn("secret response body", rendered)
+            self.assertNotIn("fixture-key", rendered)
 
 
 if __name__ == "__main__":

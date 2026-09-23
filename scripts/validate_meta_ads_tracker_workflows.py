@@ -245,8 +245,10 @@ def main() -> int:
         jev_routing_with = jev_routing_artifact.get("with", {}) if isinstance(jev_routing_artifact, dict) else {}
         if jev_routing_with.get("path") != "${{ runner.temp }}/meta-ads-jev-routing.json":
             fail("Personal Feed collection must upload only its runner-temp Jev routing artifact")
-        if jev_routing_with.get("if-no-files-found") != "error" or jev_routing_with.get("retention-days") != "30":
-            fail("Jev routing artifact must fail on absence and retain exactly 30 days")
+        if jev_routing_with.get("if-no-files-found") != "warn" or jev_routing_with.get("retention-days") != "30":
+            fail("Jev routing artifact must warn on absence and retain exactly 30 days")
+        if "always()" not in str(jev_routing_artifact.get("if", "")):
+            fail("Jev routing artifact must upload after collector failure when the kill switch is enabled")
         backfill = parsed["presentation_backfill"]
         if "workflow_dispatch" not in backfill.get("on", {}):
             fail("Personal Feed presentation backfill must be manual only")
