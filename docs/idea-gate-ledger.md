@@ -986,3 +986,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Jev routingの判定を表示カテゴリとして保存し、rendererとindex parserを新2分類および旧Markdown互換へ更新する
 - Revisit when: Jevのdirect_life_impactとpublic_informationが読者の分類意図と繰り返し異なる; RSS-only rollbackで旧3分類を読めなくなる; 新しい表示が選定結果やURL保持を変える
+
+<!-- idea-gate:20260923t062218-malaysia-jev-candidate-evidence -->
+## Jev候補の話題単位重複排除と本文語彙ブロックを外す
+
+- Record ID: `20260923t062218-malaysia-jev-candidate-evidence`
+- Evaluated: 2026-09-23T06:22:18+08:00
+- Project: ysmsnsmr.github.io / Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 94/100
+- Confidence: high - 現行コードと実artifact、合成再現が同じ原因を示している。次artifactで重複候補の増加と本文利用による要約品質を観察できる
+
+### Idea Card
+
+- Purpose: 地域・時刻・対象が異なる生活情報を話題名だけで消さず、取得できた記事本文を要約根拠として利用する
+- First experience: Jev候補poolにURLごとに記事を残し、清掃後の本文根拠があれば記事の話題によらずGroqへ渡す
+- Scope and cost: Jev候補生成と本文根拠選択の2モジュールに限定し、既存URL重複排除、根拠検査、RSS-only rollback、追加API呼び出しなしで行う
+- Continuation boundary: 次のartifactで地域別の運用情報が候補に残り、本文根拠の利用率とhard safety結果を確認する。重複記事による編集予算の圧迫または根拠検査の悪化が続けば変更を戻す
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 15/15 |
+| `evidence_and_learning` | 15/15 |
+| `expected_outcome` | 14/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 18/20 |
+| **Total** | **94/100** |
+
+### Next Step
+
+- Action: Jev候補poolのcanonical重複排除を外し、本文語彙ブロックを清掃済み本文の有無による判定へ置き換える
+- Revisit when: 同じ出来事の複数記事が15件の編集予算を繰り返し圧迫する; 本文根拠を使った記事でhard safety rejectまたは誤訳が増える; candidate poolが150件のrouting上限を継続して超える
