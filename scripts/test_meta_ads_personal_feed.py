@@ -1699,6 +1699,47 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertNotIn("blocked_api_access", json.dumps(feed))
         self.assertNotIn("blocked_api_access", json.dumps(stats["failureReasons"]))
 
+    def test_rate_limit_failure_logs_only_allowlisted_header_diagnostics(self) -> None:
+        stats: dict = {}
+        secret_body_marker = "private provider response body"
+
+        def failing_presenter(_title: str, _source_context: str, _policy: dict) -> dict[str, str]:
+            raise PresentationError(
+                "rate_limited_429",
+                attempts=3,
+                provider_error_type="tokens",
+                provider_error_code="rate_limit_exceeded",
+                rate_limit_headers={
+                    "retry_after": "12",
+                    "remaining_tokens": "0",
+                    "reset_tokens": "8.25s",
+                    "unexpected": secret_body_marker,
+                },
+            )
+
+        feed, next_state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            self.fetcher(),
+            failing_presenter,
+            presentation_stats=stats,
+        )
+        output = io.StringIO()
+        with redirect_stdout(output):
+            _print_presentation_stats(stats)
+        log = output.getvalue()
+        self.assertIn(
+            "PRESENTATION_RATE_LIMIT: source_id=meta-product-news-rss attempts=3 "
+            "retry_after=12 remaining_tokens=0 reset_tokens=8.25s",
+            log,
+        )
+        self.assertNotIn(secret_body_marker, log)
+        self.assertNotIn(secret_body_marker, json.dumps(feed))
+        self.assertNotIn(secret_body_marker, json.dumps(next_state))
+        self.assertNotIn("unexpected", json.dumps(next_state))
+
     def test_presentation_contract_rejects_stale_fingerprint_and_overlong_text(self) -> None:
         def presenter(title: str, _source_context: str, _policy: dict) -> dict[str, str]:
             return {"shortHeadlineEn": f"{title} headline", "summaryEn": f"{title} summary", "shortHeadlineJa": f"{title} の短見出し", "summaryJa": f"{title} の要約"}

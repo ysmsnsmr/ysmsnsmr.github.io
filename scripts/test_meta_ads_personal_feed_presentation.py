@@ -214,7 +214,17 @@ class PersonalFeedPresentationTest(unittest.TestCase):
 
     @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
     def test_classifies_http_failures_without_exposing_the_response(self, urlopen) -> None:
-        urlopen.side_effect = HTTPError("https://api.groq.com/openai/v1/chat/completions", 429, "rate limited", {}, None)
+        urlopen.side_effect = HTTPError(
+            "https://api.groq.com/openai/v1/chat/completions",
+            429,
+            "rate limited",
+            {
+                "Retry-After": "12",
+                "x-ratelimit-remaining-tokens": "0",
+                "x-ratelimit-reset-tokens": "8.25s",
+            },
+            None,
+        )
         with self.assertRaises(PresentationError) as error:
             request_presentation(
                 api_key="test-key",
@@ -227,7 +237,28 @@ class PersonalFeedPresentationTest(unittest.TestCase):
                 max_attempts=1,
             )
         self.assertEqual(error.exception.code, "rate_limited_429")
+        self.assertEqual(
+            error.exception.rate_limit_headers,
+            {"retry_after": "12", "remaining_tokens": "0", "reset_tokens": "8.25s"},
+        )
         self.assertNotIn("rate limited", str(error.exception))
+
+    @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
+    def test_discards_untrusted_rate_limit_header_values(self, urlopen) -> None:
+        urlopen.side_effect = HTTPError(
+            "https://api.groq.com/openai/v1/chat/completions",
+            429,
+            "rate limited",
+            {
+                "Retry-After": "12\nINJECTED",
+                "x-ratelimit-remaining-tokens": "0\nsecret",
+                "x-ratelimit-reset-tokens": "8.25 seconds secret",
+            },
+            None,
+        )
+        with self.assertRaises(PresentationError) as error:
+            self.request()
+        self.assertEqual(error.exception.rate_limit_headers, {})
 
     @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
     def test_retains_only_safe_provider_error_type_and_code(self, urlopen) -> None:

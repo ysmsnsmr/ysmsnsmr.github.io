@@ -24,259 +24,6 @@ CONTENT_SOURCE_VALUES = {ARTICLE_BODY, RSS_FALLBACK}
 POLICY_VALUES = {USE_BODY, RSS_ONLY, RSS_FALLBACK}
 SELECTED_CONTEXT_SOURCE_VALUES = {SELECTED_ARTICLE_BODY, SELECTED_RSS_SUMMARY}
 
-CRIME_OR_COURT_PHRASES = [
-    "court",
-    "charged",
-    "pleaded",
-    "remanded",
-    "jail",
-    "caning",
-    "lawsuit",
-    "saman",
-    "mahkamah",
-    "arrested",
-    "police arrested",
-    "drug",
-    "dadah",
-    "molest",
-    "sexual misconduct",
-    "macc",
-    "sprm",
-    "probe",
-]
-INCIDENT_PHRASES = [
-    "killed",
-    "dies",
-    "died",
-    "dead",
-    "fatal",
-    "accident",
-    "crash",
-    "collision",
-    "drowned",
-    "lemas",
-    "feared drowned",
-    "search underway",
-]
-MARKET_OR_OVERSEAS_PHRASES = [
-    "business as usual",
-    "counterfeit",
-    "job market",
-    "work culture",
-    "shepherd job",
-    "hanoi",
-    "vietnam",
-    "ringgit",
-    "bursa",
-    "stock market",
-    "forex",
-    "currency",
-    "greenback",
-    "earnings",
-    "shares",
-    "equities",
-]
-OIL_PRICE_PHRASES = [
-    "oil prices",
-    "oil jumps",
-    "crude",
-    "brent",
-]
-GEOPOLITICS_NOISE_PHRASES = [
-    "middle east",
-    "iran",
-    "military",
-    "conflict",
-    "strikes",
-    "strike",
-    "war",
-    "ceasefire",
-    "strait of hormuz",
-]
-COST_OR_SUBSIDY_PHRASES = [
-    "ron95",
-    "ron97",
-    "diesel",
-    "fuel prices",
-    "petrol",
-    "price",
-    "prices",
-    "tariff",
-    "fare",
-    "subsidy",
-    "subsidised",
-    "budi95",
-    "rahmah",
-    "kos sara hidup",
-    "cost of living",
-]
-FINANCIAL_SERVICE_ACCESS_PHRASES = [
-    "bank",
-    "banking",
-    "branch",
-    "premier centre",
-    "premier center",
-    "wealth",
-    "financial service",
-    "financial services",
-    "investment service",
-    "investment services",
-    "customer service",
-    "hsbc",
-]
-PUBLIC_SERVICE_PHRASES = [
-    "ministry",
-    "mof",
-    "lhdn",
-    "tax",
-    "tax exemption",
-    "e-derma",
-    "jpj",
-    "myjpj",
-    "mykad",
-    "immigration",
-    "application",
-    "applications",
-    "permit",
-    "permits",
-    "licence",
-    "license",
-    "renewal",
-    "deadline",
-    "counter",
-    "public service",
-    "government",
-    "dbkl",
-    "mbpj",
-    "mcmc",
-]
-TRANSPORT_OR_INFRA_PHRASES = [
-    "road",
-    "jalan",
-    "traffic",
-    "train",
-    "bus",
-    "mrt",
-    "lrt",
-    "ktmb",
-    "public transport",
-    "airport",
-    "stadium",
-    "facilities",
-    "venue",
-    "venues",
-    "infrastructure",
-    "concert",
-]
-TRANSPORT_CLOSURE_PHRASES = [
-    "closure",
-    "closed",
-    "tutup",
-]
-TRANSPORT_CONTEXT_PHRASES = [
-    "road",
-    "lane",
-    "jalan",
-    "traffic",
-    "route",
-    "highway",
-    "bridge",
-    "station",
-]
-AGRICULTURE_OR_PUBLIC_HEALTH_PHRASES = [
-    "pig farm",
-    "pig farms",
-    "farm",
-    "farms",
-    "livestock",
-    "animals",
-    "veterinary",
-    "agriculture",
-    "public health",
-    "environment",
-    "tanjong sepat",
-]
-CONSUMER_OR_CROSSBORDER_SERVICE_PHRASES = [
-    "payment",
-    "payments",
-    "paypal",
-    "wechat pay",
-    "alipay",
-    "qr-code",
-    "qr code",
-    "e-wallet",
-    "ewallet",
-    "bank card",
-    "foreign bank cards",
-    "card",
-    "mobile payments",
-    "ecommerce",
-    "e-commerce",
-    "platform",
-    "app",
-]
-VEHICLE_OR_TRANSPORT_SERVICE_PHRASES = [
-    "vehicle",
-    "vehicles",
-    "car",
-    "cars",
-    "connected vehicles",
-    "ev",
-    "airline",
-    "airport",
-    "travel",
-    "visa",
-]
-HEALTH_OR_EDUCATION_PHRASES = [
-    "health",
-    "medical",
-    "hospital",
-    "moh",
-    "disease",
-    "infection",
-    "school",
-    "education",
-    "student",
-    "university",
-    "spm",
-]
-POLITICAL_CONTEXT_PHRASES = [
-    "election",
-    "party",
-    "parties",
-    "dap",
-    "barisan nasional",
-    "bn",
-    "pakatan harapan",
-    "ph",
-    "chairman",
-    "secretary-general",
-    "menteri besar",
-    "caretaker",
-    "campaign",
-    "political",
-]
-TRANSPORT_OPERATIONAL_PHRASES = [
-    "service disruption",
-    "service launch",
-    "launch of",
-    "starts",
-    "begins",
-    "route",
-    "routes",
-    "schedule",
-    "timetable",
-    "fare",
-    "station",
-    "stations",
-    "closure",
-    "closed",
-    "open",
-    "opens",
-    "frequency",
-    "operation",
-    "operations",
-]
 BODY_EVIDENCE_FORBIDDEN = [
     "dateline",
     "wire_credit",
@@ -416,43 +163,6 @@ def is_astro_awani(item: dict[str, Any]) -> bool:
     return clean_text(item.get("source")) == "Astro Awani"
 
 
-def has_phrase(text: str, phrase: str) -> bool:
-    normalized = re.sub(r"\s+", " ", phrase.strip().lower())
-    if not normalized:
-        return False
-    if re.search(r"[a-z0-9]", normalized):
-        return re.search(rf"(?<![a-z0-9]){re.escape(normalized)}(?![a-z0-9])", text) is not None
-    return normalized in text
-
-
-def has_any(text: str, phrases: list[str]) -> bool:
-    return any(has_phrase(text, phrase) for phrase in phrases)
-
-
-def matched_phrases(text: str, phrases: list[str]) -> list[str]:
-    return [phrase for phrase in phrases if has_phrase(text, phrase)]
-
-
-def normalized_blob(item: dict[str, Any]) -> str:
-    parts = [
-        item_title(item),
-        item_rss_summary(item),
-        item.get("body_evidence_excerpt"),
-        item.get("body_excerpt"),
-    ]
-    return clean_text(" ".join(text_value(part) for part in parts)).lower()
-
-
-def is_oil_geopolitics_market_noise(text: str) -> bool:
-    return has_any(text, OIL_PRICE_PHRASES) and has_any(text, GEOPOLITICS_NOISE_PHRASES)
-
-
-def is_transport_or_infra(text: str) -> bool:
-    if has_any(text, TRANSPORT_CLOSURE_PHRASES):
-        return has_any(text, TRANSPORT_CONTEXT_PHRASES)
-    return has_any(text, TRANSPORT_OR_INFRA_PHRASES)
-
-
 def classify_body_excerpt_policy(item: dict[str, Any]) -> tuple[str, str]:
     content_source = clean_text(item.get("content_source"))
     if content_source == RSS_FALLBACK:
@@ -460,34 +170,9 @@ def classify_body_excerpt_policy(item: dict[str, Any]) -> tuple[str, str]:
     if content_source != ARTICLE_BODY:
         return RSS_FALLBACK, "invalid_content_source"
 
-    text = normalized_blob(item)
-    if has_any(text, CRIME_OR_COURT_PHRASES):
-        return RSS_ONLY, "blocked_crime_or_court"
-    if has_any(text, INCIDENT_PHRASES):
-        return RSS_ONLY, "blocked_incident"
-    if is_oil_geopolitics_market_noise(text):
-        return RSS_ONLY, "blocked_oil_geopolitics"
-    if has_any(text, POLITICAL_CONTEXT_PHRASES) and not has_any(text, TRANSPORT_OPERATIONAL_PHRASES):
-        return RSS_ONLY, "blocked_political_context"
-    if has_any(text, FINANCIAL_SERVICE_ACCESS_PHRASES):
-        return USE_BODY, "allowed_financial_service_access"
-    if has_any(text, AGRICULTURE_OR_PUBLIC_HEALTH_PHRASES):
-        return USE_BODY, "allowed_agriculture_or_public_health"
-    if has_any(text, COST_OR_SUBSIDY_PHRASES):
-        return USE_BODY, "allowed_cost_or_subsidy"
-    if has_any(text, CONSUMER_OR_CROSSBORDER_SERVICE_PHRASES):
-        return USE_BODY, "allowed_consumer_or_crossborder_service"
-    if has_any(text, VEHICLE_OR_TRANSPORT_SERVICE_PHRASES):
-        return USE_BODY, "allowed_vehicle_or_transport_service"
-    if is_transport_or_infra(text):
-        return USE_BODY, "allowed_transport_or_infra"
-    if has_any(text, PUBLIC_SERVICE_PHRASES):
-        return USE_BODY, "allowed_public_service"
-    if has_any(text, MARKET_OR_OVERSEAS_PHRASES):
-        return RSS_ONLY, "blocked_market_or_overseas"
-    if has_any(text, HEALTH_OR_EDUCATION_PHRASES):
-        return USE_BODY, "allowed_health_or_education"
-    return RSS_ONLY, "fallback_uncertain"
+    if not clean_text(item.get("body_evidence_excerpt")):
+        return RSS_ONLY, "empty_body_evidence"
+    return USE_BODY, "clean_article_body"
 
 
 def base_body_fields(error: str = "") -> dict[str, Any]:
@@ -503,21 +188,6 @@ def base_body_fields(error: str = "") -> dict[str, Any]:
     }
 
 
-def body_evidence_focus(item: dict[str, Any]) -> list[str]:
-    text = normalized_blob(item)
-    focus_groups = [
-        ("procedure_or_public_service", PUBLIC_SERVICE_PHRASES),
-        ("cost_or_subsidy", COST_OR_SUBSIDY_PHRASES),
-        ("transport_or_infra", TRANSPORT_OR_INFRA_PHRASES + TRANSPORT_OPERATIONAL_PHRASES),
-        ("consumer_or_payment", CONSUMER_OR_CROSSBORDER_SERVICE_PHRASES),
-        ("vehicle_or_transport_service", VEHICLE_OR_TRANSPORT_SERVICE_PHRASES),
-        ("health_or_education", HEALTH_OR_EDUCATION_PHRASES),
-        ("financial_service_access", FINANCIAL_SERVICE_ACCESS_PHRASES),
-        ("agriculture_or_public_health", AGRICULTURE_OR_PUBLIC_HEALTH_PHRASES),
-    ]
-    return [name for name, phrases in focus_groups if matched_phrases(text, phrases)]
-
-
 def apply_body_evidence_fields(item: dict[str, Any], excerpt_chars: int) -> None:
     if item.get("content_source") != ARTICLE_BODY:
         item["body_evidence_excerpt"] = ""
@@ -526,7 +196,7 @@ def apply_body_evidence_fields(item: dict[str, Any], excerpt_chars: int) -> None
         return
     evidence = cleanup_body_evidence(clean_text(item.get("body_excerpt")), excerpt_chars)
     item["body_evidence_excerpt"] = evidence
-    item["body_evidence_focus"] = body_evidence_focus(item)
+    item["body_evidence_focus"] = []
     item["body_evidence_forbidden"] = BODY_EVIDENCE_FORBIDDEN
 
 
