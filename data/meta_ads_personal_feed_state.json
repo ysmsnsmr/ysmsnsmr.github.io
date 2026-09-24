@@ -1,6 +1,6 @@
 {
   "schemaVersion": "meta-ads-personal-feed-state/v5",
-  "updatedAt": "2026-09-23T13:03:46Z",
+  "updatedAt": "2026-09-24T10:49:46Z",
   "sources": {
     "meta-product-news-rss": {
       "relevanceRevision": "meta-ads-lanes-v1",
@@ -17,7 +17,7 @@
           ],
           "fingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
           "firstObservedAt": "2026-09-17T04:55:10Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
@@ -86,7 +86,7 @@
           ],
           "fingerprint": "7ec28c89eba18f71014806f8761c9662a7068ae8ed01ebd3e8b28d182c8a14ea",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7ec28c89eba18f71014806f8761c9662a7068ae8ed01ebd3e8b28d182c8a14ea",
@@ -155,7 +155,7 @@
           ],
           "fingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
@@ -224,7 +224,7 @@
           ],
           "fingerprint": "6a3e19041f996e3c52d055589111ca61de96dffeb589c06d9a8a8c965fbee1e0",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "6a3e19041f996e3c52d055589111ca61de96dffeb589c06d9a8a8c965fbee1e0",
@@ -293,7 +293,7 @@
           ],
           "fingerprint": "3200d8fbab7ee18881fb9819af4c09217f2382e91316da2c863d8ec9d2922618",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3200d8fbab7ee18881fb9819af4c09217f2382e91316da2c863d8ec9d2922618",
@@ -362,7 +362,7 @@
           ],
           "fingerprint": "887d7edd242f173fef4a2548142caaee3ed5e2b8d0f4927635f97e194dd50b7c",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "887d7edd242f173fef4a2548142caaee3ed5e2b8d0f4927635f97e194dd50b7c",
@@ -431,7 +431,7 @@
           ],
           "fingerprint": "f891db2becaa267972f9c207eb3243f28729d0f14b11fde71e1250717412aae6",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f891db2becaa267972f9c207eb3243f28729d0f14b11fde71e1250717412aae6",
@@ -694,6 +694,213 @@
               }
             }
           }
+        },
+        "https://about.fb.com/news/2026/09/new-features-for-meta-ray-ban-display-navigation-hologram/": {
+          "url": "https://about.fb.com/news/2026/09/new-features-for-meta-ray-ban-display-navigation-hologram/",
+          "title": "New Features for Meta Ray-Ban Display",
+          "publishedDate": "2026-09-23",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "drop",
+          "publicationEvidence": [
+            "jev:unrelated"
+          ],
+          "fingerprint": "0f0a4b995015a905b71ed2e3f56d32de09fb4f853161ccb023bba0e886526fe5",
+          "firstObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "0f0a4b995015a905b71ed2e3f56d32de09fb4f853161ccb023bba0e886526fe5",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "b52fd517599af9bc4efb99e727c85efcd24a04ebe4fa3639927fe78bcc516e03",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "b52fd517599af9bc4efb99e727c85efcd24a04ebe4fa3639927fe78bcc516e03",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "b52fd517599af9bc4efb99e727c85efcd24a04ebe4fa3639927fe78bcc516e03",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://about.fb.com/news/2026/09/introducing-meta-vr-glasses-3d-movies-immersive-live-sports-100-grams/": {
+          "url": "https://about.fb.com/news/2026/09/introducing-meta-vr-glasses-3d-movies-immersive-live-sports-100-grams/",
+          "title": "Introducing Meta VR Glasses: A Cinema, Courtside Seat, and Workspace in Just 100 Grams",
+          "publishedDate": "2026-09-23",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "drop",
+          "publicationEvidence": [
+            "jev:unrelated"
+          ],
+          "fingerprint": "81f32c25b7a71918ebf29c52f8eecf6a3a4751d1a48f3fad79366cb3d96220f2",
+          "firstObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "81f32c25b7a71918ebf29c52f8eecf6a3a4751d1a48f3fad79366cb3d96220f2",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "018017d6f84dda9dbdab3a211e3d20afc3f0a3e2bbb3daeebaa94fecb1ac967c",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "018017d6f84dda9dbdab3a211e3d20afc3f0a3e2bbb3daeebaa94fecb1ac967c",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "018017d6f84dda9dbdab3a211e3d20afc3f0a3e2bbb3daeebaa94fecb1ac967c",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://about.fb.com/news/2026/09/introducing-ray-ban-meta-audio-glasses-new-styles-plus-muse/": {
+          "url": "https://about.fb.com/news/2026/09/introducing-ray-ban-meta-audio-glasses-new-styles-plus-muse/",
+          "title": "Introducing Ray-Ban Meta Audio and More AI Glasses Styles",
+          "publishedDate": "2026-09-23",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "drop",
+          "publicationEvidence": [
+            "jev:unrelated"
+          ],
+          "fingerprint": "0adeaf0813b90a6ad3ae72fc6723f8206fbe4fcd963df8684360f2f523e34cce",
+          "firstObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "0adeaf0813b90a6ad3ae72fc6723f8206fbe4fcd963df8684360f2f523e34cce",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "e24a063ca131c5f1665ff6c5a60fd60d9163fa381fb7a7c6b3031dc89345dee6",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "e24a063ca131c5f1665ff6c5a60fd60d9163fa381fb7a7c6b3031dc89345dee6",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "e24a063ca131c5f1665ff6c5a60fd60d9163fa381fb7a7c6b3031dc89345dee6",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -712,7 +919,7 @@
           ],
           "fingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
@@ -781,7 +988,7 @@
           ],
           "fingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
@@ -846,11 +1053,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "jev:unclear"
+            "jev:strategic_signal"
           ],
           "fingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
@@ -919,7 +1126,7 @@
           ],
           "fingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
@@ -988,7 +1195,7 @@
           ],
           "fingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
@@ -1057,7 +1264,7 @@
           ],
           "fingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
@@ -1126,7 +1333,7 @@
           ],
           "fingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
@@ -1195,7 +1402,7 @@
           ],
           "fingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
@@ -1264,7 +1471,7 @@
           ],
           "fingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
@@ -1333,7 +1540,7 @@
           ],
           "fingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
@@ -1398,11 +1605,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "jev:unclear"
+            "jev:strategic_signal"
           ],
           "fingerprint": "eed8ce943afb8409ed2fbdd518ba54d81c5644043e4ca8f976f188c790e98f76",
           "firstObservedAt": "2026-09-22T05:01:36Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "eed8ce943afb8409ed2fbdd518ba54d81c5644043e4ca8f976f188c790e98f76",
@@ -1476,7 +1683,7 @@
           ],
           "fingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
@@ -1545,7 +1752,7 @@
           ],
           "fingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
@@ -1614,7 +1821,7 @@
           ],
           "fingerprint": "7acf956231436a87c7b7a9015db094361a079af2b65baf71f7b29d23f773fa11",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7acf956231436a87c7b7a9015db094361a079af2b65baf71f7b29d23f773fa11",
@@ -1968,7 +2175,7 @@
           ],
           "fingerprint": "b35a1f5bd3df45609ea7344b16e5d345202e2951c5f6d1ffa6a0c6ed22ad3509",
           "firstObservedAt": "2026-09-11T04:43:19Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b35a1f5bd3df45609ea7344b16e5d345202e2951c5f6d1ffa6a0c6ed22ad3509",
@@ -2037,7 +2244,7 @@
           ],
           "fingerprint": "458f353eef407444549b3ec68b6489d82873f8642f1707db100854945d78bcbc",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "458f353eef407444549b3ec68b6489d82873f8642f1707db100854945d78bcbc",
@@ -2106,7 +2313,7 @@
           ],
           "fingerprint": "ff23184ef3220928736c800efa6e9314e8a7760550fa387687cf9e2f0f7c072b",
           "firstObservedAt": "2026-09-18T11:07:09Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ff23184ef3220928736c800efa6e9314e8a7760550fa387687cf9e2f0f7c072b",
@@ -2175,56 +2382,56 @@
           ],
           "fingerprint": "a0f66a34b7150065230b3f172aaf6ff33d3271a7625781fbec17b9badca51efe",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a0f66a34b7150065230b3f172aaf6ff33d3271a7625781fbec17b9badca51efe",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Meta limits Facebook Pages to two link posts per month without subscription",
+                "summary": "Meta has expanded a test that began in December 2025, restricting non‑paying Pages to two link posts on Facebook each month unless they purchase a Meta One for Business subscription. Publisher Pages are exempt. A Q1 2026 report shows only 1.3% of U.S. post views included a link, down from 9.8% in 2022.",
                 "inputHash": "771c6743a7593974be5a75f68217b0bb362080044e08daa83b2e94472a7b9389",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Meta limits Facebook Pages to two link posts per month without subscription",
                     "inputHash": "771c6743a7593974be5a75f68217b0bb362080044e08daa83b2e94472a7b9389",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Meta has expanded a test that began in December 2025, restricting non‑paying Pages to two link posts on Facebook each month unless they purchase a Meta One for Business subscription. Publisher Pages are exempt. A Q1 2026 report shows only 1.3% of U.S. post views included a link, down from 9.8% in 2022.",
                     "inputHash": "771c6743a7593974be5a75f68217b0bb362080044e08daa83b2e94472a7b9389",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
               },
               "ja": {
                 "status": "machine",
-                "shortHeadline": "Meta One導入でFacebookページのリンク投稿が有料化、月2件に制限",
-                "summary": "Meta One for Businessの有料プラン開始に伴い、Facebookページのリンク付き投稿が有料化され、非課金のプロアカウントは月2件までに制限されるテストが拡大された。2025年12月に開始された同様のテストは当初限定的だったが、現在は対象ページが増加。出版社ページは除外され、リンク投稿は米国で2022年の9.8%から2026年Q1",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
+                "shortHeadline": "Meta One導入でFacebookページのリンク投稿が有料制限へ",
+                "summary": "Metaが提供する有料サブスクリプション「Meta One for Business」の開始に伴い、Facebookページのリンク付き投稿が月2件に制限され、追加投稿は有料プランでのみ可能になるテストが拡大された。対象は2025年12月に開始された同様のテスト対象外の出版社ページを除く。Metaはこのテストでリンク投稿が有料ユーザーにどれだけ価値をもたらすかを測定すると説明している。なお、2026年第1四半期の米国における調査では、リンク付き投稿の閲覧率は2022年の9.8%から1.3%に低下し、全体の98.7%が外部リンクを含まないと報告されている。",
+                "inputHash": "fefc4f6ab760d4f76ba3dc23c4c744921225bb0763183c2caf91fc9021df8f77",
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
                     "status": "machine",
-                    "value": "Meta One導入でFacebookページのリンク投稿が有料化、月2件に制限",
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "value": "Meta One導入でFacebookページのリンク投稿が有料制限へ",
+                    "inputHash": "fefc4f6ab760d4f76ba3dc23c4c744921225bb0763183c2caf91fc9021df8f77",
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
                     "status": "machine",
-                    "value": "Meta One for Businessの有料プラン開始に伴い、Facebookページのリンク付き投稿が有料化され、非課金のプロアカウントは月2件までに制限されるテストが拡大された。2025年12月に開始された同様のテストは当初限定的だったが、現在は対象ページが増加。出版社ページは除外され、リンク投稿は米国で2022年の9.8%から2026年Q1",
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "value": "Metaが提供する有料サブスクリプション「Meta One for Business」の開始に伴い、Facebookページのリンク付き投稿が月2件に制限され、追加投稿は有料プランでのみ可能になるテストが拡大された。対象は2025年12月に開始された同様のテスト対象外の出版社ページを除く。Metaはこのテストでリンク投稿が有料ユーザーにどれだけ価値をもたらすかを測定すると説明している。なお、2026年第1四半期の米国における調査では、リンク付き投稿の閲覧率は2022年の9.8%から1.3%に低下し、全体の98.7%が外部リンクを含まないと報告されている。",
+                    "inputHash": "fefc4f6ab760d4f76ba3dc23c4c744921225bb0763183c2caf91fc9021df8f77",
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
@@ -2244,7 +2451,7 @@
           ],
           "fingerprint": "7a3735fa2125245b701f0403e70d5be9f38bfb2c05a2f55eb26f365c64100363",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7a3735fa2125245b701f0403e70d5be9f38bfb2c05a2f55eb26f365c64100363",
@@ -2275,25 +2482,25 @@
                 }
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Meta、AI搭載のMeta One for Businessサブスクリプションを開始",
+                "summary": "Metaは、AI機能を組み込んだMeta One for Businessのサブスクリプションパッケージを発表した。月額14.99ドルから499ドルまでの4段階で、Instagramの競合分析や拡張インサイト履歴、Facebookのカスタムオーディエンス分析、コンテンツスケジューリング、投稿やリールへのリンク付与（プラン別上限あり）などを提供する。さらに、Facebookの目立つフォローボタン、WhatsAppのVerified Channels、24時間対応のAIチャットボット「Meta Business Agent」も利用可能となった。",
                 "inputHash": "93a5ef31ebe24309529d94734f1824dcd58a076ed84a10bbd388cda8677a66fc",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Meta、AI搭載のMeta One for Businessサブスクリプションを開始",
                     "inputHash": "93a5ef31ebe24309529d94734f1824dcd58a076ed84a10bbd388cda8677a66fc",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Metaは、AI機能を組み込んだMeta One for Businessのサブスクリプションパッケージを発表した。月額14.99ドルから499ドルまでの4段階で、Instagramの競合分析や拡張インサイト履歴、Facebookのカスタムオーディエンス分析、コンテンツスケジューリング、投稿やリールへのリンク付与（プラン別上限あり）などを提供する。さらに、Facebookの目立つフォローボタン、WhatsAppのVerified Channels、24時間対応のAIチャットボット「Meta Business Agent」も利用可能となった。",
                     "inputHash": "93a5ef31ebe24309529d94734f1824dcd58a076ed84a10bbd388cda8677a66fc",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
@@ -2313,7 +2520,7 @@
           ],
           "fingerprint": "b99bc004f19561d3b41b11db261e1c6bda71eea2a77e1fa2ffa57c0c463f7605",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b99bc004f19561d3b41b11db261e1c6bda71eea2a77e1fa2ffa57c0c463f7605",
@@ -2382,7 +2589,7 @@
           ],
           "fingerprint": "7710575499092c0ebde4bc14eb5f367ef0d75afa7befefcebbf176f614c5fda9",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7710575499092c0ebde4bc14eb5f367ef0d75afa7befefcebbf176f614c5fda9",
@@ -2413,25 +2620,25 @@
                 }
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "オーストラリア政府、ソーシャルメディアのアルゴリズムをオプトイン化へ",
+                "summary": "オーストラリア政府はソーシャルメディアのアルゴリズムをオプトイン方式にする計画を進めている。Metaらはユーザーが非アルゴリズ",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "オーストラリア政府、ソーシャルメディアのアルゴリズムをオプトイン化へ",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "オーストラリア政府はソーシャルメディアのアルゴリズムをオプトイン方式にする計画を進めている。Metaらはユーザーが非アルゴリズ",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
@@ -2451,7 +2658,7 @@
           ],
           "fingerprint": "4aaf9c911d85ee247eff16f2aa13b54517bcd16bd00668ba611261e38116d198",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4aaf9c911d85ee247eff16f2aa13b54517bcd16bd00668ba611261e38116d198",
@@ -2520,56 +2727,56 @@
           ],
           "fingerprint": "2065f116ecd6d8ec5fd93cf1775c9164b3390a46e23ce1e1f6dfe7297ab78042",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "2065f116ecd6d8ec5fd93cf1775c9164b3390a46e23ce1e1f6dfe7297ab78042",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Instagram active users in EU outpace Facebook in H1 2026",
+                "summary": "Meta’s EU DSA report shows Instagram had 297 million active users in the EU in the first half of 2026, versus 264 million on Facebook. Instagram’s user base is rising, while Facebook usage has been flat or declining, putting Instagram ahead in reach.",
                 "inputHash": "ee8aa2fd3c0e98a707690c0ba6417502908b1955b98a926734dd55bb96479ce9",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Instagram active users in EU outpace Facebook in H1 2026",
                     "inputHash": "ee8aa2fd3c0e98a707690c0ba6417502908b1955b98a926734dd55bb96479ce9",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Meta’s EU DSA report shows Instagram had 297 million active users in the EU in the first half of 2026, versus 264 million on Facebook. Instagram’s user base is rising, while Facebook usage has been flat or declining, putting Instagram ahead in reach.",
                     "inputHash": "ee8aa2fd3c0e98a707690c0ba6417502908b1955b98a926734dd55bb96479ce9",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "shortHeadline": "Instagram、EUでユーザー数がFacebookを上回り成長続く",
+                "summary": "Metaの2026年上半期EU DSA報告によると、Instagramのアクティブユーザーは2億9700万で、Facebookの2億6400万を上回り、成長が続いている。Facebookは利用者が横ばいか減少傾向で、次年にはInstagramが3億ユーザーを超える見込み。ThreadsはEUで4100万人、モデレーションスタッフは約7700人から5900人へ減少。Instagramではテロ関連コンテンツ報告が前期比38％増、児童性的搾取報告が22％増。一方、Facebook",
+                "inputHash": "d3712a90583e9116c89892353a7d3c6d9431bbe1e6fbab75d634c3cab1d74965",
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "status": "machine",
+                    "value": "Instagram、EUでユーザー数がFacebookを上回り成長続く",
+                    "inputHash": "d3712a90583e9116c89892353a7d3c6d9431bbe1e6fbab75d634c3cab1d74965",
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "status": "machine",
+                    "value": "Metaの2026年上半期EU DSA報告によると、Instagramのアクティブユーザーは2億9700万で、Facebookの2億6400万を上回り、成長が続いている。Facebookは利用者が横ばいか減少傾向で、次年にはInstagramが3億ユーザーを超える見込み。ThreadsはEUで4100万人、モデレーションスタッフは約7700人から5900人へ減少。Instagramではテロ関連コンテンツ報告が前期比38％増、児童性的搾取報告が22％増。一方、Facebook",
+                    "inputHash": "d3712a90583e9116c89892353a7d3c6d9431bbe1e6fbab75d634c3cab1d74965",
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
@@ -2583,62 +2790,62 @@
           "publishedDate": "2026-08-30",
           "updatedDate": null,
           "matchEvidence": [],
-          "publicationStatus": "drop",
+          "publicationStatus": "included",
           "publicationEvidence": [
-            "jev:unrelated"
+            "jev:strategic_signal"
           ],
           "fingerprint": "d3fb5f3c45f341c06bab017f5c86d88dc6bcbd0e1ad985b8a2ce1a5135709e30",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d3fb5f3c45f341c06bab017f5c86d88dc6bcbd0e1ad985b8a2ce1a5135709e30",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Meta adds one‑tap Facebook login for Android, Web and iOS",
+                "summary": "Meta is rolling out a one‑tap sign‑on for Android and Web, improves its Limited Login flow, and updates the iOS fast app switch to use the native Facebook app. Developers can access these changes through the latest SDK.",
                 "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Meta adds one‑tap Facebook login for Android, Web and iOS",
                     "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Meta is rolling out a one‑tap sign‑on for Android and Web, improves its Limited Login flow, and updates the iOS fast app switch to use the native Facebook app. Developers can access these changes through the latest SDK.",
                     "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "shortHeadline": "Meta、Facebookログインをワンタップで簡素化",
+                "summary": "Metaは、Facebookアカウントでのログイン機能を改善し、Android と Web でワンタップサインオンを提供します。既にデバイスにサインイン済みのユーザーは、1 回のタップで第三者アプリにログインでき、フローが短縮されます。また、Limited Login の再ログイン回数削減や、iOS ではネイティブ Facebook アプリへの高速スイッチにより、ブラウザ経由より速くログインできます。これらの機能は最新 SDK で利用可能で、開発者は必要な機能を選択して導入できます。",
+                "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "status": "machine",
+                    "value": "Meta、Facebookログインをワンタップで簡素化",
+                    "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "status": "machine",
+                    "value": "Metaは、Facebookアカウントでのログイン機能を改善し、Android と Web でワンタップサインオンを提供します。既にデバイスにサインイン済みのユーザーは、1 回のタップで第三者アプリにログインでき、フローが短縮されます。また、Limited Login の再ログイン回数削減や、iOS ではネイティブ Facebook アプリへの高速スイッチにより、ブラウザ経由より速くログインできます。これらの機能は最新 SDK で利用可能で、開発者は必要な機能を選択して導入できます。",
+                    "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
@@ -2658,7 +2865,7 @@
           ],
           "fingerprint": "8747337b0552909dab732fabc4a01657cfc6f50fdfbabaf7503970d3d9622764",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "8747337b0552909dab732fabc4a01657cfc6f50fdfbabaf7503970d3d9622764",
@@ -2689,25 +2896,25 @@
                 }
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "ニュージーランド、16歳以上確認を義務付けるティーン向けSNS規制法案を提出",
+                "summary": "ニュージーランドは、Instagram、TikTok、Snapchat、Facebookなどの高リスクSNSに対し、利用者が16歳以上であることを確認する措置を義務付ける「オンライン安全法案」を提出した",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "ニュージーランド、16歳以上確認を義務付けるティーン向けSNS規制法案を提出",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "ニュージーランドは、Instagram、TikTok、Snapchat、Facebookなどの高リスクSNSに対し、利用者が16歳以上であることを確認する措置を義務付ける「オンライン安全法案」を提出した",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
@@ -2727,7 +2934,7 @@
           ],
           "fingerprint": "db241d612442e92283e0466c55eddfc3fb1c6c0e4059efa132d5e7f40115ba99",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "db241d612442e92283e0466c55eddfc3fb1c6c0e4059efa132d5e7f40115ba99",
@@ -2796,7 +3003,7 @@
           ],
           "fingerprint": "f207af774f37350e35a2b8c49ca9b17ea6c1fd470f4202f794a9429e8bbcd1fd",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f207af774f37350e35a2b8c49ca9b17ea6c1fd470f4202f794a9429e8bbcd1fd",
@@ -2865,7 +3072,7 @@
           ],
           "fingerprint": "50725616e01ef75b4c2ada2657f23c2d1f96ba76454c5feec1c399fd39c39b2d",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "50725616e01ef75b4c2ada2657f23c2d1f96ba76454c5feec1c399fd39c39b2d",
@@ -2934,7 +3141,7 @@
           ],
           "fingerprint": "a8bfab76f93d2f1d4991da976afd8f58e84e059e9f40f4cc66c7eeb93528afde",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a8bfab76f93d2f1d4991da976afd8f58e84e059e9f40f4cc66c7eeb93528afde",
@@ -2965,25 +3172,25 @@
                 }
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "YouTubeを含む各SNSの動画視聴数の測定基準が異なる",
+                "summary": "YouTubeは動画視聴数の算出方法を変更し、1秒以上再生されたものを「ビュー」、最初のフレームを超えて視聴またはクリックしたものを「エンゲージドビュー」、公開長尺動画やアーカイブ配信のエンゲージドビューを「クオリファイドビュー」と定義した。他のSNSでもビューの定義はプラットフォームや形式により異なり、同一指標でも意味合いが変わることがある。そのため、ビュー数だけでエンゲージメントや関心を判断するのは難しく、マーケティングやスポンサー契約の際には数値の背景を確認する必要がある。",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "YouTubeを含む各SNSの動画視聴数の測定基準が異なる",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "YouTubeは動画視聴数の算出方法を変更し、1秒以上再生されたものを「ビュー」、最初のフレームを超えて視聴またはクリックしたものを「エンゲージドビュー」、公開長尺動画やアーカイブ配信のエンゲージドビューを「クオリファイドビュー」と定義した。他のSNSでもビューの定義はプラットフォームや形式により異なり、同一指標でも意味合いが変わることがある。そのため、ビュー数だけでエンゲージメントや関心を判断するのは難しく、マーケティングやスポンサー契約の際には数値の背景を確認する必要がある。",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
@@ -3003,7 +3210,7 @@
           ],
           "fingerprint": "c40906d09211e86d39ab33460b54614334f5d56c28cb7d8c403bcd7456f8c6f3",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "c40906d09211e86d39ab33460b54614334f5d56c28cb7d8c403bcd7456f8c6f3",
@@ -3059,6 +3266,75 @@
               }
             }
           }
+        },
+        "https://www.socialmediatoday.com/news/meta-outlines-muse-ai-glasses-and-vr-device-updates-at-connect-2026/831223/": {
+          "url": "https://www.socialmediatoday.com/news/meta-outlines-muse-ai-glasses-and-vr-device-updates-at-connect-2026/831223/",
+          "title": "Meta outlines Muse, AI glasses and VR device updates at Connect 2026",
+          "publishedDate": "2026-09-24",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "drop",
+          "publicationEvidence": [
+            "jev:unrelated"
+          ],
+          "fingerprint": "b9e26ee389d2561ec364cf8ab275694fdb11b32162145fbfc2d422abdc5d96f6",
+          "firstObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "b9e26ee389d2561ec364cf8ab275694fdb11b32162145fbfc2d422abdc5d96f6",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "9efa32fbc6ef8a857c9e6cb6d498293b6acd819d309db41c7e86cb9f35ce6923",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "9efa32fbc6ef8a857c9e6cb6d498293b6acd819d309db41c7e86cb9f35ce6923",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "9efa32fbc6ef8a857c9e6cb6d498293b6acd819d309db41c7e86cb9f35ce6923",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3077,7 +3353,7 @@
           ],
           "fingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
           "firstObservedAt": "2026-09-02T04:36:59Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
@@ -3146,7 +3422,7 @@
           ],
           "fingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
@@ -3215,7 +3491,7 @@
           ],
           "fingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
@@ -3284,7 +3560,7 @@
           ],
           "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
@@ -3353,7 +3629,7 @@
           ],
           "fingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
@@ -3422,7 +3698,7 @@
           ],
           "fingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
@@ -3491,7 +3767,7 @@
           ],
           "fingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
@@ -3560,7 +3836,7 @@
           ],
           "fingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
@@ -3629,7 +3905,7 @@
           ],
           "fingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
@@ -3698,7 +3974,7 @@
           ],
           "fingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
@@ -3767,7 +4043,7 @@
           ],
           "fingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
@@ -3836,7 +4112,7 @@
           ],
           "fingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
@@ -3905,7 +4181,7 @@
           ],
           "fingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
@@ -3974,7 +4250,7 @@
           ],
           "fingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
@@ -4043,7 +4319,7 @@
           ],
           "fingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
@@ -4112,7 +4388,7 @@
           ],
           "fingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
@@ -4181,7 +4457,7 @@
           ],
           "fingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
@@ -4250,7 +4526,7 @@
           ],
           "fingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
@@ -4319,7 +4595,7 @@
           ],
           "fingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
@@ -4388,7 +4664,7 @@
           ],
           "fingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
@@ -4457,7 +4733,7 @@
           ],
           "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
@@ -4526,7 +4802,7 @@
           ],
           "fingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
@@ -4595,7 +4871,7 @@
           ],
           "fingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
@@ -4664,7 +4940,7 @@
           ],
           "fingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
@@ -4733,7 +5009,7 @@
           ],
           "fingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
@@ -4802,7 +5078,7 @@
           ],
           "fingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
@@ -4871,7 +5147,7 @@
           ],
           "fingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
@@ -4940,7 +5216,7 @@
           ],
           "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
@@ -5297,7 +5573,7 @@
           ],
           "fingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
           "firstObservedAt": "2026-09-09T04:45:10Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
@@ -5366,7 +5642,7 @@
           ],
           "fingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
@@ -5435,7 +5711,7 @@
           ],
           "fingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
@@ -5504,7 +5780,7 @@
           ],
           "fingerprint": "4aa58a1d9015c2e87532ffcf67da05612a70ab2224562cbe10a554a8efb30049",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4aa58a1d9015c2e87532ffcf67da05612a70ab2224562cbe10a554a8efb30049",
@@ -5573,7 +5849,7 @@
           ],
           "fingerprint": "7b84af3e65c26a3c2facace38301e1a3b57887ef09a34e1cfa0008852dcd1f8c",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7b84af3e65c26a3c2facace38301e1a3b57887ef09a34e1cfa0008852dcd1f8c",
@@ -5642,7 +5918,7 @@
           ],
           "fingerprint": "7e118c18c9a7eafed3392219c9c930ab728955ad17119f4b83752bb90596e63a",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7e118c18c9a7eafed3392219c9c930ab728955ad17119f4b83752bb90596e63a",
@@ -5711,7 +5987,7 @@
           ],
           "fingerprint": "36c97d1dd653bebefad321d32289082419452d7186bd74a6ac68a8b102dd120b",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "36c97d1dd653bebefad321d32289082419452d7186bd74a6ac68a8b102dd120b",
@@ -5780,7 +6056,7 @@
           ],
           "fingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
@@ -5849,56 +6125,56 @@
           ],
           "fingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "15-year evolution of jonloomer.com after two layoffs",
+                "summary": "After being laid off twice—first as VP of Strategic Marketing for a nonprofit and earlier as Director of Product for a startup—he bought jonloomer.com to showcase his experience. He built a basic site, wrote about social media, later focused on Facebook marketing, monetized with AdSense, affiliate links and low‑budget Facebook ads.",
                 "inputHash": "2886a15c10e2cedd8b11691e5e8816f01d94ec18f12e7647ff2eb74323a93431",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "15-year evolution of jonloomer.com after two layoffs",
                     "inputHash": "2886a15c10e2cedd8b11691e5e8816f01d94ec18f12e7647ff2eb74323a93431",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "After being laid off twice—first as VP of Strategic Marketing for a nonprofit and earlier as Director of Product for a startup—he bought jonloomer.com to showcase his experience. He built a basic site, wrote about social media, later focused on Facebook marketing, monetized with AdSense, affiliate links and low‑budget Facebook ads.",
                     "inputHash": "2886a15c10e2cedd8b11691e5e8816f01d94ec18f12e7647ff2eb74323a93431",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "shortHeadline": "ジョン・ルーマー氏のブログ創設から15年の軌跡",
+                "summary": "15年前、非営利団体の戦略マーケティングVPを解雇されたジョン・ルーマー氏は再就職のために jonloomer.com を取得し、当初は自身のスキルを示す簡易サイトを作った。SNSやマーケティングに関する記事を書き続け、約半年後にFacebook広告に特化したニッチを見つけ、AdSenseやアフィリエイト、広告枠販売で収益化を図った。現在までに同サイトは15年の歴史を持つ。",
+                "inputHash": "253675d89b524ed261aed2f7456a73a384155a0ee7cad4d5203baee44973b0e3",
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "status": "machine",
+                    "value": "ジョン・ルーマー氏のブログ創設から15年の軌跡",
+                    "inputHash": "253675d89b524ed261aed2f7456a73a384155a0ee7cad4d5203baee44973b0e3",
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "status": "machine",
+                    "value": "15年前、非営利団体の戦略マーケティングVPを解雇されたジョン・ルーマー氏は再就職のために jonloomer.com を取得し、当初は自身のスキルを示す簡易サイトを作った。SNSやマーケティングに関する記事を書き続け、約半年後にFacebook広告に特化したニッチを見つけ、AdSenseやアフィリエイト、広告枠販売で収益化を図った。現在までに同サイトは15年の歴史を持つ。",
+                    "inputHash": "253675d89b524ed261aed2f7456a73a384155a0ee7cad4d5203baee44973b0e3",
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
@@ -5918,7 +6194,7 @@
           ],
           "fingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
@@ -5987,56 +6263,56 @@
           ],
           "fingerprint": "2b92989d8e83f9d6a4e793958554dcf47ff39977e08bb8078a17f8ee2d7ca70f",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "2b92989d8e83f9d6a4e793958554dcf47ff39977e08bb8078a17f8ee2d7ca70f",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Custom Attribution option for Meta ads",
+                "summary": "Custom attribution is a Meta ad delivery option, alongside Standard and Incremental models. It uses granular conversion data shared via API from partners or in‑house tools (e.g., Adobe, Northbeam, Rockerbox, Triple Whale) to assign credit to each ad touchpoint. Most advertisers are advised to use existing models, defaulting to incremental attribution.",
                 "inputHash": "f8028f2edce50d8a7d2deb19aee02548b02793cd112e3f023f5c48d449444df3",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Custom Attribution option for Meta ads",
                     "inputHash": "f8028f2edce50d8a7d2deb19aee02548b02793cd112e3f023f5c48d449444df3",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Custom attribution is a Meta ad delivery option, alongside Standard and Incremental models. It uses granular conversion data shared via API from partners or in‑house tools (e.g., Adobe, Northbeam, Rockerbox, Triple Whale) to assign credit to each ad touchpoint. Most advertisers are advised to use existing models, defaulting to incremental attribution.",
                     "inputHash": "f8028f2edce50d8a7d2deb19aee02548b02793cd112e3f023f5c48d449444df3",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
               },
               "ja": {
                 "status": "machine",
-                "shortHeadline": "Metaのカスタムアトリビューションはパートナー連携で配信最適化",
-                "summary": "広告主は属性モデル選択時に標準・インクリメンタルに加えて「カスタム」オプション",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
+                "shortHeadline": "Metaのカスタムアトリビューションとは何か",
+                "summary": "Meta広告の属性モデルに「カスタム」オプションが追加されました。標準やインクリメンタルに加えて、パートナーや社内分析ツールと連携し、各広告タッチポイントに対するクレジットを独自に設定できます。Adobe、Northbeam、Rockerbox、Triple Whale などの提携パートナー経由で API で属性データを提供する必要があります。多くの広告主は利用する必要はなく、特に理由がなければインクリメンタル属性を使用することが推奨されます。",
+                "inputHash": "31e3f06b2c613a4708ac528836fcd1279934d7402be23e4bac67913257aac2b0",
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
                     "status": "machine",
-                    "value": "Metaのカスタムアトリビューションはパートナー連携で配信最適化",
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "value": "Metaのカスタムアトリビューションとは何か",
+                    "inputHash": "31e3f06b2c613a4708ac528836fcd1279934d7402be23e4bac67913257aac2b0",
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
                     "status": "machine",
-                    "value": "広告主は属性モデル選択時に標準・インクリメンタルに加えて「カスタム」オプション",
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "value": "Meta広告の属性モデルに「カスタム」オプションが追加されました。標準やインクリメンタルに加えて、パートナーや社内分析ツールと連携し、各広告タッチポイントに対するクレジットを独自に設定できます。Adobe、Northbeam、Rockerbox、Triple Whale などの提携パートナー経由で API で属性データを提供する必要があります。多くの広告主は利用する必要はなく、特に理由がなければインクリメンタル属性を使用することが推奨されます。",
+                    "inputHash": "31e3f06b2c613a4708ac528836fcd1279934d7402be23e4bac67913257aac2b0",
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
@@ -6056,56 +6332,56 @@
           ],
           "fingerprint": "740954a5f394867bf9fe5eb3e01abe0ae085d6f24477c5c260af08363e10ac76",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "740954a5f394867bf9fe5eb3e01abe0ae085d6f24477c5c260af08363e10ac76",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Advice to Start Campaigns with Fewer Ads",
+                "summary": "The article argues that launching a campaign with many ads can waste resources and lower quality. It recommends beginning with a small handful of ads, monitoring performance for a few weeks, and then expanding only if results justify it, emphasizing quality over quantity.",
                 "inputHash": "94464d75cc602ff9eb75e49e89ee76c710dc972833400ae3a283b0ec40f8f386",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Advice to Start Campaigns with Fewer Ads",
                     "inputHash": "94464d75cc602ff9eb75e49e89ee76c710dc972833400ae3a283b0ec40f8f386",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "The article argues that launching a campaign with many ads can waste resources and lower quality. It recommends beginning with a small handful of ads, monitoring performance for a few weeks, and then expanding only if results justify it, emphasizing quality over quantity.",
                     "inputHash": "94464d75cc602ff9eb75e49e89ee76c710dc972833400ae3a283b0ec40f8f386",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
               },
               "ja": {
                 "status": "machine",
-                "shortHeadline": "広告は少数から始め、品質を重視すべき",
-                "summary": "多くの広告を一度に作成すると、Meta が一部だけを選び他は無視され、リソースが無駄になる上に品質が低下しやすい。まずは2〜3本、あるいは1本の広告に絞り、顧客ペルソナの課題に合わせたクリエイティブを作成し、数週間結果を観測して効果を検証する。成果が出ればそのまま、出なければ角度やビジュアルを変えて新たに広告を作成する。必要に応じて段階的に広告数を増やすことで、無駄な広告作成を防ぎつつ効果的なキャンペーンが実現できる。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
+                "shortHeadline": "広告は多数より少数で開始し、品質と効果を検証すべき",
+                "summary": "現在は多数の広告でキャンペーンを開始するのが主",
+                "inputHash": "87d8dfdcd70438e59e01ac46abf3d586ffd4e0818943f51f5b05b85710f890c9",
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
                     "status": "machine",
-                    "value": "広告は少数から始め、品質を重視すべき",
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "value": "広告は多数より少数で開始し、品質と効果を検証すべき",
+                    "inputHash": "87d8dfdcd70438e59e01ac46abf3d586ffd4e0818943f51f5b05b85710f890c9",
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
                     "status": "machine",
-                    "value": "多くの広告を一度に作成すると、Meta が一部だけを選び他は無視され、リソースが無駄になる上に品質が低下しやすい。まずは2〜3本、あるいは1本の広告に絞り、顧客ペルソナの課題に合わせたクリエイティブを作成し、数週間結果を観測して効果を検証する。成果が出ればそのまま、出なければ角度やビジュアルを変えて新たに広告を作成する。必要に応じて段階的に広告数を増やすことで、無駄な広告作成を防ぎつつ効果的なキャンペーンが実現できる。",
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "value": "現在は多数の広告でキャンペーンを開始するのが主",
+                    "inputHash": "87d8dfdcd70438e59e01ac46abf3d586ffd4e0818943f51f5b05b85710f890c9",
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
@@ -6125,7 +6401,7 @@
           ],
           "fingerprint": "71ba278f719424a43f5e5b3edf7b2b5db300c1033f3f3bea14595c68e91b4a8f",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "71ba278f719424a43f5e5b3edf7b2b5db300c1033f3f3bea14595c68e91b4a8f",
@@ -6194,7 +6470,7 @@
           ],
           "fingerprint": "bcd54ad6dad960c22cd207d1c9480c82c88d455d2161303c3ab0ea69ade9d260",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "bcd54ad6dad960c22cd207d1c9480c82c88d455d2161303c3ab0ea69ade9d260",
@@ -6225,25 +6501,25 @@
                 }
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "「コンバージョン数最大化」でもROAS目標入札が利用可能に",
+                "summary": "Metaは、パフォーマンス目標「コンバージョン数を最大化」でもROAS（広告費回収率）目標入札戦略を選択できるようにした。従来は「コンバージョン価値の最大化」のみで利用可能だったが、ABOでもCBOでもROAS目標を設定できるようになった。",
                 "inputHash": "9a5321816224768387f18d3fb4b334bd504e92e79e90ecfd814283ee4bb84e46",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "「コンバージョン数最大化」でもROAS目標入札が利用可能に",
                     "inputHash": "9a5321816224768387f18d3fb4b334bd504e92e79e90ecfd814283ee4bb84e46",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Metaは、パフォーマンス目標「コンバージョン数を最大化」でもROAS（広告費回収率）目標入札戦略を選択できるようにした。従来は「コンバージョン価値の最大化」のみで利用可能だったが、ABOでもCBOでもROAS目標を設定できるようになった。",
                     "inputHash": "9a5321816224768387f18d3fb4b334bd504e92e79e90ecfd814283ee4bb84e46",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
@@ -6263,7 +6539,7 @@
           ],
           "fingerprint": "ed38006cc4837fe23ac660bf174e18b9a2bd7f250705e0a27997c323cc136b53",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ed38006cc4837fe23ac660bf174e18b9a2bd7f250705e0a27997c323cc136b53",
@@ -6294,25 +6570,25 @@
                 }
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "スケールに適したキャンペーンの見極め方法",
+                "summary": "高パフォーマンスと見えるキャンペーンでも、予算増で成果が低下することがある。スケールに適しているか判断するには、①1日クリックコンバージョンだけを抽出し、ビュー・エンゲージ・7日クリックは除外して単独の成果を確認する。②新規オーディエンスの結果を分離し、訪問者180日カスタムオーディエンスや購入者730日カスタムオーディエンスなど、セグメントを明確に定義した上で、リマーケティングや既存顧客を除いた新規層の成果だけを評価する。新規層と1日クリックで高い成果とコスト効率が確認できれば、予算増加に伴うコスト上昇を見込んでもスケール可能と判断できる。",
                 "inputHash": "fd78ae120a3e6cf368468ac0930620a8086af183424f4490418e28482cc29571",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "スケールに適したキャンペーンの見極め方法",
                     "inputHash": "fd78ae120a3e6cf368468ac0930620a8086af183424f4490418e28482cc29571",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "高パフォーマンスと見えるキャンペーンでも、予算増で成果が低下することがある。スケールに適しているか判断するには、①1日クリックコンバージョンだけを抽出し、ビュー・エンゲージ・7日クリックは除外して単独の成果を確認する。②新規オーディエンスの結果を分離し、訪問者180日カスタムオーディエンスや購入者730日カスタムオーディエンスなど、セグメントを明確に定義した上で、リマーケティングや既存顧客を除いた新規層の成果だけを評価する。新規層と1日クリックで高い成果とコスト効率が確認できれば、予算増加に伴うコスト上昇を見込んでもスケール可能と判断できる。",
                     "inputHash": "fd78ae120a3e6cf368468ac0930620a8086af183424f4490418e28482cc29571",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
@@ -6332,7 +6608,7 @@
           ],
           "fingerprint": "8d1d52727a5ae35c48f40a200de5b33f0ffd37a05d60b4b7c39ca83704aa8564",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "8d1d52727a5ae35c48f40a200de5b33f0ffd37a05d60b4b7c39ca83704aa8564",
@@ -6401,7 +6677,7 @@
           ],
           "fingerprint": "4e803170dfe0d9450cc16523a987e6f132b598c600b1621a69d956243129a651",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4e803170dfe0d9450cc16523a987e6f132b598c600b1621a69d956243129a651",
@@ -6470,7 +6746,7 @@
           ],
           "fingerprint": "1841e5a6c23dbb8dadcd208300abd7d77a90779b41a99f0c292c579a460cf150",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1841e5a6c23dbb8dadcd208300abd7d77a90779b41a99f0c292c579a460cf150",
@@ -6539,7 +6815,7 @@
           ],
           "fingerprint": "4765d055b9b7c5886994d3a6ed2e50aa01eb3f8c1001a5c7edf377d55f906c75",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4765d055b9b7c5886994d3a6ed2e50aa01eb3f8c1001a5c7edf377d55f906c75",
@@ -6570,25 +6846,25 @@
                 }
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "購入最適化では不要な年齢・性別・配置制限を避ける",
+                "summary": "広告主は購入を目的とした最適化時に、年齢・性別や配置（例：Audience Network）で不要に制限しがちだが、Metaは自動で調整する。クリックや閲覧など上位ファネルの指標を最適化する場合は、低品質なクリックや強制再生が増えることがある。その際は除外せず、価値ルールや入札額の調整で対応するのが推奨される。",
                 "inputHash": "4b9561f50edddc304bd32d13c98fa806291efaf335e844371b1eb054d994bbb1",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "購入最適化では不要な年齢・性別・配置制限を避ける",
                     "inputHash": "4b9561f50edddc304bd32d13c98fa806291efaf335e844371b1eb054d994bbb1",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "広告主は購入を目的とした最適化時に、年齢・性別や配置（例：Audience Network）で不要に制限しがちだが、Metaは自動で調整する。クリックや閲覧など上位ファネルの指標を最適化する場合は、低品質なクリックや強制再生が増えることがある。その際は除外せず、価値ルールや入札額の調整で対応するのが推奨される。",
                     "inputHash": "4b9561f50edddc304bd32d13c98fa806291efaf335e844371b1eb054d994bbb1",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-24T10:49:46Z",
                     "reviewedAt": null
                   }
                 }
@@ -6608,7 +6884,7 @@
           ],
           "fingerprint": "5695ecb547e935ecda99879bd723c583c879fef875a9d9cf6ef6bf1634313871",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5695ecb547e935ecda99879bd723c583c879fef875a9d9cf6ef6bf1634313871",
@@ -6677,7 +6953,7 @@
           ],
           "fingerprint": "f35b86ceb1facb612ff803b02e81a1641e7e48d13deec393e2a44fbb82cec060",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f35b86ceb1facb612ff803b02e81a1641e7e48d13deec393e2a44fbb82cec060",
@@ -6746,7 +7022,7 @@
           ],
           "fingerprint": "f2c1c8efecb357013bb002fc2359ce41c1fbd7d1d2a434f58878f0b6e220db07",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f2c1c8efecb357013bb002fc2359ce41c1fbd7d1d2a434f58878f0b6e220db07",
@@ -6822,7 +7098,7 @@
           ],
           "fingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
@@ -6893,7 +7169,7 @@
           ],
           "fingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
@@ -6964,7 +7240,7 @@
           ],
           "fingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-23T13:03:46Z",
+          "lastObservedAt": "2026-09-24T10:49:46Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
@@ -7100,30 +7376,6 @@
     "entries": [
       {
         "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/15-years-of-jonloomer-com/",
-        "fingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
-        "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/15-years-of-jonloomer-com/",
-        "fingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
-        "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
         "itemKey": "https://www.jonloomer.com/ai-disclosure-checkbox-chatgpt-attribution/",
         "fingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
         "locale": "en",
@@ -7139,9 +7391,9 @@
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-automated-bidding-placements-url-parameters/",
         "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
         "locale": "en",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-23T10:27:45Z",
-        "nextRetryAt": "2026-09-23T14:27:45Z",
+        "failureCount": 4,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T18:49:46Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -7151,11 +7403,11 @@
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-initial-impressions/",
         "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
         "locale": "en",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-23T10:27:45Z",
-        "nextRetryAt": "2026-09-23T14:27:45Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
+        "failureCount": 4,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T18:49:46Z",
+        "lastFailureCode": "summary_invalid",
+        "lastProviderErrorCode": null,
         "quarantined": false
       },
       {
@@ -7163,9 +7415,9 @@
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-initial-impressions/",
         "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
         "locale": "ja",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-23T10:27:45Z",
-        "nextRetryAt": "2026-09-23T14:27:45Z",
+        "failureCount": 4,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T18:49:46Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -7175,9 +7427,9 @@
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-limitations-ai-instant-forms/",
         "fingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
         "locale": "en",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-23T10:27:45Z",
-        "nextRetryAt": "2026-09-23T14:27:45Z",
+        "failureCount": 4,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T18:49:46Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -7283,9 +7535,9 @@
         "itemKey": "https://www.jonloomer.com/meta-one-business-plans/",
         "fingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T14:49:46Z",
         "lastFailureCode": "response_invalid_shape",
         "lastProviderErrorCode": null,
         "quarantined": false
@@ -7319,21 +7571,21 @@
         "itemKey": "https://www.jonloomer.com/push-delivery-tests-chatgpt-ads-updates/",
         "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
         "locale": "en",
+        "failureCount": 4,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T18:49:46Z",
+        "lastFailureCode": "summary_invalid",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/qvt/15-discontinued-facebook-ads-features/",
+        "fingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
+        "locale": "en",
         "failureCount": 3,
-        "lastFailureAt": "2026-09-23T10:27:45Z",
-        "nextRetryAt": "2026-09-23T14:27:45Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/qvt/15-discontinued-facebook-ads-features/",
-        "fingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
-        "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T14:49:46Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -7343,23 +7595,11 @@
         "itemKey": "https://www.jonloomer.com/qvt/15-discontinued-facebook-ads-features/",
         "fingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
         "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/qvt/age-gender-placement-restrictions/",
-        "fingerprint": "4765d055b9b7c5886994d3a6ed2e50aa01eb3f8c1001a5c7edf377d55f906c75",
-        "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T14:49:46Z",
+        "lastFailureCode": "summary_invalid",
+        "lastProviderErrorCode": null,
         "quarantined": false
       },
       {
@@ -7367,11 +7607,11 @@
         "itemKey": "https://www.jonloomer.com/qvt/audience-segments-failures/",
         "fingerprint": "5695ecb547e935ecda99879bd723c583c879fef875a9d9cf6ef6bf1634313871",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T14:49:46Z",
+        "lastFailureCode": "summary_invalid",
+        "lastProviderErrorCode": null,
         "quarantined": false
       },
       {
@@ -7379,21 +7619,9 @@
         "itemKey": "https://www.jonloomer.com/qvt/audience-segments-failures/",
         "fingerprint": "5695ecb547e935ecda99879bd723c583c879fef875a9d9cf6ef6bf1634313871",
         "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/qvt/custom-attribution/",
-        "fingerprint": "2b92989d8e83f9d6a4e793958554dcf47ff39977e08bb8078a17f8ee2d7ca70f",
-        "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T14:49:46Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -7403,11 +7631,11 @@
         "itemKey": "https://www.jonloomer.com/qvt/i-need-a-specific-audience/",
         "fingerprint": "4e803170dfe0d9450cc16523a987e6f132b598c600b1621a69d956243129a651",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T14:49:46Z",
+        "lastFailureCode": "summary_invalid",
+        "lastProviderErrorCode": null,
         "quarantined": false
       },
       {
@@ -7415,11 +7643,11 @@
         "itemKey": "https://www.jonloomer.com/qvt/meta-restricted-my-account/",
         "fingerprint": "1841e5a6c23dbb8dadcd208300abd7d77a90779b41a99f0c292c579a460cf150",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T14:49:46Z",
+        "lastFailureCode": "summary_invalid",
+        "lastProviderErrorCode": null,
         "quarantined": false
       },
       {
@@ -7427,9 +7655,9 @@
         "itemKey": "https://www.jonloomer.com/qvt/predicted-lifetime-value-pltv/",
         "fingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T14:49:46Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -7439,33 +7667,9 @@
         "itemKey": "https://www.jonloomer.com/qvt/quality-traffic-percentage/",
         "fingerprint": "f2c1c8efecb357013bb002fc2359ce41c1fbd7d1d2a434f58878f0b6e220db07",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/qvt/roas-goal-maximize-number-conversions/",
-        "fingerprint": "bcd54ad6dad960c22cd207d1c9480c82c88d455d2161303c3ab0ea69ade9d260",
-        "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/qvt/start-with-fewer-ads/",
-        "fingerprint": "740954a5f394867bf9fe5eb3e01abe0ae085d6f24477c5c260af08363e10ac76",
-        "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T14:49:46Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -7475,23 +7679,11 @@
         "itemKey": "https://www.jonloomer.com/qvt/website-and-instant-forms-confusion/",
         "fingerprint": "f35b86ceb1facb612ff803b02e81a1641e7e48d13deec393e2a44fbb82cec060",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/qvt/when-is-a-campaign-worth-scaling/",
-        "fingerprint": "ed38006cc4837fe23ac660bf174e18b9a2bd7f250705e0a27997c323cc136b53",
-        "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T14:49:46Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
         "quarantined": false
       },
       {
@@ -7580,36 +7772,12 @@
       },
       {
         "sourceId": "social-media-today-meta-ads",
-        "itemKey": "https://www.socialmediatoday.com/news/facebook-pages-get-charged-for-link-posts/830743/",
-        "fingerprint": "a0f66a34b7150065230b3f172aaf6ff33d3271a7625781fbec17b9badca51efe",
+        "itemKey": "https://www.socialmediatoday.com/news/how-social-platforms-measure-video-views/828349/",
+        "fingerprint": "a8bfab76f93d2f1d4991da976afd8f58e84e059e9f40f4cc66c7eeb93528afde",
         "locale": "en",
         "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "response_invalid_shape",
-        "lastProviderErrorCode": null,
-        "quarantined": false
-      },
-      {
-        "sourceId": "social-media-today-meta-ads",
-        "itemKey": "https://www.socialmediatoday.com/news/how-social-platforms-measure-video-views/828349/",
-        "fingerprint": "a8bfab76f93d2f1d4991da976afd8f58e84e059e9f40f4cc66c7eeb93528afde",
-        "locale": "en",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T14:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "social-media-today-meta-ads",
-        "itemKey": "https://www.socialmediatoday.com/news/how-social-platforms-measure-video-views/828349/",
-        "fingerprint": "a8bfab76f93d2f1d4991da976afd8f58e84e059e9f40f4cc66c7eeb93528afde",
-        "locale": "ja",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T14:03:46Z",
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T12:49:46Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -7619,35 +7787,11 @@
         "itemKey": "https://www.socialmediatoday.com/news/how-will-metas-settlement-impact-social-media/829033/",
         "fingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
         "locale": "en",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-23T10:27:45Z",
-        "nextRetryAt": "2026-09-23T14:27:45Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "social-media-today-meta-ads",
-        "itemKey": "https://www.socialmediatoday.com/news/instagram-growth-continues-to-outpace-facebook-in-eu/829134/",
-        "fingerprint": "2065f116ecd6d8ec5fd93cf1775c9164b3390a46e23ce1e1f6dfe7297ab78042",
-        "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "social-media-today-meta-ads",
-        "itemKey": "https://www.socialmediatoday.com/news/instagram-growth-continues-to-outpace-facebook-in-eu/829134/",
-        "fingerprint": "2065f116ecd6d8ec5fd93cf1775c9164b3390a46e23ce1e1f6dfe7297ab78042",
-        "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
+        "failureCount": 4,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T18:49:46Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
         "quarantined": false
       },
       {
@@ -7667,11 +7811,11 @@
         "itemKey": "https://www.socialmediatoday.com/news/meta-highlights-rising-brand-opportunities-in-womens-sports/828348/",
         "fingerprint": "c40906d09211e86d39ab33460b54614334f5d56c28cb7d8c403bcd7456f8c6f3",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T14:49:46Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
         "quarantined": false
       },
       {
@@ -7679,21 +7823,9 @@
         "itemKey": "https://www.socialmediatoday.com/news/meta-highlights-rising-brand-opportunities-in-womens-sports/828348/",
         "fingerprint": "c40906d09211e86d39ab33460b54614334f5d56c28cb7d8c403bcd7456f8c6f3",
         "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "social-media-today-meta-ads",
-        "itemKey": "https://www.socialmediatoday.com/news/meta-launches-meta-one-for-business-add-on-packages/830469/",
-        "fingerprint": "7a3735fa2125245b701f0403e70d5be9f38bfb2c05a2f55eb26f365c64100363",
-        "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T14:49:46Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -7703,9 +7835,9 @@
         "itemKey": "https://www.socialmediatoday.com/news/meta-settles-landmark-lawsuit-for-18b/828900/",
         "fingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
         "locale": "en",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T14:03:46Z",
+        "failureCount": 2,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T12:49:46Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -7715,21 +7847,9 @@
         "itemKey": "https://www.socialmediatoday.com/news/new-zealand-introduces-teen-social-media-restrictions/828662/",
         "fingerprint": "8747337b0552909dab732fabc4a01657cfc6f50fdfbabaf7503970d3d9622764",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "social-media-today-meta-ads",
-        "itemKey": "https://www.socialmediatoday.com/news/new-zealand-introduces-teen-social-media-restrictions/828662/",
-        "fingerprint": "8747337b0552909dab732fabc4a01657cfc6f50fdfbabaf7503970d3d9622764",
-        "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T14:49:46Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -7739,9 +7859,9 @@
         "itemKey": "https://www.socialmediatoday.com/news/will-meta-be-found-guilty-of-driving-social-media-addiction/828553/",
         "fingerprint": "f207af774f37350e35a2b8c49ca9b17ea6c1fd470f4202f794a9429e8bbcd1fd",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T14:49:46Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -7751,9 +7871,9 @@
         "itemKey": "https://www.socialmediatoday.com/news/will-meta-be-found-guilty-of-driving-social-media-addiction/828553/",
         "fingerprint": "f207af774f37350e35a2b8c49ca9b17ea6c1fd470f4202f794a9429e8bbcd1fd",
         "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T14:49:46Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -7763,23 +7883,11 @@
         "itemKey": "https://www.socialmediatoday.com/news/will-removing-algorithmic-sorting-improve-social-media/829868/",
         "fingerprint": "7710575499092c0ebde4bc14eb5f367ef0d75afa7befefcebbf176f614c5fda9",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "social-media-today-meta-ads",
-        "itemKey": "https://www.socialmediatoday.com/news/will-removing-algorithmic-sorting-improve-social-media/829868/",
-        "fingerprint": "7710575499092c0ebde4bc14eb5f367ef0d75afa7befefcebbf176f614c5fda9",
-        "locale": "ja",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-23T13:03:46Z",
-        "nextRetryAt": "2026-09-23T15:03:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
+        "failureCount": 3,
+        "lastFailureAt": "2026-09-24T10:49:46Z",
+        "nextRetryAt": "2026-09-24T14:49:46Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
         "quarantined": false
       }
     ]

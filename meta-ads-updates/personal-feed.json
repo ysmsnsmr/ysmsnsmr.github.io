@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-09-23T13:03:46Z",
+  "generatedAt": "2026-09-24T10:49:46Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -68,7 +68,7 @@
       "publishedDate": "2026-09-22",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -137,7 +137,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": "2026-09-21",
       "firstObservedAt": "2026-09-22T05:01:36Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -207,7 +207,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -276,7 +276,7 @@
       "publishedDate": "2026-09-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-18T11:07:09Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -345,7 +345,7 @@
       "publishedDate": "2026-09-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -356,49 +356,49 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta limits Facebook Pages to two link posts per month without subscription",
+            "summary": "Meta has expanded a test that began in December 2025, restricting non‑paying Pages to two link posts on Facebook each month unless they purchase a Meta One for Business subscription. Publisher Pages are exempt. A Q1 2026 report shows only 1.3% of U.S. post views included a link, down from 9.8% in 2022.",
             "inputHash": "771c6743a7593974be5a75f68217b0bb362080044e08daa83b2e94472a7b9389",
-            "generatedAt": null,
+            "generatedAt": "2026-09-24T10:49:46Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Meta limits Facebook Pages to two link posts per month without subscription",
                 "inputHash": "771c6743a7593974be5a75f68217b0bb362080044e08daa83b2e94472a7b9389",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Meta has expanded a test that began in December 2025, restricting non‑paying Pages to two link posts on Facebook each month unless they purchase a Meta One for Business subscription. Publisher Pages are exempt. A Q1 2026 report shows only 1.3% of U.S. post views included a link, down from 9.8% in 2022.",
                 "inputHash": "771c6743a7593974be5a75f68217b0bb362080044e08daa83b2e94472a7b9389",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               }
             }
           },
           "ja": {
             "status": "machine",
-            "shortHeadline": "Meta One導入でFacebookページのリンク投稿が有料化、月2件に制限",
-            "summary": "Meta One for Businessの有料プラン開始に伴い、Facebookページのリンク付き投稿が有料化され、非課金のプロアカウントは月2件までに制限されるテストが拡大された。2025年12月に開始された同様のテストは当初限定的だったが、現在は対象ページが増加。出版社ページは除外され、リンク投稿は米国で2022年の9.8%から2026年Q1",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-23T10:27:45Z",
+            "shortHeadline": "Meta One導入でFacebookページのリンク投稿が有料制限へ",
+            "summary": "Metaが提供する有料サブスクリプション「Meta One for Business」の開始に伴い、Facebookページのリンク付き投稿が月2件に制限され、追加投稿は有料プランでのみ可能になるテストが拡大された。対象は2025年12月に開始された同様のテスト対象外の出版社ページを除く。Metaはこのテストでリンク投稿が有料ユーザーにどれだけ価値をもたらすかを測定すると説明している。なお、2026年第1四半期の米国における調査では、リンク付き投稿の閲覧率は2022年の9.8%から1.3%に低下し、全体の98.7%が外部リンクを含まないと報告されている。",
+            "inputHash": "fefc4f6ab760d4f76ba3dc23c4c744921225bb0763183c2caf91fc9021df8f77",
+            "generatedAt": "2026-09-24T10:49:46Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
-                "value": "Meta One導入でFacebookページのリンク投稿が有料化、月2件に制限",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
+                "value": "Meta One導入でFacebookページのリンク投稿が有料制限へ",
+                "inputHash": "fefc4f6ab760d4f76ba3dc23c4c744921225bb0763183c2caf91fc9021df8f77",
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
-                "value": "Meta One for Businessの有料プラン開始に伴い、Facebookページのリンク付き投稿が有料化され、非課金のプロアカウントは月2件までに制限されるテストが拡大された。2025年12月に開始された同様のテストは当初限定的だったが、現在は対象ページが増加。出版社ページは除外され、リンク投稿は米国で2022年の9.8%から2026年Q1",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
+                "value": "Metaが提供する有料サブスクリプション「Meta One for Business」の開始に伴い、Facebookページのリンク付き投稿が月2件に制限され、追加投稿は有料プランでのみ可能になるテストが拡大された。対象は2025年12月に開始された同様のテスト対象外の出版社ページを除く。Metaはこのテストでリンク投稿が有料ユーザーにどれだけ価値をもたらすかを測定すると説明している。なお、2026年第1四半期の米国における調査では、リンク付き投稿の閲覧率は2022年の9.8%から1.3%に低下し、全体の98.7%が外部リンクを含まないと報告されている。",
+                "inputHash": "fefc4f6ab760d4f76ba3dc23c4c744921225bb0763183c2caf91fc9021df8f77",
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               }
             }
@@ -414,7 +414,7 @@
       "publishedDate": "2026-09-16",
       "updatedDate": null,
       "firstObservedAt": "2026-09-17T04:55:10Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -483,7 +483,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -518,25 +518,25 @@
             }
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta、AI搭載のMeta One for Businessサブスクリプションを開始",
+            "summary": "Metaは、AI機能を組み込んだMeta One for Businessのサブスクリプションパッケージを発表した。月額14.99ドルから499ドルまでの4段階で、Instagramの競合分析や拡張インサイト履歴、Facebookのカスタムオーディエンス分析、コンテンツスケジューリング、投稿やリールへのリンク付与（プラン別上限あり）などを提供する。さらに、Facebookの目立つフォローボタン、WhatsAppのVerified Channels、24時間対応のAIチャットボット「Meta Business Agent」も利用可能となった。",
             "inputHash": "93a5ef31ebe24309529d94734f1824dcd58a076ed84a10bbd388cda8677a66fc",
-            "generatedAt": null,
+            "generatedAt": "2026-09-24T10:49:46Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Meta、AI搭載のMeta One for Businessサブスクリプションを開始",
                 "inputHash": "93a5ef31ebe24309529d94734f1824dcd58a076ed84a10bbd388cda8677a66fc",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Metaは、AI機能を組み込んだMeta One for Businessのサブスクリプションパッケージを発表した。月額14.99ドルから499ドルまでの4段階で、Instagramの競合分析や拡張インサイト履歴、Facebookのカスタムオーディエンス分析、コンテンツスケジューリング、投稿やリールへのリンク付与（プラン別上限あり）などを提供する。さらに、Facebookの目立つフォローボタン、WhatsAppのVerified Channels、24時間対応のAIチャットボット「Meta Business Agent」も利用可能となった。",
                 "inputHash": "93a5ef31ebe24309529d94734f1824dcd58a076ed84a10bbd388cda8677a66fc",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               }
             }
@@ -552,7 +552,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -621,7 +621,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -690,7 +690,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -759,7 +759,7 @@
       "publishedDate": "2026-09-14",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -828,7 +828,7 @@
       "publishedDate": "2026-09-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-11T04:43:19Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -897,7 +897,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -932,25 +932,25 @@
             }
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "オーストラリア政府、ソーシャルメディアのアルゴリズムをオプトイン化へ",
+            "summary": "オーストラリア政府はソーシャルメディアのアルゴリズムをオプトイン方式にする計画を進めている。Metaらはユーザーが非アルゴリズ",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-09-24T10:49:46Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "オーストラリア政府、ソーシャルメディアのアルゴリズムをオプトイン化へ",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "オーストラリア政府はソーシャルメディアのアルゴリズムをオプトイン方式にする計画を進めている。Metaらはユーザーが非アルゴリズ",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               }
             }
@@ -966,7 +966,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1035,7 +1035,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-14T11:20:59Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -1104,7 +1104,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T04:45:10Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1173,7 +1173,7 @@
       "publishedDate": "2026-09-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1242,7 +1242,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1311,7 +1311,7 @@
       "publishedDate": "2026-08-31",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1373,6 +1373,75 @@
       }
     },
     {
+      "id": "social-media-today-meta-ads-d3fb5f3c45f341c06bab",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta updates login with Facebook",
+      "url": "https://www.socialmediatoday.com/news/meta-updates-login-with-facebook/829135/",
+      "publishedDate": "2026-08-30",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-23T10:27:45Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "d3fb5f3c45f341c06bab017f5c86d88dc6bcbd0e1ad985b8a2ce1a5135709e30",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta adds one‑tap Facebook login for Android, Web and iOS",
+            "summary": "Meta is rolling out a one‑tap sign‑on for Android and Web, improves its Limited Login flow, and updates the iOS fast app switch to use the native Facebook app. Developers can access these changes through the latest SDK.",
+            "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
+            "generatedAt": "2026-09-24T10:49:46Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta adds one‑tap Facebook login for Android, Web and iOS",
+                "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
+                "generatedAt": "2026-09-24T10:49:46Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta is rolling out a one‑tap sign‑on for Android and Web, improves its Limited Login flow, and updates the iOS fast app switch to use the native Facebook app. Developers can access these changes through the latest SDK.",
+                "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
+                "generatedAt": "2026-09-24T10:49:46Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、Facebookログインをワンタップで簡素化",
+            "summary": "Metaは、Facebookアカウントでのログイン機能を改善し、Android と Web でワンタップサインオンを提供します。既にデバイスにサインイン済みのユーザーは、1 回のタップで第三者アプリにログインでき、フローが短縮されます。また、Limited Login の再ログイン回数削減や、iOS ではネイティブ Facebook アプリへの高速スイッチにより、ブラウザ経由より速くログインできます。これらの機能は最新 SDK で利用可能で、開発者は必要な機能を選択して導入できます。",
+            "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
+            "generatedAt": "2026-09-24T10:49:46Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、Facebookログインをワンタップで簡素化",
+                "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
+                "generatedAt": "2026-09-24T10:49:46Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは、Facebookアカウントでのログイン機能を改善し、Android と Web でワンタップサインオンを提供します。既にデバイスにサインイン済みのユーザーは、1 回のタップで第三者アプリにログインでき、フローが短縮されます。また、Limited Login の再ログイン回数削減や、iOS ではネイティブ Facebook アプリへの高速スイッチにより、ブラウザ経由より速くログインできます。これらの機能は最新 SDK で利用可能で、開発者は必要な機能を選択して導入できます。",
+                "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
+                "generatedAt": "2026-09-24T10:49:46Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "social-media-today-meta-ads-2065f116ecd6d8ec5fd9",
       "sourceId": "social-media-today-meta-ads",
       "title": "Instagram growth continues to outpace Facebook in EU",
@@ -1380,7 +1449,7 @@
       "publishedDate": "2026-08-30",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1391,49 +1460,49 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Instagram active users in EU outpace Facebook in H1 2026",
+            "summary": "Meta’s EU DSA report shows Instagram had 297 million active users in the EU in the first half of 2026, versus 264 million on Facebook. Instagram’s user base is rising, while Facebook usage has been flat or declining, putting Instagram ahead in reach.",
             "inputHash": "ee8aa2fd3c0e98a707690c0ba6417502908b1955b98a926734dd55bb96479ce9",
-            "generatedAt": null,
+            "generatedAt": "2026-09-24T10:49:46Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Instagram active users in EU outpace Facebook in H1 2026",
                 "inputHash": "ee8aa2fd3c0e98a707690c0ba6417502908b1955b98a926734dd55bb96479ce9",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Meta’s EU DSA report shows Instagram had 297 million active users in the EU in the first half of 2026, versus 264 million on Facebook. Instagram’s user base is rising, while Facebook usage has been flat or declining, putting Instagram ahead in reach.",
                 "inputHash": "ee8aa2fd3c0e98a707690c0ba6417502908b1955b98a926734dd55bb96479ce9",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               }
             }
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "Instagram、EUでユーザー数がFacebookを上回り成長続く",
+            "summary": "Metaの2026年上半期EU DSA報告によると、Instagramのアクティブユーザーは2億9700万で、Facebookの2億6400万を上回り、成長が続いている。Facebookは利用者が横ばいか減少傾向で、次年にはInstagramが3億ユーザーを超える見込み。ThreadsはEUで4100万人、モデレーションスタッフは約7700人から5900人へ減少。Instagramではテロ関連コンテンツ報告が前期比38％増、児童性的搾取報告が22％増。一方、Facebook",
+            "inputHash": "d3712a90583e9116c89892353a7d3c6d9431bbe1e6fbab75d634c3cab1d74965",
+            "generatedAt": "2026-09-24T10:49:46Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "value": "Instagram、EUでユーザー数がFacebookを上回り成長続く",
+                "inputHash": "d3712a90583e9116c89892353a7d3c6d9431bbe1e6fbab75d634c3cab1d74965",
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "value": "Metaの2026年上半期EU DSA報告によると、Instagramのアクティブユーザーは2億9700万で、Facebookの2億6400万を上回り、成長が続いている。Facebookは利用者が横ばいか減少傾向で、次年にはInstagramが3億ユーザーを超える見込み。ThreadsはEUで4100万人、モデレーションスタッフは約7700人から5900人へ減少。Instagramではテロ関連コンテンツ報告が前期比38％増、児童性的搾取報告が22％増。一方、Facebook",
+                "inputHash": "d3712a90583e9116c89892353a7d3c6d9431bbe1e6fbab75d634c3cab1d74965",
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               }
             }
@@ -1449,7 +1518,7 @@
       "publishedDate": "2026-08-27",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T22:29:27Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1518,7 +1587,7 @@
       "publishedDate": "2026-08-26",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T22:29:27Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1587,7 +1656,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1657,7 +1726,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1726,7 +1795,7 @@
       "publishedDate": "2026-08-24",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1761,25 +1830,25 @@
             }
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "ニュージーランド、16歳以上確認を義務付けるティーン向けSNS規制法案を提出",
+            "summary": "ニュージーランドは、Instagram、TikTok、Snapchat、Facebookなどの高リスクSNSに対し、利用者が16歳以上であることを確認する措置を義務付ける「オンライン安全法案」を提出した",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-09-24T10:49:46Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "ニュージーランド、16歳以上確認を義務付けるティーン向けSNS規制法案を提出",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "ニュージーランドは、Instagram、TikTok、Snapchat、Facebookなどの高リスクSNSに対し、利用者が16歳以上であることを確認する措置を義務付ける「オンライン安全法案」を提出した",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               }
             }
@@ -1795,7 +1864,7 @@
       "publishedDate": "2026-08-24",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1864,7 +1933,7 @@
       "publishedDate": "2026-08-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1933,7 +2002,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T22:29:27Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2002,7 +2071,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2143,7 +2212,7 @@
       "publishedDate": "2026-08-19",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2212,7 +2281,7 @@
       "publishedDate": "2026-08-19",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2247,25 +2316,25 @@
             }
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "YouTubeを含む各SNSの動画視聴数の測定基準が異なる",
+            "summary": "YouTubeは動画視聴数の算出方法を変更し、1秒以上再生されたものを「ビュー」、最初のフレームを超えて視聴またはクリックしたものを「エンゲージドビュー」、公開長尺動画やアーカイブ配信のエンゲージドビューを「クオリファイドビュー」と定義した。他のSNSでもビューの定義はプラットフォームや形式により異なり、同一指標でも意味合いが変わることがある。そのため、ビュー数だけでエンゲージメントや関心を判断するのは難しく、マーケティングやスポンサー契約の際には数値の背景を確認する必要がある。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-09-24T10:49:46Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "YouTubeを含む各SNSの動画視聴数の測定基準が異なる",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "YouTubeは動画視聴数の算出方法を変更し、1秒以上再生されたものを「ビュー」、最初のフレームを超えて視聴またはクリックしたものを「エンゲージドビュー」、公開長尺動画やアーカイブ配信のエンゲージドビューを「クオリファイドビュー」と定義した。他のSNSでもビューの定義はプラットフォームや形式により異なり、同一指標でも意味合いが変わることがある。そのため、ビュー数だけでエンゲージメントや関心を判断するのは難しく、マーケティングやスポンサー契約の際には数値の背景を確認する必要がある。",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               }
             }
@@ -2350,7 +2419,7 @@
       "publishedDate": "2026-08-18",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2361,49 +2430,49 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "15-year evolution of jonloomer.com after two layoffs",
+            "summary": "After being laid off twice—first as VP of Strategic Marketing for a nonprofit and earlier as Director of Product for a startup—he bought jonloomer.com to showcase his experience. He built a basic site, wrote about social media, later focused on Facebook marketing, monetized with AdSense, affiliate links and low‑budget Facebook ads.",
             "inputHash": "2886a15c10e2cedd8b11691e5e8816f01d94ec18f12e7647ff2eb74323a93431",
-            "generatedAt": null,
+            "generatedAt": "2026-09-24T10:49:46Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "15-year evolution of jonloomer.com after two layoffs",
                 "inputHash": "2886a15c10e2cedd8b11691e5e8816f01d94ec18f12e7647ff2eb74323a93431",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "After being laid off twice—first as VP of Strategic Marketing for a nonprofit and earlier as Director of Product for a startup—he bought jonloomer.com to showcase his experience. He built a basic site, wrote about social media, later focused on Facebook marketing, monetized with AdSense, affiliate links and low‑budget Facebook ads.",
                 "inputHash": "2886a15c10e2cedd8b11691e5e8816f01d94ec18f12e7647ff2eb74323a93431",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               }
             }
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "ジョン・ルーマー氏のブログ創設から15年の軌跡",
+            "summary": "15年前、非営利団体の戦略マーケティングVPを解雇されたジョン・ルーマー氏は再就職のために jonloomer.com を取得し、当初は自身のスキルを示す簡易サイトを作った。SNSやマーケティングに関する記事を書き続け、約半年後にFacebook広告に特化したニッチを見つけ、AdSenseやアフィリエイト、広告枠販売で収益化を図った。現在までに同サイトは15年の歴史を持つ。",
+            "inputHash": "253675d89b524ed261aed2f7456a73a384155a0ee7cad4d5203baee44973b0e3",
+            "generatedAt": "2026-09-24T10:49:46Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "value": "ジョン・ルーマー氏のブログ創設から15年の軌跡",
+                "inputHash": "253675d89b524ed261aed2f7456a73a384155a0ee7cad4d5203baee44973b0e3",
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "value": "15年前、非営利団体の戦略マーケティングVPを解雇されたジョン・ルーマー氏は再就職のために jonloomer.com を取得し、当初は自身のスキルを示す簡易サイトを作った。SNSやマーケティングに関する記事を書き続け、約半年後にFacebook広告に特化したニッチを見つけ、AdSenseやアフィリエイト、広告枠販売で収益化を図った。現在までに同サイトは15年の歴史を持つ。",
+                "inputHash": "253675d89b524ed261aed2f7456a73a384155a0ee7cad4d5203baee44973b0e3",
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               }
             }
@@ -2419,7 +2488,7 @@
       "publishedDate": "2026-08-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2560,7 +2629,7 @@
       "publishedDate": "2026-08-13",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2629,7 +2698,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2698,7 +2767,7 @@
       "publishedDate": "2026-08-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2709,49 +2778,49 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Custom Attribution option for Meta ads",
+            "summary": "Custom attribution is a Meta ad delivery option, alongside Standard and Incremental models. It uses granular conversion data shared via API from partners or in‑house tools (e.g., Adobe, Northbeam, Rockerbox, Triple Whale) to assign credit to each ad touchpoint. Most advertisers are advised to use existing models, defaulting to incremental attribution.",
             "inputHash": "f8028f2edce50d8a7d2deb19aee02548b02793cd112e3f023f5c48d449444df3",
-            "generatedAt": null,
+            "generatedAt": "2026-09-24T10:49:46Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Custom Attribution option for Meta ads",
                 "inputHash": "f8028f2edce50d8a7d2deb19aee02548b02793cd112e3f023f5c48d449444df3",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Custom attribution is a Meta ad delivery option, alongside Standard and Incremental models. It uses granular conversion data shared via API from partners or in‑house tools (e.g., Adobe, Northbeam, Rockerbox, Triple Whale) to assign credit to each ad touchpoint. Most advertisers are advised to use existing models, defaulting to incremental attribution.",
                 "inputHash": "f8028f2edce50d8a7d2deb19aee02548b02793cd112e3f023f5c48d449444df3",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               }
             }
           },
           "ja": {
             "status": "machine",
-            "shortHeadline": "Metaのカスタムアトリビューションはパートナー連携で配信最適化",
-            "summary": "広告主は属性モデル選択時に標準・インクリメンタルに加えて「カスタム」オプション",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-23T10:27:45Z",
+            "shortHeadline": "Metaのカスタムアトリビューションとは何か",
+            "summary": "Meta広告の属性モデルに「カスタム」オプションが追加されました。標準やインクリメンタルに加えて、パートナーや社内分析ツールと連携し、各広告タッチポイントに対するクレジットを独自に設定できます。Adobe、Northbeam、Rockerbox、Triple Whale などの提携パートナー経由で API で属性データを提供する必要があります。多くの広告主は利用する必要はなく、特に理由がなければインクリメンタル属性を使用することが推奨されます。",
+            "inputHash": "31e3f06b2c613a4708ac528836fcd1279934d7402be23e4bac67913257aac2b0",
+            "generatedAt": "2026-09-24T10:49:46Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
-                "value": "Metaのカスタムアトリビューションはパートナー連携で配信最適化",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
+                "value": "Metaのカスタムアトリビューションとは何か",
+                "inputHash": "31e3f06b2c613a4708ac528836fcd1279934d7402be23e4bac67913257aac2b0",
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
-                "value": "広告主は属性モデル選択時に標準・インクリメンタルに加えて「カスタム」オプション",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
+                "value": "Meta広告の属性モデルに「カスタム」オプションが追加されました。標準やインクリメンタルに加えて、パートナーや社内分析ツールと連携し、各広告タッチポイントに対するクレジットを独自に設定できます。Adobe、Northbeam、Rockerbox、Triple Whale などの提携パートナー経由で API で属性データを提供する必要があります。多くの広告主は利用する必要はなく、特に理由がなければインクリメンタル属性を使用することが推奨されます。",
+                "inputHash": "31e3f06b2c613a4708ac528836fcd1279934d7402be23e4bac67913257aac2b0",
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               }
             }
@@ -2767,7 +2836,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2836,7 +2905,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2905,7 +2974,7 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -2975,7 +3044,7 @@
       "publishedDate": "2026-08-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3044,7 +3113,7 @@
       "publishedDate": "2026-08-03",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3055,49 +3124,49 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Advice to Start Campaigns with Fewer Ads",
+            "summary": "The article argues that launching a campaign with many ads can waste resources and lower quality. It recommends beginning with a small handful of ads, monitoring performance for a few weeks, and then expanding only if results justify it, emphasizing quality over quantity.",
             "inputHash": "94464d75cc602ff9eb75e49e89ee76c710dc972833400ae3a283b0ec40f8f386",
-            "generatedAt": null,
+            "generatedAt": "2026-09-24T10:49:46Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Advice to Start Campaigns with Fewer Ads",
                 "inputHash": "94464d75cc602ff9eb75e49e89ee76c710dc972833400ae3a283b0ec40f8f386",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "The article argues that launching a campaign with many ads can waste resources and lower quality. It recommends beginning with a small handful of ads, monitoring performance for a few weeks, and then expanding only if results justify it, emphasizing quality over quantity.",
                 "inputHash": "94464d75cc602ff9eb75e49e89ee76c710dc972833400ae3a283b0ec40f8f386",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               }
             }
           },
           "ja": {
             "status": "machine",
-            "shortHeadline": "広告は少数から始め、品質を重視すべき",
-            "summary": "多くの広告を一度に作成すると、Meta が一部だけを選び他は無視され、リソースが無駄になる上に品質が低下しやすい。まずは2〜3本、あるいは1本の広告に絞り、顧客ペルソナの課題に合わせたクリエイティブを作成し、数週間結果を観測して効果を検証する。成果が出ればそのまま、出なければ角度やビジュアルを変えて新たに広告を作成する。必要に応じて段階的に広告数を増やすことで、無駄な広告作成を防ぎつつ効果的なキャンペーンが実現できる。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-23T10:27:45Z",
+            "shortHeadline": "広告は多数より少数で開始し、品質と効果を検証すべき",
+            "summary": "現在は多数の広告でキャンペーンを開始するのが主",
+            "inputHash": "87d8dfdcd70438e59e01ac46abf3d586ffd4e0818943f51f5b05b85710f890c9",
+            "generatedAt": "2026-09-24T10:49:46Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
-                "value": "広告は少数から始め、品質を重視すべき",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
+                "value": "広告は多数より少数で開始し、品質と効果を検証すべき",
+                "inputHash": "87d8dfdcd70438e59e01ac46abf3d586ffd4e0818943f51f5b05b85710f890c9",
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
-                "value": "多くの広告を一度に作成すると、Meta が一部だけを選び他は無視され、リソースが無駄になる上に品質が低下しやすい。まずは2〜3本、あるいは1本の広告に絞り、顧客ペルソナの課題に合わせたクリエイティブを作成し、数週間結果を観測して効果を検証する。成果が出ればそのまま、出なければ角度やビジュアルを変えて新たに広告を作成する。必要に応じて段階的に広告数を増やすことで、無駄な広告作成を防ぎつつ効果的なキャンペーンが実現できる。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
+                "value": "現在は多数の広告でキャンペーンを開始するのが主",
+                "inputHash": "87d8dfdcd70438e59e01ac46abf3d586ffd4e0818943f51f5b05b85710f890c9",
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               }
             }
@@ -3113,7 +3182,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3182,7 +3251,7 @@
       "publishedDate": "2026-07-27",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3320,7 +3389,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3389,7 +3458,7 @@
       "publishedDate": "2026-07-20",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3424,25 +3493,25 @@
             }
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "「コンバージョン数最大化」でもROAS目標入札が利用可能に",
+            "summary": "Metaは、パフォーマンス目標「コンバージョン数を最大化」でもROAS（広告費回収率）目標入札戦略を選択できるようにした。従来は「コンバージョン価値の最大化」のみで利用可能だったが、ABOでもCBOでもROAS目標を設定できるようになった。",
             "inputHash": "9a5321816224768387f18d3fb4b334bd504e92e79e90ecfd814283ee4bb84e46",
-            "generatedAt": null,
+            "generatedAt": "2026-09-24T10:49:46Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "「コンバージョン数最大化」でもROAS目標入札が利用可能に",
                 "inputHash": "9a5321816224768387f18d3fb4b334bd504e92e79e90ecfd814283ee4bb84e46",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Metaは、パフォーマンス目標「コンバージョン数を最大化」でもROAS（広告費回収率）目標入札戦略を選択できるようにした。従来は「コンバージョン価値の最大化」のみで利用可能だったが、ABOでもCBOでもROAS目標を設定できるようになった。",
                 "inputHash": "9a5321816224768387f18d3fb4b334bd504e92e79e90ecfd814283ee4bb84e46",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               }
             }
@@ -3458,7 +3527,7 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -3528,7 +3597,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3597,7 +3666,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3666,7 +3735,7 @@
       "publishedDate": "2026-07-13",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3701,25 +3770,25 @@
             }
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "スケールに適したキャンペーンの見極め方法",
+            "summary": "高パフォーマンスと見えるキャンペーンでも、予算増で成果が低下することがある。スケールに適しているか判断するには、①1日クリックコンバージョンだけを抽出し、ビュー・エンゲージ・7日クリックは除外して単独の成果を確認する。②新規オーディエンスの結果を分離し、訪問者180日カスタムオーディエンスや購入者730日カスタムオーディエンスなど、セグメントを明確に定義した上で、リマーケティングや既存顧客を除いた新規層の成果だけを評価する。新規層と1日クリックで高い成果とコスト効率が確認できれば、予算増加に伴うコスト上昇を見込んでもスケール可能と判断できる。",
             "inputHash": "fd78ae120a3e6cf368468ac0930620a8086af183424f4490418e28482cc29571",
-            "generatedAt": null,
+            "generatedAt": "2026-09-24T10:49:46Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "スケールに適したキャンペーンの見極め方法",
                 "inputHash": "fd78ae120a3e6cf368468ac0930620a8086af183424f4490418e28482cc29571",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "高パフォーマンスと見えるキャンペーンでも、予算増で成果が低下することがある。スケールに適しているか判断するには、①1日クリックコンバージョンだけを抽出し、ビュー・エンゲージ・7日クリックは除外して単独の成果を確認する。②新規オーディエンスの結果を分離し、訪問者180日カスタムオーディエンスや購入者730日カスタムオーディエンスなど、セグメントを明確に定義した上で、リマーケティングや既存顧客を除いた新規層の成果だけを評価する。新規層と1日クリックで高い成果とコスト効率が確認できれば、予算増加に伴うコスト上昇を見込んでもスケール可能と判断できる。",
                 "inputHash": "fd78ae120a3e6cf368468ac0930620a8086af183424f4490418e28482cc29571",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               }
             }
@@ -3735,7 +3804,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3804,7 +3873,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3875,7 +3944,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3944,7 +4013,7 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -4014,7 +4083,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4083,7 +4152,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4152,7 +4221,7 @@
       "publishedDate": "2026-06-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4221,7 +4290,7 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4290,7 +4359,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4361,7 +4430,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4432,7 +4501,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4501,7 +4570,7 @@
       "publishedDate": "2026-06-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4570,7 +4639,7 @@
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4639,7 +4708,7 @@
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4708,7 +4777,7 @@
       "publishedDate": "2026-06-14",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4743,25 +4812,25 @@
             }
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "購入最適化では不要な年齢・性別・配置制限を避ける",
+            "summary": "広告主は購入を目的とした最適化時に、年齢・性別や配置（例：Audience Network）で不要に制限しがちだが、Metaは自動で調整する。クリックや閲覧など上位ファネルの指標を最適化する場合は、低品質なクリックや強制再生が増えることがある。その際は除外せず、価値ルールや入札額の調整で対応するのが推奨される。",
             "inputHash": "4b9561f50edddc304bd32d13c98fa806291efaf335e844371b1eb054d994bbb1",
-            "generatedAt": null,
+            "generatedAt": "2026-09-24T10:49:46Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "購入最適化では不要な年齢・性別・配置制限を避ける",
                 "inputHash": "4b9561f50edddc304bd32d13c98fa806291efaf335e844371b1eb054d994bbb1",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "広告主は購入を目的とした最適化時に、年齢・性別や配置（例：Audience Network）で不要に制限しがちだが、Metaは自動で調整する。クリックや閲覧など上位ファネルの指標を最適化する場合は、低品質なクリックや強制再生が増えることがある。その際は除外せず、価値ルールや入札額の調整で対応するのが推奨される。",
                 "inputHash": "4b9561f50edddc304bd32d13c98fa806291efaf335e844371b1eb054d994bbb1",
-                "generatedAt": null,
+                "generatedAt": "2026-09-24T10:49:46Z",
                 "reviewedAt": null
               }
             }
@@ -4777,7 +4846,7 @@
       "publishedDate": "2026-06-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4846,7 +4915,7 @@
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4915,7 +4984,7 @@
       "publishedDate": "2026-06-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4984,7 +5053,7 @@
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5053,7 +5122,7 @@
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5122,7 +5191,7 @@
       "publishedDate": "2026-05-31",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5191,7 +5260,7 @@
       "publishedDate": "2026-05-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5260,7 +5329,7 @@
       "publishedDate": "2026-05-26",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5329,7 +5398,7 @@
       "publishedDate": "2026-05-24",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5398,7 +5467,7 @@
       "publishedDate": "2026-05-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5467,7 +5536,7 @@
       "publishedDate": "2026-05-19",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5823,7 +5892,7 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -5893,7 +5962,7 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -5963,7 +6032,7 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -6033,7 +6102,7 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -6103,7 +6172,7 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -6173,7 +6242,7 @@
       "publishedDate": "2025-09-26",
       "updatedDate": "2025-09-26",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-23T13:03:46Z",
+      "lastObservedAt": "2026-09-24T10:49:46Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
