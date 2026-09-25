@@ -1,6 +1,6 @@
 {
   "schemaVersion": "meta-ads-personal-feed-state/v5",
-  "updatedAt": "2026-09-24T10:49:46Z",
+  "updatedAt": "2026-09-25T05:01:44Z",
   "sources": {
     "meta-product-news-rss": {
       "relevanceRevision": "meta-ads-lanes-v1",
@@ -17,7 +17,7 @@
           ],
           "fingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
           "firstObservedAt": "2026-09-17T04:55:10Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
@@ -86,7 +86,7 @@
           ],
           "fingerprint": "7ec28c89eba18f71014806f8761c9662a7068ae8ed01ebd3e8b28d182c8a14ea",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7ec28c89eba18f71014806f8761c9662a7068ae8ed01ebd3e8b28d182c8a14ea",
@@ -155,7 +155,7 @@
           ],
           "fingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
@@ -224,7 +224,7 @@
           ],
           "fingerprint": "6a3e19041f996e3c52d055589111ca61de96dffeb589c06d9a8a8c965fbee1e0",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "6a3e19041f996e3c52d055589111ca61de96dffeb589c06d9a8a8c965fbee1e0",
@@ -293,7 +293,7 @@
           ],
           "fingerprint": "3200d8fbab7ee18881fb9819af4c09217f2382e91316da2c863d8ec9d2922618",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3200d8fbab7ee18881fb9819af4c09217f2382e91316da2c863d8ec9d2922618",
@@ -362,7 +362,7 @@
           ],
           "fingerprint": "887d7edd242f173fef4a2548142caaee3ed5e2b8d0f4927635f97e194dd50b7c",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "887d7edd242f173fef4a2548142caaee3ed5e2b8d0f4927635f97e194dd50b7c",
@@ -705,33 +705,33 @@
           "publicationEvidence": [
             "jev:unrelated"
           ],
-          "fingerprint": "0f0a4b995015a905b71ed2e3f56d32de09fb4f853161ccb023bba0e886526fe5",
+          "fingerprint": "4eaba66ff972adf270ab3d1f9f39c784a5c1dd47873fc9be29cb2b1c75da3228",
           "firstObservedAt": "2026-09-24T10:49:46Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-            "sourceFingerprint": "0f0a4b995015a905b71ed2e3f56d32de09fb4f853161ccb023bba0e886526fe5",
+            "sourceFingerprint": "4eaba66ff972adf270ab3d1f9f39c784a5c1dd47873fc9be29cb2b1c75da3228",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
                 "status": "missing",
                 "shortHeadline": null,
                 "summary": null,
-                "inputHash": "b52fd517599af9bc4efb99e727c85efcd24a04ebe4fa3639927fe78bcc516e03",
+                "inputHash": "a53fb3917a87248e6a0fbfa93e3f16b4800ea0f9ff686a1a351e2715136391cc",
                 "generatedAt": null,
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
                     "status": "missing",
                     "value": null,
-                    "inputHash": "b52fd517599af9bc4efb99e727c85efcd24a04ebe4fa3639927fe78bcc516e03",
+                    "inputHash": "a53fb3917a87248e6a0fbfa93e3f16b4800ea0f9ff686a1a351e2715136391cc",
                     "generatedAt": null,
                     "reviewedAt": null
                   },
                   "summary": {
                     "status": "missing",
                     "value": null,
-                    "inputHash": "b52fd517599af9bc4efb99e727c85efcd24a04ebe4fa3639927fe78bcc516e03",
+                    "inputHash": "a53fb3917a87248e6a0fbfa93e3f16b4800ea0f9ff686a1a351e2715136391cc",
                     "generatedAt": null,
                     "reviewedAt": null
                   }
@@ -776,7 +776,7 @@
           ],
           "fingerprint": "81f32c25b7a71918ebf29c52f8eecf6a3a4751d1a48f3fad79366cb3d96220f2",
           "firstObservedAt": "2026-09-24T10:49:46Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "81f32c25b7a71918ebf29c52f8eecf6a3a4751d1a48f3fad79366cb3d96220f2",
@@ -845,7 +845,7 @@
           ],
           "fingerprint": "0adeaf0813b90a6ad3ae72fc6723f8206fbe4fcd963df8684360f2f523e34cce",
           "firstObservedAt": "2026-09-24T10:49:46Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0adeaf0813b90a6ad3ae72fc6723f8206fbe4fcd963df8684360f2f523e34cce",
@@ -901,6 +901,75 @@
               }
             }
           }
+        },
+        "https://about.fb.com/news/2026/09/the-biggest-news-from-connect-2026/": {
+          "url": "https://about.fb.com/news/2026/09/the-biggest-news-from-connect-2026/",
+          "title": "The Biggest News From Connect 2026",
+          "publishedDate": "2026-09-24",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "drop",
+          "publicationEvidence": [
+            "jev:unrelated"
+          ],
+          "fingerprint": "3a6042854a6149112069769c01503fa0a22b366f14a78569a9fc7646992b43ef",
+          "firstObservedAt": "2026-09-25T05:01:44Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "3a6042854a6149112069769c01503fa0a22b366f14a78569a9fc7646992b43ef",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "95096d919de0dcdd8e26b52cc22afbbd0c2129f850d50e6b6e0a3366ac6d2da5",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "95096d919de0dcdd8e26b52cc22afbbd0c2129f850d50e6b6e0a3366ac6d2da5",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "95096d919de0dcdd8e26b52cc22afbbd0c2129f850d50e6b6e0a3366ac6d2da5",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -919,7 +988,7 @@
           ],
           "fingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
@@ -988,7 +1057,7 @@
           ],
           "fingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
@@ -1057,7 +1126,7 @@
           ],
           "fingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
@@ -1126,7 +1195,7 @@
           ],
           "fingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
@@ -1191,11 +1260,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "jev:strategic_signal"
+            "jev:unclear"
           ],
           "fingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
@@ -1264,7 +1333,7 @@
           ],
           "fingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
@@ -1333,7 +1402,7 @@
           ],
           "fingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
@@ -1402,7 +1471,7 @@
           ],
           "fingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
@@ -1471,7 +1540,7 @@
           ],
           "fingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
@@ -1540,7 +1609,7 @@
           ],
           "fingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
@@ -1605,11 +1674,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "jev:strategic_signal"
+            "jev:unclear"
           ],
           "fingerprint": "eed8ce943afb8409ed2fbdd518ba54d81c5644043e4ca8f976f188c790e98f76",
           "firstObservedAt": "2026-09-22T05:01:36Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "eed8ce943afb8409ed2fbdd518ba54d81c5644043e4ca8f976f188c790e98f76",
@@ -1683,7 +1752,7 @@
           ],
           "fingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
@@ -1752,7 +1821,7 @@
           ],
           "fingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
@@ -1821,7 +1890,7 @@
           ],
           "fingerprint": "7acf956231436a87c7b7a9015db094361a079af2b65baf71f7b29d23f773fa11",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7acf956231436a87c7b7a9015db094361a079af2b65baf71f7b29d23f773fa11",
@@ -2175,7 +2244,7 @@
           ],
           "fingerprint": "b35a1f5bd3df45609ea7344b16e5d345202e2951c5f6d1ffa6a0c6ed22ad3509",
           "firstObservedAt": "2026-09-11T04:43:19Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b35a1f5bd3df45609ea7344b16e5d345202e2951c5f6d1ffa6a0c6ed22ad3509",
@@ -2244,7 +2313,7 @@
           ],
           "fingerprint": "458f353eef407444549b3ec68b6489d82873f8642f1707db100854945d78bcbc",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "458f353eef407444549b3ec68b6489d82873f8642f1707db100854945d78bcbc",
@@ -2313,7 +2382,7 @@
           ],
           "fingerprint": "ff23184ef3220928736c800efa6e9314e8a7760550fa387687cf9e2f0f7c072b",
           "firstObservedAt": "2026-09-18T11:07:09Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ff23184ef3220928736c800efa6e9314e8a7760550fa387687cf9e2f0f7c072b",
@@ -2382,7 +2451,7 @@
           ],
           "fingerprint": "a0f66a34b7150065230b3f172aaf6ff33d3271a7625781fbec17b9badca51efe",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a0f66a34b7150065230b3f172aaf6ff33d3271a7625781fbec17b9badca51efe",
@@ -2451,7 +2520,7 @@
           ],
           "fingerprint": "7a3735fa2125245b701f0403e70d5be9f38bfb2c05a2f55eb26f365c64100363",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7a3735fa2125245b701f0403e70d5be9f38bfb2c05a2f55eb26f365c64100363",
@@ -2520,7 +2589,7 @@
           ],
           "fingerprint": "b99bc004f19561d3b41b11db261e1c6bda71eea2a77e1fa2ffa57c0c463f7605",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b99bc004f19561d3b41b11db261e1c6bda71eea2a77e1fa2ffa57c0c463f7605",
@@ -2589,7 +2658,7 @@
           ],
           "fingerprint": "7710575499092c0ebde4bc14eb5f367ef0d75afa7befefcebbf176f614c5fda9",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7710575499092c0ebde4bc14eb5f367ef0d75afa7befefcebbf176f614c5fda9",
@@ -2658,7 +2727,7 @@
           ],
           "fingerprint": "4aaf9c911d85ee247eff16f2aa13b54517bcd16bd00668ba611261e38116d198",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4aaf9c911d85ee247eff16f2aa13b54517bcd16bd00668ba611261e38116d198",
@@ -2727,7 +2796,7 @@
           ],
           "fingerprint": "2065f116ecd6d8ec5fd93cf1775c9164b3390a46e23ce1e1f6dfe7297ab78042",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "2065f116ecd6d8ec5fd93cf1775c9164b3390a46e23ce1e1f6dfe7297ab78042",
@@ -2790,13 +2859,13 @@
           "publishedDate": "2026-08-30",
           "updatedDate": null,
           "matchEvidence": [],
-          "publicationStatus": "included",
+          "publicationStatus": "drop",
           "publicationEvidence": [
-            "jev:strategic_signal"
+            "jev:unrelated"
           ],
           "fingerprint": "d3fb5f3c45f341c06bab017f5c86d88dc6bcbd0e1ad985b8a2ce1a5135709e30",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d3fb5f3c45f341c06bab017f5c86d88dc6bcbd0e1ad985b8a2ce1a5135709e30",
@@ -2865,56 +2934,56 @@
           ],
           "fingerprint": "8747337b0552909dab732fabc4a01657cfc6f50fdfbabaf7503970d3d9622764",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "8747337b0552909dab732fabc4a01657cfc6f50fdfbabaf7503970d3d9622764",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "New Zealand’s Online Safety Bill targets teen social media use",
+                "summary": "New Zealand’s Online Safety Bill would require platforms such as Instagram, TikTok, Snapchat and Facebook to take reasonable steps to verify users are over 16. The bill is unlikely to progress until after the November election. Australia’s teen ban shows most under‑age users still access apps, wellbeing unchanged, and Meta removed 750,000 under‑age accounts.",
                 "inputHash": "ecd7344fda502e23706a57a066eaec5d5cadc06768f9a05a1eac3d5b96ae4985",
-                "generatedAt": null,
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "New Zealand’s Online Safety Bill targets teen social media use",
                     "inputHash": "ecd7344fda502e23706a57a066eaec5d5cadc06768f9a05a1eac3d5b96ae4985",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "New Zealand’s Online Safety Bill would require platforms such as Instagram, TikTok, Snapchat and Facebook to take reasonable steps to verify users are over 16. The bill is unlikely to progress until after the November election. Australia’s teen ban shows most under‑age users still access apps, wellbeing unchanged, and Meta removed 750,000 under‑age accounts.",
                     "inputHash": "ecd7344fda502e23706a57a066eaec5d5cadc06768f9a05a1eac3d5b96ae4985",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   }
                 }
               },
               "ja": {
                 "status": "machine",
-                "shortHeadline": "ニュージーランド、16歳以上確認を義務付けるティーン向けSNS規制法案を提出",
-                "summary": "ニュージーランドは、Instagram、TikTok、Snapchat、Facebookなどの高リスクSNSに対し、利用者が16歳以上であることを確認する措置を義務付ける「オンライン安全法案」を提出した",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-24T10:49:46Z",
+                "shortHeadline": "NZ、オンライン安全法案で16歳以上確認義務化も選挙後に進行遅延",
+                "summary": "ニュージーランドは新たにオンライン安全法案を策定し、Instagram、TikTok、Snapchat、Facebookなどの高リスクプラットフォームに利用者が16歳以上であることを確認させることを義務付けるが、同法は11月の総選挙後まで進行しない見込みである。オーストラリアでは同様のティーン向けソーシャルメディア規制が実施され、未成年の利用は依然多く、問題的な利用や福祉に変化はなく、利用者はメッセージングやゲームへシフトしている。Metaはオーストラリアで75万件の未成年アカウントを削除したが、年齢確認は不十分で、若者は誤った生年月日を入力している。",
+                "inputHash": "95f8db2aba990d7db53df8e674c1373433580dac97a10ed963cdcd77eea9ded8",
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
                     "status": "machine",
-                    "value": "ニュージーランド、16歳以上確認を義務付けるティーン向けSNS規制法案を提出",
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": "2026-09-24T10:49:46Z",
+                    "value": "NZ、オンライン安全法案で16歳以上確認義務化も選挙後に進行遅延",
+                    "inputHash": "95f8db2aba990d7db53df8e674c1373433580dac97a10ed963cdcd77eea9ded8",
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   },
                   "summary": {
                     "status": "machine",
-                    "value": "ニュージーランドは、Instagram、TikTok、Snapchat、Facebookなどの高リスクSNSに対し、利用者が16歳以上であることを確認する措置を義務付ける「オンライン安全法案」を提出した",
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": "2026-09-24T10:49:46Z",
+                    "value": "ニュージーランドは新たにオンライン安全法案を策定し、Instagram、TikTok、Snapchat、Facebookなどの高リスクプラットフォームに利用者が16歳以上であることを確認させることを義務付けるが、同法は11月の総選挙後まで進行しない見込みである。オーストラリアでは同様のティーン向けソーシャルメディア規制が実施され、未成年の利用は依然多く、問題的な利用や福祉に変化はなく、利用者はメッセージングやゲームへシフトしている。Metaはオーストラリアで75万件の未成年アカウントを削除したが、年齢確認は不十分で、若者は誤った生年月日を入力している。",
+                    "inputHash": "95f8db2aba990d7db53df8e674c1373433580dac97a10ed963cdcd77eea9ded8",
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   }
                 }
@@ -2934,7 +3003,7 @@
           ],
           "fingerprint": "db241d612442e92283e0466c55eddfc3fb1c6c0e4059efa132d5e7f40115ba99",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "db241d612442e92283e0466c55eddfc3fb1c6c0e4059efa132d5e7f40115ba99",
@@ -3003,7 +3072,7 @@
           ],
           "fingerprint": "f207af774f37350e35a2b8c49ca9b17ea6c1fd470f4202f794a9429e8bbcd1fd",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f207af774f37350e35a2b8c49ca9b17ea6c1fd470f4202f794a9429e8bbcd1fd",
@@ -3072,7 +3141,7 @@
           ],
           "fingerprint": "50725616e01ef75b4c2ada2657f23c2d1f96ba76454c5feec1c399fd39c39b2d",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "50725616e01ef75b4c2ada2657f23c2d1f96ba76454c5feec1c399fd39c39b2d",
@@ -3135,13 +3204,13 @@
           "publishedDate": "2026-08-19",
           "updatedDate": null,
           "matchEvidence": [],
-          "publicationStatus": "included",
+          "publicationStatus": "drop",
           "publicationEvidence": [
-            "jev:strategic_signal"
+            "jev:unrelated"
           ],
           "fingerprint": "a8bfab76f93d2f1d4991da976afd8f58e84e059e9f40f4cc66c7eeb93528afde",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a8bfab76f93d2f1d4991da976afd8f58e84e059e9f40f4cc66c7eeb93528afde",
@@ -3210,32 +3279,32 @@
           ],
           "fingerprint": "c40906d09211e86d39ab33460b54614334f5d56c28cb7d8c403bcd7456f8c6f3",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "c40906d09211e86d39ab33460b54614334f5d56c28cb7d8c403bcd7456f8c6f3",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Meta reports rapid growth in women’s sports engagement on its platforms",
+                "summary": "Meta says women’s sports, a $3 billion industry growing 4.5 times faster than men’s, is driving strong social engagement. 128 million follow the top‑10 women athletes on Instagram, over 20 000 Facebook groups exist, and last quarter WNBA and women’s soccer earned 1.2 billion and 900 million views respectively. 445",
                 "inputHash": "39c0dc3b6253335c966482b54d56b143921cef9282773482638a3993460d6e5c",
-                "generatedAt": null,
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Meta reports rapid growth in women’s sports engagement on its platforms",
                     "inputHash": "39c0dc3b6253335c966482b54d56b143921cef9282773482638a3993460d6e5c",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Meta says women’s sports, a $3 billion industry growing 4.5 times faster than men’s, is driving strong social engagement. 128 million follow the top‑10 women athletes on Instagram, over 20 000 Facebook groups exist, and last quarter WNBA and women’s soccer earned 1.2 billion and 900 million views respectively. 445",
                     "inputHash": "39c0dc3b6253335c966482b54d56b143921cef9282773482638a3993460d6e5c",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   }
                 }
@@ -3244,21 +3313,21 @@
                 "status": "missing",
                 "shortHeadline": null,
                 "summary": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "inputHash": "e861aa819133170cb8038575ff19e727db761899fdbd43a46eefa2853da79126",
                 "generatedAt": null,
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
                     "status": "missing",
                     "value": null,
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "inputHash": "e861aa819133170cb8038575ff19e727db761899fdbd43a46eefa2853da79126",
                     "generatedAt": null,
                     "reviewedAt": null
                   },
                   "summary": {
                     "status": "missing",
                     "value": null,
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "inputHash": "e861aa819133170cb8038575ff19e727db761899fdbd43a46eefa2853da79126",
                     "generatedAt": null,
                     "reviewedAt": null
                   }
@@ -3279,7 +3348,7 @@
           ],
           "fingerprint": "b9e26ee389d2561ec364cf8ab275694fdb11b32162145fbfc2d422abdc5d96f6",
           "firstObservedAt": "2026-09-24T10:49:46Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b9e26ee389d2561ec364cf8ab275694fdb11b32162145fbfc2d422abdc5d96f6",
@@ -3353,7 +3422,7 @@
           ],
           "fingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
           "firstObservedAt": "2026-09-02T04:36:59Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
@@ -3422,7 +3491,7 @@
           ],
           "fingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
@@ -3491,7 +3560,7 @@
           ],
           "fingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
@@ -3554,13 +3623,13 @@
           "publishedDate": "2026-08-13",
           "updatedDate": null,
           "matchEvidence": [],
-          "publicationStatus": "included",
+          "publicationStatus": "drop",
           "publicationEvidence": [
-            "jev:strategic_signal"
+            "jev:unrelated"
           ],
           "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
@@ -3629,7 +3698,7 @@
           ],
           "fingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
@@ -3698,7 +3767,7 @@
           ],
           "fingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
@@ -3767,7 +3836,7 @@
           ],
           "fingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
@@ -3836,7 +3905,7 @@
           ],
           "fingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
@@ -3905,7 +3974,7 @@
           ],
           "fingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
@@ -3974,7 +4043,7 @@
           ],
           "fingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
@@ -4043,7 +4112,7 @@
           ],
           "fingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
@@ -4112,7 +4181,7 @@
           ],
           "fingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
@@ -4181,7 +4250,7 @@
           ],
           "fingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
@@ -4250,7 +4319,7 @@
           ],
           "fingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
@@ -4319,7 +4388,7 @@
           ],
           "fingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
@@ -4388,7 +4457,7 @@
           ],
           "fingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
@@ -4457,7 +4526,7 @@
           ],
           "fingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
@@ -4526,7 +4595,7 @@
           ],
           "fingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
@@ -4595,7 +4664,7 @@
           ],
           "fingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
@@ -4664,7 +4733,7 @@
           ],
           "fingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
@@ -4733,7 +4802,7 @@
           ],
           "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
@@ -4802,7 +4871,7 @@
           ],
           "fingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
@@ -4871,7 +4940,7 @@
           ],
           "fingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
@@ -4940,7 +5009,7 @@
           ],
           "fingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
@@ -5009,7 +5078,7 @@
           ],
           "fingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
@@ -5078,7 +5147,7 @@
           ],
           "fingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
@@ -5147,7 +5216,7 @@
           ],
           "fingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
@@ -5216,7 +5285,7 @@
           ],
           "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
@@ -5573,7 +5642,7 @@
           ],
           "fingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
           "firstObservedAt": "2026-09-09T04:45:10Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
@@ -5642,7 +5711,7 @@
           ],
           "fingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
@@ -5711,7 +5780,7 @@
           ],
           "fingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
@@ -5780,7 +5849,7 @@
           ],
           "fingerprint": "4aa58a1d9015c2e87532ffcf67da05612a70ab2224562cbe10a554a8efb30049",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4aa58a1d9015c2e87532ffcf67da05612a70ab2224562cbe10a554a8efb30049",
@@ -5849,7 +5918,7 @@
           ],
           "fingerprint": "7b84af3e65c26a3c2facace38301e1a3b57887ef09a34e1cfa0008852dcd1f8c",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7b84af3e65c26a3c2facace38301e1a3b57887ef09a34e1cfa0008852dcd1f8c",
@@ -5918,7 +5987,7 @@
           ],
           "fingerprint": "7e118c18c9a7eafed3392219c9c930ab728955ad17119f4b83752bb90596e63a",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7e118c18c9a7eafed3392219c9c930ab728955ad17119f4b83752bb90596e63a",
@@ -5987,7 +6056,7 @@
           ],
           "fingerprint": "36c97d1dd653bebefad321d32289082419452d7186bd74a6ac68a8b102dd120b",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "36c97d1dd653bebefad321d32289082419452d7186bd74a6ac68a8b102dd120b",
@@ -6056,7 +6125,7 @@
           ],
           "fingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
@@ -6125,7 +6194,7 @@
           ],
           "fingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
@@ -6194,7 +6263,7 @@
           ],
           "fingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
@@ -6263,7 +6332,7 @@
           ],
           "fingerprint": "2b92989d8e83f9d6a4e793958554dcf47ff39977e08bb8078a17f8ee2d7ca70f",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "2b92989d8e83f9d6a4e793958554dcf47ff39977e08bb8078a17f8ee2d7ca70f",
@@ -6332,7 +6401,7 @@
           ],
           "fingerprint": "740954a5f394867bf9fe5eb3e01abe0ae085d6f24477c5c260af08363e10ac76",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "740954a5f394867bf9fe5eb3e01abe0ae085d6f24477c5c260af08363e10ac76",
@@ -6401,7 +6470,7 @@
           ],
           "fingerprint": "71ba278f719424a43f5e5b3edf7b2b5db300c1033f3f3bea14595c68e91b4a8f",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "71ba278f719424a43f5e5b3edf7b2b5db300c1033f3f3bea14595c68e91b4a8f",
@@ -6470,7 +6539,7 @@
           ],
           "fingerprint": "bcd54ad6dad960c22cd207d1c9480c82c88d455d2161303c3ab0ea69ade9d260",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "bcd54ad6dad960c22cd207d1c9480c82c88d455d2161303c3ab0ea69ade9d260",
@@ -6539,7 +6608,7 @@
           ],
           "fingerprint": "ed38006cc4837fe23ac660bf174e18b9a2bd7f250705e0a27997c323cc136b53",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ed38006cc4837fe23ac660bf174e18b9a2bd7f250705e0a27997c323cc136b53",
@@ -6608,7 +6677,7 @@
           ],
           "fingerprint": "8d1d52727a5ae35c48f40a200de5b33f0ffd37a05d60b4b7c39ca83704aa8564",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "8d1d52727a5ae35c48f40a200de5b33f0ffd37a05d60b4b7c39ca83704aa8564",
@@ -6677,7 +6746,7 @@
           ],
           "fingerprint": "4e803170dfe0d9450cc16523a987e6f132b598c600b1621a69d956243129a651",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4e803170dfe0d9450cc16523a987e6f132b598c600b1621a69d956243129a651",
@@ -6746,7 +6815,7 @@
           ],
           "fingerprint": "1841e5a6c23dbb8dadcd208300abd7d77a90779b41a99f0c292c579a460cf150",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1841e5a6c23dbb8dadcd208300abd7d77a90779b41a99f0c292c579a460cf150",
@@ -6815,7 +6884,7 @@
           ],
           "fingerprint": "4765d055b9b7c5886994d3a6ed2e50aa01eb3f8c1001a5c7edf377d55f906c75",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4765d055b9b7c5886994d3a6ed2e50aa01eb3f8c1001a5c7edf377d55f906c75",
@@ -6884,56 +6953,56 @@
           ],
           "fingerprint": "5695ecb547e935ecda99879bd723c583c879fef875a9d9cf6ef6bf1634313871",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5695ecb547e935ecda99879bd723c583c879fef875a9d9cf6ef6bf1634313871",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Common Audience Segments Failures",
+                "summary": "Advertisers often miss or mis‑define audience segments. Proper segments—Engaged Audience, Existing Customers, New Audience—are set in Advertising Settings and used only for reporting, not delivery. They reveal spend and results distribution. Meta now retains purchase events for 730 days.",
                 "inputHash": "ab5b453c6d4a0163c98d64a05becbef736328fb1862bec608b43fab984fc1bf2",
-                "generatedAt": null,
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Common Audience Segments Failures",
                     "inputHash": "ab5b453c6d4a0163c98d64a05becbef736328fb1862bec608b43fab984fc1bf2",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Advertisers often miss or mis‑define audience segments. Proper segments—Engaged Audience, Existing Customers, New Audience—are set in Advertising Settings and used only for reporting, not delivery. They reveal spend and results distribution. Meta now retains purchase events for 730 days.",
                     "inputHash": "ab5b453c6d4a0163c98d64a05becbef736328fb1862bec608b43fab984fc1bf2",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   }
                 }
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "shortHeadline": "広告主が陥りやすいオーディエンスセグメント設定の失敗",
+                "summary": "広告主はオーディエンスセグメントを定義しないか誤って設定しがちで、正しく設定すれば既存顧客・エンゲージド層・新規層別に費用と成果を把握できる。エンゲージドはメールリストと過去180日間のサイト訪問者、既存顧客は過去730日間の購入イベントと支払顧客のメールリストでカスタムオーディエンスを作成。Metaは購入イベントの保持期間を180日から730日に変更。セグメントはレポート用のみで配信には影響しない。",
+                "inputHash": "7de8c0f81ea69661280b244c9f876b2477d8fa1023c425020a4967fde9d6caea",
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "status": "machine",
+                    "value": "広告主が陥りやすいオーディエンスセグメント設定の失敗",
+                    "inputHash": "7de8c0f81ea69661280b244c9f876b2477d8fa1023c425020a4967fde9d6caea",
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "status": "machine",
+                    "value": "広告主はオーディエンスセグメントを定義しないか誤って設定しがちで、正しく設定すれば既存顧客・エンゲージド層・新規層別に費用と成果を把握できる。エンゲージドはメールリストと過去180日間のサイト訪問者、既存顧客は過去730日間の購入イベントと支払顧客のメールリストでカスタムオーディエンスを作成。Metaは購入イベントの保持期間を180日から730日に変更。セグメントはレポート用のみで配信には影響しない。",
+                    "inputHash": "7de8c0f81ea69661280b244c9f876b2477d8fa1023c425020a4967fde9d6caea",
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   }
                 }
@@ -6953,56 +7022,56 @@
           ],
           "fingerprint": "f35b86ceb1facb612ff803b02e81a1641e7e48d13deec393e2a44fbb82cec060",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f35b86ceb1facb612ff803b02e81a1641e7e48d13deec393e2a44fbb82cec060",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Leads campaigns default to Website and Instant Forms",
+                "summary": "Meta recently changed the Leads objective so its default conversion location is “Website and Instant Forms.” Advertisers are prompted for both a website URL and an instant form, and the combined options appear in the dropdown. A hidden “Single” option lets you choose only one location, either Website or Instant Forms, but it is not immediately visible.",
                 "inputHash": "b852ece32148a3f26d90b3cc14956984815a56da85c06a11dfc8ae644006c738",
-                "generatedAt": null,
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Leads campaigns default to Website and Instant Forms",
                     "inputHash": "b852ece32148a3f26d90b3cc14956984815a56da85c06a11dfc8ae644006c738",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Meta recently changed the Leads objective so its default conversion location is “Website and Instant Forms.” Advertisers are prompted for both a website URL and an instant form, and the combined options appear in the dropdown. A hidden “Single” option lets you choose only one location, either Website or Instant Forms, but it is not immediately visible.",
                     "inputHash": "b852ece32148a3f26d90b3cc14956984815a56da85c06a11dfc8ae644006c738",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   }
                 }
               },
               "ja": {
                 "status": "machine",
-                "shortHeadline": "Metaリードキャンペーンで「WebsiteとInstant Forms」がデフォルト、単一選択は隠しオプション",
-                "summary": "Metaはリード目的のキャンペーンで、デフォルトのコンバージョン先を「Website と Instant Forms」に変更した。広告作成時にウェブURLとインスタントフォームの両方を求められ、単一の場所だけを使用したい広告主は混乱した。ドロップダウンには「Website と Calls」や「Website と Messenger」もあるが、下部にある「Single」オプションを展開すると、Instant Forms または Website のみを選択できる。Metaはアルゴリズムに両方を選ばせるためにこの設定を目立たないようにしている。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
+                "shortHeadline": "Metaリードキャンペーンで「WebsiteとInstant Forms」がデフォルトに、単一選択は隠しオプション",
+                "summary": "Metaはリード目的のキャンペーンで、デフォルトのコンバージョン先を「WebsiteとInstant Forms」に変更しました。そのため広告作成時にウェブURLとインスタントフォームの両方が求められ、単一の場所だけを設定したい広告主が混乱しています。ドロップダウンの下部にある「Single」を展開すると、WebsiteまたはInstant Formsのどちらか一方だけを選択できる隠しオプションが表示されます。",
+                "inputHash": "e34506c55a937e99bdfe690ca1c397b935ff2347b3677b5d172b168db1e3a6db",
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
                     "status": "machine",
-                    "value": "Metaリードキャンペーンで「WebsiteとInstant Forms」がデフォルト、単一選択は隠しオプション",
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "value": "Metaリードキャンペーンで「WebsiteとInstant Forms」がデフォルトに、単一選択は隠しオプション",
+                    "inputHash": "e34506c55a937e99bdfe690ca1c397b935ff2347b3677b5d172b168db1e3a6db",
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   },
                   "summary": {
                     "status": "machine",
-                    "value": "Metaはリード目的のキャンペーンで、デフォルトのコンバージョン先を「Website と Instant Forms」に変更した。広告作成時にウェブURLとインスタントフォームの両方を求められ、単一の場所だけを使用したい広告主は混乱した。ドロップダウンには「Website と Calls」や「Website と Messenger」もあるが、下部にある「Single」オプションを展開すると、Instant Forms または Website のみを選択できる。Metaはアルゴリズムに両方を選ばせるためにこの設定を目立たないようにしている。",
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "value": "Metaはリード目的のキャンペーンで、デフォルトのコンバージョン先を「WebsiteとInstant Forms」に変更しました。そのため広告作成時にウェブURLとインスタントフォームの両方が求められ、単一の場所だけを設定したい広告主が混乱しています。ドロップダウンの下部にある「Single」を展開すると、WebsiteまたはInstant Formsのどちらか一方だけを選択できる隠しオプションが表示されます。",
+                    "inputHash": "e34506c55a937e99bdfe690ca1c397b935ff2347b3677b5d172b168db1e3a6db",
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   }
                 }
@@ -7022,56 +7091,56 @@
           ],
           "fingerprint": "f2c1c8efecb357013bb002fc2359ce41c1fbd7d1d2a434f58878f0b6e220db07",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f2c1c8efecb357013bb002fc2359ce41c1fbd7d1d2a434f58878f0b6e220db07",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Custom Metric Tracks 15-Second Visits to Measure Quality Traffic",
+                "summary": "A custom metric called Quality Traffic Percentage uses a GTM timer trigger to record when a visitor stays at least 15 seconds on a page, then calculates the percentage of total landing page views that meet this threshold, applying 1‑day click and first‑conversion attribution to avoid inflation and allowing comparison across campaigns, ad sets, and ads.",
                 "inputHash": "25751943289e94e12a3def2e6550611177332e0ca32917effd29aecd7055ad42",
-                "generatedAt": null,
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Custom Metric Tracks 15-Second Visits to Measure Quality Traffic",
                     "inputHash": "25751943289e94e12a3def2e6550611177332e0ca32917effd29aecd7055ad42",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "A custom metric called Quality Traffic Percentage uses a GTM timer trigger to record when a visitor stays at least 15 seconds on a page, then calculates the percentage of total landing page views that meet this threshold, applying 1‑day click and first‑conversion attribution to avoid inflation and allowing comparison across campaigns, ad sets, and ads.",
                     "inputHash": "25751943289e94e12a3def2e6550611177332e0ca32917effd29aecd7055ad42",
-                    "generatedAt": null,
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   }
                 }
               },
               "ja": {
                 "status": "machine",
-                "shortHeadline": "品質トラフィック率の測定方法と活用例",
-                "summary": "広告が送るトラフィックの質を測る指標として、ページ滞在時間が15秒以上の訪問をカウントするカスタムメトリック「品質トラフィック率」を作成できる。GTMのタイマートリガーでイベントを設定し、1日クリック＋初回コンバージョンの属性設定で割合を算出する。割合自体は単体では意味が薄いが、キャンペーンや広告セット間で比較すれば、低品質トラフィックが原因で成果が出ない広告を特定できる。実測では、購入やリード最適化時の品質トラフィック率は同程度だったが、ページビュー最適化時は約7倍低かった。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
+                "shortHeadline": "15秒滞在で測る広告の質トラフィック率",
+                "summary": "広告が質の高いトラフィックを送っているかを確認する指標として、ページ滞在時間が15秒以上の訪問をカウントするカスタムイベントをGTMで設定し、全ランディングページビューに対する割合（Quality Traffic Percentage）を算出する。比較属性設定で1日クリック・初回コンバージョンを限定し、重複訪問は除外する。この指標はキャンペーンや広告セット間で比較すると、購入やリード最適化では平均的だが、ランディングページビュー最適化では約7倍低いことが確認された。",
+                "inputHash": "6ae22d3e257948844e6a0fc6518a05f35cbf659db0b0c4d995fbb0b20be05e8b",
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
                     "status": "machine",
-                    "value": "品質トラフィック率の測定方法と活用例",
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "value": "15秒滞在で測る広告の質トラフィック率",
+                    "inputHash": "6ae22d3e257948844e6a0fc6518a05f35cbf659db0b0c4d995fbb0b20be05e8b",
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   },
                   "summary": {
                     "status": "machine",
-                    "value": "広告が送るトラフィックの質を測る指標として、ページ滞在時間が15秒以上の訪問をカウントするカスタムメトリック「品質トラフィック率」を作成できる。GTMのタイマートリガーでイベントを設定し、1日クリック＋初回コンバージョンの属性設定で割合を算出する。割合自体は単体では意味が薄いが、キャンペーンや広告セット間で比較すれば、低品質トラフィックが原因で成果が出ない広告を特定できる。実測では、購入やリード最適化時の品質トラフィック率は同程度だったが、ページビュー最適化時は約7倍低かった。",
-                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": "2026-09-23T10:27:45Z",
+                    "value": "広告が質の高いトラフィックを送っているかを確認する指標として、ページ滞在時間が15秒以上の訪問をカウントするカスタムイベントをGTMで設定し、全ランディングページビューに対する割合（Quality Traffic Percentage）を算出する。比較属性設定で1日クリック・初回コンバージョンを限定し、重複訪問は除外する。この指標はキャンペーンや広告セット間で比較すると、購入やリード最適化では平均的だが、ランディングページビュー最適化では約7倍低いことが確認された。",
+                    "inputHash": "6ae22d3e257948844e6a0fc6518a05f35cbf659db0b0c4d995fbb0b20be05e8b",
+                    "generatedAt": "2026-09-25T05:01:44Z",
                     "reviewedAt": null
                   }
                 }
@@ -7098,7 +7167,7 @@
           ],
           "fingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
@@ -7169,7 +7238,7 @@
           ],
           "fingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
@@ -7240,7 +7309,7 @@
           ],
           "fingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-24T10:49:46Z",
+          "lastObservedAt": "2026-09-25T05:01:44Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
@@ -7388,51 +7457,39 @@
       },
       {
         "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/chatgpt-ads-automated-bidding-placements-url-parameters/",
-        "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
-        "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T18:49:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-initial-impressions/",
         "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
         "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T18:49:46Z",
-        "lastFailureCode": "summary_invalid",
-        "lastProviderErrorCode": null,
-        "quarantined": false
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-25T05:01:44Z",
+        "nextRetryAt": null,
+        "lastFailureCode": "rate_limited_429",
+        "lastProviderErrorCode": "rate_limit_exceeded",
+        "quarantined": true
       },
       {
         "sourceId": "jon-loomer-meta-ads",
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-initial-impressions/",
         "fingerprint": "c8f05db68c7f034247113141b1ec4ec7fddfe7efd02ac5d203e46a6dace6b20a",
         "locale": "ja",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T18:49:46Z",
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-25T05:01:44Z",
+        "nextRetryAt": null,
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
+        "quarantined": true
       },
       {
         "sourceId": "jon-loomer-meta-ads",
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-limitations-ai-instant-forms/",
         "fingerprint": "a73a68dbe49b5381baf7c5559315a2e784470f71659fbdf0f6b147720020eec7",
         "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T18:49:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-25T05:01:44Z",
+        "nextRetryAt": null,
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
+        "quarantined": true
       },
       {
         "sourceId": "jon-loomer-meta-ads",
@@ -7535,9 +7592,9 @@
         "itemKey": "https://www.jonloomer.com/meta-one-business-plans/",
         "fingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
         "locale": "en",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T14:49:46Z",
+        "failureCount": 4,
+        "lastFailureAt": "2026-09-25T05:01:44Z",
+        "nextRetryAt": "2026-09-25T13:01:44Z",
         "lastFailureCode": "response_invalid_shape",
         "lastProviderErrorCode": null,
         "quarantined": false
@@ -7571,9 +7628,21 @@
         "itemKey": "https://www.jonloomer.com/push-delivery-tests-chatgpt-ads-updates/",
         "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
         "locale": "en",
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-25T05:01:44Z",
+        "nextRetryAt": null,
+        "lastFailureCode": "summary_invalid",
+        "lastProviderErrorCode": null,
+        "quarantined": true
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/qvt/15-discontinued-facebook-ads-features/",
+        "fingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
+        "locale": "en",
         "failureCount": 4,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T18:49:46Z",
+        "lastFailureAt": "2026-09-25T05:01:44Z",
+        "nextRetryAt": "2026-09-25T13:01:44Z",
         "lastFailureCode": "summary_invalid",
         "lastProviderErrorCode": null,
         "quarantined": false
@@ -7582,48 +7651,12 @@
         "sourceId": "jon-loomer-meta-ads",
         "itemKey": "https://www.jonloomer.com/qvt/15-discontinued-facebook-ads-features/",
         "fingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
-        "locale": "en",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T14:49:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/qvt/15-discontinued-facebook-ads-features/",
-        "fingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
         "locale": "ja",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T14:49:46Z",
+        "failureCount": 4,
+        "lastFailureAt": "2026-09-25T05:01:44Z",
+        "nextRetryAt": "2026-09-25T13:01:44Z",
         "lastFailureCode": "summary_invalid",
         "lastProviderErrorCode": null,
-        "quarantined": false
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/qvt/audience-segments-failures/",
-        "fingerprint": "5695ecb547e935ecda99879bd723c583c879fef875a9d9cf6ef6bf1634313871",
-        "locale": "en",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T14:49:46Z",
-        "lastFailureCode": "summary_invalid",
-        "lastProviderErrorCode": null,
-        "quarantined": false
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/qvt/audience-segments-failures/",
-        "fingerprint": "5695ecb547e935ecda99879bd723c583c879fef875a9d9cf6ef6bf1634313871",
-        "locale": "ja",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T14:49:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
       },
       {
@@ -7631,9 +7664,9 @@
         "itemKey": "https://www.jonloomer.com/qvt/i-need-a-specific-audience/",
         "fingerprint": "4e803170dfe0d9450cc16523a987e6f132b598c600b1621a69d956243129a651",
         "locale": "en",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T14:49:46Z",
+        "failureCount": 4,
+        "lastFailureAt": "2026-09-25T05:01:44Z",
+        "nextRetryAt": "2026-09-25T13:01:44Z",
         "lastFailureCode": "summary_invalid",
         "lastProviderErrorCode": null,
         "quarantined": false
@@ -7643,9 +7676,9 @@
         "itemKey": "https://www.jonloomer.com/qvt/meta-restricted-my-account/",
         "fingerprint": "1841e5a6c23dbb8dadcd208300abd7d77a90779b41a99f0c292c579a460cf150",
         "locale": "en",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T14:49:46Z",
+        "failureCount": 4,
+        "lastFailureAt": "2026-09-25T05:01:44Z",
+        "nextRetryAt": "2026-09-25T13:01:44Z",
         "lastFailureCode": "summary_invalid",
         "lastProviderErrorCode": null,
         "quarantined": false
@@ -7655,35 +7688,11 @@
         "itemKey": "https://www.jonloomer.com/qvt/predicted-lifetime-value-pltv/",
         "fingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
         "locale": "en",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T14:49:46Z",
+        "failureCount": 4,
+        "lastFailureAt": "2026-09-25T05:01:44Z",
+        "nextRetryAt": "2026-09-25T13:01:44Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/qvt/quality-traffic-percentage/",
-        "fingerprint": "f2c1c8efecb357013bb002fc2359ce41c1fbd7d1d2a434f58878f0b6e220db07",
-        "locale": "en",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T14:49:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/qvt/website-and-instant-forms-confusion/",
-        "fingerprint": "f35b86ceb1facb612ff803b02e81a1641e7e48d13deec393e2a44fbb82cec060",
-        "locale": "en",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T14:49:46Z",
-        "lastFailureCode": "response_invalid_shape",
-        "lastProviderErrorCode": null,
         "quarantined": false
       },
       {
@@ -7772,27 +7781,15 @@
       },
       {
         "sourceId": "social-media-today-meta-ads",
-        "itemKey": "https://www.socialmediatoday.com/news/how-social-platforms-measure-video-views/828349/",
-        "fingerprint": "a8bfab76f93d2f1d4991da976afd8f58e84e059e9f40f4cc66c7eeb93528afde",
-        "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T12:49:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "social-media-today-meta-ads",
         "itemKey": "https://www.socialmediatoday.com/news/how-will-metas-settlement-impact-social-media/829033/",
         "fingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
         "locale": "en",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T18:49:46Z",
+        "failureCount": 5,
+        "lastFailureAt": "2026-09-25T05:01:44Z",
+        "nextRetryAt": null,
         "lastFailureCode": "response_invalid_shape",
         "lastProviderErrorCode": null,
-        "quarantined": false
+        "quarantined": true
       },
       {
         "sourceId": "social-media-today-meta-ads",
@@ -7810,22 +7807,10 @@
         "sourceId": "social-media-today-meta-ads",
         "itemKey": "https://www.socialmediatoday.com/news/meta-highlights-rising-brand-opportunities-in-womens-sports/828348/",
         "fingerprint": "c40906d09211e86d39ab33460b54614334f5d56c28cb7d8c403bcd7456f8c6f3",
-        "locale": "en",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T14:49:46Z",
-        "lastFailureCode": "response_invalid_shape",
-        "lastProviderErrorCode": null,
-        "quarantined": false
-      },
-      {
-        "sourceId": "social-media-today-meta-ads",
-        "itemKey": "https://www.socialmediatoday.com/news/meta-highlights-rising-brand-opportunities-in-womens-sports/828348/",
-        "fingerprint": "c40906d09211e86d39ab33460b54614334f5d56c28cb7d8c403bcd7456f8c6f3",
         "locale": "ja",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T14:49:46Z",
+        "failureCount": 4,
+        "lastFailureAt": "2026-09-25T05:01:44Z",
+        "nextRetryAt": "2026-09-25T13:01:44Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -7835,23 +7820,11 @@
         "itemKey": "https://www.socialmediatoday.com/news/meta-settles-landmark-lawsuit-for-18b/828900/",
         "fingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T12:49:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
-      },
-      {
-        "sourceId": "social-media-today-meta-ads",
-        "itemKey": "https://www.socialmediatoday.com/news/new-zealand-introduces-teen-social-media-restrictions/828662/",
-        "fingerprint": "8747337b0552909dab732fabc4a01657cfc6f50fdfbabaf7503970d3d9622764",
-        "locale": "en",
         "failureCount": 3,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T14:49:46Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
+        "lastFailureAt": "2026-09-25T05:01:44Z",
+        "nextRetryAt": "2026-09-25T09:01:44Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
         "quarantined": false
       },
       {
@@ -7859,9 +7832,9 @@
         "itemKey": "https://www.socialmediatoday.com/news/will-meta-be-found-guilty-of-driving-social-media-addiction/828553/",
         "fingerprint": "f207af774f37350e35a2b8c49ca9b17ea6c1fd470f4202f794a9429e8bbcd1fd",
         "locale": "en",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T14:49:46Z",
+        "failureCount": 4,
+        "lastFailureAt": "2026-09-25T05:01:44Z",
+        "nextRetryAt": "2026-09-25T13:01:44Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -7871,9 +7844,9 @@
         "itemKey": "https://www.socialmediatoday.com/news/will-meta-be-found-guilty-of-driving-social-media-addiction/828553/",
         "fingerprint": "f207af774f37350e35a2b8c49ca9b17ea6c1fd470f4202f794a9429e8bbcd1fd",
         "locale": "ja",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T14:49:46Z",
+        "failureCount": 4,
+        "lastFailureAt": "2026-09-25T05:01:44Z",
+        "nextRetryAt": "2026-09-25T13:01:44Z",
         "lastFailureCode": "rate_limited_429",
         "lastProviderErrorCode": "rate_limit_exceeded",
         "quarantined": false
@@ -7883,9 +7856,9 @@
         "itemKey": "https://www.socialmediatoday.com/news/will-removing-algorithmic-sorting-improve-social-media/829868/",
         "fingerprint": "7710575499092c0ebde4bc14eb5f367ef0d75afa7befefcebbf176f614c5fda9",
         "locale": "en",
-        "failureCount": 3,
-        "lastFailureAt": "2026-09-24T10:49:46Z",
-        "nextRetryAt": "2026-09-24T14:49:46Z",
+        "failureCount": 4,
+        "lastFailureAt": "2026-09-25T05:01:44Z",
+        "nextRetryAt": "2026-09-25T13:01:44Z",
         "lastFailureCode": "response_invalid_shape",
         "lastProviderErrorCode": null,
         "quarantined": false

@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-09-24T10:49:46Z",
+  "generatedAt": "2026-09-25T05:01:44Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -68,7 +68,7 @@
       "publishedDate": "2026-09-22",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -137,7 +137,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": "2026-09-21",
       "firstObservedAt": "2026-09-22T05:01:36Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -207,7 +207,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -276,7 +276,7 @@
       "publishedDate": "2026-09-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-18T11:07:09Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -345,7 +345,7 @@
       "publishedDate": "2026-09-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -414,7 +414,7 @@
       "publishedDate": "2026-09-16",
       "updatedDate": null,
       "firstObservedAt": "2026-09-17T04:55:10Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -483,7 +483,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -552,7 +552,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -621,7 +621,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -690,7 +690,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -759,7 +759,7 @@
       "publishedDate": "2026-09-14",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -828,7 +828,7 @@
       "publishedDate": "2026-09-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-11T04:43:19Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -897,7 +897,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -966,7 +966,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1035,7 +1035,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-14T11:20:59Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -1104,7 +1104,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T04:45:10Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1173,7 +1173,7 @@
       "publishedDate": "2026-09-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1242,7 +1242,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1311,7 +1311,7 @@
       "publishedDate": "2026-08-31",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1373,75 +1373,6 @@
       }
     },
     {
-      "id": "social-media-today-meta-ads-d3fb5f3c45f341c06bab",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Meta updates login with Facebook",
-      "url": "https://www.socialmediatoday.com/news/meta-updates-login-with-facebook/829135/",
-      "publishedDate": "2026-08-30",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "d3fb5f3c45f341c06bab017f5c86d88dc6bcbd0e1ad985b8a2ce1a5135709e30",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta adds one‑tap Facebook login for Android, Web and iOS",
-            "summary": "Meta is rolling out a one‑tap sign‑on for Android and Web, improves its Limited Login flow, and updates the iOS fast app switch to use the native Facebook app. Developers can access these changes through the latest SDK.",
-            "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
-            "generatedAt": "2026-09-24T10:49:46Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta adds one‑tap Facebook login for Android, Web and iOS",
-                "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta is rolling out a one‑tap sign‑on for Android and Web, improves its Limited Login flow, and updates the iOS fast app switch to use the native Facebook app. Developers can access these changes through the latest SDK.",
-                "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta、Facebookログインをワンタップで簡素化",
-            "summary": "Metaは、Facebookアカウントでのログイン機能を改善し、Android と Web でワンタップサインオンを提供します。既にデバイスにサインイン済みのユーザーは、1 回のタップで第三者アプリにログインでき、フローが短縮されます。また、Limited Login の再ログイン回数削減や、iOS ではネイティブ Facebook アプリへの高速スイッチにより、ブラウザ経由より速くログインできます。これらの機能は最新 SDK で利用可能で、開発者は必要な機能を選択して導入できます。",
-            "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
-            "generatedAt": "2026-09-24T10:49:46Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta、Facebookログインをワンタップで簡素化",
-                "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaは、Facebookアカウントでのログイン機能を改善し、Android と Web でワンタップサインオンを提供します。既にデバイスにサインイン済みのユーザーは、1 回のタップで第三者アプリにログインでき、フローが短縮されます。また、Limited Login の再ログイン回数削減や、iOS ではネイティブ Facebook アプリへの高速スイッチにより、ブラウザ経由より速くログインできます。これらの機能は最新 SDK で利用可能で、開発者は必要な機能を選択して導入できます。",
-                "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "id": "social-media-today-meta-ads-2065f116ecd6d8ec5fd9",
       "sourceId": "social-media-today-meta-ads",
       "title": "Instagram growth continues to outpace Facebook in EU",
@@ -1449,7 +1380,7 @@
       "publishedDate": "2026-08-30",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1518,7 +1449,7 @@
       "publishedDate": "2026-08-27",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T22:29:27Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1587,7 +1518,7 @@
       "publishedDate": "2026-08-26",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T22:29:27Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1656,7 +1587,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1726,7 +1657,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1795,7 +1726,7 @@
       "publishedDate": "2026-08-24",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1806,49 +1737,49 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "New Zealand’s Online Safety Bill targets teen social media use",
+            "summary": "New Zealand’s Online Safety Bill would require platforms such as Instagram, TikTok, Snapchat and Facebook to take reasonable steps to verify users are over 16. The bill is unlikely to progress until after the November election. Australia’s teen ban shows most under‑age users still access apps, wellbeing unchanged, and Meta removed 750,000 under‑age accounts.",
             "inputHash": "ecd7344fda502e23706a57a066eaec5d5cadc06768f9a05a1eac3d5b96ae4985",
-            "generatedAt": null,
+            "generatedAt": "2026-09-25T05:01:44Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "New Zealand’s Online Safety Bill targets teen social media use",
                 "inputHash": "ecd7344fda502e23706a57a066eaec5d5cadc06768f9a05a1eac3d5b96ae4985",
-                "generatedAt": null,
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "New Zealand’s Online Safety Bill would require platforms such as Instagram, TikTok, Snapchat and Facebook to take reasonable steps to verify users are over 16. The bill is unlikely to progress until after the November election. Australia’s teen ban shows most under‑age users still access apps, wellbeing unchanged, and Meta removed 750,000 under‑age accounts.",
                 "inputHash": "ecd7344fda502e23706a57a066eaec5d5cadc06768f9a05a1eac3d5b96ae4985",
-                "generatedAt": null,
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null
               }
             }
           },
           "ja": {
             "status": "machine",
-            "shortHeadline": "ニュージーランド、16歳以上確認を義務付けるティーン向けSNS規制法案を提出",
-            "summary": "ニュージーランドは、Instagram、TikTok、Snapchat、Facebookなどの高リスクSNSに対し、利用者が16歳以上であることを確認する措置を義務付ける「オンライン安全法案」を提出した",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-24T10:49:46Z",
+            "shortHeadline": "NZ、オンライン安全法案で16歳以上確認義務化も選挙後に進行遅延",
+            "summary": "ニュージーランドは新たにオンライン安全法案を策定し、Instagram、TikTok、Snapchat、Facebookなどの高リスクプラットフォームに利用者が16歳以上であることを確認させることを義務付けるが、同法は11月の総選挙後まで進行しない見込みである。オーストラリアでは同様のティーン向けソーシャルメディア規制が実施され、未成年の利用は依然多く、問題的な利用や福祉に変化はなく、利用者はメッセージングやゲームへシフトしている。Metaはオーストラリアで75万件の未成年アカウントを削除したが、年齢確認は不十分で、若者は誤った生年月日を入力している。",
+            "inputHash": "95f8db2aba990d7db53df8e674c1373433580dac97a10ed963cdcd77eea9ded8",
+            "generatedAt": "2026-09-25T05:01:44Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
-                "value": "ニュージーランド、16歳以上確認を義務付けるティーン向けSNS規制法案を提出",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-24T10:49:46Z",
+                "value": "NZ、オンライン安全法案で16歳以上確認義務化も選挙後に進行遅延",
+                "inputHash": "95f8db2aba990d7db53df8e674c1373433580dac97a10ed963cdcd77eea9ded8",
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
-                "value": "ニュージーランドは、Instagram、TikTok、Snapchat、Facebookなどの高リスクSNSに対し、利用者が16歳以上であることを確認する措置を義務付ける「オンライン安全法案」を提出した",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-24T10:49:46Z",
+                "value": "ニュージーランドは新たにオンライン安全法案を策定し、Instagram、TikTok、Snapchat、Facebookなどの高リスクプラットフォームに利用者が16歳以上であることを確認させることを義務付けるが、同法は11月の総選挙後まで進行しない見込みである。オーストラリアでは同様のティーン向けソーシャルメディア規制が実施され、未成年の利用は依然多く、問題的な利用や福祉に変化はなく、利用者はメッセージングやゲームへシフトしている。Metaはオーストラリアで75万件の未成年アカウントを削除したが、年齢確認は不十分で、若者は誤った生年月日を入力している。",
+                "inputHash": "95f8db2aba990d7db53df8e674c1373433580dac97a10ed963cdcd77eea9ded8",
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null
               }
             }
@@ -1864,7 +1795,7 @@
       "publishedDate": "2026-08-24",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1933,7 +1864,7 @@
       "publishedDate": "2026-08-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2002,7 +1933,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T22:29:27Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2071,7 +2002,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2212,7 +2143,7 @@
       "publishedDate": "2026-08-19",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2223,118 +2154,49 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "39c0dc3b6253335c966482b54d56b143921cef9282773482638a3993460d6e5c",
-            "generatedAt": null,
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "39c0dc3b6253335c966482b54d56b143921cef9282773482638a3993460d6e5c",
-                "generatedAt": null,
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "39c0dc3b6253335c966482b54d56b143921cef9282773482638a3993460d6e5c",
-                "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "social-media-today-meta-ads-a8bfab76f93d2f1d4991",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "How social platforms measure video views",
-      "url": "https://www.socialmediatoday.com/news/how-social-platforms-measure-video-views/828349/",
-      "publishedDate": "2026-08-19",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "a8bfab76f93d2f1d4991da976afd8f58e84e059e9f40f4cc66c7eeb93528afde",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "60bce77b9c26dc53a6f9a1032945f296a407511d81aeef7e413ca1c3a0b512f9",
-            "generatedAt": null,
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "60bce77b9c26dc53a6f9a1032945f296a407511d81aeef7e413ca1c3a0b512f9",
-                "generatedAt": null,
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "60bce77b9c26dc53a6f9a1032945f296a407511d81aeef7e413ca1c3a0b512f9",
-                "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
             "status": "machine",
-            "shortHeadline": "YouTubeを含む各SNSの動画視聴数の測定基準が異なる",
-            "summary": "YouTubeは動画視聴数の算出方法を変更し、1秒以上再生されたものを「ビュー」、最初のフレームを超えて視聴またはクリックしたものを「エンゲージドビュー」、公開長尺動画やアーカイブ配信のエンゲージドビューを「クオリファイドビュー」と定義した。他のSNSでもビューの定義はプラットフォームや形式により異なり、同一指標でも意味合いが変わることがある。そのため、ビュー数だけでエンゲージメントや関心を判断するのは難しく、マーケティングやスポンサー契約の際には数値の背景を確認する必要がある。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-24T10:49:46Z",
+            "shortHeadline": "Meta reports rapid growth in women’s sports engagement on its platforms",
+            "summary": "Meta says women’s sports, a $3 billion industry growing 4.5 times faster than men’s, is driving strong social engagement. 128 million follow the top‑10 women athletes on Instagram, over 20 000 Facebook groups exist, and last quarter WNBA and women’s soccer earned 1.2 billion and 900 million views respectively. 445",
+            "inputHash": "39c0dc3b6253335c966482b54d56b143921cef9282773482638a3993460d6e5c",
+            "generatedAt": "2026-09-25T05:01:44Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
-                "value": "YouTubeを含む各SNSの動画視聴数の測定基準が異なる",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-24T10:49:46Z",
+                "value": "Meta reports rapid growth in women’s sports engagement on its platforms",
+                "inputHash": "39c0dc3b6253335c966482b54d56b143921cef9282773482638a3993460d6e5c",
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
-                "value": "YouTubeは動画視聴数の算出方法を変更し、1秒以上再生されたものを「ビュー」、最初のフレームを超えて視聴またはクリックしたものを「エンゲージドビュー」、公開長尺動画やアーカイブ配信のエンゲージドビューを「クオリファイドビュー」と定義した。他のSNSでもビューの定義はプラットフォームや形式により異なり、同一指標でも意味合いが変わることがある。そのため、ビュー数だけでエンゲージメントや関心を判断するのは難しく、マーケティングやスポンサー契約の際には数値の背景を確認する必要がある。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-24T10:49:46Z",
+                "value": "Meta says women’s sports, a $3 billion industry growing 4.5 times faster than men’s, is driving strong social engagement. 128 million follow the top‑10 women athletes on Instagram, over 20 000 Facebook groups exist, and last quarter WNBA and women’s soccer earned 1.2 billion and 900 million views respectively. 445",
+                "inputHash": "39c0dc3b6253335c966482b54d56b143921cef9282773482638a3993460d6e5c",
+                "generatedAt": "2026-09-25T05:01:44Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "e861aa819133170cb8038575ff19e727db761899fdbd43a46eefa2853da79126",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "e861aa819133170cb8038575ff19e727db761899fdbd43a46eefa2853da79126",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "e861aa819133170cb8038575ff19e727db761899fdbd43a46eefa2853da79126",
+                "generatedAt": null,
                 "reviewedAt": null
               }
             }
@@ -2419,7 +2281,7 @@
       "publishedDate": "2026-08-18",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2488,7 +2350,7 @@
       "publishedDate": "2026-08-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2622,75 +2484,6 @@
       }
     },
     {
-      "id": "jon-loomer-meta-ads-31a647f219704abc5612",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "ChatGPT Ads Get Automated Bidding, Placements, and URL Parameters",
-      "url": "https://www.jonloomer.com/chatgpt-ads-automated-bidding-placements-url-parameters/",
-      "publishedDate": "2026-08-13",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "bae818e9c6a1294225aebbcf3fe2ec19a7698f8a07f7f05c4bb3bbe9b45d5dca",
-            "generatedAt": null,
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "bae818e9c6a1294225aebbcf3fe2ec19a7698f8a07f7f05c4bb3bbe9b45d5dca",
-                "generatedAt": null,
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "bae818e9c6a1294225aebbcf3fe2ec19a7698f8a07f7f05c4bb3bbe9b45d5dca",
-                "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "ChatGPT広告に自動入札・配置選択・URLパラメータ機能が追加",
-            "summary": "OpenAIはChatGPT広告のベータ版開始以降、3つの機能を追加した。クリックやコンバージョンを目的とした場合のデフォルト入札戦略を「結果最大化」に変更し、予算に応じて自動的に入札額を調整する。キャンペーン設定に「対象プラットフォーム」ドロップダウンを導入し、iOSアプリ、Androidアプリ、Webの表示先を個別に選択できるようにした。さらに、キャンペーン・広告セット・広告単位でランディングページのクエリパラメータを設定でき、{campaign_id} などのテンプレート変数が利用可能となった。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-05T08:40:34Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "ChatGPT広告に自動入札・配置選択・URLパラメータ機能が追加",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-05T08:40:34Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "OpenAIはChatGPT広告のベータ版開始以降、3つの機能を追加した。クリックやコンバージョンを目的とした場合のデフォルト入札戦略を「結果最大化」に変更し、予算に応じて自動的に入札額を調整する。キャンペーン設定に「対象プラットフォーム」ドロップダウンを導入し、iOSアプリ、Androidアプリ、Webの表示先を個別に選択できるようにした。さらに、キャンペーン・広告セット・広告単位でランディングページのクエリパラメータを設定でき、{campaign_id} などのテンプレート変数が利用可能となった。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-05T08:40:34Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "id": "jon-loomer-meta-ads-43e38784bd796ab19923",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta Ads AI Connectors Get More Security Controls",
@@ -2698,7 +2491,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2767,7 +2560,7 @@
       "publishedDate": "2026-08-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2836,7 +2629,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2905,7 +2698,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2974,7 +2767,7 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -3044,7 +2837,7 @@
       "publishedDate": "2026-08-05",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3113,7 +2906,7 @@
       "publishedDate": "2026-08-03",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3182,7 +2975,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3251,7 +3044,7 @@
       "publishedDate": "2026-07-27",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3389,7 +3182,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3458,7 +3251,7 @@
       "publishedDate": "2026-07-20",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3527,7 +3320,7 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -3597,7 +3390,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3666,7 +3459,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3735,7 +3528,7 @@
       "publishedDate": "2026-07-13",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3804,7 +3597,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3873,7 +3666,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3944,7 +3737,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4013,7 +3806,7 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -4083,7 +3876,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4152,7 +3945,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4221,7 +4014,7 @@
       "publishedDate": "2026-06-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4290,7 +4083,7 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4359,7 +4152,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4430,7 +4223,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4501,7 +4294,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4570,7 +4363,7 @@
       "publishedDate": "2026-06-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4639,7 +4432,7 @@
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4708,7 +4501,7 @@
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4777,7 +4570,7 @@
       "publishedDate": "2026-06-14",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4846,7 +4639,7 @@
       "publishedDate": "2026-06-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4915,7 +4708,7 @@
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4984,7 +4777,7 @@
       "publishedDate": "2026-06-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4995,49 +4788,49 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Common Audience Segments Failures",
+            "summary": "Advertisers often miss or mis‑define audience segments. Proper segments—Engaged Audience, Existing Customers, New Audience—are set in Advertising Settings and used only for reporting, not delivery. They reveal spend and results distribution. Meta now retains purchase events for 730 days.",
             "inputHash": "ab5b453c6d4a0163c98d64a05becbef736328fb1862bec608b43fab984fc1bf2",
-            "generatedAt": null,
+            "generatedAt": "2026-09-25T05:01:44Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Common Audience Segments Failures",
                 "inputHash": "ab5b453c6d4a0163c98d64a05becbef736328fb1862bec608b43fab984fc1bf2",
-                "generatedAt": null,
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Advertisers often miss or mis‑define audience segments. Proper segments—Engaged Audience, Existing Customers, New Audience—are set in Advertising Settings and used only for reporting, not delivery. They reveal spend and results distribution. Meta now retains purchase events for 730 days.",
                 "inputHash": "ab5b453c6d4a0163c98d64a05becbef736328fb1862bec608b43fab984fc1bf2",
-                "generatedAt": null,
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null
               }
             }
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "status": "machine",
+            "shortHeadline": "広告主が陥りやすいオーディエンスセグメント設定の失敗",
+            "summary": "広告主はオーディエンスセグメントを定義しないか誤って設定しがちで、正しく設定すれば既存顧客・エンゲージド層・新規層別に費用と成果を把握できる。エンゲージドはメールリストと過去180日間のサイト訪問者、既存顧客は過去730日間の購入イベントと支払顧客のメールリストでカスタムオーディエンスを作成。Metaは購入イベントの保持期間を180日から730日に変更。セグメントはレポート用のみで配信には影響しない。",
+            "inputHash": "7de8c0f81ea69661280b244c9f876b2477d8fa1023c425020a4967fde9d6caea",
+            "generatedAt": "2026-09-25T05:01:44Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "value": "広告主が陥りやすいオーディエンスセグメント設定の失敗",
+                "inputHash": "7de8c0f81ea69661280b244c9f876b2477d8fa1023c425020a4967fde9d6caea",
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "status": "machine",
+                "value": "広告主はオーディエンスセグメントを定義しないか誤って設定しがちで、正しく設定すれば既存顧客・エンゲージド層・新規層別に費用と成果を把握できる。エンゲージドはメールリストと過去180日間のサイト訪問者、既存顧客は過去730日間の購入イベントと支払顧客のメールリストでカスタムオーディエンスを作成。Metaは購入イベントの保持期間を180日から730日に変更。セグメントはレポート用のみで配信には影響しない。",
+                "inputHash": "7de8c0f81ea69661280b244c9f876b2477d8fa1023c425020a4967fde9d6caea",
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null
               }
             }
@@ -5053,7 +4846,7 @@
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5122,7 +4915,7 @@
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5191,7 +4984,7 @@
       "publishedDate": "2026-05-31",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5202,49 +4995,49 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Leads campaigns default to Website and Instant Forms",
+            "summary": "Meta recently changed the Leads objective so its default conversion location is “Website and Instant Forms.” Advertisers are prompted for both a website URL and an instant form, and the combined options appear in the dropdown. A hidden “Single” option lets you choose only one location, either Website or Instant Forms, but it is not immediately visible.",
             "inputHash": "b852ece32148a3f26d90b3cc14956984815a56da85c06a11dfc8ae644006c738",
-            "generatedAt": null,
+            "generatedAt": "2026-09-25T05:01:44Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Leads campaigns default to Website and Instant Forms",
                 "inputHash": "b852ece32148a3f26d90b3cc14956984815a56da85c06a11dfc8ae644006c738",
-                "generatedAt": null,
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Meta recently changed the Leads objective so its default conversion location is “Website and Instant Forms.” Advertisers are prompted for both a website URL and an instant form, and the combined options appear in the dropdown. A hidden “Single” option lets you choose only one location, either Website or Instant Forms, but it is not immediately visible.",
                 "inputHash": "b852ece32148a3f26d90b3cc14956984815a56da85c06a11dfc8ae644006c738",
-                "generatedAt": null,
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null
               }
             }
           },
           "ja": {
             "status": "machine",
-            "shortHeadline": "Metaリードキャンペーンで「WebsiteとInstant Forms」がデフォルト、単一選択は隠しオプション",
-            "summary": "Metaはリード目的のキャンペーンで、デフォルトのコンバージョン先を「Website と Instant Forms」に変更した。広告作成時にウェブURLとインスタントフォームの両方を求められ、単一の場所だけを使用したい広告主は混乱した。ドロップダウンには「Website と Calls」や「Website と Messenger」もあるが、下部にある「Single」オプションを展開すると、Instant Forms または Website のみを選択できる。Metaはアルゴリズムに両方を選ばせるためにこの設定を目立たないようにしている。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-23T10:27:45Z",
+            "shortHeadline": "Metaリードキャンペーンで「WebsiteとInstant Forms」がデフォルトに、単一選択は隠しオプション",
+            "summary": "Metaはリード目的のキャンペーンで、デフォルトのコンバージョン先を「WebsiteとInstant Forms」に変更しました。そのため広告作成時にウェブURLとインスタントフォームの両方が求められ、単一の場所だけを設定したい広告主が混乱しています。ドロップダウンの下部にある「Single」を展開すると、WebsiteまたはInstant Formsのどちらか一方だけを選択できる隠しオプションが表示されます。",
+            "inputHash": "e34506c55a937e99bdfe690ca1c397b935ff2347b3677b5d172b168db1e3a6db",
+            "generatedAt": "2026-09-25T05:01:44Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
-                "value": "Metaリードキャンペーンで「WebsiteとInstant Forms」がデフォルト、単一選択は隠しオプション",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
+                "value": "Metaリードキャンペーンで「WebsiteとInstant Forms」がデフォルトに、単一選択は隠しオプション",
+                "inputHash": "e34506c55a937e99bdfe690ca1c397b935ff2347b3677b5d172b168db1e3a6db",
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
-                "value": "Metaはリード目的のキャンペーンで、デフォルトのコンバージョン先を「Website と Instant Forms」に変更した。広告作成時にウェブURLとインスタントフォームの両方を求められ、単一の場所だけを使用したい広告主は混乱した。ドロップダウンには「Website と Calls」や「Website と Messenger」もあるが、下部にある「Single」オプションを展開すると、Instant Forms または Website のみを選択できる。Metaはアルゴリズムに両方を選ばせるためにこの設定を目立たないようにしている。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
+                "value": "Metaはリード目的のキャンペーンで、デフォルトのコンバージョン先を「WebsiteとInstant Forms」に変更しました。そのため広告作成時にウェブURLとインスタントフォームの両方が求められ、単一の場所だけを設定したい広告主が混乱しています。ドロップダウンの下部にある「Single」を展開すると、WebsiteまたはInstant Formsのどちらか一方だけを選択できる隠しオプションが表示されます。",
+                "inputHash": "e34506c55a937e99bdfe690ca1c397b935ff2347b3677b5d172b168db1e3a6db",
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null
               }
             }
@@ -5260,7 +5053,7 @@
       "publishedDate": "2026-05-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5329,7 +5122,7 @@
       "publishedDate": "2026-05-26",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5398,7 +5191,7 @@
       "publishedDate": "2026-05-24",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5409,49 +5202,49 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Custom Metric Tracks 15-Second Visits to Measure Quality Traffic",
+            "summary": "A custom metric called Quality Traffic Percentage uses a GTM timer trigger to record when a visitor stays at least 15 seconds on a page, then calculates the percentage of total landing page views that meet this threshold, applying 1‑day click and first‑conversion attribution to avoid inflation and allowing comparison across campaigns, ad sets, and ads.",
             "inputHash": "25751943289e94e12a3def2e6550611177332e0ca32917effd29aecd7055ad42",
-            "generatedAt": null,
+            "generatedAt": "2026-09-25T05:01:44Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Custom Metric Tracks 15-Second Visits to Measure Quality Traffic",
                 "inputHash": "25751943289e94e12a3def2e6550611177332e0ca32917effd29aecd7055ad42",
-                "generatedAt": null,
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "A custom metric called Quality Traffic Percentage uses a GTM timer trigger to record when a visitor stays at least 15 seconds on a page, then calculates the percentage of total landing page views that meet this threshold, applying 1‑day click and first‑conversion attribution to avoid inflation and allowing comparison across campaigns, ad sets, and ads.",
                 "inputHash": "25751943289e94e12a3def2e6550611177332e0ca32917effd29aecd7055ad42",
-                "generatedAt": null,
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null
               }
             }
           },
           "ja": {
             "status": "machine",
-            "shortHeadline": "品質トラフィック率の測定方法と活用例",
-            "summary": "広告が送るトラフィックの質を測る指標として、ページ滞在時間が15秒以上の訪問をカウントするカスタムメトリック「品質トラフィック率」を作成できる。GTMのタイマートリガーでイベントを設定し、1日クリック＋初回コンバージョンの属性設定で割合を算出する。割合自体は単体では意味が薄いが、キャンペーンや広告セット間で比較すれば、低品質トラフィックが原因で成果が出ない広告を特定できる。実測では、購入やリード最適化時の品質トラフィック率は同程度だったが、ページビュー最適化時は約7倍低かった。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-23T10:27:45Z",
+            "shortHeadline": "15秒滞在で測る広告の質トラフィック率",
+            "summary": "広告が質の高いトラフィックを送っているかを確認する指標として、ページ滞在時間が15秒以上の訪問をカウントするカスタムイベントをGTMで設定し、全ランディングページビューに対する割合（Quality Traffic Percentage）を算出する。比較属性設定で1日クリック・初回コンバージョンを限定し、重複訪問は除外する。この指標はキャンペーンや広告セット間で比較すると、購入やリード最適化では平均的だが、ランディングページビュー最適化では約7倍低いことが確認された。",
+            "inputHash": "6ae22d3e257948844e6a0fc6518a05f35cbf659db0b0c4d995fbb0b20be05e8b",
+            "generatedAt": "2026-09-25T05:01:44Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
-                "value": "品質トラフィック率の測定方法と活用例",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
+                "value": "15秒滞在で測る広告の質トラフィック率",
+                "inputHash": "6ae22d3e257948844e6a0fc6518a05f35cbf659db0b0c4d995fbb0b20be05e8b",
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
-                "value": "広告が送るトラフィックの質を測る指標として、ページ滞在時間が15秒以上の訪問をカウントするカスタムメトリック「品質トラフィック率」を作成できる。GTMのタイマートリガーでイベントを設定し、1日クリック＋初回コンバージョンの属性設定で割合を算出する。割合自体は単体では意味が薄いが、キャンペーンや広告セット間で比較すれば、低品質トラフィックが原因で成果が出ない広告を特定できる。実測では、購入やリード最適化時の品質トラフィック率は同程度だったが、ページビュー最適化時は約7倍低かった。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
+                "value": "広告が質の高いトラフィックを送っているかを確認する指標として、ページ滞在時間が15秒以上の訪問をカウントするカスタムイベントをGTMで設定し、全ランディングページビューに対する割合（Quality Traffic Percentage）を算出する。比較属性設定で1日クリック・初回コンバージョンを限定し、重複訪問は除外する。この指標はキャンペーンや広告セット間で比較すると、購入やリード最適化では平均的だが、ランディングページビュー最適化では約7倍低いことが確認された。",
+                "inputHash": "6ae22d3e257948844e6a0fc6518a05f35cbf659db0b0c4d995fbb0b20be05e8b",
+                "generatedAt": "2026-09-25T05:01:44Z",
                 "reviewedAt": null
               }
             }
@@ -5467,7 +5260,7 @@
       "publishedDate": "2026-05-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5536,7 +5329,7 @@
       "publishedDate": "2026-05-19",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5892,7 +5685,7 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -5962,7 +5755,7 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -6032,7 +5825,7 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -6102,7 +5895,7 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -6172,7 +5965,7 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -6242,7 +6035,7 @@
       "publishedDate": "2025-09-26",
       "updatedDate": "2025-09-26",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-24T10:49:46Z",
+      "lastObservedAt": "2026-09-25T05:01:44Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
