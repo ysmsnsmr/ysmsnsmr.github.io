@@ -83,13 +83,14 @@ class GateBTest(unittest.TestCase):
         self.source_ids = automatic_sources()
         self.baseline_generation = baseline_generation()
 
-    def test_empty_committed_ledger_is_valid_but_not_ready(self) -> None:
+    def test_committed_ledger_is_valid_but_not_ready(self) -> None:
         record = json.loads((ROOT / "data/meta_ads_tracker_secondary_shadow_gate_b.json").read_text())
         validated = validate_record(record, automatic_source_ids=self.source_ids, baseline_generation=self.baseline_generation)
         result = evaluate(self.config, validated, automatic_source_ids=self.source_ids)
         self.assertEqual(result["status"], "BLOCK")
         self.assertIn("observation window is not declared", result["reasons"])
-        self.assertIn("reviews 0/10", result["reasons"])
+        self.assertLess(len(record["reviews"]), 10)
+        self.assertIn(f"reviews {len(record['reviews'])}/10", result["reasons"])
 
     def test_complete_evidence_passes_all_fixed_criteria(self) -> None:
         record = validate_record(ready_record(), automatic_source_ids=self.source_ids, baseline_generation=self.baseline_generation)
