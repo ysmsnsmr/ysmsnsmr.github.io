@@ -207,7 +207,7 @@ class PersonalFeedTest(unittest.TestCase):
     def test_manual_exclusions_are_validated_and_match_the_reviewed_urls(self) -> None:
         manifest = json.loads(personal_feed.DEFAULT_MANUAL_EXCLUSIONS.read_text(encoding="utf-8"))
         urls = personal_feed.validate_manual_exclusions(manifest, self.config)
-        self.assertEqual(len(urls), 14)
+        self.assertEqual(len(urls), 17)
         self.assertIn("https://www.jonloomer.com/chatgpt-ads-initial-impressions/", urls)
         self.assertIn("https://www.socialmediatoday.com/news/meta-settles-landmark-lawsuit-for-18b/828900/", urls)
 
