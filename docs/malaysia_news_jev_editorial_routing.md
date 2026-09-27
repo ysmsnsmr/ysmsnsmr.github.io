@@ -83,3 +83,23 @@ routing as stable:
 - direct-impact articles are retained ahead of lower-priority candidates;
 - selected/rendered URLs still match and the existing Groq/Markdown validators
   pass.
+
+## Same-Event Observation
+
+After production rendering and validation, `malaysia_event_match_observation.py`
+compares at most 24 Jev-classified `direct_life_impact` or
+`public_information` candidates in one additional GPT-OSS 120B request. It
+returns only pairs that appear to describe the same specific event or
+announcement. Same-topic reports, later developments, and different times or
+affected areas must remain separate. The input uses RSS titles and up to 350
+characters of description; it does not fetch article bodies.
+
+`event_match_observation.json` contains candidate ranks, fingerprints, matched
+pair IDs, status, and bounded API diagnostics. The IDs can be resolved against
+`editorial_candidate_pool.json`. It does not store model prose or change the
+15-card routing result, summary input, displayed links, or publication. A
+missing key, failed request, or invalid pair list leaves the match list empty.
+The workflow writes `event_match_observation_status.txt` for quick inspection.
+Set `MALAYSIA_NEWS_EVENT_MATCH_OBSERVATION_ENABLED=false` to stop only this
+additional call; leaving the variable unset enables it when Groq rendering
+is enabled.
