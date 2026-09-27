@@ -66,6 +66,7 @@ body_evidenceがない場合はRSSの情報だけを使ってください。入�
 返答はeditorial_entryだけを持つJSON objectです。まずheadline_jaに、詳細ページとピックアップで使う通常見出しを作ってください。Unicode文字数で60文字以内にし、末尾に「…」を付けず、記事の主体、出来事、必要な方向・対象・確定度が分かる自然な日本語にしてください。次にshort_headline_jaに、一覧用の短見出しを作ってください。18〜22文字を目安に最大26文字とし、通常見出しを無理に縮めて意味を壊さないでください。すでに短い通常見出しは同じ文を使って構いません。入力にない固有名詞・数値・断定は加えないでください。
 entry_jaは、読者が出典リンクを開くか判断できる日本語の概要です。主体、発言者・帰属、計画・提案・予報・調査・疑惑・否定などの確定度を、自然文の中で落とさないでください。
 発言記事では発言者または当局を自然に残してください。計画・提案・予報・警報・調査・疑惑・否定を、完了・確定した事実として書き換えないでください。
+入力のpublication_as_ofとpublished_atはマレーシア時間の基準です。警報、運行変更、募集などに対象日時や終了時刻が明記されている場合は、概要に日付と時刻を絶対表記で残してください。「今日」「明日」「現在」だけで時点を表さないでください。終了時刻がpublication_as_ofより前なら、今も有効な案内として書かず、終了した発表として記述してください。終了時刻が不明なら推測せず、掲載時点の発表として記述してください。
 supporting_points_jaは0〜2件の補足事実です。生活影響や次アクションを独立項目として作らず、入力に明確な根拠がある場合だけ概要または補足に自然に含めてください。
 RSSにない数値、対象者、死亡、事故、被害、収入減、因果関係を足さないでください。“lost students”, “losing students” は死亡を意味すると明確でない限り、利用者・生徒の減少として訳してください。
 出力はJSONのみです。"""
@@ -76,6 +77,7 @@ EDITORIAL_ENTRY_V3_CONTRACT_INSTRUCTION = """返答は次の形のJSON objectだ
 REPAIR_SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュースダッシュボードの日本語編集者です。
 入力記事JSONのtitle、description、必要に応じてbody_evidenceだけを根拠にしてください。入力にない事実、数値、主体、因果関係、死亡、事故、被害、収入減を加えないでください。
 原文が発言、計画、予報、警報、調査、疑惑、否定を表す場合は、確定した事実に書き換えないでください。dateline、wire credit、広告、関連記事は出力しません。
+入力のpublication_as_ofとpublished_atを基準に、対象日時や終了時刻が明記されている場合は絶対表記で残し、終了済みの案内を現在も有効と書かないでください。「今日」「明日」「現在」だけの表現は避け、期限不明なら推測しないでください。
 通常見出しはUnicode文字数で60文字以内、短見出しは最大26文字の自然な日本語にしてください。短見出しで意味が落ちる場合は通常見出しと同じ文を使って構いません。概要は読者が出典を開くか判断できる日本語にしてください。
 出力は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
 {"editorial_entry":{"headline_ja":"string","short_headline_ja":"string","entry_ja":"string"}}"""
@@ -142,6 +144,8 @@ def groq_payload_for_item(item: dict[str, Any]) -> dict[str, Any]:
         "category": item.get("category"),
         "source": item.get("source"),
         "published_date": item.get("published_date"),
+        "published_at": item.get("published_at"),
+        "publication_as_of": item.get("publication_as_of"),
         "title": item.get("title"),
         "description": item.get("description"),
         "rss_editorial_entry": fallback_renderer.normalize_editorial_entry(item),
@@ -165,6 +169,8 @@ def repair_source_payload_for_item(item: dict[str, Any]) -> dict[str, Any]:
     payload: dict[str, Any] = {
         "source": item.get("source"),
         "published_date": item.get("published_date"),
+        "published_at": item.get("published_at"),
+        "publication_as_of": item.get("publication_as_of"),
         "title": item.get("title"),
         "description": item.get("description"),
     }
@@ -694,6 +700,7 @@ def render_with_groq(
     for index, item in enumerate(items):
         if not isinstance(item, dict):
             continue
+        item["publication_as_of"] = data.get("generated_at")
         record = build_decision_record(index, item)
         records.append(record)
         link = clean_text(item.get("link"))

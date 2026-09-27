@@ -59,11 +59,32 @@ class NewsDay:
     summarized_count: str
     failed_sources: str
     source_only_items: list[SourceOnlyItem] = field(default_factory=list)
+    updated_at: datetime | None = None
 
 
 def extract_label(text: str, label: str) -> str:
     match = re.search(rf"^{re.escape(label)}：(.+)$", text, re.MULTILINE)
     return match.group(1).strip() if match else "不明"
+
+
+def parse_update_time(text: str) -> datetime | None:
+    value = extract_label(text, "更新時点")
+    try:
+        parsed = datetime.fromisoformat(value)
+    except ValueError:
+        return None
+    return parsed.astimezone(MYT) if parsed.tzinfo else None
+
+
+def format_update_time(day: NewsDay) -> str:
+    if day.updated_at is None:
+        return "更新時刻不明"
+    value = day.updated_at.astimezone(MYT)
+    return f"{value.year}年{value.month}月{value.day}日 {value.hour:02d}:{value.minute:02d} MYT"
+
+
+def as_of_label(day: NewsDay) -> str:
+    return f"{format_update_time(day)} 時点のまとめ" if day.updated_at else "更新時刻は記録されていません"
 
 
 def parse_markdown(path: Path) -> NewsDay:
@@ -191,6 +212,7 @@ def parse_markdown(path: Path) -> NewsDay:
         summarized_count=extract_label(text, "要約対象件数"),
         failed_sources=extract_label(text, "失敗したソース一覧"),
         source_only_items=source_only_items,
+        updated_at=parse_update_time(text),
     )
 
 
@@ -362,7 +384,7 @@ def render_status_chips(day: NewsDay, generated: str) -> str:
     """
 
 
-def render_item_card(item: NewsItem) -> str:
+def render_item_card(item: NewsItem, as_of: str = "") -> str:
     headline = display_full_headline(item)
     dek = f'<p class="focus-dek">{esc(item.conclusion)}</p>' if item.conclusion else ""
     source = ""
@@ -377,6 +399,7 @@ def render_item_card(item: NewsItem) -> str:
           <p class="item-category">{esc(category_label(item.category))}</p>
           <h3>{esc(headline)}</h3>
           {dek}
+          {f'<p class="item-asof">{esc(as_of)} 時点の記録</p>' if as_of else ''}
           {source}
         </article>
     """
@@ -391,7 +414,8 @@ def render_latest_items(day: NewsDay) -> str:
           {render_conclusions(day)}
         </div>
         """
-    return "\n".join(render_item_card(item) for item in selected)
+    as_of = format_update_time(day) if day.updated_at else ""
+    return "\n".join(render_item_card(item, as_of) for item in selected)
 
 
 def render_latest_summary(day: NewsDay) -> str:
@@ -405,7 +429,8 @@ def render_latest_summary(day: NewsDay) -> str:
           <div>
             <p class="eyebrow">Latest</p>
             <h2>{esc(format_date(day.date))}</h2>
-            <p class="muted">暮らしに関わる更新と社会・経済の動きを確認できます。</p>
+            <p class="muted">{esc(as_of_label(day))}</p>
+            <p class="muted">期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。</p>
           </div>
           <a class="primary-link" href="{daily_page_link(day)}">すべて読む</a>
         </div>
@@ -494,7 +519,7 @@ def render_archive(days: list[NewsDay]) -> str:
     return "\n".join(groups)
 
 
-def render_daily_item(item: NewsItem, position: int) -> str:
+def render_daily_item(item: NewsItem, position: int, as_of: str = "") -> str:
     if item.source_url:
         source_label = item.source or "出典を開く"
         source = f'<a class="source-link" href="{esc(item.source_url)}">出典: {esc(source_label)}</a>'
@@ -511,6 +536,7 @@ def render_daily_item(item: NewsItem, position: int) -> str:
         </div>
         <h3>{esc(display_full_headline(item))}</h3>
         <p class="daily-summary">{esc(item_summary_body(item))}</p>
+        {f'<p class="item-asof">{esc(as_of)} 時点の記録</p>' if as_of else ''}
         {source}
       </article>
     """
@@ -525,7 +551,7 @@ def render_daily_sections(day: NewsDay) -> str:
             cards = []
             for item in category_items:
                 position += 1
-                cards.append(render_daily_item(item, position))
+                cards.append(render_daily_item(item, position, format_update_time(day) if day.updated_at else ""))
             content = "\n".join(cards)
         else:
             content = '<p class="muted">このカテゴリの掲載はありません。</p>'
@@ -614,6 +640,7 @@ def render_daily_page(day: NewsDay) -> str:
     .item-number {{ display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }}
     .item-category {{ margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }}
     .daily-summary {{ margin: 16px 0 0; overflow-wrap: anywhere; }}
+    .item-asof {{ margin: 10px 0 0; color: var(--muted); font-size: .8rem; }}
     .source-link, .source-note {{ display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }}
     .source-note {{ color: var(--muted); }}
     .source-only {{ margin-top: 32px; }}
@@ -638,7 +665,7 @@ def render_daily_page(day: NewsDay) -> str:
       </nav>
       <p class="eyebrow">Daily summary</p>
       <h1>{esc(format_date(day.date))}のニュースまとめ</h1>
-      <p class="subhead">RSSから収集・要約したニュースを、生活への影響と次の行動が分かる形でまとめています。</p>
+      <p class="subhead">{esc(as_of_label(day))}。期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。</p>
       <div class="summary-strip" aria-label="カテゴリ別件数">
         {render_counts(day)}
       </div>
@@ -655,18 +682,13 @@ def render_daily_page(day: NewsDay) -> str:
 
 
 def render_html(days: list[NewsDay]) -> str:
-    generated_at = datetime.now(MYT)
-    generated = (
-        f"{generated_at.year}年{generated_at.month}月{generated_at.day}日 "
-        f"{generated_at.hour:02d}:{generated_at.minute:02d} MYT"
-    )
     latest = days[0] if days else None
     recent = days[1:7]
     older = days[7:]
 
     if latest:
         latest_summary = render_latest_summary(latest).strip()
-        status_chips = render_status_chips(latest, generated).strip()
+        status_chips = render_status_chips(latest, format_update_time(latest)).strip()
         recent_rows = render_recent(recent).strip()
         primary_href = daily_page_link(latest)
     else:
@@ -729,6 +751,7 @@ def render_html(days: list[NewsDay]) -> str:
       border-radius: var(--radius-control);
     }}
     .subhead {{ max-width: 620px; margin-bottom: 0; color: var(--muted); }}
+    .item-asof {{ margin: 8px 0 0; color: var(--muted); font-size: .78rem; }}
     .header-actions {{
       display: flex;
       flex-wrap: wrap;
@@ -1071,7 +1094,7 @@ def render_html(days: list[NewsDay]) -> str:
     <header>
       <div>
         <h1>マレーシア生活ニュース</h1>
-        <p class="subhead">生活に関わるマレーシアニュースをRSSから日次で収集・要約しています。</p>
+        <p class="subhead">生活に関わるマレーシアニュースを朝夕に収集・要約しています。</p>
       </div>
       <div class="header-actions">
         <a class="primary-link" href="{primary_href}">今日のまとめを読む</a>

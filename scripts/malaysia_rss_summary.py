@@ -2354,8 +2354,10 @@ def write_json_output(path: str, data: dict[str, object]) -> None:
         output_file.write("\n")
 
 
-def render(selected: list[Item], processed_count: int, failed_sources: list[str]) -> str:
-    lines: list[str] = []
+def render(
+    selected: list[Item], processed_count: int, failed_sources: list[str], now: datetime | None = None
+) -> str:
+    lines: list[str] = [f"更新時点：{now.isoformat(timespec='minutes')}", ""] if now else []
     ordered_categories = DISPLAY_CATEGORIES
     for category in ordered_categories:
         group = [item for item in selected if display_category_for_legacy(item.category) == category]
@@ -3032,7 +3034,7 @@ def main() -> int:
         print("")
         print(selection_summary(all_items, selected, now))
         print("")
-    output = render(selected, processed_count, failed_sources)
+    output = render(selected, processed_count, failed_sources, now)
     if args.output:
         output_path = Path(args.output)
         output_path.parent.mkdir(parents=True, exist_ok=True)

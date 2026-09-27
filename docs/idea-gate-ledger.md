@@ -1132,3 +1132,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: URL単位の人間除外一覧を検証してcollectorと公開feedに適用する
 - Revisit when: 人間が誤除外を見つけた; 除外件数や更新頻度が増え、コードレビューで管理できなくなった
+
+<!-- idea-gate:20260927t120000-malaysia-twice-daily-freshness -->
+## Update at 05:00 and 17:00 MYT, publish as-of times, and distinguish expired guidance
+
+- Record ID: `20260927t120000-malaysia-twice-daily-freshness`
+- Evaluated: 2026-09-27T12:00:00+08:00
+- Project: ysmsnsmr.github.io / Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 80/100
+- Confidence: medium - The stale-alert issue is observed, but the quality and cost of twice-daily runs still need operational evidence.
+
+### Idea Card
+
+- Purpose: Provide Malaysia residents with useful news at morning and evening reading times without mistaking expired alerts for current guidance.
+- First experience: Two daily runs publish one date page with an explicit update time and time-limited guidance marked by its target time.
+- Scope and cost: Reuse the existing Jev and Groq workflow twice daily; inspect the first few artifacts and API usage; no new service.
+- Continuation boundary: Keep two runs if publication stays accurate and cost acceptable; revert to one run or RSS-only if expiry handling or reliability regresses.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 12/15 |
+| `evidence_and_learning` | 11/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 13/15 |
+| `ownership_and_reversibility` | 15/20 |
+| **Total** | **80/100** |
+
+### Next Step
+
+- Action: Add two MYT schedules and explicit as-of and expiry presentation, then verify the first runs.
+- Revisit when: Expired weather or transport guidance is still shown as current.; Twice-daily Jev or Groq calls cause unacceptable costs or failures.; The evening run does not improve actionable coverage.

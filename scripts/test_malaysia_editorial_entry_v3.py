@@ -68,6 +68,19 @@ def accepted_result(index: int) -> groq_renderer.GroqEditorialEntryResult:
 
 
 class EditorialEntryV3Test(unittest.TestCase):
+    def test_publication_time_reaches_prompt_and_markdown_without_changing_contract(self) -> None:
+        article = item()
+        article["published_at"] = "2026-09-27T15:43:00+08:00"
+        data = {"generated_at": "2026-09-27T17:08:00+08:00", "counts": {"processed": 1, "selected": 1}, "items": [article]}
+        with patch("render_malaysia_news_with_groq.request_groq_summary_with_retry", return_value=accepted_result(1)) as request:
+            groq_renderer.render_with_groq(data, "key", "test-model")
+        payload = groq_renderer.groq_payload_for_item(request.call_args.args[0])
+        self.assertEqual(payload["published_at"], article["published_at"])
+        self.assertEqual(payload["publication_as_of"], data["generated_at"])
+        self.assertIn("終了時刻がpublication_as_ofより前なら", groq_renderer.SYSTEM_PROMPT)
+        self.assertIn("publication_as_of", groq_renderer.REPAIR_SYSTEM_PROMPT)
+        self.assertTrue(markdown_renderer.render_editorial_entries(data).startswith("更新時点：2026-09-27T17:08:00+08:00\n"))
+
     def test_strict_contract_accepts_zero_or_two_points_and_rejects_legacy_shape(self) -> None:
         self.assertEqual(
             editorial_entry_schema_error(

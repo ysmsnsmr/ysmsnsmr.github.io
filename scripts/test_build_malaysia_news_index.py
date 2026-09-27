@@ -113,6 +113,20 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
             path.write_text(SAMPLE_MARKDOWN, encoding="utf-8")
             return builder.parse_markdown(path)
 
+    def test_update_time_is_read_from_daily_markdown_not_index_build_clock(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "2026-09-27.md"
+            path.write_text("更新時点：2026-09-27T17:08:00+08:00\n\n" + DISPLAY_CATEGORY_MARKDOWN, encoding="utf-8")
+            day = builder.parse_markdown(path)
+
+        self.assertEqual(builder.format_update_time(day), "2026年9月27日 17:08 MYT")
+        self.assertIn("17:08 MYT 時点のまとめ", builder.render_daily_page(day))
+        self.assertIn("17:08 MYT 時点のまとめ", builder.render_html([day]))
+        self.assertIn("17:08 MYT 時点の記録", builder.render_daily_page(day))
+        self.assertIn("17:08 MYT 時点の記録", builder.render_html([day]))
+        self.assertIn("現在の発表は出典で確認してください", builder.render_daily_page(day))
+        self.assertEqual(builder.format_update_time(self.parse_sample()), "更新時刻不明")
+
     def test_parser_keeps_repeated_detail_lines(self) -> None:
         day = self.parse_sample()
 

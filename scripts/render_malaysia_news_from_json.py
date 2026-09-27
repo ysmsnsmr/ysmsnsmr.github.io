@@ -543,7 +543,8 @@ def render_with_item_renderer(
     if not isinstance(failed_sources, list):
         failed_sources = []
 
-    lines: list[str] = []
+    generated_at = text_value(data.get("generated_at")).strip()
+    lines: list[str] = [f"更新時点：{generated_at}", ""] if generated_at else []
     for category in CATEGORIES:
         lines.append(category)
         lines.append("")
