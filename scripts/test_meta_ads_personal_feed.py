@@ -204,6 +204,106 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertTrue(all(source["contentLanguage"] == "en" for source in [*sources.values(), *discovered.values()]))
         self.assertTrue(all(source["platformIds"] for source in [*sources.values(), *discovered.values()]))
 
+    def test_manual_exclusions_are_validated_and_match_the_reviewed_urls(self) -> None:
+        manifest = json.loads(personal_feed.DEFAULT_MANUAL_EXCLUSIONS.read_text(encoding="utf-8"))
+        urls = personal_feed.validate_manual_exclusions(manifest, self.config)
+        self.assertEqual(len(urls), 14)
+        self.assertIn("https://www.jonloomer.com/chatgpt-ads-initial-impressions/", urls)
+        self.assertIn("https://www.socialmediatoday.com/news/meta-settles-landmark-lawsuit-for-18b/828900/", urls)
+
+        duplicate = copy.deepcopy(manifest)
+        duplicate["entries"].append(duplicate["entries"][0])
+        with self.assertRaisesRegex(ContractError, "duplicates"):
+            personal_feed.validate_manual_exclusions(duplicate, self.config)
+
+        unsafe = copy.deepcopy(manifest)
+        unsafe["entries"][0]["url"] = "https://www.jonloomer.com.evil.example/story/"
+        with self.assertRaisesRegex(ContractError, "canonical configured content URL"):
+            personal_feed.validate_manual_exclusions(unsafe, self.config)
+
+    def test_manual_exclusion_survives_jev_reclassification_and_can_be_reversed(self) -> None:
+        excluded_url = "https://www.jonloomer.com/meta-ads-manager-rollout/"
+        generated_titles: list[str] = []
+
+        def locale_presenter(title: str, _context: str, _policy: dict, locale: str) -> dict[str, str]:
+            generated_titles.append(title)
+            if locale == "en":
+                return {"shortHeadlineEn": "English headline", "summaryEn": "English summary"}
+            return {"shortHeadlineJa": "日本語の見出し", "summaryJa": "日本語の要約"}
+
+        initial = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
+        baseline, seeded = collect(
+            self.config, initial, 1, NOW, self.fetcher(),
+            jev_classifier=lambda _source, _raw: ("included", ["jev:unclear"]),
+        )
+        self.assertIn(excluded_url, {item["url"] for item in baseline["items"]})
+        jev_titles: list[str] = []
+
+        def reclassify(_source: dict[str, Any], raw: dict[str, Any]) -> tuple[str, list[str]]:
+            jev_titles.append(raw["title"])
+            return "included", ["jev:strategic_signal"]
+
+        feed, state = collect(
+            self.config, seeded, 1, NOW.replace(day=30), self.fetcher(),
+            locale_item=locale_presenter,
+            jev_classifier=reclassify,
+            manual_exclusions=frozenset({excluded_url}),
+        )
+        self.assertNotIn(excluded_url, {item["url"] for item in feed["items"]})
+        self.assertEqual(
+            state["sources"]["jon-loomer-meta-ads"]["items"][excluded_url]["publicationStatus"],
+            "included",
+        )
+        self.assertNotIn("How to review a new Meta Ads setting", generated_titles)
+        self.assertNotIn("How to review a new Meta Ads setting", jev_titles)
+
+        feed, _ = collect(
+            self.config, state, 1, NOW.replace(day=31), self.fetcher(),
+            jev_classifier=reclassify,
+            manual_exclusions=frozenset({excluded_url}),
+        )
+        self.assertNotIn(excluded_url, {item["url"] for item in feed["items"]})
+        restored, _ = collect(
+            self.config, state, 1, NOW.replace(day=31), self.fetcher(),
+            jev_classifier=reclassify,
+        )
+        self.assertIn(excluded_url, {item["url"] for item in restored["items"]})
+
+    def test_manual_exclusion_refresh_changes_public_feed_without_state_or_fetch(self) -> None:
+        excluded_url = "https://www.jonloomer.com/meta-ads-manager-rollout/"
+        initial = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
+        feed, state = collect(self.config, initial, 1, NOW, self.fetcher())
+        self.assertIn(excluded_url, {item["url"] for item in feed["items"]})
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            state_path = root / "state.json"
+            feed_path = root / "feed.json"
+            exclusions_path = root / "exclusions.json"
+            personal_feed.write_json(state_path, state)
+            personal_feed.write_json(feed_path, feed)
+            personal_feed.write_json(exclusions_path, {
+                "schemaVersion": personal_feed.MANUAL_EXCLUSIONS_SCHEMA_VERSION,
+                "entries": [{"url": excluded_url, "reason": "human-reviewed-out-of-scope"}],
+            })
+            state_bytes = state_path.read_bytes()
+            updated = personal_feed.apply_manual_exclusions_to_public_feed(
+                DEFAULT_CONFIG, state_path, feed_path, exclusions_path
+            )
+            self.assertNotIn(excluded_url, {item["url"] for item in updated["items"]})
+            self.assertEqual(state_path.read_bytes(), state_bytes)
+            self.assertEqual(updated["generatedAt"], feed["generatedAt"])
+            with self.assertRaisesRegex(ContractError, "manually excluded"):
+                personal_feed.assert_no_manual_exclusions(feed, frozenset({excluded_url}))
+
+            personal_feed.write_json(exclusions_path, {
+                "schemaVersion": personal_feed.MANUAL_EXCLUSIONS_SCHEMA_VERSION,
+                "entries": [],
+            })
+            restored = personal_feed.apply_manual_exclusions_to_public_feed(
+                DEFAULT_CONFIG, state_path, feed_path, exclusions_path
+            )
+            self.assertIn(excluded_url, {item["url"] for item in restored["items"]})
+
     def test_current_relevance_revision_gate_requires_reseeded_state(self) -> None:
         state = {
             "schemaVersion": STATE_V4_SCHEMA_VERSION,

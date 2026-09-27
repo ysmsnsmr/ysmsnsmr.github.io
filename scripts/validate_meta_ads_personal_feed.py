@@ -9,7 +9,17 @@ import sys
 from pathlib import Path
 
 from meta_ads_tracker_contract import ContractError
-from meta_ads_personal_feed import DEFAULT_CONFIG, DEFAULT_OUTPUT, DEFAULT_STATE, load_config, validate_feed, validate_state
+from meta_ads_personal_feed import (
+    DEFAULT_CONFIG,
+    DEFAULT_MANUAL_EXCLUSIONS,
+    DEFAULT_OUTPUT,
+    DEFAULT_STATE,
+    assert_no_manual_exclusions,
+    load_config,
+    load_manual_exclusions,
+    validate_feed,
+    validate_state,
+)
 
 
 def validate_current_relevance_revisions(state: dict, config: dict) -> None:
@@ -44,6 +54,7 @@ def validate_current_relevance_revisions(state: dict, config: dict) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
+    parser.add_argument("--manual-exclusions", type=Path, default=DEFAULT_MANUAL_EXCLUSIONS)
     parser.add_argument("--state", type=Path, default=DEFAULT_STATE)
     parser.add_argument("--input", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument(
@@ -54,8 +65,10 @@ def main() -> int:
     args = parser.parse_args()
     try:
         config = load_config(args.config)
+        manual_exclusions = load_manual_exclusions(args.manual_exclusions, config)
         state = validate_state(json.loads(args.state.read_text(encoding="utf-8")), config)
         feed = validate_feed(json.loads(args.input.read_text(encoding="utf-8")), config)
+        assert_no_manual_exclusions(feed, manual_exclusions)
         if args.require_current_relevance_revisions:
             validate_current_relevance_revisions(state, config)
     except (ContractError, OSError, ValueError, json.JSONDecodeError) as error:
