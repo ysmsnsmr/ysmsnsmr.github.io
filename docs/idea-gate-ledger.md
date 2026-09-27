@@ -1062,3 +1062,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Jev候補poolのcanonical重複排除を外し、本文語彙ブロックを清掃済み本文の有無による判定へ置き換える
 - Revisit when: 同じ出来事の複数記事が15件の編集予算を繰り返し圧迫する; 本文根拠を使った記事でhard safety rejectまたは誤訳が増える; candidate poolが150件のrouting上限を継続して超える
+
+<!-- idea-gate:20260927t080100-meta-ads-manual-url-exclusions -->
+## 人間確認済みURLを公開フィードから除外する
+
+- Record ID: `20260927t080100-meta-ads-manual-url-exclusions`
+- Evaluated: 2026-09-27T08:01:00+08:00
+- Project: ysmsnsmr.github.io / Meta Ads Personal Feed
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 94/100
+- Confidence: high - 対象URLと望む結果が明確で、現行の収集・公開経路も確認済み
+
+### Idea Card
+
+- Purpose: 明らかな誤掲載を本人が確実に除外し、Jevの判定変化による再掲載を防ぐ
+- First experience: 指定された14 URLが公開JSONから消え、次回収集でも再掲載されない
+- Scope and cost: 既存のcollectorと公開feedにURL完全一致の小さな除外一覧を追加する。追加API呼び出しや新しい画面はなく、一覧の変更はコードレビューで管理する
+- Continuation boundary: 次回収集で除外が持続し、対象外の記事に影響しなければ継続する。誤除外が見つかれば該当URLを一覧から外して再生成する
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 14/15 |
+| `evidence_and_learning` | 14/15 |
+| `expected_outcome` | 15/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 19/20 |
+| **Total** | **94/100** |
+
+### Next Step
+
+- Action: URL単位の人間除外一覧を検証してcollectorと公開feedに適用する
+- Revisit when: 人間が誤除外を見つけた; 除外件数や更新頻度が増え、コードレビューで管理できなくなった

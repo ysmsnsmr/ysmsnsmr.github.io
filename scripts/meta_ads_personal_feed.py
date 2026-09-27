@@ -69,8 +69,10 @@ DEFAULT_V3_SCHEMA = Path(__file__).resolve().parent / "schemas/meta_ads_personal
 DEFAULT_V4_SCHEMA = Path(__file__).resolve().parent / "schemas/meta_ads_personal_feed_v4.schema.json"
 DEFAULT_V5_SCHEMA = Path(__file__).resolve().parent / "schemas/meta_ads_personal_feed_v5.schema.json"
 DEFAULT_CONFIG = Path("config/meta_ads_personal_feed_sources.json")
+DEFAULT_MANUAL_EXCLUSIONS = Path("config/meta_ads_personal_feed_manual_exclusions.json")
 DEFAULT_STATE = Path("data/meta_ads_personal_feed_state.json")
 DEFAULT_OUTPUT = Path("meta-ads-updates/personal-feed.json")
+MANUAL_EXCLUSIONS_SCHEMA_VERSION = "meta-ads-personal-feed-manual-exclusions/v1"
 TRACKING_QUERY_KEYS = {"fbclid", "gclid", "mc_cid", "mc_eid"}
 RSS_BLOCK_TAG = re.compile(r"</?(?:article|blockquote|br|div|h[1-6]|li|ol|p|section|ul)\b[^>]*>", flags=re.IGNORECASE)
 RSS_TAG = re.compile(r"<[^>]+>")
@@ -456,6 +458,44 @@ def _canonical_url(value: str) -> str:
     parsed = urlsplit(value)
     pairs = [(key, item) for key, item in parse_qsl(parsed.query, keep_blank_values=True) if not key.lower().startswith("utm_") and key.lower() not in TRACKING_QUERY_KEYS]
     return urlunsplit((parsed.scheme.lower(), parsed.netloc.lower(), parsed.path or "/", urlencode(pairs), ""))
+
+
+def validate_manual_exclusions(payload: Any, config: dict[str, Any]) -> frozenset[str]:
+    manifest = _expect_keys(payload, {"schemaVersion", "entries"}, "personal feed manual exclusions")
+    if manifest["schemaVersion"] != MANUAL_EXCLUSIONS_SCHEMA_VERSION:
+        raise ContractError("personal feed manual exclusions schemaVersion is unsupported")
+    entries = manifest["entries"]
+    if not isinstance(entries, list) or len(entries) > 500:
+        raise ContractError("personal feed manual exclusions.entries must be an array of at most 500")
+    allowed_hosts = {
+        host
+        for source in _all_sources(config)
+        for host in source["transport"]["allowedContentHosts"]
+    }
+    urls: set[str] = set()
+    for index, value in enumerate(entries):
+        label = f"personal feed manual exclusions.entries[{index}]"
+        entry = _expect_keys(value, {"url", "reason"}, label)
+        url = _expect_https_url(entry["url"], f"{label}.url")
+        parsed = urlsplit(url)
+        if parsed.username or parsed.password or parsed.port not in {None, 443}:
+            raise ContractError(f"{label}.url must use credential-free standard HTTPS")
+        if parsed.hostname not in allowed_hosts or _canonical_url(url) != url:
+            raise ContractError(f"{label}.url must be a canonical configured content URL")
+        _expect_identifier(entry["reason"], f"{label}.reason")
+        if url in urls:
+            raise ContractError(f"{label}.url duplicates another manual exclusion")
+        urls.add(url)
+    return frozenset(urls)
+
+
+def load_manual_exclusions(path: Path, config: dict[str, Any]) -> frozenset[str]:
+    try:
+        return validate_manual_exclusions(json.loads(path.read_text(encoding="utf-8")), config)
+    except FileNotFoundError as error:
+        raise ContractError(f"missing personal feed manual exclusions: {path}") from error
+    except json.JSONDecodeError as error:
+        raise ContractError(f"invalid personal feed manual exclusions JSON: {path}") from error
 
 
 class _LinkExtractor(HTMLParser):
@@ -1601,7 +1641,12 @@ def _sort_key(item: dict[str, Any]) -> tuple[str, str]:
     return (max(dates) if dates else item["firstObservedAt"], item["id"])
 
 
-def build_feed(state: dict[str, Any], config: dict[str, Any], generated_at: str) -> dict[str, Any]:
+def build_feed(
+    state: dict[str, Any],
+    config: dict[str, Any],
+    generated_at: str,
+    manual_exclusions: frozenset[str] = frozenset(),
+) -> dict[str, Any]:
     items: list[dict[str, Any]] = []
     active_discovered_ids = {
         source["id"]
@@ -1611,6 +1656,8 @@ def build_feed(state: dict[str, Any], config: dict[str, Any], generated_at: str)
     for source in _all_sources(config):
         for key, record in state["sources"].get(source["id"], {"items": {}})["items"].items():
             if record.get("publicationStatus") != PUBLICATION_INCLUDED:
+                continue
+            if _canonical_url(record["url"]) in manual_exclusions:
                 continue
             items.append({
                 "id": f"{source['id']}-{record['fingerprint'][:20]}",
@@ -1634,6 +1681,11 @@ def build_feed(state: dict[str, Any], config: dict[str, Any], generated_at: str)
         "sources": _source_descriptors_v3(config, active_discovered_ids),
         "items": items[:config["policies"]["maxPublishedItems"]],
     }
+
+
+def assert_no_manual_exclusions(feed: dict[str, Any], manual_exclusions: frozenset[str]) -> None:
+    if any(_canonical_url(item["url"]) in manual_exclusions for item in feed["items"]):
+        raise ContractError("personal feed contains a manually excluded URL")
 
 
 def _legacy_feed_fingerprint(item: dict[str, Any]) -> str:
@@ -2499,6 +2551,7 @@ def collect(
     retry_legacy_http_400: bool = False,
     jev_classifier: Callable[[dict[str, Any], dict[str, Any]], tuple[str, list[str]]] | None = None,
     jev_routing_stats: dict[str, Any] | None = None,
+    manual_exclusions: frozenset[str] = frozenset(),
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     validate_config(config)
     validate_state(state, config)
@@ -2662,11 +2715,20 @@ def collect(
         for raw in raw_by_source[source["id"]]:
             existing = prior.get(raw["key"])
             cached = existing.get("presentation") if existing and existing.get("fingerprint") == raw["fingerprint"] else None
-            publication_status, publication_evidence = (
-                jev_classifier(source, raw)
-                if jev_classifier is not None
-                else _classify_publication(source, raw)
-            )
+            if _canonical_url(raw["url"]) in manual_exclusions:
+                # Preserve a previous decision for immediate reversal without
+                # spending a Jev request on an article hidden by human review.
+                publication_status, publication_evidence = (
+                    (existing["publicationStatus"], existing["publicationEvidence"])
+                    if existing is not None
+                    else ("drop", ["manual-exclusion"])
+                )
+            else:
+                publication_status, publication_evidence = (
+                    jev_classifier(source, raw)
+                    if jev_classifier is not None
+                    else _classify_publication(source, raw)
+                )
             record = {
                 "url": raw["url"],
                 "title": raw["title"],
@@ -2682,7 +2744,11 @@ def collect(
             }
             current[raw["key"]] = record
             carried_forward_keys.discard(raw["key"])
-            pending_locales = _pending_presentation_locales(record["presentation"]) if publication_status == PUBLICATION_INCLUDED else []
+            pending_locales = (
+                _pending_presentation_locales(record["presentation"])
+                if publication_status == PUBLICATION_INCLUDED and _canonical_url(record["url"]) not in manual_exclusions
+                else []
+            )
             due_locales = [
                 locale
                 for locale in pending_locales
@@ -2721,6 +2787,7 @@ def collect(
             record is None
             or record["fingerprint"] != entry["fingerprint"]
             or record["publicationStatus"] != PUBLICATION_INCLUDED
+            or _canonical_url(record["url"]) in manual_exclusions
             or _locale_presentation_complete(record["presentation"], locale)
         ):
             del retry_queue[queue_key]
@@ -2885,9 +2952,10 @@ def collect(
     next_state["presentationRetryQueue"] = _retry_queue_payload(retry_queue)
     stats["deferred"] = max(0, stats["eligible"] - stats["attempted"])
 
-    feed = build_feed(next_state, config, generated_at)
+    feed = build_feed(next_state, config, generated_at, manual_exclusions)
     validate_state(next_state, config)
     validate_feed(feed, config)
+    assert_no_manual_exclusions(feed, manual_exclusions)
     _finalize_jev_routing_stats(jev_routing_stats, generated_at, run_status="succeeded")
     _write_presentation_stats(presentation_stats, stats)
     _write_source_pipeline_stats(source_pipeline_stats, pipeline)
@@ -2900,6 +2968,7 @@ def collect_and_write(
     output_path: Path,
     timeout: float,
     *,
+    manual_exclusions_path: Path = DEFAULT_MANUAL_EXCLUSIONS,
     now: datetime | None = None,
     fetch_body: Callable[[dict[str, Any], float], tuple[str, str]] = bounded_request,
     locale_item: Callable[[str, str, dict[str, Any], str], dict[str, str]] | None = None,
@@ -2914,6 +2983,7 @@ def collect_and_write(
     jev_routing_stats: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     config = load_config(config_path)
+    manual_exclusions = load_manual_exclusions(manual_exclusions_path, config)
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
     locale_renderer = locale_item if locale_item is not None else _locale_presentation_from_environment(timeout)
     feed, next_state = collect(
@@ -2932,10 +3002,33 @@ def collect_and_write(
         retry_legacy_http_400=retry_legacy_http_400,
         jev_classifier=jev_classifier,
         jev_routing_stats=jev_routing_stats,
+        manual_exclusions=manual_exclusions,
     )
     # Both payloads are fully constructed and validated before either single-file atomic write.
     write_json(output_path, feed)
     write_json(state_path, next_state)
+    return feed
+
+
+def apply_manual_exclusions_to_public_feed(
+    config_path: Path,
+    state_path: Path,
+    output_path: Path,
+    manual_exclusions_path: Path = DEFAULT_MANUAL_EXCLUSIONS,
+) -> dict[str, Any]:
+    """Refresh the committed public feed from existing state without fetching."""
+    config = load_config(config_path)
+    manual_exclusions = load_manual_exclusions(manual_exclusions_path, config)
+    state = validate_state(json.loads(state_path.read_text(encoding="utf-8")), config)
+    if state["schemaVersion"] != STATE_V5_SCHEMA_VERSION:
+        raise ContractError("manual exclusion refresh requires v5 state")
+    current_feed = validate_feed(json.loads(output_path.read_text(encoding="utf-8")), config)
+    if current_feed["schemaVersion"] != FEED_V5_SCHEMA_VERSION:
+        raise ContractError("manual exclusion refresh requires v5 feed")
+    feed = build_feed(state, config, current_feed["generatedAt"], manual_exclusions)
+    validate_feed(feed, config)
+    assert_no_manual_exclusions(feed, manual_exclusions)
+    write_json(output_path, feed)
     return feed
 
 
@@ -2948,8 +3041,14 @@ def _parse_presentation_limit(value: str) -> int:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
+    parser.add_argument("--manual-exclusions", type=Path, default=DEFAULT_MANUAL_EXCLUSIONS)
     parser.add_argument("--state", type=Path, default=DEFAULT_STATE)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument(
+        "--apply-manual-exclusions-only",
+        action="store_true",
+        help="rebuild the public feed from saved state without fetching or model requests",
+    )
     parser.add_argument("--timeout", type=float, default=30.0)
     parser.add_argument("--presentation-limit", type=_parse_presentation_limit, default=None)
     parser.add_argument("--jev-routing-report", type=Path, default=None)
@@ -2970,6 +3069,16 @@ def main() -> int:
         help="with --retry-json-validate-failed, release reviewed legacy quarantined HTTP 400 entries",
     )
     args = parser.parse_args()
+    if args.apply_manual_exclusions_only:
+        try:
+            feed = apply_manual_exclusions_to_public_feed(
+                args.config, args.state, args.output, args.manual_exclusions
+            )
+        except (ContractError, OSError, ValueError, json.JSONDecodeError) as error:
+            print(f"FAIL: {error}", file=sys.stderr)
+            return 1
+        print(f"PASS: refreshed public feed with {len(feed['items'])} item(s)")
+        return 0
     run_failed = True
     failure_code: str | None = None
     try:
@@ -2982,6 +3091,7 @@ def main() -> int:
             args.state,
             args.output,
             args.timeout,
+            manual_exclusions_path=args.manual_exclusions,
             presentation_limit=args.presentation_limit,
             presentation_stats=stats,
             source_pipeline_stats=pipeline,

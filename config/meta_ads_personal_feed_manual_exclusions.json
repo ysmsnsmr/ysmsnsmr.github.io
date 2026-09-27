@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "meta-ads-personal-feed-manual-exclusions/v1",
+  "entries": [
+    {
+      "url": "https://www.jonloomer.com/qvt/text-customization-chatgpt-ads-ai-enhancement/",
+      "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.jonloomer.com/15-years-facebook-meta-advertising/",
+      "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.jonloomer.com/qvt/bid-multipliers-chatgpt-ads/",
+      "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.jonloomer.com/chatgpt-ads-custom-audiences/",
+      "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.jonloomer.com/qvt/start-with-fewer-ads/",
+      "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.jonloomer.com/qvt/when-is-a-campaign-worth-scaling/",
+      "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.jonloomer.com/qvt/quality-traffic-percentage/",
+      "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.jonloomer.com/meta-ads-grouping-reports-chatgpt-conversions/",
+      "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.jonloomer.com/chatgpt-ads-limitations-ai-instant-forms/",
+      "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.jonloomer.com/chatgpt-ads-initial-impressions/",
+      "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.socialmediatoday.com/news/how-will-metas-settlement-impact-social-media/829033/",
+      "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.socialmediatoday.com/news/meta-settles-landmark-lawsuit-for-18b/828900/",
+      "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.socialmediatoday.com/news/zuckerberg-is-one-of-the-least-liked-people-in-the-us/829244/",
+      "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.socialmediatoday.com/news/instagram-growth-continues-to-outpace-facebook-in-eu/829134/",
+      "reason": "human-reviewed-out-of-scope"
+    }
+  ]
+}

@@ -46,7 +46,13 @@ Meta公式ページはRSSや公開APIではなくHTMLから限定的なmetadata�
 
 Meta Newsroom Product News RSSは候補を広く取得し、広告・計測・API・事業導線に関する具体的な関連語がある記事を掲載対象にします。Business SDK releaseは常に掲載対象です。Jon LoomerとSocial Media Todayは、既存のソース固有候補条件を通過した記事を掲載対象にします。セキュリティ、訴訟、年齢制限など広告利用と関係しない候補は`DROP`へ置きます。`DROP`は公開せず、本文を保存せずにstateだけへ残します。
 
-この判定は記事の重要度や、読者が取るべき対応を示すものではありません。掲載対象は、ソースと日付で並べて表示します。明らかに広告との関係がない記事が混じった場合は、URLと理由を残して人間確認のうえで除外規則を見直します。
+この判定は記事の重要度や、読者が取るべき対応を示すものではありません。掲載対象は、ソースと日付で並べて表示します。
+
+### 人間確認済みURLの除外
+
+明らかな誤掲載は `config/meta_ads_personal_feed_manual_exclusions.json` に記事のcanonical URLと理由を1件ずつ追加します。現在の一覧には人間が指定した14件を登録しています。これはURL単位の公開除外であり、同じ媒体の他記事や似た見出しを一括で消しません。Jevの判定が後日変わっても、一覧にあるURLは公開feedへ戻りません。元の判定結果と表示データはstateに保持し、除外された記事には新たなGroq生成を行いません。
+
+一覧の変更後は `python3 scripts/meta_ads_personal_feed.py --apply-manual-exclusions-only` で既存stateから公開feedを再生成します。この操作は外部ソースやJev/Groqを呼ばず、stateを変更しません。続けて `python3 scripts/validate_meta_ads_personal_feed.py` を実行し、対象URLが公開feedにないことを確認します。除外を取り消す場合は該当行を一覧から削除して同じ再生成を行います。収集workflowも毎回この一覧を読み、公開と表示データ生成に同じ除外を適用します。
 
 `workflow_dispatch`で`reseed_source_id`に設定済みのソースIDを指定すると、そのソースだけを現行の鮮度・関連性条件で再構築します。同じURLが引き続き採用される場合、`firstObservedAt`は維持されます。未登録IDはcollectorが失敗して既存公開物を保持します。
 
