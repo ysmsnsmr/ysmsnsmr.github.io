@@ -477,6 +477,29 @@ jobs:
             echo "::notice::Optional JSON render candidate validator failed; observation artifact only."
           fi
 
+      - name: Observe same-event Malaysia reports
+        if: always() && steps.optional.outputs.enable_groq_rendering == 'true' && vars.MALAYSIA_NEWS_EVENT_MATCH_OBSERVATION_ENABLED != 'false'
+        continue-on-error: true
+        shell: bash
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          set -u
+          run_dir="${{ steps.optional.outputs.run_dir }}"
+          if python3 -B scripts/malaysia_event_match_observation.py \
+            --candidate-pool "${run_dir}/editorial_candidate_pool.json" \
+            --routing-report "${run_dir}/jev_editorial_routing.json" \
+            --model "${{ steps.optional.outputs.groq_model_name }}" \
+            --output "${run_dir}/event_match_observation.json" \
+            > "${run_dir}/event_match_observation_stdout.log" \
+            2> "${run_dir}/event_match_observation_stderr.log"; then
+            python3 -B -c 'import json, sys; print(json.load(open(sys.argv[1], encoding="utf-8"))["status"])' \
+              "${run_dir}/event_match_observation.json" > "${run_dir}/event_match_observation_status.txt"
+          else
+            echo "runner_failed" > "${run_dir}/event_match_observation_status.txt"
+            echo "::warning::Same-event observation failed; publication is unchanged."
+          fi
+
       - name: Run artifact-only Groq model comparison
         # Candidate models remain available for explicit manual migration checks;
         # scheduled production runs must not spend API calls on them.

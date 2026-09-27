@@ -1062,3 +1062,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Jev候補poolのcanonical重複排除を外し、本文語彙ブロックを清掃済み本文の有無による判定へ置き換える
 - Revisit when: 同じ出来事の複数記事が15件の編集予算を繰り返し圧迫する; 本文根拠を使った記事でhard safety rejectまたは誤訳が増える; candidate poolが150件のrouting上限を継続して超える
+
+<!-- idea-gate:20260926t140000-malaysia-event-match-observation -->
+## Jev高関連候補を1回のモデル呼び出しで同一イベント照合する
+
+- Record ID: `20260926t140000-malaysia-event-match-observation`
+- Evaluated: 2026-09-26T14:00:00+08:00
+- Project: ysmsnsmr.github.io / Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 89/100
+- Confidence: medium - 重複と誤除外の実例はあるが、まとめて照合するモデル精度は未観測
+
+### Idea Card
+
+- Purpose: 同じ出来事の複数記事による編集枠の圧迫を減らし、異なる時刻・影響対象の続報は残す
+- First experience: 最大24件を1回照合し、同一出来事のペアをartifactで確認する
+- Scope and cost: 既存120Bへの追加呼び出しは1 runあたり最大1回。表示・選定は変更しない
+- Continuation boundary: 実artifactの同一イベントと続報を人間が確認し、誤統合がなければ表示統合を別変更で検討する
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 14/15 |
+| `evidence_and_learning` | 13/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 18/20 |
+| **Total** | **89/100** |
+
+### Next Step
+
+- Action: artifact-onlyの1回イベント照合を追加し、同一イベントの候補ペアを観察する
+- Revisit when: 候補ペアに続報や影響範囲の異なる記事が含まれる; Groqの通信・JSON契約失敗が多い; 照合結果を編集予算へ反映する価値が実artifactで確認される
