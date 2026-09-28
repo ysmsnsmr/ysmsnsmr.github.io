@@ -121,9 +121,10 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
 
         self.assertEqual(builder.format_update_time(day), "2026年9月27日 17:08 MYT")
         self.assertIn("17:08 MYT 時点のまとめ", builder.render_daily_page(day))
-        self.assertIn("17:08 MYT 時点のまとめ", builder.render_html([day]))
-        self.assertIn("17:08 MYT 時点の記録", builder.render_daily_page(day))
-        self.assertIn("17:08 MYT 時点の記録", builder.render_html([day]))
+        self.assertEqual(builder.render_daily_page(day).count("17:08 MYT"), 1)
+        self.assertEqual(builder.render_html([day]).count("17:08 MYT"), 1)
+        self.assertNotIn("時点の記録</p>", builder.render_daily_page(day))
+        self.assertNotIn("時点の記録</p>", builder.render_html([day]))
         self.assertIn("現在の発表は出典で確認してください", builder.render_daily_page(day))
         self.assertEqual(builder.format_update_time(self.parse_sample()), "更新時刻不明")
 

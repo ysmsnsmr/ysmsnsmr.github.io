@@ -384,7 +384,7 @@ def render_status_chips(day: NewsDay, generated: str) -> str:
     """
 
 
-def render_item_card(item: NewsItem, as_of: str = "") -> str:
+def render_item_card(item: NewsItem) -> str:
     headline = display_full_headline(item)
     dek = f'<p class="focus-dek">{esc(item.conclusion)}</p>' if item.conclusion else ""
     source = ""
@@ -399,7 +399,7 @@ def render_item_card(item: NewsItem, as_of: str = "") -> str:
           <p class="item-category">{esc(category_label(item.category))}</p>
           <h3>{esc(headline)}</h3>
           {dek}
-          {f'<p class="item-asof">{esc(as_of)} 時点の記録</p>' if as_of else ''}
+
           {source}
         </article>
     """
@@ -414,8 +414,7 @@ def render_latest_items(day: NewsDay) -> str:
           {render_conclusions(day)}
         </div>
         """
-    as_of = format_update_time(day) if day.updated_at else ""
-    return "\n".join(render_item_card(item, as_of) for item in selected)
+    return "\n".join(render_item_card(item) for item in selected)
 
 
 def render_latest_summary(day: NewsDay) -> str:
@@ -429,7 +428,6 @@ def render_latest_summary(day: NewsDay) -> str:
           <div>
             <p class="eyebrow">Latest</p>
             <h2>{esc(format_date(day.date))}</h2>
-            <p class="muted">{esc(as_of_label(day))}</p>
             <p class="muted">期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。</p>
           </div>
           <a class="primary-link" href="{daily_page_link(day)}">すべて読む</a>
@@ -519,7 +517,7 @@ def render_archive(days: list[NewsDay]) -> str:
     return "\n".join(groups)
 
 
-def render_daily_item(item: NewsItem, position: int, as_of: str = "") -> str:
+def render_daily_item(item: NewsItem, position: int) -> str:
     if item.source_url:
         source_label = item.source or "出典を開く"
         source = f'<a class="source-link" href="{esc(item.source_url)}">出典: {esc(source_label)}</a>'
@@ -536,7 +534,7 @@ def render_daily_item(item: NewsItem, position: int, as_of: str = "") -> str:
         </div>
         <h3>{esc(display_full_headline(item))}</h3>
         <p class="daily-summary">{esc(item_summary_body(item))}</p>
-        {f'<p class="item-asof">{esc(as_of)} 時点の記録</p>' if as_of else ''}
+
         {source}
       </article>
     """
@@ -551,7 +549,7 @@ def render_daily_sections(day: NewsDay) -> str:
             cards = []
             for item in category_items:
                 position += 1
-                cards.append(render_daily_item(item, position, format_update_time(day) if day.updated_at else ""))
+                cards.append(render_daily_item(item, position))
             content = "\n".join(cards)
         else:
             content = '<p class="muted">このカテゴリの掲載はありません。</p>'
@@ -751,7 +749,6 @@ def render_html(days: list[NewsDay]) -> str:
       border-radius: var(--radius-control);
     }}
     .subhead {{ max-width: 620px; margin-bottom: 0; color: var(--muted); }}
-    .item-asof {{ margin: 8px 0 0; color: var(--muted); font-size: .78rem; }}
     .header-actions {{
       display: flex;
       flex-wrap: wrap;
