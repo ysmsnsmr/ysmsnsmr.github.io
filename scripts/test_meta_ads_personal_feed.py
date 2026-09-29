@@ -253,6 +253,20 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertTrue(pipeline["sources"]["adsuploader-blog"]["isolatedFailure"])
         self.assertEqual(first_state["sources"]["adsuploader-blog"]["items"], second_state["sources"]["adsuploader-blog"]["items"])
         self.assertEqual(sum(item["sourceId"] == "adsuploader-blog" for item in second_feed["items"]), 2)
+
+        def malformed_fetch(source: dict, timeout: float) -> tuple[str, str]:
+            if source["id"] == "adsuploader-blog":
+                return "<html><body>No cards</body></html>", "text/html"
+            return self.fetcher()(source, timeout)
+
+        malformed_pipeline: dict = {}
+        _malformed_feed, malformed_state = collect(
+            self.config, first_state, 1, now + timedelta(days=1), malformed_fetch,
+            source_pipeline_stats=malformed_pipeline,
+            jev_classifier=lambda _source, _raw: ("included", ["test:relevant"]),
+        )
+        self.assertTrue(malformed_pipeline["sources"]["adsuploader-blog"]["isolatedFailure"])
+        self.assertEqual(first_state["sources"]["adsuploader-blog"]["items"], malformed_state["sources"]["adsuploader-blog"]["items"])
         with self.assertRaises(SourceFetchError):
             collect(self.config, first_state, 1, now + timedelta(days=1), blocked_fetch, reseed_source_id="adsuploader-blog")
 
