@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-09-29T05:47:38Z",
+  "generatedAt": "2026-09-29T13:20:20Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -49,6 +49,16 @@
       ]
     },
     {
+      "id": "adsuploader-blog",
+      "name": "Ads Uploader Blog",
+      "classification": "unofficial",
+      "sourceUrl": "https://adsuploader.com/blog",
+      "contentLanguage": "en",
+      "platformIds": [
+        "meta-ads"
+      ]
+    },
+    {
       "id": "meta-business-news-discovered",
       "name": "Meta for Business News",
       "classification": "official",
@@ -61,6 +71,213 @@
   ],
   "items": [
     {
+      "id": "meta-product-news-rss-f7871a98e4dfe752148f",
+      "sourceId": "meta-product-news-rss",
+      "title": "The Future Is for Everyone: Muse for Small Business",
+      "url": "https://about.fb.com/news/2026/09/introducing-muse-small-business/",
+      "publishedDate": "2026-09-29",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "platformIds": [
+        "meta-platforms"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "f7871a98e4dfe752148f0654ca55f84cf8e7f82606627b88131cb4ba515d3ab2",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Muse expands with new skills and connectors for small businesses",
+            "summary": "Earlier this month Muse, a personal AI agent for the US and Canada, added new skills and dozens of connectors—including Instagram, Facebook, Meta ads and Canva—to help small businesses automate tasks with tools they already use. The service is free for most features, offers subscription plans, and partners can apply via muse.ai/platform.",
+            "inputHash": "54090885a3ddd3dbb8bd4936cc99d92a886c08ef394520cb0ceea95ab53cf30e",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Muse expands with new skills and connectors for small businesses",
+                "inputHash": "54090885a3ddd3dbb8bd4936cc99d92a886c08ef394520cb0ceea95ab53cf30e",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Earlier this month Muse, a personal AI agent for the US and Canada, added new skills and dozens of connectors—including Instagram, Facebook, Meta ads and Canva—to help small businesses automate tasks with tools they already use. The service is free for most features, offers subscription plans, and partners can apply via muse.ai/platform.",
+                "inputHash": "54090885a3ddd3dbb8bd4936cc99d92a886c08ef394520cb0ceea95ab53cf30e",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "24f023969cfd86b1c320e3de38054decdac457396ba568ee95e6d4a16bbefe4d",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "24f023969cfd86b1c320e3de38054decdac457396ba568ee95e6d4a16bbefe4d",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "24f023969cfd86b1c320e3de38054decdac457396ba568ee95e6d4a16bbefe4d",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "jon-loomer-meta-ads-4d749c553b69bf363724",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "The Fundamental Principles of Creating Meta Ads",
+      "url": "https://www.jonloomer.com/fundamental-principles-creating-meta-ads/",
+      "publishedDate": "2026-09-29",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "4d749c553b69bf36372452f017309a3b51ad63b6e1bc65eae5ef113590eff47d",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "f54aee999317b2bd229d3049ac23232aea534d8310bdddab1a1435011d658ad4",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "f54aee999317b2bd229d3049ac23232aea534d8310bdddab1a1435011d658ad4",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "f54aee999317b2bd229d3049ac23232aea534d8310bdddab1a1435011d658ad4",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta広告作成の基本原則：複数フォーマット・配置最適化・アスペクト比・テキストバリエーション",
+            "summary": "Meta広告では、単一のテンプレートに頼らず、画像と動画の複数フォーマットを用意し、Advantage+ Placementsで全配置を活用することが推奨されます。配置ごとに適切なアスペクト比（フィードは正方形・4×5、リールやストーリーは9×16）を設定し、重要な要素が切り取られないよう配慮します。また、コピーとクリエイティブの組み合わせを複数用意し、Metaが最適な組み合わせを自動で提示できるようにします。",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告作成の基本原則：複数フォーマット・配置最適化・アスペクト比・テキストバリエーション",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta広告では、単一のテンプレートに頼らず、画像と動画の複数フォーマットを用意し、Advantage+ Placementsで全配置を活用することが推奨されます。配置ごとに適切なアスペクト比（フィードは正方形・4×5、リールやストーリーは9×16）を設定し、重要な要素が切り取られないよう配慮します。また、コピーとクリエイティブの組み合わせを複数用意し、Metaが最適な組み合わせを自動で提示できるようにします。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-e42aaaa8929d65b4fb0e",
+      "sourceId": "adsuploader-blog",
+      "title": "Facebook Ads by Industry: 2026 Benchmarks and What Works in Each Vertical",
+      "url": "https://adsuploader.com/blog/facebook-ads-by-industry",
+      "publishedDate": "2026-09-29",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "e42aaaa8929d65b4fb0e2e735456352ec7071e7df0468b3db9fb2559939d910b",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "0e36c576d8cdcdf4354db38284aafb767b684311a168733401330c4d7b4a0a13",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "0e36c576d8cdcdf4354db38284aafb767b684311a168733401330c4d7b4a0a13",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "0e36c576d8cdcdf4354db38284aafb767b684311a168733401330c4d7b4a0a13",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "2026年の業界別Facebook広告ベンチマーク",
+            "summary": "2026年のFacebook広告ベンチマークでは、業界ごとのリード単価が示され、レストランは約3ドル、歯科は約77ドルと報告されている。また、各業界の目的、オファー、ポリシー規則が掲載されている。",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "2026年の業界別Facebook広告ベンチマーク",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "2026年のFacebook広告ベンチマークでは、業界ごとのリード単価が示され、レストランは約3ドル、歯科は約77ドルと報告されている。また、各業界の目的、オファー、ポリシー規則が掲載されている。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "jon-loomer-meta-ads-57736eb5316a3299a116",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta Ads for Local Businesses",
@@ -68,7 +285,7 @@
       "publishedDate": "2026-09-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T05:47:38Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -137,7 +354,7 @@
       "publishedDate": "2026-09-27",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T05:47:38Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -199,6 +416,351 @@
       }
     },
     {
+      "id": "adsuploader-blog-6b85c81589f8f2f2bd31",
+      "sourceId": "adsuploader-blog",
+      "title": "Product Tags on Facebook Ads: How to Make Ads Shoppable",
+      "url": "https://adsuploader.com/blog/facebook-product-tag-ads",
+      "publishedDate": "2026-09-27",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "6b85c81589f8f2f2bd31df70d3ad00f848786705ec6cffb2dea06b55766450fb",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Product tags make Facebook ads shoppable",
+            "summary": "Product tags on Facebook ads enable catalog products to be shoppable directly within the ad creative. There are four ways to run them, recent changes affect their use, and guidance is provided on how to set them up.",
+            "inputHash": "558ff7892a2bdf876f27f420793dfa248c42ad87e04f60cab581d00c9cc8f957",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Product tags make Facebook ads shoppable",
+                "inputHash": "558ff7892a2bdf876f27f420793dfa248c42ad87e04f60cab581d00c9cc8f957",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Product tags on Facebook ads enable catalog products to be shoppable directly within the ad creative. There are four ways to run them, recent changes affect their use, and guidance is provided on how to set them up.",
+                "inputHash": "558ff7892a2bdf876f27f420793dfa248c42ad87e04f60cab581d00c9cc8f957",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Facebook広告のプロダクトタグで商品を購入可能にする方法",
+            "summary": "Facebook広告に商品タグを付けると、クリエイティブ内でカタログ商品を直接購入できるようになります。タグの設定方法は4つのパターンがあり、最近の変更点や具体的な設定手順について解説しています。",
+            "inputHash": "d68aeef64e38ee7359da13b2fa58c1e09487f7a0afdfd6712fc3326aeaaaef74",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook広告のプロダクトタグで商品を購入可能にする方法",
+                "inputHash": "d68aeef64e38ee7359da13b2fa58c1e09487f7a0afdfd6712fc3326aeaaaef74",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebook広告に商品タグを付けると、クリエイティブ内でカタログ商品を直接購入できるようになります。タグの設定方法は4つのパターンがあり、最近の変更点や具体的な設定手順について解説しています。",
+                "inputHash": "d68aeef64e38ee7359da13b2fa58c1e09487f7a0afdfd6712fc3326aeaaaef74",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-ff8f58f242be3bcb62d2",
+      "sourceId": "adsuploader-blog",
+      "title": "Facebook Ads for Ecommerce: The 2026 Playbook That Scales",
+      "url": "https://adsuploader.com/blog/facebook-ads-for-ecommerce",
+      "publishedDate": "2026-09-25",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "ff8f58f242be3bcb62d2e03880f29314a38d796cbf28e7b0f1142d3eeefd06e2",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Facebook Ads for Ecommerce: 2026 Playbook",
+            "summary": "A 2026 guide covering Facebook ad tracking, catalog setup, Shopify integration, Advantage+ Sales structure, creative strategies, targeting options, and margin‑based measurement for ecommerce.",
+            "inputHash": "63c62be20affa2b3f8a5f66d65ddc09c59668456bd03ae91fd3d357b4713d505",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook Ads for Ecommerce: 2026 Playbook",
+                "inputHash": "63c62be20affa2b3f8a5f66d65ddc09c59668456bd03ae91fd3d357b4713d505",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "A 2026 guide covering Facebook ad tracking, catalog setup, Shopify integration, Advantage+ Sales structure, creative strategies, targeting options, and margin‑based measurement for ecommerce.",
+                "inputHash": "63c62be20affa2b3f8a5f66d65ddc09c59668456bd03ae91fd3d357b4713d505",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "2026年版 Eコマース向けFacebook広告のスケールガイド",
+            "summary": "本ガイドは2026年版のEコマース向けFacebook広告の手引きで、トラッキングやカタログ設定、Shopify連携、Advantage+ Sales構造、クリエイティブ作成、ターゲティング、利益率ベースの測定方法などを解説しています。",
+            "inputHash": "e02b1c2b82f3c92f56debd0b44b2a349cc3b4cbcf6bd8e7da57c5d19bd57f707",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "2026年版 Eコマース向けFacebook広告のスケールガイド",
+                "inputHash": "e02b1c2b82f3c92f56debd0b44b2a349cc3b4cbcf6bd8e7da57c5d19bd57f707",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "本ガイドは2026年版のEコマース向けFacebook広告の手引きで、トラッキングやカタログ設定、Shopify連携、Advantage+ Sales構造、クリエイティブ作成、ターゲティング、利益率ベースの測定方法などを解説しています。",
+                "inputHash": "e02b1c2b82f3c92f56debd0b44b2a349cc3b4cbcf6bd8e7da57c5d19bd57f707",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-5311946fea5382f9ab96",
+      "sourceId": "adsuploader-blog",
+      "title": "Meta Ads CLI: Setup, Commands and Limits of Meta's Official Ads CLI (2026)",
+      "url": "https://adsuploader.com/blog/meta-ads-cli",
+      "publishedDate": "2026-09-23",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "5311946fea5382f9ab96a2a88091124d248fc4b6e59f58389150e46666c8ded5",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta Ads CLI: Setup, Commands, Limits (2026)",
+            "summary": "The feed covers the Meta Ads CLI, including installation, system user token setup, all commands, usage with Claude Code or Codex, current limits, and how the Ads Uploader fits into the workflow.",
+            "inputHash": "f15c6a0a22ad259265135e72a04a55d7b1079c2df703d2aa60c679a36208f2f9",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Ads CLI: Setup, Commands, Limits (2026)",
+                "inputHash": "f15c6a0a22ad259265135e72a04a55d7b1079c2df703d2aa60c679a36208f2f9",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The feed covers the Meta Ads CLI, including installation, system user token setup, all commands, usage with Claude Code or Codex, current limits, and how the Ads Uploader fits into the workflow.",
+                "inputHash": "f15c6a0a22ad259265135e72a04a55d7b1079c2df703d2aa60c679a36208f2f9",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta公式広告CLIの設定・コマンド・制限概要（2026年）",
+            "summary": "Meta Ads CLIのインストール手順、システムユーザートークンの設定方法、利用可能な全コマンドの概要、Claude CodeやCodexとの併用例、現在の利用上限、そしてAds Uploaderがどのように位置付けられるかが説明されています。",
+            "inputHash": "f1474c45635e57b066f43f9dc3dfcf6e0a6461d9b700705b9b037f2b6d95f7ba",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta公式広告CLIの設定・コマンド・制限概要（2026年）",
+                "inputHash": "f1474c45635e57b066f43f9dc3dfcf6e0a6461d9b700705b9b037f2b6d95f7ba",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta Ads CLIのインストール手順、システムユーザートークンの設定方法、利用可能な全コマンドの概要、Claude CodeやCodexとの併用例、現在の利用上限、そしてAds Uploaderがどのように位置付けられるかが説明されています。",
+                "inputHash": "f1474c45635e57b066f43f9dc3dfcf6e0a6461d9b700705b9b037f2b6d95f7ba",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-22a0e5ef82287f7c466a",
+      "sourceId": "adsuploader-blog",
+      "title": "Catalog Ads at Scale: How to Run Thousands of SKUs",
+      "url": "https://adsuploader.com/blog/catalog-ads-at-scale",
+      "publishedDate": "2026-09-23",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "22a0e5ef82287f7c466a1a46ecbee9a1cf9a8169696abb2adaa9329677f0701c",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Catalog Ads at Scale: How to Run Thousands of SKUs",
+            "summary": "This feed explains how to run catalog ads at scale, covering why spend concentrates on a few SKUs, how to size the core product set, stop‑loss rules, and handling of stock and variants.",
+            "inputHash": "9a802eaa6f5ff11a33f135c39610fc178491c1f49141ce9d06c4e2c4fef0e1a9",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Catalog Ads at Scale: How to Run Thousands of SKUs",
+                "inputHash": "9a802eaa6f5ff11a33f135c39610fc178491c1f49141ce9d06c4e2c4fef0e1a9",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "This feed explains how to run catalog ads at scale, covering why spend concentrates on a few SKUs, how to size the core product set, stop‑loss rules, and handling of stock and variants.",
+                "inputHash": "9a802eaa6f5ff11a33f135c39610fc178491c1f49141ce9d06c4e2c4fef0e1a9",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "カタログ広告を大規模に運用する方法",
+            "summary": "カタログ広告を多数のSKUで実施する際、支出は限られた数のSKUに集中する傾向がある。コア製品セットの規模を適切に設定し、損失を抑えるストップロスルールを導入する。さらに在庫状況やバリアント（バリエーション）を考慮した管理が必要である。",
+            "inputHash": "893e294a18cef06ee4c801442f783fdec901bfb4f42144ce62257f3348424de0",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "カタログ広告を大規模に運用する方法",
+                "inputHash": "893e294a18cef06ee4c801442f783fdec901bfb4f42144ce62257f3348424de0",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "カタログ広告を多数のSKUで実施する際、支出は限られた数のSKUに集中する傾向がある。コア製品セットの規模を適切に設定し、損失を抑えるストップロスルールを導入する。さらに在庫状況やバリアント（バリエーション）を考慮した管理が必要である。",
+                "inputHash": "893e294a18cef06ee4c801442f783fdec901bfb4f42144ce62257f3348424de0",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-05258747a2b127a014bf",
+      "sourceId": "adsuploader-blog",
+      "title": "Meta Ads MCP: Setup, Capabilities, Limits and Safety (2026)",
+      "url": "https://adsuploader.com/blog/meta-ads-mcp",
+      "publishedDate": "2026-09-23",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "05258747a2b127a014bfda12cd343485b234433d022219d9fc0f9d5984205a7c",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta Ads MCP: Setup, Capabilities, Limits, and Safety",
+            "summary": "Meta Ads MCP is explained with its URL mcp.facebook.com/ads, includes setup guidance for Claude, ChatGPT and Perplexity, describes tool functions, and outlines the July 2026 safety rules and operational limits.",
+            "inputHash": "732291f65557a4c08ac2e7eda314b91e68b3dcfe9498349dcf8f6cdc5ed274b5",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Ads MCP: Setup, Capabilities, Limits, and Safety",
+                "inputHash": "732291f65557a4c08ac2e7eda314b91e68b3dcfe9498349dcf8f6cdc5ed274b5",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta Ads MCP is explained with its URL mcp.facebook.com/ads, includes setup guidance for Claude, ChatGPT and Perplexity, describes tool functions, and outlines the July 2026 safety rules and operational limits.",
+                "inputHash": "732291f65557a4c08ac2e7eda314b91e68b3dcfe9498349dcf8f6cdc5ed274b5",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta Ads MCP の設定・機能・制限と安全性（2026年）",
+            "summary": "Meta Ads MCP は mcp.facebook.com/ads の URL で提供される広告管理プラットフォームです。設定は Claude、ChatGPT、Perplexity で行えるとされています。ツールの機能や役割、2026年7月の安全ルールおよびその制限について説明されています。",
+            "inputHash": "33f03188524a17412e46ad22506e30e366c0ccfd5f1de5f2987ea087b37e726c",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Ads MCP の設定・機能・制限と安全性（2026年）",
+                "inputHash": "33f03188524a17412e46ad22506e30e366c0ccfd5f1de5f2987ea087b37e726c",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta Ads MCP は mcp.facebook.com/ads の URL で提供される広告管理プラットフォームです。設定は Claude、ChatGPT、Perplexity で行えるとされています。ツールの機能や役割、2026年7月の安全ルールおよびその制限について説明されています。",
+                "inputHash": "33f03188524a17412e46ad22506e30e366c0ccfd5f1de5f2987ea087b37e726c",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "jon-loomer-meta-ads-5f109c4c8b7d031b8c69",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta One Business Plans: What You Get at Each Tier",
@@ -206,7 +768,7 @@
       "publishedDate": "2026-09-22",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -275,7 +837,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": "2026-09-21",
       "firstObservedAt": "2026-09-22T05:01:36Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -345,7 +907,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -407,6 +969,144 @@
       }
     },
     {
+      "id": "adsuploader-blog-1c4c213919734f43897d",
+      "sourceId": "adsuploader-blog",
+      "title": "Facebook Collection Ads Specs: Every Requirement for 2026",
+      "url": "https://adsuploader.com/blog/facebook-collection-ads-specs",
+      "publishedDate": "2026-09-21",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "1c4c213919734f43897d36fa4234d55c0174b2964a02170d8e5a707d3d1d1c1c",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Facebook Collection Ads Specs for 2026",
+            "summary": "A comprehensive overview of Facebook collection ad specifications, including cover media by placement, the four‑product minimum, Instant Experience requirements, character limits, and changes for 2026.",
+            "inputHash": "ca96144eeb98dbaecc4aaeaf08b1a1a3e6e9b882efd3cc7e9f389ac11e7208ff",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook Collection Ads Specs for 2026",
+                "inputHash": "ca96144eeb98dbaecc4aaeaf08b1a1a3e6e9b882efd3cc7e9f389ac11e7208ff",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "A comprehensive overview of Facebook collection ad specifications, including cover media by placement, the four‑product minimum, Instant Experience requirements, character limits, and changes for 2026.",
+                "inputHash": "ca96144eeb98dbaecc4aaeaf08b1a1a3e6e9b882efd3cc7e9f389ac11e7208ff",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "2026年版 Facebook コレクション広告の仕様まとめ",
+            "summary": "Facebook のコレクション広告に関する全ての仕様をまとめた資料です。配置別のカバー画像や動画の要件、最低4点の製品掲載、Instant Experience の条件、文字数制限、そして2026年に適用される変更点が含まれます。",
+            "inputHash": "3bf595494bdd164c62fde106fa84ba3ceebc510331f5a28a1935cb7faaeaa4a2",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "2026年版 Facebook コレクション広告の仕様まとめ",
+                "inputHash": "3bf595494bdd164c62fde106fa84ba3ceebc510331f5a28a1935cb7faaeaa4a2",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebook のコレクション広告に関する全ての仕様をまとめた資料です。配置別のカバー画像や動画の要件、最低4点の製品掲載、Instant Experience の条件、文字数制限、そして2026年に適用される変更点が含まれます。",
+                "inputHash": "3bf595494bdd164c62fde106fa84ba3ceebc510331f5a28a1935cb7faaeaa4a2",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-a0b325727f2455846e5f",
+      "sourceId": "adsuploader-blog",
+      "title": "Facebook Catalog Ad Overlays: Price, Discount and Shipping Labels",
+      "url": "https://adsuploader.com/blog/facebook-catalog-ad-overlays",
+      "publishedDate": "2026-09-19",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "a0b325727f2455846e5f330d4d03de57773a72b788c3d6e97acc0c7f0c1ffe7e",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Facebook catalog ad overlays: price, discount, shipping labels",
+            "summary": "Facebook catalog ad overlays add price, discount, and shipping labels to product images. The feed lists each overlay type, the required catalog fields, and reasons why an overlay may not appear.",
+            "inputHash": "33da59854a988ed65f09d35841a37e75f9b076d76b9da386d803b382a767f4fe",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook catalog ad overlays: price, discount, shipping labels",
+                "inputHash": "33da59854a988ed65f09d35841a37e75f9b076d76b9da386d803b382a767f4fe",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebook catalog ad overlays add price, discount, and shipping labels to product images. The feed lists each overlay type, the required catalog fields, and reasons why an overlay may not appear.",
+                "inputHash": "33da59854a988ed65f09d35841a37e75f9b076d76b9da386d803b382a767f4fe",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Facebookカタログ広告のオーバーレイ：価格・割引・配送料ラベル",
+            "summary": "Facebookのカタログ広告では、商品画像に価格・割引・配送料のラベルを表示するオーバーレイが利用できます。各オーバーレイの種類と、表示に必要なカタログ項目、そしてラベルが表示されない原因が解説されています。",
+            "inputHash": "8b59189942ae6fcac1f36418b97b9572df5c9b8f1a513a2e0475ff528e09a88e",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebookカタログ広告のオーバーレイ：価格・割引・配送料ラベル",
+                "inputHash": "8b59189942ae6fcac1f36418b97b9572df5c9b8f1a513a2e0475ff528e09a88e",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebookのカタログ広告では、商品画像に価格・割引・配送料のラベルを表示するオーバーレイが利用できます。各オーバーレイの種類と、表示に必要なカタログ項目、そしてラベルが表示されない原因が解説されています。",
+                "inputHash": "8b59189942ae6fcac1f36418b97b9572df5c9b8f1a513a2e0475ff528e09a88e",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "social-media-today-meta-ads-ff23184ef3220928736c",
       "sourceId": "social-media-today-meta-ads",
       "title": "Meta shares holiday 2026 planning guides",
@@ -414,7 +1114,7 @@
       "publishedDate": "2026-09-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-18T11:07:09Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -483,7 +1183,7 @@
       "publishedDate": "2026-09-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -545,6 +1245,75 @@
       }
     },
     {
+      "id": "adsuploader-blog-1fbec7600390f4b78159",
+      "sourceId": "adsuploader-blog",
+      "title": "Facebook Dynamic Creative: What It Does and When to Use It",
+      "url": "https://adsuploader.com/blog/facebook-dynamic-creative",
+      "publishedDate": "2026-09-17",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "1fbec7600390f4b7815975ec194d295039c044321666abbec626a07e35cff23c",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "89ebccf13aa5a1b3dfe8be0ffa943f6d08cbc6510d673f7130cf80eeba7e67e3",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "89ebccf13aa5a1b3dfe8be0ffa943f6d08cbc6510d673f7130cf80eeba7e67e3",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "89ebccf13aa5a1b3dfe8be0ffa943f6d08cbc6510d673f7130cf80eeba7e67e3",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Facebook Dynamic Creativeは素材を組み合わせ広告バリエーションを生成",
+            "summary": "Facebook Dynamic Creativeは、アップロードした素材を組み合わせて広告のバリエーションを自動生成します。2026年に利用できる広告目的やレポートの読み方についても説明されています。",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook Dynamic Creativeは素材を組み合わせ広告バリエーションを生成",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebook Dynamic Creativeは、アップロードした素材を組み合わせて広告のバリエーションを自動生成します。2026年に利用できる広告目的やレポートの読み方についても説明されています。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "meta-product-news-rss-e034320b81aba92d5529",
       "sourceId": "meta-product-news-rss",
       "title": "Threads Expands Podcast Toolkit for Creators and Listeners",
@@ -552,7 +1321,7 @@
       "publishedDate": "2026-09-16",
       "updatedDate": null,
       "firstObservedAt": "2026-09-17T04:55:10Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -621,7 +1390,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -690,7 +1459,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -759,7 +1528,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -828,7 +1597,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -890,6 +1659,213 @@
       }
     },
     {
+      "id": "adsuploader-blog-dfb94894897a0ada2fe0",
+      "sourceId": "adsuploader-blog",
+      "title": "Facebook Shop vs Catalog: What the Difference Actually Is",
+      "url": "https://adsuploader.com/blog/facebook-shop-vs-catalog",
+      "publishedDate": "2026-09-15",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "dfb94894897a0ada2fe09583a269feafb587a65c14b1ccefeb2b9ba71de60570",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Facebook Catalog vs Shop: Key Differences",
+            "summary": "A Facebook catalog serves as a product database, while a Shop is an optional surface powered by that catalog. The feed explains how they connect and notes changes introduced in 2025.",
+            "inputHash": "fd2ac2568b7b30915796a652dd3610602c442fe46da96e56e563e6bbe252852f",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook Catalog vs Shop: Key Differences",
+                "inputHash": "fd2ac2568b7b30915796a652dd3610602c442fe46da96e56e563e6bbe252852f",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "A Facebook catalog serves as a product database, while a Shop is an optional surface powered by that catalog. The feed explains how they connect and notes changes introduced in 2025.",
+                "inputHash": "fd2ac2568b7b30915796a652dd3610602c442fe46da96e56e563e6bbe252852f",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Facebookカタログとショップの違いと2025年の変更点",
+            "summary": "Facebookカタログは商品情報を管理するデータベースで、ショップはそのカタログを利用して表示できるオプションの販売面です。2025年に機能や連携方法に変更があり、利用目的に応じてカタログだけ、またはショップ併用を選択します。",
+            "inputHash": "ebe20e6dcaca42d6cd0fd80400a354fa46463b3ee125042ce5996fa2bd179d5b",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebookカタログとショップの違いと2025年の変更点",
+                "inputHash": "ebe20e6dcaca42d6cd0fd80400a354fa46463b3ee125042ce5996fa2bd179d5b",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebookカタログは商品情報を管理するデータベースで、ショップはそのカタログを利用して表示できるオプションの販売面です。2025年に機能や連携方法に変更があり、利用目的に応じてカタログだけ、またはショップ併用を選択します。",
+                "inputHash": "ebe20e6dcaca42d6cd0fd80400a354fa46463b3ee125042ce5996fa2bd179d5b",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-c669f78cce90c5e26d9e",
+      "sourceId": "adsuploader-blog",
+      "title": "Facebook Product Feed: Required Fields, Formats and Images",
+      "url": "https://adsuploader.com/blog/facebook-product-feed",
+      "publishedDate": "2026-09-13",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "c669f78cce90c5e26d9ec1ca21b9c8bc6233f08ac7d02b0933a5318823213b5d",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Facebook product feed: required fields, formats, images",
+            "summary": "The guide explains what a Facebook product feed is, lists the nine required fields, details accepted formats and size limits, and describes how multiple images and video can be used for each product.",
+            "inputHash": "e7a95c12a4ee4cff7cdfbeb51088aab512683b5319f7e9ecb3bffdbd78b19f4c",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook product feed: required fields, formats, images",
+                "inputHash": "e7a95c12a4ee4cff7cdfbeb51088aab512683b5319f7e9ecb3bffdbd78b19f4c",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The guide explains what a Facebook product feed is, lists the nine required fields, details accepted formats and size limits, and describes how multiple images and video can be used for each product.",
+                "inputHash": "e7a95c12a4ee4cff7cdfbeb51088aab512683b5319f7e9ecb3bffdbd78b19f4c",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Facebook商品フィードの必須項目・フォーマット・画像要件",
+            "summary": "Facebookの商品フィードは、商品情報を登録するためのデータ形式です。必須項目は9項目で、各項目には決められたフォーマットとサイズ上限があります。画像は複数登録でき、動画も商品ごとに設定可能です。",
+            "inputHash": "5d738b3e09fa1115d793adb3cf1c699bb16aee736e53098313cb49ec151f19c3",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook商品フィードの必須項目・フォーマット・画像要件",
+                "inputHash": "5d738b3e09fa1115d793adb3cf1c699bb16aee736e53098313cb49ec151f19c3",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebookの商品フィードは、商品情報を登録するためのデータ形式です。必須項目は9項目で、各項目には決められたフォーマットとサイズ上限があります。画像は複数登録でき、動画も商品ごとに設定可能です。",
+                "inputHash": "5d738b3e09fa1115d793adb3cf1c699bb16aee736e53098313cb49ec151f19c3",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-b763611bf40d7dfaa71f",
+      "sourceId": "adsuploader-blog",
+      "title": "Carousel Ads vs Catalog Ads: The Real Difference (2026)",
+      "url": "https://adsuploader.com/blog/carousel-ads-vs-catalog-ads",
+      "publishedDate": "2026-09-11",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "b763611bf40d7dfaa71f7e01917d2163215ef1be44813d27a9c025e34890ad85",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Carousel vs Catalog Ads: Creative vs Data‑Driven Formats",
+            "summary": "Carousel ads use a creative format, while catalog ads are data‑driven. The two formats differ in how they present products, and choosing the right type depends on your goals in 2026.",
+            "inputHash": "7e54397b5206719b9d6a84b85774cf0354654a8468b6a8151469f4ab49790239",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Carousel vs Catalog Ads: Creative vs Data‑Driven Formats",
+                "inputHash": "7e54397b5206719b9d6a84b85774cf0354654a8468b6a8151469f4ab49790239",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Carousel ads use a creative format, while catalog ads are data‑driven. The two formats differ in how they present products, and choosing the right type depends on your goals in 2026.",
+                "inputHash": "7e54397b5206719b9d6a84b85774cf0354654a8468b6a8151469f4ab49790239",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "カルーセル広告とカタログ広告の違い（2026年）",
+            "summary": "カルーセル広告は画像や動画をスライド形式で表示するクリエイティブなフォーマットで、複数のアイテムを1つの広告ユニットで見せられます。一方、カタログ広告は商品データフィードに基づき自動生成されるデータ駆動型の広告で、商品情報や在庫・価格の変化に応じて表示が変わります。2026年の選択基準としては、ブランドストーリーやビジュアル訴求を重視する場合はカルーセル広告、商品数が多く在庫や価格が頻繁に変わる場合はカタログ広告が適しています。",
+            "inputHash": "b56421f197acd642b444da73b66475ad5df75b2548a5435d88ec9d7ddc494cfa",
+            "generatedAt": "2026-09-29T13:20:20Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "カルーセル広告とカタログ広告の違い（2026年）",
+                "inputHash": "b56421f197acd642b444da73b66475ad5df75b2548a5435d88ec9d7ddc494cfa",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "カルーセル広告は画像や動画をスライド形式で表示するクリエイティブなフォーマットで、複数のアイテムを1つの広告ユニットで見せられます。一方、カタログ広告は商品データフィードに基づき自動生成されるデータ駆動型の広告で、商品情報や在庫・価格の変化に応じて表示が変わります。2026年の選択基準としては、ブランドストーリーやビジュアル訴求を重視する場合はカルーセル広告、商品数が多く在庫や価格が頻繁に変わる場合はカタログ広告が適しています。",
+                "inputHash": "b56421f197acd642b444da73b66475ad5df75b2548a5435d88ec9d7ddc494cfa",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "social-media-today-meta-ads-b35a1f5bd3df45609ea7",
       "sourceId": "social-media-today-meta-ads",
       "title": "Instagram chief warns against eliminating algorithms",
@@ -897,7 +1873,7 @@
       "publishedDate": "2026-09-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-11T04:43:19Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -966,7 +1942,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-14T11:20:59Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -1035,7 +2011,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T04:45:10Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1104,7 +2080,7 @@
       "publishedDate": "2026-09-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1173,7 +2149,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1242,7 +2218,7 @@
       "publishedDate": "2026-08-31",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1304,75 +2280,6 @@
       }
     },
     {
-      "id": "social-media-today-meta-ads-d3fb5f3c45f341c06bab",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Meta updates login with Facebook",
-      "url": "https://www.socialmediatoday.com/news/meta-updates-login-with-facebook/829135/",
-      "publishedDate": "2026-08-30",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "d3fb5f3c45f341c06bab017f5c86d88dc6bcbd0e1ad985b8a2ce1a5135709e30",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta adds one‑tap Facebook login for Android, Web and iOS",
-            "summary": "Meta is rolling out a one‑tap sign‑on for Android and Web, improves its Limited Login flow, and updates the iOS fast app switch to use the native Facebook app. Developers can access these changes through the latest SDK.",
-            "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
-            "generatedAt": "2026-09-24T10:49:46Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta adds one‑tap Facebook login for Android, Web and iOS",
-                "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta is rolling out a one‑tap sign‑on for Android and Web, improves its Limited Login flow, and updates the iOS fast app switch to use the native Facebook app. Developers can access these changes through the latest SDK.",
-                "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta、Facebookログインをワンタップで簡素化",
-            "summary": "Metaは、Facebookアカウントでのログイン機能を改善し、Android と Web でワンタップサインオンを提供します。既にデバイスにサインイン済みのユーザーは、1 回のタップで第三者アプリにログインでき、フローが短縮されます。また、Limited Login の再ログイン回数削減や、iOS ではネイティブ Facebook アプリへの高速スイッチにより、ブラウザ経由より速くログインできます。これらの機能は最新 SDK で利用可能で、開発者は必要な機能を選択して導入できます。",
-            "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
-            "generatedAt": "2026-09-24T10:49:46Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta、Facebookログインをワンタップで簡素化",
-                "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaは、Facebookアカウントでのログイン機能を改善し、Android と Web でワンタップサインオンを提供します。既にデバイスにサインイン済みのユーザーは、1 回のタップで第三者アプリにログインでき、フローが短縮されます。また、Limited Login の再ログイン回数削減や、iOS ではネイティブ Facebook アプリへの高速スイッチにより、ブラウザ経由より速くログインできます。これらの機能は最新 SDK で利用可能で、開発者は必要な機能を選択して導入できます。",
-                "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "id": "meta-business-sdk-releases-8ada906f14c5e1731d04",
       "sourceId": "meta-business-sdk-releases",
       "title": "v26.0.1",
@@ -1380,7 +2287,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1450,7 +2357,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1519,7 +2426,7 @@
       "publishedDate": "2026-08-24",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1588,7 +2495,7 @@
       "publishedDate": "2026-08-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1657,7 +2564,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T22:29:27Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1726,7 +2633,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1936,7 +2843,7 @@
       "publishedDate": "2026-08-19",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2074,7 +2981,7 @@
       "publishedDate": "2026-08-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2215,7 +3122,7 @@
       "publishedDate": "2026-08-13",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2284,7 +3191,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2353,7 +3260,7 @@
       "publishedDate": "2026-08-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2422,7 +3329,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2491,7 +3398,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2560,7 +3467,7 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -2630,7 +3537,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2768,7 +3675,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2837,7 +3744,7 @@
       "publishedDate": "2026-07-20",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2906,7 +3813,7 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -2976,7 +3883,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3045,7 +3952,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3114,7 +4021,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3183,7 +4090,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3254,7 +4161,7 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -3324,7 +4231,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3393,7 +4300,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3462,7 +4369,7 @@
       "publishedDate": "2026-06-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3531,7 +4438,7 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3600,7 +4507,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3671,7 +4578,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3742,7 +4649,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3811,7 +4718,7 @@
       "publishedDate": "2026-06-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3880,7 +4787,7 @@
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3949,7 +4856,7 @@
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4018,7 +4925,7 @@
       "publishedDate": "2026-06-14",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4087,7 +4994,7 @@
       "publishedDate": "2026-06-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4156,7 +5063,7 @@
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4225,7 +5132,7 @@
       "publishedDate": "2026-06-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4294,7 +5201,7 @@
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4363,7 +5270,7 @@
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4432,7 +5339,7 @@
       "publishedDate": "2026-05-31",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4501,7 +5408,7 @@
       "publishedDate": "2026-05-26",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4857,7 +5764,7 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -4927,7 +5834,7 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -4997,7 +5904,7 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -5067,7 +5974,7 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -5137,7 +6044,7 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T13:20:20Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"

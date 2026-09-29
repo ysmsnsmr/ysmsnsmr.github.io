@@ -14,6 +14,7 @@ from typing import Any
 from urllib.error import URLError
 
 from meta_ads_tracker_contract import ContractError
+from meta_ads_tracker_collect import SourceFetchError
 import meta_ads_personal_feed as personal_feed
 from meta_ads_personal_feed import (
     DEFAULT_CONFIG,
@@ -110,6 +111,8 @@ META_BUSINESS_NEWS = """<!doctype html><html><head>
 </head><body><main><span>Announcement</span><span>April 15, 2026</span></main>
 <script>Announcement January 1, 1999</script></body></html>"""
 META = """<rss><channel><item><title>Meta Ads product update</title><link>https://about.fb.com/news/2026/08/product-update/</link><description>Meta announced a product update for advertisers.</description><pubDate>Fri, 29 Aug 2026 02:00:00 +0000</pubDate></item></channel></rss>"""
+ADS_UPLOADER_OLD = """<html><body><article><a href="/blog/meta-ads-guide"><h2>Meta Ads guide</h2></a><p>Practical ad campaign guidance.</p><time dateTime="2025-01-01">January 1</time></article></body></html>"""
+ADS_UPLOADER_RECENT = """<html><body><article><div><a href="/blog/category/meta-ads/campaign-management">Campaign Management</a></div><a href="/blog/meta-ads-updates"><h2>Meta Ads Updates</h2></a><p>Recent changes to Meta Ads campaigns.</p><time dateTime="2026-09-29">September 29</time></article><article><a href="/blog/facebook-ads-playbook"><h2>Facebook Ads Playbook</h2></a><p>How to plan creative and targeting.</p><time dateTime="2026-09-27">September 27</time></article><script>ignore this article markup</script></body></html>"""
 SDK = json.dumps([{
     "tag_name": "v27.0.0", "name": "v27.0.0", "html_url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v27.0.0", "body": "Adds the latest Marketing API release support.", "published_at": "2026-08-29T01:00:00Z", "updated_at": "2026-08-29T02:00:00Z", "draft": False, "prerelease": False,
 }])
@@ -151,19 +154,22 @@ class PersonalFeedTest(unittest.TestCase):
         self.config = load_config()
 
     def fetcher(self, *, fail: bool = False, bodies: dict[str, str] | None = None):
-        source_bodies = bodies or {
+        source_bodies = {
             "meta-product-news-rss": META,
             "meta-business-sdk-releases": SDK,
             "social-media-today-meta-ads": SOCIAL_MEDIA_TODAY,
             "jon-loomer-meta-ads": JON,
+            "adsuploader-blog": ADS_UPLOADER_OLD,
         }
+        if bodies:
+            source_bodies.update(bodies)
 
         def fetch(source: dict, _timeout: float) -> tuple[str, str]:
             if fail:
                 raise URLError("response body must not be retained")
             if source["parser"] == "github_releases":
                 content_type = "application/json; charset=utf-8"
-            elif source["parser"] == "meta_business_news_html":
+            elif source["parser"] in {"meta_business_news_html", "adsuploader_blog_html"}:
                 content_type = "text/html; charset=utf-8"
             else:
                 content_type = "application/rss+xml; charset=UTF-8"
@@ -175,7 +181,7 @@ class PersonalFeedTest(unittest.TestCase):
     def test_config_adds_keyword_filtered_and_discovered_official_sources(self) -> None:
         sources = {source["id"]: source for source in self.config["sources"]}
         discovered = {source["id"]: source for source in self.config["discoveredSources"]}
-        self.assertEqual(set(sources), {"meta-product-news-rss", "meta-business-sdk-releases", "social-media-today-meta-ads", "jon-loomer-meta-ads"})
+        self.assertEqual(set(sources), {"meta-product-news-rss", "meta-business-sdk-releases", "social-media-today-meta-ads", "jon-loomer-meta-ads", "adsuploader-blog"})
         self.assertEqual(set(discovered), {"meta-business-news-discovered"})
         self.assertEqual(sources["social-media-today-meta-ads"]["sourceUrl"], "https://www.socialmediatoday.com/topic/facebook/")
         self.assertEqual(sources["social-media-today-meta-ads"]["fetchUrl"], "https://www.socialmediatoday.com/feeds/topic/facebook/")
@@ -185,6 +191,10 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(sources["jon-loomer-meta-ads"]["fetchUrl"], "https://www.jonloomer.com/feed/")
         self.assertEqual(sources["jon-loomer-meta-ads"]["match"]["kind"], "rss_category_and_terms")
         self.assertEqual(sources["jon-loomer-meta-ads"]["relevanceRevision"], "jon-loomer-v3")
+        self.assertEqual(sources["adsuploader-blog"]["fetchUrl"], "https://adsuploader.com/blog")
+        self.assertEqual(sources["adsuploader-blog"]["classification"], "unofficial")
+        self.assertEqual(sources["adsuploader-blog"]["transport"]["maxItems"], 12)
+        self.assertEqual(sources["adsuploader-blog"]["failurePolicy"], "isolate")
         self.assertEqual(sources["meta-business-sdk-releases"]["parser"], "github_releases")
         self.assertEqual(discovered["meta-business-news-discovered"]["classification"], "official")
         self.assertEqual(
@@ -203,6 +213,62 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(self.config["policies"]["bilingualPresentation"]["maxRetryDelaySeconds"], 60)
         self.assertTrue(all(source["contentLanguage"] == "en" for source in [*sources.values(), *discovered.values()]))
         self.assertTrue(all(source["platformIds"] for source in [*sources.values(), *discovered.values()]))
+
+    def test_adsuploader_blog_index_extracts_recent_cards_with_a_bounded_count(self) -> None:
+        source = next(item for item in self.config["sources"] if item["id"] == "adsuploader-blog")
+        source["transport"]["maxItems"] = 1
+        items = extract_items(source, ADS_UPLOADER_RECENT)
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0]["title"], "Meta Ads Updates")
+        self.assertEqual(items[0]["url"], "https://adsuploader.com/blog/meta-ads-updates")
+        self.assertEqual(items[0]["publishedDate"], "2026-09-29")
+        self.assertEqual(items[0]["sourceContext"], "Recent changes to Meta Ads campaigns.")
+        with self.assertRaisesRegex(ContractError, "incomplete article index"):
+            extract_items(source, "<html><body>No article cards</body></html>")
+        with self.assertRaisesRegex(ContractError, "invalid article card"):
+            extract_items(source, ADS_UPLOADER_RECENT.replace('dateTime="2026-09-29"', ""))
+
+    def test_adsuploader_failure_isolated_without_losing_previous_articles(self) -> None:
+        now = datetime(2026, 9, 29, 9, 0, tzinfo=timezone.utc)
+        empty_state = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
+        first_feed, first_state = collect(
+            self.config, empty_state, 1, now,
+            self.fetcher(bodies={"adsuploader-blog": ADS_UPLOADER_RECENT}),
+            jev_classifier=lambda _source, _raw: ("included", ["test:relevant"]),
+        )
+        self.assertEqual(len(first_state["sources"]["adsuploader-blog"]["items"]), 2)
+        self.assertEqual(sum(item["sourceId"] == "adsuploader-blog" for item in first_feed["items"]), 2)
+
+        def blocked_fetch(source: dict, timeout: float) -> tuple[str, str]:
+            if source["id"] == "adsuploader-blog":
+                raise SourceFetchError(source["id"], "http_status=403", 2)
+            return self.fetcher()(source, timeout)
+
+        pipeline: dict = {}
+        second_feed, second_state = collect(
+            self.config, first_state, 1, now + timedelta(days=1), blocked_fetch,
+            source_pipeline_stats=pipeline,
+            jev_classifier=lambda _source, _raw: ("included", ["test:relevant"]),
+        )
+        self.assertTrue(pipeline["sources"]["adsuploader-blog"]["isolatedFailure"])
+        self.assertEqual(first_state["sources"]["adsuploader-blog"]["items"], second_state["sources"]["adsuploader-blog"]["items"])
+        self.assertEqual(sum(item["sourceId"] == "adsuploader-blog" for item in second_feed["items"]), 2)
+
+        def malformed_fetch(source: dict, timeout: float) -> tuple[str, str]:
+            if source["id"] == "adsuploader-blog":
+                return "<html><body>No cards</body></html>", "text/html"
+            return self.fetcher()(source, timeout)
+
+        malformed_pipeline: dict = {}
+        _malformed_feed, malformed_state = collect(
+            self.config, first_state, 1, now + timedelta(days=1), malformed_fetch,
+            source_pipeline_stats=malformed_pipeline,
+            jev_classifier=lambda _source, _raw: ("included", ["test:relevant"]),
+        )
+        self.assertTrue(malformed_pipeline["sources"]["adsuploader-blog"]["isolatedFailure"])
+        self.assertEqual(first_state["sources"]["adsuploader-blog"]["items"], malformed_state["sources"]["adsuploader-blog"]["items"])
+        with self.assertRaises(SourceFetchError):
+            collect(self.config, first_state, 1, now + timedelta(days=1), blocked_fetch, reseed_source_id="adsuploader-blog")
 
     def test_manual_exclusions_are_validated_and_match_the_reviewed_urls(self) -> None:
         manifest = json.loads(personal_feed.DEFAULT_MANUAL_EXCLUSIONS.read_text(encoding="utf-8"))
@@ -1341,7 +1407,7 @@ class PersonalFeedTest(unittest.TestCase):
     def test_first_collection_publishes_provenance_labelled_baseline_without_human_decisions(self) -> None:
         state = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
         feed, next_state = collect(self.config, state, 1, NOW, self.fetcher())
-        self.assertEqual(len(feed["sources"]), 4)
+        self.assertEqual(len(feed["sources"]), 5)
         self.assertEqual(len(feed["items"]), 4)
         self.assertEqual(feed["schemaVersion"], FEED_V5_SCHEMA_VERSION)
         self.assertEqual({item["sourceId"] for item in feed["items"]}, {"meta-product-news-rss", "meta-business-sdk-releases", "social-media-today-meta-ads", "jon-loomer-meta-ads"})
@@ -1869,7 +1935,9 @@ class PersonalFeedTest(unittest.TestCase):
 
     def test_v3_fixed_fixture_executes_json_schema_and_python_validation(self) -> None:
         fixture = json.loads(V3_FIXTURE.read_text(encoding="utf-8"))
-        validated = validate_feed(fixture, self.config)
+        legacy_config = copy.deepcopy(self.config)
+        legacy_config["sources"] = [source for source in legacy_config["sources"] if source["id"] != "adsuploader-blog"]
+        validated = validate_feed(fixture, legacy_config)
         self.assertEqual(validated["schemaVersion"], FEED_V3_SCHEMA_VERSION)
         self.assertEqual(validated["defaultLocale"], "en")
         self.assertEqual(validated["availableLocales"], ["en", "ja"])
@@ -1879,28 +1947,30 @@ class PersonalFeedTest(unittest.TestCase):
         schema_invalid = copy.deepcopy(fixture)
         del schema_invalid["items"][0]["presentation"]["locales"]["en"]["summary"]
         with self.assertRaisesRegex(ContractError, "JSON Schema"):
-            validate_feed(schema_invalid, self.config)
+            validate_feed(schema_invalid, legacy_config)
 
         immutable_input_invalid = copy.deepcopy(fixture)
         immutable_input_invalid["items"][0]["presentation"]["locales"]["ja"]["inputHash"] = "0" * 64
         with self.assertRaisesRegex(ContractError, "immutable input"):
-            validate_feed(immutable_input_invalid, self.config)
+            validate_feed(immutable_input_invalid, legacy_config)
 
     def test_v4_fixed_fixture_requires_a_public_lane_and_lane_evidence(self) -> None:
         fixture = json.loads(V4_FIXTURE.read_text(encoding="utf-8"))
-        validated = validate_feed(fixture, self.config)
+        legacy_config = copy.deepcopy(self.config)
+        legacy_config["sources"] = [source for source in legacy_config["sources"] if source["id"] != "adsuploader-blog"]
+        validated = validate_feed(fixture, legacy_config)
         self.assertEqual(validated["schemaVersion"], FEED_V4_SCHEMA_VERSION)
         self.assertEqual([item["lane"] for item in validated["items"]], ["action", "watch"])
 
         invalid = copy.deepcopy(fixture)
         invalid["items"][0]["lane"] = "drop"
         with self.assertRaisesRegex(ContractError, "JSON Schema"):
-            validate_feed(invalid, self.config)
+            validate_feed(invalid, legacy_config)
 
         invalid = copy.deepcopy(fixture)
         invalid["items"][0]["laneEvidence"] = []
         with self.assertRaisesRegex(ContractError, "JSON Schema"):
-            validate_feed(invalid, self.config)
+            validate_feed(invalid, legacy_config)
 
     def test_v5_feed_excludes_internal_publication_classification(self) -> None:
         fixture = json.loads(V4_FIXTURE.read_text(encoding="utf-8"))
@@ -1908,7 +1978,9 @@ class PersonalFeedTest(unittest.TestCase):
         for item in fixture["items"]:
             item.pop("lane")
             item.pop("laneEvidence")
-        validated = validate_feed(fixture, self.config)
+        legacy_config = copy.deepcopy(self.config)
+        legacy_config["sources"] = [source for source in legacy_config["sources"] if source["id"] != "adsuploader-blog"]
+        validated = validate_feed(fixture, legacy_config)
         self.assertEqual(validated["schemaVersion"], FEED_V5_SCHEMA_VERSION)
         self.assertTrue(all("lane" not in item and "laneEvidence" not in item for item in validated["items"]))
 

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "meta-ads-personal-feed-sources/v7",
+  "schemaVersion": "meta-ads-personal-feed-sources/v8",
   "policies": {
     "persistRawResponseBody": false,
     "historyRetentionDays": 180,
@@ -131,6 +131,28 @@
           "events manager"
         ]
       }
+    },
+    {
+      "id": "adsuploader-blog",
+      "name": "Ads Uploader Blog",
+      "classification": "unofficial",
+      "sourceUrl": "https://adsuploader.com/blog",
+      "fetchUrl": "https://adsuploader.com/blog",
+      "parser": "adsuploader_blog_html",
+      "failurePolicy": "isolate",
+      "expectedContentTypes": ["text/html"],
+      "contentLanguage": "en",
+      "platforms": ["Meta Ads"],
+      "platformIds": ["meta-ads"],
+      "relevanceRevision": "adsuploader-blog-v1",
+      "transport": {
+        "allowedFetchHosts": ["adsuploader.com"],
+        "allowedContentHosts": ["adsuploader.com"],
+        "maxResponseBytes": 1048576,
+        "maxRedirects": 3,
+        "maxItems": 12
+      },
+      "match": {"kind": "all"}
     }
   ],
   "discoveredSources": [

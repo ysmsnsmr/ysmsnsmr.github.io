@@ -1,6 +1,6 @@
 # Meta Ads Personal Feed runbook
 
-`meta-ads-updates/` の通常画面は、承認済み週次indexではなく `personal-feed.json` を表示する個人・同僚向け情報フィードです。収集・表示は毎日自動で行い、人間レビューは公開条件ではありません。
+`meta-ads-updates/` の通常画面は、承認済み週次indexではなく `personal-feed.json` を表示する個人・同僚向け情報フィードです。収集・表示は火曜・金曜に自動で行い、人間レビューは公開条件ではありません。
 
 ## 自動収集するソース
 
@@ -8,6 +8,7 @@
 - Meta Business SDK Releases（Node.js）— Meta公式GitHub公開API
 - Social Media Today Facebook RSS（タイトルにMeta／Facebook／Instagram、かつタイトルまたは説明文に広告関連語）— 非公式・未確認
 - Jon Loomer Digital RSS — 非公式・未確認
+- Ads Uploader Blogの公開記事一覧 — 非公式。新着の見出し・日付・短い説明を収集し、運用解説も候補に含める
 - Meta for Business News — Jon Loomer DigitalまたはSocial Media TodayのRSS本文から見つかったMeta公式記事だけを追加取得
 
 Search Engine Land Meta RSSは、2026-08-30にGitHub ActionsでHTTP 403が繰り返し再現したため一時停止しています。安定した自動取得を確認できるまで再導入しません。
@@ -24,11 +25,13 @@ Meta公式ページはRSSや公開APIではなくHTMLから限定的なmetadata�
 
 非公式の文字付きラベルと画面上部の注意表示は削除しません。非公式ソースは早期検知の参考情報であり、Meta公式の見解を示すものではありません。公式情報で確認できない内容もあるため、重要な対応や判断には、複数の情報源や実環境で追加確認してください。
 
-この一覧にない通常ソースは、HTTPSで公開され、RSSまたは安定した公開APIがあり、タイトル・URL・日付を安全に抽出できる場合だけ追加します。ログインが必要なページ、429やアクセス制限が確認されているページは通常ソースへ追加しません。HTML取得は上記のMeta for Business News発見経路だけの限定例外であり、失敗時にフィード全体を止めない境界を維持します。Python/PHP/Java版SDK Releases APIは取得可能ですが、同じversionを重複表示するため、横断dedupeを実装するまで追加しません。
+この一覧にない通常ソースは、HTTPSで公開され、RSSまたは安定した公開APIがあり、タイトル・URL・日付を安全に抽出できる場合を原則とします。Ads UploaderはRSSを公開していないため、ブログ一覧HTMLの可視記事カードだけを読む限定例外です。記事本文やスクリプト埋め込みデータは取得・保存しません。ログインが必要なページ、429やアクセス制限が確認されているページは通常ソースへ追加しません。Python/PHP/Java版SDK Releases APIは取得可能ですが、同じversionを重複表示するため、横断dedupeを実装するまで追加しません。
+
+Ads Uploaderだけは追加ソースのアクセス拒否・HTML構造変更を他ソースへ波及させない `failurePolicy=isolate` とします。失敗したrunではAds Uploaderの既存記事を保存期間内だけ維持し、`SOURCE_PIPELINE` に `isolated_failure=true` を出します。失敗本文やURLはログへ出しません。新規導入・ルール変更のsource-local reseedは例外扱いせず、取得に成功するまで失敗とします。他の直接ソースのfail-closed境界は維持します。
 
 ## 通常運用
 
-`Meta Ads Personal Feed daily collect` は毎日 `00:15 UTC`（通常08:15 MYT）に実行されます。すべてのソースの取得・形式検査・解析・契約検証が成功した場合にだけ、次の順序で2ファイルを更新します。
+`Meta Ads Personal Feed twice-weekly collect` は火曜・金曜の `00:15 UTC`（通常08:15 MYT）に実行されます。すべての直接ソースの取得・形式検査・解析・契約検証が成功した場合にだけ、次の順序で2ファイルを更新します。
 
 ```text
 安全な取得 → 形式検査・解析 → 鮮度判定 → 関連性判定
@@ -38,7 +41,7 @@ Meta公式ページはRSSや公開APIではなくHTMLから限定的なmetadata�
 - `data/meta_ads_personal_feed_state.json` — URL、タイトル、日付、fingerprint、取得日時、内部の掲載可否、英語正本・日本語overlayの表示データキャッシュを保持する状態。`DROP`も後日の再評価用にここへ残す
 - `meta-ads-updates/personal-feed.json` — GitHub Pagesで表示する公開フィード。内部で掲載対象と判定した記事だけを含める
 
-生HTML、記事本文、画像、認証情報、Cookieは保存しません。いずれかのソースで失敗したrunは既存の公開フィードを更新しません。
+生HTML、記事本文、画像、認証情報、Cookieは保存しません。必須の直接ソースで失敗したrunは既存の公開フィードを更新しません。Ads Uploader単独の失敗は上記の隔離運用です。
 
 ## 鮮度・関連性
 
@@ -50,7 +53,7 @@ Meta Newsroom Product News RSSは候補を広く取得し、広告・計測・AP
 
 ### 人間確認済みURLの除外
 
-明らかな誤掲載は `config/meta_ads_personal_feed_manual_exclusions.json` に記事のcanonical URLと理由を1件ずつ追加します。現在の一覧には人間が指定した14件を登録しています。これはURL単位の公開除外であり、同じ媒体の他記事や似た見出しを一括で消しません。Jevの判定が後日変わっても、一覧にあるURLは公開feedへ戻りません。元の判定結果と表示データはstateに保持し、除外された記事には新たなGroq生成を行いません。
+明らかな誤掲載は `config/meta_ads_personal_feed_manual_exclusions.json` に記事のcanonical URLと理由を1件ずつ追加します。現在の一覧には人間が指定した17件を登録しています。これはURL単位の公開除外であり、同じ媒体の他記事や似た見出しを一括で消しません。Jevの判定が後日変わっても、一覧にあるURLは公開feedへ戻りません。元の判定結果と表示データはstateに保持し、除外された記事には新たなGroq生成を行いません。
 
 一覧の変更後は `python3 scripts/meta_ads_personal_feed.py --apply-manual-exclusions-only` で既存stateから公開feedを再生成します。この操作は外部ソースやJev/Groqを呼ばず、stateを変更しません。続けて `python3 scripts/validate_meta_ads_personal_feed.py` を実行し、対象URLが公開feedにないことを確認します。除外を取り消す場合は該当行を一覧から削除して同じ再生成を行います。収集workflowも毎回この一覧を読み、公開と表示データ生成に同じ除外を適用します。
 
@@ -60,7 +63,7 @@ Meta Newsroom Product News RSSは候補を広く取得し、広告・計測・AP
 
 関連性契約を変更するPRは、**対象sourceごとのsource-local reseed成功がmerge条件**です。設定だけをmergeしてから定例収集でreseedを待つ運用は禁止します。各変更sourceについて、次をPR branch上で完了します。
 
-1. `Meta Ads Personal Feed daily collect`をPR branchに対して手動実行し、`reseed_source_id`へ対象source IDだけを入れる。複数sourceを変更した場合は1 sourceずつ実行する。
+1. `Meta Ads Personal Feed twice-weekly collect`をPR branchに対して手動実行し、`reseed_source_id`へ対象source IDだけを入れる。複数sourceを変更した場合は1 sourceずつ実行する。
 2. runが成功し、botがstateと`personal-feed.json`を同じPR branchへcommitしたことを確認する。
 3. PR headを更新後、CIの`--require-current-relevance-revisions`をPASSさせる。これはconfigの`relevanceRevision`と全sourceのstate値が一致しない限り失敗する。
 4. PR本文またはreview記録に、変更source ID、reseed run URL、runが確認したPR head SHAを残す。

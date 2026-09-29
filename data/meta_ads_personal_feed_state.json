@@ -1,6 +1,6 @@
 {
   "schemaVersion": "meta-ads-personal-feed-state/v5",
-  "updatedAt": "2026-09-29T05:47:38Z",
+  "updatedAt": "2026-09-29T13:20:20Z",
   "sources": {
     "meta-product-news-rss": {
       "relevanceRevision": "meta-ads-lanes-v1",
@@ -17,7 +17,7 @@
           ],
           "fingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
           "firstObservedAt": "2026-09-17T04:55:10Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
@@ -86,7 +86,7 @@
           ],
           "fingerprint": "7ec28c89eba18f71014806f8761c9662a7068ae8ed01ebd3e8b28d182c8a14ea",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7ec28c89eba18f71014806f8761c9662a7068ae8ed01ebd3e8b28d182c8a14ea",
@@ -155,7 +155,7 @@
           ],
           "fingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
@@ -224,7 +224,7 @@
           ],
           "fingerprint": "6a3e19041f996e3c52d055589111ca61de96dffeb589c06d9a8a8c965fbee1e0",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "6a3e19041f996e3c52d055589111ca61de96dffeb589c06d9a8a8c965fbee1e0",
@@ -293,7 +293,7 @@
           ],
           "fingerprint": "3200d8fbab7ee18881fb9819af4c09217f2382e91316da2c863d8ec9d2922618",
           "firstObservedAt": "2026-09-14T11:20:59Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3200d8fbab7ee18881fb9819af4c09217f2382e91316da2c863d8ec9d2922618",
@@ -707,7 +707,7 @@
           ],
           "fingerprint": "4eaba66ff972adf270ab3d1f9f39c784a5c1dd47873fc9be29cb2b1c75da3228",
           "firstObservedAt": "2026-09-24T10:49:46Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4eaba66ff972adf270ab3d1f9f39c784a5c1dd47873fc9be29cb2b1c75da3228",
@@ -776,7 +776,7 @@
           ],
           "fingerprint": "81f32c25b7a71918ebf29c52f8eecf6a3a4751d1a48f3fad79366cb3d96220f2",
           "firstObservedAt": "2026-09-24T10:49:46Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "81f32c25b7a71918ebf29c52f8eecf6a3a4751d1a48f3fad79366cb3d96220f2",
@@ -845,7 +845,7 @@
           ],
           "fingerprint": "0adeaf0813b90a6ad3ae72fc6723f8206fbe4fcd963df8684360f2f523e34cce",
           "firstObservedAt": "2026-09-24T10:49:46Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0adeaf0813b90a6ad3ae72fc6723f8206fbe4fcd963df8684360f2f523e34cce",
@@ -914,7 +914,7 @@
           ],
           "fingerprint": "3a6042854a6149112069769c01503fa0a22b366f14a78569a9fc7646992b43ef",
           "firstObservedAt": "2026-09-25T05:01:44Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3a6042854a6149112069769c01503fa0a22b366f14a78569a9fc7646992b43ef",
@@ -970,6 +970,75 @@
               }
             }
           }
+        },
+        "https://about.fb.com/news/2026/09/introducing-muse-small-business/": {
+          "url": "https://about.fb.com/news/2026/09/introducing-muse-small-business/",
+          "title": "The Future Is for Everyone: Muse for Small Business",
+          "publishedDate": "2026-09-29",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "f7871a98e4dfe752148f0654ca55f84cf8e7f82606627b88131cb4ba515d3ab2",
+          "firstObservedAt": "2026-09-29T13:20:20Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "f7871a98e4dfe752148f0654ca55f84cf8e7f82606627b88131cb4ba515d3ab2",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Muse expands with new skills and connectors for small businesses",
+                "summary": "Earlier this month Muse, a personal AI agent for the US and Canada, added new skills and dozens of connectors—including Instagram, Facebook, Meta ads and Canva—to help small businesses automate tasks with tools they already use. The service is free for most features, offers subscription plans, and partners can apply via muse.ai/platform.",
+                "inputHash": "54090885a3ddd3dbb8bd4936cc99d92a886c08ef394520cb0ceea95ab53cf30e",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Muse expands with new skills and connectors for small businesses",
+                    "inputHash": "54090885a3ddd3dbb8bd4936cc99d92a886c08ef394520cb0ceea95ab53cf30e",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Earlier this month Muse, a personal AI agent for the US and Canada, added new skills and dozens of connectors—including Instagram, Facebook, Meta ads and Canva—to help small businesses automate tasks with tools they already use. The service is free for most features, offers subscription plans, and partners can apply via muse.ai/platform.",
+                    "inputHash": "54090885a3ddd3dbb8bd4936cc99d92a886c08ef394520cb0ceea95ab53cf30e",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "24f023969cfd86b1c320e3de38054decdac457396ba568ee95e6d4a16bbefe4d",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "24f023969cfd86b1c320e3de38054decdac457396ba568ee95e6d4a16bbefe4d",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "24f023969cfd86b1c320e3de38054decdac457396ba568ee95e6d4a16bbefe4d",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -988,7 +1057,7 @@
           ],
           "fingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
@@ -1057,7 +1126,7 @@
           ],
           "fingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
@@ -1126,7 +1195,7 @@
           ],
           "fingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b48f1577740a7f61cf2a79cfe6e02f0671b2bfd803899ee494465663f6429b55",
@@ -1195,7 +1264,7 @@
           ],
           "fingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b95e254b06f33f760c0880208a8d5b7ee4948e71451a2e0f2b8e38f87b75705a",
@@ -1264,7 +1333,7 @@
           ],
           "fingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "31ca244a202314e31fa13adb8d143a10c52917f4aae5bd60916ceda6794aa7c5",
@@ -1333,7 +1402,7 @@
           ],
           "fingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "911cc6e410e939bbfe84d109e8f81a19ddc240669c8c06c5e5da4684c3eb3807",
@@ -1402,7 +1471,7 @@
           ],
           "fingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25cb4f4a79d6e40aba9ed8d9e4d3c40d40d1e26685e62b9043fad9b664a4040c",
@@ -1471,7 +1540,7 @@
           ],
           "fingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "87d497f479dfab7f703646b586ed00343efe494bded1e9368309f033a6c011fb",
@@ -1536,11 +1605,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "jev:unclear"
+            "jev:strategic_signal"
           ],
           "fingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "816f201a0a01e6524e052965a74c1ad58c125eaeb9c99ac8eae9def66bba1c4e",
@@ -1609,7 +1678,7 @@
           ],
           "fingerprint": "eed8ce943afb8409ed2fbdd518ba54d81c5644043e4ca8f976f188c790e98f76",
           "firstObservedAt": "2026-09-22T05:01:36Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "eed8ce943afb8409ed2fbdd518ba54d81c5644043e4ca8f976f188c790e98f76",
@@ -1683,7 +1752,7 @@
           ],
           "fingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "166acb912126309cdfdb6cfa072c0d263916855442ba8b91006e3d7c144ea426",
@@ -1752,7 +1821,7 @@
           ],
           "fingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d855c2e9c79189f9b65ab159e7aae4aa5becdaea5efcee326d732481020c485c",
@@ -1821,7 +1890,7 @@
           ],
           "fingerprint": "7acf956231436a87c7b7a9015db094361a079af2b65baf71f7b29d23f773fa11",
           "firstObservedAt": "2026-09-09T22:29:27Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7acf956231436a87c7b7a9015db094361a079af2b65baf71f7b29d23f773fa11",
@@ -2175,7 +2244,7 @@
           ],
           "fingerprint": "b35a1f5bd3df45609ea7344b16e5d345202e2951c5f6d1ffa6a0c6ed22ad3509",
           "firstObservedAt": "2026-09-11T04:43:19Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b35a1f5bd3df45609ea7344b16e5d345202e2951c5f6d1ffa6a0c6ed22ad3509",
@@ -2244,7 +2313,7 @@
           ],
           "fingerprint": "458f353eef407444549b3ec68b6489d82873f8642f1707db100854945d78bcbc",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "458f353eef407444549b3ec68b6489d82873f8642f1707db100854945d78bcbc",
@@ -2313,7 +2382,7 @@
           ],
           "fingerprint": "ff23184ef3220928736c800efa6e9314e8a7760550fa387687cf9e2f0f7c072b",
           "firstObservedAt": "2026-09-18T11:07:09Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ff23184ef3220928736c800efa6e9314e8a7760550fa387687cf9e2f0f7c072b",
@@ -2382,7 +2451,7 @@
           ],
           "fingerprint": "a0f66a34b7150065230b3f172aaf6ff33d3271a7625781fbec17b9badca51efe",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a0f66a34b7150065230b3f172aaf6ff33d3271a7625781fbec17b9badca51efe",
@@ -2451,7 +2520,7 @@
           ],
           "fingerprint": "7a3735fa2125245b701f0403e70d5be9f38bfb2c05a2f55eb26f365c64100363",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7a3735fa2125245b701f0403e70d5be9f38bfb2c05a2f55eb26f365c64100363",
@@ -2520,7 +2589,7 @@
           ],
           "fingerprint": "b99bc004f19561d3b41b11db261e1c6bda71eea2a77e1fa2ffa57c0c463f7605",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b99bc004f19561d3b41b11db261e1c6bda71eea2a77e1fa2ffa57c0c463f7605",
@@ -2589,7 +2658,7 @@
           ],
           "fingerprint": "7710575499092c0ebde4bc14eb5f367ef0d75afa7befefcebbf176f614c5fda9",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7710575499092c0ebde4bc14eb5f367ef0d75afa7befefcebbf176f614c5fda9",
@@ -2658,7 +2727,7 @@
           ],
           "fingerprint": "4aaf9c911d85ee247eff16f2aa13b54517bcd16bd00668ba611261e38116d198",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4aaf9c911d85ee247eff16f2aa13b54517bcd16bd00668ba611261e38116d198",
@@ -2727,7 +2796,7 @@
           ],
           "fingerprint": "2065f116ecd6d8ec5fd93cf1775c9164b3390a46e23ce1e1f6dfe7297ab78042",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "2065f116ecd6d8ec5fd93cf1775c9164b3390a46e23ce1e1f6dfe7297ab78042",
@@ -2790,13 +2859,13 @@
           "publishedDate": "2026-08-30",
           "updatedDate": null,
           "matchEvidence": [],
-          "publicationStatus": "included",
+          "publicationStatus": "drop",
           "publicationEvidence": [
-            "jev:strategic_signal"
+            "jev:unrelated"
           ],
           "fingerprint": "d3fb5f3c45f341c06bab017f5c86d88dc6bcbd0e1ad985b8a2ce1a5135709e30",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d3fb5f3c45f341c06bab017f5c86d88dc6bcbd0e1ad985b8a2ce1a5135709e30",
@@ -2865,7 +2934,7 @@
           ],
           "fingerprint": "8747337b0552909dab732fabc4a01657cfc6f50fdfbabaf7503970d3d9622764",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "8747337b0552909dab732fabc4a01657cfc6f50fdfbabaf7503970d3d9622764",
@@ -2934,7 +3003,7 @@
           ],
           "fingerprint": "db241d612442e92283e0466c55eddfc3fb1c6c0e4059efa132d5e7f40115ba99",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "db241d612442e92283e0466c55eddfc3fb1c6c0e4059efa132d5e7f40115ba99",
@@ -3003,7 +3072,7 @@
           ],
           "fingerprint": "f207af774f37350e35a2b8c49ca9b17ea6c1fd470f4202f794a9429e8bbcd1fd",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f207af774f37350e35a2b8c49ca9b17ea6c1fd470f4202f794a9429e8bbcd1fd",
@@ -3072,7 +3141,7 @@
           ],
           "fingerprint": "50725616e01ef75b4c2ada2657f23c2d1f96ba76454c5feec1c399fd39c39b2d",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "50725616e01ef75b4c2ada2657f23c2d1f96ba76454c5feec1c399fd39c39b2d",
@@ -3141,7 +3210,7 @@
           ],
           "fingerprint": "a8bfab76f93d2f1d4991da976afd8f58e84e059e9f40f4cc66c7eeb93528afde",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a8bfab76f93d2f1d4991da976afd8f58e84e059e9f40f4cc66c7eeb93528afde",
@@ -3279,7 +3348,7 @@
           ],
           "fingerprint": "b9e26ee389d2561ec364cf8ab275694fdb11b32162145fbfc2d422abdc5d96f6",
           "firstObservedAt": "2026-09-24T10:49:46Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b9e26ee389d2561ec364cf8ab275694fdb11b32162145fbfc2d422abdc5d96f6",
@@ -3348,7 +3417,7 @@
           ],
           "fingerprint": "29702f759b8334876c56dc11efa6decb7cb0d514b41a7e766277ce2aa95137e2",
           "firstObservedAt": "2026-09-29T05:47:38Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "29702f759b8334876c56dc11efa6decb7cb0d514b41a7e766277ce2aa95137e2",
@@ -3422,7 +3491,7 @@
           ],
           "fingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
           "firstObservedAt": "2026-09-02T04:36:59Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
@@ -3491,7 +3560,7 @@
           ],
           "fingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
@@ -3560,7 +3629,7 @@
           ],
           "fingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
@@ -3629,7 +3698,7 @@
           ],
           "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
@@ -3698,7 +3767,7 @@
           ],
           "fingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
@@ -3767,7 +3836,7 @@
           ],
           "fingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
@@ -3836,7 +3905,7 @@
           ],
           "fingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
@@ -3905,7 +3974,7 @@
           ],
           "fingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
@@ -3974,7 +4043,7 @@
           ],
           "fingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
@@ -4043,7 +4112,7 @@
           ],
           "fingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
@@ -4112,7 +4181,7 @@
           ],
           "fingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
@@ -4181,7 +4250,7 @@
           ],
           "fingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
@@ -4250,7 +4319,7 @@
           ],
           "fingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
@@ -4319,7 +4388,7 @@
           ],
           "fingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
@@ -4388,7 +4457,7 @@
           ],
           "fingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
@@ -4457,7 +4526,7 @@
           ],
           "fingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
@@ -4526,7 +4595,7 @@
           ],
           "fingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
@@ -4595,7 +4664,7 @@
           ],
           "fingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
@@ -4664,7 +4733,7 @@
           ],
           "fingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
@@ -4733,7 +4802,7 @@
           ],
           "fingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
@@ -4802,7 +4871,7 @@
           ],
           "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
@@ -4871,7 +4940,7 @@
           ],
           "fingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
@@ -4940,7 +5009,7 @@
           ],
           "fingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
@@ -5009,7 +5078,7 @@
           ],
           "fingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
@@ -5078,7 +5147,7 @@
           ],
           "fingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a6a2618496969332f72cdee44710ca9a18a2c3e85c5a05b17339b73ec9a50e3f",
@@ -5147,7 +5216,7 @@
           ],
           "fingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "27e2577b6c95fff7df80ebbdfa460346e938c8ec7ab21dd6efe8a5efc3ef362f",
@@ -5642,7 +5711,7 @@
           ],
           "fingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
           "firstObservedAt": "2026-09-09T04:45:10Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
@@ -5711,7 +5780,7 @@
           ],
           "fingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
@@ -5780,7 +5849,7 @@
           ],
           "fingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
@@ -5849,7 +5918,7 @@
           ],
           "fingerprint": "4aa58a1d9015c2e87532ffcf67da05612a70ab2224562cbe10a554a8efb30049",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4aa58a1d9015c2e87532ffcf67da05612a70ab2224562cbe10a554a8efb30049",
@@ -5918,7 +5987,7 @@
           ],
           "fingerprint": "7b84af3e65c26a3c2facace38301e1a3b57887ef09a34e1cfa0008852dcd1f8c",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7b84af3e65c26a3c2facace38301e1a3b57887ef09a34e1cfa0008852dcd1f8c",
@@ -5987,7 +6056,7 @@
           ],
           "fingerprint": "7e118c18c9a7eafed3392219c9c930ab728955ad17119f4b83752bb90596e63a",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7e118c18c9a7eafed3392219c9c930ab728955ad17119f4b83752bb90596e63a",
@@ -6056,7 +6125,7 @@
           ],
           "fingerprint": "36c97d1dd653bebefad321d32289082419452d7186bd74a6ac68a8b102dd120b",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "36c97d1dd653bebefad321d32289082419452d7186bd74a6ac68a8b102dd120b",
@@ -6125,7 +6194,7 @@
           ],
           "fingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
@@ -6194,7 +6263,7 @@
           ],
           "fingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
@@ -6263,7 +6332,7 @@
           ],
           "fingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
@@ -6332,7 +6401,7 @@
           ],
           "fingerprint": "2b92989d8e83f9d6a4e793958554dcf47ff39977e08bb8078a17f8ee2d7ca70f",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "2b92989d8e83f9d6a4e793958554dcf47ff39977e08bb8078a17f8ee2d7ca70f",
@@ -6401,7 +6470,7 @@
           ],
           "fingerprint": "740954a5f394867bf9fe5eb3e01abe0ae085d6f24477c5c260af08363e10ac76",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "740954a5f394867bf9fe5eb3e01abe0ae085d6f24477c5c260af08363e10ac76",
@@ -6470,7 +6539,7 @@
           ],
           "fingerprint": "71ba278f719424a43f5e5b3edf7b2b5db300c1033f3f3bea14595c68e91b4a8f",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "71ba278f719424a43f5e5b3edf7b2b5db300c1033f3f3bea14595c68e91b4a8f",
@@ -6539,7 +6608,7 @@
           ],
           "fingerprint": "bcd54ad6dad960c22cd207d1c9480c82c88d455d2161303c3ab0ea69ade9d260",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "bcd54ad6dad960c22cd207d1c9480c82c88d455d2161303c3ab0ea69ade9d260",
@@ -6608,7 +6677,7 @@
           ],
           "fingerprint": "ed38006cc4837fe23ac660bf174e18b9a2bd7f250705e0a27997c323cc136b53",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ed38006cc4837fe23ac660bf174e18b9a2bd7f250705e0a27997c323cc136b53",
@@ -6677,7 +6746,7 @@
           ],
           "fingerprint": "8d1d52727a5ae35c48f40a200de5b33f0ffd37a05d60b4b7c39ca83704aa8564",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "8d1d52727a5ae35c48f40a200de5b33f0ffd37a05d60b4b7c39ca83704aa8564",
@@ -6746,7 +6815,7 @@
           ],
           "fingerprint": "4e803170dfe0d9450cc16523a987e6f132b598c600b1621a69d956243129a651",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4e803170dfe0d9450cc16523a987e6f132b598c600b1621a69d956243129a651",
@@ -6815,7 +6884,7 @@
           ],
           "fingerprint": "1841e5a6c23dbb8dadcd208300abd7d77a90779b41a99f0c292c579a460cf150",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1841e5a6c23dbb8dadcd208300abd7d77a90779b41a99f0c292c579a460cf150",
@@ -6884,7 +6953,7 @@
           ],
           "fingerprint": "4765d055b9b7c5886994d3a6ed2e50aa01eb3f8c1001a5c7edf377d55f906c75",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4765d055b9b7c5886994d3a6ed2e50aa01eb3f8c1001a5c7edf377d55f906c75",
@@ -6953,7 +7022,7 @@
           ],
           "fingerprint": "5695ecb547e935ecda99879bd723c583c879fef875a9d9cf6ef6bf1634313871",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5695ecb547e935ecda99879bd723c583c879fef875a9d9cf6ef6bf1634313871",
@@ -7022,7 +7091,7 @@
           ],
           "fingerprint": "f35b86ceb1facb612ff803b02e81a1641e7e48d13deec393e2a44fbb82cec060",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f35b86ceb1facb612ff803b02e81a1641e7e48d13deec393e2a44fbb82cec060",
@@ -7091,7 +7160,7 @@
           ],
           "fingerprint": "f2c1c8efecb357013bb002fc2359ce41c1fbd7d1d2a434f58878f0b6e220db07",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f2c1c8efecb357013bb002fc2359ce41c1fbd7d1d2a434f58878f0b6e220db07",
@@ -7160,7 +7229,7 @@
           ],
           "fingerprint": "57736eb5316a3299a1161d64d8be94c9e2e7083572a4d70ee15783c022ecf4c6",
           "firstObservedAt": "2026-09-29T05:47:38Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "57736eb5316a3299a1161d64d8be94c9e2e7083572a4d70ee15783c022ecf4c6",
@@ -7216,6 +7285,908 @@
               }
             }
           }
+        },
+        "https://www.jonloomer.com/fundamental-principles-creating-meta-ads/": {
+          "url": "https://www.jonloomer.com/fundamental-principles-creating-meta-ads/",
+          "title": "The Fundamental Principles of Creating Meta Ads",
+          "publishedDate": "2026-09-29",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "4d749c553b69bf36372452f017309a3b51ad63b6e1bc65eae5ef113590eff47d",
+          "firstObservedAt": "2026-09-29T13:20:20Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "4d749c553b69bf36372452f017309a3b51ad63b6e1bc65eae5ef113590eff47d",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "f54aee999317b2bd229d3049ac23232aea534d8310bdddab1a1435011d658ad4",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "f54aee999317b2bd229d3049ac23232aea534d8310bdddab1a1435011d658ad4",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "f54aee999317b2bd229d3049ac23232aea534d8310bdddab1a1435011d658ad4",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Meta広告作成の基本原則：複数フォーマット・配置最適化・アスペクト比・テキストバリエーション",
+                "summary": "Meta広告では、単一のテンプレートに頼らず、画像と動画の複数フォーマットを用意し、Advantage+ Placementsで全配置を活用することが推奨されます。配置ごとに適切なアスペクト比（フィードは正方形・4×5、リールやストーリーは9×16）を設定し、重要な要素が切り取られないよう配慮します。また、コピーとクリエイティブの組み合わせを複数用意し、Metaが最適な組み合わせを自動で提示できるようにします。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Meta広告作成の基本原則：複数フォーマット・配置最適化・アスペクト比・テキストバリエーション",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta広告では、単一のテンプレートに頼らず、画像と動画の複数フォーマットを用意し、Advantage+ Placementsで全配置を活用することが推奨されます。配置ごとに適切なアスペクト比（フィードは正方形・4×5、リールやストーリーは9×16）を設定し、重要な要素が切り取られないよう配慮します。また、コピーとクリエイティブの組み合わせを複数用意し、Metaが最適な組み合わせを自動で提示できるようにします。",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "adsuploader-blog": {
+      "relevanceRevision": "adsuploader-blog-v1",
+      "items": {
+        "https://adsuploader.com/blog/facebook-ads-by-industry": {
+          "url": "https://adsuploader.com/blog/facebook-ads-by-industry",
+          "title": "Facebook Ads by Industry: 2026 Benchmarks and What Works in Each Vertical",
+          "publishedDate": "2026-09-29",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "e42aaaa8929d65b4fb0e2e735456352ec7071e7df0468b3db9fb2559939d910b",
+          "firstObservedAt": "2026-09-29T13:20:20Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "e42aaaa8929d65b4fb0e2e735456352ec7071e7df0468b3db9fb2559939d910b",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "0e36c576d8cdcdf4354db38284aafb767b684311a168733401330c4d7b4a0a13",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "0e36c576d8cdcdf4354db38284aafb767b684311a168733401330c4d7b4a0a13",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "0e36c576d8cdcdf4354db38284aafb767b684311a168733401330c4d7b4a0a13",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "2026年の業界別Facebook広告ベンチマーク",
+                "summary": "2026年のFacebook広告ベンチマークでは、業界ごとのリード単価が示され、レストランは約3ドル、歯科は約77ドルと報告されている。また、各業界の目的、オファー、ポリシー規則が掲載されている。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "2026年の業界別Facebook広告ベンチマーク",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "2026年のFacebook広告ベンチマークでは、業界ごとのリード単価が示され、レストランは約3ドル、歯科は約77ドルと報告されている。また、各業界の目的、オファー、ポリシー規則が掲載されている。",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://adsuploader.com/blog/facebook-product-tag-ads": {
+          "url": "https://adsuploader.com/blog/facebook-product-tag-ads",
+          "title": "Product Tags on Facebook Ads: How to Make Ads Shoppable",
+          "publishedDate": "2026-09-27",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "6b85c81589f8f2f2bd31df70d3ad00f848786705ec6cffb2dea06b55766450fb",
+          "firstObservedAt": "2026-09-29T13:20:20Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "6b85c81589f8f2f2bd31df70d3ad00f848786705ec6cffb2dea06b55766450fb",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Product tags make Facebook ads shoppable",
+                "summary": "Product tags on Facebook ads enable catalog products to be shoppable directly within the ad creative. There are four ways to run them, recent changes affect their use, and guidance is provided on how to set them up.",
+                "inputHash": "558ff7892a2bdf876f27f420793dfa248c42ad87e04f60cab581d00c9cc8f957",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Product tags make Facebook ads shoppable",
+                    "inputHash": "558ff7892a2bdf876f27f420793dfa248c42ad87e04f60cab581d00c9cc8f957",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Product tags on Facebook ads enable catalog products to be shoppable directly within the ad creative. There are four ways to run them, recent changes affect their use, and guidance is provided on how to set them up.",
+                    "inputHash": "558ff7892a2bdf876f27f420793dfa248c42ad87e04f60cab581d00c9cc8f957",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Facebook広告のプロダクトタグで商品を購入可能にする方法",
+                "summary": "Facebook広告に商品タグを付けると、クリエイティブ内でカタログ商品を直接購入できるようになります。タグの設定方法は4つのパターンがあり、最近の変更点や具体的な設定手順について解説しています。",
+                "inputHash": "d68aeef64e38ee7359da13b2fa58c1e09487f7a0afdfd6712fc3326aeaaaef74",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Facebook広告のプロダクトタグで商品を購入可能にする方法",
+                    "inputHash": "d68aeef64e38ee7359da13b2fa58c1e09487f7a0afdfd6712fc3326aeaaaef74",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Facebook広告に商品タグを付けると、クリエイティブ内でカタログ商品を直接購入できるようになります。タグの設定方法は4つのパターンがあり、最近の変更点や具体的な設定手順について解説しています。",
+                    "inputHash": "d68aeef64e38ee7359da13b2fa58c1e09487f7a0afdfd6712fc3326aeaaaef74",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://adsuploader.com/blog/facebook-ads-for-ecommerce": {
+          "url": "https://adsuploader.com/blog/facebook-ads-for-ecommerce",
+          "title": "Facebook Ads for Ecommerce: The 2026 Playbook That Scales",
+          "publishedDate": "2026-09-25",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "ff8f58f242be3bcb62d2e03880f29314a38d796cbf28e7b0f1142d3eeefd06e2",
+          "firstObservedAt": "2026-09-29T13:20:20Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "ff8f58f242be3bcb62d2e03880f29314a38d796cbf28e7b0f1142d3eeefd06e2",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Facebook Ads for Ecommerce: 2026 Playbook",
+                "summary": "A 2026 guide covering Facebook ad tracking, catalog setup, Shopify integration, Advantage+ Sales structure, creative strategies, targeting options, and margin‑based measurement for ecommerce.",
+                "inputHash": "63c62be20affa2b3f8a5f66d65ddc09c59668456bd03ae91fd3d357b4713d505",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Facebook Ads for Ecommerce: 2026 Playbook",
+                    "inputHash": "63c62be20affa2b3f8a5f66d65ddc09c59668456bd03ae91fd3d357b4713d505",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "A 2026 guide covering Facebook ad tracking, catalog setup, Shopify integration, Advantage+ Sales structure, creative strategies, targeting options, and margin‑based measurement for ecommerce.",
+                    "inputHash": "63c62be20affa2b3f8a5f66d65ddc09c59668456bd03ae91fd3d357b4713d505",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "2026年版 Eコマース向けFacebook広告のスケールガイド",
+                "summary": "本ガイドは2026年版のEコマース向けFacebook広告の手引きで、トラッキングやカタログ設定、Shopify連携、Advantage+ Sales構造、クリエイティブ作成、ターゲティング、利益率ベースの測定方法などを解説しています。",
+                "inputHash": "e02b1c2b82f3c92f56debd0b44b2a349cc3b4cbcf6bd8e7da57c5d19bd57f707",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "2026年版 Eコマース向けFacebook広告のスケールガイド",
+                    "inputHash": "e02b1c2b82f3c92f56debd0b44b2a349cc3b4cbcf6bd8e7da57c5d19bd57f707",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "本ガイドは2026年版のEコマース向けFacebook広告の手引きで、トラッキングやカタログ設定、Shopify連携、Advantage+ Sales構造、クリエイティブ作成、ターゲティング、利益率ベースの測定方法などを解説しています。",
+                    "inputHash": "e02b1c2b82f3c92f56debd0b44b2a349cc3b4cbcf6bd8e7da57c5d19bd57f707",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://adsuploader.com/blog/catalog-ads-at-scale": {
+          "url": "https://adsuploader.com/blog/catalog-ads-at-scale",
+          "title": "Catalog Ads at Scale: How to Run Thousands of SKUs",
+          "publishedDate": "2026-09-23",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "22a0e5ef82287f7c466a1a46ecbee9a1cf9a8169696abb2adaa9329677f0701c",
+          "firstObservedAt": "2026-09-29T13:20:20Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "22a0e5ef82287f7c466a1a46ecbee9a1cf9a8169696abb2adaa9329677f0701c",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Catalog Ads at Scale: How to Run Thousands of SKUs",
+                "summary": "This feed explains how to run catalog ads at scale, covering why spend concentrates on a few SKUs, how to size the core product set, stop‑loss rules, and handling of stock and variants.",
+                "inputHash": "9a802eaa6f5ff11a33f135c39610fc178491c1f49141ce9d06c4e2c4fef0e1a9",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Catalog Ads at Scale: How to Run Thousands of SKUs",
+                    "inputHash": "9a802eaa6f5ff11a33f135c39610fc178491c1f49141ce9d06c4e2c4fef0e1a9",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "This feed explains how to run catalog ads at scale, covering why spend concentrates on a few SKUs, how to size the core product set, stop‑loss rules, and handling of stock and variants.",
+                    "inputHash": "9a802eaa6f5ff11a33f135c39610fc178491c1f49141ce9d06c4e2c4fef0e1a9",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "カタログ広告を大規模に運用する方法",
+                "summary": "カタログ広告を多数のSKUで実施する際、支出は限られた数のSKUに集中する傾向がある。コア製品セットの規模を適切に設定し、損失を抑えるストップロスルールを導入する。さらに在庫状況やバリアント（バリエーション）を考慮した管理が必要である。",
+                "inputHash": "893e294a18cef06ee4c801442f783fdec901bfb4f42144ce62257f3348424de0",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "カタログ広告を大規模に運用する方法",
+                    "inputHash": "893e294a18cef06ee4c801442f783fdec901bfb4f42144ce62257f3348424de0",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "カタログ広告を多数のSKUで実施する際、支出は限られた数のSKUに集中する傾向がある。コア製品セットの規模を適切に設定し、損失を抑えるストップロスルールを導入する。さらに在庫状況やバリアント（バリエーション）を考慮した管理が必要である。",
+                    "inputHash": "893e294a18cef06ee4c801442f783fdec901bfb4f42144ce62257f3348424de0",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://adsuploader.com/blog/meta-ads-cli": {
+          "url": "https://adsuploader.com/blog/meta-ads-cli",
+          "title": "Meta Ads CLI: Setup, Commands and Limits of Meta's Official Ads CLI (2026)",
+          "publishedDate": "2026-09-23",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "5311946fea5382f9ab96a2a88091124d248fc4b6e59f58389150e46666c8ded5",
+          "firstObservedAt": "2026-09-29T13:20:20Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "5311946fea5382f9ab96a2a88091124d248fc4b6e59f58389150e46666c8ded5",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Meta Ads CLI: Setup, Commands, Limits (2026)",
+                "summary": "The feed covers the Meta Ads CLI, including installation, system user token setup, all commands, usage with Claude Code or Codex, current limits, and how the Ads Uploader fits into the workflow.",
+                "inputHash": "f15c6a0a22ad259265135e72a04a55d7b1079c2df703d2aa60c679a36208f2f9",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Meta Ads CLI: Setup, Commands, Limits (2026)",
+                    "inputHash": "f15c6a0a22ad259265135e72a04a55d7b1079c2df703d2aa60c679a36208f2f9",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "The feed covers the Meta Ads CLI, including installation, system user token setup, all commands, usage with Claude Code or Codex, current limits, and how the Ads Uploader fits into the workflow.",
+                    "inputHash": "f15c6a0a22ad259265135e72a04a55d7b1079c2df703d2aa60c679a36208f2f9",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Meta公式広告CLIの設定・コマンド・制限概要（2026年）",
+                "summary": "Meta Ads CLIのインストール手順、システムユーザートークンの設定方法、利用可能な全コマンドの概要、Claude CodeやCodexとの併用例、現在の利用上限、そしてAds Uploaderがどのように位置付けられるかが説明されています。",
+                "inputHash": "f1474c45635e57b066f43f9dc3dfcf6e0a6461d9b700705b9b037f2b6d95f7ba",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Meta公式広告CLIの設定・コマンド・制限概要（2026年）",
+                    "inputHash": "f1474c45635e57b066f43f9dc3dfcf6e0a6461d9b700705b9b037f2b6d95f7ba",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta Ads CLIのインストール手順、システムユーザートークンの設定方法、利用可能な全コマンドの概要、Claude CodeやCodexとの併用例、現在の利用上限、そしてAds Uploaderがどのように位置付けられるかが説明されています。",
+                    "inputHash": "f1474c45635e57b066f43f9dc3dfcf6e0a6461d9b700705b9b037f2b6d95f7ba",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://adsuploader.com/blog/meta-ads-mcp": {
+          "url": "https://adsuploader.com/blog/meta-ads-mcp",
+          "title": "Meta Ads MCP: Setup, Capabilities, Limits and Safety (2026)",
+          "publishedDate": "2026-09-23",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "05258747a2b127a014bfda12cd343485b234433d022219d9fc0f9d5984205a7c",
+          "firstObservedAt": "2026-09-29T13:20:20Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "05258747a2b127a014bfda12cd343485b234433d022219d9fc0f9d5984205a7c",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Meta Ads MCP: Setup, Capabilities, Limits, and Safety",
+                "summary": "Meta Ads MCP is explained with its URL mcp.facebook.com/ads, includes setup guidance for Claude, ChatGPT and Perplexity, describes tool functions, and outlines the July 2026 safety rules and operational limits.",
+                "inputHash": "732291f65557a4c08ac2e7eda314b91e68b3dcfe9498349dcf8f6cdc5ed274b5",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Meta Ads MCP: Setup, Capabilities, Limits, and Safety",
+                    "inputHash": "732291f65557a4c08ac2e7eda314b91e68b3dcfe9498349dcf8f6cdc5ed274b5",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta Ads MCP is explained with its URL mcp.facebook.com/ads, includes setup guidance for Claude, ChatGPT and Perplexity, describes tool functions, and outlines the July 2026 safety rules and operational limits.",
+                    "inputHash": "732291f65557a4c08ac2e7eda314b91e68b3dcfe9498349dcf8f6cdc5ed274b5",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Meta Ads MCP の設定・機能・制限と安全性（2026年）",
+                "summary": "Meta Ads MCP は mcp.facebook.com/ads の URL で提供される広告管理プラットフォームです。設定は Claude、ChatGPT、Perplexity で行えるとされています。ツールの機能や役割、2026年7月の安全ルールおよびその制限について説明されています。",
+                "inputHash": "33f03188524a17412e46ad22506e30e366c0ccfd5f1de5f2987ea087b37e726c",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Meta Ads MCP の設定・機能・制限と安全性（2026年）",
+                    "inputHash": "33f03188524a17412e46ad22506e30e366c0ccfd5f1de5f2987ea087b37e726c",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta Ads MCP は mcp.facebook.com/ads の URL で提供される広告管理プラットフォームです。設定は Claude、ChatGPT、Perplexity で行えるとされています。ツールの機能や役割、2026年7月の安全ルールおよびその制限について説明されています。",
+                    "inputHash": "33f03188524a17412e46ad22506e30e366c0ccfd5f1de5f2987ea087b37e726c",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://adsuploader.com/blog/facebook-collection-ads-specs": {
+          "url": "https://adsuploader.com/blog/facebook-collection-ads-specs",
+          "title": "Facebook Collection Ads Specs: Every Requirement for 2026",
+          "publishedDate": "2026-09-21",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "1c4c213919734f43897d36fa4234d55c0174b2964a02170d8e5a707d3d1d1c1c",
+          "firstObservedAt": "2026-09-29T13:20:20Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "1c4c213919734f43897d36fa4234d55c0174b2964a02170d8e5a707d3d1d1c1c",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Facebook Collection Ads Specs for 2026",
+                "summary": "A comprehensive overview of Facebook collection ad specifications, including cover media by placement, the four‑product minimum, Instant Experience requirements, character limits, and changes for 2026.",
+                "inputHash": "ca96144eeb98dbaecc4aaeaf08b1a1a3e6e9b882efd3cc7e9f389ac11e7208ff",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Facebook Collection Ads Specs for 2026",
+                    "inputHash": "ca96144eeb98dbaecc4aaeaf08b1a1a3e6e9b882efd3cc7e9f389ac11e7208ff",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "A comprehensive overview of Facebook collection ad specifications, including cover media by placement, the four‑product minimum, Instant Experience requirements, character limits, and changes for 2026.",
+                    "inputHash": "ca96144eeb98dbaecc4aaeaf08b1a1a3e6e9b882efd3cc7e9f389ac11e7208ff",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "2026年版 Facebook コレクション広告の仕様まとめ",
+                "summary": "Facebook のコレクション広告に関する全ての仕様をまとめた資料です。配置別のカバー画像や動画の要件、最低4点の製品掲載、Instant Experience の条件、文字数制限、そして2026年に適用される変更点が含まれます。",
+                "inputHash": "3bf595494bdd164c62fde106fa84ba3ceebc510331f5a28a1935cb7faaeaa4a2",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "2026年版 Facebook コレクション広告の仕様まとめ",
+                    "inputHash": "3bf595494bdd164c62fde106fa84ba3ceebc510331f5a28a1935cb7faaeaa4a2",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Facebook のコレクション広告に関する全ての仕様をまとめた資料です。配置別のカバー画像や動画の要件、最低4点の製品掲載、Instant Experience の条件、文字数制限、そして2026年に適用される変更点が含まれます。",
+                    "inputHash": "3bf595494bdd164c62fde106fa84ba3ceebc510331f5a28a1935cb7faaeaa4a2",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://adsuploader.com/blog/facebook-catalog-ad-overlays": {
+          "url": "https://adsuploader.com/blog/facebook-catalog-ad-overlays",
+          "title": "Facebook Catalog Ad Overlays: Price, Discount and Shipping Labels",
+          "publishedDate": "2026-09-19",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "a0b325727f2455846e5f330d4d03de57773a72b788c3d6e97acc0c7f0c1ffe7e",
+          "firstObservedAt": "2026-09-29T13:20:20Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "a0b325727f2455846e5f330d4d03de57773a72b788c3d6e97acc0c7f0c1ffe7e",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Facebook catalog ad overlays: price, discount, shipping labels",
+                "summary": "Facebook catalog ad overlays add price, discount, and shipping labels to product images. The feed lists each overlay type, the required catalog fields, and reasons why an overlay may not appear.",
+                "inputHash": "33da59854a988ed65f09d35841a37e75f9b076d76b9da386d803b382a767f4fe",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Facebook catalog ad overlays: price, discount, shipping labels",
+                    "inputHash": "33da59854a988ed65f09d35841a37e75f9b076d76b9da386d803b382a767f4fe",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Facebook catalog ad overlays add price, discount, and shipping labels to product images. The feed lists each overlay type, the required catalog fields, and reasons why an overlay may not appear.",
+                    "inputHash": "33da59854a988ed65f09d35841a37e75f9b076d76b9da386d803b382a767f4fe",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Facebookカタログ広告のオーバーレイ：価格・割引・配送料ラベル",
+                "summary": "Facebookのカタログ広告では、商品画像に価格・割引・配送料のラベルを表示するオーバーレイが利用できます。各オーバーレイの種類と、表示に必要なカタログ項目、そしてラベルが表示されない原因が解説されています。",
+                "inputHash": "8b59189942ae6fcac1f36418b97b9572df5c9b8f1a513a2e0475ff528e09a88e",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Facebookカタログ広告のオーバーレイ：価格・割引・配送料ラベル",
+                    "inputHash": "8b59189942ae6fcac1f36418b97b9572df5c9b8f1a513a2e0475ff528e09a88e",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Facebookのカタログ広告では、商品画像に価格・割引・配送料のラベルを表示するオーバーレイが利用できます。各オーバーレイの種類と、表示に必要なカタログ項目、そしてラベルが表示されない原因が解説されています。",
+                    "inputHash": "8b59189942ae6fcac1f36418b97b9572df5c9b8f1a513a2e0475ff528e09a88e",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://adsuploader.com/blog/facebook-dynamic-creative": {
+          "url": "https://adsuploader.com/blog/facebook-dynamic-creative",
+          "title": "Facebook Dynamic Creative: What It Does and When to Use It",
+          "publishedDate": "2026-09-17",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "1fbec7600390f4b7815975ec194d295039c044321666abbec626a07e35cff23c",
+          "firstObservedAt": "2026-09-29T13:20:20Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "1fbec7600390f4b7815975ec194d295039c044321666abbec626a07e35cff23c",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "89ebccf13aa5a1b3dfe8be0ffa943f6d08cbc6510d673f7130cf80eeba7e67e3",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "89ebccf13aa5a1b3dfe8be0ffa943f6d08cbc6510d673f7130cf80eeba7e67e3",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "89ebccf13aa5a1b3dfe8be0ffa943f6d08cbc6510d673f7130cf80eeba7e67e3",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Facebook Dynamic Creativeは素材を組み合わせ広告バリエーションを生成",
+                "summary": "Facebook Dynamic Creativeは、アップロードした素材を組み合わせて広告のバリエーションを自動生成します。2026年に利用できる広告目的やレポートの読み方についても説明されています。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Facebook Dynamic Creativeは素材を組み合わせ広告バリエーションを生成",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Facebook Dynamic Creativeは、アップロードした素材を組み合わせて広告のバリエーションを自動生成します。2026年に利用できる広告目的やレポートの読み方についても説明されています。",
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://adsuploader.com/blog/facebook-shop-vs-catalog": {
+          "url": "https://adsuploader.com/blog/facebook-shop-vs-catalog",
+          "title": "Facebook Shop vs Catalog: What the Difference Actually Is",
+          "publishedDate": "2026-09-15",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "dfb94894897a0ada2fe09583a269feafb587a65c14b1ccefeb2b9ba71de60570",
+          "firstObservedAt": "2026-09-29T13:20:20Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "dfb94894897a0ada2fe09583a269feafb587a65c14b1ccefeb2b9ba71de60570",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Facebook Catalog vs Shop: Key Differences",
+                "summary": "A Facebook catalog serves as a product database, while a Shop is an optional surface powered by that catalog. The feed explains how they connect and notes changes introduced in 2025.",
+                "inputHash": "fd2ac2568b7b30915796a652dd3610602c442fe46da96e56e563e6bbe252852f",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Facebook Catalog vs Shop: Key Differences",
+                    "inputHash": "fd2ac2568b7b30915796a652dd3610602c442fe46da96e56e563e6bbe252852f",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "A Facebook catalog serves as a product database, while a Shop is an optional surface powered by that catalog. The feed explains how they connect and notes changes introduced in 2025.",
+                    "inputHash": "fd2ac2568b7b30915796a652dd3610602c442fe46da96e56e563e6bbe252852f",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Facebookカタログとショップの違いと2025年の変更点",
+                "summary": "Facebookカタログは商品情報を管理するデータベースで、ショップはそのカタログを利用して表示できるオプションの販売面です。2025年に機能や連携方法に変更があり、利用目的に応じてカタログだけ、またはショップ併用を選択します。",
+                "inputHash": "ebe20e6dcaca42d6cd0fd80400a354fa46463b3ee125042ce5996fa2bd179d5b",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Facebookカタログとショップの違いと2025年の変更点",
+                    "inputHash": "ebe20e6dcaca42d6cd0fd80400a354fa46463b3ee125042ce5996fa2bd179d5b",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Facebookカタログは商品情報を管理するデータベースで、ショップはそのカタログを利用して表示できるオプションの販売面です。2025年に機能や連携方法に変更があり、利用目的に応じてカタログだけ、またはショップ併用を選択します。",
+                    "inputHash": "ebe20e6dcaca42d6cd0fd80400a354fa46463b3ee125042ce5996fa2bd179d5b",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://adsuploader.com/blog/facebook-product-feed": {
+          "url": "https://adsuploader.com/blog/facebook-product-feed",
+          "title": "Facebook Product Feed: Required Fields, Formats and Images",
+          "publishedDate": "2026-09-13",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "c669f78cce90c5e26d9ec1ca21b9c8bc6233f08ac7d02b0933a5318823213b5d",
+          "firstObservedAt": "2026-09-29T13:20:20Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "c669f78cce90c5e26d9ec1ca21b9c8bc6233f08ac7d02b0933a5318823213b5d",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Facebook product feed: required fields, formats, images",
+                "summary": "The guide explains what a Facebook product feed is, lists the nine required fields, details accepted formats and size limits, and describes how multiple images and video can be used for each product.",
+                "inputHash": "e7a95c12a4ee4cff7cdfbeb51088aab512683b5319f7e9ecb3bffdbd78b19f4c",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Facebook product feed: required fields, formats, images",
+                    "inputHash": "e7a95c12a4ee4cff7cdfbeb51088aab512683b5319f7e9ecb3bffdbd78b19f4c",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "The guide explains what a Facebook product feed is, lists the nine required fields, details accepted formats and size limits, and describes how multiple images and video can be used for each product.",
+                    "inputHash": "e7a95c12a4ee4cff7cdfbeb51088aab512683b5319f7e9ecb3bffdbd78b19f4c",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Facebook商品フィードの必須項目・フォーマット・画像要件",
+                "summary": "Facebookの商品フィードは、商品情報を登録するためのデータ形式です。必須項目は9項目で、各項目には決められたフォーマットとサイズ上限があります。画像は複数登録でき、動画も商品ごとに設定可能です。",
+                "inputHash": "5d738b3e09fa1115d793adb3cf1c699bb16aee736e53098313cb49ec151f19c3",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Facebook商品フィードの必須項目・フォーマット・画像要件",
+                    "inputHash": "5d738b3e09fa1115d793adb3cf1c699bb16aee736e53098313cb49ec151f19c3",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Facebookの商品フィードは、商品情報を登録するためのデータ形式です。必須項目は9項目で、各項目には決められたフォーマットとサイズ上限があります。画像は複数登録でき、動画も商品ごとに設定可能です。",
+                    "inputHash": "5d738b3e09fa1115d793adb3cf1c699bb16aee736e53098313cb49ec151f19c3",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://adsuploader.com/blog/carousel-ads-vs-catalog-ads": {
+          "url": "https://adsuploader.com/blog/carousel-ads-vs-catalog-ads",
+          "title": "Carousel Ads vs Catalog Ads: The Real Difference (2026)",
+          "publishedDate": "2026-09-11",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "b763611bf40d7dfaa71f7e01917d2163215ef1be44813d27a9c025e34890ad85",
+          "firstObservedAt": "2026-09-29T13:20:20Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "b763611bf40d7dfaa71f7e01917d2163215ef1be44813d27a9c025e34890ad85",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Carousel vs Catalog Ads: Creative vs Data‑Driven Formats",
+                "summary": "Carousel ads use a creative format, while catalog ads are data‑driven. The two formats differ in how they present products, and choosing the right type depends on your goals in 2026.",
+                "inputHash": "7e54397b5206719b9d6a84b85774cf0354654a8468b6a8151469f4ab49790239",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Carousel vs Catalog Ads: Creative vs Data‑Driven Formats",
+                    "inputHash": "7e54397b5206719b9d6a84b85774cf0354654a8468b6a8151469f4ab49790239",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Carousel ads use a creative format, while catalog ads are data‑driven. The two formats differ in how they present products, and choosing the right type depends on your goals in 2026.",
+                    "inputHash": "7e54397b5206719b9d6a84b85774cf0354654a8468b6a8151469f4ab49790239",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "カルーセル広告とカタログ広告の違い（2026年）",
+                "summary": "カルーセル広告は画像や動画をスライド形式で表示するクリエイティブなフォーマットで、複数のアイテムを1つの広告ユニットで見せられます。一方、カタログ広告は商品データフィードに基づき自動生成されるデータ駆動型の広告で、商品情報や在庫・価格の変化に応じて表示が変わります。2026年の選択基準としては、ブランドストーリーやビジュアル訴求を重視する場合はカルーセル広告、商品数が多く在庫や価格が頻繁に変わる場合はカタログ広告が適しています。",
+                "inputHash": "b56421f197acd642b444da73b66475ad5df75b2548a5435d88ec9d7ddc494cfa",
+                "generatedAt": "2026-09-29T13:20:20Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "カルーセル広告とカタログ広告の違い（2026年）",
+                    "inputHash": "b56421f197acd642b444da73b66475ad5df75b2548a5435d88ec9d7ddc494cfa",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "カルーセル広告は画像や動画をスライド形式で表示するクリエイティブなフォーマットで、複数のアイテムを1つの広告ユニットで見せられます。一方、カタログ広告は商品データフィードに基づき自動生成されるデータ駆動型の広告で、商品情報や在庫・価格の変化に応じて表示が変わります。2026年の選択基準としては、ブランドストーリーやビジュアル訴求を重視する場合はカルーセル広告、商品数が多く在庫や価格が頻繁に変わる場合はカタログ広告が適しています。",
+                    "inputHash": "b56421f197acd642b444da73b66475ad5df75b2548a5435d88ec9d7ddc494cfa",
+                    "generatedAt": "2026-09-29T13:20:20Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -7236,7 +8207,7 @@
           ],
           "fingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
@@ -7307,7 +8278,7 @@
           ],
           "fingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
@@ -7378,7 +8349,7 @@
           ],
           "fingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-09-29T05:47:38Z",
+          "lastObservedAt": "2026-09-29T13:20:20Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
@@ -7513,6 +8484,30 @@
     "schemaVersion": "meta-ads-personal-feed-presentation-retry/v2",
     "entries": [
       {
+        "sourceId": "adsuploader-blog",
+        "itemKey": "https://adsuploader.com/blog/facebook-ads-by-industry",
+        "fingerprint": "e42aaaa8929d65b4fb0e2e735456352ec7071e7df0468b3db9fb2559939d910b",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-29T13:20:20Z",
+        "nextRetryAt": "2026-09-29T14:20:20Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
+        "sourceId": "adsuploader-blog",
+        "itemKey": "https://adsuploader.com/blog/facebook-dynamic-creative",
+        "fingerprint": "1fbec7600390f4b7815975ec194d295039c044321666abbec626a07e35cff23c",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-29T13:20:20Z",
+        "nextRetryAt": "2026-09-29T14:20:20Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
         "sourceId": "jon-loomer-meta-ads",
         "itemKey": "https://www.jonloomer.com/ai-disclosure-checkbox-chatgpt-attribution/",
         "fingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
@@ -7529,10 +8524,22 @@
         "itemKey": "https://www.jonloomer.com/chatgpt-ads-automated-bidding-placements-url-parameters/",
         "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
         "locale": "en",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-29T05:47:38Z",
-        "nextRetryAt": "2026-09-29T06:47:38Z",
+        "failureCount": 2,
+        "lastFailureAt": "2026-09-29T13:20:20Z",
+        "nextRetryAt": "2026-09-29T15:20:20Z",
         "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
+        "sourceId": "jon-loomer-meta-ads",
+        "itemKey": "https://www.jonloomer.com/fundamental-principles-creating-meta-ads/",
+        "fingerprint": "4d749c553b69bf36372452f017309a3b51ad63b6e1bc65eae5ef113590eff47d",
+        "locale": "en",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-29T13:20:20Z",
+        "nextRetryAt": "2026-09-29T14:20:20Z",
+        "lastFailureCode": "summary_invalid",
         "lastProviderErrorCode": null,
         "quarantined": false
       },
@@ -7709,9 +8716,9 @@
         "itemKey": "https://www.jonloomer.com/qvt/meta-ads-local-businesses/",
         "fingerprint": "57736eb5316a3299a1161d64d8be94c9e2e7083572a4d70ee15783c022ecf4c6",
         "locale": "en",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-29T05:47:38Z",
-        "nextRetryAt": "2026-09-29T06:47:38Z",
+        "failureCount": 2,
+        "lastFailureAt": "2026-09-29T13:20:20Z",
+        "nextRetryAt": "2026-09-29T15:20:20Z",
         "lastFailureCode": "summary_invalid",
         "lastProviderErrorCode": null,
         "quarantined": false
@@ -7813,13 +8820,25 @@
         "quarantined": true
       },
       {
+        "sourceId": "meta-product-news-rss",
+        "itemKey": "https://about.fb.com/news/2026/09/introducing-muse-small-business/",
+        "fingerprint": "f7871a98e4dfe752148f0654ca55f84cf8e7f82606627b88131cb4ba515d3ab2",
+        "locale": "ja",
+        "failureCount": 1,
+        "lastFailureAt": "2026-09-29T13:20:20Z",
+        "nextRetryAt": "2026-09-29T14:20:20Z",
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
+        "quarantined": false
+      },
+      {
         "sourceId": "social-media-today-meta-ads",
         "itemKey": "https://www.socialmediatoday.com/news/can-meta-be-trusted-with-user-data-to-power-its-ai-agents/831446/",
         "fingerprint": "29702f759b8334876c56dc11efa6decb7cb0d514b41a7e766277ce2aa95137e2",
         "locale": "en",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-29T05:47:38Z",
-        "nextRetryAt": "2026-09-29T06:47:38Z",
+        "failureCount": 2,
+        "lastFailureAt": "2026-09-29T13:20:20Z",
+        "nextRetryAt": "2026-09-29T15:20:20Z",
         "lastFailureCode": "response_invalid_shape",
         "lastProviderErrorCode": null,
         "quarantined": false
@@ -7829,9 +8848,9 @@
         "itemKey": "https://www.socialmediatoday.com/news/can-meta-be-trusted-with-user-data-to-power-its-ai-agents/831446/",
         "fingerprint": "29702f759b8334876c56dc11efa6decb7cb0d514b41a7e766277ce2aa95137e2",
         "locale": "ja",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-29T05:47:38Z",
-        "nextRetryAt": "2026-09-29T06:47:38Z",
+        "failureCount": 2,
+        "lastFailureAt": "2026-09-29T13:20:20Z",
+        "nextRetryAt": "2026-09-29T15:20:20Z",
         "lastFailureCode": "response_invalid_shape",
         "lastProviderErrorCode": null,
         "quarantined": false
@@ -7841,10 +8860,10 @@
         "itemKey": "https://www.socialmediatoday.com/news/how-social-platforms-measure-video-views/828349/",
         "fingerprint": "a8bfab76f93d2f1d4991da976afd8f58e84e059e9f40f4cc66c7eeb93528afde",
         "locale": "en",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-29T05:47:38Z",
-        "nextRetryAt": "2026-09-29T06:47:38Z",
-        "lastFailureCode": "summary_invalid",
+        "failureCount": 2,
+        "lastFailureAt": "2026-09-29T13:20:20Z",
+        "nextRetryAt": "2026-09-29T15:20:20Z",
+        "lastFailureCode": "response_invalid_shape",
         "lastProviderErrorCode": null,
         "quarantined": false
       },

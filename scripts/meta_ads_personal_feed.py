@@ -49,7 +49,7 @@ from experiment_meta_ads_jev_ads_relevance_shadow import (
 )
 
 
-SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v7"
+SOURCE_SCHEMA_VERSION = "meta-ads-personal-feed-sources/v8"
 STATE_SCHEMA_VERSION = "meta-ads-personal-feed-state/v2"
 LEGACY_STATE_SCHEMA_VERSION = "meta-ads-personal-feed-state/v1"
 STATE_V3_SCHEMA_VERSION = "meta-ads-personal-feed-state/v3"
@@ -78,10 +78,11 @@ RSS_BLOCK_TAG = re.compile(r"</?(?:article|blockquote|br|div|h[1-6]|li|ol|p|sect
 RSS_TAG = re.compile(r"<[^>]+>")
 RSS_NONCONTENT_TAG = re.compile(r"<(?:noscript|script|style)\b[^>]*>.*?</(?:noscript|script|style)\s*>", flags=re.IGNORECASE | re.DOTALL)
 SENTENCE_BOUNDARY = re.compile(r"(?<=[.!?])\s+|(?<=[。！？])")
-PARSER_TYPES = {"rss", "github_releases"}
+PARSER_TYPES = {"rss", "github_releases", "adsuploader_blog_html"}
 CONTENT_TYPES = {
     "rss": ["application/rss+xml", "application/xml", "text/xml"],
     "github_releases": ["application/json"],
+    "adsuploader_blog_html": ["text/html"],
     "meta_business_news_html": ["text/html"],
 }
 PRESENTATION_STATUSES = {"generated", "pending"}
@@ -320,7 +321,10 @@ def validate_config(payload: Any) -> dict[str, Any]:
     ids: set[str] = set()
     for index, value in enumerate(config["sources"]):
         label = f"personal feed sources[{index}]"
-        source = _expect_keys(value, {"id", "name", "classification", "sourceUrl", "fetchUrl", "parser", "expectedContentTypes", "contentLanguage", "platforms", "platformIds", "transport", "relevanceRevision", "match"}, label)
+        expected_keys = {"id", "name", "classification", "sourceUrl", "fetchUrl", "parser", "expectedContentTypes", "contentLanguage", "platforms", "platformIds", "transport", "relevanceRevision", "match"}
+        if isinstance(value, dict) and "failurePolicy" in value:
+            expected_keys.add("failurePolicy")
+        source = _expect_keys(value, expected_keys, label)
         source_id = _expect_identifier(source["id"], f"{label}.id")
         if source_id in ids:
             raise ContractError(f"duplicate personal feed source id: {source_id}")
@@ -332,6 +336,10 @@ def validate_config(payload: Any) -> dict[str, Any]:
         parser = source["parser"]
         if parser not in PARSER_TYPES:
             raise ContractError(f"{label}.parser is unsupported")
+        if source.get("failurePolicy", "required") not in {"required", "isolate"}:
+            raise ContractError(f"{label}.failurePolicy is unsupported")
+        if source.get("failurePolicy") == "isolate" and source["classification"] != "unofficial":
+            raise ContractError(f"{label}.failurePolicy=isolate requires an unofficial source")
         if source["expectedContentTypes"] != CONTENT_TYPES[parser]:
             raise ContractError(f"{label}.expectedContentTypes must match parser")
         fetch_url = _expect_https_url(source["fetchUrl"], f"{label}.fetchUrl")
@@ -509,6 +517,54 @@ class _LinkExtractor(HTMLParser):
         href = next((value for name, value in attrs if name.casefold() == "href"), None)
         if href:
             self.links.append(html.unescape(href).strip())
+
+
+class _AdsUploaderBlogParser(HTMLParser):
+    """Read visible article cards from the public blog index, never script data."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.cards: list[dict[str, str]] = []
+        self.current: dict[str, str] | None = None
+        self.capture: str | None = None
+        self.card_count = 0
+        self.skip_content = False
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag in {"script", "style", "noscript"}:
+            self.skip_content = True
+        if self.skip_content:
+            return
+        values = {key: value for key, value in attrs if value is not None}
+        if tag == "article":
+            self.card_count += 1
+            self.current = {}
+            return
+        if self.current is None:
+            return
+        if tag == "a" and re.fullmatch(r"/blog/[a-z0-9-]+", values.get("href", "")):
+            self.current["path"] = values["href"]
+        elif tag == "h2" and "path" in self.current:
+            self.capture = "title"
+            self.current["title"] = ""
+        elif tag == "p":
+            self.capture = "description"
+            self.current["description"] = ""
+        elif tag == "time":
+            self.current["date"] = values.get("datetime", "")
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag in {"script", "style", "noscript"}:
+            self.skip_content = False
+        if tag in {"h2", "p"}:
+            self.capture = None
+        if tag == "article" and self.current is not None:
+            self.cards.append(self.current)
+            self.current = None
+
+    def handle_data(self, data: str) -> None:
+        if self.current is not None and self.capture and not self.skip_content:
+            self.current[self.capture] += data
 
 
 class _MetaBusinessNewsParser(HTMLParser):
@@ -933,6 +989,45 @@ def _github_release_items(source: dict[str, Any], body: str, pipeline: dict[str,
     return items
 
 
+def _adsuploader_blog_items(source: dict[str, Any], body: str, pipeline: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+    parser = _AdsUploaderBlogParser()
+    parser.feed(body)
+    if not parser.cards or len(parser.cards) != parser.card_count:
+        raise ContractError("personal feed source adsuploader-blog returned an incomplete article index")
+    items: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for card in parser.cards[:source["transport"]["maxItems"]]:
+        if pipeline is not None:
+            pipeline["parsedItems"] += 1
+        path = card.get("path", "")
+        url = f"https://adsuploader.com{path}"
+        title = _normalise(card.get("title", ""))
+        context = _normalise(card.get("description", ""))
+        published = _date_from_feed(card.get("date"))
+        if not title or not context or not published or url in seen:
+            raise ContractError("personal feed source adsuploader-blog contains an invalid article card")
+        parsed = urlsplit(url)
+        if parsed.hostname not in source["transport"]["allowedContentHosts"]:
+            raise ContractError("personal feed source adsuploader-blog contains an unapproved article host")
+        seen.add(url)
+        if pipeline is not None:
+            pipeline["validItems"] += 1
+        items.append({
+            "key": url,
+            "url": url,
+            "title": title[:280],
+            "publishedDate": published,
+            "updatedDate": None,
+            "matchEvidence": [],
+            "sourceContext": context,
+            "presentationContext": context,
+            "presentationContextKind": "plain",
+            "categories": [],
+            "fingerprint": _fingerprint(url, title, published, context),
+        })
+    return items
+
+
 def extract_items(
     source: dict[str, Any],
     body: str,
@@ -943,6 +1038,8 @@ def extract_items(
         return _rss_items(source, body, pipeline, discovery_source)
     if source["parser"] == "github_releases":
         return _github_release_items(source, body, pipeline)
+    if source["parser"] == "adsuploader_blog_html":
+        return _adsuploader_blog_items(source, body, pipeline)
     raise ContractError(f"personal feed source {source['id']} has an unsupported parser")
 
 
@@ -2251,6 +2348,7 @@ def _source_pipeline_stats(config: dict[str, Any]) -> dict[str, Any]:
             source["id"]: {
                 "mode": "direct" if source["id"] in direct_ids else "discovered_official",
                 "fetched": False,
+                "isolatedFailure": False,
                 "responseBytes": 0,
                 "parsedItems": 0,
                 "validItems": 0,
@@ -2413,6 +2511,7 @@ def _print_source_pipeline_stats(stats: dict[str, Any]) -> None:
             "SOURCE_PIPELINE: "
             f"id={source_id} mode={counts['mode']} parser_version={stats['parserVersion']} "
             f"fetched={'true' if counts['fetched'] else 'false'} "
+            f"isolated_failure={'true' if counts['isolatedFailure'] else 'false'} "
             f"response_bytes={counts['responseBytes']} parsed={counts['parsedItems']} valid={counts['validItems']} "
             f"matched={counts['matchedItems']} expired={counts['freshnessExcludedItems']} "
             f"relevance_excluded={counts['relevanceExcludedItems']} excluded={counts['excludedItems']} "
@@ -2589,9 +2688,9 @@ def collect(
         for source_id, _item_key, _locale in released_keys:
             stats["sources"][source_id]["retryReleasedLegacyHttp400"] += 1
 
-    # First complete safe fetch, format validation and parsing for every direct
-    # source.  No model request or persistent output is produced before all of
-    # those fail-closed boundaries have passed.
+    # First complete safe fetch, format validation and parsing. A configured
+    # best-effort unofficial source may be isolated, preserving its prior
+    # records, while all required sources still fail closed before publication.
     parsed_by_source: dict[str, list[dict[str, Any]]] = {}
     raw_by_source: dict[str, list[dict[str, Any]]] = {}
     rejected_by_source: dict[str, set[str]] = {}
@@ -2602,18 +2701,21 @@ def collect(
         for origin_id in source["discovery"]["fromSourceIds"]
     }
     for source in config["sources"]:
-        body, content_type = fetch_body(source, timeout)
-        if not isinstance(body, str) or (content_type or "").split(";", 1)[0].strip().lower() not in source["expectedContentTypes"]:
-            raise ContractError(f"personal feed source {source['id']} returned an unexpected response")
         source_pipeline = pipeline["sources"][source["id"]]
-        source_pipeline["fetched"] = True
-        source_pipeline["responseBytes"] = len(body.encode("utf-8"))
-        parsed_by_source[source["id"]] = extract_items(
-            source,
-            body,
-            source_pipeline,
-            discovery_by_origin.get(source["id"]),
-        )
+        try:
+            body, content_type = fetch_body(source, timeout)
+            if not isinstance(body, str) or (content_type or "").split(";", 1)[0].strip().lower() not in source["expectedContentTypes"]:
+                raise ContractError(f"personal feed source {source['id']} returned an unexpected response")
+            source_pipeline["fetched"] = True
+            source_pipeline["responseBytes"] = len(body.encode("utf-8"))
+            parsed_by_source[source["id"]] = extract_items(
+                source, body, source_pipeline, discovery_by_origin.get(source["id"]),
+            )
+        except (ContractError, OSError, ValueError, urllib.error.URLError):
+            if source.get("failurePolicy") != "isolate" or reseed_source_id == source["id"]:
+                raise
+            source_pipeline["isolatedFailure"] = True
+            parsed_by_source[source["id"]] = []
 
     # Freshness and relevance use only successfully parsed candidates.  This
     # phase remains before state construction and before every model request.
