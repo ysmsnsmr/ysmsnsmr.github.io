@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-09-25T05:01:44Z",
+  "generatedAt": "2026-09-29T05:47:38Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -61,6 +61,144 @@
   ],
   "items": [
     {
+      "id": "jon-loomer-meta-ads-57736eb5316a3299a116",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Meta Ads for Local Businesses",
+      "url": "https://www.jonloomer.com/qvt/meta-ads-local-businesses/",
+      "publishedDate": "2026-09-28",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "57736eb5316a3299a1161d64d8be94c9e2e7083572a4d70ee15783c022ecf4c6",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "6fc5eb0d6da8beda151f6112b7f9a6801bff7a0a77197aae1adf0b357ea99948",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "6fc5eb0d6da8beda151f6112b7f9a6801bff7a0a77197aae1adf0b357ea99948",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "6fc5eb0d6da8beda151f6112b7f9a6801bff7a0a77197aae1adf0b357ea99948",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "ローカルビジネス向けMeta広告のポイントと設定方法",
+            "summary": "ローカルビジネスは対象が限られ、フットトラフィック重視で予算も低め。可能なら購入やリードで最適化し、できなければリーチや広告リコール、ThruPlay視聴、インタ",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-09-29T05:47:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "ローカルビジネス向けMeta広告のポイントと設定方法",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-29T05:47:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "ローカルビジネスは対象が限られ、フットトラフィック重視で予算も低め。可能なら購入やリードで最適化し、できなければリーチや広告リコール、ThruPlay視聴、インタ",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-29T05:47:38Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-29702f759b8334876c56",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Can Meta be trusted with user data to power its AI agents?",
+      "url": "https://www.socialmediatoday.com/news/can-meta-be-trusted-with-user-data-to-power-its-ai-agents/831446/",
+      "publishedDate": "2026-09-27",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T05:47:38Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "29702f759b8334876c56dc11efa6decb7cb0d514b41a7e766277ce2aa95137e2",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "a2d3f92f99571afd9777e18d79e3409be49410b6885ec9b54eee0a683207edc0",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "a2d3f92f99571afd9777e18d79e3409be49410b6885ec9b54eee0a683207edc0",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "a2d3f92f99571afd9777e18d79e3409be49410b6885ec9b54eee0a683207edc0",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "jon-loomer-meta-ads-5f109c4c8b7d031b8c69",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta One Business Plans: What You Get at Each Tier",
@@ -68,7 +206,7 @@
       "publishedDate": "2026-09-22",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -137,7 +275,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": "2026-09-21",
       "firstObservedAt": "2026-09-22T05:01:36Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -207,7 +345,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -276,7 +414,7 @@
       "publishedDate": "2026-09-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-18T11:07:09Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -345,7 +483,7 @@
       "publishedDate": "2026-09-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -414,7 +552,7 @@
       "publishedDate": "2026-09-16",
       "updatedDate": null,
       "firstObservedAt": "2026-09-17T04:55:10Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -483,7 +621,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -552,7 +690,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -621,7 +759,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -690,7 +828,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -759,7 +897,7 @@
       "publishedDate": "2026-09-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-11T04:43:19Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -828,7 +966,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-14T11:20:59Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -897,7 +1035,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T04:45:10Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -966,7 +1104,7 @@
       "publishedDate": "2026-09-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1035,7 +1173,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1104,7 +1242,7 @@
       "publishedDate": "2026-08-31",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1166,6 +1304,75 @@
       }
     },
     {
+      "id": "social-media-today-meta-ads-d3fb5f3c45f341c06bab",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta updates login with Facebook",
+      "url": "https://www.socialmediatoday.com/news/meta-updates-login-with-facebook/829135/",
+      "publishedDate": "2026-08-30",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-23T10:27:45Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "d3fb5f3c45f341c06bab017f5c86d88dc6bcbd0e1ad985b8a2ce1a5135709e30",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta adds one‑tap Facebook login for Android, Web and iOS",
+            "summary": "Meta is rolling out a one‑tap sign‑on for Android and Web, improves its Limited Login flow, and updates the iOS fast app switch to use the native Facebook app. Developers can access these changes through the latest SDK.",
+            "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
+            "generatedAt": "2026-09-24T10:49:46Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta adds one‑tap Facebook login for Android, Web and iOS",
+                "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
+                "generatedAt": "2026-09-24T10:49:46Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta is rolling out a one‑tap sign‑on for Android and Web, improves its Limited Login flow, and updates the iOS fast app switch to use the native Facebook app. Developers can access these changes through the latest SDK.",
+                "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
+                "generatedAt": "2026-09-24T10:49:46Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、Facebookログインをワンタップで簡素化",
+            "summary": "Metaは、Facebookアカウントでのログイン機能を改善し、Android と Web でワンタップサインオンを提供します。既にデバイスにサインイン済みのユーザーは、1 回のタップで第三者アプリにログインでき、フローが短縮されます。また、Limited Login の再ログイン回数削減や、iOS ではネイティブ Facebook アプリへの高速スイッチにより、ブラウザ経由より速くログインできます。これらの機能は最新 SDK で利用可能で、開発者は必要な機能を選択して導入できます。",
+            "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
+            "generatedAt": "2026-09-24T10:49:46Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、Facebookログインをワンタップで簡素化",
+                "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
+                "generatedAt": "2026-09-24T10:49:46Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは、Facebookアカウントでのログイン機能を改善し、Android と Web でワンタップサインオンを提供します。既にデバイスにサインイン済みのユーザーは、1 回のタップで第三者アプリにログインでき、フローが短縮されます。また、Limited Login の再ログイン回数削減や、iOS ではネイティブ Facebook アプリへの高速スイッチにより、ブラウザ経由より速くログインできます。これらの機能は最新 SDK で利用可能で、開発者は必要な機能を選択して導入できます。",
+                "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
+                "generatedAt": "2026-09-24T10:49:46Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "meta-business-sdk-releases-8ada906f14c5e1731d04",
       "sourceId": "meta-business-sdk-releases",
       "title": "v26.0.1",
@@ -1173,7 +1380,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1243,7 +1450,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1312,7 +1519,7 @@
       "publishedDate": "2026-08-24",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1381,7 +1588,7 @@
       "publishedDate": "2026-08-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1416,25 +1623,25 @@
             }
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta、29州の検事総長が中毒的システム設計で訴訟 損害賠償は1兆ドル超の可能性",
+            "summary": "米国の29州検事総長がMetaに対し、利用者にリスクを認識しながら中毒性システムを意図的に設計したと訴え、カリフォルニアでの裁判が開始された。Reutersは判決が不利になった場合、1兆ドル超の損害賠償が見込まれると報じた。Metaの時価総額は約1.5兆ドル。争点はソーシャルメディア依存が医学的に認められた疾患か否かで、MetaはDSMに掲載されていないと主張。2017年のNature論文は神経影響が他の依存症と類似すると示し、ギャンブル依存は1980年から認定されている。スタンフォードの精神科医Anna Lembkeは2021年の著書でドーパミン依存を指摘し、2024年の論文は過剰な画面時間や強",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-09-29T05:47:38Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Meta、29州の検事総長が中毒的システム設計で訴訟 損害賠償は1兆ドル超の可能性",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-29T05:47:38Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "米国の29州検事総長がMetaに対し、利用者にリスクを認識しながら中毒性システムを意図的に設計したと訴え、カリフォルニアでの裁判が開始された。Reutersは判決が不利になった場合、1兆ドル超の損害賠償が見込まれると報じた。Metaの時価総額は約1.5兆ドル。争点はソーシャルメディア依存が医学的に認められた疾患か否かで、MetaはDSMに掲載されていないと主張。2017年のNature論文は神経影響が他の依存症と類似すると示し、ギャンブル依存は1980年から認定されている。スタンフォードの精神科医Anna Lembkeは2021年の著書でドーパミン依存を指摘し、2024年の論文は過剰な画面時間や強",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-09-29T05:47:38Z",
                 "reviewedAt": null
               }
             }
@@ -1450,7 +1657,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T22:29:27Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1519,7 +1726,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1722,6 +1929,75 @@
       }
     },
     {
+      "id": "social-media-today-meta-ads-a8bfab76f93d2f1d4991",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "How social platforms measure video views",
+      "url": "https://www.socialmediatoday.com/news/how-social-platforms-measure-video-views/828349/",
+      "publishedDate": "2026-08-19",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-23T10:27:45Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "a8bfab76f93d2f1d4991da976afd8f58e84e059e9f40f4cc66c7eeb93528afde",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "60bce77b9c26dc53a6f9a1032945f296a407511d81aeef7e413ca1c3a0b512f9",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "60bce77b9c26dc53a6f9a1032945f296a407511d81aeef7e413ca1c3a0b512f9",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "60bce77b9c26dc53a6f9a1032945f296a407511d81aeef7e413ca1c3a0b512f9",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "YouTubeを含む各SNSの動画視聴数の測定基準が異なる",
+            "summary": "YouTubeは動画視聴数の算出方法を変更し、1秒以上再生されたものを「ビュー」、最初のフレームを超えて視聴またはクリックしたものを「エンゲージドビュー」、公開長尺動画やアーカイブ配信のエンゲージドビューを「クオリファイドビュー」と定義した。他のSNSでもビューの定義はプラットフォームや形式により異なり、同一指標でも意味合いが変わることがある。そのため、ビュー数だけでエンゲージメントや関心を判断するのは難しく、マーケティングやスポンサー契約の際には数値の背景を確認する必要がある。",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-09-24T10:49:46Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "YouTubeを含む各SNSの動画視聴数の測定基準が異なる",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-24T10:49:46Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "YouTubeは動画視聴数の算出方法を変更し、1秒以上再生されたものを「ビュー」、最初のフレームを超えて視聴またはクリックしたものを「エンゲージドビュー」、公開長尺動画やアーカイブ配信のエンゲージドビューを「クオリファイドビュー」と定義した。他のSNSでもビューの定義はプラットフォームや形式により異なり、同一指標でも意味合いが変わることがある。そのため、ビュー数だけでエンゲージメントや関心を判断するのは難しく、マーケティングやスポンサー契約の際には数値の背景を確認する必要がある。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-24T10:49:46Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "social-media-today-meta-ads-143436c34d5eef00048e",
       "sourceId": "social-media-today-meta-ads",
       "title": "Meta AI launches for Mac",
@@ -1798,7 +2074,7 @@
       "publishedDate": "2026-08-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1932,6 +2208,75 @@
       }
     },
     {
+      "id": "jon-loomer-meta-ads-31a647f219704abc5612",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "ChatGPT Ads Get Automated Bidding, Placements, and URL Parameters",
+      "url": "https://www.jonloomer.com/chatgpt-ads-automated-bidding-placements-url-parameters/",
+      "publishedDate": "2026-08-13",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "bae818e9c6a1294225aebbcf3fe2ec19a7698f8a07f7f05c4bb3bbe9b45d5dca",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "bae818e9c6a1294225aebbcf3fe2ec19a7698f8a07f7f05c4bb3bbe9b45d5dca",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "bae818e9c6a1294225aebbcf3fe2ec19a7698f8a07f7f05c4bb3bbe9b45d5dca",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "ChatGPT広告に自動入札・配置選択・URLパラメータ機能が追加",
+            "summary": "OpenAIはChatGPT広告のベータ版開始以降、3つの機能を追加した。クリックやコンバージョンを目的とした場合のデフォルト入札戦略を「結果最大化」に変更し、予算に応じて自動的に入札額を調整する。キャンペーン設定に「対象プラットフォーム」ドロップダウンを導入し、iOSアプリ、Androidアプリ、Webの表示先を個別に選択できるようにした。さらに、キャンペーン・広告セット・広告単位でランディングページのクエリパラメータを設定でき、{campaign_id} などのテンプレート変数が利用可能となった。",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-09-05T08:40:34Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "ChatGPT広告に自動入札・配置選択・URLパラメータ機能が追加",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "OpenAIはChatGPT広告のベータ版開始以降、3つの機能を追加した。クリックやコンバージョンを目的とした場合のデフォルト入札戦略を「結果最大化」に変更し、予算に応じて自動的に入札額を調整する。キャンペーン設定に「対象プラットフォーム」ドロップダウンを導入し、iOSアプリ、Androidアプリ、Webの表示先を個別に選択できるようにした。さらに、キャンペーン・広告セット・広告単位でランディングページのクエリパラメータを設定でき、{campaign_id} などのテンプレート変数が利用可能となった。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "jon-loomer-meta-ads-43e38784bd796ab19923",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta Ads AI Connectors Get More Security Controls",
@@ -1939,7 +2284,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2008,7 +2353,7 @@
       "publishedDate": "2026-08-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2077,7 +2422,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2146,7 +2491,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2215,7 +2560,7 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -2285,7 +2630,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2423,7 +2768,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2492,7 +2837,7 @@
       "publishedDate": "2026-07-20",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2561,7 +2906,7 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -2631,7 +2976,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2700,7 +3045,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2769,7 +3114,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2838,7 +3183,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2909,7 +3254,7 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -2979,7 +3324,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3048,7 +3393,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3117,7 +3462,7 @@
       "publishedDate": "2026-06-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3186,7 +3531,7 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3255,7 +3600,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3326,7 +3671,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3397,7 +3742,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3466,7 +3811,7 @@
       "publishedDate": "2026-06-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3477,49 +3822,49 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta restricted my account after I shared a link to its documentation",
+            "summary": "The user posted a screenshot of a new Meta ads feature and added a link to Meta’s official documentation in a private Facebook group. Meta then restricted actions on the account, prompting a \"Confirm Your Identity\" request. After uploading a driver’s license, verification failed, leaving the user unable to join or create groups, post, or comment.",
             "inputHash": "9989ca1102e64ef203b32cbd46abbc87559f6c24e9a4ba75257c61e39b014e9d",
-            "generatedAt": null,
+            "generatedAt": "2026-09-29T05:47:38Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Meta restricted my account after I shared a link to its documentation",
                 "inputHash": "9989ca1102e64ef203b32cbd46abbc87559f6c24e9a4ba75257c61e39b014e9d",
-                "generatedAt": null,
+                "generatedAt": "2026-09-29T05:47:38Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "The user posted a screenshot of a new Meta ads feature and added a link to Meta’s official documentation in a private Facebook group. Meta then restricted actions on the account, prompting a \"Confirm Your Identity\" request. After uploading a driver’s license, verification failed, leaving the user unable to join or create groups, post, or comment.",
                 "inputHash": "9989ca1102e64ef203b32cbd46abbc87559f6c24e9a4ba75257c61e39b014e9d",
-                "generatedAt": null,
+                "generatedAt": "2026-09-29T05:47:38Z",
                 "reviewedAt": null
               }
             }
           },
           "ja": {
             "status": "machine",
-            "shortHeadline": "リンク共有でアカウントが制限され本人確認が失敗",
-            "summary": "ユーザーはプライベートFacebookグループでMetaの新機能のスクリーンショットと公式ドキュメントへのリンクを共有したところ、Metaから不審な活動とみなされ本人確認を求められた。運転免許証で確認を行ったが失敗し、グループへの参加や投稿・コメントが制限された。現在も解除手段がなく、同様の問題が報告されている。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-23T10:27:45Z",
+            "shortHeadline": "Meta、リンク共有でアカウントが制限される",
+            "summary": "ユーザーはプライベートFacebookグループでMetaの新機能のスクリーンショットと公式ドキュメントへのリンクを共有したところ、Metaから「本人確認が必要」とのメッセージを受け、運転免許証の写真をアップロードした。しかし本人確認が失敗し、現在は新しいグループへの参加やグループ内での投稿・コメントが制限されている。",
+            "inputHash": "cd2fe16f714ed8899f240697ba1ec3aefb534f70f651da50f744e83dcc72998d",
+            "generatedAt": "2026-09-29T05:47:38Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
-                "value": "リンク共有でアカウントが制限され本人確認が失敗",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
+                "value": "Meta、リンク共有でアカウントが制限される",
+                "inputHash": "cd2fe16f714ed8899f240697ba1ec3aefb534f70f651da50f744e83dcc72998d",
+                "generatedAt": "2026-09-29T05:47:38Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
-                "value": "ユーザーはプライベートFacebookグループでMetaの新機能のスクリーンショットと公式ドキュメントへのリンクを共有したところ、Metaから不審な活動とみなされ本人確認を求められた。運転免許証で確認を行ったが失敗し、グループへの参加や投稿・コメントが制限された。現在も解除手段がなく、同様の問題が報告されている。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
+                "value": "ユーザーはプライベートFacebookグループでMetaの新機能のスクリーンショットと公式ドキュメントへのリンクを共有したところ、Metaから「本人確認が必要」とのメッセージを受け、運転免許証の写真をアップロードした。しかし本人確認が失敗し、現在は新しいグループへの参加やグループ内での投稿・コメントが制限されている。",
+                "inputHash": "cd2fe16f714ed8899f240697ba1ec3aefb534f70f651da50f744e83dcc72998d",
+                "generatedAt": "2026-09-29T05:47:38Z",
                 "reviewedAt": null
               }
             }
@@ -3535,7 +3880,7 @@
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3604,7 +3949,7 @@
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3673,7 +4018,7 @@
       "publishedDate": "2026-06-14",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3742,7 +4087,7 @@
       "publishedDate": "2026-06-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3811,7 +4156,7 @@
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3880,7 +4225,7 @@
       "publishedDate": "2026-06-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3949,7 +4294,7 @@
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4018,7 +4363,7 @@
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4087,7 +4432,7 @@
       "publishedDate": "2026-05-31",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4156,7 +4501,7 @@
       "publishedDate": "2026-05-26",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4512,7 +4857,7 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -4582,7 +4927,7 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -4652,7 +4997,7 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -4722,7 +5067,7 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -4792,7 +5137,7 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
+      "lastObservedAt": "2026-09-29T05:47:38Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -4846,76 +5191,6 @@
                 "status": "machine",
                 "value": "Facebook Node.js Business SDK のバージョン v23.0.3 がリリースされました。",
                 "inputHash": "c35f2837c12b6bab551a494a31a13630fc385f64d57b7df4ddd27dbeda6009f8",
-                "generatedAt": "2026-09-07T04:44:41Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-82cda13c93eae906bf7a",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "v23.0.2",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v23.0.2",
-      "publishedDate": "2025-09-26",
-      "updatedDate": "2025-09-26",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-25T05:01:44Z",
-      "platformIds": [
-        "meta-business-sdk",
-        "marketing-api"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "82cda13c93eae906bf7a5b2787d2a1740ce4ac662008de29020012ad7c52363a",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Version v23.0.2 released",
-            "summary": "The software has been updated to version v23.0.2.",
-            "inputHash": "26f18ae7679a2a508c3b738be6197f8735106558a0902a261ab255631a526040",
-            "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Version v23.0.2 released",
-                "inputHash": "26f18ae7679a2a508c3b738be6197f8735106558a0902a261ab255631a526040",
-                "generatedAt": "2026-09-07T04:44:41Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "The software has been updated to version v23.0.2.",
-                "inputHash": "26f18ae7679a2a508c3b738be6197f8735106558a0902a261ab255631a526040",
-                "generatedAt": "2026-09-07T04:44:41Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "バージョン v23.0.2 がリリースされました",
-            "summary": "ソフトウェアがバージョン v23.0.2 に更新されました。",
-            "inputHash": "5e033da59bf3a3836d457e564fb328fe0689dda2dff85da767d10ab697807500",
-            "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "バージョン v23.0.2 がリリースされました",
-                "inputHash": "5e033da59bf3a3836d457e564fb328fe0689dda2dff85da767d10ab697807500",
-                "generatedAt": "2026-09-07T04:44:41Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "ソフトウェアがバージョン v23.0.2 に更新されました。",
-                "inputHash": "5e033da59bf3a3836d457e564fb328fe0689dda2dff85da767d10ab697807500",
                 "generatedAt": "2026-09-07T04:44:41Z",
                 "reviewedAt": null
               }
