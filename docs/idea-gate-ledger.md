@@ -1167,3 +1167,43 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Add two MYT schedules and explicit as-of and expiry presentation, then verify the first runs.
 - Revisit when: Expired weather or transport guidance is still shown as current.; Twice-daily Jev or Groq calls cause unacceptable costs or failures.; The evening run does not improve actionable coverage.
+
+<!-- idea-gate:20260929t122050-meta-ads-adsuploader-blog -->
+## Ads Uploader Blogを非公式ソースとして追加
+
+- Record ID: `20260929t122050-meta-ads-adsuploader-blog`
+- Evaluated: 2026-09-29T12:20:50Z
+- Project: ysmsnsmr.github.io / Meta Ads Personal Feed
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 82/100
+- Confidence: medium - 利用目的と取得可能性は確認済みだが、継続的な有用性とHTML構造の安定性は未観測
+
+### Idea Card
+
+- Purpose: 同僚が勧めた広告運用ブログから、既存ソースにない具体的な変更と実務上の提案を学ぶ
+- First experience: 新着記事が既存フィードの非公式カテゴリに出て、原文へ進める
+- Scope and cost: 既存の週2回workflowに公開ブログ一覧の限定取得を追加し、1 run最大12件を処理する。追加契約はしない
+- Continuation boundary: 有用な記事が継続して見つかり安全に取得できれば維持し、重複・誤掲載・アクセス制限が続けば停止する
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 13/15 |
+| `evidence_and_learning` | 11/15 |
+| `expected_outcome` | 13/15 |
+| `scope_and_fit` | 13/15 |
+| `ownership_and_reversibility` | 14/20 |
+| **Total** | **82/100** |
+
+### Alternatives
+
+- **SHRINK - 手動参照だけに留める:** 保守負担は最小だが、フィード上で発見できない
+- **INTEGRATE - 既存の非公式フィードへ統合:** 新しい画面を設けず、既存のJev判定と注意表示を再利用する
+
+### Next Step
+
+- Action: 公開ブログ一覧の新着を安全に取り込み、非公式カテゴリの候補として既存workflowで検証する
+- Revisit when: HTML構造変更やアクセス拒否で定例収集が止まる; 既存記事との重複または誤掲載が継続する
