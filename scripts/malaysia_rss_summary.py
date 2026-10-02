@@ -1798,7 +1798,7 @@ def build_editorial_candidate_pool_json(
             "summary_validation_applied": False,
         },
         "post_relevance_policy": {
-            "target_card_count": 15,
+            "target_card_count": 20,
             "default_source_limit": 24,
             "source_limits": dict(SOURCE_LIMITS),
             "financial_limits": dict(FINANCIAL_LIMITS),

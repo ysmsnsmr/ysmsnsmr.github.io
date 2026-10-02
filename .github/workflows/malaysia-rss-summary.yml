@@ -2,10 +2,8 @@ name: Malaysia RSS Summary
 
 on:
   schedule:
-    # 04:45 MYT = 20:45 UTC on the previous day.
-    - cron: "45 20 * * *"
-    # 16:45 MYT = 08:45 UTC on the same day.
-    - cron: "45 8 * * *"
+    # 03:45 MYT = 19:45 UTC on the previous day.
+    - cron: "45 19 * * *"
   workflow_dispatch:
     inputs:
       enable_body_enrichment:
@@ -96,6 +94,7 @@ jobs:
           VAR_FORCE_ALL_GROQ: ${{ vars.MALAYSIA_NEWS_FORCE_ALL_GROQ }}
           VAR_DEBUG_GROQ: ${{ vars.MALAYSIA_NEWS_DEBUG_GROQ }}
           VAR_GROQ_MODEL: ${{ vars.MALAYSIA_NEWS_GROQ_MODEL }}
+          VAR_GROQ_REQUEST_CAP: ${{ vars.MALAYSIA_NEWS_GROQ_FORCE_ALL_REQUEST_CAP }}
           VAR_ENABLE_JEV_SHADOW: ${{ vars.MALAYSIA_NEWS_JEV_SHADOW_ENABLED }}
           VAR_ENABLE_JEV_ROUTING: ${{ vars.MALAYSIA_NEWS_JEV_ROUTING_ENABLED }}
         run: |
@@ -144,6 +143,8 @@ jobs:
 
           model_profile_line="$(python3 -B scripts/malaysia_groq_model_profiles.py resolve-production "${model_input}" --fallback-to-default)"
           IFS=$'\t' read -r model_profile model_short model_name model_prompt_layout model_max_tokens model_contract model_rate_reset_wait_max_seconds <<< "${model_profile_line}"
+          export MALAYSIA_NEWS_GROQ_FORCE_ALL_REQUEST_CAP="${VAR_GROQ_REQUEST_CAP:-}"
+          groq_request_cap="$(PYTHONPATH=scripts python3 -B -c 'from malaysia_groq_force_all_policy import force_all_request_cap; print(force_all_request_cap())')"
 
           today="$(TZ=Asia/Kuala_Lumpur date +%F)"
           run_dir="${RUNNER_TEMP}/malaysia-rss-summary-optional-${today}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
@@ -165,6 +166,7 @@ jobs:
             echo "- groq_summary_max_tokens: ${model_max_tokens}"
             echo "- groq_summary_contract: ${model_contract}"
             echo "- groq_rate_reset_wait_max_seconds: ${model_rate_reset_wait_max_seconds}"
+            echo "- groq_request_cap: ${groq_request_cap}"
             echo "- groq_model_comparison: $([ "${enable_groq_model_comparison}" = "true" ] && printf 'enabled' || printf 'disabled')"
             echo "- jev_selector_shadow: $([ "${enable_jev_shadow}" = "true" ] && printf 'enabled' || printf 'disabled')"
             echo "- jev_editorial_routing: $([ "${enable_jev_routing}" = "true" ] && printf 'enabled' || printf 'disabled')"
@@ -187,6 +189,7 @@ jobs:
           echo "groq_summary_max_tokens=${model_max_tokens}" >> "${GITHUB_OUTPUT}"
           echo "groq_summary_contract=${model_contract}" >> "${GITHUB_OUTPUT}"
           echo "groq_rate_reset_wait_max_seconds=${model_rate_reset_wait_max_seconds}" >> "${GITHUB_OUTPUT}"
+          echo "groq_request_cap=${groq_request_cap}" >> "${GITHUB_OUTPUT}"
 
       - name: Generate Malaysia RSS summary
         id: generate
@@ -293,6 +296,7 @@ jobs:
         shell: bash
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          MALAYSIA_NEWS_GROQ_FORCE_ALL_REQUEST_CAP: ${{ steps.optional.outputs.groq_request_cap }}
         run: |
           set -u
           run_dir="${{ steps.optional.outputs.run_dir }}"
