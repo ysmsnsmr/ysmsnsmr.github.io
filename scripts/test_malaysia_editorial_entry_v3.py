@@ -219,27 +219,27 @@ class EditorialEntryV3Test(unittest.TestCase):
         self.assertIn('"editorial_entry"', messages[0]["content"])
         self.assertNotIn('"selected_summary"', messages[0]["content"])
 
-    def test_request_cap_is_first_twelve_in_selected_order_without_lexical_exclusions(self) -> None:
-        data = {"items": [item(index) for index in range(1, 14)]}
+    def test_request_cap_is_first_twenty_in_selected_order_without_lexical_exclusions(self) -> None:
+        data = {"items": [item(index) for index in range(1, 22)]}
         data["items"][0]["title"] = "Financial market article"
         data["items"][1]["title"] = "Paul Tan transport article"
         data["items"][2]["title"] = "Incident report article"
         with patch(
             "render_malaysia_news_with_groq.request_groq_summary_with_retry",
-            side_effect=[accepted_result(index) for index in range(1, 13)],
+            side_effect=[accepted_result(index) for index in range(1, 21)],
         ) as request:
             rendered, accepted, stats, records = groq_renderer.render_with_groq(
                 data, "key", "test-model"
             )
-        self.assertEqual(request.call_count, 12)
-        self.assertEqual(stats, {"requested": 12, "accepted": 12, "fallback": 0})
-        self.assertEqual(len(accepted), 12)
+        self.assertEqual(request.call_count, 20)
+        self.assertEqual(stats, {"requested": 20, "accepted": 20, "fallback": 0})
+        self.assertEqual(len(accepted), 20)
         self.assertEqual(
             [call.args[0]["link"] for call in request.call_args_list],
-            [f"https://example.test/{index}" for index in range(1, 13)],
+            [f"https://example.test/{index}" for index in range(1, 21)],
         )
         self.assertEqual(records[-1]["reason"], "request_cap")
-        self.assertEqual(rendered["items"][12]["editorial_entry"]["entry_ja"], "RSS概要13")
+        self.assertEqual(rendered["items"][20]["editorial_entry"]["entry_ja"], "RSS概要21")
 
     def test_request_cap_keeps_the_existing_environment_override_name(self) -> None:
         with patch.dict(os.environ, {"MALAYSIA_NEWS_GROQ_FORCE_ALL_REQUEST_CAP": "7"}, clear=False):

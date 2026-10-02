@@ -1207,3 +1207,41 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: 公開ブログ一覧の新着を安全に取り込み、非公式カテゴリの候補として既存workflowで検証する
 - Revisit when: HTML構造変更やアクセス拒否で定例収集が止まる; 既存記事との重複または誤掲載が継続する
+
+<!-- idea-gate:20261002t090000-malaysia-daily-20-item-budget-trial -->
+## 朝1回更新とし、Jev掲載予算とGroq要約上限を20件へ増やす7日間試行
+
+- Record ID: `20261002t090000-malaysia-daily-20-item-budget-trial`
+- Evaluated: 2026-10-02T09:00:00+08:00
+- Project: ysmsnsmr.github.io / Malaysia News
+- Rubric: 1.1.0
+- Decision: **TRY**
+- Score: 89/100
+- Confidence: medium - 上限と重複しない候補の存在はartifactで確認できたが、16〜20件目の公開品質は実運用で未検証
+
+### Idea Card
+
+- Purpose: 日次ページを朝の一度の更新にまとめながら、読者に届ける記事の幅を広げる
+- First experience: 03:45 MYTに1日1回実行し、Jev予算20件とGroq上限20件で7日分のページを公開する
+- Scope and cost: 既存Malaysia News workflowのscheduleと上限を変更する。1日最大20件のGroq要約で、現行の2回実行・各12件の最大24件/日を下回る。新規サービスや依存関係は追加しない
+- Continuation boundary: 16〜20件目の記事が読者価値を増やし、要約fallbackとvalidator結果が許容範囲なら継続する。低関連記事や品質劣化が目立てば元のscheduleと上限へ戻す
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 13/15 |
+| `evidence_and_learning` | 14/15 |
+| `expected_outcome` | 13/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 18/20 |
+| **Total** | **89/100** |
+- Trial limit: 7 calendar days; one scheduled run per day; Jev target 20; Groq request cap 20 per run
+- Trial stop condition: Stop or revert if the added items are repeatedly low relevance, validator or fallback behavior regresses, or scheduled execution fails to publish reliably.
+
+### Next Step
+
+- Action: Set one 03:45 MYT schedule, raise the Jev target and Groq request cap to 20, then inspect the next seven daily artifacts.
+- Revisit when: More than 15 articles consistently improve the daily page without diluting relevance; Jev or Groq failures, RSS fallback volume, or actual API cost increase beyond the observed baseline
+- Supersedes: `20260927t120000-malaysia-twice-daily-freshness`
