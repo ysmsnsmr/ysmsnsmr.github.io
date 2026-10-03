@@ -45,7 +45,11 @@
       <section class="control-panel" aria-labelledby="filter-heading">
         <p id="filter-heading" class="section-kicker">Filters</p>
         <form id="filter-form" class="filter-form">
-          <div class="filter-field">
+          <div class="filter-field filter-field--query">
+            <label for="query-filter">Keyword</label>
+            <input id="query-filter" name="query" type="search" placeholder="Search updates" autocomplete="off">
+          </div>
+          <div class="filter-field filter-field--source">
             <label for="source-filter">Source</label>
             <select id="source-filter" name="source">
               <option value="all">All sources</option>
@@ -53,17 +57,13 @@
               <option value="meta-business-sdk-releases">Business SDK Releases</option>
             </select>
           </div>
-          <div class="filter-field">
+          <div class="filter-field filter-field--type">
             <label id="priority-filter-label" for="priority-filter">Source type</label>
             <select id="priority-filter" name="priority">
               <option value="all">All</option>
               <option value="official">Official</option>
               <option value="unofficial">Unofficial</option>
             </select>
-          </div>
-          <div class="filter-field">
-            <label for="query-filter">Keyword</label>
-            <input id="query-filter" name="query" type="search" placeholder="Search updates" autocomplete="off">
           </div>
           <button id="reset-button" class="reset-button" type="button">Reset filters</button>
         </form>

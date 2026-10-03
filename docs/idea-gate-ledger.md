@@ -1280,3 +1280,40 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: TOPのピックアップカードに概要1行を再表示する
 - Revisit when: カード内の情報量が増え、見出しや全体の一覧性を損なう; 見出しと概要の重複が継続して目立つ
+
+<!-- idea-gate:20261003t150000-meta-ads-reading-first-list -->
+## Replace the three-column Meta Ads update cards with a headline-first horizontal list
+
+- Record ID: `20261003t150000-meta-ads-reading-first-list`
+- Evaluated: 2026-10-03T15:00:00+08:00
+- Project: ysmsnsmr.github.io / Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **TRY**
+- Score: 93/100
+- Confidence: medium - The mock is extensively checked, but production integration and real-content density still need regression tests and user observation.
+
+### Idea Card
+
+- Purpose: Make the feed easier for the owner and colleagues to scan and read.
+- First experience: On the production feed, scan update headlines in a single-column list while retaining source/date context, search, filters, and favorites.
+- Scope and cost: One reversible UI PR; change only the feed presentation and its tests. Keep URLs, data schemas, collection, publication, localization, and favorites behavior intact; no new service or recurring cost.
+- Continuation boundary: Keep the layout if headlines are easier to scan without losing existing actions or mobile accessibility. Revert the layout if line-item density, navigation, or usability regresses.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 14/15 |
+| `evidence_and_learning` | 14/15 |
+| `expected_outcome` | 14/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 19/20 |
+| **Total** | **93/100** |
+- Trial limit: One production UI PR and observation through one real content cycle; no paid services or data migrations.
+- Trial stop condition: Do not merge if existing routes, filtering, favorites, accessibility, or mobile behavior regress; revert only the list presentation if the first real content cycle is harder to scan.
+
+### Next Step
+
+- Action: Implement the reviewed horizontal-list structure in an isolated branch and run the existing contract, functional, accessibility, and responsive UI checks.
+- Revisit when: Real articles with long headlines or metadata make the list hard to scan on mobile or desktop.; Search, filters, favorites, locale routes, or detail navigation do not remain clear and accessible.

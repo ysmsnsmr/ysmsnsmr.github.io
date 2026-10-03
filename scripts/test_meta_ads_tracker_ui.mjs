@@ -226,14 +226,14 @@ async function assertTokens(page) {
     target: "44px",
     mastheadDisplay: "grid",
     mastheadBorder: "solid",
-    panelRadius: "10px"
+    panelRadius: "0px"
   }), `Approved Workbench token/layout mismatch: ${JSON.stringify(values)}`);
 }
 
 async function assertAccessibilityAndLayout(page, label) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   assert(overflow <= 1, `${label}: horizontal overflow ${overflow}px`);
-  const undersized = await page.locator("button, select, input, .source-link, .detail-link, .sdk-update-log-link, .back-link, .locale-switch a").evaluateAll((nodes) =>
+  const undersized = await page.locator("button, select, input, .source-link, .detail-link, .update-title-link, .sdk-update-log-link, .back-link, .locale-switch a").evaluateAll((nodes) =>
     nodes.map((node) => ({ text: node.textContent || node.getAttribute("placeholder"), rect: node.getBoundingClientRect() }))
       .filter(({ rect }) => rect.width > 0 && rect.height > 0 && (rect.height < 44 || rect.width < 44))
       .map(({ text, rect }) => `${text}:${rect.width}x${rect.height}`)
@@ -337,20 +337,30 @@ try {
     assert(await page.locator(".update-card").count() === 3, `${label}: personal feed cards are missing`);
     assert(await page.locator(".origin-label--official").count() === 1, `${label}: official badge is missing`);
     assert(await page.locator(".origin-label--unofficial").count() === 2, `${label}: non-official badge is missing`);
-    assert(await page.locator(".detail-link").count() === 3, `${label}: detail links are missing`);
+    assert(await page.locator(".update-title-link").count() === 3, `${label}: headline detail links are missing`);
+    assert(await page.locator(".detail-link").count() === 0, `${label}: redundant detail buttons must not be rendered`);
     assert(await page.locator(".source-link").count() === 0, `${label}: Personal Feed list must not expose article links directly`);
     assert((await page.locator(".update-card h2").allTextContents()).includes("Meta Ads APIの観測"), `${label}: generated Japanese headline is missing from the list`);
+    const filterLayout = await page.evaluate(() => {
+      const ids = [...document.querySelectorAll("#filter-form > .filter-field")].map((field) => field.classList.contains("filter-field--query") ? "query" : field.classList.contains("filter-field--source") ? "source" : "type");
+      const rect = (selector) => {
+        const { top, bottom, left, width } = document.querySelector(selector).getBoundingClientRect();
+        return { top, bottom, left, width };
+      };
+      return { ids, query: rect(".filter-field--query"), source: rect(".filter-field--source"), type: rect(".filter-field--type") };
+    });
+    assert(filterLayout.ids.join(",") === "query,source,type", `${label}: keyword search must precede source filters`);
+    assert(filterLayout.query.bottom <= filterLayout.source.top && Math.abs(filterLayout.source.top - filterLayout.type.top) <= 1, `${label}: search and source filters are not arranged in the reading-first order`);
     assert(await page.locator(".unofficial-copy").count() === 0, `${label}: per-card non-official warning must not be rendered`);
-    assert((await page.locator(".fact-label").allTextContents()).filter((label) => label === "最終更新日").length === 3, `${label}: final update date label is missing`);
+    assert((await page.locator(".list-dates").allTextContents()).some((text) => text.includes("発表日: 2026-08-29")), `${label}: known publication date is missing from the list`);
+    assert((await page.locator(".list-dates").allTextContents()).some((text) => text.includes("最終更新日: 2026-08-29")), `${label}: known final update date is missing from the list`);
+    assert(!(await page.locator(".list-dates").allTextContents()).join(" ").includes("確認できず"), `${label}: unknown dates must be omitted from the list`);
     assert(!(await page.locator(".fact-label").allTextContents()).includes("対象"), `${label}: target platform must not be shown on the Personal Feed list`);
-    assert(await page.locator(".fact-grid > div").evaluateAll((nodes) => nodes
-      .filter((node) => node.querySelector(".fact-label")?.textContent === "最終更新日")
-      .filter((node) => node.querySelector("dd")?.textContent === "確認できず")
-      .every((node) => getComputedStyle(node.querySelector("dd")).fontStyle === "normal")), `${label}: unknown final update date must use normal typography`);
+    assert(await page.locator("#official-list .fact-grid, #unofficial-list .fact-grid").count() === 0, `${label}: full metadata cards must not remain in the compact list`);
     assert(!(await page.locator(".fact-label").allTextContents()).includes("最終確認"), `${label}: automated observation timestamp must not be shown as human confirmation`);
     assert(await page.locator(".masthead").textContent().then((text) => !text.includes("Personal information feed") && !text.includes("個人・同僚向けフィード")), `${label}: removed personal-feed copy is still visible`);
     const personalColumns = await page.locator("#unofficial-list").evaluate((node) => getComputedStyle(node).gridTemplateColumns.trim().split(/\s+/).length);
-    const expectedColumns = viewport.name === "desktop" ? 3 : viewport.name === "tablet" ? 2 : 1;
+    const expectedColumns = 1;
     assert(personalColumns === expectedColumns, `${label}: expected ${expectedColumns} personal-feed column(s), found ${personalColumns}`);
     assert(await page.locator(".source-link").evaluateAll((links) => links.every((link) => link.href.startsWith("https://") && link.target === "_blank" && link.rel.includes("noreferrer"))), `${label}: source links are unsafe`);
     assert(consoleErrors.length === 0 && pageErrors.length === 0, `${label}: runtime errors: ${[...consoleErrors, ...pageErrors].join("; ")}`);
@@ -383,12 +393,12 @@ try {
   assert((await v3List.locator(".update-card h2").allTextContents()).includes("Meta広告の計測機能を更新"), "v3 list did not use its Japanese locale overlay");
   assert(await v3List.locator(".lane-label").count() === 0, "v3 items must not be labelled as ACTION or WATCH");
   assert(await v3List.locator("#official-group").isVisible(), "v3 list must group official items without an ACTION heading");
-  assert(await v3List.locator(".detail-link").first().getAttribute("href").then((href) => href?.includes("personal-fixture=v3")), "v3 detail links did not retain the fixed fixture selector");
+  assert(await v3List.locator(".update-title-link").first().getAttribute("href").then((href) => href?.includes("personal-fixture=v3")), "v3 detail links did not retain the fixed fixture selector");
   assert(await v3List.locator(".update-card").allTextContents().then((cards) => !cards.join(" ").includes("machine") && !cards.join(" ").includes("missing")), "v3 list must not expose presentation status");
   assert(v3ListConsoleErrors.length === 0 && v3ListPageErrors.length === 0, `v3 Personal Feed list runtime errors: ${[...v3ListConsoleErrors, ...v3ListPageErrors].join("; ")}`);
   await assertTokens(v3List);
   await assertAccessibilityAndLayout(v3List, "personal-feed-v3/desktop");
-  await v3List.locator(".detail-link").first().click();
+  await v3List.locator(".update-title-link").first().click();
   await v3List.waitForURL(/detail\.html\?/);
   assert(await v3List.locator(".lane-label").count() === 0, "v3 detail must not show an ACTION or WATCH label");
   assert(!(await v3List.locator(".fact-label").allTextContents()).includes("レーン"), "v3 detail must not show a lane fact");
@@ -401,7 +411,7 @@ try {
   assert(await v4List.locator("#unofficial-group").isVisible(), "v4 unofficial group is missing");
   assert(await v4List.locator(".lane-label").count() === 0, "v4 must not expose legacy lane labels");
   await assertAccessibilityAndLayout(v4List, "personal-feed-v4/desktop");
-  await v4List.locator("#unofficial-list .detail-link").click();
+  await v4List.locator("#unofficial-list .update-title-link").click();
   await v4List.waitForURL(/detail\.html\?/);
   assert(await v4List.locator(".lane-label").count() === 0, "v4 detail must not expose legacy lane labels");
   assert(!(await v4List.locator(".fact-label").allTextContents()).includes("レーン"), "v4 detail must not expose a legacy lane fact");
@@ -438,7 +448,7 @@ try {
   await fieldsList.goto(`${server.origin}/meta-ads-updates/ja/?personal-fixture=fields`, { waitUntil: "networkidle" });
   assert((await fieldsList.locator(".update-card h2").allTextContents()).includes(fieldsHeadline), "v3 fields list must retain a completed headline when the sibling summary is missing");
   await assertAccessibilityAndLayout(fieldsList, "personal-feed-v3-fields/desktop");
-  await fieldsList.locator(`.detail-link[href*="id=${fieldsItem.id}"]`).click();
+  await fieldsList.locator(`.update-title-link[href*="id=${fieldsItem.id}"]`).click();
   await fieldsList.waitForURL(/detail\.html\?/);
   assert(await fieldsList.locator("#detail-title").textContent() === fieldsHeadline, "v3 fields detail must use the completed headline");
   assert((await fieldsList.locator("#detail-summary").textContent()).includes("要約は利用できません"), "v3 fields detail must show the missing summary fallback only for that field");
@@ -466,9 +476,9 @@ try {
     await page.selectOption("#source-filter", "search-engine-land-meta-rss");
     await page.selectOption("#priority-filter", "unofficial");
     await page.fill("#query-filter", "表示変更");
-    const href = await page.locator(".detail-link").getAttribute("href");
+    const href = await page.locator(".update-title-link").getAttribute("href");
     assert(href?.includes("personal-fixture=1") && href.includes("source=search-engine-land-meta-rss") && href.includes("type=unofficial") && href.includes("q=%E8%A1%A8%E7%A4%BA%E5%A4%89%E6%9B%B4"), `${label}: detail link did not preserve filters`);
-    await page.locator(".detail-link").click();
+    await page.locator(".update-title-link").click();
     await page.waitForURL(/detail\.html\?/);
     assert(await page.locator("#detail-card").isVisible(), `${label}: detail card is missing`);
     assert((await page.locator("#detail-title").textContent()).includes("Meta Adsの表示変更"), `${label}: Japanese short headline is missing`);
@@ -521,7 +531,7 @@ try {
   await favoritesPage.reload({ waitUntil: "networkidle" });
   const reloadedCard = favoritesPage.locator(".update-card").filter({ hasText: "Meta Ads APIの観測" });
   assert(await reloadedCard.locator(".favorite-button").getAttribute("aria-pressed") === "true", "favorite state must persist after a reload");
-  await reloadedCard.locator(".detail-link").click();
+  await reloadedCard.locator(".update-title-link").click();
   await favoritesPage.waitForURL(/detail\.html\?/);
   assert(await favoritesPage.locator("#detail-favorite").getAttribute("aria-pressed") === "true", "detail page must share the card favorite state");
   await favoritesPage.locator("#detail-favorite").click();
@@ -647,7 +657,7 @@ try {
   assert(await englishList.locator("#canonical-link").getAttribute("href") === "https://ysmsnsmr.github.io/meta-ads-updates/", "English list canonical is incorrect");
   assert(await englishList.locator("#alternate-ja").getAttribute("href") === "https://ysmsnsmr.github.io/meta-ads-updates/ja/", "English list hreflang is incorrect");
   await assertAccessibilityAndLayout(englishList, "english-list/desktop");
-  await englishList.locator(".detail-link").click();
+  await englishList.locator(".update-title-link").click();
   await englishList.waitForURL(/detail\.html\?/);
   assert((await englishList.locator("#detail-title").textContent()) === "Meta Ads measurement update", "English detail must use the English overlay");
   assert((await englishList.locator("#detail-presentation-status").textContent()) === "Machine-generated summary", "detail must disclose a machine-generated summary");
