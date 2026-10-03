@@ -1,6 +1,6 @@
 {
   "schemaVersion": "meta-ads-personal-feed-state/v5",
-  "updatedAt": "2026-09-29T13:20:20Z",
+  "updatedAt": "2026-10-03T13:32:27Z",
   "sources": {
     "meta-product-news-rss": {
       "relevanceRevision": "meta-ads-lanes-v1",
@@ -187,17 +187,17 @@
               },
               "ja": {
                 "status": "missing",
-                "shortHeadline": null,
+                "shortHeadline": "Museの紹介：誰でも使える世界初のパーソナルAIエージェント",
                 "summary": null,
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
                 "generatedAt": null,
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Museの紹介：誰でも使える世界初のパーソナルAIエージェント",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-10-03T13:32:27Z",
                     "reviewedAt": null
                   },
                   "summary": {
@@ -1014,25 +1014,25 @@
                 }
               },
               "ja": {
-                "status": "missing",
-                "shortHeadline": null,
-                "summary": null,
+                "status": "machine",
+                "shortHeadline": "Muse、小規模事業向けに新スキルとコネクタを拡充",
+                "summary": "今月初め、米国・カナダ向けのパーソナルAIエージェントMuseは、新しいスキルとInstagram、Facebook、Meta広告、Canvaなど数十のコネクタを追加し、既存のツールで小規模事業がタスクを自動化できるようにしました。サービスは多くの機能が無料で、サブスクリプションプランも提供され、パートナーは muse.ai/platform から応募できます。",
                 "inputHash": "24f023969cfd86b1c320e3de38054decdac457396ba568ee95e6d4a16bbefe4d",
-                "generatedAt": null,
+                "generatedAt": "2026-10-03T13:32:27Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Muse、小規模事業向けに新スキルとコネクタを拡充",
                     "inputHash": "24f023969cfd86b1c320e3de38054decdac457396ba568ee95e6d4a16bbefe4d",
-                    "generatedAt": null,
+                    "generatedAt": "2026-10-03T13:32:27Z",
                     "reviewedAt": null
                   },
                   "summary": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "今月初め、米国・カナダ向けのパーソナルAIエージェントMuseは、新しいスキルとInstagram、Facebook、Meta広告、Canvaなど数十のコネクタを追加し、既存のツールで小規模事業がタスクを自動化できるようにしました。サービスは多くの機能が無料で、サブスクリプションプランも提供され、パートナーは muse.ai/platform から応募できます。",
                     "inputHash": "24f023969cfd86b1c320e3de38054decdac457396ba568ee95e6d4a16bbefe4d",
-                    "generatedAt": null,
+                    "generatedAt": "2026-10-03T13:32:27Z",
                     "reviewedAt": null
                   }
                 }
@@ -1158,17 +1158,17 @@
               },
               "ja": {
                 "status": "missing",
-                "shortHeadline": null,
+                "shortHeadline": "Meta Business SDK バージョン 26.0.0",
                 "summary": null,
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
                 "generatedAt": null,
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Meta Business SDK バージョン 26.0.0",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-10-03T13:32:27Z",
                     "reviewedAt": null
                   },
                   "summary": {
@@ -3449,17 +3449,17 @@
               },
               "ja": {
                 "status": "missing",
-                "shortHeadline": null,
+                "shortHeadline": "MetaはユーザーデータをAIエージェントに活用することを信頼できるか？",
                 "summary": null,
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
                 "generatedAt": null,
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "MetaはユーザーデータをAIエージェントに活用することを信頼できるか？",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-10-03T13:32:27Z",
                     "reviewedAt": null
                   },
                   "summary": {
@@ -4351,17 +4351,17 @@
               },
               "ja": {
                 "status": "missing",
-                "shortHeadline": null,
+                "shortHeadline": "インスタントフォームなどのリードキャプチャAIエージェント",
                 "summary": null,
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
                 "generatedAt": null,
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "インスタントフォームなどのリードキャプチャAIエージェント",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-10-03T13:32:27Z",
                     "reviewedAt": null
                   },
                   "summary": {
@@ -5674,17 +5674,17 @@
               },
               "ja": {
                 "status": "missing",
-                "shortHeadline": null,
+                "shortHeadline": "Meta Ads AI コネクタとClaude：設定、利用方法、リスク",
                 "summary": null,
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
                 "generatedAt": null,
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Meta Ads AI コネクタとClaude：設定、利用方法、リスク",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-10-03T13:32:27Z",
                     "reviewedAt": null
                   },
                   "summary": {
@@ -6226,17 +6226,17 @@
               },
               "ja": {
                 "status": "missing",
-                "shortHeadline": null,
+                "shortHeadline": "Facebook広告15年で廃止された15の機能",
                 "summary": null,
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
                 "generatedAt": null,
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
-                    "status": "missing",
-                    "value": null,
+                    "status": "machine",
+                    "value": "Facebook広告15年で廃止された15の機能",
                     "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                    "generatedAt": null,
+                    "generatedAt": "2026-10-03T13:32:27Z",
                     "reviewedAt": null
                   },
                   "summary": {
@@ -8581,33 +8581,9 @@
       },
       {
         "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/lead-capture-ai-agent-instant-forms/",
-        "fingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
-        "locale": "ja",
-        "failureCount": 5,
-        "lastFailureAt": "2026-09-09T04:45:10Z",
-        "nextRetryAt": null,
-        "lastFailureCode": "http_400",
-        "quarantined": true,
-        "lastProviderErrorCode": "legacy_unknown"
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
         "itemKey": "https://www.jonloomer.com/meta-ads-ai-connectors-claude/",
         "fingerprint": "4bda6e29ffa378f20da5718e67adb16b2431a61aa6e3f8a8191b17f7ce7d9590",
         "locale": "en",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-07T04:44:41Z",
-        "nextRetryAt": "2026-09-07T05:44:41Z",
-        "lastFailureCode": "http_400",
-        "quarantined": false,
-        "lastProviderErrorCode": "legacy_unknown"
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/meta-ads-ai-connectors-claude/",
-        "fingerprint": "4bda6e29ffa378f20da5718e67adb16b2431a61aa6e3f8a8191b17f7ce7d9590",
-        "locale": "ja",
         "failureCount": 1,
         "lastFailureAt": "2026-09-07T04:44:41Z",
         "nextRetryAt": "2026-09-07T05:44:41Z",
@@ -8689,18 +8665,6 @@
       },
       {
         "sourceId": "jon-loomer-meta-ads",
-        "itemKey": "https://www.jonloomer.com/qvt/15-discontinued-facebook-ads-features/",
-        "fingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
-        "locale": "ja",
-        "failureCount": 5,
-        "lastFailureAt": "2026-09-29T05:47:38Z",
-        "nextRetryAt": null,
-        "lastFailureCode": "summary_invalid",
-        "lastProviderErrorCode": null,
-        "quarantined": true
-      },
-      {
-        "sourceId": "jon-loomer-meta-ads",
         "itemKey": "https://www.jonloomer.com/qvt/i-need-a-specific-audience/",
         "fingerprint": "4e803170dfe0d9450cc16523a987e6f132b598c600b1621a69d956243129a651",
         "locale": "en",
@@ -8760,18 +8724,6 @@
         "lastProviderErrorCode": "legacy_unknown"
       },
       {
-        "sourceId": "meta-business-sdk-releases",
-        "itemKey": "v26.0.0",
-        "fingerprint": "408c6109ca988aaba7c02212d5aa3a05f1b7f4eaf86bfe4f5d241446edbd57e5",
-        "locale": "ja",
-        "failureCount": 5,
-        "lastFailureAt": "2026-09-09T04:45:10Z",
-        "nextRetryAt": null,
-        "lastFailureCode": "http_400",
-        "quarantined": true,
-        "lastProviderErrorCode": "legacy_unknown"
-      },
-      {
         "sourceId": "meta-product-news-rss",
         "itemKey": "https://about.fb.com/news/2026/07/connecting-real-people-on-facebook/",
         "fingerprint": "933196690767de83451e164a7225a992dba2d0360859caeb4cb74b831a72b55a",
@@ -8808,46 +8760,10 @@
         "quarantined": true
       },
       {
-        "sourceId": "meta-product-news-rss",
-        "itemKey": "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/",
-        "fingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
-        "locale": "ja",
-        "failureCount": 5,
-        "lastFailureAt": "2026-09-23T10:27:45Z",
-        "nextRetryAt": null,
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": true
-      },
-      {
-        "sourceId": "meta-product-news-rss",
-        "itemKey": "https://about.fb.com/news/2026/09/introducing-muse-small-business/",
-        "fingerprint": "f7871a98e4dfe752148f0654ca55f84cf8e7f82606627b88131cb4ba515d3ab2",
-        "locale": "ja",
-        "failureCount": 1,
-        "lastFailureAt": "2026-09-29T13:20:20Z",
-        "nextRetryAt": "2026-09-29T14:20:20Z",
-        "lastFailureCode": "response_invalid_shape",
-        "lastProviderErrorCode": null,
-        "quarantined": false
-      },
-      {
         "sourceId": "social-media-today-meta-ads",
         "itemKey": "https://www.socialmediatoday.com/news/can-meta-be-trusted-with-user-data-to-power-its-ai-agents/831446/",
         "fingerprint": "29702f759b8334876c56dc11efa6decb7cb0d514b41a7e766277ce2aa95137e2",
         "locale": "en",
-        "failureCount": 2,
-        "lastFailureAt": "2026-09-29T13:20:20Z",
-        "nextRetryAt": "2026-09-29T15:20:20Z",
-        "lastFailureCode": "response_invalid_shape",
-        "lastProviderErrorCode": null,
-        "quarantined": false
-      },
-      {
-        "sourceId": "social-media-today-meta-ads",
-        "itemKey": "https://www.socialmediatoday.com/news/can-meta-be-trusted-with-user-data-to-power-its-ai-agents/831446/",
-        "fingerprint": "29702f759b8334876c56dc11efa6decb7cb0d514b41a7e766277ce2aa95137e2",
-        "locale": "ja",
         "failureCount": 2,
         "lastFailureAt": "2026-09-29T13:20:20Z",
         "nextRetryAt": "2026-09-29T15:20:20Z",
@@ -8884,12 +8800,12 @@
         "itemKey": "https://www.socialmediatoday.com/news/meta-highlights-rising-brand-opportunities-in-womens-sports/828348/",
         "fingerprint": "c40906d09211e86d39ab33460b54614334f5d56c28cb7d8c403bcd7456f8c6f3",
         "locale": "ja",
-        "failureCount": 4,
-        "lastFailureAt": "2026-09-25T05:01:44Z",
-        "nextRetryAt": "2026-09-25T13:01:44Z",
-        "lastFailureCode": "rate_limited_429",
-        "lastProviderErrorCode": "rate_limit_exceeded",
-        "quarantined": false
+        "failureCount": 5,
+        "lastFailureAt": "2026-10-03T13:32:27Z",
+        "nextRetryAt": null,
+        "lastFailureCode": "response_invalid_shape",
+        "lastProviderErrorCode": null,
+        "quarantined": true
       },
       {
         "sourceId": "social-media-today-meta-ads",

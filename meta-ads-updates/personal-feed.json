@@ -113,25 +113,25 @@
             }
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Muse、小規模事業向けに新スキルとコネクタを拡充",
+            "summary": "今月初め、米国・カナダ向けのパーソナルAIエージェントMuseは、新しいスキルとInstagram、Facebook、Meta広告、Canvaなど数十のコネクタを追加し、既存のツールで小規模事業がタスクを自動化できるようにしました。サービスは多くの機能が無料で、サブスクリプションプランも提供され、パートナーは muse.ai/platform から応募できます。",
             "inputHash": "24f023969cfd86b1c320e3de38054decdac457396ba568ee95e6d4a16bbefe4d",
-            "generatedAt": null,
+            "generatedAt": "2026-10-03T13:32:27Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Muse、小規模事業向けに新スキルとコネクタを拡充",
                 "inputHash": "24f023969cfd86b1c320e3de38054decdac457396ba568ee95e6d4a16bbefe4d",
-                "generatedAt": null,
+                "generatedAt": "2026-10-03T13:32:27Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "今月初め、米国・カナダ向けのパーソナルAIエージェントMuseは、新しいスキルとInstagram、Facebook、Meta広告、Canvaなど数十のコネクタを追加し、既存のツールで小規模事業がタスクを自動化できるようにしました。サービスは多くの機能が無料で、サブスクリプションプランも提供され、パートナーは muse.ai/platform から応募できます。",
                 "inputHash": "24f023969cfd86b1c320e3de38054decdac457396ba568ee95e6d4a16bbefe4d",
-                "generatedAt": null,
+                "generatedAt": "2026-10-03T13:32:27Z",
                 "reviewedAt": null
               }
             }
@@ -390,17 +390,17 @@
           },
           "ja": {
             "status": "missing",
-            "shortHeadline": null,
+            "shortHeadline": "MetaはユーザーデータをAIエージェントに活用することを信頼できるか？",
             "summary": null,
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": null,
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "MetaはユーザーデータをAIエージェントに活用することを信頼できるか？",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-10-03T13:32:27Z",
                 "reviewedAt": null
               },
               "summary": {
@@ -1978,17 +1978,17 @@
           },
           "ja": {
             "status": "missing",
-            "shortHeadline": null,
+            "shortHeadline": "Museの紹介：誰でも使える世界初のパーソナルAIエージェント",
             "summary": null,
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": null,
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Museの紹介：誰でも使える世界初のパーソナルAIエージェント",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-10-03T13:32:27Z",
                 "reviewedAt": null
               },
               "summary": {
@@ -2462,17 +2462,17 @@
           },
           "ja": {
             "status": "missing",
-            "shortHeadline": null,
+            "shortHeadline": "Facebook広告15年で廃止された15の機能",
             "summary": null,
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": null,
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Facebook広告15年で廃止された15の機能",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-10-03T13:32:27Z",
                 "reviewedAt": null
               },
               "summary": {
@@ -3366,17 +3366,17 @@
           },
           "ja": {
             "status": "missing",
-            "shortHeadline": null,
+            "shortHeadline": "Meta Business SDK バージョン 26.0.0",
             "summary": null,
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": null,
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Meta Business SDK バージョン 26.0.0",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-10-03T13:32:27Z",
                 "reviewedAt": null
               },
               "summary": {
@@ -3919,17 +3919,17 @@
           },
           "ja": {
             "status": "missing",
-            "shortHeadline": null,
+            "shortHeadline": "インスタントフォームなどのリードキャプチャAIエージェント",
             "summary": null,
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": null,
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "インスタントフォームなどのリードキャプチャAIエージェント",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-10-03T13:32:27Z",
                 "reviewedAt": null
               },
               "summary": {
@@ -5522,17 +5522,17 @@
           },
           "ja": {
             "status": "missing",
-            "shortHeadline": null,
+            "shortHeadline": "Meta Ads AI コネクタとClaude：設定、利用方法、リスク",
             "summary": null,
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
             "generatedAt": null,
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Meta Ads AI コネクタとClaude：設定、利用方法、リスク",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-10-03T13:32:27Z",
                 "reviewedAt": null
               },
               "summary": {
