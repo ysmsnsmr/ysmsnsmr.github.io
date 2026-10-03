@@ -94,7 +94,7 @@ GroqのAPIキーがない、生成に失敗する、または出力契約に合�
 
 理由コードは調査の入口であり、記事本文やGroqの応答内容を出すものではありません。タイトル、RSS説明文、release notes、Groqの応答や例外本文はログに出しません。
 
-既存の`missing`を確認する場合は、手動workflow `Meta Ads Personal Feed Japanese presentation backfill` を使います。最初は `presentation_limit=1` で実行し、`generated=1` と `failed=0` を確認してから、必要に応じて最大50件まで増やします。このworkflowも現在のRSS/APIを取得して一時文脈を作るため、すでにRSS/APIから消えた古い記事の要約は生成しません。stateには本文を保存しない設計のため、そのような記事を要約するには個別取得の別設計が必要です。
+公開中の日本語`missing`を補完する場合は、手動workflow `Meta Ads Personal Feed Japanese presentation backfill` を使います。最初は `presentation_limit=1` で実行し、ログの `PUBLISHED_JA_BACKFILL` にある `completed` / `headlineOnly` / `failed` を確認してから、必要に応じて最大50件まで増やします。対象はその時点の公開feedに載る記事だけです。既存stateの英語要約がある記事は英語見出し・要約から日本語2項目を作り、英語要約がない記事は原文タイトルから日本語見出しだけを作ります。後者では要約を推測して埋めません。RSS/APIやJevは呼ばず、取得日時と掲載記事の並びを保持します。手動実行は公開中の日本語欠落だけに限定して隔離中の項目も再試行し、失敗回数は既存の隔離キューで記録します。記事がすでに公開feedから外れている場合は対象になりません。
 
 ## 画面の使い方
 

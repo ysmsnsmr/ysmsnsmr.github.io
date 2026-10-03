@@ -36,6 +36,7 @@ from meta_ads_tracker_publication import write_json
 from meta_ads_personal_feed_presentation import (
     PresentationError,
     request_english_presentation_strict,
+    request_japanese_backfill,
     request_plaintext_presentation,
     request_presentation,
 )
@@ -3112,6 +3113,146 @@ def collect_and_write(
     return feed
 
 
+def backfill_published_japanese(
+    config: dict[str, Any],
+    state: dict[str, Any],
+    feed: dict[str, Any],
+    manual_exclusions: frozenset[str],
+    now: datetime,
+    limit: int,
+    translate: Callable[[str, str | None, dict[str, Any]], dict[str, str]],
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, int]]:
+    """Fill missing Japanese fields for currently published items without fetching sources."""
+    if state.get("schemaVersion") != STATE_V5_SCHEMA_VERSION or feed.get("schemaVersion") != FEED_V5_SCHEMA_VERSION:
+        raise ContractError("published Japanese backfill requires current v5 state and feed")
+    validate_state(state, config)
+    validate_feed(feed, config)
+    policy = config["policies"]["bilingualPresentation"]
+    request_limit = _presentation_request_limit(limit, policy)
+    if build_feed(state, config, feed["generatedAt"], manual_exclusions) != feed:
+        raise ContractError("public feed and state differ; run the collector before backfill")
+
+    next_state = copy.deepcopy(state)
+    queue = _retry_queue_map(_migrate_presentation_retry_queue(next_state.get("presentationRetryQueue")))
+    records: dict[str, tuple[str, str, dict[str, Any]]] = {}
+    for source_id, source_state in next_state["sources"].items():
+        for key, record in source_state["items"].items():
+            item_id = f"{source_id}-{record['fingerprint'][:20]}"
+            if item_id in records:
+                raise ContractError("published Japanese backfill found a duplicate item ID")
+            records[item_id] = (source_id, key, record)
+
+    stats = {"eligible": 0, "attempted": 0, "completed": 0, "headlineOnly": 0, "failed": 0}
+    generated_at = _now(now)
+    for item in feed["items"]:
+        match = records.get(item["id"])
+        if match is None or match[2]["url"] != item["url"]:
+            raise ContractError("published Japanese backfill cannot resolve a public item")
+        source_id, item_key, record = match
+        presentation = record["presentation"]
+        ja = presentation["locales"]["ja"]["fields"]
+        en = presentation["locales"]["en"]["fields"]
+        missing_headline = ja["shortHeadline"]["status"] == "missing"
+        missing_summary = ja["summary"]["status"] == "missing"
+        english_summary = en["summary"]["value"] if missing_summary else None
+        if not (missing_headline or (missing_summary and english_summary)):
+            continue
+        stats["eligible"] += 1
+        if stats["attempted"] >= request_limit:
+            continue
+        stats["attempted"] += 1
+        title = en["shortHeadline"]["value"] or record["title"]
+        try:
+            generated = translate(title, english_summary, policy)
+            if english_summary:
+                record["presentation"] = _merge_locale_presentation(
+                    presentation, record["fingerprint"], "ja", generated, generated_at,
+                    presentation["generatorRevision"],
+                )
+            else:
+                headline = _text(generated["shortHeadlineJa"], "Japanese backfill headline")
+                if len(headline) > policy["shortHeadlineMaxChars"]:
+                    raise PresentationError("short_headline_invalid")
+                updated = copy.deepcopy(presentation)
+                fields = updated["locales"]["ja"]["fields"]
+                fields["shortHeadline"] = _machine_presentation_field(
+                    headline, fields["shortHeadline"]["inputHash"], generated_at
+                )
+                updated["locales"]["ja"] = _locale_from_fields(fields)
+                record["presentation"] = updated
+            queue.pop(_retry_queue_key(source_id, item_key, "ja"), None)
+            if _locale_presentation_complete(record["presentation"], "ja"):
+                stats["completed"] += 1
+            else:
+                stats["headlineOnly"] += 1
+        except (KeyError, PresentationError, ValueError, OSError) as error:
+            _record_retry_failure(
+                queue, source_id, item_key, record["fingerprint"], "ja",
+                _presentation_failure_code(error), generated_at,
+                provider_error_code=_provider_error_code(error),
+            )
+            stats["failed"] += 1
+    if stats["attempted"]:
+        next_state["updatedAt"] = generated_at
+        next_state["presentationRetryQueue"] = _retry_queue_payload(queue)
+    next_feed = build_feed(next_state, config, feed["generatedAt"], manual_exclusions)
+    if [item["id"] for item in next_feed["items"]] != [item["id"] for item in feed["items"]]:
+        raise ContractError("published Japanese backfill changed the public item list")
+    validate_state(next_state, config)
+    validate_feed(next_feed, config)
+    return next_feed, next_state, stats
+
+
+def backfill_published_japanese_and_write(
+    config_path: Path,
+    state_path: Path,
+    output_path: Path,
+    manual_exclusions_path: Path,
+    timeout: float,
+    limit: int,
+    *,
+    now: datetime | None = None,
+    translate: Callable[[str, str | None, dict[str, Any]], dict[str, str]] | None = None,
+) -> dict[str, int]:
+    config = load_config(config_path)
+    manual_exclusions = load_manual_exclusions(manual_exclusions_path, config)
+    state = json.loads(state_path.read_text(encoding="utf-8"))
+    feed = json.loads(output_path.read_text(encoding="utf-8"))
+    if translate is None:
+        setting = os.environ.get("META_ADS_PERSONAL_FEED_JA_ENABLED", "").strip().lower() or "true"
+        if setting != "true":
+            raise ContractError("published Japanese backfill requires META_ADS_PERSONAL_FEED_JA_ENABLED=true or unset")
+        api_key = os.environ.get("GROQ_API_KEY", "").strip()
+        if not api_key:
+            raise ContractError("published Japanese backfill requires GROQ_API_KEY")
+        model = os.environ.get("META_ADS_PERSONAL_FEED_GROQ_MODEL", "").strip() or "openai/gpt-oss-120b"
+        next_request_at = 0.0
+
+        def translate(title: str, english_summary: str | None, policy: dict[str, Any]) -> dict[str, str]:
+            nonlocal next_request_at
+            delay = max(0.0, next_request_at - time.monotonic())
+            if delay:
+                time.sleep(delay)
+            try:
+                return request_japanese_backfill(
+                    api_key=api_key, model=model, title=title, english_summary=english_summary,
+                    short_headline_max_chars=policy["shortHeadlineMaxChars"],
+                    summary_max_chars=policy["summaryMaxChars"], timeout=timeout,
+                    max_retry_delay_seconds=policy["maxRetryDelaySeconds"],
+                )
+            finally:
+                next_request_at = time.monotonic() + policy["minRequestIntervalSeconds"]
+
+    next_feed, next_state, stats = backfill_published_japanese(
+        config, state, feed, manual_exclusions, now or datetime.now(timezone.utc), limit, translate
+    )
+    if next_feed != feed:
+        write_json(output_path, next_feed)
+    if next_state != state:
+        write_json(state_path, next_state)
+    return stats
+
+
 def apply_manual_exclusions_to_public_feed(
     config_path: Path,
     state_path: Path,
@@ -3151,6 +3292,11 @@ def main() -> int:
         action="store_true",
         help="rebuild the public feed from saved state without fetching or model requests",
     )
+    parser.add_argument(
+        "--published-ja-backfill-only",
+        action="store_true",
+        help="translate missing Japanese fields in the current public feed without fetching sources",
+    )
     parser.add_argument("--timeout", type=float, default=30.0)
     parser.add_argument("--presentation-limit", type=_parse_presentation_limit, default=None)
     parser.add_argument("--jev-routing-report", type=Path, default=None)
@@ -3171,6 +3317,20 @@ def main() -> int:
         help="with --retry-json-validate-failed, release reviewed legacy quarantined HTTP 400 entries",
     )
     args = parser.parse_args()
+    if args.published_ja_backfill_only:
+        if args.apply_manual_exclusions_only or args.reseed_source or args.retry_failed or args.retry_json_validate_failed or args.retry_legacy_http_400:
+            print("FAIL: published Japanese backfill cannot be combined with collection or retry options", file=sys.stderr)
+            return 1
+        try:
+            stats = backfill_published_japanese_and_write(
+                args.config, args.state, args.output, args.manual_exclusions,
+                args.timeout, args.presentation_limit or 1,
+            )
+        except (ContractError, OSError, ValueError, json.JSONDecodeError) as error:
+            print(f"FAIL: {error}", file=sys.stderr)
+            return 1
+        print("PUBLISHED_JA_BACKFILL: " + " ".join(f"{key}={value}" for key, value in stats.items()))
+        return 0
     if args.apply_manual_exclusions_only:
         try:
             feed = apply_manual_exclusions_to_public_feed(

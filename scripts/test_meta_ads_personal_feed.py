@@ -44,6 +44,8 @@ from meta_ads_personal_feed import (
     _presentation_stats,
     _record_generation_path,
     PresentationOutput,
+    backfill_published_japanese,
+    build_feed,
     collect,
     collect_and_write,
     main,
@@ -1490,6 +1492,95 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertNotIn("Meta expands Ads Manager", json.dumps(stats))
         self.assertEqual(sum(item["presentation"]["locales"]["en"]["status"] == "machine" for item in feed["items"]), 1)
         validate_state(next_state, self.config)
+
+    def test_published_japanese_backfill_uses_saved_text_and_only_public_items(self) -> None:
+        original_feed, state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1, NOW, self.fetcher(),
+        )
+        excluded = frozenset({original_feed["items"][-1]["url"]})
+        selected = original_feed["items"][:2]
+        source_id = selected[0]["sourceId"]
+        english_record = next(
+            record for record in state["sources"][source_id]["items"].values()
+            if record["url"] == selected[0]["url"]
+        )
+        english_record["presentation"] = _merge_locale_presentation(
+            english_record["presentation"], english_record["fingerprint"], "en",
+            {"shortHeadlineEn": "English headline", "summaryEn": "Verified English summary"},
+            "2026-08-29T09:00:00Z",
+        )
+        title_item = selected[1]
+        title_key, title_record = next(
+            (key, record) for key, record in state["sources"][title_item["sourceId"]]["items"].items()
+            if record["url"] == title_item["url"]
+        )
+        queue = {}
+        for _ in range(5):
+            personal_feed._record_retry_failure(
+                queue, title_item["sourceId"], title_key, title_record["fingerprint"],
+                "ja", "response_invalid_shape", "2026-08-29T09:00:00Z",
+            )
+        state["presentationRetryQueue"] = personal_feed._retry_queue_payload(queue)
+        feed = build_feed(state, self.config, original_feed["generatedAt"], excluded)
+        calls: list[tuple[str, str | None]] = []
+
+        def translate(title: str, english_summary: str | None, _policy: dict) -> dict[str, str]:
+            calls.append((title, english_summary))
+            if english_summary:
+                return {"shortHeadlineJa": "日本語見出し", "summaryJa": "日本語の要約"}
+            return {"shortHeadlineJa": "タイトルの日本語訳"}
+
+        updated_feed, updated_state, stats = backfill_published_japanese(
+            self.config, state, feed, excluded, NOW.replace(day=30), 2, translate,
+        )
+        self.assertEqual(stats, {"eligible": 3, "attempted": 2, "completed": 1, "headlineOnly": 1, "failed": 0})
+        self.assertEqual(calls[0], ("English headline", "Verified English summary"))
+        self.assertEqual(calls[1], (title_item["title"], None))
+        self.assertEqual([item["id"] for item in updated_feed["items"]], [item["id"] for item in feed["items"]])
+        self.assertEqual(updated_feed["generatedAt"], feed["generatedAt"])
+        self.assertEqual(updated_feed["items"][0]["presentation"]["locales"]["ja"]["status"], "machine")
+        title_fields = updated_feed["items"][1]["presentation"]["locales"]["ja"]["fields"]
+        self.assertEqual(title_fields["shortHeadline"]["value"], "タイトルの日本語訳")
+        self.assertEqual(title_fields["summary"]["status"], "missing")
+        self.assertFalse(any(entry["itemKey"] == title_key and entry["locale"] == "ja" for entry in updated_state["presentationRetryQueue"]["entries"]))
+        self.assertNotIn(original_feed["items"][-1]["url"], {item["url"] for item in updated_feed["items"]})
+        validate_state(updated_state, self.config)
+        validate_feed(updated_feed, self.config)
+
+    def test_published_japanese_backfill_rejects_stale_feed_without_requests(self) -> None:
+        feed, state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1, NOW, self.fetcher(),
+        )
+        stale = copy.deepcopy(feed)
+        stale["items"][0]["title"] = "Stale public title"
+        with self.assertRaisesRegex(ContractError, "public feed and state differ"):
+            backfill_published_japanese(
+                self.config, state, stale, frozenset(), NOW, 1,
+                lambda *_args: self.fail("stale feed must not call Groq"),
+            )
+
+    def test_published_japanese_backfill_failure_keeps_publication_and_saves_only_safe_code(self) -> None:
+        feed, state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1, NOW, self.fetcher(),
+        )
+
+        def fail(_title: str, _summary: str | None, _policy: dict) -> dict[str, str]:
+            raise ValueError("secret response body")
+
+        updated_feed, updated_state, stats = backfill_published_japanese(
+            self.config, state, feed, frozenset(), NOW.replace(day=30), 1, fail,
+        )
+        self.assertEqual(updated_feed, feed)
+        self.assertEqual(stats["failed"], 1)
+        self.assertEqual(len(updated_state["presentationRetryQueue"]["entries"]), 1)
+        self.assertEqual(updated_state["presentationRetryQueue"]["entries"][0]["lastFailureCode"], "response_invalid_shape")
+        self.assertNotIn("secret response body", json.dumps(updated_state))
 
     def test_source_pipeline_reports_safe_match_counts_without_source_content(self) -> None:
         pipeline: dict = {}
