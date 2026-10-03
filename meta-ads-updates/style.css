@@ -132,20 +132,17 @@ button:hover {
 }
 
 .unofficial-notice {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--tracker-space-2);
+  display: block;
   margin-bottom: var(--tracker-space-4);
-  padding: var(--tracker-space-3);
-  border: 1px solid #b78103;
-  border-radius: var(--tracker-radius-md);
-  background: #fff7df;
-  color: #6e4b00;
-  font-size: 0.875rem;
+  padding: var(--tracker-space-2) 0;
+  border-bottom: 1px solid var(--tracker-line);
+  color: var(--tracker-muted);
+  font-size: 0.8125rem;
 }
 
 .unofficial-notice strong {
-  color: #533800;
+  margin-right: var(--tracker-space-1);
+  color: var(--tracker-ink);
 }
 
 .unofficial-notice[hidden] {
@@ -225,7 +222,7 @@ h1 {
 }
 
 .masthead-copy {
-  max-width: 66ch;
+  max-width: none;
   margin: var(--tracker-space-2) 0 0;
   color: var(--tracker-muted);
   font-size: 0.95rem;
@@ -233,29 +230,26 @@ h1 {
 
 .week-stamp {
   margin: 0;
-  padding: var(--tracker-space-2) var(--tracker-space-3);
-  border: 1px solid var(--tracker-line);
-  border-radius: var(--tracker-radius-sm);
-  background: var(--tracker-surface);
-  color: var(--tracker-navy);
-  font-size: 0.875rem;
-  font-weight: 700;
+  padding: 0;
+  color: var(--tracker-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
   white-space: nowrap;
 }
 
 .control-panel {
-  display: grid;
-  gap: var(--tracker-space-3);
-  padding: var(--tracker-space-4);
-  border: 1px solid var(--tracker-line);
-  border-radius: var(--tracker-radius-md);
-  background: var(--tracker-surface);
-  box-shadow: var(--tracker-shadow);
+  display: block;
+  padding: 0 0 var(--tracker-space-4);
+  border-bottom: 1px solid var(--tracker-line);
+}
+
+#filter-heading {
+  margin-bottom: var(--tracker-space-2);
 }
 
 .filter-form {
   display: grid;
-  grid-template-columns: minmax(150px, 0.9fr) minmax(130px, 0.65fr) minmax(220px, 1.45fr) auto;
+  grid-template-columns: minmax(0, 1.8fr) minmax(150px, 0.8fr) minmax(150px, 0.8fr) auto;
   gap: var(--tracker-space-3);
   align-items: end;
 }
@@ -268,7 +262,7 @@ h1 {
 
 .filter-field label {
   color: var(--tracker-muted);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -278,14 +272,25 @@ h1 {
   padding: 0 var(--tracker-space-2);
 }
 
+.filter-field--query {
+  grid-column: 1 / -1;
+}
+
+.filter-field--query input {
+  min-height: 52px;
+  font-size: 1.0625rem;
+}
+
 .reset-button {
   padding: 0 var(--tracker-space-3);
-  color: var(--tracker-navy);
+  border: 0;
+  background: transparent;
+  color: var(--tracker-muted);
   font-weight: 700;
 }
 
 .result-summary {
-  margin: 0;
+  margin: var(--tracker-space-2) 0 0;
   color: var(--tracker-muted);
   font-size: 0.875rem;
 }
@@ -295,7 +300,7 @@ h1 {
 }
 
 .feed-group {
-  margin-top: var(--tracker-space-5);
+  margin-top: var(--tracker-space-4);
 }
 
 .feed-group[hidden] {
@@ -307,7 +312,7 @@ h1 {
   align-items: end;
   justify-content: space-between;
   gap: var(--tracker-space-3);
-  padding-bottom: var(--tracker-space-3);
+  padding-bottom: var(--tracker-space-2);
   border-bottom: 1px solid var(--tracker-line);
 }
 
@@ -332,16 +337,113 @@ h1 {
   list-style: none;
 }
 
-.update-list--personal .fact-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.update-list--personal {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  margin-top: 0;
 }
 
-.update-list--personal .source-link {
-  margin-top: auto;
+.update-list--personal > li {
+  min-width: 0;
 }
 
-.update-list--personal .detail-link {
-  margin-top: auto;
+.update-list--personal .update-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "title favorite" "meta favorite" "dates dates";
+  align-items: start;
+  gap: var(--tracker-space-1) var(--tracker-space-3);
+  height: auto;
+  padding: var(--tracker-space-3) 0;
+  border: 0;
+  border-bottom: 1px solid var(--tracker-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.update-list--personal .update-card h2 {
+  grid-area: title;
+  margin: 0;
+  font-size: clamp(1.0625rem, 1.8vw, 1.25rem);
+  line-height: 1.4;
+}
+
+.update-title-link {
+  display: inline-block;
+  min-height: var(--tracker-target-min);
+  padding: 2px 0;
+  color: var(--tracker-ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.update-title-link:hover {
+  color: var(--tracker-navy);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.update-title-link:focus-visible {
+  outline: 3px solid var(--tracker-focus);
+  outline-offset: 2px;
+}
+
+.update-list--personal .card-heading {
+  grid-area: meta;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--tracker-space-2);
+  align-items: center;
+}
+
+.update-list--personal .card-heading .origin-label {
+  display: inline;
+  min-height: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--tracker-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.update-list--personal .source-name {
+  display: inline;
+  margin-left: var(--tracker-space-2);
+  color: var(--tracker-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.update-list--personal .favorite-button {
+  grid-area: favorite;
+  align-self: start;
+  margin: 0;
+}
+
+.update-list--personal .list-dates {
+  grid-area: dates;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--tracker-space-3);
+  grid-column: 1 / -1;
+  color: var(--tracker-muted);
+  font-size: 0.75rem;
+}
+
+.update-list--personal .list-dates time + time::before {
+  content: "·";
+  margin-right: var(--tracker-space-3);
+}
+
+#sdk-group {
+  margin-top: var(--tracker-space-6);
+}
+
+#sdk-group-heading {
+  color: var(--tracker-muted);
+  font-size: 0.95rem;
 }
 
 .sdk-update-log {
@@ -386,34 +488,6 @@ h1 {
 
 .sdk-update-log-link:hover {
   text-decoration: underline;
-}
-
-@media (min-width: 761px) and (max-width: 1099px) {
-  .update-list--personal {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .update-list--personal > li {
-    min-width: 0;
-  }
-
-  .update-list--personal .update-card {
-    height: 100%;
-  }
-}
-
-@media (min-width: 1100px) {
-  .update-list--personal {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .update-list--personal > li {
-    min-width: 0;
-  }
-
-  .update-list--personal .update-card {
-    height: 100%;
-  }
 }
 
 .update-card {
@@ -769,7 +843,7 @@ h1 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .filter-field:nth-of-type(3),
+  .filter-field--query,
   .reset-button {
     grid-column: 1 / -1;
   }
@@ -792,6 +866,7 @@ h1 {
   }
 
   .reset-button {
-    width: 100%;
+    width: fit-content;
+    justify-self: end;
   }
 }
