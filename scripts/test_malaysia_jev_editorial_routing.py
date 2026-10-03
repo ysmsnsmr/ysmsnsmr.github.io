@@ -255,6 +255,74 @@ class MalaysiaJevEditorialRoutingTests(unittest.TestCase):
         self.assertNotIn("https://example.test/haze", rendered)
         self.assertEqual(output["items"], self.baseline["items"])
 
+    def test_covered_report_is_removed_before_budget_and_next_article_backfills(self) -> None:
+        reports = [
+            item("JPJ MyEG renewal announcement", "https://example.test/jpj-1"),
+            item("Another report of the JPJ MyEG announcement", "https://example.test/jpj-2"),
+            item("Separate Rapid KL service update", "https://example.test/rapid"),
+        ]
+        seen = []
+
+        def compare(pool, classified, **kwargs):
+            seen.append([row["jevDecision"] for row in classified["results"]])
+            return {
+                "status": "completed", "productionEffect": False,
+                "cohort": [{"id": index, "candidateRank": index} for index in range(1, 4)],
+                "coverageDecisions": [{"keep": 1, "omit": 2, "reason": "Same JPJ announcement"}],
+            }
+
+        with patch.object(routing, "TARGET_CARD_COUNT", 2):
+            output, report = routing.route_candidates(
+                payload(reports), payload([]), enabled=True, api_key="jev-key", timeout_seconds=1,
+                post_json=lambda *_: response("direct_life_impact"), event_enabled=True,
+                event_api_key="groq-key", event_observer=compare,
+            )
+        self.assertEqual(len(seen), 1)
+        self.assertEqual([row["title"] for row in output["items"]], [reports[0]["title"], reports[2]["title"]])
+        self.assertEqual(report["results"][1]["publicationDecision"], "excluded_covered_event")
+        self.assertEqual(report["results"][1]["coveredByCandidateRank"], 1)
+        self.assertEqual(report["eventCoverage"]["suppressedCount"], 1)
+        self.assertNotIn("jpj-1", json.dumps(report))
+
+    def test_distinct_updates_and_failed_comparison_keep_both(self) -> None:
+        reports = [
+            item("Morning weather alert in Selangor", "https://example.test/weather-morning"),
+            item("Evening weather alert in Perlis", "https://example.test/weather-evening"),
+        ]
+        for compare in (
+            lambda *args, **kwargs: {"status": "completed", "cohort": [], "coverageDecisions": []},
+            lambda *args, **kwargs: (_ for _ in ()).throw(TimeoutError("fixture")),
+        ):
+            output, report = routing.route_candidates(
+                payload(reports), payload([]), enabled=True, api_key="jev-key", timeout_seconds=1,
+                post_json=lambda *_: response("direct_life_impact"), event_enabled=True,
+                event_observer=compare,
+            )
+            self.assertEqual(len(output["items"]), 2)
+            self.assertEqual(report["eventCoverage"]["suppressedCount"], 0)
+
+    def test_unselected_representative_does_not_hide_other_report(self) -> None:
+        reports = [item("First", "https://example.test/first"), item("Second", "https://example.test/second")]
+        pool = payload(reports, post_relevance_policy={"source_limits": {"Fixture Source": 1}})
+        # A representative rejected by an earlier selection cannot cover the later report.
+        reports[0]["source"] = "Blocked Source"
+        pool["post_relevance_policy"]["source_limits"] = {"Blocked Source": 1}
+        third = item("Earlier blocked-source story", "https://example.test/earlier", source="Blocked Source")
+        pool["items"] = [third, *reports]
+        pool["post_relevance_policy"]["source_limits"] = {"Blocked Source": 1}
+        coverage = {
+            "status": "completed", "cohort": [{"id": 1, "candidateRank": 2}, {"id": 2, "candidateRank": 3}],
+            "coverageDecisions": [{"keep": 1, "omit": 2, "reason": "Equivalent"}],
+        }
+        output, report = routing.route_candidates(
+            pool, payload([]), enabled=True, api_key="jev-key", timeout_seconds=1,
+            post_json=lambda *_: response("direct_life_impact"), event_enabled=True,
+            event_observer=lambda *args, **kwargs: coverage,
+        )
+        self.assertEqual([row["title"] for row in output["items"]], [third["title"], reports[1]["title"]])
+        self.assertEqual(report["results"][1]["publicationDecision"], "excluded_source_diversity")
+        self.assertEqual(report["results"][2]["publicationDecision"], "selected")
+
 
 if __name__ == "__main__":
     unittest.main()

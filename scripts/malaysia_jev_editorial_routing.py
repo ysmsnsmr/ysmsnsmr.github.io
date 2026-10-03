@@ -20,6 +20,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from jev_shadow_transport import JevRequestError, post_jev_request
+from malaysia_event_match_observation import observe as observe_event_coverage
 from malaysia_jev_selector_shadow import (
     QUESTION_SET_VERSION,
     REQUESTED_MODEL_ID,
@@ -187,6 +188,10 @@ def route_candidates(
     api_key: str | None,
     timeout_seconds: float,
     post_json: PostJson = post_jev_request,
+    event_enabled: bool = False,
+    event_api_key: str | None = None,
+    event_model: str = "gpt-oss-120b",
+    event_observer: Callable[..., dict[str, Any]] = observe_event_coverage,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     """Return a routed payload or the untouched selector baseline.
 
@@ -246,8 +251,27 @@ def route_candidates(
     for index, item, answer in classified:
         by_choice[answer["choice"]].append((index, item))
 
+    coverage = {"status": "disabled", "productionEffect": False, "coverageDecisions": [], "cohort": []}
+    if event_enabled:
+        try:
+            coverage = event_observer(
+                candidate_pool, {"status": "applied", "results": report["results"]},
+                api_key=event_api_key, model_name=event_model,
+            )
+        except Exception:
+            coverage = {"status": "request_failed", "productionEffect": False, "coverageDecisions": [], "cohort": []}
+    report["eventCoverage"] = coverage
+    cohort_ranks = {row["id"]: row["candidateRank"] for row in coverage.get("cohort", [])}
+    covered_by = {
+        cohort_ranks[row["omit"]]: cohort_ranks[row["keep"]]
+        for row in coverage.get("coverageDecisions", [])
+        if coverage.get("status") == "completed"
+        and row["omit"] in cohort_ranks and row["keep"] in cohort_ranks
+    }
+
     selected: list[dict[str, Any]] = []
     selected_fingerprints: set[str] = set()
+    selected_ranks: set[int] = set()
     source_counts: Counter[str] = Counter()
     financial_counts: Counter[str] = Counter()
     results_by_fingerprint = {
@@ -259,13 +283,19 @@ def route_candidates(
         results_by_fingerprint[_fingerprint(item)]["publicationDecision"] = "excluded_unrelated_noise"
 
     for choice in CHOICE_ORDER:
-        for _, item in by_choice[choice]:
+        for rank, item in by_choice[choice]:
             fingerprint = _fingerprint(item)
             result = results_by_fingerprint[fingerprint]
             if fingerprint in selected_fingerprints:
                 continue
             if choice == "unclear" and str(item.get("link") or "") not in baseline_links:
                 result["publicationDecision"] = "excluded_unclear"
+                continue
+            representative_rank = covered_by.get(rank)
+            if representative_rank in selected_ranks:
+                result["publicationDecision"] = "excluded_covered_event"
+                result["coveredByCandidateRank"] = representative_rank
+                result["coveredByFingerprint"] = report["results"][representative_rank - 1]["itemFingerprint"]
                 continue
             source = str(item.get("source") or "")
             source_limit = policy["source_limits"].get(source, policy["default_source_limit"])
@@ -283,15 +313,24 @@ def route_candidates(
                 continue
             selected.append(_selected_item(item, choice))
             selected_fingerprints.add(fingerprint)
+            selected_ranks.add(rank)
             result["publicationDecision"] = "selected"
             source_counts[source] += 1
             if financial_bucket:
                 financial_counts[financial_bucket] += 1
 
+    coverage["productionEffect"] = bool(
+        any(result.get("publicationDecision") == "excluded_covered_event" for result in report["results"])
+    )
+    coverage["suppressedCount"] = sum(
+        result.get("publicationDecision") == "excluded_covered_event" for result in report["results"]
+    )
     routing = {
         "status": "applied",
         "applied": True,
-        "policy": "jev_relevance_then_diversity_and_editorial_budget",
+        "policy": "jev_relevance_then_event_coverage_then_diversity_and_editorial_budget",
+        "event_coverage_status": coverage["status"],
+        "event_coverage_suppressed_count": coverage["suppressedCount"],
         "target_card_count": policy["target_card_count"],
         "direct_life_impact_protected": True,
         "fixed_category_caps_applied": False,
@@ -312,6 +351,9 @@ def main() -> int:
     parser.add_argument("--output", required=True)
     parser.add_argument("--report-output", required=True)
     parser.add_argument("--timeout-seconds", type=float, default=15.0)
+    parser.add_argument("--event-coverage", action="store_true")
+    parser.add_argument("--event-model", default="gpt-oss-120b")
+    parser.add_argument("--event-report-output")
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--live", action="store_true")
     mode.add_argument("--disabled", action="store_true")
@@ -326,9 +368,17 @@ def main() -> int:
             enabled=args.live,
             api_key=os.environ.get("TYPESAFE_API_KEY", "").strip() or None,
             timeout_seconds=args.timeout_seconds,
+            event_enabled=args.event_coverage and args.live,
+            event_api_key=os.environ.get("GROQ_API_KEY", "").strip() or None,
+            event_model=args.event_model,
         )
         _write_json(Path(args.output), output)
         _write_json(Path(args.report_output), report)
+        if args.event_report_output:
+            _write_json(Path(args.event_report_output), report.get("eventCoverage") or {
+                "status": "skipped_routing_not_applied", "productionEffect": False,
+                "coverageDecisions": [], "cohort": [],
+            })
     except (OSError, ValueError, json.JSONDecodeError) as error:
         print(f"ERROR: editorial routing input failure: {error}")
         return 2

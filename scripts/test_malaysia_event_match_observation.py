@@ -27,19 +27,19 @@ def routing(choices: list[str], status: str = "applied") -> dict:
 
 
 class EventMatchObservationTests(unittest.TestCase):
-    def test_workflow_runs_observation_after_production_guard(self) -> None:
+    def test_workflow_runs_coverage_before_publication(self) -> None:
         workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/malaysia-rss-summary.yml").read_text()
-        self.assertLess(workflow.index("- name: Guard optional Groq production overwrite"),
-                        workflow.index("- name: Observe same-event Malaysia reports"))
-        self.assertIn("--routing-report \"${run_dir}/jev_editorial_routing.json\"", workflow)
+        self.assertIn("--event-coverage", workflow)
+        self.assertIn("--event-report-output \"${run_dir}/event_match_observation.json\"", workflow)
+        self.assertNotIn("- name: Observe same-event Malaysia reports", workflow)
 
-    def test_one_call_compares_positive_candidates_and_preserves_publication(self) -> None:
+    def test_one_call_compares_positive_candidates(self) -> None:
         pool = {"items": [candidate(index) for index in range(1, 5)]}
         calls = []
 
         def request(**kwargs):
             calls.append(kwargs)
-            return SimpleNamespace(parsed={"pairs": [{"first": 1, "second": 2}]}, diagnostic={"transport_status": "success"})
+            return SimpleNamespace(parsed={"omissions": [{"keep": 1, "omit": 2, "reason": "Same announcement and figures"}]}, diagnostic={"transport_status": "success"})
 
         result = observe(
             pool, routing(["direct_life_impact", "direct_life_impact", "unrelated_noise", "public_information"]),
@@ -49,9 +49,9 @@ class EventMatchObservationTests(unittest.TestCase):
         self.assertFalse(result["productionEffect"])
         self.assertEqual(len(calls), 1)
         self.assertEqual([row["candidateRank"] for row in result["cohort"]], [1, 2, 4])
-        self.assertEqual(result["sameEventPairs"], [{"first": 1, "second": 2}])
-        self.assertEqual(calls[0]["json_schema_name"], "malaysia_news_same_event_pairs_v1")
-        self.assertIn("different times", calls[0]["messages"][0]["content"])
+        self.assertEqual(result["coverageDecisions"], [{"keep": 1, "omit": 2, "reason": "Same announcement and figures"}])
+        self.assertEqual(calls[0]["json_schema_name"], "malaysia_news_event_coverage_v2")
+        self.assertIn("important new information", calls[0]["messages"][0]["content"])
         self.assertNotIn("fixture-key", str(result))
         self.assertNotIn("https://example.test", str(result))
 
@@ -72,20 +72,20 @@ class EventMatchObservationTests(unittest.TestCase):
         result = observe(
             pool, routing(["direct_life_impact", "public_information"]), api_key="key",
             model_name="gpt-oss-120b",
-            request=lambda **_: SimpleNamespace(parsed={"pairs": [{"first": 1, "second": 3}]}, diagnostic={}),
+            request=lambda **_: SimpleNamespace(parsed={"omissions": [{"keep": 1, "omit": 3, "reason": "same"}]}, diagnostic={}),
         )
-        self.assertEqual(result["status"], "invalid_pairs")
-        self.assertEqual(result["sameEventPairs"], [])
+        self.assertEqual(result["status"], "invalid_coverage")
+        self.assertEqual(result["coverageDecisions"], [])
 
     def test_malformed_json_object_response_is_not_marked_completed(self) -> None:
         pool = {"items": [candidate(1), candidate(2)]}
         result = observe(
             pool, routing(["direct_life_impact", "public_information"]), api_key="key",
             model_name="gpt-oss-120b",
-            request=lambda **_: SimpleNamespace(parsed={"pairs": [{"first": "1", "second": 2}]}, diagnostic={}),
+            request=lambda **_: SimpleNamespace(parsed={"omissions": [{"keep": "1", "omit": 2, "reason": "same"}]}, diagnostic={}),
         )
-        self.assertEqual(result["status"], "invalid_pairs")
-        self.assertEqual(result["sameEventPairs"], [])
+        self.assertEqual(result["status"], "invalid_coverage")
+        self.assertEqual(result["coverageDecisions"], [])
 
     def test_request_failure_is_observation_only(self) -> None:
         pool = {"items": [candidate(1), candidate(2)]}
@@ -96,7 +96,33 @@ class EventMatchObservationTests(unittest.TestCase):
         result = observe(pool, routing(["direct_life_impact", "public_information"]),
                          api_key="key", model_name="gpt-oss-120b", request=failure)
         self.assertEqual(result["status"], "request_failed")
-        self.assertEqual(result["sameEventPairs"], [])
+        self.assertEqual(result["coverageDecisions"], [])
+
+    def test_rejects_chained_and_ambiguous_omissions(self) -> None:
+        pool = {"items": [candidate(index) for index in range(1, 4)]}
+        for decisions in (
+            [{"keep": 1, "omit": 2, "reason": "same"}, {"keep": 2, "omit": 3, "reason": "same"}],
+            [{"keep": 1, "omit": 3, "reason": "same"}, {"keep": 2, "omit": 3, "reason": "same"}],
+        ):
+            result = observe(
+                pool, routing(["direct_life_impact"] * 3), api_key="key", model_name="gpt-oss-120b",
+                request=lambda **_: SimpleNamespace(parsed={"omissions": decisions}, diagnostic={}),
+            )
+            self.assertEqual(result["status"], "invalid_coverage")
+            self.assertEqual(result["coverageDecisions"], [])
+
+    def test_truncated_description_cannot_justify_omission(self) -> None:
+        pool = {"items": [candidate(1), candidate(2)]}
+        pool["items"][1]["description"] = "a" * 351
+        result = observe(
+            pool, routing(["direct_life_impact"] * 2), api_key="key", model_name="gpt-oss-120b",
+            request=lambda **_: SimpleNamespace(
+                parsed={"omissions": [{"keep": 1, "omit": 2, "reason": "same"}]}, diagnostic={}
+            ),
+        )
+        self.assertEqual(result["status"], "completed")
+        self.assertEqual(result["coverageDecisions"], [])
+        self.assertEqual(result["discardedTruncatedInputCount"], 1)
 
     def test_request_has_bounded_cohort(self) -> None:
         pool = {"items": [candidate(index) for index in range(1, MAX_CANDIDATES + 8)]}
