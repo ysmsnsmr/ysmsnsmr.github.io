@@ -131,15 +131,22 @@
   function personalCard(item, source) {
     const li = make("li");
     const card = make("article", `update-card update-card--${source.classification}`);
+    const itemPresentation = presentation(item);
     const heading = make("div", "card-heading");
     const official = source.classification === "official";
     heading.append(make("span", official ? "origin-label origin-label--official" : "origin-label origin-label--unofficial", official ? words.official : words.unofficial), make("p", "source-name", source.name));
     const favorite = favoriteButton(item);
-    const titleLink = make("a", "update-title-link", headline(item));
+    const titleText = itemPresentation.shortHeadline || item.title;
+    const titleLink = make("a", "update-title-link", titleText);
     titleLink.href = detailUrl(item);
-    titleLink.setAttribute("aria-label", headline(item));
+    titleLink.setAttribute("aria-label", titleText);
     const title = make("h2");
     title.append(titleLink);
+    const main = make("div", "update-main");
+    main.append(title);
+    if (itemPresentation.status === "machine" && itemPresentation.shortHeadline && itemPresentation.summary) {
+      main.append(make("p", "update-summary", itemPresentation.summary));
+    }
     const dates = make("div", "list-dates");
     for (const [label, value] of [[words.published, item.publishedDate], [words.updated, item.updatedDate]]) {
       if (!value) continue;
@@ -147,7 +154,7 @@
       date.dateTime = value;
       dates.append(date);
     }
-    card.append(title);
+    card.append(main);
     if (favorite) card.append(favorite);
     card.append(heading);
     if (dates.childElementCount) card.append(dates);

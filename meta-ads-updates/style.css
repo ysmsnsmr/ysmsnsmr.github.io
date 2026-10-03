@@ -362,11 +362,25 @@ h1 {
   box-shadow: none;
 }
 
-.update-list--personal .update-card h2 {
+.update-list--personal .update-main {
   grid-area: title;
+  min-width: 0;
+}
+
+.update-list--personal .update-card h2 {
   margin: 0;
   font-size: clamp(1.0625rem, 1.8vw, 1.25rem);
   line-height: 1.4;
+}
+
+.update-list--personal .update-summary {
+  overflow: hidden;
+  margin: var(--tracker-space-1) 0 0;
+  color: var(--tracker-muted);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .update-title-link {
