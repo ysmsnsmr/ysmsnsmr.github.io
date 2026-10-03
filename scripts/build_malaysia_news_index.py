@@ -386,21 +386,9 @@ def render_status_chips(day: NewsDay, generated: str) -> str:
 
 def render_item_card(item: NewsItem) -> str:
     headline = display_full_headline(item)
-    dek = f'<p class="focus-dek">{esc(item.conclusion)}</p>' if item.conclusion else ""
-    source = ""
-    if item.source_url:
-        source_label = item.source or "出典"
-        source = f'<a class="source-link" href="{esc(item.source_url)}">出典: {esc(source_label)}</a>'
-    elif item.source:
-        source = f'<span class="source-note">出典: {esc(item.source)}</span>'
-
     return f"""
         <article class="focus-card">
-          <p class="item-category">{esc(category_label(item.category))}</p>
           <h3>{esc(headline)}</h3>
-          {dek}
-
-          {source}
         </article>
     """
 
@@ -430,10 +418,12 @@ def render_latest_summary(day: NewsDay) -> str:
             <h2>{esc(format_date(day.date))}</h2>
             <p class="muted">期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。</p>
           </div>
-          <a class="primary-link" href="{daily_page_link(day)}">すべて読む</a>
         </div>
         <div class="focus-grid">
           {render_latest_items(day)}
+        </div>
+        <div class="today-footer">
+          <a class="primary-link" href="{daily_page_link(day)}">すべて読む</a>
         </div>
         {failed}
       </article>
@@ -688,12 +678,10 @@ def render_html(days: list[NewsDay]) -> str:
         latest_summary = render_latest_summary(latest).strip()
         status_chips = render_status_chips(latest, format_update_time(latest)).strip()
         recent_rows = render_recent(recent).strip()
-        primary_href = daily_page_link(latest)
     else:
         latest_summary = '<p class="muted">まだ記事がありません。</p>'
         status_chips = '<p class="muted">まだ記事がありません。</p>'
         recent_rows = '<p class="muted">まだ記事がありません。</p>'
-        primary_href = "#"
 
     return f"""<!doctype html>
 <html lang="ja">
@@ -749,13 +737,6 @@ def render_html(days: list[NewsDay]) -> str:
       border-radius: var(--radius-control);
     }}
     .subhead {{ max-width: 620px; margin-bottom: 0; color: var(--muted); }}
-    .header-actions {{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: flex-end;
-      align-items: center;
-    }}
     section + section {{ margin-top: 32px; }}
     .section-head {{
       display: flex;
@@ -812,10 +793,6 @@ def render_html(days: list[NewsDay]) -> str:
       box-shadow: var(--shadow);
     }}
     .today-head {{
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: flex-start;
       margin-bottom: 18px;
     }}
     .focus-grid {{
@@ -823,10 +800,12 @@ def render_html(days: list[NewsDay]) -> str:
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
     }}
-    .focus-card {{
+    .today-footer {{
       display: flex;
-      flex-direction: column;
-      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 18px;
+    }}
+    .focus-card {{
       min-width: 0;
       border: 1px solid var(--line);
       border-radius: var(--radius-card);
@@ -840,32 +819,6 @@ def render_html(days: list[NewsDay]) -> str:
       white-space: normal;
       word-break: normal;
       overflow-wrap: anywhere;
-    }}
-    .focus-dek {{
-      display: -webkit-box;
-      margin: 0;
-      overflow: hidden;
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.5;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 1;
-    }}
-    .item-category {{
-      align-self: flex-start;
-      margin-bottom: 0;
-      border-radius: var(--radius-pill);
-      background: var(--accent-soft);
-      padding: 4px 10px;
-      color: var(--accent-strong);
-      font-size: 0.82rem;
-      font-weight: 700;
-    }}
-    .source-link,
-    .source-note {{
-      margin-top: auto;
-      overflow-wrap: anywhere;
-      font-size: 0.86rem;
     }}
     .recent-list {{
       display: grid;
@@ -942,7 +895,6 @@ def render_html(days: list[NewsDay]) -> str:
       letter-spacing: 0.06em;
     }}
     .primary-link,
-    .secondary-link,
     .open-link {{
       flex: 0 0 auto;
       display: inline-flex;
@@ -962,10 +914,6 @@ def render_html(days: list[NewsDay]) -> str:
       border-color: var(--accent);
       background: var(--accent);
       color: var(--panel);
-      font-weight: 700;
-    }}
-    .secondary-link {{
-      color: var(--accent-strong);
       font-weight: 700;
     }}
     .markdown-link {{
@@ -1036,11 +984,6 @@ def render_html(days: list[NewsDay]) -> str:
         gap: 14px;
         align-items: start;
       }}
-      .header-actions {{
-        justify-content: stretch;
-        width: 100%;
-      }}
-      .header-actions a {{ flex: 1 1 100%; min-width: 0; }}
       .status-strip {{ margin-bottom: 24px; }}
       .status-chip {{
         min-height: 34px;
@@ -1048,10 +991,6 @@ def render_html(days: list[NewsDay]) -> str:
       }}
       .status-strip .markdown-link {{ margin-left: 0; }}
       .today-panel {{ padding: 18px; }}
-      .today-head {{
-        display: grid;
-        gap: 14px;
-      }}
       .primary-link {{
         width: 100%;
         min-height: 44px;
@@ -1091,11 +1030,7 @@ def render_html(days: list[NewsDay]) -> str:
     <header>
       <div>
         <h1>マレーシア生活ニュース</h1>
-        <p class="subhead">生活に関わるマレーシアニュースを朝夕に収集・要約しています。</p>
-      </div>
-      <div class="header-actions">
-        <a class="primary-link" href="{primary_href}">今日のまとめを読む</a>
-        <a class="secondary-link" href="#archive-heading">過去分を見る</a>
+        <p class="subhead">生活に関わるマレーシアニュースを毎朝収集・要約しています。</p>
       </div>
     </header>
     {status_chips}
