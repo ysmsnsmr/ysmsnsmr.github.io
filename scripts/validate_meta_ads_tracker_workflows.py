@@ -270,9 +270,11 @@ def main() -> int:
             fail("Personal Feed presentation backfill must build and validate the Personal Feed")
         if '--presentation-limit "${PRESENTATION_LIMIT}"' not in backfill_runs:
             fail("Personal Feed presentation backfill must pass its bounded environment input to the collector")
+        if "--published-ja-backfill-only" not in backfill_runs:
+            fail("Personal Feed Japanese backfill must target published items without fetching sources")
         if any(value in backfill_runs for value in ("meta_ads_tracker_collect.py", "meta_ads_tracker_weekly", "meta_ads_tracker_decisions", "meta_ads_tracker_groq.py")):
             fail("Personal Feed presentation backfill must not depend on candidate, weekly, decision, or Groq stages")
-        backfill_collect = next((step for step in backfill_steps if step.get("name") == "Generate bounded Japanese presentation backfill"), None)
+        backfill_collect = next((step for step in backfill_steps if step.get("name") == "Backfill published Japanese text without source fetches"), None)
         backfill_env = backfill_collect.get("env", {}) if isinstance(backfill_collect, dict) else {}
         if not isinstance(backfill_env, dict) or backfill_env.get("GROQ_API_KEY") != "${{ secrets.GROQ_API_KEY }}":
             fail("Personal Feed presentation backfill must provide the optional Japanese-presentation API key")

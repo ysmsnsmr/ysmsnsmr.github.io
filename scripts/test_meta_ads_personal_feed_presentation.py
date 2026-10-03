@@ -11,6 +11,7 @@ from meta_ads_personal_feed_presentation import (
     _messages,
     request_english_presentation,
     request_english_presentation_strict,
+    request_japanese_backfill,
     request_plaintext_presentation,
     request_presentation,
 )
@@ -31,6 +32,41 @@ class _Response:
 
 
 class PersonalFeedPresentationTest(unittest.TestCase):
+    @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
+    def test_published_backfill_never_invents_a_summary_from_title_only(self, urlopen) -> None:
+        urlopen.return_value = _Response({"choices": [{"message": {"content": "SHORT_HEADLINE: Meta広告の更新"}}]})
+        generated = request_japanese_backfill(
+            api_key="test-key", model="test-model", title="Meta Ads update",
+            english_summary=None, short_headline_max_chars=80,
+            summary_max_chars=360, timeout=1,
+        )
+        self.assertEqual(generated, {"shortHeadlineJa": "Meta広告の更新"})
+        payload = json.loads(urlopen.call_args.args[0].data)
+        self.assertNotIn("ENGLISH_SUMMARY", payload["messages"][1]["content"])
+        self.assertIn("do not create one", payload["messages"][0]["content"])
+
+    @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
+    def test_published_backfill_translates_saved_english_summary(self, urlopen) -> None:
+        urlopen.return_value = _Response({"choices": [{"message": {"content": "SHORT_HEADLINE: Meta広告の更新\nSUMMARY: Meta広告が更新されました。"}}]})
+        generated = request_japanese_backfill(
+            api_key="test-key", model="test-model", title="Meta Ads update",
+            english_summary="Meta Ads was updated.", short_headline_max_chars=80,
+            summary_max_chars=360, timeout=1,
+        )
+        self.assertEqual(generated, {"shortHeadlineJa": "Meta広告の更新", "summaryJa": "Meta広告が更新されました。"})
+        payload = json.loads(urlopen.call_args.args[0].data)
+        self.assertIn("Meta Ads was updated.", payload["messages"][1]["content"])
+
+    @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
+    def test_published_backfill_rejects_untranslated_english(self, urlopen) -> None:
+        urlopen.return_value = _Response({"choices": [{"message": {"content": "SHORT_HEADLINE: Meta Ads update"}}]})
+        with self.assertRaisesRegex(PresentationError, "short_headline_invalid"):
+            request_japanese_backfill(
+                api_key="test-key", model="test-model", title="Meta Ads update",
+                english_summary=None, short_headline_max_chars=80,
+                summary_max_chars=360, timeout=1,
+            )
+
     def request(self) -> dict:
         return request_presentation(
             api_key="test-key",
