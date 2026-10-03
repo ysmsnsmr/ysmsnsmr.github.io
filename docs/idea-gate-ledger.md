@@ -1317,3 +1317,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Implement the reviewed horizontal-list structure in an isolated branch and run the existing contract, functional, accessibility, and responsive UI checks.
 - Revisit when: Real articles with long headlines or metadata make the list hard to scan on mobile or desktop.; Search, filters, favorites, locale routes, or detail navigation do not remain clear and accessible.
+
+<!-- idea-gate:20261003-meta-ads-list-summary -->
+## Show an available article summary on one line below its list headline
+
+- Record ID: `20261003-meta-ads-list-summary`
+- Evaluated: 2026-10-03T21:50:00+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 90/100
+- Confidence: high - The requested first experience and required data are both present; only final visual fit needs verification.
+
+### Idea Card
+
+- Purpose: Help readers understand an update before opening its detail page
+- First experience: Completed English and Japanese presentations show a single clipped summary line below the headline
+- Scope and cost: A small UI-only change using existing published presentation data, with no new API calls or stored state
+- Continuation boundary: Keep the display if it improves scanning without crowding the list; remove or adjust it if mobile readability suffers
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 13/15 |
+| `evidence_and_learning` | 13/15 |
+| `expected_outcome` | 13/15 |
+| `scope_and_fit` | 15/15 |
+| `ownership_and_reversibility` | 19/20 |
+| **Total** | **90/100** |
+
+### Next Step
+
+- Action: Add a one-line summary to completed list items and verify it in English and Japanese at desktop and mobile widths.
+- Revisit when: Readers report that the extra line makes the list harder to scan.

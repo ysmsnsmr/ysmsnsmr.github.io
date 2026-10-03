@@ -341,6 +341,9 @@ try {
     assert(await page.locator(".detail-link").count() === 0, `${label}: redundant detail buttons must not be rendered`);
     assert(await page.locator(".source-link").count() === 0, `${label}: Personal Feed list must not expose article links directly`);
     assert((await page.locator(".update-card h2").allTextContents()).includes("Meta Ads APIの観測"), `${label}: generated Japanese headline is missing from the list`);
+    assert(await page.locator(".update-summary").count() === 2, `${label}: summaries must appear only for completed presentations`);
+    assert((await page.locator(".update-summary").allTextContents()).includes("Meta Ads APIに関する観測記事です。"), `${label}: completed Japanese summary is missing from the list`);
+    assert(await page.locator(".update-summary").first().evaluate((node) => getComputedStyle(node).whiteSpace) === "nowrap", `${label}: list summary must stay on one line`);
     const filterLayout = await page.evaluate(() => {
       const ids = [...document.querySelectorAll("#filter-form > .filter-field")].map((field) => field.classList.contains("filter-field--query") ? "query" : field.classList.contains("filter-field--source") ? "source" : "type");
       const rect = (selector) => {
@@ -447,6 +450,7 @@ try {
   const fieldsHeadline = fieldsItem.presentation.locales.ja.fields.shortHeadline.value;
   await fieldsList.goto(`${server.origin}/meta-ads-updates/ja/?personal-fixture=fields`, { waitUntil: "networkidle" });
   assert((await fieldsList.locator(".update-card h2").allTextContents()).includes(fieldsHeadline), "v3 fields list must retain a completed headline when the sibling summary is missing");
+  assert(await fieldsList.locator(`.update-title-link[href*="id=${fieldsItem.id}"]`).locator("xpath=../..").locator(".update-summary").count() === 0, "v3 fields list must omit missing Japanese summaries");
   await assertAccessibilityAndLayout(fieldsList, "personal-feed-v3-fields/desktop");
   await fieldsList.locator(`.update-title-link[href*="id=${fieldsItem.id}"]`).click();
   await fieldsList.waitForURL(/detail\.html\?/);
@@ -652,6 +656,7 @@ try {
   await englishList.goto(`${server.origin}/meta-ads-updates/?personal-fixture=v3&source=meta-product-news-rss&type=official&q=measurement`, { waitUntil: "networkidle" });
   assert(await englishList.locator("html").getAttribute("lang") === "en", "root route must be English");
   assert((await englishList.locator("#official-list h2").textContent()) === "Meta Ads measurement update", "English route must use the English overlay");
+  assert((await englishList.locator("#official-list .update-summary").textContent()) === "Meta announced an update for advertisers using measurement tools.", "English list must show its completed one-line summary");
   assert(await englishList.locator(".update-card").allTextContents().then((cards) => !cards.join(" ").includes("machine") && !cards.join(" ").includes("missing")), "list cards must not expose generation status");
   assert(await englishList.locator("#locale-ja").getAttribute("href").then((href) => href === "/meta-ads-updates/ja/?source=meta-product-news-rss&type=official&q=measurement&personal-fixture=v3"), "language switch must retain supported list filters");
   assert(await englishList.locator("#canonical-link").getAttribute("href") === "https://ysmsnsmr.github.io/meta-ads-updates/", "English list canonical is incorrect");
