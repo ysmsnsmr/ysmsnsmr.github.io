@@ -386,9 +386,11 @@ def render_status_chips(day: NewsDay, generated: str) -> str:
 
 def render_item_card(item: NewsItem) -> str:
     headline = display_full_headline(item)
+    dek = f'<p class="focus-dek">{esc(item.conclusion)}</p>' if item.conclusion else ""
     return f"""
         <article class="focus-card">
           <h3>{esc(headline)}</h3>
+          {dek}
         </article>
     """
 
@@ -821,6 +823,16 @@ def render_html(days: list[NewsDay]) -> str:
       white-space: normal;
       word-break: normal;
       overflow-wrap: anywhere;
+    }}
+    .focus-dek {{
+      display: -webkit-box;
+      margin: 0;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
     }}
     .recent-list {{
       display: grid;
