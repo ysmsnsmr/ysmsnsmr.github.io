@@ -801,10 +801,12 @@ def render_html(days: list[NewsDay]) -> str:
       gap: 12px;
     }}
     .today-footer {{
-      display: flex;
-      justify-content: flex-end;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
       margin-top: 18px;
     }}
+    .today-footer .primary-link {{ grid-column: 2; }}
     .focus-card {{
       min-width: 0;
       border: 1px solid var(--line);
@@ -999,6 +1001,8 @@ def render_html(days: list[NewsDay]) -> str:
         grid-template-columns: 1fr;
         gap: 12px;
       }}
+      .today-footer {{ grid-template-columns: 1fr; }}
+      .today-footer .primary-link {{ grid-column: 1; }}
       .focus-card h3 {{ white-space: normal; }}
       .section-head {{
         display: grid;
