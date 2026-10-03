@@ -18,7 +18,7 @@ this stage. It writes both outputs to the optional artifact:
 
 This distinction is intentional. Category and total limits are no longer used
 to decide which semantic candidates Jev sees. The limits are replaced after
-classification by one editorial budget of 15 cards.
+classification by one editorial budget of 20 cards.
 
 ## Public Display Categories
 
@@ -40,13 +40,13 @@ selection.
 
 | Jev choice | Publication handling |
 | --- | --- |
-| `direct_life_impact` | First priority within the 15-card editorial budget |
+| `direct_life_impact` | First priority within the 20-card editorial budget |
 | `public_information` | Fills remaining budget in deterministic candidate order |
 | `unclear` | Fills any remaining budget in deterministic candidate order |
 | `unrelated_noise` | Not included in the routed card set |
 
 `direct_life_impact` is protected from lower-priority candidates, but it is
-not an unlimited exception: the page remains bounded to 15 selected cards.
+not an unlimited exception: the page remains bounded to 20 selected cards.
 Each routing artifact records a stable fingerprint, candidate rank, baseline
 selection status, Jev choice, confidence, latency, and final publication
 decision. It never stores article text, URLs, raw provider responses, or
@@ -84,22 +84,30 @@ routing as stable:
 - selected/rendered URLs still match and the existing Groq/Markdown validators
   pass.
 
-## Same-Event Observation
+## Event Coverage Before Budget
 
-After production rendering and validation, `malaysia_event_match_observation.py`
-compares at most 24 Jev-classified `direct_life_impact` or
-`public_information` candidates in one additional GPT-OSS 120B request. It
-returns only pairs that appear to describe the same specific event or
-announcement. Same-topic reports, later developments, and different times or
-affected areas must remain separate. The input uses RSS titles and up to 350
-characters of description; it does not fetch article bodies.
+After Jev classification and before the 20-card budget, `malaysia_event_match_observation.py`
+compares at most 24 `direct_life_impact` or `public_information` candidates in
+one additional GPT-OSS 120B request. It may mark a later report as omittable
+only when an earlier, higher-priority report contains all important reader
+information. Sharing a topic or event is insufficient. Distinct times,
+affected areas, services, audiences, status changes, and reader actions remain
+separate. The input uses RSS titles and up to 350 characters of description;
+it does not fetch article bodies. Sparse descriptions, truncated comparison
+inputs, and uncertainty retain both reports.
 
-`event_match_observation.json` contains candidate ranks, fingerprints, matched
-pair IDs, status, and bounded API diagnostics. The IDs can be resolved against
-`editorial_candidate_pool.json`. It does not store model prose or change the
-15-card routing result, summary input, displayed links, or publication. A
-missing key, failed request, or invalid pair list leaves the match list empty.
-The workflow writes `event_match_observation_status.txt` for quick inspection.
-Set `MALAYSIA_NEWS_EVENT_MATCH_OBSERVATION_ENABLED=false` to stop only this
-additional call; leaving the variable unset enables it when Groq rendering
-is enabled.
+The router removes an omittable report only if its representative was actually
+selected. It then fills the freed slot from remaining candidates.
+`event_match_observation.json` records the bounded cohort, directional coverage
+decisions, short reasons, suppression count, and API diagnostics. The Jev report
+marks each excluded item and its representative rank/fingerprint. Article text,
+URLs, and credentials are not stored in these reports. Request failure, invalid
+contract, or missing key leaves all candidates eligible. The existing
+`event_match_observation_status.txt` name is retained for artifact continuity.
+
+Set `MALAYSIA_NEWS_EVENT_COVERAGE_ENABLED=false` to stop this call and return
+to Jev's previous selection behavior without disabling Jev or Groq summaries.
+The older `MALAYSIA_NEWS_EVENT_MATCH_OBSERVATION_ENABLED=false` setting also
+continues to disable the call. When both are unset, coverage comparison runs
+while Jev routing is enabled. The
+document-level RSS-only rollback remains unchanged.
