@@ -1245,3 +1245,38 @@ must use `supersedes` instead of editing an earlier entry.
 - Action: Set one 03:45 MYT schedule, raise the Jev target and Groq request cap to 20, then inspect the next seven daily artifacts.
 - Revisit when: More than 15 articles consistently improve the daily page without diluting relevance; Jev or Groq failures, RSS fallback volume, or actual API cost increase beyond the observed baseline
 - Supersedes: `20260927t120000-malaysia-twice-daily-freshness`
+
+<!-- idea-gate:20261003t120700-malaysia-pickup-summary-preview -->
+## TOPページのピックアップ3件に要約文を再表示する
+
+- Record ID: `20261003t120700-malaysia-pickup-summary-preview`
+- Evaluated: 2026-10-03T12:07:00+08:00
+- Project: ysmsnsmr.github.io / Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 94/100
+- Confidence: high - 対象表示と以前の実装がスクリーンショット・Git履歴の両方から確認できる
+
+### Idea Card
+
+- Purpose: 記事一覧で各記事の概要を読めるようにし、出典を開く前に内容を把握する
+- First experience: TOPのピックアップ3カードで見出しの下に各記事の要約を1行表示する
+- Scope and cost: 既存カードのHTML/CSSと表示テストのみを変更し、既存の1行省略を使う
+- Continuation boundary: カードが読みやすく概要が役立てば継続し、表示が混雑する場合は要約表示だけを戻す
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 14/15 |
+| `evidence_and_learning` | 14/15 |
+| `expected_outcome` | 14/15 |
+| `scope_and_fit` | 15/15 |
+| `ownership_and_reversibility` | 19/20 |
+| **Total** | **94/100** |
+
+### Next Step
+
+- Action: TOPのピックアップカードに概要1行を再表示する
+- Revisit when: カード内の情報量が増え、見出しや全体の一覧性を損なう; 見出しと概要の重複が継続して目立つ

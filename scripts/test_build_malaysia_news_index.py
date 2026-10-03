@@ -167,7 +167,10 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertIn("font-size: clamp(1.4rem, 2.4vw, 1.875rem)", page)
         self.assertIn(".focus-card h3", page)
         self.assertIn("white-space: normal", page)
-        self.assertNotIn(".focus-dek", page)
+        self.assertIn(".focus-dek", page)
+        self.assertIn('<p class="focus-dek">午後は雷雨に注意が必要です。</p>', page)
+        self.assertEqual(page.count('class="focus-dek"'), 2)
+        self.assertIn("-webkit-line-clamp: 1", page)
 
     def test_daily_page_has_short_headline_and_summary_body(self) -> None:
         page = builder.render_daily_page(self.parse_sample())
