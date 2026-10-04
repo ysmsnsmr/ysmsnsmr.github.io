@@ -16,7 +16,7 @@ SCHEMA_VERSION = "malaysia-apims-snapshot/v1"
 SCHEMA_NAME = "malaysia_apims_snapshot_v1"
 MAX_REPORTS = 8
 MAX_EVIDENCE_CHARS = 1800
-MAX_TOKENS = 1500
+MAX_TOKENS = 10_000
 READING_SCHEMA = {
     "type": "object",
     "properties": {
