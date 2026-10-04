@@ -255,7 +255,7 @@ async function assertAccessibilityAndLayout(page, label) {
 async function assertDetailAccessibilityAndLayout(page, label) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   assert(overflow <= 1, `${label}: horizontal overflow ${overflow}px`);
-  const undersized = await page.locator(".source-link, .back-link, .favorite-button, .locale-switch a").evaluateAll((nodes) =>
+  const undersized = await page.locator(".source-link, .back-link, .copy-email-button, .favorite-button, .locale-switch a").evaluateAll((nodes) =>
     nodes.map((node) => ({ text: node.textContent, rect: node.getBoundingClientRect() }))
       .filter(({ rect }) => rect.width > 0 && rect.height > 0 && (rect.height < 44 || rect.width < 44))
       .map(({ text, rect }) => `${text}:${rect.width}x${rect.height}`)
@@ -515,10 +515,17 @@ try {
   await missingDetail.close();
 
   const generatedDetail = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await generatedDetail.context().grantPermissions(["clipboard-read", "clipboard-write"], { origin: server.origin });
   await generatedDetail.goto(`${server.origin}/meta-ads-updates/ja/detail.html?id=search-engine-land-meta-rss-bbbbbbbbbbbbbbbbbbbb&personal-fixture=1`, { waitUntil: "networkidle" });
   assert((await generatedDetail.locator("#detail-title").textContent()) === "Meta Ads APIの観測", "generated detail must use the Japanese short headline");
   assert((await generatedDetail.locator("#detail-summary").textContent()).includes("Meta Ads APIに関する観測記事です。"), "generated detail must display the Japanese summary");
   assert(await generatedDetail.locator("#detail-unofficial-notice").isVisible(), "generated non-official detail must show the notice");
+  await generatedDetail.locator("#detail-copy-email").click();
+  assert((await generatedDetail.evaluate(() => navigator.clipboard.readText())) === "Meta Ads APIの観測\n\nAI生成の要約\nMeta Ads APIに関する観測記事です。\n\n原文（非公式：Search Engine Land (Meta / PPC)）\nMeta Ads APIの観測記事\nhttps://searchengineland.com/meta-ads-api/", "Japanese email copy must contain only plain text with the summary, original title and URL");
+  assert((await generatedDetail.locator("#detail-copy-status").textContent()) === "メール用テキストをコピーしました", "Japanese copy confirmation is missing");
+  await generatedDetail.evaluate(() => Object.defineProperty(navigator, "clipboard", { configurable: true, value: { writeText: async () => { throw new Error("denied"); } } }));
+  await generatedDetail.locator("#detail-copy-email").click();
+  assert((await generatedDetail.locator("#detail-copy-status").textContent()).includes("コピーできませんでした"), "clipboard failure must not be reported as a successful copy");
   await generatedDetail.close();
 
   const favoritesPage = await browser.newPage({ viewport: { width: 1440, height: 900 } });
@@ -552,10 +559,14 @@ try {
   await v3MachineDetail.close();
 
   const v3MissingDetail = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await v3MissingDetail.context().grantPermissions(["clipboard-read", "clipboard-write"], { origin: server.origin });
   await v3MissingDetail.goto(`${server.origin}/meta-ads-updates/ja/detail.html?id=social-media-today-meta-ads-bbbbbbbbbbbbbbbbbbbb&personal-fixture=v3`, { waitUntil: "networkidle" });
   assert((await v3MissingDetail.locator("#detail-title").textContent()) === "Meta Ads source article", "v3 missing detail must fall back to the original title");
   assert((await v3MissingDetail.locator("#detail-summary").textContent()).includes("要約は利用できません"), "v3 missing detail must show the Japanese fallback");
   assert(await v3MissingDetail.locator("#detail-unofficial-notice").isVisible(), "v3 unofficial detail must show the notice");
+  await v3MissingDetail.locator("#detail-copy-email").click();
+  const missingCopy = await v3MissingDetail.evaluate(() => navigator.clipboard.readText());
+  assert(missingCopy.startsWith("Meta Ads source article\n\n原文（非公式：") && !missingCopy.includes("要約は利用できません") && !missingCopy.includes("要約なし"), "missing summary must not be copied as content");
   await v3MissingDetail.close();
 
   const productionDetail = await browser.newPage({ viewport: { width: 1440, height: 900 } });
@@ -670,6 +681,10 @@ try {
   assert(await englishList.locator("#canonical-link").getAttribute("href").then((href) => href?.startsWith("https://ysmsnsmr.github.io/meta-ads-updates/detail.html?id=")), "English detail canonical is incorrect");
   assert(await englishList.locator("#alternate-ja").getAttribute("href").then((href) => href?.startsWith("https://ysmsnsmr.github.io/meta-ads-updates/ja/detail.html?id=")), "English detail hreflang is incorrect");
   assert(await englishList.locator("#locale-ja").getAttribute("href").then((href) => href?.includes("/ja/detail.html?id=") && href.includes("source=meta-product-news-rss") && href.includes("type=official") && href.includes("q=measurement")), "detail language switch must retain id and filters");
+  await englishList.context().grantPermissions(["clipboard-read", "clipboard-write"], { origin: server.origin });
+  await englishList.locator("#detail-copy-email").click();
+  const englishCopy = await englishList.evaluate(() => navigator.clipboard.readText());
+  assert(englishCopy === "Meta Ads measurement update\n\nMachine-generated summary\nMeta announced an update for advertisers using measurement tools.\n\nOriginal source (Official: Meta Newsroom Product News)\nMeta Ads measurement update\nhttps://about.fb.com/news/2026/09/meta-ads-measurement-update/", "English email copy must contain the localized headline, summary and source URL");
   await englishList.close();
 
   const englishMissing = await browser.newPage({ viewport: { width: 1440, height: 900 } });
