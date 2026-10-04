@@ -1387,3 +1387,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: 既存event coverageスイッチの下で同日APIMSヘイズ続報だけを追加照合し、掲載予算前に安全に抑制する
 - Revisit when: Klang Valleyへの新しい影響が誤って除外される; 一般続報が複数残り、枠圧迫が解消しない; 追加APIの失敗率や待機時間が日次運用に影響する
+
+<!-- idea-gate:20261004-meta-ads-email-copy-button -->
+## Copy email-ready plain text from the article detail page
+
+- Record ID: `20261004-meta-ads-email-copy-button`
+- Evaluated: 2026-10-04T21:24:26+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 94/100
+- Confidence: high - The intended interaction and required data are specified; the change is local and reversible.
+
+### Idea Card
+
+- Purpose: Make a relevant update easy to share with a client by email
+- First experience: Click one button to copy the displayed headline, available summary, original title, and source URL as readable plain text
+- Scope and cost: A small English/Japanese detail-page UI change using existing feed fields, with no new API calls, storage, or paid service
+- Continuation boundary: Keep the button if copied text is clear in email drafts; adjust or remove it if clients mistake AI summaries or unofficial sources for verified Meta statements
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 14/15 |
+| `evidence_and_learning` | 14/15 |
+| `expected_outcome` | 14/15 |
+| `scope_and_fit` | 15/15 |
+| `ownership_and_reversibility` | 19/20 |
+| **Total** | **94/100** |
+
+### Next Step
+
+- Action: Add a copy button to English and Japanese detail pages, omit missing summaries, and verify the clipboard text and fallback behavior.
+- Revisit when: A colleague finds that the copied text needs different labels or spacing in their email client.
