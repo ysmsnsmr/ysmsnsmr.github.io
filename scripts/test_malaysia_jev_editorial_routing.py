@@ -359,6 +359,30 @@ class MalaysiaJevEditorialRoutingTests(unittest.TestCase):
         self.assertEqual(report["eventCoverage"]["suppressedCount"], 0)
         self.assertEqual(report["hazeCoverage"]["suppressedCount"], 0)
 
+    def test_failed_haze_call_does_not_fall_back_to_generic_haze_omission(self) -> None:
+        reports = [
+            item("Haze API unhealthy in Johor", "https://example.test/johor"),
+            item("Haze API now affects Cheras", "https://example.test/cheras"),
+        ]
+        output, report = routing.route_candidates(
+            payload(reports), payload([]), enabled=True, api_key="jev-key", timeout_seconds=1,
+            post_json=lambda *_: response("direct_life_impact"), event_enabled=True,
+            event_api_key="groq-key",
+            event_observer=lambda *args, **kwargs: {
+                "status": "completed",
+                "cohort": [{"id": 1, "candidateRank": 1}, {"id": 2, "candidateRank": 2}],
+                "coverageDecisions": [{"keep": 1, "omit": 2, "reason": "Same haze event"}],
+            },
+            haze_observer=lambda *args, **kwargs: {
+                "status": "request_failed",
+                "cohort": [{"id": 1, "candidateRank": 1}, {"id": 2, "candidateRank": 2}],
+                "coverageDecisions": [],
+            },
+        )
+        self.assertEqual(len(output["items"]), 2)
+        self.assertEqual(report["eventCoverage"]["suppressedCount"], 0)
+        self.assertEqual(report["hazeCoverage"]["status"], "request_failed")
+
     def test_distinct_updates_and_failed_comparison_keep_both(self) -> None:
         reports = [
             item("Morning weather alert in Selangor", "https://example.test/weather-morning"),
