@@ -44,6 +44,7 @@ class APIMSSnapshotTests(unittest.TestCase):
                           for row in result["readings"]], [("Sri Aman", 152, "9am"), ("Pasir Gudang", 155, "5pm")])
         self.assertFalse(result["productionEffect"])
         self.assertEqual(len(calls), 1)
+        self.assertEqual(calls[0]["max_tokens"], 10_000)
         self.assertNotIn("fixture-key", str(result))
         preview = render_preview(result)
         self.assertIn("## Sri Aman\n\n- API/IPU 152（9am、Source 1）", preview)
