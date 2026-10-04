@@ -280,11 +280,11 @@ def route_candidates(
         and row["omit"] in cohort_ranks and row["keep"] in cohort_ranks
     }
     haze_cohort_ranks = {row["id"]: row["candidateRank"] for row in haze_coverage.get("cohort", [])}
+    # Even if the focused call fails, a generic event match must not decide
+    # whether a Klang Valley haze follow-up is redundant.
+    for rank in haze_cohort_ranks.values():
+        covered_by.pop(rank, None)
     if haze_coverage.get("status") == "completed":
-        # The daily haze comparison has the narrower editorial policy. A generic
-        # event omission must not hide a Klang Valley follow-up it chose to keep.
-        for rank in haze_cohort_ranks.values():
-            covered_by.pop(rank, None)
         for row in haze_coverage.get("coverageDecisions", []):
             if row["omit"] in haze_cohort_ranks and row["keep"] in haze_cohort_ranks:
                 covered_by[haze_cohort_ranks[row["omit"]]] = haze_cohort_ranks[row["keep"]]
