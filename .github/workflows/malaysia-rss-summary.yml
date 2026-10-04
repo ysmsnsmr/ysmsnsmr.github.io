@@ -6,6 +6,11 @@ on:
     - cron: "45 19 * * *"
   workflow_dispatch:
     inputs:
+      enable_apims_snapshot:
+        description: "Create an artifact-only APIMS regional snapshot"
+        required: false
+        default: false
+        type: boolean
       enable_body_enrichment:
         description: "Run optional article body enrichment diagnostics"
         required: false
@@ -303,6 +308,32 @@ jobs:
             echo "failed" > "${run_dir}/body_enrichment_status.txt"
             echo "body_enrichment_succeeded=false" >> "${GITHUB_OUTPUT}"
             echo "::warning::Optional body enrichment failed; RSS-only output will continue."
+          fi
+
+      - name: Build APIMS regional snapshot preview
+        if: github.event_name == 'workflow_dispatch' && inputs.enable_apims_snapshot
+        continue-on-error: true
+        shell: bash
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          set -u
+          run_dir="${{ steps.optional.outputs.run_dir }}"
+          selected="${run_dir}/selected_items.json"
+          if [ -s "${run_dir}/selected_items_enriched.json" ]; then
+            selected="${run_dir}/selected_items_enriched.json"
+          fi
+          if python3 -B scripts/malaysia_apims_snapshot.py \
+            --selected-items "${selected}" \
+            --model "${{ steps.optional.outputs.groq_model_name }}" \
+            --output "${run_dir}/apims_snapshot.json" \
+            --preview-output "${run_dir}/apims_snapshot_preview.md" \
+            > "${run_dir}/apims_snapshot_stdout.log" \
+            2> "${run_dir}/apims_snapshot_stderr.log"; then
+            python3 -B -c 'import json, sys; print(json.load(open(sys.argv[1], encoding="utf-8"))["status"])' \
+              "${run_dir}/apims_snapshot.json" > "${run_dir}/apims_snapshot_status.txt"
+          else
+            echo "runner_failed" > "${run_dir}/apims_snapshot_status.txt"
           fi
 
       - name: Run optional Groq rendering
