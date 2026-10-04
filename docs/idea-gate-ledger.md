@@ -1352,3 +1352,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Add a one-line summary to completed list items and verify it in English and Japanese at desktop and mobile widths.
 - Revisit when: Readers report that the extra line makes the list harder to scan.
+
+<!-- idea-gate:20261004t211500-malaysia-haze-followup-coverage -->
+## 同日ヘイズの一般続報を代表記事へ整理し、Klang Valleyへの新しい影響は残す
+
+- Record ID: `20261004t211500-malaysia-haze-followup-coverage`
+- Evaluated: 2026-10-04T21:15:00+08:00
+- Project: ysmsnsmr.github.io / Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 88/100
+- Confidence: medium - 実データの重複は明確だが、新しいKlang Valley影響の意味判定は実APIで未検証
+
+### Idea Card
+
+- Purpose: 同じ状況を伝えるヘイズ記事が掲載20件の枠を圧迫しないようにする
+- First experience: 同日の一般ヘイズ続報が代表1件になり、Klang Valleyへの新しい影響がある続報は別記事として残る
+- Scope and cost: 既存Jev routing後のヘイズ候補に限り、追加Groq照合は1日1回・最大12候補。公開形式とAPIMS数値抽出は変更しない
+- Continuation boundary: 初回実artifactで除外と保持の根拠を確認し、Klang Valley影響の取りこぼしがあればevent coverageを無効化して戻す
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 14/15 |
+| `evidence_and_learning` | 14/15 |
+| `expected_outcome` | 13/15 |
+| `scope_and_fit` | 13/15 |
+| `ownership_and_reversibility` | 16/20 |
+| **Total** | **88/100** |
+
+### Next Step
+
+- Action: 既存event coverageスイッチの下で同日APIMSヘイズ続報だけを追加照合し、掲載予算前に安全に抑制する
+- Revisit when: Klang Valleyへの新しい影響が誤って除外される; 一般続報が複数残り、枠圧迫が解消しない; 追加APIの失敗率や待機時間が日次運用に影響する
