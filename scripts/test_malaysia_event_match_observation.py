@@ -3,7 +3,9 @@ import unittest
 from pathlib import Path
 from types import SimpleNamespace
 
-from malaysia_event_match_observation import MAX_CANDIDATES, observe, select_cohort
+from malaysia_event_match_observation import (
+    MAX_CANDIDATES, MAX_HAZE_CANDIDATES, observe, observe_haze_coverage, select_cohort,
+)
 
 
 def candidate(index: int) -> dict:
@@ -27,6 +29,93 @@ def routing(choices: list[str], status: str = "applied") -> dict:
 
 
 class EventMatchObservationTests(unittest.TestCase):
+    def test_haze_daily_call_keeps_new_klang_valley_impact_separate(self) -> None:
+        reports = [candidate(index) for index in range(1, 5)]
+        reports[0].update(title="Haze: API unhealthy in Segamat", description="Johor API remains unhealthy")
+        reports[1].update(title="Jerebu: IPU unhealthy in Nilai", description="Negeri Sembilan IPU update")
+        reports[2].update(title="Haze: API now affects Cheras", description="Cheras in Kuala Lumpur newly affected")
+        reports[3].update(title="Haze: API unhealthy in Johor", description="Another Johor API reading")
+        calls = []
+
+        def request(**kwargs):
+            calls.append(kwargs)
+            return SimpleNamespace(
+                parsed={"omissions": [
+                    {"keep": 1, "omit": 2, "reason": "Same daily situation outside Klang Valley"},
+                    {"keep": 1, "omit": 4, "reason": "Same daily situation outside Klang Valley"},
+                ]},
+                diagnostic={"transport_status": "success", "json_contract_status": "valid"},
+            )
+
+        result = observe_haze_coverage(
+            {"items": reports}, routing(["direct_life_impact"] * 4),
+            api_key="fixture-key", model_name="gpt-oss-120b", request=request,
+        )
+        self.assertEqual(result["status"], "completed")
+        self.assertEqual(len(result["coverageDecisions"]), 2)
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(calls[0]["json_schema_name"], "malaysia_news_haze_daily_coverage_v1")
+        self.assertIn("Klang Valley", calls[0]["messages"][0]["content"])
+        self.assertNotIn("fixture-key", str(result))
+        self.assertNotIn("https://example.test", str(result))
+
+    def test_haze_coverage_never_crosses_malaysia_day(self) -> None:
+        reports = [candidate(1), candidate(2)]
+        for row in reports:
+            row.update(title="Haze API report", description="Jerebu IPU update")
+        reports[1]["published_at"] = "2026-09-27T00:05:00+08:00"
+        result = observe_haze_coverage(
+            {"items": reports}, routing(["direct_life_impact"] * 2),
+            api_key="fixture-key", model_name="gpt-oss-120b",
+            request=lambda **_: self.fail("different days must not trigger a call"),
+        )
+        self.assertEqual(result["status"], "skipped_insufficient_same_day_candidates")
+        reports.append(candidate(3))
+        reports[2].update(title="Haze API report", description="Jerebu IPU update")
+        result = observe_haze_coverage(
+            {"items": reports}, routing(["direct_life_impact"] * 3),
+            api_key="fixture-key", model_name="gpt-oss-120b",
+            request=lambda **_: SimpleNamespace(
+                parsed={"omissions": [{"keep": 1, "omit": 2, "reason": "same"}]}, diagnostic={}
+            ),
+        )
+        self.assertEqual(result["status"], "invalid_coverage")
+        self.assertEqual(result["coverageDecisions"], [])
+
+    def test_haze_coverage_fails_open_for_cap_and_transport(self) -> None:
+        reports = [candidate(index) for index in range(1, MAX_HAZE_CANDIDATES + 2)]
+        for row in reports:
+            row.update(title="Haze API report", description="Jerebu IPU update")
+        result = observe_haze_coverage(
+            {"items": reports}, routing(["direct_life_impact"] * len(reports)),
+            api_key="fixture-key", model_name="gpt-oss-120b",
+            request=lambda **_: self.fail("over-cap cohort must not trigger a call"),
+        )
+        self.assertEqual(result["status"], "skipped_candidate_cap")
+        self.assertEqual(result["coverageDecisions"], [])
+        result = observe_haze_coverage(
+            {"items": reports[:2]}, routing(["direct_life_impact"] * 2),
+            api_key="fixture-key", model_name="gpt-oss-120b",
+            request=lambda **_: (_ for _ in ()).throw(TimeoutError("fixture")),
+        )
+        self.assertEqual(result["status"], "request_failed")
+        self.assertEqual(result["coverageDecisions"], [])
+
+    def test_air_pollutant_index_status_is_included_without_haze_keyword(self) -> None:
+        reports = [candidate(1), candidate(2)]
+        reports[0].update(title="Jerebu: IPU tidak sihat", description="Johor IPU update")
+        reports[1].update(
+            title="Batu Pahat and Segamat API hits unhealthy levels",
+            description="KUALA LUMPUR, Oct 4 -- Air Pollutant Index readings in Johor are unhealthy",
+        )
+        result = observe_haze_coverage(
+            {"items": reports}, routing(["direct_life_impact"] * 2),
+            api_key="fixture-key", model_name="gpt-oss-120b",
+            request=lambda **_: SimpleNamespace(parsed={"omissions": []}, diagnostic={}),
+        )
+        self.assertEqual(result["status"], "completed")
+        self.assertEqual(result["candidateCount"], 2)
+
     def test_workflow_runs_coverage_before_publication(self) -> None:
         workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/malaysia-rss-summary.yml").read_text()
         self.assertIn("--event-coverage", workflow)
