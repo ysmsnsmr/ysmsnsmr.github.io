@@ -46,6 +46,12 @@ COVERAGE_SCHEMA = {
 }
 
 
+class CoverageValidationError(ValueError):
+    def __init__(self, reason_code: str) -> None:
+        self.reason_code = reason_code
+        super().__init__(reason_code)
+
+
 def _fingerprint(item: dict[str, Any]) -> str:
     fields = (str(item.get("source") or ""), str(item.get("link") or ""), str(item.get("published_at") or ""))
     return hashlib.sha256("\n".join(fields).encode("utf-8")).hexdigest()
@@ -96,13 +102,21 @@ def _validated_pairs(value: dict[str, Any], cohort_size: int) -> list[dict[str, 
     for pair in value["omissions"]:
         keep, omit = pair["keep"], pair["omit"]
         reason = pair["reason"].strip()
-        if not 1 <= keep < omit <= cohort_size or omit in omitted or not reason or len(reason) > 160:
-            raise ValueError("invalid coverage references")
+        if not 1 <= keep <= cohort_size or not 1 <= omit <= cohort_size:
+            raise CoverageValidationError("reference_out_of_range")
+        if keep >= omit:
+            raise CoverageValidationError("reference_order_invalid")
+        if omit in omitted:
+            raise CoverageValidationError("duplicate_omission")
+        if not reason:
+            raise CoverageValidationError("empty_reason")
+        if len(reason) > 160:
+            raise CoverageValidationError("reason_too_long")
         omitted.add(omit)
         kept.add(keep)
         pairs.append({"keep": keep, "omit": omit, "reason": reason})
     if omitted & kept:
-        raise ValueError("chained coverage is ambiguous")
+        raise CoverageValidationError("chained_coverage")
     return pairs
 
 
@@ -228,11 +242,12 @@ def observe_haze_coverage(
             json_schema=COVERAGE_SCHEMA, schema_error=_schema_error, api_key=api_key,
         )
         report["diagnostic"] = _safe_diagnostic(completion.diagnostic)
-        if _schema_error(completion.parsed):
-            raise ValueError("invalid haze match response shape")
+        shape_error = _schema_error(completion.parsed)
+        if shape_error:
+            raise CoverageValidationError(shape_error)
         decisions = _validated_pairs(completion.parsed, len(cohort))
         if any(dates[row["keep"] - 1] != dates[row["omit"] - 1] for row in decisions):
-            raise ValueError("cross-day haze coverage is not allowed")
+            raise CoverageValidationError("cross_day_reference")
         truncated = {
             index for index, row in enumerate(cohort, start=1)
             if len(row["item"]["description"]) > MAX_DESCRIPTION_CHARS
@@ -249,6 +264,10 @@ def observe_haze_coverage(
         if diagnostic is not None:
             report["diagnostic"] = _safe_diagnostic(diagnostic)
         report["status"] = "invalid_coverage" if isinstance(error, ValueError) and diagnostic is None else "request_failed"
+        if report["status"] == "invalid_coverage":
+            report["validationReason"] = (
+                error.reason_code if isinstance(error, CoverageValidationError) else "unexpected_value_error"
+            )
     return report
 
 
@@ -319,8 +338,9 @@ def observe(
             json_schema=COVERAGE_SCHEMA, schema_error=_schema_error, api_key=api_key,
         )
         report["diagnostic"] = _safe_diagnostic(completion.diagnostic)
-        if _schema_error(completion.parsed):
-            raise ValueError("invalid match response shape")
+        shape_error = _schema_error(completion.parsed)
+        if shape_error:
+            raise CoverageValidationError(shape_error)
         decisions = _validated_pairs(completion.parsed, len(cohort))
         truncated = {
             index for index, entry in enumerate(cohort, start=1)
@@ -338,6 +358,10 @@ def observe(
         if diagnostic is not None:
             report["diagnostic"] = _safe_diagnostic(diagnostic)
         report["status"] = "invalid_coverage" if isinstance(error, ValueError) and diagnostic is None else "request_failed"
+        if report["status"] == "invalid_coverage":
+            report["validationReason"] = (
+                error.reason_code if isinstance(error, CoverageValidationError) else "unexpected_value_error"
+            )
     return report
 
 

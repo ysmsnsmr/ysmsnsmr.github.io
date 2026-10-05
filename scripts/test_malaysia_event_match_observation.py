@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import unittest
+import json
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -80,6 +81,7 @@ class EventMatchObservationTests(unittest.TestCase):
             ),
         )
         self.assertEqual(result["status"], "invalid_coverage")
+        self.assertEqual(result["validationReason"], "cross_day_reference")
         self.assertEqual(result["coverageDecisions"], [])
 
     def test_haze_coverage_fails_open_for_cap_and_transport(self) -> None:
@@ -99,6 +101,7 @@ class EventMatchObservationTests(unittest.TestCase):
             request=lambda **_: (_ for _ in ()).throw(TimeoutError("fixture")),
         )
         self.assertEqual(result["status"], "request_failed")
+        self.assertNotIn("validationReason", result)
         self.assertEqual(result["coverageDecisions"], [])
 
     def test_air_pollutant_index_status_is_included_without_haze_keyword(self) -> None:
@@ -164,6 +167,7 @@ class EventMatchObservationTests(unittest.TestCase):
             request=lambda **_: SimpleNamespace(parsed={"omissions": [{"keep": 1, "omit": 3, "reason": "same"}]}, diagnostic={}),
         )
         self.assertEqual(result["status"], "invalid_coverage")
+        self.assertEqual(result["validationReason"], "reference_out_of_range")
         self.assertEqual(result["coverageDecisions"], [])
 
     def test_malformed_json_object_response_is_not_marked_completed(self) -> None:
@@ -174,7 +178,33 @@ class EventMatchObservationTests(unittest.TestCase):
             request=lambda **_: SimpleNamespace(parsed={"omissions": [{"keep": "1", "omit": 2, "reason": "same"}]}, diagnostic={}),
         )
         self.assertEqual(result["status"], "invalid_coverage")
+        self.assertEqual(result["validationReason"], "entry_shape")
         self.assertEqual(result["coverageDecisions"], [])
+
+    def test_validation_reasons_are_fixed_codes_without_response_text(self) -> None:
+        pool = {"items": [candidate(index) for index in range(1, 4)]}
+        cases = (
+            ([{"keep": 2, "omit": 1, "reason": "secret response text"}], "reference_order_invalid"),
+            ([{"keep": 1, "omit": 2, "reason": "same"},
+              {"keep": 1, "omit": 2, "reason": "same"}], "duplicate_omission"),
+            ([{"keep": 1, "omit": 2, "reason": " "}], "empty_reason"),
+            ([{"keep": 1, "omit": 2, "reason": "secret response text" * 20}], "reason_too_long"),
+            ([{"keep": 1, "omit": 2, "reason": "same"},
+              {"keep": 2, "omit": 3, "reason": "same"}], "chained_coverage"),
+        )
+        for omissions, expected in cases:
+            with self.subTest(expected=expected):
+                result = observe(
+                    pool, routing(["direct_life_impact"] * 3), api_key="fixture-key",
+                    model_name="gpt-oss-120b",
+                    request=lambda **_: SimpleNamespace(parsed={"omissions": omissions}, diagnostic={}),
+                )
+                self.assertEqual(result["status"], "invalid_coverage")
+                self.assertEqual(result["validationReason"], expected)
+                self.assertEqual(result["coverageDecisions"], [])
+                rendered = json.dumps(result)
+                self.assertNotIn("secret response text", rendered)
+                self.assertNotIn("fixture-key", rendered)
 
     def test_request_failure_is_observation_only(self) -> None:
         pool = {"items": [candidate(1), candidate(2)]}
