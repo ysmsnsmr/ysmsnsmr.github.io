@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-09-29T13:20:20Z",
+  "generatedAt": "2026-10-06T06:25:59Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -71,6 +71,558 @@
   ],
   "items": [
     {
+      "id": "social-media-today-meta-ads-20043650dff9943a8525",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Social media platforms resist U.K. safety disclosures",
+      "url": "https://www.socialmediatoday.com/news/social-media-platforms-resist-uk-safety-disclosures/832199/",
+      "publishedDate": "2026-10-05",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "20043650dff9943a8525c66241bdfb424744502ecafeb928a53c043ecbf2dfae",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "ade785c4b8cf412e20c9b4edcc310be50e0d90841ad7d6e92c9b9286390e6598",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "ade785c4b8cf412e20c9b4edcc310be50e0d90841ad7d6e92c9b9286390e6598",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "ade785c4b8cf412e20c9b4edcc310be50e0d90841ad7d6e92c9b9286390e6598",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "jon-loomer-meta-ads-5f7bfbbe183a62959292",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Should You Optimize for a Custom Conversion?",
+      "url": "https://www.jonloomer.com/qvt/optimize-custom-conversion/",
+      "publishedDate": "2026-10-05",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "5f7bfbbe183a6295929227cdb386133ccb6a14f9f7c7ba38e395e93863b0b4a4",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "50ac5bde5d6768ea0748edeaac1186f8b47a207c94917311c579479554bc50ff",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "50ac5bde5d6768ea0748edeaac1186f8b47a207c94917311c579479554bc50ff",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "50ac5bde5d6768ea0748edeaac1186f8b47a207c94917311c579479554bc50ff",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "カスタムコンバージョンで最適化は標準イベントを優先すべき",
+            "summary": "カスタムコンバージョンはコード不要でルールで定義でき、特定商品や条件の計測に使えるが、ボリュームが減少し学習が遅れる可能性がある。多くの場合はMetaが用意した標準イベント（例：Purchase）で最適化し、レポートにカスタムコンバージョン列を追加して成果を確認することが推奨される。",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-10-06T06:25:59Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "カスタムコンバージョンで最適化は標準イベントを優先すべき",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "カスタムコンバージョンはコード不要でルールで定義でき、特定商品や条件の計測に使えるが、ボリュームが減少し学習が遅れる可能性がある。多くの場合はMetaが用意した標準イベント（例：Purchase）で最適化し、レポートにカスタムコンバージョン列を追加して成果を確認することが推奨される。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-edb482d367dd7aba3c57",
+      "sourceId": "adsuploader-blog",
+      "title": "Solar Facebook Ads Examples: 6 Proven Ads Running in 2026",
+      "url": "https://adsuploader.com/blog/solar-facebook-ads-examples",
+      "publishedDate": "2026-10-05",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "edb482d367dd7aba3c570e5580a0322868965b5fbfb37e7c487e8681eccf942b",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Solar Facebook Ads: 6 Proven Examples (2026)",
+            "summary": "The feed highlights six solar Facebook ads that have been running long enough to demonstrate effectiveness. It includes the real creative, copy, and offer construction, and notes the claims rules solar advertisers often break.",
+            "inputHash": "8b25d7575b1a2b00634498cbeaed952c623608e9bf280663e5d0e99474654e98",
+            "generatedAt": "2026-10-06T06:25:59Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Solar Facebook Ads: 6 Proven Examples (2026)",
+                "inputHash": "8b25d7575b1a2b00634498cbeaed952c623608e9bf280663e5d0e99474654e98",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The feed highlights six solar Facebook ads that have been running long enough to demonstrate effectiveness. It includes the real creative, copy, and offer construction, and notes the claims rules solar advertisers often break.",
+                "inputHash": "8b25d7575b1a2b00634498cbeaed952c623608e9bf280663e5d0e99474654e98",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "2026年に実績のある太陽光広告6例",
+            "summary": "2026年に実際に運用され、効果が確認された太陽光関連のFacebook広告6件について、クリエイティブやコピー、オファーの構成を具体的に解説し、広告主がしばしば違反する表現ルールについても触れています。",
+            "inputHash": "c8c18440d07832bfe052de4fe25a08dc5ab7b325d39b7b86b8b4f5bf632aa6b8",
+            "generatedAt": "2026-10-06T06:25:59Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "2026年に実績のある太陽光広告6例",
+                "inputHash": "c8c18440d07832bfe052de4fe25a08dc5ab7b325d39b7b86b8b4f5bf632aa6b8",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "2026年に実際に運用され、効果が確認された太陽光関連のFacebook広告6件について、クリエイティブやコピー、オファーの構成を具体的に解説し、広告主がしばしば違反する表現ルールについても触れています。",
+                "inputHash": "c8c18440d07832bfe052de4fe25a08dc5ab7b325d39b7b86b8b4f5bf632aa6b8",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-4538ab0e720c5f348571",
+      "sourceId": "adsuploader-blog",
+      "title": "Facebook Ads for Dental Practices: Offers, Costs and Compliance",
+      "url": "https://adsuploader.com/blog/facebook-ads-dental",
+      "publishedDate": "2026-10-03",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "4538ab0e720c5f348571babf1112054cd9b1ce434fe80d2466d540622473c245",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Facebook Ads for Dental Practices: Offers, Costs and Compliance",
+            "summary": "This feed explains dental Facebook ad costs, the offers that convert by procedure, and the Meta health and patient-data rules that can cause practice ads to be rejected.",
+            "inputHash": "d747f31ff9da17cdc6936c8ccf95d2e944b6e5eb14a0c18b95331257559e585d",
+            "generatedAt": "2026-10-06T06:25:59Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook Ads for Dental Practices: Offers, Costs and Compliance",
+                "inputHash": "d747f31ff9da17cdc6936c8ccf95d2e944b6e5eb14a0c18b95331257559e585d",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "This feed explains dental Facebook ad costs, the offers that convert by procedure, and the Meta health and patient-data rules that can cause practice ads to be rejected.",
+                "inputHash": "d747f31ff9da17cdc6936c8ccf95d2e944b6e5eb14a0c18b95331257559e585d",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "歯科医院向けFacebook広告：費用・オファー・コンプライアンス",
+            "summary": "本稿では、歯科医院がFacebook広告を利用する際の実際の費用、施術別に効果的なオファー、そしてMetaが定める健康情報や患者データに関する規定で広告が却下されるケースについて概観します。",
+            "inputHash": "27dc9d7e0cb6752ba5a407fde50fd80a5d0fd5ba4092fa4a1e3894a4ecf7fc7a",
+            "generatedAt": "2026-10-06T06:25:59Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "歯科医院向けFacebook広告：費用・オファー・コンプライアンス",
+                "inputHash": "27dc9d7e0cb6752ba5a407fde50fd80a5d0fd5ba4092fa4a1e3894a4ecf7fc7a",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "本稿では、歯科医院がFacebook広告を利用する際の実際の費用、施術別に効果的なオファー、そしてMetaが定める健康情報や患者データに関する規定で広告が却下されるケースについて概観します。",
+                "inputHash": "27dc9d7e0cb6752ba5a407fde50fd80a5d0fd5ba4092fa4a1e3894a4ecf7fc7a",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-6e0a5c7bfd87debec9d4",
+      "sourceId": "adsuploader-blog",
+      "title": "Facebook Ad Examples: 13 Real Ads by Format (2026)",
+      "url": "https://adsuploader.com/blog/facebook-ad-examples",
+      "publishedDate": "2026-10-01",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "6e0a5c7bfd87debec9d4f59c4f0eb2730a99d6c0770007002e854c9aa29bc3aa",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "13 Real Facebook Ads by Format (2026)",
+            "summary": "Thirteen real Facebook ad examples from the Meta Ad Library, organized by format and objective, showing each creative with its archive ID and how to find your own.",
+            "inputHash": "645009af2e6625ed4c00b383a2333bca6923c0c1522cefc1cb7c66483a754f3a",
+            "generatedAt": "2026-10-06T06:25:59Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "13 Real Facebook Ads by Format (2026)",
+                "inputHash": "645009af2e6625ed4c00b383a2333bca6923c0c1522cefc1cb7c66483a754f3a",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Thirteen real Facebook ad examples from the Meta Ad Library, organized by format and objective, showing each creative with its archive ID and how to find your own.",
+                "inputHash": "645009af2e6625ed4c00b383a2333bca6923c0c1522cefc1cb7c66483a754f3a",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta広告ライブラリから抽出した13件の実際のFacebook広告例",
+            "summary": "Meta広告ライブラリから取得した13件の実際のFacebook広告を、フォーマットと目的別に分類し、各広告のクリエイティブとアーカイブIDを掲載しています。また、ユーザー自身が同様の広告を検索・取得する方法も紹介しています。",
+            "inputHash": "ef39662fa8ad149433c337a86836157ca755bd1d4e638b218e58573af1952cbd",
+            "generatedAt": "2026-10-06T06:25:59Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告ライブラリから抽出した13件の実際のFacebook広告例",
+                "inputHash": "ef39662fa8ad149433c337a86836157ca755bd1d4e638b218e58573af1952cbd",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta広告ライブラリから取得した13件の実際のFacebook広告を、フォーマットと目的別に分類し、各広告のクリエイティブとアーカイブIDを掲載しています。また、ユーザー自身が同様の広告を検索・取得する方法も紹介しています。",
+                "inputHash": "ef39662fa8ad149433c337a86836157ca755bd1d4e638b218e58573af1952cbd",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-b70ce5d3837f37840dd5",
+      "sourceId": "adsuploader-blog",
+      "title": "Meta Ads MCP Server: Setup, Tools, Limits and Safety (2026)",
+      "url": "https://adsuploader.com/blog/meta-ads-mcp",
+      "publishedDate": "2026-09-30",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "b70ce5d3837f37840dd52310163399f0829ac75fead48a1a539d81575c2952b8",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta Ads MCP Server: Setup, Tools, Limits and Safety (2026)",
+            "summary": "The feed explains Meta Ads MCP, including the mcp.facebook.com/ads URL, how to set it up in Claude, ChatGPT and Perplexity, the functions of its tools, the July 2026 safety rules, and the system’s limits.",
+            "inputHash": "cc0f5b2fb39733de2f9eb862df54ae4cd8916ebe0244ef3a0327962b972c4ec0",
+            "generatedAt": "2026-10-06T06:25:59Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Ads MCP Server: Setup, Tools, Limits and Safety (2026)",
+                "inputHash": "cc0f5b2fb39733de2f9eb862df54ae4cd8916ebe0244ef3a0327962b972c4ec0",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The feed explains Meta Ads MCP, including the mcp.facebook.com/ads URL, how to set it up in Claude, ChatGPT and Perplexity, the functions of its tools, the July 2026 safety rules, and the system’s limits.",
+                "inputHash": "cc0f5b2fb39733de2f9eb862df54ae4cd8916ebe0244ef3a0327962b972c4ec0",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta Ads MCPの概要と設定、ツール、2026年7月の安全ルールと制限",
+            "summary": "Meta Ads MCPはmcp.facebook.com/adsのURLで提供され、Claude、ChatGPT、Perplexityで設定可能です。ツールの機能や2026年7月の安全ルール、利用上の制限について説明されています。",
+            "inputHash": "330265b147982b10ccb907cd059f7af04d7a5124e6c0564b418eea781d014eeb",
+            "generatedAt": "2026-10-06T06:25:59Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Ads MCPの概要と設定、ツール、2026年7月の安全ルールと制限",
+                "inputHash": "330265b147982b10ccb907cd059f7af04d7a5124e6c0564b418eea781d014eeb",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta Ads MCPはmcp.facebook.com/adsのURLで提供され、Claude、ChatGPT、Perplexityで設定可能です。ツールの機能や2026年7月の安全ルール、利用上の制限について説明されています。",
+                "inputHash": "330265b147982b10ccb907cd059f7af04d7a5124e6c0564b418eea781d014eeb",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-809565cf26ad179a2736",
+      "sourceId": "adsuploader-blog",
+      "title": "Meta Ads CLI: Setup, Commands and Limits of Meta's Official Ads CLI (2026)",
+      "url": "https://adsuploader.com/blog/meta-ads-cli",
+      "publishedDate": "2026-09-30",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "809565cf26ad179a27360bc99d86e83d3fe94c497da7723f90f8058e922a2f4b",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta Ads CLI: Setup, Commands, and Limits (2026)",
+            "summary": "The Meta Ads CLI offers installation guidance, system‑user token configuration, a complete command set, integration with Claude Code or Codex, details on current limits, and explains how the Ads Uploader integrates.",
+            "inputHash": "9514b857caebc1cb1380dc55ef61ed75cbcbf2488f9b3881cb7382e2392ec4b8",
+            "generatedAt": "2026-10-06T06:25:59Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Ads CLI: Setup, Commands, and Limits (2026)",
+                "inputHash": "9514b857caebc1cb1380dc55ef61ed75cbcbf2488f9b3881cb7382e2392ec4b8",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The Meta Ads CLI offers installation guidance, system‑user token configuration, a complete command set, integration with Claude Code or Codex, details on current limits, and explains how the Ads Uploader integrates.",
+                "inputHash": "9514b857caebc1cb1380dc55ef61ed75cbcbf2488f9b3881cb7382e2392ec4b8",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta Ads CLI の設定・コマンド・制限（2026年）",
+            "summary": "Meta Ads CLI は Meta が提供する公式広告コマンドラインツールで、インストール方法、システムユーザートークンの設定、利用可能な全コマンド、Claude Code や Codex との連携方法、現在の利用上限、Ads Uploader との位置付けが説明されています。",
+            "inputHash": "26472b50953bb1d9ad40537b2bf27b4da2bb5afdcc821d6e1f158c7cc3f6e16a",
+            "generatedAt": "2026-10-06T06:25:59Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Ads CLI の設定・コマンド・制限（2026年）",
+                "inputHash": "26472b50953bb1d9ad40537b2bf27b4da2bb5afdcc821d6e1f158c7cc3f6e16a",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta Ads CLI は Meta が提供する公式広告コマンドラインツールで、インストール方法、システムユーザートークンの設定、利用可能な全コマンド、Claude Code や Codex との連携方法、現在の利用上限、Ads Uploader との位置付けが説明されています。",
+                "inputHash": "26472b50953bb1d9ad40537b2bf27b4da2bb5afdcc821d6e1f158c7cc3f6e16a",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-bbaebd4d8fcfa00cf474",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta launches Muse AI for SMBs",
+      "url": "https://www.socialmediatoday.com/news/meta-launches-muse-ai-for-smbs/831714/",
+      "publishedDate": "2026-09-29",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "bbaebd4d8fcfa00cf474682521b38691d2b7e90da64196ed5eb355fd50068543",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "d57acab09a81cd788b3c08344e8e29a73d374d2ef124ccf1cf60b924f68ba926",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "d57acab09a81cd788b3c08344e8e29a73d374d2ef124ccf1cf60b924f68ba926",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "d57acab09a81cd788b3c08344e8e29a73d374d2ef124ccf1cf60b924f68ba926",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、SMB向けAIツール「Muse」を提供開始",
+            "summary": "Metaは中小企業向けにAIエージェント「Muse」をリリースし、ZoomやFigma、Canva、Stripe、GitHub、QuickBooks、Slack、Shopifyなどのパートナーアプリと連携できるコネクタを提供した。プランナーや財務管理、顧客対応、マーケティング支援などの機能で、業務効率化や自動化を支援する。利用者はデータ利用に明示的な同意が必要で、操作はユーザーが管理できるとされている。",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-10-06T06:25:59Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、SMB向けAIツール「Muse」を提供開始",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは中小企業向けにAIエージェント「Muse」をリリースし、ZoomやFigma、Canva、Stripe、GitHub、QuickBooks、Slack、Shopifyなどのパートナーアプリと連携できるコネクタを提供した。プランナーや財務管理、顧客対応、マーケティング支援などの機能で、業務効率化や自動化を支援する。利用者はデータ利用に明示的な同意が必要で、操作はユーザーが管理できるとされている。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-10-06T06:25:59Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "meta-product-news-rss-f7871a98e4dfe752148f",
       "sourceId": "meta-product-news-rss",
       "title": "The Future Is for Everyone: Muse for Small Business",
@@ -78,7 +630,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -147,7 +699,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -158,49 +710,49 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Key Principles for Effective Meta Ad Creation",
+            "summary": "The feed outlines four core guidelines: use multiple ad formats (static image and video), leverage all Advantage+ placements, match creative aspect ratios to placement types (square/4×5 for feeds, 9×16 for reels and stories), and provide varied copy and creative combinations for Meta to optimize delivery.",
             "inputHash": "f54aee999317b2bd229d3049ac23232aea534d8310bdddab1a1435011d658ad4",
-            "generatedAt": null,
+            "generatedAt": "2026-10-06T06:25:59Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Key Principles for Effective Meta Ad Creation",
                 "inputHash": "f54aee999317b2bd229d3049ac23232aea534d8310bdddab1a1435011d658ad4",
-                "generatedAt": null,
+                "generatedAt": "2026-10-06T06:25:59Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "The feed outlines four core guidelines: use multiple ad formats (static image and video), leverage all Advantage+ placements, match creative aspect ratios to placement types (square/4×5 for feeds, 9×16 for reels and stories), and provide varied copy and creative combinations for Meta to optimize delivery.",
                 "inputHash": "f54aee999317b2bd229d3049ac23232aea534d8310bdddab1a1435011d658ad4",
-                "generatedAt": null,
+                "generatedAt": "2026-10-06T06:25:59Z",
                 "reviewedAt": null
               }
             }
           },
           "ja": {
             "status": "machine",
-            "shortHeadline": "Meta広告作成の基本原則：複数フォーマット・配置最適化・アスペクト比・テキストバリエーション",
-            "summary": "Meta広告では、単一のテンプレートに頼らず、画像と動画の複数フォーマットを用意し、Advantage+ Placementsで全配置を活用することが推奨されます。配置ごとに適切なアスペクト比（フィードは正方形・4×5、リールやストーリーは9×16）を設定し、重要な要素が切り取られないよう配慮します。また、コピーとクリエイティブの組み合わせを複数用意し、Metaが最適な組み合わせを自動で提示できるようにします。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-29T13:20:20Z",
+            "shortHeadline": "Meta広告作成の基本原則：フォーマット・配置・比率・テキストの多様化",
+            "summary": "Meta広告は単一テンプレートではなく、以下の原則を守ることが推奨される。1) 静止画と動画など複数フォーマットを用意し、異なるユーザー層に対応する。2) Advantage+配置を活用し、全ての配置で表示できるようにする。3) 配置ごとに最適なアスペクト比（フィードは正方形・4×5、リール・ストーリーは9×16）で素材を作成する。4) コピーとクリエイティブの組み合わせを複数用意し、Metaが最適な組み合わせを自動で選択できるようにする。",
+            "inputHash": "9d41c8786053cd64d5e2f29efe1e015f40d9e6463389b9faac2ad7bf9f328ee7",
+            "generatedAt": "2026-10-06T06:25:59Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
-                "value": "Meta広告作成の基本原則：複数フォーマット・配置最適化・アスペクト比・テキストバリエーション",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-29T13:20:20Z",
+                "value": "Meta広告作成の基本原則：フォーマット・配置・比率・テキストの多様化",
+                "inputHash": "9d41c8786053cd64d5e2f29efe1e015f40d9e6463389b9faac2ad7bf9f328ee7",
+                "generatedAt": "2026-10-06T06:25:59Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
-                "value": "Meta広告では、単一のテンプレートに頼らず、画像と動画の複数フォーマットを用意し、Advantage+ Placementsで全配置を活用することが推奨されます。配置ごとに適切なアスペクト比（フィードは正方形・4×5、リールやストーリーは9×16）を設定し、重要な要素が切り取られないよう配慮します。また、コピーとクリエイティブの組み合わせを複数用意し、Metaが最適な組み合わせを自動で提示できるようにします。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-29T13:20:20Z",
+                "value": "Meta広告は単一テンプレートではなく、以下の原則を守ることが推奨される。1) 静止画と動画など複数フォーマットを用意し、異なるユーザー層に対応する。2) Advantage+配置を活用し、全ての配置で表示できるようにする。3) 配置ごとに最適なアスペクト比（フィードは正方形・4×5、リール・ストーリーは9×16）で素材を作成する。4) コピーとクリエイティブの組み合わせを複数用意し、Metaが最適な組み合わせを自動で選択できるようにする。",
+                "inputHash": "9d41c8786053cd64d5e2f29efe1e015f40d9e6463389b9faac2ad7bf9f328ee7",
+                "generatedAt": "2026-10-06T06:25:59Z",
                 "reviewedAt": null
               }
             }
@@ -216,7 +768,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -227,49 +779,49 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Facebook Ads 2026 Industry Benchmarks",
+            "summary": "2026 Facebook ad benchmarks by industry show lead costs from $3 for restaurants to $77 for dental, and detail the objectives, offers, and policy rules that drive performance in each vertical.",
             "inputHash": "0e36c576d8cdcdf4354db38284aafb767b684311a168733401330c4d7b4a0a13",
-            "generatedAt": null,
+            "generatedAt": "2026-10-06T06:25:59Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Facebook Ads 2026 Industry Benchmarks",
                 "inputHash": "0e36c576d8cdcdf4354db38284aafb767b684311a168733401330c4d7b4a0a13",
-                "generatedAt": null,
+                "generatedAt": "2026-10-06T06:25:59Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "2026 Facebook ad benchmarks by industry show lead costs from $3 for restaurants to $77 for dental, and detail the objectives, offers, and policy rules that drive performance in each vertical.",
                 "inputHash": "0e36c576d8cdcdf4354db38284aafb767b684311a168733401330c4d7b4a0a13",
-                "generatedAt": null,
+                "generatedAt": "2026-10-06T06:25:59Z",
                 "reviewedAt": null
               }
             }
           },
           "ja": {
             "status": "machine",
-            "shortHeadline": "2026年の業界別Facebook広告ベンチマーク",
-            "summary": "2026年のFacebook広告ベンチマークでは、業界ごとのリード単価が示され、レストランは約3ドル、歯科は約77ドルと報告されている。また、各業界の目的、オファー、ポリシー規則が掲載されている。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-29T13:20:20Z",
+            "shortHeadline": "2026年版 Facebook広告 業界別ベンチマークと成功要因",
+            "summary": "2026年のFacebook広告における業界別ベンチマークが示され、レストランのリード獲得費用は約3ドル、歯科は約77ドルと業種により大きく異なることが分かります。また、各業界で効果的な広告目的やオファー、ポリシーのルールも併せて紹介されています。",
+            "inputHash": "3eaaacb35d9b3a5be0530c30f3c1c302d3e05adb055e0823a8ce5b9375c7269e",
+            "generatedAt": "2026-10-06T06:25:59Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
-                "value": "2026年の業界別Facebook広告ベンチマーク",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-29T13:20:20Z",
+                "value": "2026年版 Facebook広告 業界別ベンチマークと成功要因",
+                "inputHash": "3eaaacb35d9b3a5be0530c30f3c1c302d3e05adb055e0823a8ce5b9375c7269e",
+                "generatedAt": "2026-10-06T06:25:59Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
-                "value": "2026年のFacebook広告ベンチマークでは、業界ごとのリード単価が示され、レストランは約3ドル、歯科は約77ドルと報告されている。また、各業界の目的、オファー、ポリシー規則が掲載されている。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-29T13:20:20Z",
+                "value": "2026年のFacebook広告における業界別ベンチマークが示され、レストランのリード獲得費用は約3ドル、歯科は約77ドルと業種により大きく異なることが分かります。また、各業界で効果的な広告目的やオファー、ポリシーのルールも併せて紹介されています。",
+                "inputHash": "3eaaacb35d9b3a5be0530c30f3c1c302d3e05adb055e0823a8ce5b9375c7269e",
+                "generatedAt": "2026-10-06T06:25:59Z",
                 "reviewedAt": null
               }
             }
@@ -285,7 +837,7 @@
       "publishedDate": "2026-09-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T05:47:38Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -354,7 +906,7 @@
       "publishedDate": "2026-09-27",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T05:47:38Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -423,7 +975,7 @@
       "publishedDate": "2026-09-27",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -492,7 +1044,7 @@
       "publishedDate": "2026-09-25",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -554,75 +1106,6 @@
       }
     },
     {
-      "id": "adsuploader-blog-5311946fea5382f9ab96",
-      "sourceId": "adsuploader-blog",
-      "title": "Meta Ads CLI: Setup, Commands and Limits of Meta's Official Ads CLI (2026)",
-      "url": "https://adsuploader.com/blog/meta-ads-cli",
-      "publishedDate": "2026-09-23",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "5311946fea5382f9ab96a2a88091124d248fc4b6e59f58389150e46666c8ded5",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta Ads CLI: Setup, Commands, Limits (2026)",
-            "summary": "The feed covers the Meta Ads CLI, including installation, system user token setup, all commands, usage with Claude Code or Codex, current limits, and how the Ads Uploader fits into the workflow.",
-            "inputHash": "f15c6a0a22ad259265135e72a04a55d7b1079c2df703d2aa60c679a36208f2f9",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta Ads CLI: Setup, Commands, Limits (2026)",
-                "inputHash": "f15c6a0a22ad259265135e72a04a55d7b1079c2df703d2aa60c679a36208f2f9",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "The feed covers the Meta Ads CLI, including installation, system user token setup, all commands, usage with Claude Code or Codex, current limits, and how the Ads Uploader fits into the workflow.",
-                "inputHash": "f15c6a0a22ad259265135e72a04a55d7b1079c2df703d2aa60c679a36208f2f9",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta公式広告CLIの設定・コマンド・制限概要（2026年）",
-            "summary": "Meta Ads CLIのインストール手順、システムユーザートークンの設定方法、利用可能な全コマンドの概要、Claude CodeやCodexとの併用例、現在の利用上限、そしてAds Uploaderがどのように位置付けられるかが説明されています。",
-            "inputHash": "f1474c45635e57b066f43f9dc3dfcf6e0a6461d9b700705b9b037f2b6d95f7ba",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta公式広告CLIの設定・コマンド・制限概要（2026年）",
-                "inputHash": "f1474c45635e57b066f43f9dc3dfcf6e0a6461d9b700705b9b037f2b6d95f7ba",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta Ads CLIのインストール手順、システムユーザートークンの設定方法、利用可能な全コマンドの概要、Claude CodeやCodexとの併用例、現在の利用上限、そしてAds Uploaderがどのように位置付けられるかが説明されています。",
-                "inputHash": "f1474c45635e57b066f43f9dc3dfcf6e0a6461d9b700705b9b037f2b6d95f7ba",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "id": "adsuploader-blog-22a0e5ef82287f7c466a",
       "sourceId": "adsuploader-blog",
       "title": "Catalog Ads at Scale: How to Run Thousands of SKUs",
@@ -630,7 +1113,7 @@
       "publishedDate": "2026-09-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -692,75 +1175,6 @@
       }
     },
     {
-      "id": "adsuploader-blog-05258747a2b127a014bf",
-      "sourceId": "adsuploader-blog",
-      "title": "Meta Ads MCP: Setup, Capabilities, Limits and Safety (2026)",
-      "url": "https://adsuploader.com/blog/meta-ads-mcp",
-      "publishedDate": "2026-09-23",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "05258747a2b127a014bfda12cd343485b234433d022219d9fc0f9d5984205a7c",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta Ads MCP: Setup, Capabilities, Limits, and Safety",
-            "summary": "Meta Ads MCP is explained with its URL mcp.facebook.com/ads, includes setup guidance for Claude, ChatGPT and Perplexity, describes tool functions, and outlines the July 2026 safety rules and operational limits.",
-            "inputHash": "732291f65557a4c08ac2e7eda314b91e68b3dcfe9498349dcf8f6cdc5ed274b5",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta Ads MCP: Setup, Capabilities, Limits, and Safety",
-                "inputHash": "732291f65557a4c08ac2e7eda314b91e68b3dcfe9498349dcf8f6cdc5ed274b5",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta Ads MCP is explained with its URL mcp.facebook.com/ads, includes setup guidance for Claude, ChatGPT and Perplexity, describes tool functions, and outlines the July 2026 safety rules and operational limits.",
-                "inputHash": "732291f65557a4c08ac2e7eda314b91e68b3dcfe9498349dcf8f6cdc5ed274b5",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta Ads MCP の設定・機能・制限と安全性（2026年）",
-            "summary": "Meta Ads MCP は mcp.facebook.com/ads の URL で提供される広告管理プラットフォームです。設定は Claude、ChatGPT、Perplexity で行えるとされています。ツールの機能や役割、2026年7月の安全ルールおよびその制限について説明されています。",
-            "inputHash": "33f03188524a17412e46ad22506e30e366c0ccfd5f1de5f2987ea087b37e726c",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta Ads MCP の設定・機能・制限と安全性（2026年）",
-                "inputHash": "33f03188524a17412e46ad22506e30e366c0ccfd5f1de5f2987ea087b37e726c",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta Ads MCP は mcp.facebook.com/ads の URL で提供される広告管理プラットフォームです。設定は Claude、ChatGPT、Perplexity で行えるとされています。ツールの機能や役割、2026年7月の安全ルールおよびその制限について説明されています。",
-                "inputHash": "33f03188524a17412e46ad22506e30e366c0ccfd5f1de5f2987ea087b37e726c",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "id": "jon-loomer-meta-ads-5f109c4c8b7d031b8c69",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta One Business Plans: What You Get at Each Tier",
@@ -768,7 +1182,7 @@
       "publishedDate": "2026-09-22",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -837,7 +1251,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": "2026-09-21",
       "firstObservedAt": "2026-09-22T05:01:36Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -907,7 +1321,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -976,7 +1390,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1045,7 +1459,7 @@
       "publishedDate": "2026-09-19",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1114,7 +1528,7 @@
       "publishedDate": "2026-09-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-18T11:07:09Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1183,7 +1597,7 @@
       "publishedDate": "2026-09-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1252,7 +1666,7 @@
       "publishedDate": "2026-09-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1263,49 +1677,49 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Facebook Dynamic Creative mixes assets into ad variations",
+            "summary": "Facebook Dynamic Creative mixes uploaded assets into ad variations, works with certain objectives in 2026, and provides reporting details.",
             "inputHash": "89ebccf13aa5a1b3dfe8be0ffa943f6d08cbc6510d673f7130cf80eeba7e67e3",
-            "generatedAt": null,
+            "generatedAt": "2026-10-06T06:25:59Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Facebook Dynamic Creative mixes assets into ad variations",
                 "inputHash": "89ebccf13aa5a1b3dfe8be0ffa943f6d08cbc6510d673f7130cf80eeba7e67e3",
-                "generatedAt": null,
+                "generatedAt": "2026-10-06T06:25:59Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Facebook Dynamic Creative mixes uploaded assets into ad variations, works with certain objectives in 2026, and provides reporting details.",
                 "inputHash": "89ebccf13aa5a1b3dfe8be0ffa943f6d08cbc6510d673f7130cf80eeba7e67e3",
-                "generatedAt": null,
+                "generatedAt": "2026-10-06T06:25:59Z",
                 "reviewedAt": null
               }
             }
           },
           "ja": {
             "status": "machine",
-            "shortHeadline": "Facebook Dynamic Creativeは素材を組み合わせ広告バリエーションを生成",
-            "summary": "Facebook Dynamic Creativeは、アップロードした素材を組み合わせて広告のバリエーションを自動生成します。2026年に利用できる広告目的やレポートの読み方についても説明されています。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-29T13:20:20Z",
+            "shortHeadline": "Facebook ダイナミッククリエイティブの概要と活用時期",
+            "summary": "Facebook のダイナミッククリエイティブは、アップロードした画像や動画などの素材を組み合わせて複数の広告バリエーションを自動生成します。機能の概要や、2026 年時点で利用可能な広告目的、レポートの見方について説明しています。",
+            "inputHash": "be0f40a86c9e6c9d228b6c23ae416dcdd216de9c342f142fdd4decb82b088fe3",
+            "generatedAt": "2026-10-06T06:25:59Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
-                "value": "Facebook Dynamic Creativeは素材を組み合わせ広告バリエーションを生成",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-29T13:20:20Z",
+                "value": "Facebook ダイナミッククリエイティブの概要と活用時期",
+                "inputHash": "be0f40a86c9e6c9d228b6c23ae416dcdd216de9c342f142fdd4decb82b088fe3",
+                "generatedAt": "2026-10-06T06:25:59Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
-                "value": "Facebook Dynamic Creativeは、アップロードした素材を組み合わせて広告のバリエーションを自動生成します。2026年に利用できる広告目的やレポートの読み方についても説明されています。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-29T13:20:20Z",
+                "value": "Facebook のダイナミッククリエイティブは、アップロードした画像や動画などの素材を組み合わせて複数の広告バリエーションを自動生成します。機能の概要や、2026 年時点で利用可能な広告目的、レポートの見方について説明しています。",
+                "inputHash": "be0f40a86c9e6c9d228b6c23ae416dcdd216de9c342f142fdd4decb82b088fe3",
+                "generatedAt": "2026-10-06T06:25:59Z",
                 "reviewedAt": null
               }
             }
@@ -1321,7 +1735,7 @@
       "publishedDate": "2026-09-16",
       "updatedDate": null,
       "firstObservedAt": "2026-09-17T04:55:10Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -1390,7 +1804,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1459,7 +1873,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1528,7 +1942,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -1597,7 +2011,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1873,7 +2287,7 @@
       "publishedDate": "2026-09-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-11T04:43:19Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1935,75 +2349,6 @@
       }
     },
     {
-      "id": "meta-product-news-rss-d717bb73381559618ba3",
-      "sourceId": "meta-product-news-rss",
-      "title": "Introducing Muse: The World’s First Personal AI Agent Built for Everyone",
-      "url": "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/",
-      "publishedDate": "2026-09-08",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-14T11:20:59Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
-      "platformIds": [
-        "meta-platforms"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "d717bb73381559618ba386bbda9459c908cfe1d8e4602f666d055bae906194b3",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "484f050a14964a0aa87da9b54afc599a1101416338cf1426b8d6a11f1901ce36",
-            "generatedAt": null,
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "484f050a14964a0aa87da9b54afc599a1101416338cf1426b8d6a11f1901ce36",
-                "generatedAt": null,
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "484f050a14964a0aa87da9b54afc599a1101416338cf1426b8d6a11f1901ce36",
-                "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "missing",
-            "shortHeadline": "Museの紹介：誰でも使える世界初のパーソナルAIエージェント",
-            "summary": null,
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Museの紹介：誰でも使える世界初のパーソナルAIエージェント",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-10-03T13:32:27Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "id": "jon-loomer-meta-ads-d457987942b9d8c73735",
       "sourceId": "jon-loomer-meta-ads",
       "title": "How to Approach Meta Advertising Control",
@@ -2011,7 +2356,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T04:45:10Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2080,7 +2425,7 @@
       "publishedDate": "2026-09-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2149,7 +2494,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2218,7 +2563,7 @@
       "publishedDate": "2026-08-31",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2287,7 +2632,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -2357,7 +2702,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2426,7 +2771,7 @@
       "publishedDate": "2026-08-24",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2564,7 +2909,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2843,7 +3188,7 @@
       "publishedDate": "2026-08-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2977,75 +3322,6 @@
       }
     },
     {
-      "id": "jon-loomer-meta-ads-31a647f219704abc5612",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "ChatGPT Ads Get Automated Bidding, Placements, and URL Parameters",
-      "url": "https://www.jonloomer.com/chatgpt-ads-automated-bidding-placements-url-parameters/",
-      "publishedDate": "2026-08-13",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "bae818e9c6a1294225aebbcf3fe2ec19a7698f8a07f7f05c4bb3bbe9b45d5dca",
-            "generatedAt": null,
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "bae818e9c6a1294225aebbcf3fe2ec19a7698f8a07f7f05c4bb3bbe9b45d5dca",
-                "generatedAt": null,
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "bae818e9c6a1294225aebbcf3fe2ec19a7698f8a07f7f05c4bb3bbe9b45d5dca",
-                "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "ChatGPT広告に自動入札・配置選択・URLパラメータ機能が追加",
-            "summary": "OpenAIはChatGPT広告のベータ版開始以降、3つの機能を追加した。クリックやコンバージョンを目的とした場合のデフォルト入札戦略を「結果最大化」に変更し、予算に応じて自動的に入札額を調整する。キャンペーン設定に「対象プラットフォーム」ドロップダウンを導入し、iOSアプリ、Androidアプリ、Webの表示先を個別に選択できるようにした。さらに、キャンペーン・広告セット・広告単位でランディングページのクエリパラメータを設定でき、{campaign_id} などのテンプレート変数が利用可能となった。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-05T08:40:34Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "ChatGPT広告に自動入札・配置選択・URLパラメータ機能が追加",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-05T08:40:34Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "OpenAIはChatGPT広告のベータ版開始以降、3つの機能を追加した。クリックやコンバージョンを目的とした場合のデフォルト入札戦略を「結果最大化」に変更し、予算に応じて自動的に入札額を調整する。キャンペーン設定に「対象プラットフォーム」ドロップダウンを導入し、iOSアプリ、Androidアプリ、Webの表示先を個別に選択できるようにした。さらに、キャンペーン・広告セット・広告単位でランディングページのクエリパラメータを設定でき、{campaign_id} などのテンプレート変数が利用可能となった。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-05T08:40:34Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "id": "jon-loomer-meta-ads-43e38784bd796ab19923",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta Ads AI Connectors Get More Security Controls",
@@ -3053,7 +3329,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3122,7 +3398,7 @@
       "publishedDate": "2026-08-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3191,7 +3467,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3260,7 +3536,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3329,7 +3605,7 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -3399,7 +3675,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3537,7 +3813,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3606,7 +3882,7 @@
       "publishedDate": "2026-07-20",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3675,7 +3951,7 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -3745,7 +4021,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3814,7 +4090,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3883,7 +4159,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3918,11 +4194,11 @@
             }
           },
           "ja": {
-            "status": "missing",
+            "status": "machine",
             "shortHeadline": "インスタントフォームなどのリードキャプチャAIエージェント",
-            "summary": null,
+            "summary": "MetaはInstant Form広告に「リード取得AIエージェント」機能を追加し、会話形式で情報収集しつつ、フォームと比較してコンバージョン可能性が高い方を自動選択する。エージェントはフォームやウェブサイトの情報で基本的な質問に回答し、会話はアプリ内で完結し保存されない。さらに、数週間以内に広告向け画像生成を担う",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-10-06T06:25:59Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
@@ -3933,10 +4209,10 @@
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "MetaはInstant Form広告に「リード取得AIエージェント」機能を追加し、会話形式で情報収集しつつ、フォームと比較してコンバージョン可能性が高い方を自動選択する。エージェントはフォームやウェブサイトの情報で基本的な質問に回答し、会話はアプリ内で完結し保存されない。さらに、数週間以内に広告向け画像生成を担う",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-10-06T06:25:59Z",
                 "reviewedAt": null
               }
             }
@@ -3952,7 +4228,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4023,7 +4299,7 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -4093,7 +4369,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4162,7 +4438,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4231,7 +4507,7 @@
       "publishedDate": "2026-06-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4300,7 +4576,7 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4369,7 +4645,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4440,7 +4716,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4511,7 +4787,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4580,7 +4856,7 @@
       "publishedDate": "2026-06-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4649,7 +4925,7 @@
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4718,7 +4994,7 @@
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4787,7 +5063,7 @@
       "publishedDate": "2026-06-14",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4856,7 +5132,7 @@
       "publishedDate": "2026-06-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4925,7 +5201,7 @@
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4994,7 +5270,7 @@
       "publishedDate": "2026-06-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5063,7 +5339,7 @@
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5132,7 +5408,7 @@
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5201,7 +5477,7 @@
       "publishedDate": "2026-05-31",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5270,7 +5546,7 @@
       "publishedDate": "2026-05-26",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5626,7 +5902,7 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -5696,7 +5972,7 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -5766,7 +6042,7 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -5836,7 +6112,7 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -5906,7 +6182,7 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
+      "lastObservedAt": "2026-10-06T06:25:59Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
