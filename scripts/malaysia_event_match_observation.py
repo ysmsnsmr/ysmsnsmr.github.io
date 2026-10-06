@@ -110,11 +110,9 @@ def _validated_pairs(value: dict[str, Any], cohort_size: int) -> list[dict[str, 
             raise CoverageValidationError("duplicate_omission")
         if not reason:
             raise CoverageValidationError("empty_reason")
-        if len(reason) > 160:
-            raise CoverageValidationError("reason_too_long")
         omitted.add(omit)
         kept.add(keep)
-        pairs.append({"keep": keep, "omit": omit, "reason": reason})
+        pairs.append({"keep": keep, "omit": omit, "reason": reason[:160]})
     if omitted & kept:
         raise CoverageValidationError("chained_coverage")
     return pairs
@@ -246,6 +244,9 @@ def observe_haze_coverage(
         if shape_error:
             raise CoverageValidationError(shape_error)
         decisions = _validated_pairs(completion.parsed, len(cohort))
+        report["truncatedReasonCount"] = sum(
+            len(row["reason"].strip()) > 160 for row in completion.parsed["omissions"]
+        )
         if any(dates[row["keep"] - 1] != dates[row["omit"] - 1] for row in decisions):
             raise CoverageValidationError("cross_day_reference")
         truncated = {
@@ -342,6 +343,9 @@ def observe(
         if shape_error:
             raise CoverageValidationError(shape_error)
         decisions = _validated_pairs(completion.parsed, len(cohort))
+        report["truncatedReasonCount"] = sum(
+            len(row["reason"].strip()) > 160 for row in completion.parsed["omissions"]
+        )
         truncated = {
             index for index, entry in enumerate(cohort, start=1)
             if len(entry["item"]["description"]) > MAX_DESCRIPTION_CHARS

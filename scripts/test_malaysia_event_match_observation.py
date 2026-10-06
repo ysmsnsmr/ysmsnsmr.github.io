@@ -188,7 +188,6 @@ class EventMatchObservationTests(unittest.TestCase):
             ([{"keep": 1, "omit": 2, "reason": "same"},
               {"keep": 1, "omit": 2, "reason": "same"}], "duplicate_omission"),
             ([{"keep": 1, "omit": 2, "reason": " "}], "empty_reason"),
-            ([{"keep": 1, "omit": 2, "reason": "secret response text" * 20}], "reason_too_long"),
             ([{"keep": 1, "omit": 2, "reason": "same"},
               {"keep": 2, "omit": 3, "reason": "same"}], "chained_coverage"),
         )
@@ -205,6 +204,27 @@ class EventMatchObservationTests(unittest.TestCase):
                 rendered = json.dumps(result)
                 self.assertNotIn("secret response text", rendered)
                 self.assertNotIn("fixture-key", rendered)
+
+    def test_long_reason_is_bounded_without_rejecting_valid_references(self) -> None:
+        reason = "Same daily situation. " + "x" * 200 + "private-tail"
+        pool = {"items": [candidate(1), candidate(2)]}
+        for observer in (observe, observe_haze_coverage):
+            with self.subTest(observer=observer.__name__):
+                if observer is observe_haze_coverage:
+                    for row in pool["items"]:
+                        row.update(title="Jerebu IPU tidak sihat", description="Johor IPU update")
+                result = observer(
+                    pool, routing(["direct_life_impact"] * 2), api_key="fixture-key",
+                    model_name="gpt-oss-120b",
+                    request=lambda **_: SimpleNamespace(
+                        parsed={"omissions": [{"keep": 1, "omit": 2, "reason": reason}]}, diagnostic={}
+                    ),
+                )
+                self.assertEqual(result["status"], "completed")
+                self.assertEqual(result["truncatedReasonCount"], 1)
+                self.assertEqual(len(result["coverageDecisions"][0]["reason"]), 160)
+                self.assertNotIn("private-tail", json.dumps(result))
+                self.assertNotIn("validationReason", result)
 
     def test_request_failure_is_observation_only(self) -> None:
         pool = {"items": [candidate(1), candidate(2)]}
