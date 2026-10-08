@@ -284,6 +284,69 @@ class MalaysiaJevEditorialRoutingTests(unittest.TestCase):
         self.assertEqual(report["eventCoverage"]["suppressedCount"], 1)
         self.assertNotIn("jpj-1", json.dumps(report))
 
+    def test_later_representative_is_selected_before_budget_and_older_story_is_omitted(self) -> None:
+        reports = [
+            item("Morning air quality status", "https://example.test/morning"),
+            item("Separate service change", "https://example.test/service"),
+            item("Afternoon air quality update covering morning status", "https://example.test/afternoon"),
+        ]
+        reports[2]["published_at"] = "2026-09-20T16:30:00+08:00"
+        coverage = {
+            "status": "completed", "cohort": [{"id": 1, "candidateRank": 1}, {"id": 2, "candidateRank": 3}],
+            "coverageDecisions": [{"keep": 2, "omit": 1, "reason": "Later report includes morning status"}],
+        }
+        with patch.object(routing, "TARGET_CARD_COUNT", 2):
+            output, report = routing.route_candidates(
+                payload(reports), payload([]), enabled=True, api_key="jev-key", timeout_seconds=1,
+                post_json=lambda *_: response("direct_life_impact"), event_enabled=True,
+                event_observer=lambda *args, **kwargs: coverage,
+                haze_observer=lambda *args, **kwargs: {"status": "disabled", "cohort": [], "coverageDecisions": []},
+            )
+        self.assertEqual([row["title"] for row in output["items"]], [reports[2]["title"], reports[1]["title"]])
+        self.assertEqual(report["results"][0]["publicationDecision"], "excluded_covered_event")
+        self.assertEqual(report["results"][0]["coveredByCandidateRank"], 3)
+
+    def test_later_representative_not_selected_keeps_earlier_story(self) -> None:
+        reports = [
+            item("Earlier blocked-source story", "https://example.test/other", source="Blocked"),
+            item("Earlier district closure", "https://example.test/district", source="Available"),
+            item("Later statewide closure", "https://example.test/state", source="Blocked"),
+        ]
+        coverage = {
+            "status": "completed", "cohort": [{"id": 1, "candidateRank": 2}, {"id": 2, "candidateRank": 3}],
+            "coverageDecisions": [{"keep": 2, "omit": 1, "reason": "Later report covers earlier closure"}],
+        }
+        output, report = routing.route_candidates(
+            payload(reports, post_relevance_policy={"source_limits": {"Blocked": 1}}), payload([]),
+            enabled=True, api_key="jev-key", timeout_seconds=1,
+            post_json=lambda *_: response("direct_life_impact"), event_enabled=True,
+            event_observer=lambda *args, **kwargs: coverage,
+            haze_observer=lambda *args, **kwargs: {"status": "disabled", "cohort": [], "coverageDecisions": []},
+        )
+        self.assertEqual([row["title"] for row in output["items"]], [reports[0]["title"], reports[1]["title"]])
+        self.assertEqual(report["results"][1]["publicationDecision"], "selected")
+        self.assertEqual(report["results"][2]["publicationDecision"], "excluded_source_diversity")
+
+    def test_public_information_representative_does_not_replace_direct_impact(self) -> None:
+        reports = [
+            item("Affected district closure", "https://example.test/district"),
+            item("Later statewide report", "https://example.test/state"),
+        ]
+        choices = {reports[0]["title"]: "direct_life_impact", reports[1]["title"]: "public_information"}
+        coverage = {
+            "status": "completed", "cohort": [{"id": 1, "candidateRank": 1}, {"id": 2, "candidateRank": 2}],
+            "coverageDecisions": [{"keep": 2, "omit": 1, "reason": "Later report covers the district"}],
+        }
+        with patch.object(routing, "TARGET_CARD_COUNT", 1):
+            output, report = routing.route_candidates(
+                payload(reports), payload([]), enabled=True, api_key="jev-key", timeout_seconds=1,
+                post_json=lambda request, *_: response(choices[request["state"]["title"]]),
+                event_enabled=True, event_observer=lambda *args, **kwargs: coverage,
+                haze_observer=lambda *args, **kwargs: {"status": "disabled", "cohort": [], "coverageDecisions": []},
+            )
+        self.assertEqual([row["title"] for row in output["items"]], [reports[0]["title"]])
+        self.assertEqual(report["results"][0]["publicationDecision"], "selected")
+
     def test_haze_daily_coverage_preserves_klang_followup_and_backfills_budget(self) -> None:
         reports = [
             item("Haze API unhealthy in Segamat", "https://example.test/segamat"),
@@ -318,6 +381,27 @@ class MalaysiaJevEditorialRoutingTests(unittest.TestCase):
         self.assertEqual(output["editorial_routing"]["haze_coverage_suppressed_count"], 2)
         self.assertEqual(report["results"][1]["coverageSource"], "haze_daily")
         self.assertNotIn("https://example.test", json.dumps(report))
+
+    def test_haze_followup_can_replace_higher_priority_earlier_status(self) -> None:
+        reports = [
+            item("Morning air quality unhealthy in 35 areas", "https://example.test/morning"),
+            item("Other local news", "https://example.test/other"),
+            item("Afternoon air quality unhealthy in 37 stations", "https://example.test/afternoon"),
+        ]
+        haze = {
+            "status": "completed", "cohort": [{"id": 1, "candidateRank": 1}, {"id": 2, "candidateRank": 3}],
+            "coverageDecisions": [{"keep": 2, "omit": 1, "reason": "Updated status covers earlier affected areas"}],
+        }
+        with patch.object(routing, "TARGET_CARD_COUNT", 2):
+            output, report = routing.route_candidates(
+                payload(reports), payload([]), enabled=True, api_key="jev-key", timeout_seconds=1,
+                post_json=lambda *_: response("direct_life_impact"), event_enabled=True,
+                event_observer=lambda *args, **kwargs: {"status": "disabled", "cohort": [], "coverageDecisions": []},
+                haze_observer=lambda *args, **kwargs: haze,
+            )
+        self.assertEqual([row["title"] for row in output["items"]], [reports[2]["title"], reports[1]["title"]])
+        self.assertEqual(report["results"][0]["coverageSource"], "haze_daily")
+        self.assertEqual(report["hazeCoverage"]["suppressedCount"], 1)
 
     def test_failed_haze_matching_keeps_all_status_articles(self) -> None:
         reports = [
