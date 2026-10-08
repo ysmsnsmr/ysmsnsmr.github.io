@@ -252,6 +252,10 @@ def route_candidates(
     by_choice: dict[str, list[tuple[int, dict[str, Any]]]] = {choice: [] for choice in (*CHOICE_ORDER, "unrelated_noise")}
     for index, item, answer in classified:
         by_choice[answer["choice"]].append((index, item))
+    choice_priority = {
+        rank: CHOICE_ORDER.index(answer["choice"])
+        for rank, _, answer in classified if answer["choice"] in CHOICE_ORDER
+    }
 
     coverage = {"status": "disabled", "productionEffect": False, "coverageDecisions": [], "cohort": []}
     haze_coverage = {"status": "disabled", "productionEffect": False, "coverageDecisions": [], "cohort": []}
@@ -288,6 +292,11 @@ def route_candidates(
         for row in haze_coverage.get("coverageDecisions", []):
             if row["omit"] in haze_cohort_ranks and row["keep"] in haze_cohort_ranks:
                 covered_by[haze_cohort_ranks[row["omit"]]] = haze_cohort_ranks[row["keep"]]
+    # Two independent observers can otherwise form a chain with an unselected representative.
+    covered_by = {
+        omit: keep for omit, keep in covered_by.items()
+        if keep not in covered_by and choice_priority.get(keep, len(CHOICE_ORDER)) <= choice_priority.get(omit, -1)
+    }
     haze_omitted_ranks = {
         haze_cohort_ranks[row["omit"]]
         for row in haze_coverage.get("coverageDecisions", [])
@@ -307,43 +316,54 @@ def route_candidates(
     for _, item in by_choice["unrelated_noise"]:
         results_by_fingerprint[_fingerprint(item)]["publicationDecision"] = "excluded_unrelated_noise"
 
-    for choice in CHOICE_ORDER:
-        for rank, item in by_choice[choice]:
-            fingerprint = _fingerprint(item)
-            result = results_by_fingerprint[fingerprint]
-            if fingerprint in selected_fingerprints:
-                continue
-            if choice == "unclear" and str(item.get("link") or "") not in baseline_links:
-                result["publicationDecision"] = "excluded_unclear"
-                continue
-            representative_rank = covered_by.get(rank)
-            if representative_rank in selected_ranks:
-                result["publicationDecision"] = "excluded_covered_event"
-                result["coverageSource"] = "haze_daily" if rank in haze_omitted_ranks else "general_event"
-                result["coveredByCandidateRank"] = representative_rank
-                result["coveredByFingerprint"] = report["results"][representative_rank - 1]["itemFingerprint"]
-                continue
-            source = str(item.get("source") or "")
-            source_limit = policy["source_limits"].get(source, policy["default_source_limit"])
-            if source_counts[source] >= source_limit:
-                result["publicationDecision"] = "excluded_source_diversity"
-                continue
-            metadata = item.get("routing_metadata")
-            financial_bucket = metadata.get("financial_bucket") if isinstance(metadata, dict) else ""
-            financial_limit = policy["financial_limits"].get(financial_bucket) if financial_bucket else None
-            if financial_limit is not None and financial_counts[financial_bucket] >= financial_limit:
-                result["publicationDecision"] = "excluded_financial_diversity"
-                continue
-            if len(selected) >= policy["target_card_count"]:
-                result["publicationDecision"] = "excluded_editorial_budget"
-                continue
-            selected.append(_selected_item(item, choice))
-            selected_fingerprints.add(fingerprint)
-            selected_ranks.add(rank)
-            result["publicationDecision"] = "selected"
-            source_counts[source] += 1
-            if financial_bucket:
-                financial_counts[financial_bucket] += 1
+    ordered_candidates = [
+        (choice, rank, item)
+        for choice in CHOICE_ORDER for rank, item in by_choice[choice]
+    ]
+    # Give a later, fully covering report its predecessor's place before applying
+    # the card budget. The predecessor remains eligible if that report is not selected.
+    for omit, keep in sorted(covered_by.items(), key=lambda pair: pair[0]):
+        positions = {rank: index for index, (_, rank, _) in enumerate(ordered_candidates)}
+        if keep in positions and omit in positions and positions[keep] > positions[omit]:
+            representative = ordered_candidates.pop(positions[keep])
+            ordered_candidates.insert(positions[omit], representative)
+
+    for choice, rank, item in ordered_candidates:
+        fingerprint = _fingerprint(item)
+        result = results_by_fingerprint[fingerprint]
+        if fingerprint in selected_fingerprints:
+            continue
+        if choice == "unclear" and str(item.get("link") or "") not in baseline_links:
+            result["publicationDecision"] = "excluded_unclear"
+            continue
+        representative_rank = covered_by.get(rank)
+        if representative_rank in selected_ranks:
+            result["publicationDecision"] = "excluded_covered_event"
+            result["coverageSource"] = "haze_daily" if rank in haze_omitted_ranks else "general_event"
+            result["coveredByCandidateRank"] = representative_rank
+            result["coveredByFingerprint"] = report["results"][representative_rank - 1]["itemFingerprint"]
+            continue
+        source = str(item.get("source") or "")
+        source_limit = policy["source_limits"].get(source, policy["default_source_limit"])
+        if source_counts[source] >= source_limit:
+            result["publicationDecision"] = "excluded_source_diversity"
+            continue
+        metadata = item.get("routing_metadata")
+        financial_bucket = metadata.get("financial_bucket") if isinstance(metadata, dict) else ""
+        financial_limit = policy["financial_limits"].get(financial_bucket) if financial_bucket else None
+        if financial_limit is not None and financial_counts[financial_bucket] >= financial_limit:
+            result["publicationDecision"] = "excluded_financial_diversity"
+            continue
+        if len(selected) >= policy["target_card_count"]:
+            result["publicationDecision"] = "excluded_editorial_budget"
+            continue
+        selected.append(_selected_item(item, choice))
+        selected_fingerprints.add(fingerprint)
+        selected_ranks.add(rank)
+        result["publicationDecision"] = "selected"
+        source_counts[source] += 1
+        if financial_bucket:
+            financial_counts[financial_bucket] += 1
 
     coverage["productionEffect"] = any(
         result.get("coverageSource") == "general_event" for result in report["results"]

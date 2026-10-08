@@ -55,7 +55,7 @@ class EventMatchObservationTests(unittest.TestCase):
         self.assertEqual(result["status"], "completed")
         self.assertEqual(len(result["coverageDecisions"]), 2)
         self.assertEqual(len(calls), 1)
-        self.assertEqual(calls[0]["json_schema_name"], "malaysia_news_haze_daily_coverage_v1")
+        self.assertEqual(calls[0]["json_schema_name"], "malaysia_news_haze_daily_coverage_v2")
         self.assertIn("Klang Valley", calls[0]["messages"][0]["content"])
         self.assertNotIn("fixture-key", str(result))
         self.assertNotIn("https://example.test", str(result))
@@ -77,7 +77,7 @@ class EventMatchObservationTests(unittest.TestCase):
             {"items": reports}, routing(["direct_life_impact"] * 3),
             api_key="fixture-key", model_name="gpt-oss-120b",
             request=lambda **_: SimpleNamespace(
-                parsed={"omissions": [{"keep": 1, "omit": 2, "reason": "same"}]}, diagnostic={}
+                parsed={"omissions": [{"keep": 2, "omit": 1, "reason": "same"}]}, diagnostic={}
             ),
         )
         self.assertEqual(result["status"], "invalid_coverage")
@@ -119,6 +119,64 @@ class EventMatchObservationTests(unittest.TestCase):
         self.assertEqual(result["status"], "completed")
         self.assertEqual(result["candidateCount"], 2)
 
+    def test_air_quality_and_related_school_action_enter_same_day_cohort(self) -> None:
+        reports = [candidate(index) for index in range(1, 3)]
+        reports[0].update(title="Air quality deteriorates in 37 stations", description="Klang Valley affected")
+        reports[1].update(title="Schools in Batu Pahat close amid hazardous air quality", description="Childcare centres also close")
+        result = observe_haze_coverage(
+            {"items": reports}, routing(["direct_life_impact"] * 2),
+            api_key="fixture-key", model_name="gpt-oss-120b",
+            request=lambda **_: SimpleNamespace(parsed={"omissions": []}, diagnostic={}),
+        )
+        self.assertEqual(result["status"], "completed")
+        self.assertEqual(result["candidateCount"], 2)
+
+    def test_later_report_can_cover_higher_priority_earlier_report(self) -> None:
+        reports = [candidate(index) for index in range(1, 3)]
+        reports[0]["published_at"] = "2026-10-07T10:00:00+08:00"
+        reports[1]["published_at"] = "2026-10-07T16:30:00+08:00"
+        result = observe(
+            {"items": reports}, routing(["direct_life_impact"] * 2),
+            api_key="fixture-key", model_name="gpt-oss-120b",
+            request=lambda **_: SimpleNamespace(
+                parsed={"omissions": [{"keep": 2, "omit": 1, "reason": "Later report retains all affected areas"}]},
+                diagnostic={},
+            ),
+        )
+        self.assertEqual(result["status"], "completed")
+        self.assertEqual(result["coverageDecisions"][0]["keep"], 2)
+
+    def test_reverse_reference_without_later_publication_fails_open(self) -> None:
+        reports = [candidate(index) for index in range(1, 3)]
+        reports[0]["published_at"] = "2026-10-07T16:30:00+08:00"
+        reports[1]["published_at"] = "2026-10-07T10:00:00+08:00"
+        result = observe(
+            {"items": reports}, routing(["direct_life_impact"] * 2),
+            api_key="fixture-key", model_name="gpt-oss-120b",
+            request=lambda **_: SimpleNamespace(
+                parsed={"omissions": [{"keep": 2, "omit": 1, "reason": "Incorrect order"}]}, diagnostic={},
+            ),
+        )
+        self.assertEqual(result["status"], "invalid_coverage")
+        self.assertEqual(result["validationReason"], "representative_not_newer")
+        self.assertEqual(result["coverageDecisions"], [])
+
+    def test_older_higher_priority_report_cannot_hide_a_newer_update(self) -> None:
+        reports = [candidate(index) for index in range(1, 3)]
+        reports[0]["published_at"] = "2026-10-07T10:00:00+08:00"
+        reports[1]["published_at"] = "2026-10-07T16:30:00+08:00"
+        result = observe(
+            {"items": reports}, routing(["direct_life_impact"] * 2),
+            api_key="fixture-key", model_name="gpt-oss-120b",
+            request=lambda **_: SimpleNamespace(
+                parsed={"omissions": [{"keep": 1, "omit": 2, "reason": "Incorrectly hides later status"}]},
+                diagnostic={},
+            ),
+        )
+        self.assertEqual(result["status"], "invalid_coverage")
+        self.assertEqual(result["validationReason"], "representative_not_newer")
+        self.assertEqual(result["coverageDecisions"], [])
+
     def test_workflow_runs_coverage_before_publication(self) -> None:
         workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/malaysia-rss-summary.yml").read_text()
         self.assertIn("--event-coverage", workflow)
@@ -142,8 +200,8 @@ class EventMatchObservationTests(unittest.TestCase):
         self.assertEqual(len(calls), 1)
         self.assertEqual([row["candidateRank"] for row in result["cohort"]], [1, 2, 4])
         self.assertEqual(result["coverageDecisions"], [{"keep": 1, "omit": 2, "reason": "Same announcement and figures"}])
-        self.assertEqual(calls[0]["json_schema_name"], "malaysia_news_event_coverage_v2")
-        self.assertIn("important new information", calls[0]["messages"][0]["content"])
+        self.assertEqual(calls[0]["json_schema_name"], "malaysia_news_event_coverage_v3")
+        self.assertIn("ALL important information", calls[0]["messages"][0]["content"])
         self.assertNotIn("fixture-key", str(result))
         self.assertNotIn("https://example.test", str(result))
 
@@ -184,7 +242,7 @@ class EventMatchObservationTests(unittest.TestCase):
     def test_validation_reasons_are_fixed_codes_without_response_text(self) -> None:
         pool = {"items": [candidate(index) for index in range(1, 4)]}
         cases = (
-            ([{"keep": 2, "omit": 1, "reason": "secret response text"}], "reference_order_invalid"),
+            ([{"keep": 1, "omit": 1, "reason": "secret response text"}], "reference_order_invalid"),
             ([{"keep": 1, "omit": 2, "reason": "same"},
               {"keep": 1, "omit": 2, "reason": "same"}], "duplicate_omission"),
             ([{"keep": 1, "omit": 2, "reason": " "}], "empty_reason"),
