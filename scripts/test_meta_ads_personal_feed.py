@@ -275,7 +275,7 @@ class PersonalFeedTest(unittest.TestCase):
     def test_manual_exclusions_are_validated_and_match_the_reviewed_urls(self) -> None:
         manifest = json.loads(personal_feed.DEFAULT_MANUAL_EXCLUSIONS.read_text(encoding="utf-8"))
         urls = personal_feed.validate_manual_exclusions(manifest, self.config)
-        self.assertEqual(len(urls), 25)
+        self.assertEqual(len(urls), 26)
         self.assertIn("https://www.jonloomer.com/chatgpt-ads-initial-impressions/", urls)
         self.assertIn("https://www.socialmediatoday.com/news/meta-settles-landmark-lawsuit-for-18b/828900/", urls)
         self.assertIn("https://www.socialmediatoday.com/news/will-meta-be-found-guilty-of-driving-social-media-addiction/828553/", urls)
@@ -286,6 +286,7 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertIn("https://www.jonloomer.com/push-delivery-tests-chatgpt-ads-updates/", urls)
         self.assertIn("https://www.socialmediatoday.com/news/meta-outlines-political-ad-restrictions/832444/", urls)
         self.assertIn("https://www.socialmediatoday.com/news/ai-favors-brands-with-an-active-social-media-presence/832450/", urls)
+        self.assertIn("https://www.jonloomer.com/chatgpt-ads-automated-bidding-placements-url-parameters/", urls)
 
         duplicate = copy.deepcopy(manifest)
         duplicate["entries"].append(duplicate["entries"][0])
