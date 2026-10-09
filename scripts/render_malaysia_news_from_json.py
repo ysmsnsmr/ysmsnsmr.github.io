@@ -451,7 +451,6 @@ def render_editorial_entry_item(item: dict[str, Any]) -> list[str]:
         f"- 短見出し：{entry['short_headline_ja']}",
         f"- 概要：{entry['entry_ja']}",
     ]
-    lines.extend(f"- 補足：{point}" for point in entry["supporting_points_ja"])
     lines.extend(
         [
             f"- 出典：{source}（{published_date}）",

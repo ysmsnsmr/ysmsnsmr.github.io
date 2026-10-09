@@ -2273,25 +2273,13 @@ def selected_summary_json(item: Item) -> dict[str, object]:
 
 
 def editorial_entry_json(item: Item) -> dict[str, object]:
-    """Adapt the existing RSS summary to the v3 renderer contract.
-
-    This remains deterministic RSS fallback data.  Generic impact and action
-    text is intentionally not promoted into supporting points.
-    """
+    """Keep a deterministic RSS entry alongside the legacy rollback summary."""
     summary = selected_summary_json(item)
     entry_ja = str(summary.get("conclusion") or "").strip()
-    points = [
-        line.strip()
-        for line in summary.get("what_happened", [])
-        if isinstance(line, str)
-        and line.strip()
-        and "RSS内のタイトルと説明をもとに整理しました" not in line
-    ][:2]
     return {
         "headline_ja": "記事詳細は出典へ",
         "short_headline_ja": "記事詳細は出典へ",
         "entry_ja": entry_ja,
-        "supporting_points_ja": points,
     }
 
 
@@ -2932,12 +2920,12 @@ def self_test() -> int:
     check("JSON selected summary has next_action key", "next_action" in selected_summary)
     check("JSON selected summary splits what_happened like render", len(selected_summary["what_happened"]) <= 2)
     check(
-        "JSON item carries Editorial Entry v3 fallback",
+        "JSON item carries Editorial Entry v4 fallback",
         bool(editorial_entry["headline_ja"])
         and bool(editorial_entry["short_headline_ja"])
         and bool(editorial_entry["entry_ja"]),
     )
-    check("Editorial Entry v3 has at most two supporting points", len(editorial_entry["supporting_points_ja"]) <= 2)
+    check("Editorial Entry v4 has no supporting points", "supporting_points_ja" not in editorial_entry)
 
     observed_duplicate = Item(
         "Test Duplicate",

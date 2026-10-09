@@ -30,11 +30,11 @@ Before the cutover:
 The production profile uses the already observed GPT-OSS 120B request configuration:
 
 - prompt layout: `user_only`;
-- JSON contract: `editorial_entry_v3`;
+- JSON contract: `editorial_entry_v4`;
 - completion budget: `800` tokens;
 - rate-reset wait maximum: `60` seconds.
 
-The production response has one required Japanese `entry_ja` and zero to two `supporting_points_ja`. Subject, attribution, state, and certainty remain in this prose; life impact and next action are not independent required fields. API未実行やrequest-cap skipは原題・説明のsource displayとして通常表示し、hard-safety rejectionなどのcode-owned safety fallbackは日別ページ末尾の「原文のみ」一覧へ降格する。
+The production response has two headline fields and one required Japanese `entry_ja`; there is no supporting-points field or fixed overview character limit. Necessary facts can stay together in a longer overview. Subject, attribution, state, and certainty remain in this prose; life impact and next action are not independent required fields. API未実行やrequest-cap skipは原題・説明のsource displayとして通常表示し、hard-safety rejectionなどのcode-owned safety fallbackは日別ページ末尾の「原文のみ」一覧へ降格する。Historical Markdown and the legacy RSS-only rollback remain readable.
 
 The single profile registry is `scripts/malaysia_groq_model_profiles.json`. Workflow YAML must not contain a model-ID selection branch.
 
