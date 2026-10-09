@@ -165,6 +165,12 @@ EDITORIAL_ENTRY_V3_REPAIR_SCHEMA = {
 }
 
 
+# v4 uses the former repair shape for every request: one complete overview,
+# without a second field in which the model can repeat or contradict it.
+EDITORIAL_ENTRY_V4_SCHEMA = EDITORIAL_ENTRY_V3_REPAIR_SCHEMA
+EDITORIAL_ENTRY_V4_REPAIR_SCHEMA = EDITORIAL_ENTRY_V4_SCHEMA
+
+
 SUMMARY_ENTRY_SCHEMA = {
     "type": "object",
     "properties": {
@@ -341,8 +347,12 @@ def editorial_entry_repair_schema_error(value: Any) -> str:
     return ""
 
 
+def editorial_entry_v4_schema_error(value: Any) -> str:
+    return editorial_entry_repair_schema_error(value)
+
+
 def editorial_entry_forbidden_patterns(value: str) -> list[str]:
-    """Return display tokens that remain forbidden in Editorial Entry v3."""
+    """Return display tokens forbidden in editorial entries."""
     return [pattern for pattern in EDITORIAL_ENTRY_FORBIDDEN_PATTERNS if pattern in value]
 
 

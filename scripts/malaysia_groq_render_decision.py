@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Finalize v3 Malaysia news editorial entries in one place."""
+"""Finalize Malaysia news editorial entries in one place."""
 
 import copy
 from dataclasses import dataclass
 from typing import Any
 
 from malaysia_groq_common import clean_text
-from malaysia_groq_output_contract import editorial_entry_schema_error
+from malaysia_groq_output_contract import editorial_entry_v4_schema_error
 
 
 GROQ_ACCEPTED = "groq_accepted"
@@ -24,14 +24,13 @@ PROVENANCE_ORIGINS = (
     "fallback_source_only",
 )
 
-# This is the only article-level fallback emitted by the v3 candidate path.
+# This is the only article-level fallback emitted by the candidate path.
 # It makes no claim about the article, so a rejected model response cannot
 # reintroduce unverified legacy RSS text into an otherwise valid document.
 RSS_FALLBACK_EDITORIAL_ENTRY = {
     "headline_ja": "記事詳細は出典へ",
     "short_headline_ja": "記事詳細は出典へ",
     "entry_ja": "この記事の詳細は出典リンクで確認できます。",
-    "supporting_points_ja": [],
 }
 
 
@@ -46,28 +45,22 @@ class RenderDecision:
 
 def editorial_entry_payload(value: Any) -> dict[str, Any]:
     entry = value if isinstance(value, dict) else {}
-    points = entry.get("supporting_points_ja")
     return {
         "headline_ja": clean_text(entry.get("headline_ja")) or "記事詳細は出典へ",
         "short_headline_ja": clean_text(entry.get("short_headline_ja")) or clean_text(entry.get("headline_ja")) or "記事詳細は出典へ",
         "entry_ja": clean_text(entry.get("entry_ja")),
-        "supporting_points_ja": [
-            clean_text(point) for point in points if clean_text(point)
-        ][:2]
-        if isinstance(points, list)
-        else [],
     }
 
 
 def validated_rss_fallback_editorial_entry() -> dict[str, Any]:
-    """Return the code-owned, validator-safe v3 fallback object.
+    """Return the code-owned, validator-safe fallback object.
 
     Legacy RSS entries are not used here.  They can contain untranslated text
     or old topic templates, while this object has no article-level assertion
     that could conflict with a hard-safety rejection.
     """
     entry = editorial_entry_payload(RSS_FALLBACK_EDITORIAL_ENTRY)
-    error = editorial_entry_schema_error({"editorial_entry": entry})
+    error = editorial_entry_v4_schema_error({"editorial_entry": entry})
     if error:
         raise ValueError(f"invalid code-owned RSS fallback entry: {error}")
     return entry
@@ -79,10 +72,11 @@ def validated_source_display_editorial_entry(item: dict[str, Any]) -> dict[str, 
     entry = {
         "headline_ja": "原題・出典情報",
         "short_headline_ja": "原題・出典情報",
-        "entry_ja": clean_text(item.get("title")) or "原題は出典リンクで確認できます。",
-        "supporting_points_ja": [description] if description else [],
+        "entry_ja": " ".join(
+            filter(None, [clean_text(item.get("title")) or "原題は出典リンクで確認できます。", description])
+        ),
     }
-    error = editorial_entry_schema_error({"editorial_entry": entry})
+    error = editorial_entry_v4_schema_error({"editorial_entry": entry})
     if error:
         raise ValueError(f"invalid source display entry: {error}")
     return entry
@@ -191,9 +185,6 @@ def _entry_lines(entry: dict[str, Any]) -> list[tuple[str, str]]:
     text = clean_text(entry.get("entry_ja"))
     if text:
         lines.append(("entry_ja", text))
-    points = entry.get("supporting_points_ja")
-    if isinstance(points, list):
-        lines.extend(("supporting_points_ja", clean_text(point)) for point in points if clean_text(point))
     return lines
 
 
@@ -234,7 +225,6 @@ def annotate_decision_records(
             "headline_ja": {},
             "short_headline_ja": {},
             "entry_ja": {},
-            "supporting_points_ja": {},
         }
         for field, text in _entry_lines(original):
             remaining[field][text] = remaining[field].get(text, 0) + 1
@@ -259,7 +249,7 @@ def provenance_observation(records: list[dict[str, Any]]) -> dict[str, Any]:
     counts = {origin: 0 for origin in PROVENANCE_ORIGINS}
     fields = {
         field: {origin: 0 for origin in PROVENANCE_ORIGINS}
-        for field in ("headline_ja", "short_headline_ja", "entry_ja", "supporting_points_ja")
+        for field in ("headline_ja", "short_headline_ja", "entry_ja")
     }
     for record in records:
         raw_lines = record.get("editorial_entry_line_provenance") if isinstance(record, dict) else []
