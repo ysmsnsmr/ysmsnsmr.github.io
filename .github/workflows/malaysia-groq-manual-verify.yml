@@ -30,6 +30,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: malaysia-groq-manual-verify
@@ -37,6 +38,7 @@ concurrency:
 
 jobs:
   verify:
+    if: ${{ !startsWith(inputs.date_label, 'cohort-') }}
     runs-on: ubuntu-latest
     env:
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
@@ -220,3 +222,57 @@ jobs:
           name: malaysia-groq-manual-verify-${{ steps.prep.outputs.label }}-${{ inputs.model }}
           path: ${{ steps.prep.outputs.run_dir }}
           if-no-files-found: error
+
+  same-cohort-v3:
+    if: ${{ startsWith(inputs.date_label, 'cohort-') }}
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      MALAYSIA_NEWS_GROQ_FORCE_ALL_REQUEST_CAP: "20"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Re-run v3 on the selected cohort from a prior artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_id="${{ inputs.date_label }}"
+          run_id="${run_id#cohort-}"
+          [[ "${run_id}" =~ ^[0-9]+$ ]]
+          test -n "${GROQ_API_KEY:-}"
+          out="${RUNNER_TEMP}/same-cohort-v3"
+          mkdir -p "${out}/source"
+          gh run download "${run_id}" --repo "${GITHUB_REPOSITORY}" --dir "${out}/source"
+          selected="$(find "${out}/source" -name selected_items.json -print -quit)"
+          fallback="$(find "${out}/source" -name rss_production_fallback.md -print -quit)"
+          test -s "${selected}"
+          test -s "${fallback}"
+          cp "${selected}" "${out}/selected_items.json"
+          python3 -B scripts/render_malaysia_news_with_groq.py \
+            --json-input "${selected}" \
+            --output "${out}/v3_candidate.md" \
+            --model openai/gpt-oss-120b \
+            --summary-prompt-layout user_only \
+            --summary-max-tokens 800 \
+            --summary-contract editorial_entry_v3 \
+            --rate-reset-wait-max-seconds 60 \
+            --improved-items-output "${out}/v3_improved_items.json" \
+            > "${out}/renderer_stdout.log" 2> "${out}/renderer_stderr.log"
+          python3 -B scripts/validate_malaysia_groq_merged_candidate.py \
+            --selected-json "${selected}" \
+            --candidate-markdown "${out}/v3_candidate.md" \
+            --improved-items-json "${out}/v3_improved_items.json" \
+            --rss-fallback-markdown "${fallback}" \
+            --status-output "${out}/v3_validator_status.json" \
+            --report-output "${out}/v3_validator_report.md" \
+            > "${out}/validator_stdout.log" 2> "${out}/validator_stderr.log"
+      - name: Upload same-cohort comparison artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: malaysia-v3-same-cohort-${{ github.run_id }}
+          path: ${{ runner.temp }}/same-cohort-v3
+          if-no-files-found: warn
