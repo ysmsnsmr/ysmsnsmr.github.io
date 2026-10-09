@@ -1227,6 +1227,71 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(len(promoted), 1)
         self.assertEqual(promoted[0]["matchEvidence"], ["discovered-via:social-media-today-meta-ads"])
 
+    def test_manually_excluded_article_does_not_discover_official_links(self) -> None:
+        excluded_url = "https://www.jonloomer.com/one-click-capi-activated/"
+        bodies = {
+            "meta-product-news-rss": META,
+            "meta-business-sdk-releases": SDK,
+            "social-media-today-meta-ads": SOCIAL_MEDIA_TODAY,
+            "jon-loomer-meta-ads": JON_WITH_OFFICIAL_LINK,
+            "meta-business-news-discovered": META_BUSINESS_NEWS,
+        }
+        discovered_fetches = 0
+
+        def fetch(source: dict, timeout: float) -> tuple[str, str]:
+            nonlocal discovered_fetches
+            if source["id"] == "meta-business-news-discovered":
+                discovered_fetches += 1
+            return self.fetcher(bodies=bodies)(source, timeout)
+
+        pipeline: dict[str, Any] = {}
+        feed, next_state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            fetch,
+            manual_exclusions=frozenset({excluded_url}),
+            source_pipeline_stats=pipeline,
+        )
+        self.assertEqual(discovered_fetches, 0)
+        self.assertEqual(pipeline["sources"]["meta-business-news-discovered"]["discoveredLinks"], 0)
+        self.assertEqual(next_state["sources"]["meta-business-news-discovered"]["items"], {})
+        self.assertNotIn(excluded_url, {item["url"] for item in feed["items"]})
+
+    def test_other_article_can_still_discover_link_from_excluded_article(self) -> None:
+        excluded_url = "https://www.jonloomer.com/one-click-capi-activated/"
+        bodies = {
+            "meta-product-news-rss": META,
+            "meta-business-sdk-releases": SDK,
+            "social-media-today-meta-ads": SOCIAL_MEDIA_TODAY_WITH_OFFICIAL_LINK,
+            "jon-loomer-meta-ads": JON_WITH_OFFICIAL_LINK,
+            "meta-business-news-discovered": META_BUSINESS_NEWS,
+        }
+        discovered_fetches = 0
+
+        def fetch(source: dict, timeout: float) -> tuple[str, str]:
+            nonlocal discovered_fetches
+            if source["id"] == "meta-business-news-discovered":
+                discovered_fetches += 1
+            return self.fetcher(bodies=bodies)(source, timeout)
+
+        pipeline: dict[str, Any] = {}
+        feed, _next_state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1,
+            NOW,
+            fetch,
+            manual_exclusions=frozenset({excluded_url}),
+            source_pipeline_stats=pipeline,
+        )
+        promoted = [item for item in feed["items"] if item["sourceId"] == "meta-business-news-discovered"]
+        self.assertEqual(discovered_fetches, 1)
+        self.assertEqual(pipeline["sources"]["meta-business-news-discovered"]["discoveredLinks"], 1)
+        self.assertEqual(len(promoted), 1)
+        self.assertEqual(promoted[0]["matchEvidence"], ["discovered-via:social-media-today-meta-ads"])
+
     def test_meta_business_news_date_accepts_observed_label_variants(self) -> None:
         cases = {
             "Announcement · April 15, 2026": "2026-04-15",

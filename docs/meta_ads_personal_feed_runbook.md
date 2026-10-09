@@ -15,7 +15,7 @@ Search Engine Land Meta RSSは、2026-08-30にGitHub ActionsでHTTP 403が繰り
 
 Social Media TodayはFacebook専用RSSを使います。タイトルにMeta／Facebook／Instagramの語があり、さらにタイトルまたはRSS説明に広告・キャンペーン・Advertiser・Advantage+などの語がある記事だけを掲載候補にします。Creator Studioのようなクリエイター運用の記事は除外します。これは記事の正確性を保証するものではなく、フィードの対象範囲を絞るための機械的な条件です。
 
-Jon Loomerは `Meta Advertising` カテゴリだけでなく、タイトルまたはRSS説明に広告運用を示す具体的な語（Ads Manager、campaign、pixel、Conversions API、audienceなど）がある記事だけを掲載候補にします。カテゴリだけの周辺記事は除外します。この判定はsource-localの`relevanceRevision`で管理します。Jon LoomerまたはSocial Media Todayの掲載候補に `https://www.facebook.com/business/news/<slug>` 形式のリンクがある場合は、リンク先をMeta公式記事の候補として扱います。完全一致するHTTPSホストとパスだけを許可し、Meta公式ページ自身からcanonical URL、記事種別、タイトル、説明、発表日を検証できた候補だけを「Meta公式」として掲載します。非公式側の見出しや説明をMeta公式情報として転用しません。同じMeta公式URLを複数の非公式RSSが見つけた場合も、公式ページは1回だけ取得・掲載し、state内の`matchEvidence`に発見元のsource IDだけを併記します。
+Jon Loomerは `Meta Advertising` カテゴリだけでなく、タイトルまたはRSS説明に広告運用を示す具体的な語（Ads Manager、campaign、pixel、Conversions API、audienceなど）がある記事だけを掲載候補にします。カテゴリだけの周辺記事は除外します。この判定はsource-localの`relevanceRevision`で管理します。Jon LoomerまたはSocial Media Todayの新鮮なRSS記事に `https://www.facebook.com/business/news/<slug>` 形式のリンクがある場合は、発見元URLが人間確認済みの除外一覧にないことを確認してから、リンク先をMeta公式記事の候補として扱います。Jevによる発見元記事の掲載判定は、このリンク発見を妨げません。完全一致するHTTPSホストとパスだけを許可し、Meta公式ページ自身からcanonical URL、記事種別、タイトル、説明、発表日を検証できた候補だけを「Meta公式」として掲載します。非公式側の見出しや説明をMeta公式情報として転用しません。同じMeta公式URLを複数の非公式RSSが見つけた場合も、除外されていない発見元から公式ページを1回だけ取得・掲載し、state内の`matchEvidence`に発見元のsource IDだけを併記します。
 
 Meta公式ページはRSSや公開APIではなくHTMLから限定的なmetadataを読むため、アクセス制限や構造変更の影響を受けます。この追加取得だけが失敗した場合は該当候補を掲載せず、他のPersonal Feed収集は継続します。本文・失敗URL・例外本文は保存またはログ出力せず、許可ホスト、最大3回のredirect、1 MiBの応答上限、1 run最大20件を維持します。
 
@@ -53,9 +53,9 @@ Meta Newsroom Product News RSSは候補を広く取得し、広告・計測・AP
 
 ### 人間確認済みURLの除外
 
-明らかな誤掲載は `config/meta_ads_personal_feed_manual_exclusions.json` に記事のcanonical URLと理由を1件ずつ追加します。現在の一覧には人間が指定した26件を登録しています。これはURL単位の公開除外であり、同じ媒体の他記事や似た見出しを一括で消しません。Jevの判定が後日変わっても、一覧にあるURLは公開feedへ戻りません。元の判定結果と表示データはstateに保持し、除外された記事には新たなGroq生成を行いません。
+明らかな誤掲載は `config/meta_ads_personal_feed_manual_exclusions.json` に記事のcanonical URLと理由を1件ずつ追加します。現在の一覧には人間が指定した26件を登録しています。これはURL単位の公開除外であり、同じ媒体の他記事や似た見出しを一括で消しません。Jevの判定が後日変わっても、一覧にあるURLは公開feedへ戻りません。次の収集runからは、除外された非公式記事を公式リンクの発見元にも使いません。同じ公式URLが別の非除外記事から見つかれば、そちらからの発見は維持します。元の判定結果と表示データはstateに保持し、除外された記事には新たなGroq生成を行いません。
 
-一覧の変更後は `python3 scripts/meta_ads_personal_feed.py --apply-manual-exclusions-only` で既存stateから公開feedを再生成します。この操作は外部ソースやJev/Groqを呼ばず、stateを変更しません。続けて `python3 scripts/validate_meta_ads_personal_feed.py` を実行し、対象URLが公開feedにないことを確認します。除外を取り消す場合は該当行を一覧から削除して同じ再生成を行います。収集workflowも毎回この一覧を読み、公開と表示データ生成に同じ除外を適用します。
+一覧の変更後は `python3 scripts/meta_ads_personal_feed.py --apply-manual-exclusions-only` で既存stateから公開feedを再生成します。この操作は外部ソースやJev/Groqを呼ばず、stateを変更しません。続けて `python3 scripts/validate_meta_ads_personal_feed.py` を実行し、対象URLが公開feedにないことを確認します。除外を取り消す場合は該当行を一覧から削除して同じ再生成を行います。収集workflowも毎回この一覧を読み、公開と表示データ生成に同じ除外を適用します。発見元の除外は次の収集runに適用され、過去に検証済みでstateに残る公式記事を遡って削除するものではありません。
 
 `workflow_dispatch`で`reseed_source_id`に設定済みのソースIDを指定すると、そのソースだけを現行の鮮度・関連性条件で再構築します。同じURLが引き続き採用される場合、`firstObservedAt`は維持されます。未登録IDはcollectorが失敗して既存公開物を保持します。
 
