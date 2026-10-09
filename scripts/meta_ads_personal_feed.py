@@ -1072,6 +1072,7 @@ def _filter_items(
     discovery_source: dict[str, Any] | None = None,
     discovery_links: dict[str, tuple[list[str], int]] | None = None,
     apply_source_relevance: bool = True,
+    manual_exclusions: frozenset[str] = frozenset(),
 ) -> tuple[list[dict[str, Any]], set[str]]:
     """Apply freshness and optional source relevance without retaining bodies.
 
@@ -1092,7 +1093,15 @@ def _filter_items(
             rejected_keys.add(raw["key"])
             continue
         if discovery_source is not None:
-            links, deferred = _official_news_links(raw.pop("sourceContextMarkup", ""), discovery_source)
+            markup = raw.pop("sourceContextMarkup", "")
+            # A human-excluded article must not be an origin for official-link
+            # discovery. This does not exclude the same official URL when an
+            # independent, non-excluded article links to it.
+            links, deferred = (
+                ([], 0)
+                if _canonical_url(raw["url"]) in manual_exclusions
+                else _official_news_links(markup, discovery_source)
+            )
             if discovery_links is not None:
                 discovery_links[raw["key"]] = (links, deferred)
             raw["discoveredLinks"] = links
@@ -2734,6 +2743,7 @@ def collect(
             discovery_by_origin.get(source["id"]),
             discovered_links_by_source.setdefault(source["id"], {}),
             apply_source_relevance=not jev_enabled,
+            manual_exclusions=manual_exclusions,
         )
 
     # A discovered official source is deliberately independent: an inaccessible
