@@ -85,6 +85,7 @@ CONTENT_TYPES = {
     "github_releases": ["application/json"],
     "adsuploader_blog_html": ["text/html"],
     "meta_business_news_html": ["text/html"],
+    "meta_developer_blog_html": ["text/html"],
 }
 PRESENTATION_STATUSES = {"generated", "pending"}
 BILINGUAL_PRESENTATION_STATUSES = {"machine", "missing", "reviewed"}
@@ -357,7 +358,6 @@ def validate_config(payload: Any) -> dict[str, Any]:
     if not isinstance(config["discoveredSources"], list) or not config["discoveredSources"]:
         raise ContractError("personal feed discoveredSources must be a non-empty array")
     direct_ids = set(ids)
-    discovery_origins: set[str] = set()
     for index, value in enumerate(config["discoveredSources"]):
         label = f"personal feed discoveredSources[{index}]"
         source = _expect_keys(
@@ -373,7 +373,7 @@ def validate_config(payload: Any) -> dict[str, Any]:
         _expect_identifier(source["relevanceRevision"], f"{label}.relevanceRevision")
         if source["classification"] != "official":
             raise ContractError(f"{label}.classification must be official")
-        if source["parser"] != "meta_business_news_html":
+        if source["parser"] not in {"meta_business_news_html", "meta_developer_blog_html"}:
             raise ContractError(f"{label}.parser is unsupported")
         if source["expectedContentTypes"] != CONTENT_TYPES[source["parser"]]:
             raise ContractError(f"{label}.expectedContentTypes must match parser")
@@ -399,13 +399,17 @@ def validate_config(payload: Any) -> dict[str, Any]:
             _expect_identifier(origin_id, f"{label}.discovery.fromSourceIds[]")
             if origin_id not in direct_ids:
                 raise ContractError(f"{label}.discovery.fromSourceIds must reference direct sources")
-            if origin_id in discovery_origins:
-                raise ContractError(f"{label}.discovery.fromSourceIds must be unique across discovered sources")
-            discovery_origins.add(origin_id)
             origin = next(item for item in config["sources"] if item["id"] == origin_id)
             if origin["parser"] != "rss" or origin["classification"] != "unofficial":
                 raise ContractError(f"{label}.discovery.fromSourceIds must reference unofficial RSS sources")
-        if discovery["allowedPathPrefix"] != "/business/news/":
+        expected_host, expected_prefix = (
+            ("www.facebook.com", "/business/news/")
+            if source["parser"] == "meta_business_news_html"
+            else ("developers.facebook.com", "/blog/post/")
+        )
+        if source["transport"]["allowedFetchHosts"] != [expected_host] or source["transport"]["allowedContentHosts"] != [expected_host]:
+            raise ContractError(f"{label}.transport must be restricted to its official host")
+        if discovery["allowedPathPrefix"] != expected_prefix:
             raise ContractError(f"{label}.discovery.allowedPathPrefix is unsupported")
         _limit(discovery["maxLinksPerSourceItem"], f"{label}.discovery.maxLinksPerSourceItem", 1, 25)
     return config
@@ -573,6 +577,9 @@ class _MetaBusinessNewsParser(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.metadata: dict[str, str] = {}
         self.text: list[str] = []
+        self.canonical_link = ""
+        self.headings: list[str] = []
+        self._in_h1 = False
         self._skip_depth = 0
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
@@ -580,6 +587,12 @@ class _MetaBusinessNewsParser(HTMLParser):
         if normalized in {"script", "style", "noscript"}:
             self._skip_depth += 1
             return
+        if normalized == "h1":
+            self._in_h1 = True
+        if normalized == "link":
+            values = {name.casefold(): value for name, value in attrs if value is not None}
+            if "canonical" in values.get("rel", "").casefold().split() and values.get("href"):
+                self.canonical_link = values["href"]
         if normalized != "meta":
             return
         values = {name.casefold(): value for name, value in attrs if value is not None}
@@ -589,12 +602,16 @@ class _MetaBusinessNewsParser(HTMLParser):
             self.metadata.setdefault(key, _normalise(content))
 
     def handle_endtag(self, tag: str) -> None:
+        if tag.casefold() == "h1":
+            self._in_h1 = False
         if tag.casefold() in {"script", "style", "noscript"} and self._skip_depth:
             self._skip_depth -= 1
 
     def handle_data(self, data: str) -> None:
         if not self._skip_depth and data.strip():
             self.text.append(data)
+            if self._in_h1:
+                self.headings.append(data)
 
 
 def _canonical_official_news_url(value: str, source: dict[str, Any]) -> str | None:
@@ -624,6 +641,10 @@ def _canonical_official_news_url(value: str, source: dict[str, Any]) -> str | No
     if not parsed.path.startswith(prefix):
         return None
     slug = parsed.path[len(prefix):].strip("/")
+    if source["parser"] == "meta_developer_blog_html":
+        if not re.fullmatch(r"20\d{2}/(?:0?[1-9]|1[0-2])/(?:0?[1-9]|[12]\d|3[01])/[A-Za-z0-9][A-Za-z0-9_-]*", slug):
+            return None
+        return urlunsplit(("https", parsed.netloc.lower(), f"{prefix}{slug}/", "", ""))
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]*", slug):
         return None
     return urlunsplit(("https", parsed.netloc.lower(), f"{prefix}{slug}", "", ""))
@@ -682,6 +703,55 @@ def _meta_business_news_item(source: dict[str, Any], url: str, body: str, origin
     }
 
 
+def _meta_developer_blog_item(source: dict[str, Any], url: str, body: str, origin_ids: list[str]) -> dict[str, Any]:
+    parser = _MetaBusinessNewsParser()
+    parser.feed(body)
+    if (
+        _canonical_official_news_url(parser.metadata.get("og:url", ""), source) != url
+        or _canonical_official_news_url(parser.canonical_link, source) != url
+    ):
+        raise ContractError("Meta Developer Blog canonical metadata does not match its discovered URL")
+    title = _text(parser.metadata.get("og:title"), "Meta Developer Blog title")[:280]
+    _text(_normalise(" ".join(parser.headings)), "Meta Developer Blog visible headline")
+    description = _text(parser.metadata.get("og:description"), "Meta Developer Blog description")[:3500]
+    visible = _normalise(" ".join(parser.text))
+    date_match = re.search(r"(20\d{2})年(\d{1,2})月(\d{1,2})日", visible)
+    if date_match:
+        year, month, day = map(int, date_match.groups())
+        try:
+            published = datetime(year, month, day).date().isoformat()
+        except ValueError as error:
+            raise ContractError("Meta Developer Blog has an invalid visible date") from error
+    else:
+        months = "January|February|March|April|May|June|July|August|September|October|November|December"
+        date_match = re.search(rf"\b({months})\s+\d{{1,2}},\s+20\d{{2}}\b", visible, flags=re.IGNORECASE)
+        if date_match is None:
+            raise ContractError("Meta Developer Blog is missing a visible date")
+        try:
+            published = datetime.strptime(date_match.group(0), "%B %d, %Y").date().isoformat()
+        except ValueError as error:
+            raise ContractError("Meta Developer Blog has an invalid visible date") from error
+    path_date = re.match(r"/blog/post/(20\d{2})/(\d{1,2})/(\d{1,2})/", urlsplit(url).path)
+    try:
+        url_date = datetime(*map(int, path_date.groups())).date().isoformat() if path_date else None
+    except ValueError as error:
+        raise ContractError("Meta Developer Blog has an invalid URL date") from error
+    if published != url_date:
+        raise ContractError("Meta Developer Blog visible date does not match article URL")
+    return {
+        "key": url,
+        "url": url,
+        "title": title,
+        "publishedDate": published,
+        "updatedDate": None,
+        "matchEvidence": [f"discovered-via:{origin_id}" for origin_id in origin_ids],
+        "sourceContext": description,
+        "presentationContext": description,
+        "presentationContextKind": "plain",
+        "fingerprint": _fingerprint(url, title, published, description),
+    }
+
+
 def _fingerprint(*parts: str) -> str:
     return hashlib.sha256("\n".join(parts).encode("utf-8")).hexdigest()
 
@@ -725,6 +795,8 @@ def _classify_publication(source: dict[str, Any], raw: dict[str, Any]) -> tuple[
         return PUBLICATION_INCLUDED, ["source:business-sdk-release"]
     if source_id == "meta-business-news-discovered":
         return PUBLICATION_INCLUDED, ["source:meta-business-news"]
+    if source_id == "meta-developer-blog-discovered":
+        return PUBLICATION_INCLUDED, ["source:meta-developer-blog"]
     if source_id == "meta-product-news-rss":
         if relevance is not None:
             return PUBLICATION_INCLUDED, [f"relevance:{relevance}"]
@@ -1069,8 +1141,8 @@ def _filter_items(
     now: datetime,
     freshness_policy: dict[str, Any],
     pipeline: dict[str, Any],
-    discovery_source: dict[str, Any] | None = None,
-    discovery_links: dict[str, tuple[list[str], int]] | None = None,
+    discovery_source: dict[str, Any] | list[dict[str, Any]] | None = None,
+    discovery_links: dict[str, dict[str, tuple[list[str], int]]] | None = None,
     apply_source_relevance: bool = True,
     manual_exclusions: frozenset[str] = frozenset(),
 ) -> tuple[list[dict[str, Any]], set[str]]:
@@ -1097,15 +1169,14 @@ def _filter_items(
             # A human-excluded article must not be an origin for official-link
             # discovery. This does not exclude the same official URL when an
             # independent, non-excluded article links to it.
-            links, deferred = (
-                ([], 0)
-                if _canonical_url(raw["url"]) in manual_exclusions
-                else _official_news_links(markup, discovery_source)
-            )
-            if discovery_links is not None:
-                discovery_links[raw["key"]] = (links, deferred)
-            raw["discoveredLinks"] = links
-            raw["deferredDiscoveredLinks"] = deferred
+            for discovered in (discovery_source if isinstance(discovery_source, list) else [discovery_source]):
+                links, deferred = (
+                    ([], 0)
+                    if _canonical_url(raw["url"]) in manual_exclusions
+                    else _official_news_links(markup, discovered)
+                )
+                if discovery_links is not None:
+                    discovery_links.setdefault(discovered["id"], {})[raw["key"]] = (links, deferred)
         if apply_source_relevance and "match" in source:
             evidence, group_matches = _match(source, raw["title"], raw["sourceContext"], raw["categories"])
         else:
@@ -2704,11 +2775,10 @@ def collect(
     parsed_by_source: dict[str, list[dict[str, Any]]] = {}
     raw_by_source: dict[str, list[dict[str, Any]]] = {}
     rejected_by_source: dict[str, set[str]] = {}
-    discovered_links_by_source: dict[str, dict[str, tuple[list[str], int]]] = {}
+    discovered_links_by_source: dict[str, dict[str, dict[str, tuple[list[str], int]]]] = {}
     discovery_by_origin = {
-        origin_id: source
-        for source in config["discoveredSources"]
-        for origin_id in source["discovery"]["fromSourceIds"]
+        origin_id: [discovered for discovered in config["discoveredSources"] if origin_id in discovered["discovery"]["fromSourceIds"]]
+        for origin_id in {origin_id for source in config["discoveredSources"] for origin_id in source["discovery"]["fromSourceIds"]}
     }
     for source in config["sources"]:
         source_pipeline = pipeline["sources"][source["id"]]
@@ -2755,7 +2825,7 @@ def collect(
         candidates: list[str] = []
         per_item_deferred = 0
         for origin_id in source["discovery"]["fromSourceIds"]:
-            for links, deferred in discovered_links_by_source.get(origin_id, {}).values():
+            for links, deferred in discovered_links_by_source.get(origin_id, {}).get(source["id"], {}).values():
                 per_item_deferred += deferred
                 for url in links:
                     is_new_candidate = url not in candidate_origins
@@ -2777,9 +2847,10 @@ def collect(
                 source_pipeline["responseBytes"] += len(body.encode("utf-8")) if isinstance(body, str) else 0
                 normalized_content_type = (content_type or "").split(";", 1)[0].strip().lower()
                 if not isinstance(body, str) or normalized_content_type not in source["expectedContentTypes"]:
-                    raise ContractError("Meta for Business News article returned an unexpected response")
+                    raise ContractError("discovered official article returned an unexpected response")
                 source_pipeline["parsedItems"] += 1
-                promoted.append(_meta_business_news_item(source, url, body, candidate_origins[url]))
+                item_parser = _meta_business_news_item if source["parser"] == "meta_business_news_html" else _meta_developer_blog_item
+                promoted.append(item_parser(source, url, body, candidate_origins[url]))
                 source_pipeline["validItems"] += 1
             except (ContractError, OSError, ValueError, urllib.error.URLError):
                 # Discovery is optional. Reject only this candidate without logging its URL,

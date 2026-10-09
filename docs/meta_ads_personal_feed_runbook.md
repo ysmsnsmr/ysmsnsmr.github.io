@@ -10,6 +10,7 @@
 - Jon Loomer Digital RSS — 非公式・未確認
 - Ads Uploader Blogの公開記事一覧 — 非公式。新着の見出し・日付・短い説明を収集し、運用解説も候補に含める
 - Meta for Business News — Jon Loomer DigitalまたはSocial Media TodayのRSS本文から見つかったMeta公式記事だけを追加取得
+- Meta for Developers Blog — 同じ2つのRSS本文から見つかった `developers.facebook.com/blog/post/YYYY/MM/DD/<slug>/` 形式だけを追加取得。Ads Uploader記事ページの巡回は行わない
 
 Search Engine Land Meta RSSは、2026-08-30にGitHub ActionsでHTTP 403が繰り返し再現したため一時停止しています。安定した自動取得を確認できるまで再導入しません。
 
@@ -18,6 +19,8 @@ Social Media TodayはFacebook専用RSSを使います。タイトルにMeta／Fa
 Jon Loomerは `Meta Advertising` カテゴリだけでなく、タイトルまたはRSS説明に広告運用を示す具体的な語（Ads Manager、campaign、pixel、Conversions API、audienceなど）がある記事だけを掲載候補にします。カテゴリだけの周辺記事は除外します。この判定はsource-localの`relevanceRevision`で管理します。Jon LoomerまたはSocial Media Todayの新鮮なRSS記事に `https://www.facebook.com/business/news/<slug>` 形式のリンクがある場合は、発見元URLが人間確認済みの除外一覧にないことを確認してから、リンク先をMeta公式記事の候補として扱います。Jevによる発見元記事の掲載判定は、このリンク発見を妨げません。完全一致するHTTPSホストとパスだけを許可し、Meta公式ページ自身からcanonical URL、記事種別、タイトル、説明、発表日を検証できた候補だけを「Meta公式」として掲載します。非公式側の見出しや説明をMeta公式情報として転用しません。同じMeta公式URLを複数の非公式RSSが見つけた場合も、除外されていない発見元から公式ページを1回だけ取得・掲載し、state内の`matchEvidence`に発見元のsource IDだけを併記します。
 
 Meta公式ページはRSSや公開APIではなくHTMLから限定的なmetadataを読むため、アクセス制限や構造変更の影響を受けます。この追加取得だけが失敗した場合は該当候補を掲載せず、他のPersonal Feed収集は継続します。本文・失敗URL・例外本文は保存またはログ出力せず、許可ホスト、最大3回のredirect、1 MiBの応答上限、1 run最大20件を維持します。
+
+Developer Blog発見経路も発見元URLの人間除外を先に適用します。完全一致の `developers.facebook.com` ホストと日付付き記事パスに限定し、取得したページ自身のcanonicalリンクと`og:url`、見出し、説明、可視の日付（URLの日付と一致）を検証します。`og:type=website`のページもあるため、Business News用の`og:type=article`条件を流用しません。記事のMeta広告との関連性は通常のJev掲載判定に委ねます。Developer Blogの追加取得は1 run最大10件・1記事から最大5リンク・最大2回のredirectとし、個別候補の取得・検証失敗は他ソースへ波及させません。`SOURCE_PIPELINE`でこのsource IDの`attempted_links`、`rejected_links`、`retained`を確認し、不要な昇格や取得不能が続く場合はこの独立source設定と処理を戻します。
 
 各収集runはソースごとに `SOURCE_PIPELINE` を出力します。`mode=direct` は通常のRSS/API、`mode=discovered_official` は別ソース内の公式リンクから追加取得する経路です。`parsed` はRSS item、API releaseまたは公式HTML候補として読めた件数、`valid` は安全なURLと必要情報を持つ候補数、`matched` は今回の取得結果で掲載条件を満たした件数、`excluded` は直接ソースの有効候補のうち掲載条件で除外した件数です。`carried_forward` は今回の取得結果には現れなかったものの保存期間内のため前回stateから維持した件数、`retained` はそのcarry-forward分を含む保存期間内のstate件数です。発見経路では `discovered_links`、`attempted_links`、`rejected_links`、`deferred_links` も件数だけ出力します。`all_groups` 条件のソースには `SOURCE_MATCH_GROUP` も出力し、各キーワード群を満たした候補数を確認できます。たとえば直接ソースの `valid > 0` かつ `matched = 0` は、取得失敗ではなく現在の掲載条件に合う記事がなかったことを示します。
 

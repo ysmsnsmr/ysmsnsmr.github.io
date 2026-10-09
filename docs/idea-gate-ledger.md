@@ -1422,3 +1422,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Add a copy button to English and Japanese detail pages, omit missing summaries, and verify the clipboard text and fallback behavior.
 - Revisit when: A colleague finds that the copied text needs different labels or spacing in their email client.
+
+<!-- idea-gate:20261010-meta-ads-developer-blog-promotion -->
+## Promote verified Meta for Developers blog articles discovered in existing unofficial RSS
+
+- Record ID: `20261010-meta-ads-developer-blog-promotion`
+- Evaluated: 2026-10-09T23:48:49Z
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 84/100
+- Confidence: medium - The URL family has real examples, but GitHub Actions fetch reliability and production metadata consistency remain untested.
+
+### Idea Card
+
+- Purpose: Recover relevant official Developer Blog announcements that the current Meta for Business News URL rule misses.
+- First experience: A production run records a verified Developer Blog candidate or a safe rejection without interrupting the existing feed.
+- Scope and cost: One URL family from the existing Jon Loomer and Social Media Today RSS origins; capped official-page fetches, existing Jev and presentation paths, no new account or source crawl.
+- Continuation boundary: Keep it if verified relevant articles appear without false promotions or collection failures; disable this discovered source if the page format or access proves unreliable.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 13/15 |
+| `evidence_and_learning` | 11/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 17/20 |
+| **Total** | **84/100** |
+
+### Next Step
+
+- Action: Add one strictly validated Developer Blog discovered source from the two existing RSS origins, run tests and CI, then observe the first production artifact.
+- Revisit when: Official-page fetches or publication dates repeatedly fail in GitHub Actions.; A page is promoted without reliable article identity or an independently verified announcement date.; The added candidates create disproportionate Jev or presentation work.

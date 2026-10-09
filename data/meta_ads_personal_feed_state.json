@@ -9294,6 +9294,10 @@
         }
       }
     },
+    "meta-developer-blog-discovered": {
+      "relevanceRevision": "meta-developer-blog-discovered-v1",
+      "items": {}
+    },
     "meta-business-news-discovered": {
       "relevanceRevision": "meta-business-news-discovered-v2",
       "items": {
