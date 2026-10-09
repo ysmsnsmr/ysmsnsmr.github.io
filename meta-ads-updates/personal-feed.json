@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-10-06T06:25:59Z",
+  "generatedAt": "2026-10-09T06:14:01Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -71,42 +71,111 @@
   ],
   "items": [
     {
-      "id": "jon-loomer-meta-ads-5f7bfbbe183a62959292",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "Should You Optimize for a Custom Conversion?",
-      "url": "https://www.jonloomer.com/qvt/optimize-custom-conversion/",
-      "publishedDate": "2026-10-05",
+      "id": "adsuploader-blog-ca9230e43ba0221eef6e",
+      "sourceId": "adsuploader-blog",
+      "title": "Facebook Ads Copywriting: A 2026 Operator's Guide",
+      "url": "https://adsuploader.com/blog/facebook-ads-copywriting",
+      "publishedDate": "2026-10-09",
       "updatedDate": null,
-      "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "firstObservedAt": "2026-10-09T06:14:01Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "5f7bfbbe183a6295929227cdb386133ccb6a14f9f7c7ba38e395e93863b0b4a4",
+        "sourceFingerprint": "ca9230e43ba0221eef6eec5606856796b9794aa76d81f129c85a783dfece3559",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Facebook Ads Copywriting Guide 2026",
+            "summary": "A 2026 guide covering how to write Facebook ad copy that converts and passes review, including hooks, frameworks, CTA buttons, Meta policy considerations, and AI-driven rewrites.",
+            "inputHash": "85c1767fdb85b6c20ca0f7a029db76edb37c0a2ef51625581268782496c9ba0c",
+            "generatedAt": "2026-10-09T06:14:01Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook Ads Copywriting Guide 2026",
+                "inputHash": "85c1767fdb85b6c20ca0f7a029db76edb37c0a2ef51625581268782496c9ba0c",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "A 2026 guide covering how to write Facebook ad copy that converts and passes review, including hooks, frameworks, CTA buttons, Meta policy considerations, and AI-driven rewrites.",
+                "inputHash": "85c1767fdb85b6c20ca0f7a029db76edb37c0a2ef51625581268782496c9ba0c",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Facebook広告コピー作成の2026年版ガイド",
+            "summary": "本ガイドは、Facebook広告のコピーを効果的に作成し、コンバージョンを高めつつMetaの審査を通過させる方法を解説します。魅力的なフックの作り方、汎用的なコピー構成フレームワーク、適切なCTAボタンの選択、Metaポリシーの落とし穴、そしてAIが自動で書き換える際の留意点について具体例を交えて紹介しています。",
+            "inputHash": "6ad86dc0732199183b1ea1a1579959148fd8c14a20a7190a2ff861d5bcceb0e1",
+            "generatedAt": "2026-10-09T06:14:01Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook広告コピー作成の2026年版ガイド",
+                "inputHash": "6ad86dc0732199183b1ea1a1579959148fd8c14a20a7190a2ff861d5bcceb0e1",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "本ガイドは、Facebook広告のコピーを効果的に作成し、コンバージョンを高めつつMetaの審査を通過させる方法を解説します。魅力的なフックの作り方、汎用的なコピー構成フレームワーク、適切なCTAボタンの選択、Metaポリシーの落とし穴、そしてAIが自動で書き換える際の留意点について具体例を交えて紹介しています。",
+                "inputHash": "6ad86dc0732199183b1ea1a1579959148fd8c14a20a7190a2ff861d5bcceb0e1",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-fd3887a604df7c6c7679",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta outlines political ad restrictions",
+      "url": "https://www.socialmediatoday.com/news/meta-outlines-political-ad-restrictions/832444/",
+      "publishedDate": "2026-10-07",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-09T06:14:01Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "fd3887a604df7c6c76791c7f450518e1e59c1fd019681eeac1d038e875547f8a",
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
             "status": "missing",
             "shortHeadline": null,
             "summary": null,
-            "inputHash": "50ac5bde5d6768ea0748edeaac1186f8b47a207c94917311c579479554bc50ff",
+            "inputHash": "f581a876b04a12627c46fc6afe1dc8857257e5de8419481ac68d419b24070369",
             "generatedAt": null,
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "missing",
                 "value": null,
-                "inputHash": "50ac5bde5d6768ea0748edeaac1186f8b47a207c94917311c579479554bc50ff",
+                "inputHash": "f581a876b04a12627c46fc6afe1dc8857257e5de8419481ac68d419b24070369",
                 "generatedAt": null,
                 "reviewedAt": null
               },
               "summary": {
                 "status": "missing",
                 "value": null,
-                "inputHash": "50ac5bde5d6768ea0748edeaac1186f8b47a207c94917311c579479554bc50ff",
+                "inputHash": "f581a876b04a12627c46fc6afe1dc8857257e5de8419481ac68d419b24070369",
                 "generatedAt": null,
                 "reviewedAt": null
               }
@@ -114,24 +183,509 @@
           },
           "ja": {
             "status": "machine",
-            "shortHeadline": "カスタムコンバージョンで最適化は標準イベントを優先すべき",
-            "summary": "カスタムコンバージョンはコード不要でルールで定義でき、特定商品や条件の計測に使えるが、ボリュームが減少し学習が遅れる可能性がある。多くの場合はMetaが用意した標準イベント（例：Purchase）で最適化し、レポートにカスタムコンバージョン列を追加して成果を確認することが推奨される。",
+            "shortHeadline": "Meta、米国で10月27日～11月3日の政治広告制限期間を実施",
+            "summary": "Metaは米国で2026年10月27日（火）から11月3日（火）までの期間、政治・社会問題広告の新規掲載を禁止する。制限開始前に少なくとも1回表示された広告は、入札額・予算・終了日時の変更や一時停止・再開は可能だが、クリエイティブやターゲティング等の編集はできない。広告主は10月13日までに認証を完了し、10月20日までに広告を審査に提出する必要がある。対象となるテーマは民権・犯罪・経済・教育・環境政治・銃規制・健康・移民・政治価値・安全保障など。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-10-06T06:25:59Z",
+            "generatedAt": "2026-10-09T06:14:01Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
-                "value": "カスタムコンバージョンで最適化は標準イベントを優先すべき",
+                "value": "Meta、米国で10月27日～11月3日の政治広告制限期間を実施",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-10-06T06:25:59Z",
+                "generatedAt": "2026-10-09T06:14:01Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
-                "value": "カスタムコンバージョンはコード不要でルールで定義でき、特定商品や条件の計測に使えるが、ボリュームが減少し学習が遅れる可能性がある。多くの場合はMetaが用意した標準イベント（例：Purchase）で最適化し、レポートにカスタムコンバージョン列を追加して成果を確認することが推奨される。",
+                "value": "Metaは米国で2026年10月27日（火）から11月3日（火）までの期間、政治・社会問題広告の新規掲載を禁止する。制限開始前に少なくとも1回表示された広告は、入札額・予算・終了日時の変更や一時停止・再開は可能だが、クリエイティブやターゲティング等の編集はできない。広告主は10月13日までに認証を完了し、10月20日までに広告を審査に提出する必要がある。対象となるテーマは民権・犯罪・経済・教育・環境政治・銃規制・健康・移民・政治価値・安全保障など。",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-10-06T06:25:59Z",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-8d711ec51394844e8e6a",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "AI favors brands with an active social media presence",
+      "url": "https://www.socialmediatoday.com/news/ai-favors-brands-with-an-active-social-media-presence/832450/",
+      "publishedDate": "2026-10-07",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-09T06:14:01Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "8d711ec51394844e8e6a14860fe79c2c098527066940a952d99f3d69a3fd948a",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "1024539f9a27f6615299978abb4e2c3d3f28e3294d38967b3d7a5e004de5ce89",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "1024539f9a27f6615299978abb4e2c3d3f28e3294d38967b3d7a5e004de5ce89",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "1024539f9a27f6615299978abb4e2c3d3f28e3294d38967b3d7a5e004de5ce89",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "SNS活用でAI検索結果への露出が向上、YouTubeが最頻出",
+            "summary": "SE Rankingが10万キーワードを分析したところ、Google AI概要回答の67.66％、Google AI Modeの32.39％、ChatGPTの8.4％でSNSリンクが引用されていることが分かった。You",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-10-09T06:14:01Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "SNS活用でAI検索結果への露出が向上、YouTubeが最頻出",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "SE Rankingが10万キーワードを分析したところ、Google AI概要回答の67.66％、Google AI Modeの32.39％、ChatGPTの8.4％でSNSリンクが引用されていることが分かった。You",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-00edc71a77fe43551912",
+      "sourceId": "adsuploader-blog",
+      "title": "Real Estate Ads for Facebook: Rules, Formats, and Benchmarks (2026)",
+      "url": "https://adsuploader.com/blog/real-estate-ads-for-facebook",
+      "publishedDate": "2026-10-07",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-09T06:14:01Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "00edc71a77fe435519120ad15fff728ce4bc460cb3256d751b90b642f81d4b52",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Real Estate Ads for Facebook: Rules, Formats, and Benchmarks (2026)",
+            "summary": "An overview of Facebook real estate advertising in 2026, covering Housing category rules, lead‑generating offers, format specifications, CPL benchmarks, and managing multiple listings.",
+            "inputHash": "15576dbed88f2d636d1ae1eed3dc9c195c97d59b5a0c73d63f42d35457327442",
+            "generatedAt": "2026-10-09T06:14:01Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Real Estate Ads for Facebook: Rules, Formats, and Benchmarks (2026)",
+                "inputHash": "15576dbed88f2d636d1ae1eed3dc9c195c97d59b5a0c73d63f42d35457327442",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "An overview of Facebook real estate advertising in 2026, covering Housing category rules, lead‑generating offers, format specifications, CPL benchmarks, and managing multiple listings.",
+                "inputHash": "15576dbed88f2d636d1ae1eed3dc9c195c97d59b5a0c73d63f42d35457327442",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "2026年版 Facebook不動産広告のルール・フォーマット・ベンチマーク",
+            "summary": "2026年におけるFacebookの住宅カテゴリ広告の規定、リード獲得に適したオファー、広告フォーマットの仕様、実績のCPLベンチマーク、複数物件の掲載方法について説明しています。",
+            "inputHash": "d28c53d0e99e42d131090508cb25c80768d570d513004f8d1851148505bc3f5a",
+            "generatedAt": "2026-10-09T06:14:01Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "2026年版 Facebook不動産広告のルール・フォーマット・ベンチマーク",
+                "inputHash": "d28c53d0e99e42d131090508cb25c80768d570d513004f8d1851148505bc3f5a",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "2026年におけるFacebookの住宅カテゴリ広告の規定、リード獲得に適したオファー、広告フォーマットの仕様、実績のCPLベンチマーク、複数物件の掲載方法について説明しています。",
+                "inputHash": "d28c53d0e99e42d131090508cb25c80768d570d513004f8d1851148505bc3f5a",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-f9e2816e53d1636250a2",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta tests Reels-first Facebook feed in India",
+      "url": "https://www.socialmediatoday.com/news/meta-tests-reels-first-facebook-feed-in-india/832295/",
+      "publishedDate": "2026-10-06",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-09T06:14:01Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "f9e2816e53d1636250a29388812698f38eef70c6793473fd289dd93e60d71b58",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta tests Reels-first Facebook feed in India",
+            "summary": "Meta is expanding a trial in India that opens the Facebook app directly to a recommended Reels feed, with the traditional News Feed moved to a separate tab. The change was first announced in July and is planned for U.S. users next year. Meta says video accounts for 60% of time spent on Facebook and Instagram, with over 3.5 billion Reels shared daily.",
+            "inputHash": "e0d95014645a03f6629503482b91947c4798c10820f3d838d00330cb59bd49b6",
+            "generatedAt": "2026-10-09T06:14:01Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta tests Reels-first Facebook feed in India",
+                "inputHash": "e0d95014645a03f6629503482b91947c4798c10820f3d838d00330cb59bd49b6",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta is expanding a trial in India that opens the Facebook app directly to a recommended Reels feed, with the traditional News Feed moved to a separate tab. The change was first announced in July and is planned for U.S. users next year. Meta says video accounts for 60% of time spent on Facebook and Instagram, with over 3.5 billion Reels shared daily.",
+                "inputHash": "e0d95014645a03f6629503482b91947c4798c10820f3d838d00330cb59bd49b6",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、インドのFacebookでリール優先フィードをテスト開始",
+            "summary": "MetaはインドのFacebookユーザー向けに、アプリ起動時にニュースフィードではなくリールのおすすめフィードを最初に表示する「リール優先」体験をテストしている。利用者には「Reels are now front and center」のポップアップが表示され、従来のニュースフィードは別タブで閲覧可能。Metaは2023年7月にこの実験を発表し、来年米国への展開も検討中。動画視聴が全利用時間の約60％を占め、日々35億件以上のリールが共有されていることから、エンゲージメント向上を狙っている。",
+            "inputHash": "57b8b33ac7ebfa7417b37cfc6ada24ed326e4df2ff446f7bcdaeb10602f79852",
+            "generatedAt": "2026-10-09T06:14:01Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、インドのFacebookでリール優先フィードをテスト開始",
+                "inputHash": "57b8b33ac7ebfa7417b37cfc6ada24ed326e4df2ff446f7bcdaeb10602f79852",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "MetaはインドのFacebookユーザー向けに、アプリ起動時にニュースフィードではなくリールのおすすめフィードを最初に表示する「リール優先」体験をテストしている。利用者には「Reels are now front and center」のポップアップが表示され、従来のニュースフィードは別タブで閲覧可能。Metaは2023年7月にこの実験を発表し、来年米国への展開も検討中。動画視聴が全利用時間の約60％を占め、日々35億件以上のリールが共有されていることから、エンゲージメント向上を狙っている。",
+                "inputHash": "57b8b33ac7ebfa7417b37cfc6ada24ed326e4df2ff446f7bcdaeb10602f79852",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-c0fafb06c7f24db9471c",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta introduces new AI-powered tools at Advertising Week",
+      "url": "https://www.socialmediatoday.com/news/meta-introduces-new-ai-powered-tools-at-advertising-week/832288/",
+      "publishedDate": "2026-10-06",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-09T06:14:01Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "c0fafb06c7f24db9471cee794a2113704fc914a70da1d67170f9963c3c7a3d44",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "df857d3d3641f31bff1f1d725a0a46ff06379acf1c7af63e569ebb92cec10dbf",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "df857d3d3641f31bff1f1d725a0a46ff06379acf1c7af63e569ebb92cec10dbf",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "df857d3d3641f31bff1f1d725a0a46ff06379acf1c7af63e569ebb92cec10dbf",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "meta-business-news-discovered-8970dc3ea43579bc67fe",
+      "sourceId": "meta-business-news-discovered",
+      "title": "Advertising Week New York 2026: New AI Capabilities to Guide Campaigns and Reach Customers",
+      "url": "https://www.facebook.com/business/news/advertising-week-new-york-2026",
+      "publishedDate": "2026-10-06",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-09T06:14:01Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "discovered-via:social-media-today-meta-ads"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "8970dc3ea43579bc67fe7f4fbdd0830e9e378e10585f949db07afb91c316631f",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta unveils new AI ad tools at Advertising Week New York 2026",
+            "summary": "Meta announced new AI advertising tools at Advertising Week New York 2026, featuring Ads Creative Studio, AI audience discovery, generative AI video, and in‑conversation checkout.",
+            "inputHash": "a262639895aba7e3c08b01539cc7642bf0328c88116612a09bbe04afd0a3f007",
+            "generatedAt": "2026-10-09T06:14:01Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta unveils new AI ad tools at Advertising Week New York 2026",
+                "inputHash": "a262639895aba7e3c08b01539cc7642bf0328c88116612a09bbe04afd0a3f007",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta announced new AI advertising tools at Advertising Week New York 2026, featuring Ads Creative Studio, AI audience discovery, generative AI video, and in‑conversation checkout.",
+                "inputHash": "a262639895aba7e3c08b01539cc7642bf0328c88116612a09bbe04afd0a3f007",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、Advertising Week NYで新AI広告ツールを発表",
+            "summary": "MetaはAdvertising Week New York 2026で新しいAI広告ツールを公開した。ツールはAds Creative Studio、AI audience discovery、生成AI動画、会話中チェックアウト機能を含む。これらはキャンペーン作成や顧客リーチを支援することを目的としている。",
+            "inputHash": "808008b9128835839dd50a49abfc5f7ddc7e201e35d5ddbe0748b065945d4e0e",
+            "generatedAt": "2026-10-09T06:14:01Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、Advertising Week NYで新AI広告ツールを発表",
+                "inputHash": "808008b9128835839dd50a49abfc5f7ddc7e201e35d5ddbe0748b065945d4e0e",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "MetaはAdvertising Week New York 2026で新しいAI広告ツールを公開した。ツールはAds Creative Studio、AI audience discovery、生成AI動画、会話中チェックアウト機能を含む。これらはキャンペーン作成や顧客リーチを支援することを目的としている。",
+                "inputHash": "808008b9128835839dd50a49abfc5f7ddc7e201e35d5ddbe0748b065945d4e0e",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "jon-loomer-meta-ads-c416f019212a3f04fec6",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Meta Sequenced Events: Optimize for Qualified Website Leads",
+      "url": "https://www.jonloomer.com/meta-sequenced-events/",
+      "publishedDate": "2026-10-06",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-09T06:14:01Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "c416f019212a3f04fec6308c4b416dc3382280279f22d72225ba2b149dc6ca51",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "ff5894b30af479d1b74a9c9939755a788dfe5a588bff596aa746a57e5eb69268",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "ff5894b30af479d1b74a9c9939755a788dfe5a588bff596aa746a57e5eb69268",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "ff5894b30af479d1b74a9c9939755a788dfe5a588bff596aa746a57e5eb69268",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Metaのシーケンスイベントでウェブリードを最適化",
+            "summary": "Metaのテスト機能「Sequenced Events」は、Leads目的のキャンペーンでコンバージョン場所を「Website」に設定し、「qualified leads（資格リード）」を最大化するオプションを利用できる。2つのイベントを順序通りに発生させた場合のみ広告がコンバージョンとして計測され、標準帰属モデルのみが使用可能。UIでは「Sequenced Events」がデフォルトで選択され、単一イベントは選択不可となっている。公式ドキュメントは未公開である。",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-10-09T06:14:01Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Metaのシーケンスイベントでウェブリードを最適化",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaのテスト機能「Sequenced Events」は、Leads目的のキャンペーンでコンバージョン場所を「Website」に設定し、「qualified leads（資格リード）」を最大化するオプションを利用できる。2つのイベントを順序通りに発生させた場合のみ広告がコンバージョンとして計測され、標準帰属モデルのみが使用可能。UIでは「Sequenced Events」がデフォルトで選択され、単一イベントは選択不可となっている。公式ドキュメントは未公開である。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "jon-loomer-meta-ads-fc3ed58fb62c4b0612cd",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Should You Optimize for a Custom Conversion?",
+      "url": "https://www.jonloomer.com/qvt/optimize-custom-conversion/",
+      "publishedDate": "2026-10-05",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "fc3ed58fb62c4b0612cdab6041acb27a164e4d3089b6ffbca62063518953f3c9",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "1c4d7b99e0c81daaaa525970b530d6c72b7f23eff89b6c1dfcf54612f7746232",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "1c4d7b99e0c81daaaa525970b530d6c72b7f23eff89b6c1dfcf54612f7746232",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "1c4d7b99e0c81daaaa525970b530d6c72b7f23eff89b6c1dfcf54612f7746232",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "カスタムコンバージョン最適化は標準イベントを優先すべきか",
+            "summary": "“コンバージョン数最大化”を選択する際は、標準イベント（例：Purchase）かカスタムイベント・カスタムコンバージョンを選べるが、ほとんどの場合は標準イベントの使用が推奨される。カスタムコンバージョンはコード不要で条件設定できるが、ボリュームが減少し学習が遅れる可能性がある。結果のインフレは報告の解釈次第であり、実際の売上は大部分が対象商品になる。カスタムコンバージョンは十分な数が確保でき、特定課題がある場合に限定して利用し、標準イベントで最適化しつつレポートにカスタムコンバージョン列を追加して確認するのが実務的です。",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-10-09T06:14:01Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "カスタムコンバージョン最適化は標準イベントを優先すべきか",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-10-09T06:14:01Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "“コンバージョン数最大化”を選択する際は、標準イベント（例：Purchase）かカスタムイベント・カスタムコンバージョンを選べるが、ほとんどの場合は標準イベントの使用が推奨される。カスタムコンバージョンはコード不要で条件設定できるが、ボリュームが減少し学習が遅れる可能性がある。結果のインフレは報告の解釈次第であり、実際の売上は大部分が対象商品になる。カスタムコンバージョンは十分な数が確保でき、特定課題がある場合に限定して利用し、標準イベントで最適化しつつレポートにカスタムコンバージョン列を追加して確認するのが実務的です。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-10-09T06:14:01Z",
                 "reviewedAt": null
               }
             }
@@ -147,7 +701,7 @@
       "publishedDate": "2026-10-05",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -216,7 +770,7 @@
       "publishedDate": "2026-10-03",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -285,7 +839,7 @@
       "publishedDate": "2026-10-01",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -354,7 +908,7 @@
       "publishedDate": "2026-09-30",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -423,7 +977,7 @@
       "publishedDate": "2026-09-30",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -492,7 +1046,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -554,67 +1108,67 @@
       }
     },
     {
-      "id": "meta-product-news-rss-f7871a98e4dfe752148f",
+      "id": "meta-product-news-rss-5246d21d9b0bec1aaa7c",
       "sourceId": "meta-product-news-rss",
       "title": "The Future Is for Everyone: Muse for Small Business",
       "url": "https://about.fb.com/news/2026/09/introducing-muse-small-business/",
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-platforms"
       ],
       "matchEvidence": [],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "f7871a98e4dfe752148f0654ca55f84cf8e7f82606627b88131cb4ba515d3ab2",
+        "sourceFingerprint": "5246d21d9b0bec1aaa7cc2d1a4fc6fc647224b94bc170e314730f8ca94dc7a5a",
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
             "status": "machine",
             "shortHeadline": "Muse expands with new skills and connectors for small businesses",
             "summary": "Earlier this month Muse, a personal AI agent for the US and Canada, added new skills and dozens of connectors—including Instagram, Facebook, Meta ads and Canva—to help small businesses automate tasks with tools they already use. The service is free for most features, offers subscription plans, and partners can apply via muse.ai/platform.",
-            "inputHash": "54090885a3ddd3dbb8bd4936cc99d92a886c08ef394520cb0ceea95ab53cf30e",
-            "generatedAt": "2026-09-29T13:20:20Z",
+            "inputHash": "d66da284a2a68bf2a0c65ce06e44304f37165c44889c9e9cbcb3405c063748cd",
+            "generatedAt": "2026-10-09T06:14:01Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
                 "value": "Muse expands with new skills and connectors for small businesses",
-                "inputHash": "54090885a3ddd3dbb8bd4936cc99d92a886c08ef394520cb0ceea95ab53cf30e",
-                "generatedAt": "2026-09-29T13:20:20Z",
+                "inputHash": "d66da284a2a68bf2a0c65ce06e44304f37165c44889c9e9cbcb3405c063748cd",
+                "generatedAt": "2026-10-09T06:14:01Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
                 "value": "Earlier this month Muse, a personal AI agent for the US and Canada, added new skills and dozens of connectors—including Instagram, Facebook, Meta ads and Canva—to help small businesses automate tasks with tools they already use. The service is free for most features, offers subscription plans, and partners can apply via muse.ai/platform.",
-                "inputHash": "54090885a3ddd3dbb8bd4936cc99d92a886c08ef394520cb0ceea95ab53cf30e",
-                "generatedAt": "2026-09-29T13:20:20Z",
+                "inputHash": "d66da284a2a68bf2a0c65ce06e44304f37165c44889c9e9cbcb3405c063748cd",
+                "generatedAt": "2026-10-09T06:14:01Z",
                 "reviewedAt": null
               }
             }
           },
           "ja": {
-            "status": "machine",
-            "shortHeadline": "Muse、小規模事業向けに新スキルとコネクタを拡充",
-            "summary": "今月初め、米国・カナダ向けのパーソナルAIエージェントMuseは、新しいスキルとInstagram、Facebook、Meta広告、Canvaなど数十のコネクタを追加し、既存のツールで小規模事業がタスクを自動化できるようにしました。サービスは多くの機能が無料で、サブスクリプションプランも提供され、パートナーは muse.ai/platform から応募できます。",
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
             "inputHash": "24f023969cfd86b1c320e3de38054decdac457396ba568ee95e6d4a16bbefe4d",
-            "generatedAt": "2026-10-03T13:32:27Z",
+            "generatedAt": null,
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "machine",
-                "value": "Muse、小規模事業向けに新スキルとコネクタを拡充",
+                "status": "missing",
+                "value": null,
                 "inputHash": "24f023969cfd86b1c320e3de38054decdac457396ba568ee95e6d4a16bbefe4d",
-                "generatedAt": "2026-10-03T13:32:27Z",
+                "generatedAt": null,
                 "reviewedAt": null
               },
               "summary": {
-                "status": "machine",
-                "value": "今月初め、米国・カナダ向けのパーソナルAIエージェントMuseは、新しいスキルとInstagram、Facebook、Meta広告、Canvaなど数十のコネクタを追加し、既存のツールで小規模事業がタスクを自動化できるようにしました。サービスは多くの機能が無料で、サブスクリプションプランも提供され、パートナーは muse.ai/platform から応募できます。",
+                "status": "missing",
+                "value": null,
                 "inputHash": "24f023969cfd86b1c320e3de38054decdac457396ba568ee95e6d4a16bbefe4d",
-                "generatedAt": "2026-10-03T13:32:27Z",
+                "generatedAt": null,
                 "reviewedAt": null
               }
             }
@@ -630,7 +1184,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -699,7 +1253,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -768,7 +1322,7 @@
       "publishedDate": "2026-09-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T05:47:38Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -837,7 +1391,7 @@
       "publishedDate": "2026-09-27",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T05:47:38Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -906,7 +1460,7 @@
       "publishedDate": "2026-09-27",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -975,7 +1529,7 @@
       "publishedDate": "2026-09-25",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1044,7 +1598,7 @@
       "publishedDate": "2026-09-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1113,7 +1667,7 @@
       "publishedDate": "2026-09-22",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1182,7 +1736,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": "2026-09-21",
       "firstObservedAt": "2026-09-22T05:01:36Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1252,7 +1806,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1321,7 +1875,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1459,7 +2013,7 @@
       "publishedDate": "2026-09-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-18T11:07:09Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1528,7 +2082,7 @@
       "publishedDate": "2026-09-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1666,7 +2220,7 @@
       "publishedDate": "2026-09-16",
       "updatedDate": null,
       "firstObservedAt": "2026-09-17T04:55:10Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -1735,7 +2289,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1804,7 +2358,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1873,7 +2427,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -1942,7 +2496,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2218,7 +2772,7 @@
       "publishedDate": "2026-09-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-11T04:43:19Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2287,7 +2841,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T04:45:10Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2356,7 +2910,7 @@
       "publishedDate": "2026-09-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2425,7 +2979,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2494,7 +3048,7 @@
       "publishedDate": "2026-08-31",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2563,7 +3117,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -2633,7 +3187,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2771,7 +3325,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2981,7 +3535,7 @@
       "publishedDate": "2026-08-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3115,6 +3669,75 @@
       }
     },
     {
+      "id": "jon-loomer-meta-ads-31a647f219704abc5612",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "ChatGPT Ads Get Automated Bidding, Placements, and URL Parameters",
+      "url": "https://www.jonloomer.com/chatgpt-ads-automated-bidding-placements-url-parameters/",
+      "publishedDate": "2026-08-13",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "bae818e9c6a1294225aebbcf3fe2ec19a7698f8a07f7f05c4bb3bbe9b45d5dca",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "bae818e9c6a1294225aebbcf3fe2ec19a7698f8a07f7f05c4bb3bbe9b45d5dca",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "bae818e9c6a1294225aebbcf3fe2ec19a7698f8a07f7f05c4bb3bbe9b45d5dca",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "ChatGPT広告に自動入札・配置選択・URLパラメータ機能が追加",
+            "summary": "OpenAIはChatGPT広告のベータ版開始以降、3つの機能を追加した。クリックやコンバージョンを目的とした場合のデフォルト入札戦略を「結果最大化」に変更し、予算に応じて自動的に入札額を調整する。キャンペーン設定に「対象プラットフォーム」ドロップダウンを導入し、iOSアプリ、Androidアプリ、Webの表示先を個別に選択できるようにした。さらに、キャンペーン・広告セット・広告単位でランディングページのクエリパラメータを設定でき、{campaign_id} などのテンプレート変数が利用可能となった。",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-09-05T08:40:34Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "ChatGPT広告に自動入札・配置選択・URLパラメータ機能が追加",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "OpenAIはChatGPT広告のベータ版開始以降、3つの機能を追加した。クリックやコンバージョンを目的とした場合のデフォルト入札戦略を「結果最大化」に変更し、予算に応じて自動的に入札額を調整する。キャンペーン設定に「対象プラットフォーム」ドロップダウンを導入し、iOSアプリ、Androidアプリ、Webの表示先を個別に選択できるようにした。さらに、キャンペーン・広告セット・広告単位でランディングページのクエリパラメータを設定でき、{campaign_id} などのテンプレート変数が利用可能となった。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-05T08:40:34Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "jon-loomer-meta-ads-43e38784bd796ab19923",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta Ads AI Connectors Get More Security Controls",
@@ -3122,7 +3745,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3191,7 +3814,7 @@
       "publishedDate": "2026-08-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3260,7 +3883,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3329,7 +3952,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3398,7 +4021,7 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -3468,7 +4091,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3606,7 +4229,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3675,7 +4298,7 @@
       "publishedDate": "2026-07-20",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3744,7 +4367,7 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -3814,7 +4437,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3883,7 +4506,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3952,7 +4575,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4021,7 +4644,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4092,7 +4715,7 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -4162,7 +4785,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4231,7 +4854,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4300,7 +4923,7 @@
       "publishedDate": "2026-06-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4369,7 +4992,7 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4438,7 +5061,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4509,7 +5132,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4580,7 +5203,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4649,7 +5272,7 @@
       "publishedDate": "2026-06-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4718,7 +5341,7 @@
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4787,7 +5410,7 @@
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4856,7 +5479,7 @@
       "publishedDate": "2026-06-14",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4925,7 +5548,7 @@
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4994,7 +5617,7 @@
       "publishedDate": "2026-06-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5063,7 +5686,7 @@
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5132,7 +5755,7 @@
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5201,7 +5824,7 @@
       "publishedDate": "2026-05-31",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5626,7 +6249,7 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -5696,7 +6319,7 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -5766,7 +6389,7 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -5836,7 +6459,7 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -5906,7 +6529,7 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
+      "lastObservedAt": "2026-10-09T06:14:01Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
