@@ -92,6 +92,14 @@
     {
       "url": "https://www.jonloomer.com/push-delivery-tests-chatgpt-ads-updates/",
       "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.socialmediatoday.com/news/meta-outlines-political-ad-restrictions/832444/",
+      "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.socialmediatoday.com/news/ai-favors-brands-with-an-active-social-media-presence/832450/",
+      "reason": "human-reviewed-out-of-scope"
     }
   ]
 }
