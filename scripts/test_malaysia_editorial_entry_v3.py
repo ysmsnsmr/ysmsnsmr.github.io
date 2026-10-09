@@ -455,6 +455,75 @@ class EditorialEntryV3Test(unittest.TestCase):
             {"entry_ja": "道路事故により交通の遅れが出ています。", "supporting_points_ja": []},
         )
 
+    def test_money_claims_match_source_amount_and_currency(self) -> None:
+        cases = [
+            ("RM160 a month", "月160円節約", "unsupported yen conversion"),
+            ("RM130 juta", "130億リンギット", "monetary amount or currency"),
+            ("RM130m", "1億3000万リンギット（約130億円相当）", "unsupported yen conversion"),
+            ("RM1.5 bilion", "1.5億リンギット", "monetary amount or currency"),
+            ("RM100 juta", "1億リンギット（約2億5千万円）", "unsupported yen conversion"),
+            ("No amount stated", "1億リンギットを支給", "monetary amount or currency"),
+            ("RM100 juta", "数百万円規模を支援", "monetary amount could not be verified"),
+            ("$100 grant", "100米ドルの助成金", "monetary amount or currency"),
+        ]
+        for source, rendered, reason in cases:
+            with self.subTest(source=source, rendered=rendered), self.assertRaisesRegex(ValueError, reason):
+                groq_renderer.validate_editorial_entry_against_source(
+                    {"title": source, "description": ""}, {"entry_ja": rendered}
+                )
+        for source, rendered in (
+            ("RM130 juta", "1億3000万リンギット"),
+            ("RM1.5 bilion", "15億リンギット"),
+            ("RM100 juta", "1億リンギット"),
+            ("JPY 250 million", "2億5千万円"),
+            ("RM1,000", "1千リンギット"),
+            ("Form 6 students receive RM2,500", "Form 6生徒にRM2,500を支給"),
+            ("US$100 grant", "100米ドルの助成金"),
+            ("$100 grant", "100ドルの助成金"),
+            ("The agency counted 130 projects", "130件の事業"),
+        ):
+            with self.subTest(source=source, rendered=rendered):
+                groq_renderer.validate_editorial_entry_against_source(
+                    {"title": source, "description": ""}, {"entry_ja": rendered}
+                )
+
+    def test_money_rejection_keeps_only_the_affected_item_as_source_link(self) -> None:
+        data = {"items": [item(1), item(2)]}
+        data["items"][0]["title"] = "Monthly savings RM160"
+        data["items"][1]["title"] = "Fund of RM130 juta"
+        def completion(entry: str) -> ChatCompletion:
+            return ChatCompletion(
+                "{}",
+                {"editorial_entry": {
+                    "headline_ja": entry,
+                    "short_headline_ja": entry,
+                    "entry_ja": entry,
+                }},
+                {"transport_status": "success", "json_contract_status": "valid"},
+            )
+        with patch(
+            "render_malaysia_news_with_groq.request_chat_completion",
+            side_effect=[completion("月160円節約"), completion("1億3000万リンギットの基金")],
+        ) as request:
+            rendered, accepted, stats, records = groq_renderer.render_with_groq(
+                data, "test-key", groq_renderer.DEFAULT_MODEL
+            )
+        decisions = build_render_decisions(rendered["items"], records)
+        final = apply_render_decisions(rendered, decisions)
+        self.assertEqual(request.call_count, 2)
+        self.assertEqual(stats, {"requested": 2, "accepted": 1, "fallback": 1})
+        self.assertEqual(records[0]["hard_safety_rejection_reason"], "unsupported yen conversion")
+        self.assertFalse(records[0]["repair_attempted"])
+        self.assertEqual(records[0]["groq_call"]["transport_status"], "success")
+        self.assertEqual(decisions[0].source_kind, "rss_fallback")
+        self.assertEqual(decisions[1].source_kind, "groq_accepted")
+        self.assertEqual(len(accepted), 1)
+        self.assertEqual(final["items"][1]["editorial_entry"]["entry_ja"], "1億3000万リンギットの基金")
+        markdown = markdown_renderer.render_editorial_entries(final)
+        self.assertIn(data["items"][0]["link"], markdown)
+        self.assertIn(data["items"][1]["link"], markdown)
+        self.assertNotIn("月160円節約", markdown)
+
     def test_missing_api_key_preserves_every_url_as_source_display(self) -> None:
         data = {"counts": {"processed": 2, "selected": 2}, "failed_sources": [], "items": [item(1), item(2)]}
         with tempfile.TemporaryDirectory() as directory:
