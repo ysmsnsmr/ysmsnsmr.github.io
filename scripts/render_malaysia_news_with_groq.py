@@ -50,6 +50,7 @@ from malaysia_groq_render_decision import (
     provenance_observation,
 )
 from malaysia_groq_transport import error_diagnostic, request_chat_completion
+from malaysia_money_claim_guard import unsupported_money_claim_reason
 import render_malaysia_news_from_json as fallback_renderer
 
 
@@ -69,6 +70,7 @@ entry_jaは、読者が出典リンクを開くか判断できる日本語の概
 入力のpublication_as_ofとpublished_atはマレーシア時間の基準です。警報、運行変更、募集などに対象日時や終了時刻が明記されている場合は、概要に日付と時刻を絶対表記で残してください。「今日」「明日」「現在」だけで時点を表さないでください。終了時刻がpublication_as_ofより前なら、今も有効な案内として書かず、終了した発表として記述してください。終了時刻が不明なら推測せず、掲載時点の発表として記述してください。
 補足欄は作りません。生活影響や次アクションは入力に明確な根拠がある場合だけ概要へ自然に含めてください。
 RSSにない数値、対象者、死亡、事故、被害、収入減、因果関係を足さないでください。“lost students”, “losing students” は死亡を意味すると明確でない限り、利用者・生徒の減少として訳してください。
+金額は原文の通貨と数量を維持してください。原文に円での金額がない場合、円換算や「円相当」は書かないでください。
 出力はJSONのみです。"""
 
 EDITORIAL_ENTRY_V4_CONTRACT_INSTRUCTION = """返答は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
@@ -78,6 +80,7 @@ REPAIR_SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュース
 入力記事JSONのtitle、description、必要に応じてbody_evidenceだけを根拠にしてください。入力にない事実、数値、主体、因果関係、死亡、事故、被害、収入減を加えないでください。
 原文が発言、計画、予報、警報、調査、疑惑、否定を表す場合は、確定した事実に書き換えないでください。dateline、wire credit、広告、関連記事は出力しません。
 入力のpublication_as_ofとpublished_atを基準に、対象日時や終了時刻が明記されている場合は絶対表記で残し、終了済みの案内を現在も有効と書かないでください。「今日」「明日」「現在」だけの表現は避け、期限不明なら推測しないでください。
+金額は原文の通貨と数量を維持し、原文にない円換算や「円相当」は書かないでください。
 通常見出しはUnicode文字数で60文字以内、短見出しは最大26文字の自然な日本語にしてください。短見出しで意味が落ちる場合は通常見出しと同じ文を使って構いません。概要は読者が出典を開くか判断できる長さで、必要な事実を省かず日本語で書いてください。
 出力は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
 {"editorial_entry":{"headline_ja":"string","short_headline_ja":"string","entry_ja":"string"}}"""
@@ -304,6 +307,7 @@ def validate_editorial_entry_against_source(item: dict[str, Any], entry: dict[st
     for reason in (
         reject_numeric_unit_reason(source_text, rendered_text),
         reject_currency_token_reason(source_text, rendered_text),
+        unsupported_money_claim_reason(source_text, rendered_text),
     ):
         if reason:
             raise ValueError(reason)
