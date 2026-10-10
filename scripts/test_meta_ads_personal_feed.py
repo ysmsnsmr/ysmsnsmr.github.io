@@ -171,7 +171,7 @@ class PersonalFeedTest(unittest.TestCase):
                 raise URLError("response body must not be retained")
             if source["parser"] == "github_releases":
                 content_type = "application/json; charset=utf-8"
-            elif source["parser"] in {"meta_business_news_html", "adsuploader_blog_html"}:
+            elif source["parser"] in {"meta_business_news_html", "meta_developer_blog_html", "adsuploader_blog_html"}:
                 content_type = "text/html; charset=utf-8"
             else:
                 content_type = "application/rss+xml; charset=UTF-8"
@@ -184,7 +184,7 @@ class PersonalFeedTest(unittest.TestCase):
         sources = {source["id"]: source for source in self.config["sources"]}
         discovered = {source["id"]: source for source in self.config["discoveredSources"]}
         self.assertEqual(set(sources), {"meta-product-news-rss", "meta-business-sdk-releases", "social-media-today-meta-ads", "jon-loomer-meta-ads", "adsuploader-blog"})
-        self.assertEqual(set(discovered), {"meta-business-news-discovered"})
+        self.assertEqual(set(discovered), {"meta-business-news-discovered", "meta-developer-blog-discovered"})
         self.assertEqual(sources["social-media-today-meta-ads"]["sourceUrl"], "https://www.socialmediatoday.com/topic/facebook/")
         self.assertEqual(sources["social-media-today-meta-ads"]["fetchUrl"], "https://www.socialmediatoday.com/feeds/topic/facebook/")
         self.assertEqual(sources["social-media-today-meta-ads"]["match"]["kind"], "all_groups")
@@ -205,6 +205,7 @@ class PersonalFeedTest(unittest.TestCase):
         )
         self.assertEqual(discovered["meta-business-news-discovered"]["relevanceRevision"], "meta-business-news-discovered-v2")
         self.assertEqual(discovered["meta-business-news-discovered"]["transport"]["allowedFetchHosts"], ["www.facebook.com"])
+        self.assertEqual(discovered["meta-developer-blog-discovered"]["transport"]["allowedFetchHosts"], ["developers.facebook.com"])
         self.assertFalse(self.config["policies"]["persistRawResponseBody"])
         self.assertEqual(sources["meta-product-news-rss"]["match"]["kind"], "all")
         self.assertEqual(sources["meta-product-news-rss"]["relevanceRevision"], "meta-ads-lanes-v1")
@@ -1194,6 +1195,63 @@ class PersonalFeedTest(unittest.TestCase):
         base = "https://www.facebook.com/business/news/pixel-conversionsapi-updates"
         self.assertEqual(_canonical_official_news_url(f"{base}?_sp=fixture-token", discovery), base)
         self.assertIsNone(_canonical_official_news_url(f"{base}?unknown=keep", discovery))
+
+    def test_developer_blog_discovery_verifies_own_page_and_preserves_provenance(self) -> None:
+        url = "https://developers.facebook.com/blog/post/2026/08/27/new-meta-marketing-api-update/"
+        rss = f"""<rss><channel><item><title>Meta updates its Marketing API</title>
+        <link>https://www.jonloomer.com/meta-api-update/</link>
+        <description><![CDATA[Meta Ads update <a href="{url}?_sp=tracking">Official post</a>]]></description>
+        <pubDate>Fri, 28 Aug 2026 10:00:00 +0000</pubDate></item></channel></rss>"""
+        page = f"""<html><head><link rel="canonical" href="{url}">
+        <meta property="og:url" content="{url}">
+        <meta property="og:title" content="Meta Marketing API Update">
+        <meta property="og:description" content="Meta is updating its Marketing API.">
+        <meta property="og:type" content="website"></head><body>
+        <h1>Meta Marketing API Update</h1><time>2026年8月27日</time></body></html>"""
+        bodies = {"jon-loomer-meta-ads": rss, "meta-developer-blog-discovered": page}
+        pipeline: dict[str, Any] = {}
+        feed, state = collect(
+            self.config, {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1, NOW, self.fetcher(bodies=bodies), source_pipeline_stats=pipeline,
+        )
+        promoted = [item for item in feed["items"] if item["sourceId"] == "meta-developer-blog-discovered"]
+        self.assertEqual(len(promoted), 1)
+        self.assertEqual(promoted[0]["url"], url)
+        self.assertEqual(promoted[0]["publishedDate"], "2026-08-27")
+        self.assertEqual(promoted[0]["matchEvidence"], ["discovered-via:jon-loomer-meta-ads"])
+        self.assertEqual(pipeline["sources"]["meta-developer-blog-discovered"]["attemptedLinks"], 1)
+        self.assertNotIn("Meta is updating", json.dumps(state))
+
+    def test_developer_blog_rejects_mismatched_canonical_and_excluded_origin(self) -> None:
+        url = "https://developers.facebook.com/blog/post/2026/08/27/new-meta-marketing-api-update/"
+        rss = f"""<rss><channel><item><title>Meta updates its Marketing API</title>
+        <link>https://www.jonloomer.com/meta-api-update/</link>
+        <description><![CDATA[<a href="{url}">Official post</a>]]></description>
+        <pubDate>Fri, 28 Aug 2026 10:00:00 +0000</pubDate></item></channel></rss>"""
+        bad_page = f"""<html><head><link rel="canonical" href="{url}">
+        <meta property="og:url" content="https://developers.facebook.com/blog/post/2026/08/27/another-post/">
+        <meta property="og:title" content="Meta Marketing API Update">
+        <meta property="og:description" content="An API update."></head><body>
+        <h1>Meta Marketing API Update</h1>2026年8月27日</body></html>"""
+        bodies = {"jon-loomer-meta-ads": rss, "meta-developer-blog-discovered": bad_page}
+        pipeline: dict[str, Any] = {}
+        feed, _state = collect(
+            self.config, {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1, NOW, self.fetcher(bodies=bodies), source_pipeline_stats=pipeline,
+        )
+        self.assertNotIn("meta-developer-blog-discovered", {item["sourceId"] for item in feed["items"]})
+        self.assertEqual(pipeline["sources"]["meta-developer-blog-discovered"]["rejectedLinks"], 1)
+        self.assertIsNone(_canonical_official_news_url("https://developers.facebook.com.evil.example/blog/post/2026/08/27/post/", self.config["discoveredSources"][1]))
+        self.assertIsNone(_canonical_official_news_url("https://developers.facebook.com/blog/other/2026/08/27/post/", self.config["discoveredSources"][1]))
+
+        excluded_pipeline: dict[str, Any] = {}
+        collect(
+            self.config, {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1, NOW, self.fetcher(bodies=bodies),
+            manual_exclusions=frozenset({"https://www.jonloomer.com/meta-api-update/"}),
+            source_pipeline_stats=excluded_pipeline,
+        )
+        self.assertEqual(excluded_pipeline["sources"]["meta-developer-blog-discovered"]["attemptedLinks"], 0)
 
     def test_official_discovery_runs_even_when_parent_relevance_is_excluded(self) -> None:
         social_without_ads_term = """<rss><channel>

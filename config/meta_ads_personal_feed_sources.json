@@ -182,6 +182,33 @@
         "allowedPathPrefix": "/business/news/",
         "maxLinksPerSourceItem": 10
       }
+    },
+    {
+      "id": "meta-developer-blog-discovered",
+      "name": "Meta for Developers Blog",
+      "classification": "official",
+      "sourceUrl": "https://developers.facebook.com/blog/",
+      "parser": "meta_developer_blog_html",
+      "expectedContentTypes": ["text/html"],
+      "contentLanguage": "en",
+      "platforms": ["Meta Ads"],
+      "platformIds": ["meta-ads"],
+      "relevanceRevision": "meta-developer-blog-discovered-v1",
+      "transport": {
+        "allowedFetchHosts": ["developers.facebook.com"],
+        "allowedContentHosts": ["developers.facebook.com"],
+        "maxResponseBytes": 1048576,
+        "maxRedirects": 2,
+        "maxItems": 10
+      },
+      "discovery": {
+        "fromSourceIds": [
+          "jon-loomer-meta-ads",
+          "social-media-today-meta-ads"
+        ],
+        "allowedPathPrefix": "/blog/post/",
+        "maxLinksPerSourceItem": 5
+      }
     }
   ]
 }
