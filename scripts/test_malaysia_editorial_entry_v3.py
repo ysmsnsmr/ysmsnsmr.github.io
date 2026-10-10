@@ -503,17 +503,20 @@ class EditorialEntryV3Test(unittest.TestCase):
             )
         with patch(
             "render_malaysia_news_with_groq.request_chat_completion",
-            side_effect=[completion("月160円節約"), completion("1億3000万リンギットの基金")],
+            side_effect=[
+                completion("月160円節約"), completion("月160円節約"),
+                completion("1億3000万リンギットの基金"),
+            ],
         ) as request:
             rendered, accepted, stats, records = groq_renderer.render_with_groq(
                 data, "test-key", groq_renderer.DEFAULT_MODEL
             )
         decisions = build_render_decisions(rendered["items"], records)
         final = apply_render_decisions(rendered, decisions)
-        self.assertEqual(request.call_count, 2)
+        self.assertEqual(request.call_count, 3)
         self.assertEqual(stats, {"requested": 2, "accepted": 1, "fallback": 1})
         self.assertEqual(records[0]["hard_safety_rejection_reason"], "unsupported yen conversion")
-        self.assertFalse(records[0]["repair_attempted"])
+        self.assertTrue(records[0]["repair_attempted"])
         self.assertEqual(records[0]["groq_call"]["transport_status"], "success")
         self.assertEqual(decisions[0].source_kind, "rss_fallback")
         self.assertEqual(decisions[1].source_kind, "groq_accepted")
@@ -523,6 +526,66 @@ class EditorialEntryV3Test(unittest.TestCase):
         self.assertIn(data["items"][0]["link"], markdown)
         self.assertIn(data["items"][1]["link"], markdown)
         self.assertNotIn("月160円節約", markdown)
+
+    def test_money_prompt_preserves_original_amount_spelling(self) -> None:
+        article = item()
+        article["title"] = "Aid of RM1.3 billion and RM130 juta announced"
+        article["description"] = "The agency also offered RM160 per month."
+        payload = groq_renderer.groq_payload_for_item(article)
+        self.assertEqual(payload["source_money_literals"], ["RM1.3 billion", "RM130 juta", "RM160"])
+        self.assertIn("RM1.3 billion", groq_renderer.summary_request_messages(article, "user_only")[0]["content"])
+        self.assertIn("億・万や円へ換算", groq_renderer.money_repair_request_messages(article)[0]["content"])
+
+    def test_money_rejection_can_recover_with_literal_source_amount(self) -> None:
+        article = item()
+        article["title"] = "Aid of RM1.3 billion announced"
+        data = {"items": [article]}
+        primary = groq_renderer.GroqEditorialEntryRejected(
+            "unsafe numeric unit conversion: RM1.3 billion",
+            {"transport_status": "success", "json_contract_status": "valid"},
+        )
+        parsed = {"editorial_entry": {
+            "headline_ja": "RM1.3 billionの支援を発表",
+            "short_headline_ja": "RM1.3 billionの支援",
+            "entry_ja": "政府はRM1.3 billionの支援を発表しました。",
+        }}
+        with patch("render_malaysia_news_with_groq.request_groq_summary_with_retry", side_effect=primary), patch(
+            "render_malaysia_news_with_groq.request_chat_completion",
+            return_value=ChatCompletion("{}", parsed, {"transport_status": "success", "json_contract_status": "valid"}),
+        ) as request:
+            rendered, accepted, stats, records = groq_renderer.render_with_groq(
+                data, "key", groq_renderer.DEFAULT_MODEL, summary_max_tokens=800
+            )
+        self.assertEqual(stats, {"requested": 1, "accepted": 1, "fallback": 0})
+        self.assertEqual(accepted[0]["generation_kind"], "money_repair")
+        self.assertTrue(records[0]["repair_accepted"])
+        self.assertEqual(records[0]["hard_safety_rejection_reason"], "")
+        self.assertEqual(records[0]["money_repair_trigger_reason"], "unsafe numeric unit conversion: RM1.3 billion")
+        self.assertEqual(request.call_args.kwargs["max_tokens"], 800)
+        self.assertEqual(request.call_args.kwargs["json_schema_name"], "malaysia_news_editorial_entry_v4_money_repair")
+        self.assertEqual(build_render_decisions(rendered["items"], records)[0].source_kind, "groq_repaired")
+
+    def test_money_repair_still_rejects_a_wrong_amount(self) -> None:
+        article = item()
+        article["title"] = "Aid of RM1.3 billion announced"
+        primary = groq_renderer.GroqEditorialEntryRejected("unsupported yen conversion")
+        parsed = {"editorial_entry": {
+            "headline_ja": "1.3億リンギットの支援",
+            "short_headline_ja": "1.3億リンギットの支援",
+            "entry_ja": "政府は1.3億リンギットの支援を発表しました。",
+        }}
+        with patch("render_malaysia_news_with_groq.request_groq_summary_with_retry", side_effect=primary), patch(
+            "render_malaysia_news_with_groq.request_chat_completion",
+            return_value=ChatCompletion("{}", parsed, {"transport_status": "success", "json_contract_status": "valid"}),
+        ) as request:
+            rendered, accepted, stats, records = groq_renderer.render_with_groq(
+                {"items": [article]}, "key", groq_renderer.DEFAULT_MODEL
+            )
+        self.assertEqual(request.call_count, 1)
+        self.assertEqual(stats, {"requested": 1, "accepted": 0, "fallback": 1})
+        self.assertEqual(accepted, [])
+        self.assertTrue(records[0]["repair_attempted"])
+        self.assertEqual(build_render_decisions(rendered["items"], records)[0].source_kind, "rss_fallback")
 
     def test_missing_api_key_preserves_every_url_as_source_display(self) -> None:
         data = {"counts": {"processed": 2, "selected": 2}, "failed_sources": [], "items": [item(1), item(2)]}
