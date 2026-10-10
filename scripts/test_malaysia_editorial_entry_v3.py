@@ -70,6 +70,21 @@ def accepted_result(index: int) -> groq_renderer.GroqEditorialEntryResult:
 
 
 class EditorialEntryV3Test(unittest.TestCase):
+    def test_haze_source_terms_reach_all_generation_paths(self) -> None:
+        article = item()
+        article["title"] = "Haze eases in Lubok Antu, Kanowit API remains unhealthy"
+        article["description"] = "Jerebu and IPU readings were reported by APIMS."
+        primary = groq_renderer.summary_request_messages(article, prompt_layout="user_only")
+        repair = groq_renderer.repair_request_messages(article)
+        money_repair = groq_renderer.money_repair_request_messages(article)
+        for messages in (primary, repair, money_repair):
+            prompt = " ".join(message["content"] for message in messages)
+            for term in ("haze", "jerebu", "API", "IPU", "APIMS", "濃霧"):
+                self.assertIn(term, prompt)
+            self.assertIn("原文表記のまま", prompt)
+            self.assertIn("Lubok Antu", prompt)
+            self.assertIn("Kanowit", prompt)
+
     def test_publication_time_reaches_prompt_and_markdown_without_changing_contract(self) -> None:
         article = item()
         article["published_at"] = "2026-09-27T15:43:00+08:00"
