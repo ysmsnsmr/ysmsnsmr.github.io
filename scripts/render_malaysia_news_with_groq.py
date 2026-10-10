@@ -50,7 +50,7 @@ from malaysia_groq_render_decision import (
     provenance_observation,
 )
 from malaysia_groq_transport import error_diagnostic, request_chat_completion
-from malaysia_money_claim_guard import unsupported_money_claim_reason
+from malaysia_money_claim_guard import source_money_literals, unsupported_money_claim_reason
 import render_malaysia_news_from_json as fallback_renderer
 
 
@@ -70,7 +70,7 @@ entry_jaは、読者が出典リンクを開くか判断できる日本語の概
 入力のpublication_as_ofとpublished_atはマレーシア時間の基準です。警報、運行変更、募集などに対象日時や終了時刻が明記されている場合は、概要に日付と時刻を絶対表記で残してください。「今日」「明日」「現在」だけで時点を表さないでください。終了時刻がpublication_as_ofより前なら、今も有効な案内として書かず、終了した発表として記述してください。終了時刻が不明なら推測せず、掲載時点の発表として記述してください。
 補足欄は作りません。生活影響や次アクションは入力に明確な根拠がある場合だけ概要へ自然に含めてください。
 RSSにない数値、対象者、死亡、事故、被害、収入減、因果関係を足さないでください。“lost students”, “losing students” は死亡を意味すると明確でない限り、利用者・生徒の減少として訳してください。
-金額は原文の通貨と数量を維持してください。原文に円での金額がない場合、円換算や「円相当」は書かないでください。
+金額を書く場合は、title、description、body_evidenceにある表記を通貨・数字・単位ごとそのまま使ってください。source_money_literalsはその原文表記です。RM130mを「1億3000万リンギット」に換算する必要はありません。RSS entry内の金額は根拠としません。原文にない円換算や「円相当」は書かないでください。
 出力はJSONのみです。"""
 
 EDITORIAL_ENTRY_V4_CONTRACT_INSTRUCTION = """返答は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
@@ -80,9 +80,15 @@ REPAIR_SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュース
 入力記事JSONのtitle、description、必要に応じてbody_evidenceだけを根拠にしてください。入力にない事実、数値、主体、因果関係、死亡、事故、被害、収入減を加えないでください。
 原文が発言、計画、予報、警報、調査、疑惑、否定を表す場合は、確定した事実に書き換えないでください。dateline、wire credit、広告、関連記事は出力しません。
 入力のpublication_as_ofとpublished_atを基準に、対象日時や終了時刻が明記されている場合は絶対表記で残し、終了済みの案内を現在も有効と書かないでください。「今日」「明日」「現在」だけの表現は避け、期限不明なら推測しないでください。
-金額は原文の通貨と数量を維持し、原文にない円換算や「円相当」は書かないでください。
+金額を書く場合は原文の通貨・数字・単位をそのまま使い、億・万への換算や原文にない円換算をしないでください。RSS entry内の金額は根拠としません。
 通常見出しはUnicode文字数で60文字以内、短見出しは最大26文字の自然な日本語にしてください。短見出しで意味が落ちる場合は通常見出しと同じ文を使って構いません。概要は読者が出典を開くか判断できる長さで、必要な事実を省かず日本語で書いてください。
 出力は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
+{"editorial_entry":{"headline_ja":"string","short_headline_ja":"string","entry_ja":"string"}}"""
+
+MONEY_REPAIR_SYSTEM_PROMPT = """日本語のニュース概要を原文の事実だけから再生成してください。
+金額を書く場合はsource_money_literalsの表記を通貨・数字・単位ごと正確にコピーしてください。日本語の億・万や円へ換算しないでください。原文に金額がない場合は金額を書かないでください。
+原文にない事実を足さず、主体、対象、方向、計画・発言・予報などの確定度を保持してください。補足欄は作りません。
+返答は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
 {"editorial_entry":{"headline_ja":"string","short_headline_ja":"string","entry_ja":"string"}}"""
 
 # Kept as an import-compatible alias for the comparison runner.
@@ -134,6 +140,13 @@ def editorial_entry_text(entry: dict[str, Any]) -> str:
     ).strip()
 
 
+def money_source_text(item: dict[str, Any]) -> str:
+    parts = [clean_text(item.get("title")), clean_text(item.get("description"))]
+    if item.get("body_excerpt_policy") == "use_body":
+        parts.append(clean_text(item.get("body_evidence_excerpt")))
+    return " ".join(part for part in parts if part)
+
+
 def groq_payload_for_item(item: dict[str, Any]) -> dict[str, Any]:
     """The model sees article facts plus the RSS fallback, never legacy fields."""
     payload: dict[str, Any] = {
@@ -147,6 +160,7 @@ def groq_payload_for_item(item: dict[str, Any]) -> dict[str, Any]:
         "rss_editorial_entry": normalize_editorial_entry(fallback_renderer.normalize_editorial_entry(item)),
         "tags": item.get("tags") if isinstance(item.get("tags"), list) else [],
         "flags": item.get("flags") if isinstance(item.get("flags"), dict) else {},
+        "source_money_literals": source_money_literals(money_source_text(item)),
     }
     if item.get("body_excerpt_policy") == "use_body":
         excerpt = clean_text(item.get("body_evidence_excerpt"))
@@ -169,6 +183,7 @@ def repair_source_payload_for_item(item: dict[str, Any]) -> dict[str, Any]:
         "publication_as_of": item.get("publication_as_of"),
         "title": item.get("title"),
         "description": item.get("description"),
+        "source_money_literals": source_money_literals(money_source_text(item)),
     }
     if item.get("body_excerpt_policy") == "use_body":
         excerpt = clean_text(item.get("body_evidence_excerpt"))
@@ -201,6 +216,11 @@ def summary_request_messages(
 
 def repair_request_messages(item: dict[str, Any]) -> list[dict[str, str]]:
     content = f"{REPAIR_SYSTEM_PROMPT}\n\n入力記事JSON:\n{json.dumps(repair_source_payload_for_item(item), ensure_ascii=False)}"
+    return [{"role": "user", "content": content}]
+
+
+def money_repair_request_messages(item: dict[str, Any]) -> list[dict[str, str]]:
+    content = f"{MONEY_REPAIR_SYSTEM_PROMPT}\n\n入力記事JSON:\n{json.dumps(repair_source_payload_for_item(item), ensure_ascii=False)}"
     return [{"role": "user", "content": content}]
 
 
@@ -307,7 +327,7 @@ def validate_editorial_entry_against_source(item: dict[str, Any], entry: dict[st
     for reason in (
         reject_numeric_unit_reason(source_text, rendered_text),
         reject_currency_token_reason(source_text, rendered_text),
-        unsupported_money_claim_reason(source_text, rendered_text),
+        unsupported_money_claim_reason(money_source_text(item), rendered_text),
     ):
         if reason:
             raise ValueError(reason)
@@ -408,16 +428,17 @@ def request_groq_repair_entry(
     model: str,
     model_profile: ModelProfile | None = None,
     summary_max_tokens: int = DEFAULT_COMPARISON_MAX_TOKENS,
+    money_only: bool = False,
 ) -> GroqEditorialEntryResult:
-    """Make at most one small-contract recovery attempt after a non-safety failure."""
+    """Make one contract recovery or source-literal money retry."""
     completion = request_chat_completion(
         profile=model_profile or profile_for_model_id(model),
-        messages=repair_request_messages(item),
+        messages=money_repair_request_messages(item) if money_only else repair_request_messages(item),
         temperature=0.0,
-        max_tokens=min(summary_max_tokens, REPAIR_MAX_TOKENS),
+        max_tokens=summary_max_tokens if money_only else min(summary_max_tokens, REPAIR_MAX_TOKENS),
         timeout_seconds=TIMEOUT_SECONDS,
         max_response_chars=MAX_RESPONSE_CHARS,
-        json_schema_name="malaysia_news_editorial_entry_v4_repair",
+        json_schema_name="malaysia_news_editorial_entry_v4_money_repair" if money_only else "malaysia_news_editorial_entry_v4_repair",
         json_schema=EDITORIAL_ENTRY_V4_REPAIR_SCHEMA,
         schema_error=editorial_entry_repair_schema_error,
         api_key=api_key,
@@ -563,6 +584,11 @@ def transport_observation(records: list[dict[str, Any]]) -> dict[str, Any]:
         "hard_safety_rejection_reason_counts": dict(sorted(hard_safety.items())),
         "repair_attempted_count": sum(record.get("repair_attempted") is True for record in records),
         "repair_accepted_count": sum(record.get("repair_accepted") is True for record in records),
+        "money_repair_attempted_count": sum(bool(record.get("money_repair_trigger_reason")) for record in records),
+        "money_repair_accepted_count": sum(
+            bool(record.get("money_repair_trigger_reason")) and record.get("repair_accepted") is True
+            for record in records
+        ),
         "repair_transport_status_counts": dict(sorted(repair_transport.items())),
         "repair_json_contract_status_counts": dict(sorted(repair_contracts.items())),
         "repair_json_contract_reason_counts": dict(sorted(repair_contract_reasons.items())),
@@ -655,6 +681,16 @@ def repair_is_eligible(error: BaseException) -> bool:
     )
 
 
+def money_repair_is_eligible(reason: str) -> bool:
+    return reason.startswith((
+        "unsafe numeric unit conversion",
+        "unsafe RM1 date/currency conversion",
+        "unsupported yen conversion",
+        "monetary amount or currency not supported by source",
+        "monetary amount could not be verified",
+    ))
+
+
 def repair_failure_reason(error: BaseException) -> str:
     if isinstance(error, GroqEditorialEntryRejected):
         return f"hard_safety: {str(error) or 'validation failed'}"
@@ -725,7 +761,6 @@ def render_with_groq(
             accepted_records.append(accepted_record_payload(index, item, original_entry, result.editorial_entry, "primary"))
             accepted += 1
         except GroqEditorialEntryRejected as error:
-            fallback += 1
             reason = str(error) or "validation failed"
             record.update(
                 decision="fallback",
@@ -733,7 +768,43 @@ def render_with_groq(
                 hard_safety_rejection_reason=reason,
                 groq_call=error.transport_diagnostic or error_diagnostic(error),
             )
-            if debug:
+            if money_repair_is_eligible(reason):
+                record["repair_attempted"] = True
+                record["money_repair_trigger_reason"] = reason
+                try:
+                    repair = request_groq_repair_entry(
+                        item, api_key, model,
+                        summary_max_tokens=summary_max_tokens,
+                        money_only=True,
+                    )
+                except GroqEditorialEntryRejected as repair_error:
+                    repair_reason = str(repair_error) or "repair validation failed"
+                    record.update(
+                        groq_repair_call=repair_error.transport_diagnostic or error_diagnostic(repair_error),
+                        repair_failure_reason=repair_failure_reason(repair_error),
+                        hard_safety_rejection_reason=repair_reason,
+                    )
+                    fallback += 1
+                except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError, KeyError, IndexError, TypeError) as repair_error:
+                    record.update(
+                        groq_repair_call=error_diagnostic(repair_error),
+                        repair_failure_reason=repair_failure_reason(repair_error),
+                    )
+                    fallback += 1
+                else:
+                    item["editorial_entry"] = repair.editorial_entry
+                    record.update(
+                        decision="accepted", accepted=True, reason="money_repair_accepted",
+                        hard_safety_rejection_reason="", repair_accepted=True,
+                        groq_repair_call=repair.transport_diagnostic,
+                    )
+                    accepted_records.append(accepted_record_payload(
+                        index, item, original_entry, repair.editorial_entry, "money_repair"
+                    ))
+                    accepted += 1
+            else:
+                fallback += 1
+            if debug and record["decision"] != "accepted":
                 debug_groq_payload(index, item, reason)
         except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError, KeyError, IndexError, TypeError) as error:
             primary_reason = f"HTTP {error.code}" if isinstance(error, urllib.error.HTTPError) else error.__class__.__name__
@@ -778,7 +849,7 @@ def render_with_groq(
                     fallback += 1
             else:
                 fallback += 1
-        wait = rate_reset_wait_seconds(record.get("groq_call"))
+        wait = rate_reset_wait_seconds(record.get("groq_repair_call") or record.get("groq_call"))
         if rate_reset_wait_max_seconds > 0 and wait is not None:
             if wait > rate_reset_wait_max_seconds:
                 rate_budget_deferred = True

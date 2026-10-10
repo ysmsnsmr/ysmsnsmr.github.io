@@ -82,6 +82,15 @@ def monetary_claims(text: str) -> set[tuple[str, Decimal]]:
     return claims
 
 
+def source_money_literals(text: str) -> list[str]:
+    """Preserve source spelling and order for the model's money references."""
+    matches = [
+        match for pattern in (_PREFIXED, _SUFFIXED, _JAPANESE)
+        for match in pattern.finditer(text)
+    ]
+    return list(dict.fromkeys(match.group(0).strip() for match in sorted(matches, key=lambda match: match.start())))
+
+
 def unsupported_money_claim_reason(source_text: str, rendered_text: str) -> str:
     source_claims = monetary_claims(source_text)
     rendered_claims = monetary_claims(rendered_text)
