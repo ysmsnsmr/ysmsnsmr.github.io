@@ -53,12 +53,48 @@ class EventMatchObservationTests(unittest.TestCase):
             api_key="fixture-key", model_name="gpt-oss-120b", request=request,
         )
         self.assertEqual(result["status"], "completed")
-        self.assertEqual(len(result["coverageDecisions"]), 2)
+        self.assertEqual([(row["keep"], row["omit"]) for row in result["coverageDecisions"]], [(1, 4)])
+        self.assertEqual(result["discardedUncoveredTitleCount"], 1)
         self.assertEqual(len(calls), 1)
         self.assertEqual(calls[0]["json_schema_name"], "malaysia_news_haze_daily_coverage_v2")
         self.assertIn("Klang Valley", calls[0]["messages"][0]["content"])
         self.assertNotIn("fixture-key", str(result))
         self.assertNotIn("https://example.test", str(result))
+
+    def test_haze_coverage_keeps_unique_place_named_in_earlier_title(self) -> None:
+        reports = [candidate(1), candidate(2)]
+        reports[0].update(
+            title="Jerebu: Pasir Gudang catat IPU tertinggi, 28 stesen masih tidak sihat setakat 7 malam",
+            description="28 stations unhealthy, 39 moderate and one good",
+            published_at="2026-10-10T19:30:12+08:00",
+        )
+        reports[1].update(
+            title="Jerebu beransur pulih, Langkawi kawasan pertama kembali tahap Baik setakat 6 petang",
+            description="28 stations unhealthy, 39 moderate and one good",
+            published_at="2026-10-10T18:20:11+08:00",
+        )
+        result = observe_haze_coverage(
+            {"items": reports}, routing(["direct_life_impact"] * 2),
+            api_key="fixture-key", model_name="gpt-oss-120b",
+            request=lambda **_: SimpleNamespace(
+                parsed={"omissions": [{"keep": 1, "omit": 2, "reason": "Same national totals"}]}, diagnostic={}
+            ),
+        )
+        self.assertEqual(result["status"], "completed")
+        self.assertEqual(result["coverageDecisions"], [])
+        self.assertEqual(result["discardedUncoveredTitleCount"], 1)
+
+        reports[0]["description"] += "; Langkawi returned to Baik air quality"
+        result = observe_haze_coverage(
+            {"items": reports}, routing(["direct_life_impact"] * 2),
+            api_key="fixture-key", model_name="gpt-oss-120b",
+            request=lambda **_: SimpleNamespace(
+                parsed={"omissions": [{"keep": 1, "omit": 2, "reason": "Same national totals and Langkawi recovery"}]},
+                diagnostic={},
+            ),
+        )
+        self.assertEqual(result["discardedUncoveredTitleCount"], 0)
+        self.assertEqual(len(result["coverageDecisions"]), 1)
 
     def test_haze_coverage_never_crosses_malaysia_day(self) -> None:
         reports = [candidate(1), candidate(2)]

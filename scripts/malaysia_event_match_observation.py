@@ -29,6 +29,7 @@ HAZE_TERMS = re.compile(
 )
 INDEX_TERMS = re.compile(r"\b(?:APIMS|IPU|air pollutant index|indeks pencemaran udara)\b", re.IGNORECASE)
 API_STATUS_TERMS = re.compile(r"\b(?:unhealthy|tidak sihat|reading|station|pollutant|haze)\b", re.IGNORECASE)
+DISTINCTIVE_TITLE_TERM = re.compile(r"\b[A-Z][a-z]{3,}\b")
 COVERAGE_SCHEMA = {
     "type": "object",
     "properties": {
@@ -162,6 +163,17 @@ def _is_haze_status(item: dict[str, Any]) -> bool:
     )
 
 
+def _has_uncovered_title_term(kept: dict[str, Any], omitted: dict[str, Any]) -> bool:
+    """Fail open when a named scope in the omitted title is absent from the representative."""
+    title = str(omitted.get("title") or "")
+    representative = f"{kept.get('title') or ''} {kept.get('description') or ''}".casefold()
+    return any(
+        not re.search(rf"\b{re.escape(match.group().casefold())}\b", representative)
+        for match in DISTINCTIVE_TITLE_TERM.finditer(title)
+        if match.start() != 0
+    )
+
+
 def observe_haze_coverage(
     pool: dict[str, Any],
     routing: dict[str, Any],
@@ -276,8 +288,15 @@ def observe_haze_coverage(
         report["discardedTruncatedInputCount"] = sum(
             row["keep"] in truncated or row["omit"] in truncated for row in decisions
         )
+        report["discardedUncoveredTitleCount"] = sum(
+            row["keep"] not in truncated and row["omit"] not in truncated
+            and _has_uncovered_title_term(cohort[row["keep"] - 1]["item"], cohort[row["omit"] - 1]["item"])
+            for row in decisions
+        )
         report["coverageDecisions"] = [
-            row for row in decisions if row["keep"] not in truncated and row["omit"] not in truncated
+            row for row in decisions
+            if row["keep"] not in truncated and row["omit"] not in truncated
+            and not _has_uncovered_title_term(cohort[row["keep"] - 1]["item"], cohort[row["omit"] - 1]["item"])
         ]
         report["status"] = "completed"
     except Exception as error:
