@@ -85,6 +85,35 @@ class EditorialEntryV3Test(unittest.TestCase):
             self.assertIn("Lubok Antu", prompt)
             self.assertIn("Kanowit", prompt)
 
+    def test_haze_translation_is_corrected_after_primary_and_repair_calls(self) -> None:
+        article = item()
+        article["title"] = "Haze affects road visibility in Johor"
+        article["description"] = "Streetlight hours were extended during haze."
+        parsed = {"editorial_entry": {
+            "headline_ja": "ジョホール州、濃霧で街灯時間を延長",
+            "short_headline_ja": "濃霧で街灯時間を延長",
+            "entry_ja": "haze（濃霧）のため街灯の点灯時間を延長した。",
+        }}
+        completion = ChatCompletion("{}", parsed, {"transport_status": "success", "json_contract_status": "valid"})
+        with patch("render_malaysia_news_with_groq.request_chat_completion", return_value=completion):
+            primary = groq_renderer.request_groq_summary(article, "key", "openai/gpt-oss-120b")
+            repair = groq_renderer.request_groq_repair_entry(article, "key", "openai/gpt-oss-120b")
+        for result in (primary, repair):
+            self.assertIn("haze", result.editorial_entry["entry_ja"])
+            self.assertNotIn("濃霧", " ".join(result.editorial_entry.values()))
+            self.assertEqual(result.editorial_entry["entry_ja"], "hazeのため街灯の点灯時間を延長した。")
+
+    def test_haze_normalization_does_not_rewrite_real_fog_or_unrelated_news(self) -> None:
+        entry = {"headline_ja": "濃霧が発生", "short_headline_ja": "濃霧", "entry_ja": "濃霧が発生した。"}
+        actual_fog = item()
+        actual_fog.update(title="Haze and fog affect roads", description="Fog reduced visibility.")
+        self.assertEqual(groq_renderer.preserve_haze_term(actual_fog, entry), entry)
+        self.assertEqual(groq_renderer.preserve_haze_term(item(), entry), entry)
+
+        jerebu = item()
+        jerebu.update(title="Jerebu affects Johor", description="Air quality remains unhealthy.")
+        self.assertEqual(groq_renderer.preserve_haze_term(jerebu, entry)["entry_ja"], "Jerebuが発生した。")
+
     def test_publication_time_reaches_prompt_and_markdown_without_changing_contract(self) -> None:
         article = item()
         article["published_at"] = "2026-09-27T15:43:00+08:00"

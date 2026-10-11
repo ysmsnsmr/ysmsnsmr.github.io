@@ -143,6 +143,22 @@ def editorial_entry_text(entry: dict[str, Any]) -> str:
     ).strip()
 
 
+def preserve_haze_term(item: dict[str, Any], entry: dict[str, Any]) -> dict[str, Any]:
+    """Keep source haze terminology when the model mistakes it for fog."""
+    source = money_source_text(item)
+    if re.search(r"\b(?:fog|mist|kabus)\b|霧", source, re.IGNORECASE):
+        return entry
+    term = re.search(r"\b(?:haze|jerebu)\b", source, re.IGNORECASE)
+    if not term:
+        return entry
+    normalized = entry.copy()
+    for field in ("headline_ja", "short_headline_ja", "entry_ja"):
+        value = normalized[field]
+        value = re.sub(r"\b(haze|jerebu)\s*[（(]\s*濃霧\s*[）)]", r"\1", value, flags=re.IGNORECASE)
+        normalized[field] = value.replace("濃霧", term.group())
+    return normalized
+
+
 def money_source_text(item: dict[str, Any]) -> str:
     parts = [clean_text(item.get("title")), clean_text(item.get("description"))]
     if item.get("body_excerpt_policy") == "use_body":
@@ -417,6 +433,9 @@ def request_groq_summary(
     except ValueError as error:
         raise GroqEditorialEntryContractError(str(error) or "contract validation failed", completion.diagnostic) from error
     try:
+        entry = preserve_haze_term(item, entry)
+        if not headline_is_valid(entry["headline_ja"]) or not short_headline_is_valid(entry["short_headline_ja"]):
+            raise ValueError("source haze term exceeds headline limit")
         validate_editorial_entry_against_source(item, entry)
     except ValueError as error:
         raise GroqEditorialEntryRejected(str(error) or "validation failed", completion.diagnostic) from error
@@ -451,6 +470,9 @@ def request_groq_repair_entry(
     except ValueError as error:
         raise GroqEditorialEntryContractError(str(error) or "repair contract validation failed", completion.diagnostic) from error
     try:
+        entry = preserve_haze_term(item, entry)
+        if not headline_is_valid(entry["headline_ja"]) or not short_headline_is_valid(entry["short_headline_ja"]):
+            raise ValueError("source haze term exceeds headline limit")
         validate_editorial_entry_against_source(item, entry)
     except ValueError as error:
         raise GroqEditorialEntryRejected(str(error) or "repair validation failed", completion.diagnostic) from error
