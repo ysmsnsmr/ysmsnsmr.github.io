@@ -1496,3 +1496,40 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Add clearly separated official-source links to the existing index and day page, and test their rendering.
 - Revisit when: Links are unused or overwhelm the news page.; A verified official machine-readable source and a real need justify a time-stamped local snapshot.
+
+<!-- idea-gate:20261012t190100-meta-ads-early-twice-weekly -->
+## Start the existing Tuesday and Friday collection at 00:17 Malaysia time
+
+- Record ID: `20261012t190100-meta-ads-early-twice-weekly`
+- Evaluated: 2026-10-12T19:01:00+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **TRY**
+- Score: 90/100
+- Confidence: medium - The previous delays are measured, but GitHub does not guarantee future schedule timing.
+
+### Idea Card
+
+- Purpose: Have the updated feed visible by 08:00 Malaysia time on Tuesday and Friday.
+- First experience: The first scheduled Tuesday and Friday runs publish their feed before 08:00 Malaysia time.
+- Scope and cost: Change one cron entry in the existing workflow; observe four scheduled runs over two weeks, with no additional runs or paid services.
+- Continuation boundary: Keep the schedule if the four runs publish by 08:00; reassess the trigger or publishing path if a run misses the target.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 14/15 |
+| `evidence_and_learning` | 13/15 |
+| `expected_outcome` | 13/15 |
+| `scope_and_fit` | 15/15 |
+| `ownership_and_reversibility` | 17/20 |
+| **Total** | **90/100** |
+- Trial limit: Four scheduled runs through 2026-10-23; no extra scheduled execution or spending.
+- Trial stop condition: After four runs, compare Pages deployment and live feed times with the 08:00 MYT goal.
+
+### Next Step
+
+- Action: Change the existing cron to 17 16 * * 1,4 and inspect the next four scheduled runs.
+- Revisit when: A run or its Pages deployment misses 08:00 MYT.; The earlier source snapshot proves too stale for readers.

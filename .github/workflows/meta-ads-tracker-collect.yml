@@ -2,7 +2,7 @@ name: Meta Ads Personal Feed twice-weekly collect
 
 on:
   schedule:
-    - cron: "15 0 * * 2,5"
+    - cron: "17 16 * * 1,4" # Tue/Fri 00:17 MYT (UTC+8)
   workflow_dispatch:
     inputs:
       reseed_source_id:

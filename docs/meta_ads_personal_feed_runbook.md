@@ -34,7 +34,7 @@ Ads Uploaderだけは追加ソースのアクセス拒否・HTML構造変更を�
 
 ## 通常運用
 
-`Meta Ads Personal Feed twice-weekly collect` は火曜・金曜の `00:15 UTC`（通常08:15 MYT）に実行されます。すべての直接ソースの取得・形式検査・解析・契約検証が成功した場合にだけ、次の順序で2ファイルを更新します。
+`Meta Ads Personal Feed twice-weekly collect` は月曜・木曜の `16:17 UTC`（火曜・金曜00:17 MYT）に起動するよう設定されています。GitHub Actionsの定期実行には遅延があり、サイトへの反映は収集とGitHub Pagesの公開処理が完了した後です。すべての直接ソースの取得・形式検査・解析・契約検証が成功した場合にだけ、次の順序で2ファイルを更新します。
 
 ```text
 安全な取得 → 形式検査・解析 → 鮮度判定 → 関連性判定

@@ -196,7 +196,7 @@ def main() -> int:
         if "meta_ads_personal_feed.py" not in collect_runs or "validate_meta_ads_personal_feed.py" not in collect_runs:
             fail("collect workflow must build and validate the Personal Feed")
         collect_schedule = parsed["collect"].get("on", {}).get("schedule", [])
-        if collect_schedule != [{"cron": "15 0 * * 2,5"}]:
+        if collect_schedule != [{"cron": "17 16 * * 1,4"}]:
             fail("Personal Feed collection must run only at the approved twice-weekly MYT schedule")
         if any(value in collect_runs for value in ("meta_ads_tracker_collect.py", "meta_ads_tracker_weekly", "meta_ads_tracker_decisions", "meta_ads_tracker_groq.py")):
             fail("Personal Feed collection must not depend on candidate, weekly, decision, or Groq stages")
