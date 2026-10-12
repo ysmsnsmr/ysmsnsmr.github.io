@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-10-10T00:01:03Z",
+  "generatedAt": "2026-10-12T23:02:27Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -81,6 +81,353 @@
   ],
   "items": [
     {
+      "id": "social-media-today-meta-ads-7ba2707808fc98d06dff",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta offers updated ad placement control guidance",
+      "url": "https://www.socialmediatoday.com/news/meta-offers-updated-ad-placement-control-guidance/832791/",
+      "publishedDate": "2026-10-12",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-12T23:02:27Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "7ba2707808fc98d06dff22ebb2df2bf2459c70a89098b80987acf874b3350c4c",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "a1ac12bc45c39ebeccb7fc88b5c204a1c3fe25234d2a4a0822a2f7faebe3b8e9",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "a1ac12bc45c39ebeccb7fc88b5c204a1c3fe25234d2a4a0822a2f7faebe3b8e9",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "a1ac12bc45c39ebeccb7fc88b5c204a1c3fe25234d2a4a0822a2f7faebe3b8e9",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、広告配置制御の新ガイダンスを提供 手動オプション削除へ",
+            "summary": "Metaは自動広告配信システムの更新に伴い、エンゲージメント・リード・アプリプロモーション・販売目的の広告で手動の配置オプションを削除した。認知・トラフィック目的は残るが、将来的にすべての広告で配置制御が失われる可能性がある。代替策として、マルチメディア広告で配置ごとに画像・動画や比率・テキストをカスタマイズできる機能、配置価値ルールによる入札調整、目的別のアカウントレベル除外設定、Advantage+ 配置とパートナーシップでの媒体選択・配置管理を提供した。",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-10-12T23:02:27Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、広告配置制御の新ガイダンスを提供 手動オプション削除へ",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-10-12T23:02:27Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは自動広告配信システムの更新に伴い、エンゲージメント・リード・アプリプロモーション・販売目的の広告で手動の配置オプションを削除した。認知・トラフィック目的は残るが、将来的にすべての広告で配置制御が失われる可能性がある。代替策として、マルチメディア広告で配置ごとに画像・動画や比率・テキストをカスタマイズできる機能、配置価値ルールによる入札調整、目的別のアカウントレベル除外設定、Advantage+ 配置とパートナーシップでの媒体選択・配置管理を提供した。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-10-12T23:02:27Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "jon-loomer-meta-ads-eead0251a70d1bb6b637",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Which CTA Button Should You Use?",
+      "url": "https://www.jonloomer.com/qvt/cta-button/",
+      "publishedDate": "2026-10-12",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-12T23:02:27Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "eead0251a70d1bb6b63799b2c81cc151f15289a3c338e4b9bb07a8200f990a72",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta reports “See details” yields up to 2.3% higher CVR than “Learn more”",
+            "summary": "Meta’s Ads Manager shows “See details” as the default CTA and states it can achieve up to 2.3% higher conversion rate compared with “Learn more”. The post notes no comparable data for other CTA options such as “Shop Now” or “Sign Up”. Source: Jon Loomer Digital.",
+            "inputHash": "2878105f0b82d732795a49e6f8de15b36ac5ec8c90d5552ce6b6298efbd8c84d",
+            "generatedAt": "2026-10-12T23:02:27Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta reports “See details” yields up to 2.3% higher CVR than “Learn more”",
+                "inputHash": "2878105f0b82d732795a49e6f8de15b36ac5ec8c90d5552ce6b6298efbd8c84d",
+                "generatedAt": "2026-10-12T23:02:27Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta’s Ads Manager shows “See details” as the default CTA and states it can achieve up to 2.3% higher conversion rate compared with “Learn more”. The post notes no comparable data for other CTA options such as “Shop Now” or “Sign Up”. Source: Jon Loomer Digital.",
+                "inputHash": "2878105f0b82d732795a49e6f8de15b36ac5ec8c90d5552ce6b6298efbd8c84d",
+                "generatedAt": "2026-10-12T23:02:27Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "どのCTAボタンを使うべきか",
+            "summary": "Metaは広告作成時に「See details」をデフォルトのCTAとして表示し、これが「Learn more」より最大2.3%高いコンバージョン率を示すとしています。差は小さいとされ、予算に余裕がある場合を除きCTAボタンのA/Bテストは必須ではないとの見解です。Metaは他のCTA（「Shop Now」や「Sign Up」等）についてのデータを公開していません。",
+            "inputHash": "3f9280e3c7dbcd922d042f2579e357ecac4a5d5bd1518fc25add2d2fef6dae6d",
+            "generatedAt": "2026-10-12T23:02:27Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "どのCTAボタンを使うべきか",
+                "inputHash": "3f9280e3c7dbcd922d042f2579e357ecac4a5d5bd1518fc25add2d2fef6dae6d",
+                "generatedAt": "2026-10-12T23:02:27Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは広告作成時に「See details」をデフォルトのCTAとして表示し、これが「Learn more」より最大2.3%高いコンバージョン率を示すとしています。差は小さいとされ、予算に余裕がある場合を除きCTAボタンのA/Bテストは必須ではないとの見解です。Metaは他のCTA（「Shop Now」や「Sign Up」等）についてのデータを公開していません。",
+                "inputHash": "3f9280e3c7dbcd922d042f2579e357ecac4a5d5bd1518fc25add2d2fef6dae6d",
+                "generatedAt": "2026-10-12T23:02:27Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-c6e4ce6fc637053911a6",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta removes access verification for developers",
+      "url": "https://www.socialmediatoday.com/news/meta-removes-access-verification-for-developers/832678/",
+      "publishedDate": "2026-10-11",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-12T23:02:27Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "c6e4ce6fc637053911a64e3eb025da08b072675e85321fe872af5bec24e65cd2",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "3a41ece6e8dab7e5fcece94915b3584d4aca02c3878a52e3ecda613ebff58d7b",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "3a41ece6e8dab7e5fcece94915b3584d4aca02c3878a52e3ecda613ebff58d7b",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "3a41ece6e8dab7e5fcece94915b3584d4aca02c3878a52e3ecda613ebff58d7b",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、開発者向けデータアクセスの認証要件を廃止",
+            "summary": "Metaは先週末にビジネス利用規則を更新し、クライアントのビジネスデータにアクセスする開発者に対するアクセス認証要件を撤廃した。これにより、開発者は別途ビジネス情報を提出したり、認証結果を待つ必要がなくなり、すぐにアプリを公開できる。Metaは、ビジネス認証とアプリ審査が成熟し、より高度なシグナルを用いていることを根拠としている。",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-10-12T23:02:27Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、開発者向けデータアクセスの認証要件を廃止",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-10-12T23:02:27Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは先週末にビジネス利用規則を更新し、クライアントのビジネスデータにアクセスする開発者に対するアクセス認証要件を撤廃した。これにより、開発者は別途ビジネス情報を提出したり、認証結果を待つ必要がなくなり、すぐにアプリを公開できる。Metaは、ビジネス認証とアプリ審査が成熟し、より高度なシグナルを用いていることを根拠としている。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-10-12T23:02:27Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-7b2d5018d4e41e838f50",
+      "sourceId": "adsuploader-blog",
+      "title": "Facebook Ads for Chiropractors: Offers, Compliance, and Show Rates",
+      "url": "https://adsuploader.com/blog/facebook-ads-for-chiropractors",
+      "publishedDate": "2026-10-11",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-12T23:02:27Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "7b2d5018d4e41e838f501f7b78cfa2375a1fa50a619be657754f22f4fccf4fca",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Facebook Ads for Chiropractors: Offers, Compliance, and Show Rates",
+            "summary": "The feed explains how chiropractic clinics run Facebook ads that get approved and fill their schedules by using compliant copy, offer economics, HIPAA‑safe tracking, and a show‑rate system.",
+            "inputHash": "c0c10149c64ede0d77e239a239b3c682d566c76af188ec15858d26fe446b2615",
+            "generatedAt": "2026-10-12T23:02:27Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook Ads for Chiropractors: Offers, Compliance, and Show Rates",
+                "inputHash": "c0c10149c64ede0d77e239a239b3c682d566c76af188ec15858d26fe446b2615",
+                "generatedAt": "2026-10-12T23:02:27Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The feed explains how chiropractic clinics run Facebook ads that get approved and fill their schedules by using compliant copy, offer economics, HIPAA‑safe tracking, and a show‑rate system.",
+                "inputHash": "c0c10149c64ede0d77e239a239b3c682d566c76af188ec15858d26fe446b2615",
+                "generatedAt": "2026-10-12T23:02:27Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "カイロプラクティック向けFacebook広告：オファー・コンプライアンス・来院率",
+            "summary": "カイロプラクティック診療所が、承認されスケジュールを埋めるために実施しているFacebook広告の手法を紹介します。法令やHIPAAに準拠したコピー作成、オファーの経済性、プライバシーに配慮したトラッキング、そして来院率を高めるショー率システムについて説明しています。",
+            "inputHash": "b88e7e12a371a0181bce87e5c7b1856a8070f9a48a0e8ed2f3a91f4abf88a3b3",
+            "generatedAt": "2026-10-12T23:02:27Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "カイロプラクティック向けFacebook広告：オファー・コンプライアンス・来院率",
+                "inputHash": "b88e7e12a371a0181bce87e5c7b1856a8070f9a48a0e8ed2f3a91f4abf88a3b3",
+                "generatedAt": "2026-10-12T23:02:27Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "カイロプラクティック診療所が、承認されスケジュールを埋めるために実施しているFacebook広告の手法を紹介します。法令やHIPAAに準拠したコピー作成、オファーの経済性、プライバシーに配慮したトラッキング、そして来院率を高めるショー率システムについて説明しています。",
+                "inputHash": "b88e7e12a371a0181bce87e5c7b1856a8070f9a48a0e8ed2f3a91f4abf88a3b3",
+                "generatedAt": "2026-10-12T23:02:27Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "meta-developer-blog-discovered-b0401be977f82a8365a3",
+      "sourceId": "meta-developer-blog-discovered",
+      "title": "Retiring Access Verification for Tech Provider Apps",
+      "url": "https://developers.facebook.com/blog/post/2026/10/09/retiring-access-verification-for-tech-provider-apps/",
+      "publishedDate": "2026-10-09",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-12T23:02:27Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "discovered-via:social-media-today-meta-ads"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "b0401be977f82a8365a32b229f8afecae225c55167d06d01a350f6c38a7906b8",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Access verification retiring for tech provider apps",
+            "summary": "Facebook for Developers is retiring the access verification process for technology provider applications.",
+            "inputHash": "b8bc34bb23d98ce65c7abd1b5d7ae5fdbfc12788ee8cbee8730227501d85a995",
+            "generatedAt": "2026-10-12T23:02:27Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Access verification retiring for tech provider apps",
+                "inputHash": "b8bc34bb23d98ce65c7abd1b5d7ae5fdbfc12788ee8cbee8730227501d85a995",
+                "generatedAt": "2026-10-12T23:02:27Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebook for Developers is retiring the access verification process for technology provider applications.",
+                "inputHash": "b8bc34bb23d98ce65c7abd1b5d7ae5fdbfc12788ee8cbee8730227501d85a995",
+                "generatedAt": "2026-10-12T23:02:27Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "テックプロバイダーアプリのアクセス検証を廃止",
+            "summary": "Facebook for Developersは、テックプロバイダー向けアプリのアクセス検証機能を段階的に廃止することを発表しました。対象アプリは今後この検証を受ける必要がなくなり、既存の設定や手順は変更されます。詳細なスケジュールや影響範囲は公式ドキュメントをご参照ください。",
+            "inputHash": "ef3bf24d85ad2b42a8345f18bb25f52c50bd3e9467c301683d2d00e069be5664",
+            "generatedAt": "2026-10-12T23:02:27Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "テックプロバイダーアプリのアクセス検証を廃止",
+                "inputHash": "ef3bf24d85ad2b42a8345f18bb25f52c50bd3e9467c301683d2d00e069be5664",
+                "generatedAt": "2026-10-12T23:02:27Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebook for Developersは、テックプロバイダー向けアプリのアクセス検証機能を段階的に廃止することを発表しました。対象アプリは今後この検証を受ける必要がなくなり、既存の設定や手順は変更されます。詳細なスケジュールや影響範囲は公式ドキュメントをご参照ください。",
+                "inputHash": "ef3bf24d85ad2b42a8345f18bb25f52c50bd3e9467c301683d2d00e069be5664",
+                "generatedAt": "2026-10-12T23:02:27Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "adsuploader-blog-ca9230e43ba0221eef6e",
       "sourceId": "adsuploader-blog",
       "title": "Facebook Ads Copywriting: A 2026 Operator's Guide",
@@ -88,7 +435,7 @@
       "publishedDate": "2026-10-09",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -157,7 +504,7 @@
       "publishedDate": "2026-10-07",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -226,7 +573,7 @@
       "publishedDate": "2026-10-06",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -295,7 +642,7 @@
       "publishedDate": "2026-10-06",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -330,25 +677,25 @@
             }
           },
           "ja": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Meta、Advertising WeekでAI広告ツール群を拡充",
+            "summary": "Metaはニューヨークで開催されたAdvertising Weekで、AI搭載のビジネスアシスタントの記憶量・文脈理解を強化し、クリエイティブインサイトやブランドガイドラインのインポート機能、ターゲティングや予算変更を会話で指示できるエージェント機能、定期レポートのスケジュールタスクを追加したと発表した。また、Ads Creative Studioをより多くの広告主に提供し、第三者AIツール向けのMeta Ads MCPサーバーを拡張、Customer Lifecycle Strategyを全広告主に公開した。さらに、静止画から動画を生成する機能やカタログからの動画生成、関連商品レコメンドを導入し、Shopifyや決済パートナーと連携したMessenger上での直接購入体験のテストも開始した。",
             "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": null,
+            "generatedAt": "2026-10-12T23:02:27Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Meta、Advertising WeekでAI広告ツール群を拡充",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-10-12T23:02:27Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Metaはニューヨークで開催されたAdvertising Weekで、AI搭載のビジネスアシスタントの記憶量・文脈理解を強化し、クリエイティブインサイトやブランドガイドラインのインポート機能、ターゲティングや予算変更を会話で指示できるエージェント機能、定期レポートのスケジュールタスクを追加したと発表した。また、Ads Creative Studioをより多くの広告主に提供し、第三者AIツール向けのMeta Ads MCPサーバーを拡張、Customer Lifecycle Strategyを全広告主に公開した。さらに、静止画から動画を生成する機能やカタログからの動画生成、関連商品レコメンドを導入し、Shopifyや決済パートナーと連携したMessenger上での直接購入体験のテストも開始した。",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": null,
+                "generatedAt": "2026-10-12T23:02:27Z",
                 "reviewedAt": null
               }
             }
@@ -364,7 +711,7 @@
       "publishedDate": "2026-10-06",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -435,7 +782,7 @@
       "publishedDate": "2026-10-06",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -504,7 +851,7 @@
       "publishedDate": "2026-10-05",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -515,49 +862,49 @@
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
+            "status": "machine",
+            "shortHeadline": "Standard events usually preferred over custom conversions for optimization",
+            "summary": "Meta’s “maximize number of conversions” goal requires picking a conversion event—standard, custom event, or custom conversion. Custom conversions can target specific products but may limit volume and",
             "inputHash": "1c4d7b99e0c81daaaa525970b530d6c72b7f23eff89b6c1dfcf54612f7746232",
-            "generatedAt": null,
+            "generatedAt": "2026-10-12T23:02:27Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Standard events usually preferred over custom conversions for optimization",
                 "inputHash": "1c4d7b99e0c81daaaa525970b530d6c72b7f23eff89b6c1dfcf54612f7746232",
-                "generatedAt": null,
+                "generatedAt": "2026-10-12T23:02:27Z",
                 "reviewedAt": null
               },
               "summary": {
-                "status": "missing",
-                "value": null,
+                "status": "machine",
+                "value": "Meta’s “maximize number of conversions” goal requires picking a conversion event—standard, custom event, or custom conversion. Custom conversions can target specific products but may limit volume and",
                 "inputHash": "1c4d7b99e0c81daaaa525970b530d6c72b7f23eff89b6c1dfcf54612f7746232",
-                "generatedAt": null,
+                "generatedAt": "2026-10-12T23:02:27Z",
                 "reviewedAt": null
               }
             }
           },
           "ja": {
             "status": "machine",
-            "shortHeadline": "カスタムコンバージョン最適化は標準イベントを優先すべきか",
-            "summary": "“コンバージョン数最大化”を選択する際は、標準イベント（例：Purchase）かカスタムイベント・カスタムコンバージョンを選べるが、ほとんどの場合は標準イベントの使用が推奨される。カスタムコンバージョンはコード不要で条件設定できるが、ボリュームが減少し学習が遅れる可能性がある。結果のインフレは報告の解釈次第であり、実際の売上は大部分が対象商品になる。カスタムコンバージョンは十分な数が確保でき、特定課題がある場合に限定して利用し、標準イベントで最適化しつつレポートにカスタムコンバージョン列を追加して確認するのが実務的です。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-10-09T06:14:01Z",
+            "shortHeadline": "カスタムコンバージョン最適化は標準イベント使用が基本",
+            "summary": "“コンバージョン数最大化”目標で広告を設定する際は、標準イベント（例：Purchase）かカスタムイベント・カスタムコンバージョンのいずれかを選択する。カスタムコンバージョンは特定商品や金額条件で絞り込めるが、コンバージョン数が減少し配信最適化が困難になるため、ほとんどの場合は標準イベントで最適化し、レポートにカスタムコンバージョン列を追加して成果を把握することが推奨される。カスタムコンバージョンを使うのは、十分なボリュームが確保でき、利益率の低い商品への配信過多など明確な課題がある場合に限られる。",
+            "inputHash": "287923c9dc79cb68d8e1904f8af8a94adaf8825df48d6214f089ae06b5e0305b",
+            "generatedAt": "2026-10-12T23:02:27Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
-                "value": "カスタムコンバージョン最適化は標準イベントを優先すべきか",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-10-09T06:14:01Z",
+                "value": "カスタムコンバージョン最適化は標準イベント使用が基本",
+                "inputHash": "287923c9dc79cb68d8e1904f8af8a94adaf8825df48d6214f089ae06b5e0305b",
+                "generatedAt": "2026-10-12T23:02:27Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
-                "value": "“コンバージョン数最大化”を選択する際は、標準イベント（例：Purchase）かカスタムイベント・カスタムコンバージョンを選べるが、ほとんどの場合は標準イベントの使用が推奨される。カスタムコンバージョンはコード不要で条件設定できるが、ボリュームが減少し学習が遅れる可能性がある。結果のインフレは報告の解釈次第であり、実際の売上は大部分が対象商品になる。カスタムコンバージョンは十分な数が確保でき、特定課題がある場合に限定して利用し、標準イベントで最適化しつつレポートにカスタムコンバージョン列を追加して確認するのが実務的です。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-10-09T06:14:01Z",
+                "value": "“コンバージョン数最大化”目標で広告を設定する際は、標準イベント（例：Purchase）かカスタムイベント・カスタムコンバージョンのいずれかを選択する。カスタムコンバージョンは特定商品や金額条件で絞り込めるが、コンバージョン数が減少し配信最適化が困難になるため、ほとんどの場合は標準イベントで最適化し、レポートにカスタムコンバージョン列を追加して成果を把握することが推奨される。カスタムコンバージョンを使うのは、十分なボリュームが確保でき、利益率の低い商品への配信過多など明確な課題がある場合に限られる。",
+                "inputHash": "287923c9dc79cb68d8e1904f8af8a94adaf8825df48d6214f089ae06b5e0305b",
+                "generatedAt": "2026-10-12T23:02:27Z",
                 "reviewedAt": null
               }
             }
@@ -573,7 +920,7 @@
       "publishedDate": "2026-10-05",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -642,7 +989,7 @@
       "publishedDate": "2026-10-03",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -711,7 +1058,7 @@
       "publishedDate": "2026-10-01",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -780,7 +1127,7 @@
       "publishedDate": "2026-09-30",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -849,7 +1196,7 @@
       "publishedDate": "2026-09-30",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -918,7 +1265,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -987,7 +1334,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -1056,7 +1403,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1125,7 +1472,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1194,7 +1541,7 @@
       "publishedDate": "2026-09-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T05:47:38Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1263,7 +1610,7 @@
       "publishedDate": "2026-09-27",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T05:47:38Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1332,7 +1679,7 @@
       "publishedDate": "2026-09-27",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1401,7 +1748,7 @@
       "publishedDate": "2026-09-25",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1470,7 +1817,7 @@
       "publishedDate": "2026-09-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1539,7 +1886,7 @@
       "publishedDate": "2026-09-22",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1608,7 +1955,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": "2026-09-21",
       "firstObservedAt": "2026-09-22T05:01:36Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -1678,7 +2025,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1885,7 +2232,7 @@
       "publishedDate": "2026-09-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-18T11:07:09Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1954,7 +2301,7 @@
       "publishedDate": "2026-09-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2092,7 +2439,7 @@
       "publishedDate": "2026-09-16",
       "updatedDate": null,
       "firstObservedAt": "2026-09-17T04:55:10Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -2161,7 +2508,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2230,7 +2577,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2299,7 +2646,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -2368,7 +2715,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2644,7 +2991,7 @@
       "publishedDate": "2026-09-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-11T04:43:19Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2713,7 +3060,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T04:45:10Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2782,7 +3129,7 @@
       "publishedDate": "2026-09-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2851,7 +3198,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2920,7 +3267,7 @@
       "publishedDate": "2026-08-31",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3058,7 +3405,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": "2026-08-25",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -3128,7 +3475,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3266,7 +3613,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3476,7 +3823,7 @@
       "publishedDate": "2026-08-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3617,7 +3964,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3686,7 +4033,7 @@
       "publishedDate": "2026-08-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3755,7 +4102,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3824,7 +4171,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3893,7 +4240,7 @@
       "publishedDate": "2026-08-06",
       "updatedDate": "2026-08-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -3963,7 +4310,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4101,7 +4448,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4170,7 +4517,7 @@
       "publishedDate": "2026-07-20",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4239,7 +4586,7 @@
       "publishedDate": "2026-07-17",
       "updatedDate": "2026-07-17",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -4309,7 +4656,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4378,7 +4725,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4447,7 +4794,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4516,7 +4863,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4587,7 +4934,7 @@
       "publishedDate": "2026-06-08",
       "updatedDate": "2026-07-06",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -4657,7 +5004,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4726,7 +5073,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4795,7 +5142,7 @@
       "publishedDate": "2026-06-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4864,7 +5211,7 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4933,7 +5280,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5004,7 +5351,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5075,7 +5422,7 @@
       "publishedDate": "2026-06-23",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5144,7 +5491,7 @@
       "publishedDate": "2026-06-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5213,7 +5560,7 @@
       "publishedDate": "2026-06-18",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5282,7 +5629,7 @@
       "publishedDate": "2026-06-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5351,7 +5698,7 @@
       "publishedDate": "2026-06-14",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5420,7 +5767,7 @@
       "publishedDate": "2026-06-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5489,7 +5836,7 @@
       "publishedDate": "2026-06-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5558,7 +5905,7 @@
       "publishedDate": "2026-06-04",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5627,7 +5974,7 @@
       "publishedDate": "2026-06-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5696,7 +6043,7 @@
       "publishedDate": "2026-05-31",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6121,7 +6468,7 @@
       "publishedDate": "2026-03-30",
       "updatedDate": "2026-03-30",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -6191,7 +6538,7 @@
       "publishedDate": "2026-03-10",
       "updatedDate": "2026-03-10",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -6261,7 +6608,7 @@
       "publishedDate": "2025-11-21",
       "updatedDate": "2025-11-21",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -6331,7 +6678,7 @@
       "publishedDate": "2025-10-24",
       "updatedDate": "2025-10-24",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
@@ -6401,7 +6748,7 @@
       "publishedDate": "2025-10-14",
       "updatedDate": "2025-10-14",
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
+      "lastObservedAt": "2026-10-12T23:02:27Z",
       "platformIds": [
         "meta-business-sdk",
         "marketing-api"
