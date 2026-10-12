@@ -1457,3 +1457,42 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Add one strictly validated Developer Blog discovered source from the two existing RSS origins, run tests and CI, then observe the first production artifact.
 - Revisit when: Official-page fetches or publication dates repeatedly fail in GitHub Actions.; A page is promoted without reliable article identity or an independently verified announcement date.; The added candidates create disproportionate Jev or presentation work.
+
+<!-- idea-gate:20261012t183524-malaysia-air-quality-role-split -->
+## Separate official air-quality observations and forecasts from ordinary haze-impact news
+
+- Record ID: `20261012t183524-malaysia-air-quality-role-split`
+- Evaluated: 2026-10-12T18:35:24+08:00
+- Project: ysmsnsmr.github.io / Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 83/100
+- Confidence: medium - The need and official sources are clear; usefulness of a link-only entry point is not yet observed.
+
+### Idea Card
+
+- Purpose: Let the owner quickly check Klang Valley air quality without building a fragile haze-specific news summary system.
+- First experience: A compact route to official observations and forecasts, clearly labelled as different information types.
+- Scope and cost: Two static official links in existing pages; no API ingestion, new model calls, data retention, or recurring review.
+- Continuation boundary: Observe the published page for several days; retain only if the links are useful and unambiguous, otherwise remove them.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 13/15 |
+| `evidence_and_learning` | 12/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 14/20 |
+| **Total** | **83/100** |
+
+### Alternatives
+
+- **SHRINK - Official links first:** Link to observations and forecasts without reproducing dynamic values or maintaining a seasonal data collector.
+
+### Next Step
+
+- Action: Add clearly separated official-source links to the existing index and day page, and test their rendering.
+- Revisit when: Links are unused or overwhelm the news page.; A verified official machine-readable source and a real need justify a time-stamped local snapshot.

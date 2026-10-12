@@ -3,6 +3,7 @@ from __future__ import annotations
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 import build_malaysia_news_index as builder
 
@@ -172,6 +173,30 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertEqual(page.count('class="focus-dek"'), 2)
         self.assertIn("-webkit-line-clamp: 1", page)
 
+    def test_air_quality_observations_and_forecasts_are_separate_from_news(self) -> None:
+        day = self.parse_sample()
+        for page in (builder.render_html([day]), builder.render_daily_page(day, show_current_air_quality=True)):
+            self.assertEqual(page.count('id="air-quality-heading"'), 1)
+            self.assertIn(f'href="{builder.APIMS_URL}"', page)
+            self.assertIn(f'href="{builder.MYCMAQ_URL}"', page)
+            self.assertIn("APIMSの観測値を見る", page)
+            self.assertIn("MyCMAQの予報を見る", page)
+            self.assertIn("観測値と予報は別の情報です", page)
+            self.assertNotIn("今日のヘイズ予報", page)
+        self.assertEqual(len(day.items), 2)
+        self.assertNotIn('id="air-quality-heading"', builder.render_daily_page(day))
+
+    def test_air_quality_links_appear_only_on_latest_day(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            news_dir = Path(directory)
+            for date in ("2026-10-11", "2026-10-12"):
+                (news_dir / f"{date}.md").write_text(DISPLAY_CATEGORY_MARKDOWN, encoding="utf-8")
+            with patch.object(builder, "NEWS_DIR", news_dir), patch.object(builder, "OUTPUT_PATH", news_dir / "index.html"):
+                self.assertEqual(builder.main(), 0)
+            self.assertIn('id="air-quality-heading"', (news_dir / "index.html").read_text(encoding="utf-8"))
+            self.assertIn('id="air-quality-heading"', (news_dir / "2026-10-12.html").read_text(encoding="utf-8"))
+            self.assertNotIn('id="air-quality-heading"', (news_dir / "2026-10-11.html").read_text(encoding="utf-8"))
+
     def test_daily_page_has_short_headline_and_summary_body(self) -> None:
         page = builder.render_daily_page(self.parse_sample())
 
@@ -255,7 +280,7 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertEqual(builder.display_short_headline(first), first.short_headline)
         card = builder.render_item_card(first)
         self.assertIn(first.headline, card)
-        self.assertNotIn(first.conclusion, card)
+        self.assertIn(first.conclusion, card)
         self.assertNotIn(first.source, card)
         self.assertNotIn(first.source_url, card)
         self.assertNotIn("item-category", card)

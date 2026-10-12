@@ -21,6 +21,8 @@ CATEGORIES = DISPLAY_CATEGORIES
 SOURCE_ONLY_HEADER = "【原文のみ】"
 LEGACY_PICKUP_HEADLINE_MAX_WIDTH = 15.5
 RECENT_HEADLINE_LIMIT = 3
+APIMS_URL = "https://eqms.doe.gov.my/apims/main"
+MYCMAQ_URL = "https://mycmaq.met.gov.my/"
 
 
 @dataclass
@@ -384,6 +386,21 @@ def render_status_chips(day: NewsDay, generated: str) -> str:
     """
 
 
+def render_air_quality_links() -> str:
+    return f"""
+    <section class="air-quality-links" aria-labelledby="air-quality-heading">
+      <div>
+        <h2 id="air-quality-heading">大気情報（公式）</h2>
+        <p>クランバレー周辺の状況は、各ページで地域・更新時刻を確認してください。観測値と予報は別の情報です。</p>
+      </div>
+      <div class="air-quality-actions">
+        <a href="{esc(APIMS_URL)}">APIMSの観測値を見る</a>
+        <a href="{esc(MYCMAQ_URL)}">MyCMAQの予報を見る</a>
+      </div>
+    </section>
+    """
+
+
 def render_item_card(item: NewsItem) -> str:
     headline = display_full_headline(item)
     dek = f'<p class="focus-dek">{esc(item.conclusion)}</p>' if item.conclusion else ""
@@ -586,7 +603,7 @@ def render_source_only_section(day: NewsDay) -> str:
             '''
 
 
-def render_daily_page(day: NewsDay) -> str:
+def render_daily_page(day: NewsDay, *, show_current_air_quality: bool = False) -> str:
     return f"""<!doctype html>
 <html lang="ja">
 <head>
@@ -621,6 +638,10 @@ def render_daily_page(day: NewsDay) -> str:
     .count-pill strong {{ color: var(--accent-strong); }}
     .category-nav {{ display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }}
     .category-nav a {{ border: 1px solid var(--line); border-radius: var(--radius-pill); background: var(--panel); padding: 6px 11px; color: var(--accent-strong); font-size: .9rem; font-weight: 700; text-decoration: none; }}
+    .air-quality-links {{ display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 24px; border-block: 1px solid var(--line); padding: 14px 0; }}
+    .air-quality-links h2 {{ font-size: 1rem; }}
+    .air-quality-links p {{ margin: 3px 0 0; color: var(--muted); font-size: .84rem; }}
+    .air-quality-actions {{ display: flex; flex-wrap: wrap; gap: 8px 16px; flex: 0 0 auto; font-size: .88rem; }}
     .daily-category + .daily-category {{ margin-top: 32px; }}
     .daily-category-head {{ display: flex; justify-content: space-between; gap: 12px; align-items: baseline; border-bottom: 2px solid var(--accent-soft); padding-bottom: 9px; }}
     .daily-category-head span {{ color: var(--muted); font-size: .9rem; }}
@@ -643,6 +664,8 @@ def render_daily_page(day: NewsDay) -> str:
       main {{ width: min(100% - 20px, 880px); padding-top: 20px; }}
       .page-nav {{ align-items: flex-start; flex-direction: column; gap: 6px; margin-bottom: 24px; }}
       .daily-item {{ padding: 15px; }}
+      .air-quality-links {{ align-items: flex-start; flex-direction: column; }}
+      .air-quality-actions {{ flex: 1 1 auto; }}
     }}
   </style>
 </head>
@@ -660,6 +683,7 @@ def render_daily_page(day: NewsDay) -> str:
         {render_counts(day)}
       </div>
     </header>
+    {render_air_quality_links() if show_current_air_quality else ''}
     <nav class="category-nav" aria-label="カテゴリへ移動">
       {''.join(f'<a href="#category-{index + 1}">{esc(category_label(category))} {day.category_counts.get(category, 0)}件</a>' for index, category in enumerate(CATEGORIES))}
     </nav>
@@ -940,6 +964,10 @@ def render_html(days: list[NewsDay]) -> str:
       white-space: nowrap;
     }}
     .status-strip .markdown-link {{ margin-left: auto; }}
+    .air-quality-links {{ display: flex; justify-content: space-between; gap: 16px; align-items: center; border-block: 1px solid var(--line); padding: 14px 0; }}
+    .air-quality-links h2 {{ margin: 0; font-size: 1rem; }}
+    .air-quality-links p {{ margin: 3px 0 0; color: var(--muted); font-size: .84rem; }}
+    .air-quality-actions {{ display: flex; flex-wrap: wrap; gap: 8px 16px; flex: 0 0 auto; font-size: .88rem; }}
     .counts {{
       display: flex;
       flex-wrap: wrap;
@@ -1020,6 +1048,8 @@ def render_html(days: list[NewsDay]) -> str:
         display: grid;
         gap: 2px;
       }}
+      .air-quality-links {{ align-items: flex-start; flex-direction: column; }}
+      .air-quality-actions {{ flex: 1 1 auto; }}
       .recent-list {{
         display: grid;
         margin: 0;
@@ -1059,6 +1089,8 @@ def render_html(days: list[NewsDay]) -> str:
       {latest_summary}
     </section>
 
+    {render_air_quality_links()}
+
     <section aria-labelledby="recent-heading">
       <div class="section-head">
         <h2 id="recent-heading">直近7日のまとめ</h2>
@@ -1094,7 +1126,7 @@ def main() -> int:
     for day in days:
         daily_output = NEWS_DIR / f"{day.date}.html"
         daily_rendered = "\n".join(
-            line.rstrip() for line in render_daily_page(day).splitlines()
+            line.rstrip() for line in render_daily_page(day, show_current_air_quality=day is days[0]).splitlines()
         ) + "\n"
         daily_output.write_text(daily_rendered, encoding="utf-8")
     print(f"Wrote index: {OUTPUT_PATH}")
