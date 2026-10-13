@@ -21,7 +21,7 @@ from typing import Any, Callable
 
 from jev_shadow_transport import JevRequestError, post_jev_request
 from malaysia_event_match_observation import observe as observe_event_coverage
-from malaysia_event_match_observation import observe_haze_coverage
+from malaysia_event_match_observation import _is_haze_status
 from malaysia_jev_selector_shadow import (
     QUESTION_SET_VERSION,
     REQUESTED_MODEL_ID,
@@ -193,7 +193,6 @@ def route_candidates(
     event_api_key: str | None = None,
     event_model: str = "gpt-oss-120b",
     event_observer: Callable[..., dict[str, Any]] = observe_event_coverage,
-    haze_observer: Callable[..., dict[str, Any]] = observe_haze_coverage,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     """Return a routed payload or the untouched selector baseline.
 
@@ -258,7 +257,7 @@ def route_candidates(
     }
 
     coverage = {"status": "disabled", "productionEffect": False, "coverageDecisions": [], "cohort": []}
-    haze_coverage = {"status": "disabled", "productionEffect": False, "coverageDecisions": [], "cohort": []}
+    haze_coverage = {"status": "disabled", "productionEffect": False, "suppressedCount": 0}
     if event_enabled:
         try:
             coverage = event_observer(
@@ -267,13 +266,6 @@ def route_candidates(
             )
         except Exception:
             coverage = {"status": "request_failed", "productionEffect": False, "coverageDecisions": [], "cohort": []}
-        try:
-            haze_coverage = haze_observer(
-                candidate_pool, {"status": "applied", "results": report["results"]},
-                api_key=event_api_key, model_name=event_model,
-            )
-        except Exception:
-            haze_coverage = {"status": "request_failed", "productionEffect": False, "coverageDecisions": [], "cohort": []}
     report["eventCoverage"] = coverage
     report["hazeCoverage"] = haze_coverage
     cohort_ranks = {row["id"]: row["candidateRank"] for row in coverage.get("cohort", [])}
@@ -283,24 +275,18 @@ def route_candidates(
         if coverage.get("status") == "completed"
         and row["omit"] in cohort_ranks and row["keep"] in cohort_ranks
     }
-    haze_cohort_ranks = {row["id"]: row["candidateRank"] for row in haze_coverage.get("cohort", [])}
-    # Even if the focused call fails, a generic event match must not decide
-    # whether a Klang Valley haze follow-up is redundant.
-    for rank in haze_cohort_ranks.values():
-        covered_by.pop(rank, None)
-    if haze_coverage.get("status") == "completed":
-        for row in haze_coverage.get("coverageDecisions", []):
-            if row["omit"] in haze_cohort_ranks and row["keep"] in haze_cohort_ranks:
-                covered_by[haze_cohort_ranks[row["omit"]]] = haze_cohort_ranks[row["keep"]]
-    # Two independent observers can otherwise form a chain with an unselected representative.
+    haze_ranks = {
+        rank for rank, item, answer in classified
+        if answer["choice"] in CHOICE_ORDER and _is_haze_status(item)
+    }
+    # General event matching lacks the area/time detail needed to omit haze updates.
+    covered_by = {
+        omit: keep for omit, keep in covered_by.items()
+        if omit not in haze_ranks and keep not in haze_ranks
+    }
     covered_by = {
         omit: keep for omit, keep in covered_by.items()
         if keep not in covered_by and choice_priority.get(keep, len(CHOICE_ORDER)) <= choice_priority.get(omit, -1)
-    }
-    haze_omitted_ranks = {
-        haze_cohort_ranks[row["omit"]]
-        for row in haze_coverage.get("coverageDecisions", [])
-        if haze_coverage.get("status") == "completed" and row["omit"] in haze_cohort_ranks
     }
 
     selected: list[dict[str, Any]] = []
@@ -339,7 +325,7 @@ def route_candidates(
         representative_rank = covered_by.get(rank)
         if representative_rank in selected_ranks:
             result["publicationDecision"] = "excluded_covered_event"
-            result["coverageSource"] = "haze_daily" if rank in haze_omitted_ranks else "general_event"
+            result["coverageSource"] = "general_event"
             result["coveredByCandidateRank"] = representative_rank
             result["coveredByFingerprint"] = report["results"][representative_rank - 1]["itemFingerprint"]
             continue
@@ -371,10 +357,6 @@ def route_candidates(
     coverage["suppressedCount"] = sum(
         result.get("coverageSource") == "general_event" for result in report["results"]
     )
-    haze_coverage["suppressedCount"] = sum(
-        result.get("coverageSource") == "haze_daily" for result in report["results"]
-    )
-    haze_coverage["productionEffect"] = haze_coverage["suppressedCount"] > 0
     routing = {
         "status": "applied",
         "applied": True,

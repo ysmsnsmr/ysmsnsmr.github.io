@@ -241,6 +241,32 @@ class EventMatchObservationTests(unittest.TestCase):
         self.assertNotIn("fixture-key", str(result))
         self.assertNotIn("https://example.test", str(result))
 
+    def test_generic_call_skips_haze_but_keeps_other_candidates(self) -> None:
+        reports = [candidate(index) for index in range(1, 5)]
+        reports[0].update(title="Haze API in Johor", description="Johor IPU unhealthy")
+        reports[2].update(title="Jerebu now affects Cheras", description="Cheras air quality status")
+        calls = []
+
+        def request(**kwargs):
+            calls.append(kwargs)
+            return SimpleNamespace(parsed={"omissions": []}, diagnostic={})
+
+        result = observe(
+            {"items": reports}, routing(["direct_life_impact"] * 4),
+            api_key="fixture-key", model_name="gpt-oss-120b", request=request,
+        )
+        self.assertEqual([row["candidateRank"] for row in result["cohort"]], [2, 4])
+        self.assertEqual(len(calls), 1)
+        self.assertNotIn("Haze API", calls[0]["messages"][0]["content"])
+        self.assertNotIn("Jerebu", calls[0]["messages"][0]["content"])
+
+        result = observe(
+            {"items": [reports[0], reports[2]]}, routing(["direct_life_impact"] * 2),
+            api_key="fixture-key", model_name="gpt-oss-120b", request=request,
+        )
+        self.assertEqual(result["status"], "skipped_insufficient_candidates")
+        self.assertEqual(len(calls), 1)
+
     def test_skips_when_routing_is_not_applied_or_cohort_is_too_small(self) -> None:
         def unexpected(**kwargs):
             self.fail("no event call should be made")
