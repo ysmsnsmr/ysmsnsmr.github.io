@@ -1533,3 +1533,40 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Change the existing cron to 17 16 * * 1,4 and inspect the next four scheduled runs.
 - Revisit when: A run or its Pages deployment misses 08:00 MYT.; The earlier source snapshot proves too stale for readers.
+
+<!-- idea-gate:20261013t193800-meta-ads-article-link-discovery -->
+## Discover existing eligible Meta official article links from unofficial article pages
+
+- Record ID: `20261013t193800-meta-ads-article-link-discovery`
+- Evaluated: 2026-10-13T19:38:00+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **TRY**
+- Score: 84/100
+- Confidence: medium - The gap and implementation boundary are clear; useful-link yield and external-page reliability remain unmeasured.
+
+### Idea Card
+
+- Purpose: Find official Meta articles that are linked in unofficial article pages but absent from RSS descriptions.
+- First experience: A bounded run discovers an eligible Business News or Developer Blog link in an article page while leaving Meta Help outside promotion.
+- Scope and cost: Only existing unofficial RSS sources, capped page fetches per run, no new paid service, no raw body persistence, and no new UI or official URL categories.
+- Continuation boundary: Keep if eligible links are found without harming collection reliability; disable if page fetches repeatedly fail, add excessive latency, or produce no useful links.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 14/15 |
+| `evidence_and_learning` | 11/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 15/20 |
+| **Total** | **84/100** |
+- Trial limit: At most 10 article-page fetches per unofficial source per run, using existing source response limits and no paid API.
+- Trial stop condition: After two scheduled runs, review page-fetch outcomes and eligible-link yield; disable if reliability or latency worsens.
+
+### Next Step
+
+- Action: Add capped, best-effort article-page link extraction for the existing unofficial RSS sources, retain existing official-page validation, and test failures and exclusions.
+- Revisit when: Two scheduled runs produce no eligible new links.; Article-page fetching adds meaningful latency or causes repeated fetch failures.
