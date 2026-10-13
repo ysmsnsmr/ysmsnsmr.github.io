@@ -273,6 +273,10 @@
       white-space: nowrap;
     }
     .status-strip .markdown-link { margin-left: auto; }
+    .air-quality-links { display: flex; justify-content: space-between; gap: 16px; align-items: center; border-block: 1px solid var(--line); padding: 14px 0; }
+    .air-quality-links h2 { margin: 0; font-size: 1rem; }
+    .air-quality-links p { margin: 3px 0 0; color: var(--muted); font-size: .84rem; }
+    .air-quality-actions { display: flex; flex-wrap: wrap; gap: 8px 16px; flex: 0 0 auto; font-size: .88rem; }
     .counts {
       display: flex;
       flex-wrap: wrap;
@@ -353,6 +357,8 @@
         display: grid;
         gap: 2px;
       }
+      .air-quality-links { align-items: flex-start; flex-direction: column; }
+      .air-quality-actions { flex: 1 1 auto; }
       .recent-list {
         display: grid;
         margin: 0;
@@ -383,13 +389,13 @@
       </div>
     </header>
     <div class="status-strip" aria-label="更新状況と集計">
-      <span class="status-chip"><span>更新</span><strong>2026年10月12日 07:11 MYT</strong></span>
-<span class="status-chip"><span>処理対象</span><strong>85件</strong></span>
+      <span class="status-chip"><span>更新</span><strong>2026年10月13日 09:37 MYT</strong></span>
+<span class="status-chip"><span>処理対象</span><strong>104件</strong></span>
 <span class="status-chip"><span>要約対象</span><strong>20件</strong></span>
 <span class="status-chip"><span>失敗ソース</span><strong>なし</strong></span>
       <span class="count-pill"><span>暮らしに関わる更新</span><strong>17</strong></span>
 <span class="count-pill"><span>社会・経済の動き</span><strong>0</strong></span>
-      <a class="markdown-link" href="./2026-10-12.md">Markdown版</a>
+      <a class="markdown-link" href="./2026-10-13.md">Markdown版</a>
     </div>
 
     <section aria-labelledby="today-heading">
@@ -401,36 +407,49 @@
         <div class="today-head">
           <div>
             <p class="eyebrow">Latest</p>
-            <h2>2026年10月12日</h2>
+            <h2>2026年10月13日</h2>
             <p class="muted">期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。</p>
           </div>
         </div>
         <div class="focus-grid">
 
         <article class="focus-card">
-          <h3>JPNJ、jerebuによる学校閉鎖の毎日通知 発表と保護者の疑問</h3>
-          <p class="focus-dek">教育省（JPNJ）はjerebu（jerebu）に伴う学校閉鎖について、毎日通知を発表しました。今日、SNS上で多くの保護者が州政府とJPNJが示す閉鎖期間の違いに疑問を呈しています。</p>
+          <h3>Sungai Chuahで行方不明男性の捜索作業、雨天中止後本日再開</h3>
+          <p class="focus-dek">JBPM SelangorのPenolong Pengarah Operasi、Ashrul Riezal Asbar氏は、激しい雨により中止されたSungai Chuahでの行方不明男性の捜索作業（SAR）を、本日再開すると述べました。</p>
         </article>
 
 
         <article class="focus-card">
-          <h3>Jerebu：フルーラング、ゴンバック、ペタリング・ペルダナの州立・私立イスラム校が永久閉鎖</h3>
-          <p class="focus-dek">Jerebu（ジェレブ）において、フルーラング、ゴンバック、ペタリング・ペルダナの州立宗教学校と私立イスラム学校（SIP）が永久に閉鎖されることが決定された。JAIS（イスラム教育局）ディレクターのダトゥク・モハド・シャヒザン・アハマド氏は、この措置が該当地区の私立イスラム学校にも適用されると述べている。</p>
+          <h3>Firefly、hazeの影響でスバン‑シンガポール間便を10月14日までキャンセル</h3>
+          <p class="focus-dek">現在の天候とhazeの影響により、Fireflyはスバン（スルタン・アブドゥル・アジズ・シャー空港）とシンガポール・セレタ空港間の定期便を10月14日までキャンセルすると発表しました。航空会社は、対象となる6路線（FY3122‑FY3133）について、乗客にマレーシア航空のクアラルンプール‑シンガポール路線への振替便（座席空き状況次第）または全額返金（30営業日以内に元の支払方法へ）を提供するとしています。Fireflyは以前、10月10日から12日まで同区間の全便を安全確保のためにキャンセルしていました。</p>
         </article>
 
 
         <article class="focus-card">
-          <h3>Tun Dr Lim Chong Eu高速で10月12日から高架Uターン工事のため右側車線を一時閉鎖</h3>
-          <p class="focus-dek">Tun Dr Lim Chong Eu高速（ジョージタウン方面・バヤンレパス方面）の両方向の右側最外車線が、2026年10月12日から2027年2月28日まで一時的に閉鎖されます。これは高架Uターンの次段階工事のための措置で、IJM Land Berhadが安全確保のために車線閉鎖と迂回路を設定すると発表しました。工事は2026年9月初めに第一段階が完了し、完成後はAir Itamバイパスと連携して道路接続性と交通流の改善が期待されています。ドライバーは事前にルートを計画し、案内標識に従い、該当区間付近では十分に注意して走行してください。</p>
+          <h3>KWSPがシンガル・サラフィー貯蓄向けビジネスザカットサービスを開始</h3>
+          <p class="focus-dek">Kumpulan Wang Simpanan Pekerja（KWSP）は本日、シンガル・サラフィー（イスラム金融）貯蓄に対するザカット（寄付）を簡便に行える新サービス「Zakat Perniagaan Simpanan Syariah」を導入した。この制度により、イスラム教徒の会員は自らのシンガル・サラフィー貯蓄に対するザカット義務を手軽に履行できるようになる。</p>
         </article>
 
         </div>
         <div class="today-footer">
-          <a class="primary-link" href="./2026-10-12.html">すべて読む</a>
+          <a class="primary-link" href="./2026-10-13.html">すべて読む</a>
         </div>
 
       </article>
     </section>
+
+
+    <section class="air-quality-links" aria-labelledby="air-quality-heading">
+      <div>
+        <h2 id="air-quality-heading">大気情報（公式）</h2>
+        <p>クランバレー周辺の状況は、各ページで地域・更新時刻を確認してください。観測値と予報は別の情報です。</p>
+      </div>
+      <div class="air-quality-actions">
+        <a href="https://eqms.doe.gov.my/apims/main">APIMSの観測値を見る</a>
+        <a href="https://mycmaq.met.gov.my/">MyCMAQの予報を見る</a>
+      </div>
+    </section>
+
 
     <section aria-labelledby="recent-heading">
       <div class="section-head">
@@ -438,6 +457,24 @@
         <p>今日を除く直近日を比較</p>
       </div>
       <div class="recent-list">
+        <article class="recent-day-row">
+          <div class="recent-day-meta">
+            <h3>2026年10月12日</h3>
+            <div class="counts compact-counts" aria-label="カテゴリ別件数">
+              <span class="count-pill"><span>暮らしに関わる更新</span><strong>17</strong></span>
+<span class="count-pill"><span>社会・経済の動き</span><strong>0</strong></span>
+            </div>
+            <p class="recent-status">20件 / 失敗なし</p>
+          </div>
+          <div class="recent-day-headlines">
+            <ol class="recent-headline-list"><li>JPNJ、jerebuによる学校閉鎖の毎日通知 発表と保護者の疑問</li>
+<li>Jerebu：フルーラング、ゴンバック、ペタリング・ペルダナの州立・私立イスラム校が永久閉鎖</li>
+<li>Tun Dr Lim Chong Eu高速で10月12日から高架Uターン工事のため右側車線を一時閉鎖</li></ol>
+          </div>
+          <a class="open-link recent-day-link" href="./2026-10-12.html">その日のまとめ</a>
+        </article>
+
+
         <article class="recent-day-row">
           <div class="recent-day-meta">
             <h3>2026年10月11日</h3>
@@ -526,24 +563,6 @@
           </div>
           <a class="open-link recent-day-link" href="./2026-10-07.html">その日のまとめ</a>
         </article>
-
-
-        <article class="recent-day-row">
-          <div class="recent-day-meta">
-            <h3>2026年10月6日</h3>
-            <div class="counts compact-counts" aria-label="カテゴリ別件数">
-              <span class="count-pill"><span>暮らしに関わる更新</span><strong>6</strong></span>
-<span class="count-pill"><span>社会・経済の動き</span><strong>13</strong></span>
-            </div>
-            <p class="recent-status">20件 / 失敗なし</p>
-          </div>
-          <div class="recent-day-headlines">
-            <ol class="recent-headline-list"><li>ジョホール州で最も影響、17地区が不健康なIPUを記録</li>
-<li>JBPMクランタン、資産と隊員を整備しスーパーエルニーニョに備える</li>
-<li>ACE 2026でJPJモバイルカウンターが開催、免許・道路税・違反金の手続きが可能に</li></ol>
-          </div>
-          <a class="open-link recent-day-link" href="./2026-10-06.html">その日のまとめ</a>
-        </article>
       </div>
     </section>
 
@@ -556,9 +575,16 @@
             <details class="archive-month" open>
               <summary>
                 <span>2026年10月</span>
-                <span>5日分</span>
+                <span>6日分</span>
               </summary>
               <ul class="archive-list">
+
+            <li>
+              <a href="./2026-10-06.html">2026年10月6日</a>
+              <span>20件</span>
+              <span>なし</span>
+            </li>
+
 
             <li>
               <a href="./2026-10-05.html">2026年10月5日</a>
