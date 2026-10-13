@@ -78,6 +78,8 @@ def select_cohort(pool: dict[str, Any], routing: dict[str, Any]) -> list[dict[st
                 raise ValueError("invalid editorial candidate")
             if decision.get("itemFingerprint") not in (None, _fingerprint(item)):
                 raise ValueError("routing report does not match candidate pool")
+            if _is_haze_status(item):
+                continue
             cohort.append({"candidateRank": rank, "itemFingerprint": _fingerprint(item), "item": item})
             if len(cohort) == MAX_CANDIDATES:
                 return cohort
