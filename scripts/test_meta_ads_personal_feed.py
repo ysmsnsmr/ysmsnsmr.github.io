@@ -1192,7 +1192,7 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertIn("pixel-conversionsapi-updates", jon[0]["sourceContextMarkup"])
         self.assertIn("pixel-conversionsapi-updates", social[0]["sourceContextMarkup"])
 
-    def test_article_page_discovers_existing_official_type_without_promoting_help(self) -> None:
+    def test_article_page_shows_help_as_reference_without_promoting_it(self) -> None:
         article = """<html><body>
         <nav><a href="https://www.facebook.com/business/news/navigation-only">Navigation</a></nav>
         <article><p><a href="https://www.facebook.com/business/help/1546753450586085/">Meta Help</a></p>
@@ -1223,11 +1223,44 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(promoted[0]["matchEvidence"], ["discovered-via:social-media-today-meta-ads"])
         self.assertEqual(pipeline["sources"]["social-media-today-meta-ads"]["articlePageDiscoveredLinks"], 1)
         self.assertEqual(len([item for item in fetches if item["id"] == "social-media-today-meta-ads"]), 2)
-        self.assertNotIn("1546753450586085", json.dumps(state))
+        origin = next(item for item in feed["items"] if item["sourceId"] == "social-media-today-meta-ads" and "123456" in item["url"])
+        self.assertEqual(origin["officialReferences"], [
+            "https://www.facebook.com/business/help/1546753450586085/",
+            "https://www.facebook.com/business/news/pixel-conversionsapi-updates",
+        ])
+        self.assertIn("1546753450586085", json.dumps(state))
+        self.assertNotIn("/business/help/1546753450586085/", {item["url"] for item in feed["items"]})
         self.assertNotIn("navigation-only", json.dumps(state))
         self.assertNotIn("related-story-only", json.dumps(state))
         validate_feed(feed, self.config)
         validate_state(state, self.config)
+        poisoned = copy.deepcopy(feed)
+        poisoned_origin = next(item for item in poisoned["items"] if item["id"] == origin["id"])
+        poisoned_origin["officialReferences"] = ["https://www.facebook.com.evil.example/business/help/123/"]
+        with self.assertRaises(ContractError):
+            validate_feed(poisoned, self.config)
+        later_feed, later_state = collect(
+            self.config, state, 1, NOW + timedelta(days=1), fetch,
+            article_page_discovery=False,
+        )
+        later_origin = next(item for item in later_feed["items"] if item["id"] == origin["id"])
+        self.assertEqual(later_origin["officialReferences"], origin["officialReferences"])
+        validate_state(later_state, self.config)
+
+    def test_official_reference_url_rejects_lookalikes_and_arbitrary_paths(self) -> None:
+        canonical = personal_feed._canonical_official_reference_url
+        self.assertEqual(canonical("https://www.facebook.com/business/help/123?_sp=tracker"), "https://www.facebook.com/business/help/123/")
+        self.assertEqual(canonical("https://www.facebook.com/business/news/example?utm_source=unofficial#details"), "https://www.facebook.com/business/news/example")
+        for url in (
+            "https://www.facebook.com.evil.example/business/help/123",
+            "http://www.facebook.com/business/help/123",
+            "https://www.facebook.com/business/help/not-a-number",
+            "https://www.facebook.com/business/help/123?next=evil",
+            "https://www.facebook.com/login/",
+            "https://developers.facebook.com/blog/post/2026/10/example/",
+        ):
+            with self.subTest(url=url):
+                self.assertIsNone(canonical(url))
 
     def test_article_page_failure_and_manual_exclusion_do_not_stop_collection(self) -> None:
         excluded_url = "https://www.socialmediatoday.com/news/meta-expands-ads-manager-campaign-controls/123456/"

@@ -12,10 +12,20 @@
     official: "Official", unofficial: "Unofficial", summaryMissing: "Summary not available. Review the original source.", statusMachine: "Machine-generated summary", statusReviewed: "Reviewed summary", statusMissing: "Summary not available", original: "Original title", emailOriginal: "Original source", copied: "Email text copied", copyFailed: "Could not copy. Check your browser's clipboard permissions.", published: "Published", updated: "Updated", platform: "Platforms", unknown: "Not found", unclassified: "Unclassified", sourceOfficial: "Open official source", sourceUnofficial: "Open unofficial source", addFavorite: "Add to favorites", removeFavorite: "Remove from favorites", notFound: "Item not found", notFoundCopy: "This item may have been removed after an update or the end of its retention period.", invalid: "Unable to identify the item", invalidCopy: "Return to the feed and select the item again.", error: "The current published content is unavailable", errorCopy: "Please try again later."
   };
   const platformNames = locale === "ja" ? { "meta-platforms": "Metaプラットフォーム全般", "meta-business-sdk": "Meta Business SDK", "marketing-api": "Marketing API", "meta-ads": "Meta Ads" } : { "meta-platforms": "Meta platforms", "meta-business-sdk": "Meta Business SDK", "marketing-api": "Marketing API", "meta-ads": "Meta Ads" };
-  const el = { back: document.querySelector("#back-link"), en: document.querySelector("#locale-en"), ja: document.querySelector("#locale-ja"), notice: document.querySelector("#detail-unofficial-notice"), card: document.querySelector("#detail-card"), heading: document.querySelector("#detail-heading"), title: document.querySelector("#detail-title"), summary: document.querySelector("#detail-summary"), status: document.querySelector("#detail-presentation-status"), original: document.querySelector("#detail-original-title"), facts: document.querySelector("#detail-facts"), sourceLink: document.querySelector("#detail-source-link"), copyEmail: document.querySelector("#detail-copy-email"), copyStatus: document.querySelector("#detail-copy-status"), favorite: document.querySelector("#detail-favorite"), error: document.querySelector("#detail-error"), errorTitle: document.querySelector("#detail-error-title"), errorCopy: document.querySelector("#detail-error-copy") };
+  const el = { back: document.querySelector("#back-link"), en: document.querySelector("#locale-en"), ja: document.querySelector("#locale-ja"), notice: document.querySelector("#detail-unofficial-notice"), card: document.querySelector("#detail-card"), heading: document.querySelector("#detail-heading"), title: document.querySelector("#detail-title"), summary: document.querySelector("#detail-summary"), status: document.querySelector("#detail-presentation-status"), original: document.querySelector("#detail-original-title"), facts: document.querySelector("#detail-facts"), references: document.querySelector("#detail-official-references"), referencesList: document.querySelector("#detail-official-references-list"), sourceLink: document.querySelector("#detail-source-link"), copyEmail: document.querySelector("#detail-copy-email"), copyStatus: document.querySelector("#detail-copy-status"), favorite: document.querySelector("#detail-favorite"), error: document.querySelector("#detail-error"), errorTitle: document.querySelector("#detail-error-title"), errorCopy: document.querySelector("#detail-error-copy") };
 
   function make(tag, className, text) { const node = document.createElement(tag); if (className) node.className = className; if (text !== undefined) node.textContent = text; return node; }
   function safeHttps(value) { try { const url = new URL(value); return url.protocol === "https:" ? url.href : null; } catch { return null; } }
+  function safeOfficialReference(value) {
+    try {
+      const url = new URL(value);
+      if (url.protocol !== "https:" || url.username || url.password || url.port || url.search || url.hash) return null;
+      const path = url.pathname.replace(/\/$/, "");
+      if (url.hostname === "www.facebook.com" && /^\/business\/(?:help\/\d+|news\/[A-Za-z0-9][A-Za-z0-9_-]*)$/.test(path)) return url.href;
+      if (url.hostname === "developers.facebook.com" && /^\/blog\/post\/20\d{2}\/(?:0?[1-9]|1[0-2])\/(?:0?[1-9]|[12]\d|3[01])\/[A-Za-z0-9][A-Za-z0-9_-]*$/.test(path)) return url.href;
+    } catch { /* Invalid or unsupported URL. */ }
+    return null;
+  }
   function selectedQuery() {
     const query = new URLSearchParams();
     for (const key of ["id", "source", "type", "q", "personal-fixture"]) { const value = params.get(key); if (value) query.set(key, value.slice(0, 160)); }
@@ -120,6 +130,20 @@
     appendFact(words.platform, platforms, words.unclassified);
     el.sourceLink.href = sourceUrl;
     el.sourceLink.textContent = official ? words.sourceOfficial : words.sourceUnofficial;
+    if (!official && Array.isArray(item.officialReferences)) {
+      for (const value of item.officialReferences.slice(0, 10)) {
+        const url = safeOfficialReference(value);
+        if (!url) continue;
+        const link = make("a", "official-reference-link", url);
+        link.href = url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        const row = make("li");
+        row.append(link);
+        el.referencesList.append(row);
+      }
+      el.references.hidden = !el.referencesList.children.length;
+    }
     setupEmailCopy(item, source, sourceUrl, result, official);
     setupFavorite(sourceUrl);
     el.notice.hidden = official;

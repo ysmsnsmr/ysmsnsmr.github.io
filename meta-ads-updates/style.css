@@ -778,6 +778,19 @@ h1 {
   gap: var(--tracker-space-2);
 }
 
+.reference-note {
+  margin: 0;
+  color: var(--tracker-muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.official-reference-list {
+  margin: 0;
+  padding-left: 1.4rem;
+  overflow-wrap: anywhere;
+}
+
 .detail-summary,
 .detail-original-title {
   max-width: 70ch;

@@ -51,7 +51,9 @@ const personalFeedV5Report = {
       lane: undefined,
       laneEvidence: undefined
     }
-  ].map(({ lane, laneEvidence, ...item }) => item)
+  ].map(({ lane, laneEvidence, ...item }) => item.sourceId === "social-media-today-meta-ads"
+    ? { ...item, officialReferences: ["https://www.facebook.com/business/help/1546753450586085/"] }
+    : item)
 };
 function presentationV3WithMissingJapaneseSummary(presentation) {
   const locale = (value) => {
@@ -444,6 +446,15 @@ try {
     await v5List.screenshot({ path: path.join(artifactDirectory, "personal-feed-v5-desktop-full-page.png"), fullPage: true });
   }
   await v5List.close();
+
+  const referencesDetail = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  const referencedItem = personalFeedV5Report.items.find((item) => item.sourceId === "social-media-today-meta-ads");
+  await referencesDetail.goto(`${server.origin}/meta-ads-updates/ja/detail.html?id=${referencedItem.id}&personal-fixture=v5`, { waitUntil: "networkidle" });
+  assert(await referencesDetail.locator("#detail-official-references").isVisible(), "unofficial detail must show discovered Meta references");
+  assert((await referencesDetail.locator("#detail-heading").textContent()).includes("非公式"), "references must not promote the article");
+  assert(await referencesDetail.locator("#detail-official-references-list a").evaluate((link) => link.href === "https://www.facebook.com/business/help/1546753450586085/" && link.target === "_blank" && link.rel.includes("noreferrer")), "reference link is unsafe");
+  await assertDetailAccessibilityAndLayout(referencesDetail, "personal-detail-references/desktop");
+  await referencesDetail.close();
 
   const fieldsList = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   const fieldsItem = personalFeedV5FieldsReport.items[0];

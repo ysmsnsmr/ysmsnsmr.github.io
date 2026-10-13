@@ -698,6 +698,57 @@ def _official_news_links(markup: str, source: dict[str, Any], *, article_only: b
     return links[:maximum], max(0, len(links) - maximum)
 
 
+def _canonical_official_reference_url(value: str) -> str | None:
+    """Allow only known Meta document URL shapes, never arbitrary same-domain links.
+
+    This validates URL ownership and shape, not the document's content or date.
+    Help URLs are references only and must never become news candidates.
+    """
+    try:
+        parsed = urlsplit(value)
+    except ValueError:
+        return None
+    if parsed.scheme != "https" or parsed.username or parsed.password:
+        return None
+    try:
+        if parsed.port not in {None, 443}:
+            return None
+    except ValueError:
+        return None
+    if any(
+        key.casefold() != "_sp" and not key.casefold().startswith("utm_") and key.casefold() not in TRACKING_QUERY_KEYS
+        for key, _ in parse_qsl(parsed.query, keep_blank_values=True)
+    ):
+        return None
+    host = (parsed.hostname or "").lower()
+    path = parsed.path.rstrip("/")
+    if host == "www.facebook.com" and re.fullmatch(r"/business/help/[0-9]+", path):
+        return f"https://{host}{path}/"
+    if host == "www.facebook.com" and re.fullmatch(r"/business/news/[A-Za-z0-9][A-Za-z0-9_-]*", path):
+        return f"https://{host}{path}"
+    if host == "developers.facebook.com" and re.fullmatch(r"/blog/post/20\d{2}/(?:0?[1-9]|1[0-2])/(?:0?[1-9]|[12]\d|3[01])/[A-Za-z0-9][A-Za-z0-9_-]*", path):
+        return f"https://{host}{path}/"
+    return None
+
+
+def _article_official_references(markup: str) -> list[str]:
+    parser = _ArticleLinkExtractor()
+    parser.feed(markup)
+    return list(dict.fromkeys(
+        candidate for href in parser.links
+        if (candidate := _canonical_official_reference_url(href)) is not None
+    ))[:10]
+
+
+def _validate_official_references(value: Any, label: str) -> list[str]:
+    if not isinstance(value, list) or len(value) > 10 or not all(isinstance(url, str) for url in value) or len(value) != len(set(value)):
+        raise ContractError(f"{label} must contain at most ten unique URLs")
+    for url in value:
+        if not isinstance(url, str) or _canonical_official_reference_url(url) != url:
+            raise ContractError(f"{label} contains an unsupported official reference URL")
+    return value
+
+
 def _meta_business_news_date(text: str) -> str:
     months = "January|February|March|April|May|June|July|August|September|October|November|December"
     match = re.search(
@@ -1239,6 +1290,7 @@ def _discover_links_from_article_pages(
     manual_exclusions: frozenset[str],
     fetch_body: Callable[[dict[str, Any], float], tuple[str, str]],
     timeout: float,
+    reference_candidates: dict[str, dict[str, list[str]]] | None = None,
 ) -> None:
     """Use bounded, best-effort article HTML only to augment eligible RSS links."""
     for origin in config["sources"]:
@@ -1283,6 +1335,8 @@ def _discover_links_from_article_pages(
                 if len(body.encode("utf-8")) > request_source["transport"]["maxResponseBytes"]:
                     raise ContractError("unofficial article page exceeds its byte limit")
                 counts["articlePagesFetched"] += 1
+                if reference_candidates is not None:
+                    reference_candidates.setdefault(origin["id"], {})[raw["key"]] = _article_official_references(body)
                 for discovered in discoveries:
                     previous, previous_deferred = stored_links[discovered["id"]][raw["key"]]
                     page_links, page_deferred = _official_news_links(body, discovered, article_only=True)
@@ -1832,6 +1886,8 @@ def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
                 expected.update({"lane", "laneEvidence"})
             if state["schemaVersion"] == STATE_V5_SCHEMA_VERSION:
                 expected.update({"publicationStatus", "publicationEvidence"})
+                if "officialReferences" in item:
+                    expected.add("officialReferences")
             entry = _expect_keys(item, expected, f"personal feed state.sources.{source_id}.items.{key}")
             _expect_https_url(entry["url"], "personal feed state item.url")
             _text(entry["title"], "personal feed state item.title")
@@ -1843,6 +1899,11 @@ def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
                 raise ContractError("personal feed state item.fingerprint must be a SHA-256 hash")
             _timestamp(entry["firstObservedAt"], "personal feed state item.firstObservedAt")
             _timestamp(entry["lastObservedAt"], "personal feed state item.lastObservedAt")
+            if "officialReferences" in entry:
+                configured_source = next(source for source in _all_sources(config) if source["id"] == source_id)
+                if state["schemaVersion"] != STATE_V5_SCHEMA_VERSION or configured_source["classification"] != "unofficial":
+                    raise ContractError("official references require an unofficial v5 source")
+                _validate_official_references(entry["officialReferences"], "personal feed state item.officialReferences")
             if state["schemaVersion"] == STATE_SCHEMA_VERSION:
                 _validate_presentation(
                     entry["presentation"],
@@ -1952,6 +2013,7 @@ def build_feed(
                 "platformIds": source["platformIds"],
                 "matchEvidence": record["matchEvidence"],
                 "presentation": record["presentation"],
+                **({"officialReferences": record["officialReferences"]} if source["classification"] == "unofficial" and record.get("officialReferences") else {}),
             })
     items.sort(key=_sort_key, reverse=True)
     return {
@@ -2261,7 +2323,7 @@ def _validate_feed_v5(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
     for index, item in enumerate(feed["items"]):
         entry = _expect_keys(
             item,
-            {"id", "sourceId", "title", "url", "publishedDate", "updatedDate", "firstObservedAt", "lastObservedAt", "platformIds", "matchEvidence", "presentation"},
+            {"id", "sourceId", "title", "url", "publishedDate", "updatedDate", "firstObservedAt", "lastObservedAt", "platformIds", "matchEvidence", "presentation"} | ({"officialReferences"} if "officialReferences" in item else set()),
             f"personal feed v5.items[{index}]",
         )
         item_id = _expect_identifier(entry["id"], f"personal feed v5.items[{index}].id")
@@ -2284,6 +2346,10 @@ def _validate_feed_v5(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
         if not isinstance(entry["matchEvidence"], list) or not all(isinstance(value, str) for value in entry["matchEvidence"]):
             raise ContractError("personal feed v5 item.matchEvidence must be a string array")
         _validate_bilingual_presentation(entry["presentation"], None, f"personal feed v5.items[{index}].presentation")
+        if "officialReferences" in entry:
+            if source["classification"] != "unofficial":
+                raise ContractError("official references require an unofficial source")
+            _validate_official_references(entry["officialReferences"], f"personal feed v5.items[{index}].officialReferences")
     return feed
 
 
@@ -2890,6 +2956,7 @@ def collect(
     raw_by_source: dict[str, list[dict[str, Any]]] = {}
     rejected_by_source: dict[str, set[str]] = {}
     discovered_links_by_source: dict[str, dict[str, dict[str, tuple[list[str], int]]]] = {}
+    reference_candidates: dict[str, dict[str, list[str]]] = {}
     discovery_by_origin = {
         origin_id: [discovered for discovered in config["discoveredSources"] if origin_id in discovered["discovery"]["fromSourceIds"]]
         for origin_id in {origin_id for source in config["discoveredSources"] for origin_id in source["discovery"]["fromSourceIds"]}
@@ -2933,7 +3000,7 @@ def collect(
     if article_page_discovery:
         _discover_links_from_article_pages(
             config, parsed_by_source, discovery_by_origin, discovered_links_by_source,
-            pipeline, manual_exclusions, fetch_body, timeout,
+            pipeline, manual_exclusions, fetch_body, timeout, reference_candidates,
         )
 
     # A discovered official source is deliberately independent: an inaccessible
@@ -2990,6 +3057,17 @@ def collect(
     # Build state only after every candidate has been parsed and screened.
     # sourceContext, release notes, markup, and any model response remain local
     # variables and are deliberately excluded from this structure.
+    verified_news_urls = {
+        raw["url"]
+        for source in config["discoveredSources"]
+        for raw in raw_by_source[source["id"]]
+    }
+    verified_news_urls.update(
+        record["url"]
+        for source in config["discoveredSources"]
+        for record in state["sources"].get(source["id"], {"items": {}})["items"].values()
+        if _is_fresh(record, record["firstObservedAt"], now, config["policies"]["freshness"])
+    )
     next_state: dict[str, Any] = {"schemaVersion": STATE_V5_SCHEMA_VERSION, "updatedAt": generated_at, "sources": {}}
     presentation_candidates: list[tuple[str, dict[str, Any], dict[str, Any], list[str]]] = []
     for source in _all_sources(config):
@@ -3011,6 +3089,7 @@ def collect(
                         "firstObservedAt": record["firstObservedAt"],
                         "lastObservedAt": record["lastObservedAt"],
                         "presentation": record["presentation"],
+                        **({"officialReferences": record["officialReferences"]} if record.get("officialReferences") else {}),
                     }
                     carried_forward_keys.add(key)
         for key in rejected_by_source[source["id"]]:
@@ -3046,6 +3125,14 @@ def collect(
                 "lastObservedAt": generated_at,
                 "presentation": cached or _missing_bilingual_presentation(raw["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION),
             }
+            if source["classification"] == "unofficial":
+                discovered_references = reference_candidates.get(source["id"], {}).get(raw["key"])
+                if discovered_references is not None:
+                    references = [url for url in discovered_references if "/business/help/" in url or url in verified_news_urls]
+                else:
+                    references = existing.get("officialReferences", []) if existing else []
+                if references:
+                    record["officialReferences"] = references
             current[raw["key"]] = record
             carried_forward_keys.discard(raw["key"])
             pending_locales = (

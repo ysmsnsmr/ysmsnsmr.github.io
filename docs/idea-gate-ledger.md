@@ -1570,3 +1570,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Add capped, best-effort article-page link extraction for the existing unofficial RSS sources, retain existing official-page validation, and test failures and exclusions.
 - Revisit when: Two scheduled runs produce no eligible new links.; Article-page fetching adds meaningful latency or causes repeated fetch failures.
+
+<!-- idea-gate:20261014t120000-meta-official-references -->
+## Show validated Meta reference links found in unofficial articles without promoting the article or undated Help pages to news
+
+- Record ID: `20261014t120000-meta-official-references`
+- Evaluated: 2026-10-14T12:00:00+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 84/100
+- Confidence: medium - The desired experience is clear, but live Meta Help page availability varies.
+
+### Idea Card
+
+- Purpose: Let readers verify Meta-owned reference material cited by an unofficial article
+- First experience: An unofficial article detail page shows a Meta Help link found in its article body, alongside its original source link
+- Scope and cost: Reuse bounded article-page fetching; store only a small allowlisted set of canonical URLs; no new API, model request, or account
+- Continuation boundary: Keep if references are trustworthy and useful; remove the section if links are misleading or recurring maintenance grows
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 13/15 |
+| `evidence_and_learning` | 11/15 |
+| `expected_outcome` | 13/15 |
+| `scope_and_fit` | 13/15 |
+| `ownership_and_reversibility` | 17/20 |
+| **Total** | **84/100** |
+
+### Next Step
+
+- Action: Add allowlisted reference URLs to state/feed and render them only on unofficial detail pages.
+- Revisit when: References routinely fail to open or imply an endorsement of the unofficial article.
