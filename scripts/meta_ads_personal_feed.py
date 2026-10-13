@@ -100,7 +100,10 @@ PRESENTATION_RETRY_MAX_FAILURES = 5
 PRESENTATION_RETRY_BASE_DELAY_SECONDS = 3600
 PRESENTATION_RETRY_MAX_DELAY_SECONDS = 7 * 24 * 3600
 PLATFORM_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-PARSER_VERSION = "meta-ads-personal-feed-parser/v3"
+PARSER_VERSION = "meta-ads-personal-feed-parser/v4"
+MAX_ARTICLE_PAGE_FETCHES_PER_SOURCE = 10
+MAX_ARTICLE_PAGE_FETCH_SECONDS = 5.0
+MAX_ARTICLE_PAGE_BYTES = 1_048_576
 PUBLICATION_STATUSES = {"included", "drop"}
 PUBLICATION_INCLUDED = "included"
 JEV_RELEVANCE_CHOICES = {"direct_impact", "strategic_signal", "unrelated", "unclear"}
@@ -524,6 +527,36 @@ class _LinkExtractor(HTMLParser):
             self.links.append(html.unescape(href).strip())
 
 
+class _ArticleLinkExtractor(_LinkExtractor):
+    """Accept in-text links, not page navigation or related-story cards."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.article_depth = 0
+        self.paragraph_depth = 0
+        self.article_seen = False
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag.casefold() == "article":
+            if self.article_depth:
+                self.article_depth += 1
+            elif not self.article_seen:
+                self.article_seen = True
+                self.article_depth = 1
+        if tag.casefold() == "p" and self.article_depth:
+            self.paragraph_depth += 1
+        if self.article_depth and self.paragraph_depth:
+            super().handle_starttag(tag, attrs)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.casefold() == "p" and self.paragraph_depth:
+            self.paragraph_depth -= 1
+        if tag.casefold() == "article" and self.article_depth:
+            self.article_depth -= 1
+            if not self.article_depth:
+                self.paragraph_depth = 0
+
+
 class _AdsUploaderBlogParser(HTMLParser):
     """Read visible article cards from the public blog index, never script data."""
 
@@ -650,8 +683,8 @@ def _canonical_official_news_url(value: str, source: dict[str, Any]) -> str | No
     return urlunsplit(("https", parsed.netloc.lower(), f"{prefix}{slug}", "", ""))
 
 
-def _official_news_links(markup: str, source: dict[str, Any]) -> tuple[list[str], int]:
-    parser = _LinkExtractor()
+def _official_news_links(markup: str, source: dict[str, Any], *, article_only: bool = False) -> tuple[list[str], int]:
+    parser = _ArticleLinkExtractor() if article_only else _LinkExtractor()
     parser.feed(markup)
     links: list[str] = []
     seen: set[str] = set()
@@ -1195,6 +1228,76 @@ def _filter_items(
         pipeline["matchedItems"] += 1
         accepted.append(raw)
     return accepted, rejected_keys
+
+
+def _discover_links_from_article_pages(
+    config: dict[str, Any],
+    parsed_by_source: dict[str, list[dict[str, Any]]],
+    discovery_by_origin: dict[str, list[dict[str, Any]]],
+    discovery_links: dict[str, dict[str, dict[str, tuple[list[str], int]]]],
+    pipeline: dict[str, Any],
+    manual_exclusions: frozenset[str],
+    fetch_body: Callable[[dict[str, Any], float], tuple[str, str]],
+    timeout: float,
+) -> None:
+    """Use bounded, best-effort article HTML only to augment eligible RSS links."""
+    for origin in config["sources"]:
+        discoveries = discovery_by_origin.get(origin["id"], [])
+        if not discoveries:
+            continue
+        stored_links = discovery_links.get(origin["id"], {})
+        eligible_keys = {
+            key
+            for discovered in discoveries
+            for key in stored_links.get(discovered["id"], {})
+        }
+        candidates = [
+            raw for raw in parsed_by_source.get(origin["id"], [])
+            if raw["key"] in eligible_keys and _canonical_url(raw["url"]) not in manual_exclusions
+        ]
+        # Spend the limited fetch budget on articles with no RSS-discovered
+        # official link first, preserving feed order within each group.
+        candidates.sort(key=lambda raw: any(
+            stored_links.get(discovered["id"], {}).get(raw["key"], ([], 0))[0]
+            for discovered in discoveries
+        ))
+        counts = pipeline["sources"][origin["id"]]
+        counts["articlePagesDeferred"] = max(0, len(candidates) - MAX_ARTICLE_PAGE_FETCHES_PER_SOURCE)
+        for raw in candidates[:MAX_ARTICLE_PAGE_FETCHES_PER_SOURCE]:
+            counts["articlePagesAttempted"] += 1
+            request_source = {
+                **origin,
+                "fetchUrl": raw["url"],
+                "parser": "article_page_html",
+                "expectedContentTypes": ["text/html"],
+                "transport": {
+                    **origin["transport"],
+                    "maxResponseBytes": min(origin["transport"]["maxResponseBytes"], MAX_ARTICLE_PAGE_BYTES),
+                    "maxRedirects": 0,
+                },
+            }
+            try:
+                body, content_type = fetch_body(request_source, min(timeout, MAX_ARTICLE_PAGE_FETCH_SECONDS))
+                if not isinstance(body, str) or (content_type or "").split(";", 1)[0].strip().lower() != "text/html":
+                    raise ContractError("unofficial article page returned an unexpected response")
+                if len(body.encode("utf-8")) > request_source["transport"]["maxResponseBytes"]:
+                    raise ContractError("unofficial article page exceeds its byte limit")
+                counts["articlePagesFetched"] += 1
+                for discovered in discoveries:
+                    previous, previous_deferred = stored_links[discovered["id"]][raw["key"]]
+                    page_links, page_deferred = _official_news_links(body, discovered, article_only=True)
+                    combined = list(dict.fromkeys([*previous, *page_links]))
+                    maximum = discovered["discovery"]["maxLinksPerSourceItem"]
+                    selected = combined[:maximum]
+                    counts["articlePageDiscoveredLinks"] += len(set(selected) - set(previous))
+                    stored_links[discovered["id"]][raw["key"]] = (
+                        selected,
+                        previous_deferred + page_deferred + max(0, len(combined) - maximum),
+                    )
+            except (ContractError, OSError, ValueError, urllib.error.URLError):
+                # An article page is optional. Never persist or log its body,
+                # URL, or exception, and never fail the direct RSS source.
+                counts["articlePagesRejected"] += 1
 
 
 def _validate_presentation(value: Any, fingerprint: str | None, label: str, policy: dict[str, Any]) -> dict[str, Any]:
@@ -2444,6 +2547,11 @@ def _source_pipeline_stats(config: dict[str, Any]) -> dict[str, Any]:
                 "attemptedLinks": 0,
                 "rejectedLinks": 0,
                 "deferredLinks": 0,
+                "articlePagesAttempted": 0,
+                "articlePagesFetched": 0,
+                "articlePagesRejected": 0,
+                "articlePagesDeferred": 0,
+                "articlePageDiscoveredLinks": 0,
             }
             for source in _all_sources(config)
         },
@@ -2598,7 +2706,12 @@ def _print_source_pipeline_stats(stats: dict[str, Any]) -> None:
             f"relevance_excluded={counts['relevanceExcludedItems']} excluded={counts['excludedItems']} "
             f"carried_forward={counts['carriedForwardItems']} retained={counts['retainedItems']} "
             f"discovered_links={counts['discoveredLinks']} attempted_links={counts['attemptedLinks']} "
-            f"rejected_links={counts['rejectedLinks']} deferred_links={counts['deferredLinks']}"
+            f"rejected_links={counts['rejectedLinks']} deferred_links={counts['deferredLinks']} "
+            f"article_pages_attempted={counts['articlePagesAttempted']} "
+            f"article_pages_fetched={counts['articlePagesFetched']} "
+            f"article_pages_rejected={counts['articlePagesRejected']} "
+            f"article_pages_deferred={counts['articlePagesDeferred']} "
+            f"article_page_links={counts['articlePageDiscoveredLinks']}"
         )
         for index, count in enumerate(counts["matchGroupMatches"], start=1):
             print(f"SOURCE_MATCH_GROUP: id={source_id} group={index} matched={count}")
@@ -2732,6 +2845,7 @@ def collect(
     jev_classifier: Callable[[dict[str, Any], dict[str, Any]], tuple[str, list[str]]] | None = None,
     jev_routing_stats: dict[str, Any] | None = None,
     manual_exclusions: frozenset[str] = frozenset(),
+    article_page_discovery: bool = True,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     validate_config(config)
     validate_state(state, config)
@@ -2814,6 +2928,12 @@ def collect(
             discovered_links_by_source.setdefault(source["id"], {}),
             apply_source_relevance=not jev_enabled,
             manual_exclusions=manual_exclusions,
+        )
+
+    if article_page_discovery:
+        _discover_links_from_article_pages(
+            config, parsed_by_source, discovery_by_origin, discovered_links_by_source,
+            pipeline, manual_exclusions, fetch_body, timeout,
         )
 
     # A discovered official source is deliberately independent: an inaccessible
@@ -3165,6 +3285,7 @@ def collect_and_write(
     retry_legacy_http_400: bool = False,
     jev_classifier: Callable[[dict[str, Any], dict[str, Any]], tuple[str, list[str]]] | None = None,
     jev_routing_stats: dict[str, Any] | None = None,
+    article_page_discovery: bool = True,
 ) -> dict[str, Any]:
     config = load_config(config_path)
     manual_exclusions = load_manual_exclusions(manual_exclusions_path, config)
@@ -3187,6 +3308,7 @@ def collect_and_write(
         jev_classifier=jev_classifier,
         jev_routing_stats=jev_routing_stats,
         manual_exclusions=manual_exclusions,
+        article_page_discovery=article_page_discovery,
     )
     # Both payloads are fully constructed and validated before either single-file atomic write.
     write_json(output_path, feed)
@@ -3381,6 +3503,7 @@ def main() -> int:
     parser.add_argument("--timeout", type=float, default=30.0)
     parser.add_argument("--presentation-limit", type=_parse_presentation_limit, default=None)
     parser.add_argument("--jev-routing-report", type=Path, default=None)
+    parser.add_argument("--disable-article-page-discovery", action="store_true", help="use RSS links only for this run")
     parser.add_argument("--reseed-source", default=None, help="re-evaluate one configured source under its current relevance revision")
     parser.add_argument(
         "--retry-failed",
@@ -3444,6 +3567,7 @@ def main() -> int:
             retry_legacy_http_400=args.retry_legacy_http_400,
             jev_classifier=jev_classifier,
             jev_routing_stats=jev_stats,
+            article_page_discovery=not args.disable_article_page_discovery,
         )
         run_failed = False
     except SourceFetchError as error:

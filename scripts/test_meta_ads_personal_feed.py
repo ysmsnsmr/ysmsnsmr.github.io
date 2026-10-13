@@ -169,6 +169,8 @@ class PersonalFeedTest(unittest.TestCase):
         def fetch(source: dict, _timeout: float) -> tuple[str, str]:
             if fail:
                 raise URLError("response body must not be retained")
+            if source["parser"] == "article_page_html":
+                return "<html><article></article></html>", "text/html; charset=utf-8"
             if source["parser"] == "github_releases":
                 content_type = "application/json; charset=utf-8"
             elif source["parser"] in {"meta_business_news_html", "meta_developer_blog_html", "adsuploader_blog_html"}:
@@ -1190,6 +1192,103 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertIn("pixel-conversionsapi-updates", jon[0]["sourceContextMarkup"])
         self.assertIn("pixel-conversionsapi-updates", social[0]["sourceContextMarkup"])
 
+    def test_article_page_discovers_existing_official_type_without_promoting_help(self) -> None:
+        article = """<html><body>
+        <nav><a href="https://www.facebook.com/business/news/navigation-only">Navigation</a></nav>
+        <article><p><a href="https://www.facebook.com/business/help/1546753450586085/">Meta Help</a></p>
+        <p><a href="https://www.facebook.com/business/news/pixel-conversionsapi-updates?_sp=tracking">Official news</a></p></article>
+        <article><p><a href="https://www.facebook.com/business/news/related-story-only">Related story</a></p></article>
+        <footer><a href="https://www.facebook.com/business/news/footer-only">Footer</a></footer>
+        </body></html>"""
+        fetches: list[dict[str, Any]] = []
+        regular_fetch = self.fetcher(bodies={"meta-business-news-discovered": META_BUSINESS_NEWS})
+
+        def fetch(source: dict, timeout: float) -> tuple[str, str]:
+            if source["parser"] == "article_page_html":
+                fetches.append(source)
+                self.assertLessEqual(timeout, 5)
+                self.assertEqual(source["transport"]["maxRedirects"], 0)
+                self.assertLessEqual(source["transport"]["maxResponseBytes"], 1_048_576)
+                self.assertEqual(source["expectedContentTypes"], ["text/html"])
+                return (article if "123456" in source["fetchUrl"] else "<article></article>"), "text/html"
+            return regular_fetch(source, timeout)
+
+        pipeline: dict[str, Any] = {}
+        feed, state = collect(
+            self.config, {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1, NOW, fetch, source_pipeline_stats=pipeline,
+        )
+        promoted = [item for item in feed["items"] if item["sourceId"] == "meta-business-news-discovered"]
+        self.assertEqual([item["url"] for item in promoted], ["https://www.facebook.com/business/news/pixel-conversionsapi-updates"])
+        self.assertEqual(promoted[0]["matchEvidence"], ["discovered-via:social-media-today-meta-ads"])
+        self.assertEqual(pipeline["sources"]["social-media-today-meta-ads"]["articlePageDiscoveredLinks"], 1)
+        self.assertEqual(len([item for item in fetches if item["id"] == "social-media-today-meta-ads"]), 2)
+        self.assertNotIn("1546753450586085", json.dumps(state))
+        self.assertNotIn("navigation-only", json.dumps(state))
+        self.assertNotIn("related-story-only", json.dumps(state))
+        validate_feed(feed, self.config)
+        validate_state(state, self.config)
+
+    def test_article_page_failure_and_manual_exclusion_do_not_stop_collection(self) -> None:
+        excluded_url = "https://www.socialmediatoday.com/news/meta-expands-ads-manager-campaign-controls/123456/"
+        fetched_pages: list[str] = []
+        regular_fetch = self.fetcher()
+
+        def fetch(source: dict, timeout: float) -> tuple[str, str]:
+            if source["parser"] == "article_page_html":
+                fetched_pages.append(source["fetchUrl"])
+                raise URLError("private response and URL details")
+            return regular_fetch(source, timeout)
+
+        pipeline: dict[str, Any] = {}
+        feed, state = collect(
+            self.config, {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1, NOW, fetch, manual_exclusions=frozenset({excluded_url}), source_pipeline_stats=pipeline,
+        )
+        self.assertNotIn(excluded_url, fetched_pages)
+        self.assertNotIn(excluded_url, {item["url"] for item in feed["items"]})
+        counts = pipeline["sources"]["social-media-today-meta-ads"]
+        self.assertEqual((counts["articlePagesAttempted"], counts["articlePagesRejected"]), (1, 1))
+        self.assertNotIn("private response", json.dumps(state))
+        output = io.StringIO()
+        with redirect_stdout(output):
+            _print_source_pipeline_stats(pipeline)
+        self.assertNotIn("private response", output.getvalue())
+        self.assertNotIn(excluded_url, output.getvalue())
+
+    def test_article_page_fetches_are_capped_per_source(self) -> None:
+        items = "".join(
+            f"<item><title>Meta Ads update {index}</title>"
+            f"<link>https://www.socialmediatoday.com/news/meta-ads-update/{index}/</link>"
+            "<description>Advertisers can review campaign changes.</description>"
+            "<pubDate>Fri, 29 Aug 2026 02:00:00 -0400</pubDate></item>"
+            for index in range(12)
+        )
+        bodies = {"social-media-today-meta-ads": f"<rss><channel>{items}</channel></rss>"}
+        pipeline: dict[str, Any] = {}
+        collect(
+            self.config, {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1, NOW, self.fetcher(bodies=bodies), source_pipeline_stats=pipeline,
+        )
+        counts = pipeline["sources"]["social-media-today-meta-ads"]
+        self.assertEqual((counts["articlePagesAttempted"], counts["articlePagesDeferred"]), (10, 2))
+
+    def test_article_page_discovery_can_be_disabled_without_disabling_rss_links(self) -> None:
+        pipeline: dict[str, Any] = {}
+        feed, _state = collect(
+            self.config, {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1, NOW,
+            self.fetcher(bodies={
+                "jon-loomer-meta-ads": JON_WITH_OFFICIAL_LINK,
+                "meta-business-news-discovered": META_BUSINESS_NEWS,
+            }),
+            article_page_discovery=False,
+            source_pipeline_stats=pipeline,
+        )
+        self.assertEqual(pipeline["sources"]["jon-loomer-meta-ads"]["articlePagesAttempted"], 0)
+        self.assertEqual(pipeline["sources"]["meta-business-news-discovered"]["discoveredLinks"], 1)
+        self.assertIn("meta-business-news-discovered", {item["sourceId"] for item in feed["items"]})
+
     def test_official_discovery_strips_only_known_sp_tracking_parameter(self) -> None:
         discovery = self.config["discoveredSources"][0]
         base = "https://www.facebook.com/business/news/pixel-conversionsapi-updates"
@@ -1723,7 +1822,7 @@ class PersonalFeedTest(unittest.TestCase):
             source_pipeline_stats=pipeline,
         )
         social = pipeline["sources"]["social-media-today-meta-ads"]
-        self.assertEqual(pipeline["parserVersion"], "meta-ads-personal-feed-parser/v3")
+        self.assertEqual(pipeline["parserVersion"], "meta-ads-personal-feed-parser/v4")
         self.assertTrue(all(pipeline["sources"][source["id"]]["fetched"] for source in self.config["sources"]))
         self.assertFalse(pipeline["sources"]["meta-business-news-discovered"]["fetched"])
         self.assertEqual(
