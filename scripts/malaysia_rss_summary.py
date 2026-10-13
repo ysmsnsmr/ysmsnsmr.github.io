@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import Optional
 
 from malaysia_news_display_categories import DISPLAY_CATEGORIES, display_category_for_legacy
+from malaysia_expiring_notice import notice_deadline
 
 
 UA = "Mozilla/5.0"
@@ -1784,6 +1785,7 @@ def build_editorial_candidate_pool_json(
         "timezone": "Asia/Kuala_Lumpur",
         "candidate_policy": {
             "freshness_applied": True,
+            "expired_time_bound_notices_removed": True,
             "valid_url_required": True,
             "duplicate_url_removed": True,
             "canonical_deduplication_applied": False,
@@ -1876,6 +1878,15 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
                 "decision": "excluded",
                 "decision_stage": "invalid_url",
                 "decision_reason": "article URL must use HTTP or HTTPS and include a host",
+            }
+            continue
+        deadline = notice_deadline(item.title, item.description, item.pub_date)
+        if deadline is not None and deadline <= now.astimezone(MYT):
+            item.expires_at = deadline
+            decisions[id(item)] = {
+                "decision": "excluded",
+                "decision_stage": "expired_time_bound_notice",
+                "decision_reason": "same-day weather warning deadline passed before publication",
             }
             continue
         valid_url_items.append(item)
