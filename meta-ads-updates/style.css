@@ -303,6 +303,11 @@ h1 {
   margin-top: var(--tracker-space-4);
 }
 
+#official-group,
+#unofficial-group {
+  margin-top: var(--tracker-space-6);
+}
+
 .feed-group[hidden] {
   display: none;
 }
