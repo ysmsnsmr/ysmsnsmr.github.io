@@ -456,6 +456,14 @@ try {
   await assertDetailAccessibilityAndLayout(referencesDetail, "personal-detail-references/desktop");
   await referencesDetail.close();
 
+  const officialDetail = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  const officialItem = personalFeedV5Report.items.find((item) => item.sourceId === "meta-product-news-rss");
+  await officialDetail.goto(`${server.origin}/meta-ads-updates/ja/detail.html?id=${officialItem.id}&personal-fixture=v5`, { waitUntil: "networkidle" });
+  assert((await officialDetail.locator("#detail-heading").textContent()).includes("Meta公式"), "official fixture must remain official");
+  assert(!(await officialDetail.locator("#detail-official-references").isVisible()), "official detail must not show the unofficial reference section");
+  await assertDetailAccessibilityAndLayout(officialDetail, "personal-detail-official/desktop");
+  await officialDetail.close();
+
   const fieldsList = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   const fieldsItem = personalFeedV5FieldsReport.items[0];
   const fieldsHeadline = fieldsItem.presentation.locales.ja.fields.shortHeadline.value;
@@ -501,6 +509,7 @@ try {
     assert((await page.locator("#detail-original-title").textContent()).includes("Meta Adsの表示変更"), `${label}: original title is missing`);
     assert(!(await page.locator(".fact-label").allTextContents()).includes("最終確認"), `${label}: automated observation timestamp must not be shown on detail page`);
     assert(await page.locator("#detail-unofficial-notice").isVisible(), `${label}: non-official notice is missing`);
+    assert(!(await page.locator("#detail-official-references").isVisible()), `${label}: empty official references must be hidden`);
     const detailNotice = await page.locator("#detail-unofficial-notice").textContent();
     assert(detailNotice.includes("公式情報で確認できない内容もあるため") && detailNotice.includes("複数の情報源や実環境で追加確認"), `${label}: detail notice must explain that official confirmation may not exist`);
     assert(await page.locator("#detail-source-link").evaluate((link) => link.href.startsWith("https://") && link.target === "_blank" && link.rel.includes("noreferrer")), `${label}: source link is unsafe`);
