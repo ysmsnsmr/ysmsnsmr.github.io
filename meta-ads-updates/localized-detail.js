@@ -142,8 +142,8 @@
         row.append(link);
         el.referencesList.append(row);
       }
-      el.references.hidden = !el.referencesList.children.length;
     }
+    el.references.hidden = official || !el.referencesList.children.length;
     setupEmailCopy(item, source, sourceUrl, result, official);
     setupFavorite(sourceUrl);
     el.notice.hidden = official;

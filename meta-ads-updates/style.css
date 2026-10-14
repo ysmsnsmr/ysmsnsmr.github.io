@@ -778,6 +778,10 @@ h1 {
   gap: var(--tracker-space-2);
 }
 
+.detail-section[hidden] {
+  display: none;
+}
+
 .reference-note {
   margin: 0;
   color: var(--tracker-muted);
