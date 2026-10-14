@@ -1605,3 +1605,42 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Add allowlisted reference URLs to state/feed and render them only on unofficial detail pages.
 - Revisit when: References routinely fail to open or imply an endorsement of the unofficial article.
+
+<!-- idea-gate:20261014t120517-malaysia-current-day-weather-policy -->
+## Current-day validity for short-lived weather and Klang Valley-only previous-day haze actions
+
+- Record ID: `20261014t120517-malaysia-current-day-weather-policy`
+- Evaluated: 2026-10-14T12:05:17+08:00
+- Project: ysmsnsmr.github.io / Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 87/100
+- Confidence: medium - The failure is reproduced, but RSS truncation makes recall of multi-region Klang Valley actions uncertain.
+
+### Idea Card
+
+- Purpose: Keep morning Malaysia News useful without presenting expired weather notices as current or carrying irrelevant haze actions forward.
+- First experience: One daily run retains only verifiably current short-term weather and dated Klang Valley haze actions.
+- Scope and cost: A narrow selector/publication check, focused tests and artifact observation; no new paid API or screen.
+- Continuation boundary: Continue if replay and one live artifact show correct inclusion/exclusion; roll back if valid local notices are lost or stale guidance appears.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 14/15 |
+| `evidence_and_learning` | 13/15 |
+| `expected_outcome` | 14/15 |
+| `scope_and_fit` | 12/15 |
+| `ownership_and_reversibility` | 16/20 |
+| **Total** | **87/100** |
+
+### Alternatives
+
+- **SHRINK - Only reject expired warnings:** Leaves ambiguous same-day validity and outside-region haze carryover unresolved.
+
+### Next Step
+
+- Action: Implement a narrow evidence-based gate shared by legacy and Jev candidate pools, then replay the observed artifact.
+- Revisit when: A current Klang Valley action is repeatedly missed because the RSS preview omits its location.; A stale weather notice or relative target day is still displayed after publication.

@@ -51,7 +51,7 @@ from malaysia_groq_render_decision import (
 )
 from malaysia_groq_transport import error_diagnostic, request_chat_completion
 from malaysia_money_claim_guard import source_money_literals, unsupported_money_claim_reason
-from malaysia_expiring_notice import stale_relative_date
+from malaysia_expiring_notice import klang_valley_area_in_body, missing_haze_target_date, stale_relative_date
 import render_malaysia_news_from_json as fallback_renderer
 
 
@@ -327,6 +327,15 @@ def validate_editorial_entry_against_source(item: dict[str, Any], entry: dict[st
         item.get("published_at"), item.get("publication_as_of"), rendered_text, source_text
     ):
         raise ValueError("stale relative date in time-bound notice")
+    if missing_haze_target_date(
+        item.get("published_at"), item.get("publication_as_of"),
+        item.get("title", ""), item.get("description", ""), rendered_text,
+    ):
+        raise ValueError("missing absolute target date in previous-day haze action")
+    if item.get("haze_area_verified_from_body") and not klang_valley_area_in_body(
+        str(item.get("body_evidence_excerpt") or "")
+    ):
+        raise ValueError("missing Klang Valley body evidence for carried haze action")
     if "学生を失った" in rendered_text and not has_any_text(source_text, ["death", "dead", "died", "killed", "fatal", "meninggal", "maut"]):
         raise ValueError("unsafe losing students wording")
     if any(
