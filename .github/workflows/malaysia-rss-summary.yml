@@ -196,6 +196,19 @@ jobs:
           echo "groq_rate_reset_wait_max_seconds=${model_rate_reset_wait_max_seconds}" >> "${GITHUB_OUTPUT}"
           echo "groq_request_cap=${groq_request_cap}" >> "${GITHUB_OUTPUT}"
 
+      - name: Install body enrichment dependencies
+        if: steps.optional.outputs.enable_body_enrichment == 'true'
+        shell: bash
+        run: |
+          set -u
+          run_dir="${{ steps.optional.outputs.run_dir }}"
+          if python3 -m pip install newspaper3k lxml_html_clean > "${run_dir}/body_dependency_install_stdout.log" 2> "${run_dir}/body_dependency_install_stderr.log"; then
+            echo "success" > "${run_dir}/body_dependency_install_status.txt"
+          else
+            echo "failed" > "${run_dir}/body_dependency_install_status.txt"
+            echo "::warning::Optional body enrichment dependency install failed; RSS-only output will continue."
+          fi
+
       - name: Generate Malaysia RSS summary
         id: generate
         shell: bash
@@ -276,19 +289,6 @@ jobs:
           # fallback, because its RSS-derived entry may still be generic.
           cp "${baseline_output}" "${run_dir}/rss_production_fallback.md"
           echo "status=${status}" >> "${GITHUB_OUTPUT}"
-
-      - name: Install body enrichment dependencies
-        if: steps.optional.outputs.enable_body_enrichment == 'true'
-        shell: bash
-        run: |
-          set -u
-          run_dir="${{ steps.optional.outputs.run_dir }}"
-          if python3 -m pip install newspaper3k lxml_html_clean > "${run_dir}/body_dependency_install_stdout.log" 2> "${run_dir}/body_dependency_install_stderr.log"; then
-            echo "success" > "${run_dir}/body_dependency_install_status.txt"
-          else
-            echo "failed" > "${run_dir}/body_dependency_install_status.txt"
-            echo "::warning::Optional body enrichment dependency install failed; RSS-only output will continue."
-          fi
 
       - name: Run optional body enrichment
         if: steps.optional.outputs.enable_body_enrichment == 'true'

@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Optional
 
 from malaysia_news_display_categories import DISPLAY_CATEGORIES, display_category_for_legacy
-from malaysia_expiring_notice import notice_deadline
+from malaysia_expiring_notice import klang_valley_area_in_body, notice_deadline, publication_rejection_reason
 
 
 UA = "Mozilla/5.0"
@@ -29,6 +29,7 @@ SOURCES = [
 ]
 PAUL_TAN_SOURCE = ("Paul Tan", "Paul Tan", "https://paultan.org/feed/")
 MYT = timezone(timedelta(hours=8))
+HAZE_BODY_CHECK_CAP = 6
 
 FLAG_WEATHER = "is_weather"
 FLAG_HEAT = "is_heat"
@@ -300,6 +301,7 @@ class Item:
     expires_at: datetime | None = None
     active_until: datetime | None = None
     flags: dict[str, bool] = field(default_factory=dict)
+    haze_area_verified_from_body: bool = False
 
     def __post_init__(self) -> None:
         if self.published_at is None:
@@ -1786,6 +1788,8 @@ def build_editorial_candidate_pool_json(
         "candidate_policy": {
             "freshness_applied": True,
             "expired_time_bound_notices_removed": True,
+            "current_day_weather_and_klang_valley_haze_applied": True,
+            "ambiguous_haze_body_check_cap": HAZE_BODY_CHECK_CAP,
             "valid_url_required": True,
             "duplicate_url_removed": True,
             "canonical_deduplication_applied": False,
@@ -1821,6 +1825,20 @@ def build_editorial_candidate_pool_json(
             for item in LAST_EDITORIAL_CANDIDATE_POOL
         ],
     }
+
+
+def verify_haze_area_from_body(item: Item) -> bool:
+    """Read only ambiguous Malay Mail haze actions, using the existing body extractor."""
+    if item.source != "Malay Mail" or urllib.parse.urlparse(item.link).hostname != "www.malaymail.com":
+        return False
+    try:
+        from newspaper import Article, Config
+        from enrich_malaysia_selected_items_with_body import fetch_article_body
+
+        fields = fetch_article_body({"link": item.link}, Article, Config, timeout_sec=10.0, excerpt_chars=1500)
+    except (ImportError, ValueError):
+        return False
+    return klang_valley_area_in_body(str(fields.get("body_excerpt", "")))
 
 
 def deduplicate_article_urls(items: list[Item]) -> tuple[list[Item], list[tuple[Item, Item]]]:
@@ -1871,6 +1889,7 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
             }
 
     valid_url_items: list[Item] = []
+    haze_body_checks = 0
     for item in recent:
         evaluate_item(item)
         if not valid_article_url(item.link):
@@ -1880,13 +1899,20 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
                 "decision_reason": "article URL must use HTTP or HTTPS and include a host",
             }
             continue
-        deadline = notice_deadline(item.title, item.description, item.pub_date)
-        if deadline is not None and deadline <= now.astimezone(MYT):
-            item.expires_at = deadline
+        rejection = publication_rejection_reason(item.title, item.description, item.pub_date, now)
+        if rejection == "haze_action_area_unverified" and haze_body_checks < HAZE_BODY_CHECK_CAP:
+            haze_body_checks += 1
+            if verify_haze_area_from_body(item):
+                item.haze_area_verified_from_body = True
+                rejection = None
+        if rejection:
+            deadline = notice_deadline(item.title, item.description, item.pub_date)
+            if deadline is not None:
+                item.expires_at = deadline
             decisions[id(item)] = {
                 "decision": "excluded",
-                "decision_stage": "expired_time_bound_notice",
-                "decision_reason": "same-day weather warning deadline passed before publication",
+                "decision_stage": rejection,
+                "decision_reason": "time-sensitive source text does not verify current-day validity and region",
             }
             continue
         valid_url_items.append(item)
@@ -2311,6 +2337,7 @@ def item_json(item: Item) -> dict[str, object]:
         "reasons": item.reasons,
         "penalties": item.penalties,
         "background_value": item.background_value,
+        "haze_area_verified_from_body": item.haze_area_verified_from_body,
         "selected_summary": selected_summary_json(item),
         "editorial_entry": editorial_entry_json(item),
     }

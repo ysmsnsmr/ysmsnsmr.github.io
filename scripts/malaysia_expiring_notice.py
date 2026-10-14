@@ -1,13 +1,15 @@
 """Narrow time checks for short-lived notices and their rendered dates."""
 
+from __future__ import annotations
+
 import re
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 
 
 MYT = timezone(timedelta(hours=8))
 WEATHER_NOTICE = re.compile(
-    r"thunderstorm|heavy rain|gusty winds|weather (?:warning|advisory)|"
-    r"amaran ribut petir|hujan lebat",
+    r"thunderstorm|severe storms?|heavy rain|gusty winds|weather (?:warning|advisory|forecast)|"
+    r"amaran ribut petir|ribut petir|hujan lebat|ramalan cuaca",
     re.IGNORECASE,
 )
 UNTIL_HOUR = re.compile(r"\buntil\s+(\d{1,2})(?::(\d{2}))?\s*(am|pm)\b", re.IGNORECASE)
@@ -19,32 +21,127 @@ MONTH_DAY = re.compile(
 )
 ISO_DATE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b")
 RELATIVE_JA = re.compile(r"本日|今日|明日|今朝|今夜|今夕|昨夜|昨日")
+TODAY = re.compile(r"\btoday\b|\bhari ini\b", re.IGNORECASE)
+WEATHER_FORECAST = re.compile(r"\b(?:warning|warns?|forecast|expected|advisory|alert|amaran|dijangka|ramalan)\b", re.IGNORECASE)
+HAZE = re.compile(r"\bhaze\b|\bjerebu\b", re.IGNORECASE)
+HAZE_ACTION = re.compile(r"\b(?:schools?|classes|examinations?|closures?|closed|reopen(?:ing)?|"
+                         r"flights?|trains?|buses|roads?|transport|service disruption|services? suspended)\b", re.IGNORECASE)
+KLANG_VALLEY = re.compile(
+    r"\b(?:Klang Valley|Greater Kuala Lumpur|Kuala Lumpur|Putrajaya|Petaling(?: Jaya| Perdana)?|"
+    r"Hulu Langat|Sepang|Shah Alam|Subang(?: Jaya)?|Klang|Puchong|Cheras|Ampang|Gombak)\b",
+    re.IGNORECASE,
+)
+DATELINE = re.compile(r"^\s*[A-Z][A-Z ]{2,},\s*(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\w*\s+\d{1,2}\s*[—–-]\s*", re.IGNORECASE)
+
+
+def _article_text(title: str, description: str) -> str:
+    return f"{title} {DATELINE.sub('', description)}"
+
+
+def _target_date(title: str, description: str, published_at: datetime) -> date | None:
+    if published_at.tzinfo is None:
+        return None
+    published_day = published_at.astimezone(MYT).date()
+    month_names = ("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec")
+    for text in (title, DATELINE.sub("", description)):
+        future = bool(FUTURE_DAY.search(text))
+        today = bool(TODAY.search(text))
+        if future and today:
+            return None
+        if future:
+            return published_day + timedelta(days=1)
+        if today:
+            return published_day
+        iso_dates = list(ISO_DATE.finditer(text))
+        if len(iso_dates) == 1:
+            try:
+                candidate = date.fromisoformat(iso_dates[0].group())
+            except ValueError:
+                return None
+            return candidate if (candidate - published_day).days in (-1, 0, 1) else None
+        if len(iso_dates) > 1:
+            return None
+        dates = list(MONTH_DAY.finditer(text))
+        if len(dates) == 1:
+            month = month_names.index(dates[0][1][:3].lower()) + 1
+            day = int(dates[0][2])
+            try:
+                candidate = date(published_day.year, month, day)
+            except ValueError:
+                return None
+            if (candidate - published_day).days in (-1, 0, 1):
+                return candidate
+            return None
+        if len(dates) > 1:
+            return None
+    return None
+
+
+def haze_action_target_date(title: str, description: str, published_at: datetime) -> date | None:
+    text = _article_text(title, description)
+    if not HAZE.search(text) or not HAZE_ACTION.search(text):
+        return None
+    return _target_date(title, description, published_at)
+
+
+def klang_valley_area_in_body(body: str) -> bool:
+    return bool(KLANG_VALLEY.search(DATELINE.sub("", body)))
+
+
+def publication_rejection_reason(
+    title: str, description: str, published_at: datetime, publication_as_of: datetime
+) -> str | None:
+    """Require dated source evidence before carrying time-sensitive news into a daily edition."""
+    text = _article_text(title, description)
+    short_weather = WEATHER_NOTICE.search(text) and (WEATHER_FORECAST.search(title) or UNTIL_HOUR.search(text))
+    haze_action = HAZE.search(text) and HAZE_ACTION.search(text)
+    if not short_weather and not haze_action:
+        return None
+    if published_at.tzinfo is None or publication_as_of.tzinfo is None:
+        return "unverified_publication_time"
+    source_day = published_at.astimezone(MYT).date()
+    publication_day = publication_as_of.astimezone(MYT).date()
+    if short_weather:
+        deadline = notice_deadline(title, description, published_at)
+        if deadline is not None and deadline <= publication_as_of.astimezone(MYT):
+            return "expired_time_bound_notice"
+        target_day = _target_date(title, description, published_at)
+        if target_day is None and (FUTURE_DAY.search(text) or TODAY.search(text) or MONTH_DAY.search(text) or ISO_DATE.search(text)):
+            return "unverified_weather_target_day"
+        target_day = target_day or source_day
+        if target_day != publication_day:
+            return "weather_not_for_publication_day"
+        if deadline is None:
+            return "unverified_weather_validity"
+    if source_day < publication_day and haze_action:
+        target_day = haze_action_target_date(title, description, published_at)
+        if target_day != publication_day:
+            return "haze_action_not_for_publication_day"
+        if not KLANG_VALLEY.search(text):
+            return "haze_action_area_unverified"
+    return None
 
 
 def notice_deadline(title: str, description: str, published_at: datetime) -> datetime | None:
-    """Resolve only same-day weather deadlines that the RSS text makes clear."""
+    """Resolve a weather deadline only when the article's target day is clear."""
     text = f"{title} {description}"
-    if not WEATHER_NOTICE.search(text) or FUTURE_DAY.search(text):
+    if not WEATHER_NOTICE.search(text):
         return None
-    matches = list(UNTIL_HOUR.finditer(text))
+    matches = {(match[1], match[2] or "0", match[3].lower()) for match in UNTIL_HOUR.finditer(text)}
     if len(matches) != 1 or published_at.tzinfo is None:
         return None
-    match = matches[0]
-    hour, minute = int(match[1]), int(match[2] or 0)
+    raw_hour, raw_minute, period = matches.pop()
+    hour, minute = int(raw_hour), int(raw_minute)
     if not 1 <= hour <= 12 or minute > 59:
         return None
-    hour = hour % 12 + (12 if match[3].lower() == "pm" else 0)
+    hour = hour % 12 + (12 if period == "pm" else 0)
     published_myt = published_at.astimezone(MYT)
-    month_names = ("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec")
-    if any(
-        month_names.index(date_match[1][:3].lower()) + 1 != published_myt.month
-        or int(date_match[2]) != published_myt.day
-        for date_match in MONTH_DAY.finditer(text)
-    ):
+    target_day = _target_date(title, description, published_at)
+    clean_text = _article_text(title, description)
+    if target_day is None and (FUTURE_DAY.search(clean_text) or TODAY.search(clean_text) or MONTH_DAY.search(clean_text) or ISO_DATE.search(clean_text)):
         return None
-    if any(date_match.group() != published_myt.date().isoformat() for date_match in ISO_DATE.finditer(text)):
-        return None
-    deadline = published_myt.replace(hour=hour, minute=minute, second=0, microsecond=0)
+    target_day = target_day or published_myt.date()
+    deadline = datetime(target_day.year, target_day.month, target_day.day, hour, minute, tzinfo=MYT)
     # An already-past hour in the source cannot safely be resolved to that day.
     if deadline < published_myt:
         return None
@@ -53,7 +150,12 @@ def notice_deadline(title: str, description: str, published_at: datetime) -> dat
 
 def stale_relative_date(published_at: str, publication_as_of: str, rendered_text: str, source_text: str) -> bool:
     """Reject relative Japanese dates only for a previous-day, time-bound source."""
-    if not (UNTIL_HOUR.search(source_text) or WEATHER_NOTICE.search(source_text)) or not RELATIVE_JA.search(rendered_text):
+    time_sensitive = (
+        UNTIL_HOUR.search(source_text)
+        or (WEATHER_NOTICE.search(source_text) and WEATHER_FORECAST.search(source_text))
+        or (HAZE.search(source_text) and HAZE_ACTION.search(source_text))
+    )
+    if not time_sensitive or not RELATIVE_JA.search(rendered_text):
         return False
     try:
         source_time = datetime.fromisoformat(published_at)
@@ -63,3 +165,22 @@ def stale_relative_date(published_at: str, publication_as_of: str, rendered_text
     if source_time.tzinfo is None or publication_time.tzinfo is None:
         return False
     return source_time.astimezone(MYT).date() != publication_time.astimezone(MYT).date()
+
+
+def missing_haze_target_date(
+    published_at: str, publication_as_of: str, title: str, description: str, rendered_text: str
+) -> bool:
+    try:
+        source_time = datetime.fromisoformat(published_at)
+        publication_time = datetime.fromisoformat(publication_as_of)
+    except (TypeError, ValueError):
+        return False
+    if source_time.tzinfo is None or publication_time.tzinfo is None:
+        return False
+    target_day = haze_action_target_date(title, description, source_time)
+    if target_day is None or source_time.astimezone(MYT).date() >= publication_time.astimezone(MYT).date():
+        return False
+    return not (
+        re.search(rf"{target_day.month}月\s*{target_day.day}日", rendered_text)
+        or target_day.isoformat() in rendered_text
+    )
