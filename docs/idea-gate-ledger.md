@@ -1644,3 +1644,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Implement a narrow evidence-based gate shared by legacy and Jev candidate pools, then replay the observed artifact.
 - Revisit when: A current Klang Valley action is repeatedly missed because the RSS preview omits its location.; A stale weather notice or relative target day is still displayed after publication.
+
+<!-- idea-gate:20261017-otabe-public-slot -->
+## 友人がブラウザで開ける食材スロットを静的公開する
+
+- Record ID: `20261017-otabe-public-slot`
+- Evaluated: 2026-10-17T12:00:00+08:00
+- Project: ysmsnsmr.github.io / 今日のおたべ！
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 88/100
+- Confidence: medium - 目的と最小体験は明確だが、友人の実機フィードバックと正式な文言は未確認
+
+### Idea Card
+
+- Purpose: 友人同士で身内ネタの食材スロットを気軽に楽しむ
+- First experience: スマホでURLを開きSTARTから停止・結果表示まで一回遊べる
+- Scope and cost: 静的ページ1枚、既存GitHub Pages、追加費用と個人データ保存なし
+- Continuation boundary: 実機で友人が遊べれば一区切り。追加演出は反応と画像使用許可を得てから判断
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 14/15 |
+| `evidence_and_learning` | 11/15 |
+| `expected_outcome` | 13/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 18/20 |
+| **Total** | **88/100** |
+
+### Next Step
+
+- Action: 新しい静的ページを作り、既存GitHub Pagesで公開してURLを検証する
+- Revisit when: 友人の反応を得て演出を追加する場合; 友人の画像を利用する許可を得た場合
