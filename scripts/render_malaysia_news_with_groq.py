@@ -51,7 +51,13 @@ from malaysia_groq_render_decision import (
 )
 from malaysia_groq_transport import error_diagnostic, request_chat_completion
 from malaysia_money_claim_guard import source_money_literals, unsupported_money_claim_reason
-from malaysia_expiring_notice import klang_valley_area_in_body, missing_haze_target_date, stale_relative_date
+from malaysia_expiring_notice import (
+    anchor_source_day_reference,
+    klang_valley_area_in_body,
+    missing_haze_target_date,
+    stale_relative_date,
+    stale_source_day_reference,
+)
 import render_malaysia_news_from_json as fallback_renderer
 
 
@@ -69,6 +75,7 @@ body_evidenceがない場合はRSSの情報だけを使ってください。入�
 entry_jaは、読者が出典リンクを開くか判断できる日本語の概要です。必要な事実が複数あれば文を分けて十分に説明し、無理に短縮しないでください。ただし根拠のない説明や同じ情報の繰り返しで水増ししないでください。主体、発言者・帰属、計画・提案・予報・調査・疑惑・否定などの確定度を、自然文の中で落とさないでください。
 発言記事では発言者または当局を自然に残してください。計画・提案・予報・警報・調査・疑惑・否定を、完了・確定した事実として書き換えないでください。
 入力のpublication_as_ofとpublished_atはマレーシア時間の基準です。警報、運行変更、募集などに対象日時や終了時刻が明記されている場合は、概要に日付と時刻を絶対表記で残してください。「今日」「明日」「現在」だけで時点を表さないでください。終了時刻がpublication_as_ofより前なら、今も有効な案内として書かず、終了した発表として記述してください。終了時刻が不明なら推測せず、掲載時点の発表として記述してください。
+published_atがpublication_as_ofより前の日付なら、原文のtodayやthis morningを掲載日の「本日」「今日」「今朝」に持ち越さず、原文が示す日付を絶対表記にしてください。根拠のない日時は補わないでください。
 補足欄は作りません。生活影響や次アクションは入力に明確な根拠がある場合だけ概要へ自然に含めてください。
 RSSにない数値、対象者、死亡、事故、被害、収入減、因果関係を足さないでください。“lost students”, “losing students” は死亡を意味すると明確でない限り、利用者・生徒の減少として訳してください。
 金額を書く場合は、title、description、body_evidenceにある表記を通貨・数字・単位ごとそのまま使ってください。source_money_literalsはその原文表記です。RM130mを「1億3000万リンギット」に換算する必要はありません。RSS entry内の金額は根拠としません。原文にない円換算や「円相当」は書かないでください。
@@ -82,6 +89,7 @@ REPAIR_SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュース
 入力記事JSONのtitle、description、必要に応じてbody_evidenceだけを根拠にしてください。入力にない事実、数値、主体、因果関係、死亡、事故、被害、収入減を加えないでください。
 原文が発言、計画、予報、警報、調査、疑惑、否定を表す場合は、確定した事実に書き換えないでください。dateline、wire credit、広告、関連記事は出力しません。
 入力のpublication_as_ofとpublished_atを基準に、対象日時や終了時刻が明記されている場合は絶対表記で残し、終了済みの案内を現在も有効と書かないでください。「今日」「明日」「現在」だけの表現は避け、期限不明なら推測しないでください。
+published_atがpublication_as_ofより前の日付なら、原文のtodayやthis morningを掲載日の「本日」「今日」「今朝」に持ち越さず、原文が示す日付を絶対表記にしてください。
 金額を書く場合は原文の通貨・数字・単位をそのまま使い、億・万への換算や原文にない円換算をしないでください。RSS entry内の金額は根拠としません。
 原文のhaze、jerebuは概要に原文表記のまま残し、「濃霧」「霧」に置き換えないでください。大気汚染の指標API、IPU、APIMSも原文の略語と数値を保ってください。見出しでも別の現象として表現しないでください。
 通常見出しはUnicode文字数で60文字以内、短見出しは最大26文字の自然な日本語にしてください。短見出しで意味が落ちる場合は通常見出しと同じ文を使って構いません。概要は読者が出典を開くか判断できる長さで、必要な事実を省かず日本語で書いてください。
@@ -92,6 +100,7 @@ MONEY_REPAIR_SYSTEM_PROMPT = """日本語のニュース概要を原文の事実
 金額を書く場合はsource_money_literalsの表記を通貨・数字・単位ごと正確にコピーしてください。日本語の億・万や円へ換算しないでください。原文に金額がない場合は金額を書かないでください。
 原文のhaze、jerebuは概要に原文表記のまま残し、「濃霧」「霧」に置き換えないでください。大気汚染の指標API、IPU、APIMSも原文の略語と数値を保ってください。見出しでも別の現象として表現しないでください。
 原文にない事実を足さず、主体、対象、方向、計画・発言・予報などの確定度を保持してください。補足欄は作りません。
+published_atがpublication_as_ofより前の日付なら、原文のtodayやthis morningを「本日」「今日」「今朝」とせず、原文が示す日付を絶対表記にしてください。
 返答は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
 {"editorial_entry":{"headline_ja":"string","short_headline_ja":"string","entry_ja":"string"}}"""
 
@@ -142,6 +151,16 @@ def editorial_entry_text(entry: dict[str, Any]) -> str:
             clean_text(entry.get("entry_ja")),
         ]
     ).strip()
+
+
+def anchor_previous_day_entry(item: dict[str, Any], entry: dict[str, Any]) -> dict[str, Any]:
+    source_text = money_source_text(item)
+    return {
+        field: anchor_source_day_reference(
+            item.get("published_at"), item.get("publication_as_of"), entry[field], source_text
+        )
+        for field in ("headline_ja", "short_headline_ja", "entry_ja")
+    }
 
 
 def preserve_haze_term(item: dict[str, Any], entry: dict[str, Any]) -> dict[str, Any]:
@@ -327,6 +346,8 @@ def validate_editorial_entry_against_source(item: dict[str, Any], entry: dict[st
         item.get("published_at"), item.get("publication_as_of"), rendered_text, source_text
     ):
         raise ValueError("stale relative date in time-bound notice")
+    if stale_source_day_reference(item.get("published_at"), item.get("publication_as_of"), rendered_text):
+        raise ValueError("stale source-day reference in previous-day article")
     if missing_haze_target_date(
         item.get("published_at"), item.get("publication_as_of"),
         item.get("title", ""), item.get("description", ""), rendered_text,
@@ -447,7 +468,7 @@ def request_groq_summary(
     except ValueError as error:
         raise GroqEditorialEntryContractError(str(error) or "contract validation failed", completion.diagnostic) from error
     try:
-        entry = preserve_haze_term(item, entry)
+        entry = anchor_previous_day_entry(item, preserve_haze_term(item, entry))
         if not headline_is_valid(entry["headline_ja"]) or not short_headline_is_valid(entry["short_headline_ja"]):
             raise ValueError("source haze term exceeds headline limit")
         validate_editorial_entry_against_source(item, entry)
@@ -484,7 +505,7 @@ def request_groq_repair_entry(
     except ValueError as error:
         raise GroqEditorialEntryContractError(str(error) or "repair contract validation failed", completion.diagnostic) from error
     try:
-        entry = preserve_haze_term(item, entry)
+        entry = anchor_previous_day_entry(item, preserve_haze_term(item, entry))
         if not headline_is_valid(entry["headline_ja"]) or not short_headline_is_valid(entry["short_headline_ja"]):
             raise ValueError("source haze term exceeds headline limit")
         validate_editorial_entry_against_source(item, entry)

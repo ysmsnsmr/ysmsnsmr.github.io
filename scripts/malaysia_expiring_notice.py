@@ -21,6 +21,12 @@ MONTH_DAY = re.compile(
 )
 ISO_DATE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b")
 RELATIVE_JA = re.compile(r"本日|今日|明日|今朝|今夜|今夕|昨夜|昨日")
+SOURCE_DAY_JA = re.compile(r"本日|今日|今朝")
+SOURCE_TODAY = re.compile(
+    r"\btoday\b|\bhari ini\b|\b(?:as at|as of)\s+\d{1,2}(?:[.:]\d{1,2})?\s*(?:am|pm)\b",
+    re.IGNORECASE,
+)
+SOURCE_THIS_MORNING = re.compile(r"\bthis morning\b|\bpagi (?:ini|tadi)\b", re.IGNORECASE)
 TODAY = re.compile(r"\btoday\b|\bhari ini\b", re.IGNORECASE)
 WEATHER_FORECAST = re.compile(r"\b(?:warning|warns?|forecast|expected|advisory|alert|amaran|dijangka|ramalan)\b", re.IGNORECASE)
 HAZE = re.compile(r"\bhaze\b|\bjerebu\b", re.IGNORECASE)
@@ -165,6 +171,43 @@ def stale_relative_date(published_at: str, publication_as_of: str, rendered_text
     if source_time.tzinfo is None or publication_time.tzinfo is None:
         return False
     return source_time.astimezone(MYT).date() != publication_time.astimezone(MYT).date()
+
+
+def previous_day_source_date(published_at: str, publication_as_of: str) -> date | None:
+    try:
+        source_time = datetime.fromisoformat(published_at)
+        publication_time = datetime.fromisoformat(publication_as_of)
+    except (TypeError, ValueError):
+        return None
+    if source_time.tzinfo is None or publication_time.tzinfo is None:
+        return None
+    source_day = source_time.astimezone(MYT).date()
+    return source_day if source_day < publication_time.astimezone(MYT).date() else None
+
+
+def stale_source_day_reference(published_at: str, publication_as_of: str, rendered_text: str) -> bool:
+    return previous_day_source_date(published_at, publication_as_of) is not None and bool(
+        SOURCE_DAY_JA.search(rendered_text)
+    )
+
+
+def anchor_source_day_reference(
+    published_at: str, publication_as_of: str, rendered_text: str, source_text: str
+) -> str:
+    """Use the source day only where the source itself supports a relative-day reading."""
+    source_day = previous_day_source_date(published_at, publication_as_of)
+    if source_day is None or stale_relative_date(published_at, publication_as_of, rendered_text, source_text):
+        return rendered_text
+    absolute = f"{source_day.year}年{source_day.month}月{source_day.day}日"
+    text = rendered_text
+    for marker in ("本日", "今日"):
+        text = re.sub(rf"{marker}\s*(?={re.escape(absolute)})", "", text)
+        text = re.sub(rf"{marker}\s*[（(]\s*{re.escape(absolute)}\s*[）)]", absolute, text)
+    if SOURCE_TODAY.search(source_text):
+        text = re.sub(r"本日|今日", absolute, text)
+    if SOURCE_THIS_MORNING.search(source_text):
+        text = text.replace("今朝", f"{absolute}朝")
+    return text
 
 
 def missing_haze_target_date(
