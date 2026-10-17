@@ -7,7 +7,8 @@ from unittest.mock import patch
 
 import malaysia_rss_summary as summary
 from malaysia_expiring_notice import (
-    klang_valley_area_in_body, notice_deadline, publication_rejection_reason, stale_relative_date,
+    anchor_source_day_reference, klang_valley_area_in_body, notice_deadline,
+    publication_rejection_reason, stale_relative_date, stale_source_day_reference,
 )
 from render_malaysia_news_with_groq import validate_editorial_entry_against_source
 
@@ -180,6 +181,52 @@ class ExpiringNoticeTests(unittest.TestCase):
         self.assertFalse(stale_relative_date(
             PUBLISHED.isoformat(), item["publication_as_of"], "昨日の被害", "A thunderstorm hit yesterday"
         ))
+
+    def test_previous_day_general_article_anchors_source_supported_today_and_morning(self) -> None:
+        published = "2026-10-16T19:23:20+08:00"
+        publication = "2026-10-17T06:12:56+08:00"
+        self.assertEqual(anchor_source_day_reference(
+            published, publication, "本日午後5時30分時点でAPIが202に上昇",
+            "The API was 202 as at 5.30pm.",
+        ), "2026年10月16日午後5時30分時点でAPIが202に上昇")
+        self.assertEqual(anchor_source_day_reference(
+            published, publication, "今朝5時30分頃に電力が停止",
+            "The incident disrupted services early this morning.",
+        ), "2026年10月16日朝5時30分頃に電力が停止")
+        self.assertEqual(anchor_source_day_reference(
+            published, publication, "本日2026年10月16日から施行",
+            "The act came into force on October 16.",
+        ), "2026年10月16日から施行")
+        self.assertEqual(anchor_source_day_reference(
+            published, publication, "今日（2026年10月16日）から施行",
+            "The act came into force on October 16.",
+        ), "2026年10月16日から施行")
+        self.assertEqual(anchor_source_day_reference(
+            published, published, "本日午後5時30分時点", "The API was 202 as at 5.30pm.",
+        ), "本日午後5時30分時点")
+
+    def test_previous_day_general_article_does_not_invent_an_unsupported_date(self) -> None:
+        published = "2026-10-16T19:23:20+08:00"
+        publication = "2026-10-17T06:12:56+08:00"
+        source = "The ministry announced new guidance."
+        for text in ("本日発表された", "今日発表された", "今朝発表された"):
+            with self.subTest(text=text):
+                self.assertEqual(anchor_source_day_reference(published, publication, text, source), text)
+                self.assertTrue(stale_source_day_reference(published, publication, text))
+        item = {"title": source, "description": "", "published_at": published, "publication_as_of": publication}
+        entry = {"headline_ja": "当局が指針を発表", "short_headline_ja": "新しい指針", "entry_ja": "本日発表された。"}
+        with self.assertRaisesRegex(ValueError, "stale source-day reference"):
+            validate_editorial_entry_against_source(item, entry)
+        self.assertFalse(stale_source_day_reference(published, published, "本日発表された"))
+
+    def test_time_bound_hard_safety_is_not_bypassed_by_date_anchoring(self) -> None:
+        published = "2026-10-16T16:00:00+08:00"
+        publication = "2026-10-17T06:00:00+08:00"
+        source = "MetMalaysia issued a thunderstorm warning until 6pm today."
+        self.assertEqual(anchor_source_day_reference(
+            published, publication, "本日午後6時まで警報", source,
+        ), "本日午後6時まで警報")
+        self.assertTrue(stale_relative_date(published, publication, "本日午後6時まで警報", source))
 
     def test_previous_day_haze_summary_needs_absolute_target_date(self) -> None:
         item = {

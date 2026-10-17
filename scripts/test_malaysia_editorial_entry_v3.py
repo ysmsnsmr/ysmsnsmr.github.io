@@ -70,6 +70,45 @@ def accepted_result(index: int) -> groq_renderer.GroqEditorialEntryResult:
 
 
 class EditorialEntryV3Test(unittest.TestCase):
+    def test_previous_day_source_date_is_anchored_in_primary_and_repair_entries(self) -> None:
+        article = item()
+        article.update(
+            title="Haze watch: API hits 202 in Pasir Gudang",
+            description="Air quality reached 202 as at 5.30pm.",
+            published_at="2026-10-16T19:23:20+08:00",
+            publication_as_of="2026-10-17T06:12:56+08:00",
+        )
+        parsed = {"editorial_entry": {
+            "headline_ja": "パシル・グダンでAPIが202に上昇",
+            "short_headline_ja": "APIが202に上昇",
+            "entry_ja": "本日午後5時30分時点でAPIが202に上昇しました。",
+        }}
+        completion = ChatCompletion("{}", parsed, {"transport_status": "success", "json_contract_status": "valid"})
+        with patch("render_malaysia_news_with_groq.request_chat_completion", return_value=completion):
+            primary = groq_renderer.request_groq_summary(article, "key", "openai/gpt-oss-120b")
+            repair = groq_renderer.request_groq_repair_entry(article, "key", "openai/gpt-oss-120b")
+        for result in (primary, repair):
+            self.assertEqual(
+                result.editorial_entry["entry_ja"],
+                "2026年10月16日午後5時30分時点でAPIが202に上昇しました。",
+            )
+
+    def test_previous_day_relative_date_without_source_evidence_is_rejected(self) -> None:
+        article = item()
+        article.update(
+            published_at="2026-10-16T10:00:00+08:00",
+            publication_as_of="2026-10-17T06:00:00+08:00",
+        )
+        parsed = {"editorial_entry": {
+            "headline_ja": "交通計画を発表",
+            "short_headline_ja": "交通計画を発表",
+            "entry_ja": "今朝、新しい交通計画を発表しました。",
+        }}
+        completion = ChatCompletion("{}", parsed, {"transport_status": "success", "json_contract_status": "valid"})
+        with patch("render_malaysia_news_with_groq.request_chat_completion", return_value=completion):
+            with self.assertRaisesRegex(groq_renderer.GroqEditorialEntryRejected, "stale source-day reference"):
+                groq_renderer.request_groq_summary(article, "key", "openai/gpt-oss-120b")
+
     def test_haze_source_terms_reach_all_generation_paths(self) -> None:
         article = item()
         article["title"] = "Haze eases in Lubok Antu, Kanowit API remains unhealthy"
