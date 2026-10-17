@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffcf4d">
+  <meta name="description" content="今日のおたべは何にする？ 食材を決める小さなスロットゲーム。">
+  <title>今日のおたべ！</title>
+  <style>
+    :root { font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif; color: #30252b; background: #fff9e9; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100svh; background: radial-gradient(circle at 18% 10%, #fff5ba 0 8%, transparent 24%), radial-gradient(circle at 88% 28%, #ffd6dd 0 7%, transparent 25%), #fff9e9; }
+    button, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .page { width: min(100%, 480px); min-height: 100svh; margin: auto; padding: 24px 18px max(36px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; }
+    .eyebrow { margin: 4px 0 8px; color: #9e455d; font-size: .8rem; font-weight: 900; letter-spacing: .18em; }
+    h1 { margin: 0; text-align: center; font-size: clamp(2.3rem, 11vw, 3.55rem); line-height: 1.17; letter-spacing: -.065em; text-shadow: 3px 4px 0 #fff, 5px 7px 0 #f2adba; }
+    .intro { margin: 16px 0 24px; text-align: center; font-size: .98rem; font-weight: 700; }
+    .machine { width: 100%; padding: 17px; border: 4px solid #30252b; border-radius: 34px; background: #ffcf4d; box-shadow: 0 12px 0 #d98160, 0 17px 0 #30252b; }
+    .machine-top { display: flex; align-items: center; justify-content: space-between; padding: 0 8px 13px; font-weight: 900; font-size: .78rem; letter-spacing: .12em; }
+    .light { width: 13px; height: 13px; border: 2px solid #30252b; border-radius: 50%; background: #fff; box-shadow: 22px 0 #ff8d9d, 44px 0 #fff; }
+    .reel-frame { position: relative; overflow: hidden; height: 242px; border: 4px solid #30252b; border-radius: 22px; background: #fffdf5; box-shadow: inset 0 7px 0 #eee4cf; }
+    .reel-frame::before, .reel-frame::after { content: ""; position: absolute; left: 0; right: 0; z-index: 1; height: 41px; pointer-events: none; }
+    .reel-frame::before { top: 0; background: linear-gradient(#fffdf5, transparent); }
+    .reel-frame::after { bottom: 0; background: linear-gradient(transparent, #fffdf5); }
+    .reel { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+    .emoji { display: block; font-size: 5.5rem; line-height: 1.2; filter: drop-shadow(0 6px 0 #f7e5d3); }
+    .food-name { display: block; margin-top: 10px; font-size: clamp(1.5rem, 7vw, 2rem); font-weight: 900; }
+    .running .emoji { animation: hop .18s infinite alternate; }
+    @keyframes hop { to { transform: translateY(-8px) rotate(-5deg); } }
+    .result { min-height: 72px; margin: 25px 2px 4px; display: grid; place-items: center; text-align: center; font-size: 1.28rem; font-weight: 900; line-height: 1.5; }
+    .result.celebrate { animation: pop .4s ease-out; }
+    @keyframes pop { 50% { transform: scale(1.08); } }
+    .controls { display: flex; gap: 12px; width: 100%; margin: 7px 0 0; }
+    .controls button { flex: 1; min-height: 66px; border: 3px solid #30252b; border-radius: 19px; font-size: 1.22rem; font-weight: 900; box-shadow: 0 5px 0 #30252b; transition: transform .12s, box-shadow .12s; }
+    .controls button:active:not(:disabled) { transform: translateY(4px); box-shadow: 0 1px 0 #30252b; }
+    .controls button:disabled { cursor: not-allowed; opacity: .46; box-shadow: none; }
+    .start { background: #ff7792; color: #30252b; }
+    .stop { background: #9cdbca; color: #30252b; }
+    .hint { margin: 22px 0 18px; color: #725b5f; text-align: center; font-size: .83rem; line-height: 1.6; }
+    details { width: 100%; margin-top: auto; border: 2px solid #30252b; border-radius: 18px; background: #fff; overflow: hidden; }
+    summary { padding: 15px 18px; font-weight: 900; cursor: pointer; }
+    .editor { padding: 0 17px 18px; }
+    .editor p { margin: 3px 0 12px; font-size: .85rem; line-height: 1.6; }
+    textarea { display: block; width: 100%; min-height: 155px; padding: 12px; border: 2px solid #bbaeb0; border-radius: 10px; resize: vertical; line-height: 1.65; }
+    textarea:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid #164fbb; outline-offset: 3px; }
+    .editor button { margin-top: 10px; min-height: 44px; padding: 8px 18px; border: 2px solid #30252b; border-radius: 10px; background: #ffcf4d; font-weight: 900; }
+    .editor-message { min-height: 22px; margin-top: 8px; font-size: .82rem; font-weight: 700; }
+    @media (max-width: 360px) { .page { padding-inline: 13px; } .machine { padding: 12px; } .reel-frame { height: 210px; } .emoji { font-size: 4.8rem; } }
+    @media (prefers-reduced-motion: reduce) { .running .emoji, .result.celebrate { animation: none; } .controls button { transition: none; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <p class="eyebrow">FOOD SLOT</p>
+    <h1>今日のおたべ！</h1>
+    <p class="intro">今日の食材、スロットに決めてもらおう。</p>
+
+    <section class="machine" aria-label="食材スロット">
+      <div class="machine-top"><span>★ おたべマシーン ★</span><span class="light" aria-hidden="true"></span></div>
+      <div class="reel-frame" id="reel-frame">
+        <div class="reel">
+          <span class="emoji" id="food-emoji" aria-hidden="true">🍙</span>
+          <span class="food-name" id="food-name">何が出るかな？</span>
+        </div>
+      </div>
+      <p class="result" id="result" role="status" aria-live="polite">STARTを押してね！</p>
+    </section>
+
+    <div class="controls">
+      <button class="start" id="start" type="button">START</button>
+      <button class="stop" id="stop" type="button" disabled>STOP</button>
+    </div>
+    <p class="hint">STOPを押すか、約5秒待つと決まるよ。<br>何度でもチャレンジできます。</p>
+
+    <details>
+      <summary>食材を編集する</summary>
+      <div class="editor">
+        <p>1行に「絵文字 食材名」を入力してください（2〜60種類）。変更はこのページを閉じると戻ります。</p>
+        <label for="foods">食材リスト</label>
+        <textarea id="foods" spellcheck="false" maxlength="2400"></textarea>
+        <button id="apply" type="button">食材を反映</button>
+        <div class="editor-message" id="editor-message" role="status" aria-live="polite"></div>
+      </div>
+    </details>
+  </main>
+  <script>
+    (() => {
+      'use strict';
+      const defaults = [
+        ['🍙', 'おにぎり'], ['🍜', 'ラーメン'], ['🍛', 'カレー'],
+        ['🍗', 'チキン'], ['🥚', 'たまご'], ['🍤', 'えび'],
+        ['🥬', '青菜'], ['🍌', 'バナナ'], ['🥥', 'ココナッツ'],
+        ['🐟', 'さかな'], ['🍞', 'パン'], ['🌶️', '唐辛子']
+      ];
+      let foods = defaults.map(([emoji, name]) => ({ emoji, name }));
+      const emojiEl = document.getElementById('food-emoji');
+      const nameEl = document.getElementById('food-name');
+      const resultEl = document.getElementById('result');
+      const frameEl = document.getElementById('reel-frame');
+      const startEl = document.getElementById('start');
+      const stopEl = document.getElementById('stop');
+      const foodsEl = document.getElementById('foods');
+      const messageEl = document.getElementById('editor-message');
+      foodsEl.value = defaults.map(([emoji, name]) => `${emoji} ${name}`).join('\n');
+
+      let state = 'idle';
+      let currentIndex = -1;
+      let tickTimer;
+      let autoTimer;
+      let finishTimer;
+
+      function showNext() {
+        let next = Math.floor(Math.random() * foods.length);
+        if (foods.length > 1 && next === currentIndex) next = (next + 1) % foods.length;
+        currentIndex = next;
+        emojiEl.textContent = foods[next].emoji;
+        nameEl.textContent = foods[next].name;
+      }
+
+      function clearTimers() {
+        clearInterval(tickTimer);
+        clearTimeout(autoTimer);
+        clearTimeout(finishTimer);
+      }
+
+      function finish() {
+        if (state !== 'stopping') return;
+        state = 'idle';
+        frameEl.classList.remove('running');
+        resultEl.textContent = `今日のおたべは「${foods[currentIndex].name}」！`;
+        resultEl.classList.remove('celebrate');
+        void resultEl.offsetWidth;
+        resultEl.classList.add('celebrate');
+        startEl.disabled = false;
+      }
+
+      function stop() {
+        if (state !== 'running') return;
+        state = 'stopping';
+        clearInterval(tickTimer);
+        clearTimeout(autoTimer);
+        stopEl.disabled = true;
+        const delays = [105, 150, 210, 290, 390];
+        let step = 0;
+        function coast() {
+          if (step === delays.length) { finish(); return; }
+          finishTimer = setTimeout(() => { showNext(); step += 1; coast(); }, delays[step]);
+        }
+        coast();
+      }
+
+      function start() {
+        if (state !== 'idle') return;
+        clearTimers();
+        state = 'running';
+        startEl.disabled = true;
+        stopEl.disabled = false;
+        resultEl.classList.remove('celebrate');
+        resultEl.textContent = 'まわってるよ…';
+        frameEl.classList.add('running');
+        showNext();
+        tickTimer = setInterval(showNext, 75);
+        autoTimer = setTimeout(stop, 5000);
+      }
+
+      startEl.addEventListener('click', start);
+      stopEl.addEventListener('click', stop);
+      document.getElementById('apply').addEventListener('click', () => {
+        if (state !== 'idle') { messageEl.textContent = 'スロットが止まってから反映してください。'; return; }
+        const lines = foodsEl.value.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+        if (lines.length < 2 || lines.length > 60) { messageEl.textContent = '食材は2〜60種類にしてください。'; return; }
+        const parsed = [];
+        for (const line of lines) {
+          const match = line.match(/^(\S+)\s+(.+)$/u);
+          if (!match || match[1].length > 12 || match[2].length > 30) {
+            messageEl.textContent = '各行を「絵文字 食材名」の形にしてください（名前は30文字以内）。';
+            return;
+          }
+          parsed.push({ emoji: match[1], name: match[2] });
+        }
+        foods = parsed;
+        currentIndex = -1;
+        emojiEl.textContent = '🎰';
+        nameEl.textContent = '何が出るかな？';
+        resultEl.textContent = '新しい食材でSTART！';
+        messageEl.textContent = `${foods.length}種類の食材を反映しました。`;
+      });
+    })();
+  </script>
+</body>
+</html>
