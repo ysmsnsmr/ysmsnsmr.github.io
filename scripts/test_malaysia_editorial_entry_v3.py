@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import render_malaysia_news_from_json as markdown_renderer
 import render_malaysia_news_with_groq as groq_renderer
+from malaysia_groq_model_profiles import resolve_model_profile, load_model_profile_registry
 from malaysia_groq_output_contract import (
     EDITORIAL_ENTRY_V3_REPAIR_SCHEMA,
     EDITORIAL_ENTRY_V3_SCHEMA,
@@ -70,6 +71,27 @@ def accepted_result(index: int) -> groq_renderer.GroqEditorialEntryResult:
 
 
 class EditorialEntryV3Test(unittest.TestCase):
+    def test_luna_primary_and_repair_route_to_openai_transport(self) -> None:
+        profile = resolve_model_profile("gpt-6-luna", load_model_profile_registry())
+        with patch("render_malaysia_news_with_groq.request_openai_chat_completion") as openai_request, patch(
+            "render_malaysia_news_with_groq.request_chat_completion"
+        ) as groq_request:
+            groq_renderer.request_editorial_completion(
+                profile=profile,
+                messages=[{"role": "user", "content": "test"}],
+                api_key="test-key",
+                temperature=0.2,
+                max_tokens=800,
+                json_schema_name="contract",
+                json_schema={"type": "object"},
+                schema_error=lambda _: "",
+            )
+
+        openai_request.assert_called_once()
+        self.assertEqual(openai_request.call_args.kwargs["profile"], profile)
+        self.assertEqual(openai_request.call_args.kwargs["max_completion_tokens"], 800)
+        groq_request.assert_not_called()
+
     def test_previous_day_source_date_is_anchored_in_primary_and_repair_entries(self) -> None:
         article = item()
         article.update(
@@ -344,6 +366,17 @@ class EditorialEntryV3Test(unittest.TestCase):
     def test_request_cap_keeps_the_existing_environment_override_name(self) -> None:
         with patch.dict(os.environ, {"MALAYSIA_NEWS_GROQ_FORCE_ALL_REQUEST_CAP": "7"}, clear=False):
             self.assertEqual(force_all_request_cap(), 7)
+
+    def test_provider_neutral_request_cap_takes_precedence(self) -> None:
+        with patch.dict(
+            os.environ,
+            {
+                "MALAYSIA_NEWS_EDITORIAL_REQUEST_CAP": "20",
+                "MALAYSIA_NEWS_GROQ_FORCE_ALL_REQUEST_CAP": "12",
+            },
+            clear=False,
+        ):
+            self.assertEqual(force_all_request_cap(), 20)
 
     def test_hard_safety_rejection_uses_validated_v3_fallback_and_records_reason(self) -> None:
         data = {"items": [item()]}
