@@ -148,6 +148,7 @@ jobs:
 
           model_profile_line="$(python3 -B scripts/malaysia_groq_model_profiles.py resolve-production "${model_input}" --fallback-to-default)"
           IFS=$'\t' read -r model_profile model_short model_name model_prompt_layout model_max_tokens model_contract model_rate_reset_wait_max_seconds <<< "${model_profile_line}"
+          read -r model_provider model_reasoning_setting <<< "$(PYTHONPATH=scripts python3 -B -c 'import sys; from malaysia_groq_model_profiles import profile_for_model_id; p=profile_for_model_id(sys.argv[1]); print(p.provider, p.reasoning_effort or p.reasoning_mode)' "${model_name}")"
           export MALAYSIA_NEWS_EDITORIAL_REQUEST_CAP="20"
           groq_request_cap="$(PYTHONPATH=scripts python3 -B -c 'from malaysia_groq_force_all_policy import force_all_request_cap; print(force_all_request_cap())')"
 
@@ -167,7 +168,9 @@ jobs:
             echo "- debug_groq: ${debug_groq}"
             echo "- editorial_model_profile: ${model_profile}"
             echo "- editorial_model: ${model_name}"
-            echo "- editorial_provider: openai"
+            echo "- editorial_provider: ${model_provider}"
+            echo "- editorial_reasoning_setting: ${model_reasoning_setting}"
+            echo "- editorial_diagnostics: groq_${model_short}_improved_items.json diagnostics.model_run"
             echo "- openai_api_key_configured: $([ -n "${OPENAI_API_KEY:-}" ] && printf 'yes' || printf 'no')"
             echo "- groq_summary_prompt_layout: ${model_prompt_layout}"
             echo "- groq_summary_max_tokens: ${model_max_tokens}"

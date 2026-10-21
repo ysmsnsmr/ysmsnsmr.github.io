@@ -644,6 +644,102 @@ def call_outcome_classification(call: Any) -> str:
     return "transport_and_contract_valid"
 
 
+def model_run_observation(records: list[dict[str, Any]], model: str) -> dict[str, Any]:
+    try:
+        profile = profile_for_model_id(model)
+    except ValueError:
+        profile = None
+    finish_reasons = Counter()
+    failure_classes = Counter()
+    transport_statuses = Counter()
+    contract_statuses = Counter()
+    token_sums = {name: 0 for name in ("prompt_tokens", "completion_tokens", "total_tokens")}
+    token_observations = Counter()
+    primary_call_count = 0
+    repair_call_count = 0
+
+    for record in records:
+        for field, phase in (("groq_call", "primary"), ("groq_repair_call", "repair")):
+            call = record.get(field)
+            if not isinstance(call, dict):
+                continue
+            attempts = call.get("attempts")
+            attempt_records = attempts if isinstance(attempts, list) and attempts else [call]
+            if phase == "primary":
+                primary_call_count += len(attempt_records)
+            else:
+                repair_call_count += len(attempt_records)
+            for attempt in attempt_records:
+                if not isinstance(attempt, dict):
+                    continue
+                finish_reasons[clean_text(attempt.get("finish_reason")) or "not_recorded"] += 1
+                transport = clean_text(attempt.get("transport_status")) or "not_recorded"
+                contract = clean_text(attempt.get("json_contract_status")) or "not_evaluated"
+                transport_statuses[transport] += 1
+                contract_statuses[contract] += 1
+                failure = clean_text(attempt.get("failure_class"))
+                if not failure:
+                    if transport != "success":
+                        failure = transport
+                    elif contract != "valid":
+                        failure = contract
+                    else:
+                        failure = "none"
+                failure_classes[failure] += 1
+                usage = attempt.get("usage")
+                if isinstance(usage, dict):
+                    for name in token_sums:
+                        value = usage.get(name)
+                        if isinstance(value, int) and not isinstance(value, bool):
+                            token_sums[name] += value
+                            token_observations[name] += 1
+
+    token_usage = {
+        name: {
+            "sum": token_sums[name] if token_observations[name] else None,
+            "observed_calls": token_observations[name],
+            "calls_without_usage": max(primary_call_count + repair_call_count - token_observations[name], 0),
+        }
+        for name in token_sums
+    }
+    return {
+        "schema_version": "malaysia-model-run-diagnostics/v1",
+        "provider": profile.provider if profile else next((
+            clean_text(call.get("provider"))
+            for record in records
+            for call in (record.get("groq_call"), record.get("groq_repair_call"))
+            if isinstance(call, dict) and clean_text(call.get("provider"))
+        ), "unknown"),
+        "model": profile.model_id if profile else model,
+        "reasoning_setting": (profile.reasoning_effort or profile.reasoning_mode) if profile else next((
+            clean_text(call.get("reasoning_effort"))
+            for record in records
+            for call in (record.get("groq_call"), record.get("groq_repair_call"))
+            if isinstance(call, dict) and clean_text(call.get("reasoning_effort"))
+        ), "not_recorded"),
+        "request_attempt_counts": {"primary": primary_call_count, "repair": repair_call_count},
+        "token_usage": token_usage,
+        "finish_reason_counts": dict(sorted(finish_reasons.items())),
+        "transport_status_counts": dict(sorted(transport_statuses.items())),
+        "json_contract_status_counts": dict(sorted(contract_statuses.items())),
+        "failure_class_counts": dict(sorted(failure_classes.items())),
+        "repair_result_counts": {
+            "not_attempted": sum(record.get("repair_attempted") is not True for record in records),
+            "accepted": sum(record.get("repair_accepted") is True for record in records),
+            "failed_or_rejected": sum(
+                record.get("repair_attempted") is True and record.get("repair_accepted") is not True
+                for record in records
+            ),
+        },
+        "repair_failure_reason_counts": dict(sorted(Counter(
+            clean_text(record.get("repair_failure_reason"))
+            for record in records
+            if clean_text(record.get("repair_failure_reason"))
+        ).items())),
+        "generation_result_counts": editorial_entry_counts(records),
+    }
+
+
 def transport_observation(records: list[dict[str, Any]]) -> dict[str, Any]:
     transport = Counter()
     contracts = Counter()
@@ -714,6 +810,7 @@ def build_improved_items_payload(
         "diagnostics": {
             "decision_counts": decision_record_counts(decision_records),
             "editorial_entry_counts": editorial_entry_counts(decision_records),
+            "model_run": model_run_observation(decision_records, model),
             "editorial_entry_provenance": provenance_observation(decision_records),
             **transport_observation(decision_records),
             "decision_records": decision_records,

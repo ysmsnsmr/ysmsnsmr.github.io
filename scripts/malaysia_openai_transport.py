@@ -138,7 +138,9 @@ def request_chat_completion(
         method="POST",
     )
     diagnostic: dict[str, Any] = {
-        "provider": "openai", "model": profile.model_id, "transport_status": "invalid_envelope",
+        "provider": "openai", "model": profile.model_id,
+        "reasoning_effort": profile.reasoning_effort,
+        "transport_status": "invalid_envelope", "failure_class": "invalid_envelope",
         "http_status": None, "attempt_count": 1, "elapsed_ms": 0,
         "finish_reason": "other", "content_length": 0,
         "usage": {"prompt_tokens": None, "completion_tokens": None, "total_tokens": None},
@@ -155,6 +157,11 @@ def request_chat_completion(
         raw = error.read(max_response_chars + 1).decode("utf-8", errors="replace")
         diagnostic.update(http_status=error.code, rate_limit=_rate_limit_headers(error.headers))
         diagnostic["transport_status"] = "rate_limited" if error.code == 429 else "http_error"
+        diagnostic["failure_class"] = (
+            "rate_limited" if error.code == 429 else
+            "authentication_failed" if error.code in {401, 403} else
+            "server_error" if error.code >= 500 else "http_error"
+        )
         diagnostic["error"] = _error_fields(raw)
         diagnostic["elapsed_ms"] = round((time.monotonic() - started) * 1000)
         try:
@@ -163,16 +170,17 @@ def request_chat_completion(
             pass
         raise
     except TimeoutError as error:
-        diagnostic.update(transport_status="timeout", elapsed_ms=round((time.monotonic() - started) * 1000))
+        diagnostic.update(transport_status="timeout", failure_class="timeout", elapsed_ms=round((time.monotonic() - started) * 1000))
         error.openai_diagnostic = diagnostic
         raise
     except urllib.error.URLError as error:
-        diagnostic.update(transport_status="network_error", elapsed_ms=round((time.monotonic() - started) * 1000))
+        diagnostic.update(transport_status="network_error", failure_class="network_error", elapsed_ms=round((time.monotonic() - started) * 1000))
         error.openai_diagnostic = diagnostic
         raise
 
     diagnostic["elapsed_ms"] = round((time.monotonic() - started) * 1000)
     if len(raw) > max_response_chars:
+        diagnostic["failure_class"] = "response_too_large"
         raise OpenAITransportValueError("OpenAI response too long", diagnostic)
     try:
         payload = json.loads(raw)
@@ -180,26 +188,27 @@ def request_chat_completion(
         message = choice["message"]
         content = message.get("content")
     except (KeyError, IndexError, TypeError, json.JSONDecodeError) as error:
+        diagnostic["failure_class"] = "invalid_response_envelope"
         raise OpenAITransportValueError("OpenAI response envelope is invalid", diagnostic) from error
     usage = payload.get("usage", {})
     diagnostic["usage"] = {key: usage.get(src) if isinstance(usage.get(src), int) else None for key, src in (("prompt_tokens", "prompt_tokens"), ("completion_tokens", "completion_tokens"), ("total_tokens", "total_tokens"))}
     diagnostic["finish_reason"] = choice.get("finish_reason", "other")
     diagnostic["transport_status"] = "success"
-    if not isinstance(content, str) or not content.strip():
-        diagnostic["json_contract_status"] = "empty"
-        raise OpenAITransportValueError("OpenAI response content is empty", diagnostic)
     if diagnostic["finish_reason"] == "length":
-        diagnostic["json_contract_status"] = "truncated"
+        diagnostic.update(json_contract_status="truncated", failure_class="truncated_output")
         raise OpenAITransportValueError("OpenAI response was truncated", diagnostic)
+    if not isinstance(content, str) or not content.strip():
+        diagnostic.update(json_contract_status="empty", failure_class="empty_output")
+        raise OpenAITransportValueError("OpenAI response content is empty", diagnostic)
     diagnostic["content_length"] = len(content)
     try:
         parsed = json.loads(content)
     except json.JSONDecodeError as error:
-        diagnostic["json_contract_status"] = "invalid_json"
+        diagnostic.update(json_contract_status="invalid_json", failure_class="invalid_json")
         raise OpenAITransportValueError("OpenAI returned invalid JSON", diagnostic) from error
     failure = schema_error(parsed)
     if failure:
-        diagnostic.update(json_contract_status="schema_invalid", json_contract_reason=failure)
+        diagnostic.update(json_contract_status="schema_invalid", json_contract_reason=failure, failure_class="schema_invalid")
         raise OpenAITransportValueError(f"OpenAI JSON schema mismatch: {failure}", diagnostic)
-    diagnostic["json_contract_status"] = "valid"
+    diagnostic.update(json_contract_status="valid", failure_class="none")
     return OpenAICompletion(content, parsed, diagnostic)
