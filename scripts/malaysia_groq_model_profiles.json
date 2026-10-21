@@ -58,6 +58,26 @@
       "production_rate_reset_wait_max_seconds": 60
     },
     {
+      "name": "gpt-6-luna",
+      "aliases": [
+        "luna",
+        "openai/gpt-6-luna"
+      ],
+      "artifact_key": "gpt6luna",
+      "provider": "openai",
+      "model_id": "gpt-6-luna",
+      "artifact_only": false,
+      "response_mode": "json_schema_strict",
+      "reasoning_mode": "default",
+      "reasoning_effort": "medium",
+      "comparison_prompt_layout": "user_only",
+      "comparison_max_tokens": 800,
+      "comparison_contract": "editorial_entry_v4",
+      "production_prompt_layout": "user_only",
+      "production_max_tokens": 800,
+      "production_contract": "editorial_entry_v4"
+    },
+    {
       "name": "qwen3.6-27b",
       "aliases": [
         "qwen36",

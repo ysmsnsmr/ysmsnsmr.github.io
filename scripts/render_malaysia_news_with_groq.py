@@ -7,6 +7,8 @@ source title and description. Only a hard-safety rejection or failed repair
 uses the code-owned source-link-only entry.
 """
 
+from __future__ import annotations
+
 import argparse
 import copy
 import json
@@ -49,7 +51,10 @@ from malaysia_groq_render_decision import (
     build_render_decisions,
     provenance_observation,
 )
-from malaysia_groq_transport import error_diagnostic, request_chat_completion
+from malaysia_groq_transport import error_diagnostic as groq_error_diagnostic
+from malaysia_groq_transport import request_chat_completion as request_groq_chat_completion
+from malaysia_openai_transport import error_diagnostic as openai_error_diagnostic
+from malaysia_openai_transport import request_chat_completion as request_openai_chat_completion
 from malaysia_money_claim_guard import source_money_literals, unsupported_money_claim_reason
 from malaysia_expiring_notice import (
     anchor_source_day_reference,
@@ -66,6 +71,42 @@ MAX_RESPONSE_CHARS = 4000
 TIMEOUT_SECONDS = 30
 MAX_429_RETRY_AFTER_SECONDS = 5
 REPAIR_MAX_TOKENS = 320
+request_chat_completion = request_groq_chat_completion
+
+
+def error_diagnostic(error: BaseException) -> dict[str, Any] | None:
+    return openai_error_diagnostic(error) or groq_error_diagnostic(error)
+
+
+def request_editorial_completion(
+    *, profile: ModelProfile, messages: list[dict[str, str]], api_key: str,
+    temperature: float, max_tokens: int, json_schema_name: str,
+    json_schema: dict[str, Any], schema_error: Any,
+) -> Any:
+    if profile.provider == "openai":
+        return request_openai_chat_completion(
+            profile=profile,
+            messages=messages,
+            api_key=api_key,
+            max_completion_tokens=max_tokens,
+            timeout_seconds=TIMEOUT_SECONDS,
+            max_response_chars=MAX_RESPONSE_CHARS,
+            json_schema_name=json_schema_name,
+            json_schema=json_schema,
+            schema_error=schema_error,
+        )
+    return request_chat_completion(
+        profile=profile,
+        messages=messages,
+        temperature=temperature,
+        max_tokens=max_tokens,
+        json_schema_name=json_schema_name,
+        json_schema=json_schema,
+        schema_error=schema_error,
+        api_key=api_key,
+        timeout_seconds=TIMEOUT_SECONDS,
+        max_response_chars=MAX_RESPONSE_CHARS,
+    )
 
 SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュースダッシュボードの日本語編集者です。
 入力はRSSのtitle、description、既存のRSS entry、必要に応じてbody_evidenceだけです。
@@ -451,13 +492,11 @@ def request_groq_summary(
         raise ValueError("summary max_tokens must be a positive integer")
     if summary_contract != "editorial_entry_v4":
         raise ValueError(f"unsupported summary contract: {summary_contract}")
-    completion = request_chat_completion(
+    completion = request_editorial_completion(
         profile=model_profile or profile_for_model_id(model),
         messages=summary_request_messages(item, summary_prompt_layout, summary_contract),
         temperature=0.2,
         max_tokens=summary_max_tokens,
-        timeout_seconds=TIMEOUT_SECONDS,
-        max_response_chars=MAX_RESPONSE_CHARS,
         json_schema_name="malaysia_news_editorial_entry_v4",
         json_schema=EDITORIAL_ENTRY_V4_SCHEMA,
         schema_error=editorial_entry_v4_schema_error,
@@ -488,13 +527,11 @@ def request_groq_repair_entry(
     money_only: bool = False,
 ) -> GroqEditorialEntryResult:
     """Make one contract recovery or source-literal money retry."""
-    completion = request_chat_completion(
+    completion = request_editorial_completion(
         profile=model_profile or profile_for_model_id(model),
         messages=money_repair_request_messages(item) if money_only else repair_request_messages(item),
         temperature=0.0,
         max_tokens=summary_max_tokens if money_only else min(summary_max_tokens, REPAIR_MAX_TOKENS),
-        timeout_seconds=TIMEOUT_SECONDS,
-        max_response_chars=MAX_RESPONSE_CHARS,
         json_schema_name="malaysia_news_editorial_entry_v4_money_repair" if money_only else "malaysia_news_editorial_entry_v4_repair",
         json_schema=EDITORIAL_ENTRY_V4_REPAIR_SCHEMA,
         schema_error=editorial_entry_repair_schema_error,
@@ -942,9 +979,11 @@ def main() -> int:
 
     data = fallback_renderer.load_json(str(resolve_json_input(args.json_input)))
     model = args.model or os.environ.get("GROQ_MODEL") or DEFAULT_MODEL
+    profile = profile_for_model_id(model)
+    api_key = os.environ.get("OPENAI_API_KEY", "") if profile.provider == "openai" else os.environ.get("GROQ_API_KEY", "")
     rendered, accepted_records, stats, records = render_with_groq(
         data,
-        os.environ.get("GROQ_API_KEY", ""),
+        api_key,
         model,
         args.force_all,
         args.debug_groq,

@@ -12,7 +12,9 @@ DEFAULT_FORCE_ALL_REQUEST_CAP = 20
 
 
 def force_all_request_cap() -> int:
-    raw = os.environ.get("MALAYSIA_NEWS_GROQ_FORCE_ALL_REQUEST_CAP", "").strip()
+    raw = os.environ.get("MALAYSIA_NEWS_EDITORIAL_REQUEST_CAP", "").strip()
+    if not raw:
+        raw = os.environ.get("MALAYSIA_NEWS_GROQ_FORCE_ALL_REQUEST_CAP", "").strip()
     if not raw:
         return DEFAULT_FORCE_ALL_REQUEST_CAP
     try:

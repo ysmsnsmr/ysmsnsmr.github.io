@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Load the single model-profile registry used by the Malaysia Groq workflow."""
+"""Load the model-profile registry used by Malaysia News model providers."""
 
 import argparse
 import json
@@ -14,6 +14,7 @@ DEFAULT_CONFIG_PATH = Path(__file__).with_name("malaysia_groq_model_profiles.jso
 SAFE_ARTIFACT_KEY = re.compile(r"[a-z0-9][a-z0-9-]*\Z")
 RESPONSE_MODES = {"json_object", "json_schema_strict"}
 REASONING_MODES = {"default", "low_hidden", "hidden"}
+PROVIDERS = {"groq", "openai"}
 COMPARISON_PROMPT_LAYOUTS = {"production", "user_only", "user_only_explicit_contract"}
 COMPARISON_CONTRACTS = {"editorial_entry_v4"}
 DEFAULT_COMPARISON_MAX_TOKENS = 500
@@ -42,6 +43,8 @@ class ModelProfile:
     production_max_tokens: int = DEFAULT_PRODUCTION_MAX_TOKENS
     production_contract: str = "editorial_entry_v4"
     production_rate_reset_wait_max_seconds: int = DEFAULT_PRODUCTION_RATE_RESET_WAIT_MAX_SECONDS
+    provider: str = "groq"
+    reasoning_effort: str = ""
 
 
 @dataclass(frozen=True)
@@ -75,6 +78,8 @@ def load_model_profile_registry(path: Path = DEFAULT_CONFIG_PATH) -> ModelProfil
         name = clean_text(raw_profile.get("name"))
         artifact_key = clean_text(raw_profile.get("artifact_key"))
         model_id = clean_text(raw_profile.get("model_id"))
+        provider = clean_text(raw_profile.get("provider")) or "groq"
+        reasoning_effort = clean_text(raw_profile.get("reasoning_effort"))
         response_mode = clean_text(raw_profile.get("response_mode"))
         reasoning_mode = clean_text(raw_profile.get("reasoning_mode"))
         comparison_prompt_layout = clean_text(raw_profile.get("comparison_prompt_layout")) or "production"
@@ -89,6 +94,12 @@ def load_model_profile_registry(path: Path = DEFAULT_CONFIG_PATH) -> ModelProfil
         )
         if not name or not model_id or not SAFE_ARTIFACT_KEY.fullmatch(artifact_key):
             raise ValueError("model profile requires a name, model_id, and safe artifact_key")
+        if provider not in PROVIDERS:
+            raise ValueError(f"unsupported model profile provider: {provider}")
+        if reasoning_effort and reasoning_effort not in {"none", "low", "medium", "high", "xhigh", "max"}:
+            raise ValueError(f"unsupported model profile reasoning_effort: {reasoning_effort}")
+        if provider == "openai" and not reasoning_effort:
+            raise ValueError("OpenAI model profile requires reasoning_effort")
         if response_mode not in RESPONSE_MODES:
             raise ValueError(f"unsupported model profile response_mode: {response_mode}")
         if reasoning_mode not in REASONING_MODES:
@@ -163,6 +174,8 @@ def load_model_profile_registry(path: Path = DEFAULT_CONFIG_PATH) -> ModelProfil
                 production_max_tokens=production_max_tokens,
                 production_contract=production_contract,
                 production_rate_reset_wait_max_seconds=production_rate_reset_wait_max_seconds,
+                provider=provider,
+                reasoning_effort=reasoning_effort,
             )
         )
         known_names.add(name)

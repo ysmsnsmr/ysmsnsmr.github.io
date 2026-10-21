@@ -54,6 +54,13 @@ class ModelProfileTest(unittest.TestCase):
         self.assertEqual(resolve_model_profile("gptoss120b", registry).comparison_max_tokens, 800)
         self.assertEqual(resolve_model_profile("gptoss120b", registry).comparison_contract, "editorial_entry_v4")
         self.assertEqual(resolve_model_profile("qwen36", registry).comparison_prompt_layout, "user_only_explicit_contract")
+        self.assertEqual(production_model_profile("gpt-6-luna", registry).provider, "openai")
+
+    def test_openai_profile_uses_openai_reasoning_effort(self) -> None:
+        luna = resolve_model_profile("luna", load_model_profile_registry())
+        self.assertEqual(luna.provider, "openai")
+        self.assertEqual(luna.reasoning_effort, "medium")
+        self.assertEqual(luna.production_max_tokens, 800)
 
     def test_artifact_only_profile_is_rejected_for_production(self) -> None:
         registry = load_model_profile_registry()
@@ -61,13 +68,14 @@ class ModelProfileTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "artifact-only"):
             production_model_profile("gpt-oss-20b", registry)
 
-    def test_workflow_contains_no_model_ids(self) -> None:
+    def test_workflow_routes_manual_and_scheduled_rendering_to_luna(self) -> None:
         workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/malaysia-rss-summary.yml").read_text(
             encoding="utf-8"
         )
-
-        for profile in load_model_profile_registry().profiles:
-            self.assertNotIn(profile.model_id, workflow)
+        self.assertIn('default: "gpt-6-luna"', workflow)
+        self.assertIn('model_input="gpt-6-luna"', workflow)
+        self.assertIn("if: github.event_name == 'schedule'", workflow)
+        self.assertIn("enable_overwrite=\"false\"", workflow)
 
     def test_duplicate_alias_is_rejected(self) -> None:
         config = {
