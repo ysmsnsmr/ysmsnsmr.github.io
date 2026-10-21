@@ -71,6 +71,44 @@ def accepted_result(index: int) -> groq_renderer.GroqEditorialEntryResult:
 
 
 class EditorialEntryV3Test(unittest.TestCase):
+    def test_model_run_observation_summarizes_primary_repair_and_tokens(self) -> None:
+        records = [{
+            "repair_attempted": True,
+            "repair_accepted": True,
+            "repair_failure_reason": "",
+            "render_source_kind": "groq_repaired",
+            "groq_call": {
+                "attempt_count": 1,
+                "provider": "openai",
+                "model": "gpt-6-luna",
+                "reasoning_effort": "medium",
+                "transport_status": "success",
+                "json_contract_status": "truncated",
+                "failure_class": "truncated_output",
+                "finish_reason": "length",
+                "usage": {"prompt_tokens": 100, "completion_tokens": 20, "total_tokens": 120},
+            },
+            "groq_repair_call": {
+                "transport_status": "success",
+                "json_contract_status": "valid",
+                "failure_class": "none",
+                "finish_reason": "stop",
+                "usage": {"prompt_tokens": 50, "completion_tokens": 30, "total_tokens": 80},
+            },
+        }]
+
+        summary = groq_renderer.model_run_observation(records, "gpt-6-luna")
+
+        self.assertEqual(summary["schema_version"], "malaysia-model-run-diagnostics/v1")
+        self.assertEqual(summary["provider"], "openai")
+        self.assertEqual(summary["model"], "gpt-6-luna")
+        self.assertEqual(summary["reasoning_setting"], "medium")
+        self.assertEqual(summary["request_attempt_counts"], {"primary": 1, "repair": 1})
+        self.assertEqual(summary["token_usage"]["total_tokens"]["sum"], 200)
+        self.assertEqual(summary["finish_reason_counts"], {"length": 1, "stop": 1})
+        self.assertEqual(summary["failure_class_counts"], {"none": 1, "truncated_output": 1})
+        self.assertEqual(summary["repair_result_counts"]["accepted"], 1)
+
     def test_luna_primary_and_repair_route_to_openai_transport(self) -> None:
         profile = resolve_model_profile("gpt-6-luna", load_model_profile_registry())
         with patch("render_malaysia_news_with_groq.request_openai_chat_completion") as openai_request, patch(
