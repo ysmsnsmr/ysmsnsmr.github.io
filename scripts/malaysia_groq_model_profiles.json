@@ -71,10 +71,10 @@
       "reasoning_mode": "default",
       "reasoning_effort": "medium",
       "comparison_prompt_layout": "user_only",
-      "comparison_max_tokens": 800,
+      "comparison_max_tokens": 2000,
       "comparison_contract": "editorial_entry_v4",
       "production_prompt_layout": "user_only",
-      "production_max_tokens": 800,
+      "production_max_tokens": 2000,
       "production_contract": "editorial_entry_v4"
     },
     {

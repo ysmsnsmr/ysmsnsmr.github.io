@@ -60,7 +60,8 @@ class ModelProfileTest(unittest.TestCase):
         luna = resolve_model_profile("luna", load_model_profile_registry())
         self.assertEqual(luna.provider, "openai")
         self.assertEqual(luna.reasoning_effort, "medium")
-        self.assertEqual(luna.production_max_tokens, 800)
+        self.assertEqual(luna.production_max_tokens, 2000)
+        self.assertEqual(luna.comparison_max_tokens, 2000)
 
     def test_artifact_only_profile_is_rejected_for_production(self) -> None:
         registry = load_model_profile_registry()

@@ -128,7 +128,37 @@ class EditorialEntryV3Test(unittest.TestCase):
         openai_request.assert_called_once()
         self.assertEqual(openai_request.call_args.kwargs["profile"], profile)
         self.assertEqual(openai_request.call_args.kwargs["max_completion_tokens"], 800)
+        self.assertEqual(openai_request.call_args.kwargs["timeout_seconds"], 90)
         groq_request.assert_not_called()
+
+        groq_profile = resolve_model_profile("gpt-oss-120b", load_model_profile_registry())
+        with patch("render_malaysia_news_with_groq.request_chat_completion") as groq_request:
+            groq_renderer.request_editorial_completion(
+                profile=groq_profile,
+                messages=[{"role": "user", "content": "test"}],
+                api_key="test-key",
+                temperature=0.2,
+                max_tokens=800,
+                json_schema_name="contract",
+                json_schema={"type": "object"},
+                schema_error=lambda _: "",
+            )
+        self.assertEqual(groq_request.call_args.kwargs["timeout_seconds"], 30)
+
+    def test_repair_budget_is_provider_specific(self) -> None:
+        article = item()
+        for model, expected_tokens in (("gpt-6-luna", 1200), ("gpt-oss-120b", 320)):
+            profile = resolve_model_profile(model, load_model_profile_registry())
+            with self.subTest(model=model), patch(
+                "render_malaysia_news_with_groq.request_editorial_completion",
+                side_effect=RuntimeError("captured request"),
+            ) as request:
+                with self.assertRaisesRegex(RuntimeError, "captured request"):
+                    groq_renderer.request_groq_repair_entry(
+                        article, "key", profile.model_id,
+                        model_profile=profile, summary_max_tokens=2000,
+                    )
+                self.assertEqual(request.call_args.kwargs["max_tokens"], expected_tokens)
 
     def test_previous_day_source_date_is_anchored_in_primary_and_repair_entries(self) -> None:
         article = item()
