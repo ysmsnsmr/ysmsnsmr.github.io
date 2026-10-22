@@ -69,8 +69,10 @@ import render_malaysia_news_from_json as fallback_renderer
 DEFAULT_MODEL = production_model_profile("", load_model_profile_registry()).model_id
 MAX_RESPONSE_CHARS = 4000
 TIMEOUT_SECONDS = 30
+OPENAI_TIMEOUT_SECONDS = 90
 MAX_429_RETRY_AFTER_SECONDS = 5
 REPAIR_MAX_TOKENS = 320
+OPENAI_REPAIR_MAX_TOKENS = 1200
 request_chat_completion = request_groq_chat_completion
 
 
@@ -89,7 +91,7 @@ def request_editorial_completion(
             messages=messages,
             api_key=api_key,
             max_completion_tokens=max_tokens,
-            timeout_seconds=TIMEOUT_SECONDS,
+            timeout_seconds=OPENAI_TIMEOUT_SECONDS,
             max_response_chars=MAX_RESPONSE_CHARS,
             json_schema_name=json_schema_name,
             json_schema=json_schema,
@@ -527,11 +529,13 @@ def request_groq_repair_entry(
     money_only: bool = False,
 ) -> GroqEditorialEntryResult:
     """Make one contract recovery or source-literal money retry."""
+    profile = model_profile or profile_for_model_id(model)
+    repair_max_tokens = OPENAI_REPAIR_MAX_TOKENS if profile.provider == "openai" else REPAIR_MAX_TOKENS
     completion = request_editorial_completion(
-        profile=model_profile or profile_for_model_id(model),
+        profile=profile,
         messages=money_repair_request_messages(item) if money_only else repair_request_messages(item),
         temperature=0.0,
-        max_tokens=summary_max_tokens if money_only else min(summary_max_tokens, REPAIR_MAX_TOKENS),
+        max_tokens=summary_max_tokens if money_only else min(summary_max_tokens, repair_max_tokens),
         json_schema_name="malaysia_news_editorial_entry_v4_money_repair" if money_only else "malaysia_news_editorial_entry_v4_repair",
         json_schema=EDITORIAL_ENTRY_V4_REPAIR_SCHEMA,
         schema_error=editorial_entry_repair_schema_error,

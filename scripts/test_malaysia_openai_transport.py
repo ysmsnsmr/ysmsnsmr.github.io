@@ -30,7 +30,7 @@ class OpenAIRequestSettingsTest(unittest.TestCase):
 
         self.assertEqual(body["model"], "gpt-6-luna")
         self.assertEqual(body["reasoning_effort"], "medium")
-        self.assertEqual(body["max_completion_tokens"], 800)
+        self.assertEqual(body["max_completion_tokens"], 2000)
         self.assertEqual(body["response_format"]["type"], "json_schema")
         self.assertTrue(body["response_format"]["json_schema"]["strict"])
         self.assertNotIn("temperature", body)
