@@ -742,6 +742,21 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(request.call_args.kwargs["locale"], "ja")
         self.assertEqual(request.call_args.kwargs["api_key"], "test-key")
 
+    def test_openai_schema_error_never_uses_groq_plaintext_fallback(self) -> None:
+        policy = self.config["policies"]["bilingualPresentation"]
+        with patch.dict(os.environ, {
+            "META_ADS_PERSONAL_FEED_PRESENTATION_PROVIDER": "openai",
+            "OPENAI_API_KEY": "test-key",
+        }, clear=True), patch(
+            "meta_ads_personal_feed.request_openai_locale_presentation",
+            side_effect=PresentationError("http_400", provider_error_code="json_validate_failed"),
+        ), patch("meta_ads_personal_feed.request_plaintext_presentation") as plaintext:
+            presenter = _locale_presentation_from_environment(1)
+            assert presenter is not None
+            with self.assertRaisesRegex(PresentationError, "http_400"):
+                presenter("Title", "Context", policy, "en")
+        plaintext.assert_not_called()
+
     def test_unofficial_rss_filters_only_admit_relevant_items(self) -> None:
         sources = {source["id"]: source for source in self.config["sources"]}
         social_media_today = extract_items(sources["social-media-today-meta-ads"], SOCIAL_MEDIA_TODAY)
@@ -1866,6 +1881,50 @@ class PersonalFeedTest(unittest.TestCase):
         self.assertEqual(len(updated_state["presentationRetryQueue"]["entries"]), 1)
         self.assertEqual(updated_state["presentationRetryQueue"]["entries"][0]["lastFailureCode"], "response_invalid_shape")
         self.assertNotIn("secret response body", json.dumps(updated_state))
+
+    def test_published_japanese_backfill_records_only_safe_openai_diagnostics(self) -> None:
+        feed, state = collect(
+            self.config,
+            {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}},
+            1, NOW, self.fetcher(),
+        )
+        diagnostics: list[dict[str, Any]] = []
+
+        def fail(_title: str, _summary: str | None, _policy: dict) -> dict[str, str]:
+            raise PresentationError(
+                "rate_limited_429", attempts=2,
+                provider_error_type="rate_limit_error", provider_error_code="slow_down",
+                rate_limit_headers={"retry_after": "5", "remaining_tokens": "0", "secret": "SECRET"},
+            )
+
+        updated_feed, updated_state, stats = backfill_published_japanese(
+            self.config, state, feed, frozenset(), NOW.replace(day=30), 1, fail,
+            failure_diagnostics=diagnostics,
+        )
+        self.assertEqual(updated_feed, feed)
+        self.assertEqual(stats["failed"], 1)
+        self.assertEqual(diagnostics[0]["attempts"], 2)
+        self.assertEqual(diagnostics[0]["providerErrorCode"], "slow_down")
+        self.assertEqual(diagnostics[0]["retryAfter"], "5")
+        self.assertNotIn("SECRET", json.dumps(diagnostics))
+        queued = updated_state["presentationRetryQueue"]["entries"][0]
+        self.assertEqual(queued["lastFailureCode"], "rate_limited_429")
+        self.assertEqual(queued["lastProviderErrorCode"], "slow_down")
+        self.assertEqual(queued["failureCount"], 1)
+        self.assertEqual(queued["locale"], "ja")
+
+    def test_presentation_stats_record_safe_attempt_count_and_limit_headers(self) -> None:
+        stats = _presentation_stats(self.config, True, 1, self.config["policies"]["bilingualPresentation"])
+        source_id = self.config["sources"][0]["id"]
+        error = PresentationError(
+            "rate_limited_429", attempts=2,
+            provider_error_type="rate_limit_error", provider_error_code="slow_down",
+            rate_limit_headers={"retry_after": "2", "remaining_tokens": "0", "secret": "SECRET"},
+        )
+        personal_feed._record_presentation_failure(stats, source_id, error.code, error)
+        self.assertEqual(stats["failureAttemptCounts"], {"rate_limited_429:2": 1})
+        self.assertEqual(stats["rateLimitDiagnostics"][0]["attempts"], 2)
+        self.assertNotIn("SECRET", json.dumps(stats))
 
     def test_source_pipeline_reports_safe_match_counts_without_source_content(self) -> None:
         pipeline: dict = {}

@@ -79,27 +79,30 @@ Meta Newsroom Product News RSSは候補を広く取得し、広告・計測・AP
 
 ## 英語・日本語の短見出し・要約
 
-収集時には、RSSの説明文またはSDK release notesを**そのrunの一時入力だけ**として、欠けているlocaleごとにGroqへ独立して要求します。英語は英語の短見出し・要約の2項目、日本語は日本語の短見出し・要約の2項目です。英日4項目を同時に生成するリクエストは使いません。保存は`英語/日本語 × 短見出し/要約`の4項目が独立単位です。再生成時にすでに成功した同じlocaleの項目を上書きせず、英語のいずれかが更新された場合だけ、それを入力とする日本語の2項目を再生成対象へ戻します。通常はGroqにStrict JSON Schema形式を要求し、schemaは2つの必須文字列と追加field禁止だけに限定します。Groqが安全に分類した`json_validate_failed`を返した**場合だけ**、同じlocaleへ`response_format`なしの定型プレーンテキストを1回要求します。このfallbackは`SHORT_HEADLINE:`と`SUMMARY:`の2行以外を受け付けず、JSONも受け付けません。返答は保存前にPythonが対象localeの項目完全一致、文字列型、空文字、文字数上限を検証します。文字数などの製品契約をGroq schemaへ移さず、片方のlocaleや項目の失敗が他の成功済み値を巻き込まないようにします。元の本文・説明文・release notes、Groq応答はstate、公開JSON、artifact、ログへ保存しません。
+収集時には、RSSの説明文またはSDK release notesを**そのrunの一時入力だけ**として、欠けているlocaleごとにOpenAIの`gpt-6-luna`へ独立して要求します。英語は英語の短見出し・要約の2項目、日本語は日本語の短見出し・要約の2項目です。英日4項目を同時に生成するリクエストは使いません。保存は`英語/日本語 × 短見出し/要約`の4項目が独立単位です。再生成時にすでに成功した同じlocaleの項目を上書きせず、英語のいずれかが更新された場合だけ、それを入力とする日本語の2項目を再生成対象へ戻します。通常生成では最小のStrict JSON Schema形式を要求し、schemaは2つの必須文字列と追加field禁止だけに限定します。返答は保存前にPythonが対象localeの項目完全一致、文字列型、空文字、文字数上限を検証します。Groq特有の`json_validate_failed`を条件にしたプレーンテキストfallbackはGroq経路にだけ残し、OpenAIのHTTP 400へ流用しません。元の本文・説明文・release notes、モデル応答はstate、公開JSON、artifact、ログへ保存しません。
 
 生成済みの表示データは記事内容のfingerprintに結び付けて再利用します。同じ内容には再課金しません。英語と日本語はlocaleごとに`machine`または`missing`を保持し、片方の生成失敗で成功済みのもう片方を消しません。内容が変わった記事、または未生成localeのある記事だけを新しい順に1 runあたり最大50件処理します。英語を再生成した場合、日本語は新しい英語に基づくoverlayとして再生成対象になります。
 
-GroqのAPIキーがない、生成に失敗する、または出力契約に合わない場合でも、収集と公開は継続します。失敗したlocaleだけを`missing`として記録し、原文タイトルのまま表示できます。両localeが失敗した場合も同様です。表示データは事実確認や運用判断を代替しません。
+通常収集ではOpenAIのAPIキーがない、生成に失敗する、または出力契約に合わない場合でも公開を継続します。失敗したlocaleだけを`missing`として記録し、原文タイトルのまま表示できます。両localeが失敗した場合も同様です。手動の日本語補完はキー未設定なら開始せず失敗します。表示データは事実確認や運用判断を代替しません。
 
 各runは本文を出さずに `PRESENTATION` と `PRESENTATION_SOURCE` の行を出力します。ここでは記事候補数、記事単位の試行数、locale単位の試行・成功・失敗数、次回以降へ繰り越した数を確認します。`PRESENTATION_PATH` と `PRESENTATION_SOURCE_PATH` は `strict_json_schema`、`plaintext_fallback`、`legacy` ごとの成功件数だけを示します。失敗がある場合は、全体の `PRESENTATION_FAILURE` / `PRESENTATION_FALLBACK_FAILURE` とソース別の同名ログに安全な理由コードと件数を出します。
 
-表示生成の失敗は、公開feedとは分離したstate内の `presentationRetryQueue` にlocale単位で隔離します。各エントリはsource、item fingerprint、locale、`failureCount`、`lastFailureAt`、`nextRetryAt`、安全な失敗コード、Groqが安全に返したprovider error code、`quarantined`だけを持ち、本文やGroq応答は保存しません。再試行間隔は1時間、2時間、4時間…と指数バックオフし、5回目の失敗で隔離して自動再試行を止めます。再試行時刻前のrunは外部モデルを呼ばず、公開feedはそのまま更新できます。
+表示生成の失敗は、公開feedとは分離したstate内の `presentationRetryQueue` にlocale単位で隔離します。各エントリはsource、item fingerprint、locale、`failureCount`、`lastFailureAt`、`nextRetryAt`、安全な失敗コード、安全なprovider error code、`quarantined`だけを持ち、本文やモデル応答は保存しません。再試行間隔は1時間、2時間、4時間…と指数バックオフし、5回目の失敗で隔離して自動再試行を止めます。再試行時刻前のrunは外部モデルを呼ばず、公開feedはそのまま更新できます。
 
 `json_validate_failed` と記録された隔離だけを再試行する場合は、daily collectのworkflow_dispatchで `retry_json_validate_failed=true` を指定します。これはその分類の隔離だけを解除し、他の原因の隔離は維持します。以前のv1 stateはprovider error codeを記録していないため、この操作で対象と推測しません。ログを確認済みの旧HTTP 400隔離を今回に限り回復させる場合は、`retry_json_validate_failed=true` と `retry_legacy_http_400=true` を**両方**指定します。後者だけの実行は拒否されます。原因を限定できない場合は、従来どおり `retry_failed=true` で全キューを手動解除できますが、これは最後の手段です。
 
 - `api_key_unavailable` — APIキーが未設定
-- `http_client_error` / `http_server_error` — Groq側のHTTP 4xx / 5xx 応答
+- `auth_401` / `permission_403` — 認証・権限の失敗（自動再試行しない）
+- `rate_limited_429` — 一時的なレート制限または課金・利用枠の制限。後者は同一run内で再試行しない
+- `http_server_error` — HTTP 5xx。OpenAIでは一時的な500/502/503/504だけ最大2回の範囲で再試行する
 - `network_error` — 接続・タイムアウトなどの通信失敗
 - `response_decode_error` / `response_invalid_json` — 応答を文字列またはJSONとして読めない
 - `response_missing_content` / `response_invalid_shape` — 応答に必要な生成データがない、または契約外
+- `output_limit` / `response_refused` / `response_filtered` — 出力上限到達、拒否、コンテンツフィルタ
 - `short_headline_invalid` / `summary_invalid` — 生成文が空、文字列でない、または長さ上限を超過
 - `unknown` — 上記に安全に分類できない失敗
 
-理由コードは調査の入口であり、記事本文やGroqの応答内容を出すものではありません。タイトル、RSS説明文、release notes、Groqの応答や例外本文はログに出しません。
+理由コードは調査の入口であり、記事本文やモデルの応答内容を出すものではありません。通常収集は安全なprovider `error.type` / `error.code`、試行回数、許可した`Retry-After`・トークン残量・リセット時間だけを集計ログに出します。日本語補完も失敗時に同じ項目だけを出します。タイトル、RSS説明文、release notes、モデル応答や例外本文はログに出しません。
 
 公開中の日本語`missing`を補完する場合は、手動workflow `Meta Ads Personal Feed Japanese presentation backfill` を使います。最初は `presentation_limit=1` で実行し、ログの `PUBLISHED_JA_BACKFILL` にある `completed` / `headlineOnly` / `failed` を確認してから、必要に応じて最大50件まで増やします。対象はその時点の公開feedに載る記事だけです。既存stateの英語要約がある記事は英語見出し・要約から日本語2項目を作り、英語要約がない記事は原文タイトルから日本語見出しだけを作ります。後者では要約を推測して埋めません。RSS/APIやJevは呼ばず、取得日時と掲載記事の並びを保持します。手動実行は公開中の日本語欠落だけに限定して隔離中の項目も再試行し、失敗回数は既存の隔離キューで記録します。記事がすでに公開feedから外れている場合は対象になりません。
 

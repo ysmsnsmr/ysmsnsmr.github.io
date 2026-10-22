@@ -2572,6 +2572,7 @@ def _presentation_stats(
         "retryReleasedJsonValidateFailed": 0,
         "retryReleasedLegacyHttp400": 0,
         "failureReasons": {},
+        "failureAttemptCounts": {},
         "fallbackFailureReasons": {},
         "providerErrorTypes": {},
         "providerErrorCodes": {},
@@ -2594,6 +2595,7 @@ def _presentation_stats(
                 "retryReleasedJsonValidateFailed": 0,
                 "retryReleasedLegacyHttp400": 0,
                 "failureReasons": {},
+                "failureAttemptCounts": {},
                 "fallbackFailureReasons": {},
                 "providerErrorTypes": {},
                 "providerErrorCodes": {},
@@ -2677,8 +2679,15 @@ def _record_presentation_failure(
     stats["failureReasons"][code] = stats["failureReasons"].get(code, 0) + 1
     source_reasons = stats["sources"][source_id]["failureReasons"]
     source_reasons[code] = source_reasons.get(code, 0) + 1
-    provider_error_type = getattr(error, "provider_error_type", None)
-    provider_error_code = getattr(error, "provider_error_code", None)
+    attempts = error.attempts if isinstance(error, PresentationError) else 1
+    if not isinstance(attempts, int) or isinstance(attempts, bool) or not 1 <= attempts <= 3:
+        attempts = 1
+    attempt_key = f"{code}:{attempts}"
+    stats["failureAttemptCounts"][attempt_key] = stats["failureAttemptCounts"].get(attempt_key, 0) + 1
+    source_attempts = stats["sources"][source_id]["failureAttemptCounts"]
+    source_attempts[attempt_key] = source_attempts.get(attempt_key, 0) + 1
+    provider_error_type = error.provider_error_type if isinstance(error, PresentationError) else None
+    provider_error_code = _provider_error_code(error)
     if provider_error_type:
         stats["providerErrorTypes"][provider_error_type] = stats["providerErrorTypes"].get(provider_error_type, 0) + 1
         source_types = stats["sources"][source_id]["providerErrorTypes"]
@@ -2687,12 +2696,13 @@ def _record_presentation_failure(
         stats["providerErrorCodes"][provider_error_code] = stats["providerErrorCodes"].get(provider_error_code, 0) + 1
         source_codes = stats["sources"][source_id]["providerErrorCodes"]
         source_codes[provider_error_code] = source_codes.get(provider_error_code, 0) + 1
-    rate_limit_headers = getattr(error, "rate_limit_headers", None)
-    if code == "rate_limited_429" and isinstance(rate_limit_headers, dict):
+    rate_limit_headers = error.rate_limit_headers if isinstance(error, PresentationError) else None
+    if code in {"rate_limited_429", "http_server_error"} and isinstance(rate_limit_headers, dict) and rate_limit_headers:
         stats["rateLimitDiagnostics"].append(
             {
                 "sourceId": source_id,
-                "attempts": getattr(error, "attempts", 1),
+                "code": code,
+                "attempts": attempts,
                 "retryAfter": rate_limit_headers.get("retry_after"),
                 "remainingTokens": rate_limit_headers.get("remaining_tokens"),
                 "resetTokens": rate_limit_headers.get("reset_tokens"),
@@ -2744,6 +2754,9 @@ def _print_presentation_stats(stats: dict[str, Any]) -> None:
         )
         for code, count in sorted(counts["failureReasons"].items()):
             print(f"PRESENTATION_SOURCE_FAILURE: id={source_id} code={code} count={count}")
+        for key, count in sorted(counts["failureAttemptCounts"].items()):
+            code, attempts = key.rsplit(":", 1)
+            print(f"PRESENTATION_SOURCE_ATTEMPTS: id={source_id} code={code} attempts={attempts} count={count}")
         for key, count in sorted(counts["fallbackFailureReasons"].items()):
             locale, code = key.split(":", 1)
             print(f"PRESENTATION_SOURCE_FALLBACK_FAILURE: id={source_id} locale={locale} code={code} count={count}")
@@ -2755,6 +2768,9 @@ def _print_presentation_stats(stats: dict[str, Any]) -> None:
             print(f"PRESENTATION_SOURCE_PATH: id={source_id} path={path} count={count}")
     for code, count in sorted(stats["failureReasons"].items()):
         print(f"PRESENTATION_FAILURE: code={code} count={count}")
+    for key, count in sorted(stats["failureAttemptCounts"].items()):
+        code, attempts = key.rsplit(":", 1)
+        print(f"PRESENTATION_ATTEMPTS: code={code} attempts={attempts} count={count}")
     for key, count in sorted(stats["fallbackFailureReasons"].items()):
         locale, code = key.split(":", 1)
         print(f"PRESENTATION_FALLBACK_FAILURE: locale={locale} code={code} count={count}")
@@ -3425,6 +3441,7 @@ def backfill_published_japanese(
     now: datetime,
     limit: int,
     translate: Callable[[str, str | None, dict[str, Any]], dict[str, str]],
+    failure_diagnostics: list[dict[str, Any]] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any], dict[str, int]]:
     """Fill missing Japanese fields for currently published items without fetching sources."""
     if state.get("schemaVersion") != STATE_V5_SCHEMA_VERSION or feed.get("schemaVersion") != FEED_V5_SCHEMA_VERSION:
@@ -3490,11 +3507,29 @@ def backfill_published_japanese(
             else:
                 stats["headlineOnly"] += 1
         except (KeyError, PresentationError, ValueError, OSError) as error:
+            failure_code = _presentation_failure_code(error)
             _record_retry_failure(
                 queue, source_id, item_key, record["fingerprint"], "ja",
-                _presentation_failure_code(error), generated_at,
+                failure_code, generated_at,
                 provider_error_code=_provider_error_code(error),
             )
+            if failure_diagnostics is not None:
+                attempts = error.attempts if isinstance(error, PresentationError) else 1
+                if not isinstance(attempts, int) or isinstance(attempts, bool) or not 1 <= attempts <= 3:
+                    attempts = 1
+                headers = error.rate_limit_headers if isinstance(error, PresentationError) else {}
+                if not isinstance(headers, dict):
+                    headers = {}
+                failure_diagnostics.append({
+                    "sourceId": source_id,
+                    "code": failure_code,
+                    "attempts": attempts,
+                    "providerErrorType": error.provider_error_type if isinstance(error, PresentationError) else None,
+                    "providerErrorCode": _provider_error_code(error),
+                    "retryAfter": headers.get("retry_after"),
+                    "remainingTokens": headers.get("remaining_tokens"),
+                    "resetTokens": headers.get("reset_tokens"),
+                })
             stats["failed"] += 1
     if stats["attempted"]:
         next_state["updatedAt"] = generated_at
@@ -3545,13 +3580,26 @@ def backfill_published_japanese_and_write(
             finally:
                 next_request_at = time.monotonic() + policy["minRequestIntervalSeconds"]
 
+    failure_diagnostics: list[dict[str, Any]] = []
     next_feed, next_state, stats = backfill_published_japanese(
-        config, state, feed, manual_exclusions, now or datetime.now(timezone.utc), limit, translate
+        config, state, feed, manual_exclusions, now or datetime.now(timezone.utc), limit, translate,
+        failure_diagnostics=failure_diagnostics,
     )
     if next_feed != feed:
         write_json(output_path, next_feed)
     if next_state != state:
         write_json(state_path, next_state)
+    for diagnostic in failure_diagnostics:
+        print(
+            "PUBLISHED_JA_BACKFILL_FAILURE: "
+            f"source_id={diagnostic['sourceId']} code={diagnostic['code']} "
+            f"attempts={diagnostic['attempts']} "
+            f"error_type={diagnostic['providerErrorType'] or 'unavailable'} "
+            f"error_code={diagnostic['providerErrorCode'] or 'unavailable'} "
+            f"retry_after={diagnostic['retryAfter'] or 'unavailable'} "
+            f"remaining_tokens={diagnostic['remainingTokens'] or 'unavailable'} "
+            f"reset_tokens={diagnostic['resetTokens'] or 'unavailable'}"
+        )
     return stats
 
 

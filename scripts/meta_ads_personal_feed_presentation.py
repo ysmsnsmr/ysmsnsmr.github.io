@@ -35,6 +35,9 @@ FAILURE_CODES = frozenset(
         "response_invalid_json",
         "response_missing_content",
         "response_invalid_shape",
+        "output_limit",
+        "response_refused",
+        "response_filtered",
         "short_headline_invalid",
         "summary_invalid",
         "unknown",
@@ -64,6 +67,14 @@ class PresentationError(ValueError):
 
 MAX_GROQ_ATTEMPTS = 3
 MAX_GROQ_RETRY_DELAY_SECONDS = 60
+MAX_OPENAI_RETRY_DELAY_SECONDS = 60
+NON_RETRYABLE_OPENAI_429_CODES = frozenset({
+    "credit_balance_exhausted",
+    "insufficient_quota",
+    "organization_spend_limit_exceeded",
+    "project_spend_limit_exceeded",
+    "organization_usage_limit_exceeded",
+})
 RETRYABLE_GROQ_CODES = frozenset({"rate_limited_429", "capacity_498", "http_server_error", "network_error"})
 MAX_ERROR_BODY_BYTES = 16_384
 _SAFE_ERROR_LABEL = re.compile(r"^[a-z0-9][a-z0-9_.:-]{0,63}$")
@@ -123,7 +134,7 @@ def _provider_error_labels(error: urllib.error.HTTPError) -> tuple[str | None, s
 
 
 def _rate_limit_header_diagnostics(headers: Any) -> dict[str, str]:
-    """Keep only bounded numeric values from the allowlisted Groq 429 headers."""
+    """Keep only bounded values from allowlisted provider limit headers."""
     if headers is None or not hasattr(headers, "get"):
         return {}
     values = (
@@ -150,7 +161,7 @@ def _http_failure_code(status: int) -> str:
 def _retry_delay(headers: Any, attempt: int, maximum: float) -> float:
     """Use a provider retry hint when safe, otherwise bounded exponential backoff."""
     value = headers.get("Retry-After") if headers is not None else None
-    if isinstance(value, str) and value.strip().isdigit():
+    if isinstance(value, str) and _SAFE_RETRY_AFTER.fullmatch(value.strip()):
         return min(float(value.strip()), maximum)
     return min(float(2 ** (attempt - 1)), maximum)
 
@@ -663,7 +674,7 @@ def _openai_completion(
     *, api_key: str, messages: list[dict[str, str]], timeout: float,
     response_format: dict[str, Any] | None = None, max_completion_tokens: int = 1200,
     max_attempts: int = 2, sleep: Any = time.sleep,
-) -> str:
+) -> tuple[str, int]:
     """Request Luna without persisting source text, response bytes, or error bodies."""
     if not api_key.strip():
         raise PresentationError("api_key_unavailable")
@@ -688,6 +699,8 @@ def _openai_completion(
         },
         method="POST",
     )
+    if max_attempts < 1 or max_attempts > 3:
+        raise ValueError("max_attempts must be between 1 and 3")
     for attempt in range(1, max_attempts + 1):
         try:
             with urllib.request.urlopen(request, timeout=timeout) as response:
@@ -695,18 +708,29 @@ def _openai_completion(
         except urllib.error.HTTPError as error:
             code = _http_failure_code(error.code)
             error_type, error_code = _provider_error_labels(error)
-            if code in {"rate_limited_429", "http_server_error"} and attempt < max_attempts:
-                sleep(_retry_delay(error.headers, attempt, MAX_GROQ_RETRY_DELAY_SECONDS))
+            limit_headers = _rate_limit_header_diagnostics(error.headers) if error.code in {429, 503} else {}
+            transient_429 = (
+                error.code == 429
+                and error_code not in NON_RETRYABLE_OPENAI_429_CODES
+                and error_type != "insufficient_quota"
+                and (
+                    error_type == "rate_limit_error"
+                    or error_code in {"rate_limit_exceeded", "slow_down"}
+                    or (error_type is None and error_code is None)
+                )
+            )
+            transient_server = error.code in {500, 502, 503, 504}
+            retry_after = limit_headers.get("retry_after")
+            retry_within_limit = retry_after is None or float(retry_after) <= MAX_OPENAI_RETRY_DELAY_SECONDS
+            if (transient_429 or transient_server) and retry_within_limit and attempt < max_attempts:
+                sleep(_retry_delay(error.headers, attempt, MAX_OPENAI_RETRY_DELAY_SECONDS))
                 continue
             raise PresentationError(
                 code, attempts=attempt, provider_error_type=error_type,
                 provider_error_code=error_code,
-                rate_limit_headers=_rate_limit_header_diagnostics(error.headers) if code == "rate_limited_429" else None,
+                rate_limit_headers=limit_headers,
             ) from None
         except OSError:
-            if attempt < max_attempts:
-                sleep(_retry_delay(None, attempt, MAX_GROQ_RETRY_DELAY_SECONDS))
-                continue
             raise PresentationError("network_error", attempts=attempt) from None
         if len(body) > 50_000:
             raise PresentationError("response_decode_error", attempts=attempt)
@@ -714,17 +738,23 @@ def _openai_completion(
             choice = json.loads(body.decode("utf-8"))["choices"][0]
             message = choice["message"]
             if message.get("refusal"):
-                raise PresentationError("response_invalid_shape", attempts=attempt)
+                raise PresentationError("response_refused", attempts=attempt)
+            if choice.get("finish_reason") == "length":
+                raise PresentationError("output_limit", attempts=attempt)
+            if choice.get("finish_reason") == "content_filter":
+                raise PresentationError("response_filtered", attempts=attempt)
             if choice.get("finish_reason") != "stop":
                 raise PresentationError("response_missing_content", attempts=attempt)
             content = message["content"]
-        except (UnicodeDecodeError, json.JSONDecodeError):
+        except UnicodeDecodeError:
+            raise PresentationError("response_decode_error", attempts=attempt) from None
+        except json.JSONDecodeError:
             raise PresentationError("response_invalid_json", attempts=attempt) from None
         except (KeyError, IndexError, TypeError, AttributeError):
             raise PresentationError("response_invalid_shape", attempts=attempt) from None
         if not isinstance(content, str):
             raise PresentationError("response_missing_content", attempts=attempt)
-        return content
+        return content, attempt
     raise AssertionError("bounded OpenAI request exhausted")
 
 
@@ -742,7 +772,7 @@ def request_openai_locale_presentation(
         messages = _messages(title, source_context, short_headline_max_chars, summary_max_chars)
     else:
         raise PresentationError("response_invalid_shape")
-    content = _openai_completion(
+    content, attempts = _openai_completion(
         api_key=api_key, messages=messages, timeout=timeout,
         response_format=_strict_json_schema_format(f"meta_ads_personal_feed_{locale}", fields),
         max_completion_tokens=max_completion_tokens,
@@ -750,13 +780,16 @@ def request_openai_locale_presentation(
     try:
         value = json.loads(content)
     except json.JSONDecodeError:
-        raise PresentationError("response_invalid_json") from None
+        raise PresentationError("response_invalid_json", attempts=attempts) from None
     if not isinstance(value, dict) or set(value) != set(fields):
-        raise PresentationError("response_invalid_shape")
-    return {
-        fields[0]: _text(value[fields[0]], "short_headline_invalid", short_headline_max_chars),
-        fields[1]: _text(value[fields[1]], "summary_invalid", summary_max_chars),
-    }
+        raise PresentationError("response_invalid_shape", attempts=attempts)
+    try:
+        return {
+            fields[0]: _text(value[fields[0]], "short_headline_invalid", short_headline_max_chars),
+            fields[1]: _text(value[fields[1]], "summary_invalid", summary_max_chars),
+        }
+    except PresentationError as error:
+        raise PresentationError(error.code, attempts=attempts) from None
 
 
 def request_openai_japanese_backfill(
@@ -786,22 +819,25 @@ def request_openai_japanese_backfill(
             f"Summary limit: {summary_max_chars} characters."
         )},
     ]
-    content = _openai_completion(
+    content, attempts = _openai_completion(
         api_key=api_key, messages=messages, timeout=timeout,
         max_completion_tokens=max_completion_tokens,
     )
-    if has_summary:
-        generated = _plaintext_presentation(
-            content, locale="ja", short_headline_max_chars=short_headline_max_chars,
-            summary_max_chars=summary_max_chars,
-        )
-        if not all(re.search(r"[\u3040-\u30ff\u3400-\u9fff]", text) for text in generated.values()):
+    try:
+        if has_summary:
+            generated = _plaintext_presentation(
+                content, locale="ja", short_headline_max_chars=short_headline_max_chars,
+                summary_max_chars=summary_max_chars,
+            )
+            if not all(re.search(r"[\u3040-\u30ff\u3400-\u9fff]", text) for text in generated.values()):
+                raise PresentationError("response_invalid_shape")
+            return generated
+        lines = content.strip().splitlines()
+        if len(lines) != 1 or not lines[0].startswith("SHORT_HEADLINE:"):
             raise PresentationError("response_invalid_shape")
-        return generated
-    lines = content.strip().splitlines()
-    if len(lines) != 1 or not lines[0].startswith("SHORT_HEADLINE:"):
-        raise PresentationError("response_invalid_shape")
-    headline = _text(lines[0][len("SHORT_HEADLINE:"):], "short_headline_invalid", short_headline_max_chars)
-    if not re.search(r"[\u3040-\u30ff\u3400-\u9fff]", headline):
-        raise PresentationError("short_headline_invalid")
-    return {"shortHeadlineJa": headline}
+        headline = _text(lines[0][len("SHORT_HEADLINE:"):], "short_headline_invalid", short_headline_max_chars)
+        if not re.search(r"[\u3040-\u30ff\u3400-\u9fff]", headline):
+            raise PresentationError("short_headline_invalid")
+        return {"shortHeadlineJa": headline}
+    except PresentationError as error:
+        raise PresentationError(error.code, attempts=attempts) from None
