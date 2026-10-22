@@ -62,6 +62,19 @@ class LunaPresentationTest(unittest.TestCase):
         self.assertNotIn("ENGLISH_SUMMARY", payload["messages"][1]["content"])
 
     @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
+    def test_backfill_translates_saved_english_summary(self, urlopen):
+        urlopen.return_value = Response("SHORT_HEADLINE: Meta広告の更新\nSUMMARY: Meta広告が更新された。")
+        result = request_openai_japanese_backfill(
+            api_key="test-key", title="Meta ads", english_summary="Meta changed its ads.",
+            short_headline_max_chars=80, summary_max_chars=360, timeout=1,
+        )
+        self.assertEqual(result, {
+            "shortHeadlineJa": "Meta広告の更新", "summaryJa": "Meta広告が更新された。",
+        })
+        payload = json.loads(urlopen.call_args.args[0].data)
+        self.assertIn("ENGLISH_SUMMARY: Meta changed its ads.", payload["messages"][1]["content"])
+
+    @patch("meta_ads_personal_feed_presentation.urllib.request.urlopen")
     def test_truncated_output_is_not_published(self, urlopen):
         urlopen.return_value = Response('{"shortHeadlineEn":"partial"}', "length")
         with self.assertRaises(PresentationError):

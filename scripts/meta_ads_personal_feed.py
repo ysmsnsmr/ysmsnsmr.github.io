@@ -36,8 +36,8 @@ from meta_ads_tracker_publication import write_json
 from meta_ads_personal_feed_presentation import (
     PresentationError,
     request_english_presentation_strict,
-    request_japanese_backfill,
     request_openai_locale_presentation,
+    request_openai_japanese_backfill,
     request_plaintext_presentation,
     request_presentation,
 )
@@ -3526,10 +3526,9 @@ def backfill_published_japanese_and_write(
         setting = os.environ.get("META_ADS_PERSONAL_FEED_JA_ENABLED", "").strip().lower() or "true"
         if setting != "true":
             raise ContractError("published Japanese backfill requires META_ADS_PERSONAL_FEED_JA_ENABLED=true or unset")
-        api_key = os.environ.get("GROQ_API_KEY", "").strip()
+        api_key = os.environ.get("OPENAI_API_KEY", "").strip()
         if not api_key:
-            raise ContractError("published Japanese backfill requires GROQ_API_KEY")
-        model = os.environ.get("META_ADS_PERSONAL_FEED_GROQ_MODEL", "").strip() or "openai/gpt-oss-120b"
+            raise ContractError("published Japanese backfill requires OPENAI_API_KEY")
         next_request_at = 0.0
 
         def translate(title: str, english_summary: str | None, policy: dict[str, Any]) -> dict[str, str]:
@@ -3538,11 +3537,10 @@ def backfill_published_japanese_and_write(
             if delay:
                 time.sleep(delay)
             try:
-                return request_japanese_backfill(
-                    api_key=api_key, model=model, title=title, english_summary=english_summary,
+                return request_openai_japanese_backfill(
+                    api_key=api_key, title=title, english_summary=english_summary,
                     short_headline_max_chars=policy["shortHeadlineMaxChars"],
                     summary_max_chars=policy["summaryMaxChars"], timeout=timeout,
-                    max_retry_delay_seconds=policy["maxRetryDelaySeconds"],
                 )
             finally:
                 next_request_at = time.monotonic() + policy["minRequestIntervalSeconds"]
