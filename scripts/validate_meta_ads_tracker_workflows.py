@@ -202,10 +202,12 @@ def main() -> int:
             fail("Personal Feed collection must not depend on candidate, weekly, decision, or Groq stages")
         personal_collect = next((step for step in collect_steps if step.get("name") == "Collect Personal Feed sources"), None)
         personal_env = personal_collect.get("env", {}) if isinstance(personal_collect, dict) else {}
-        if not isinstance(personal_env, dict) or personal_env.get("GROQ_API_KEY") != "${{ secrets.GROQ_API_KEY }}":
-            fail("Personal Feed collection must provide the optional Japanese-presentation API key")
-        if "META_ADS_PERSONAL_FEED_JA_ENABLED" not in personal_env or "META_ADS_PERSONAL_FEED_GROQ_MODEL" not in personal_env:
-            fail("Personal Feed collection must expose Japanese-presentation controls")
+        if not isinstance(personal_env, dict) or personal_env.get("OPENAI_API_KEY") != "${{ secrets.OPENAI_API_KEY }}":
+            fail("Personal Feed collection must provide the optional OpenAI presentation API key")
+        if personal_env.get("META_ADS_PERSONAL_FEED_PRESENTATION_PROVIDER") != "openai":
+            fail("Personal Feed collection must select the OpenAI presentation provider")
+        if "META_ADS_PERSONAL_FEED_JA_ENABLED" not in personal_env:
+            fail("Personal Feed collection must expose the presentation enable switch")
         if personal_env.get("TYPESAFE_API_KEY") != "${{ secrets.TYPESAFE_API_KEY }}":
             fail("Personal Feed collection must provide the Jev API key through the environment")
         if personal_env.get("META_ADS_JEV_ROUTING_ENABLED") != "${{ vars.META_ADS_JEV_ROUTING_ENABLED }}":

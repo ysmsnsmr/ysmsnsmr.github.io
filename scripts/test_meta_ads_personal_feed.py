@@ -720,6 +720,28 @@ class PersonalFeedTest(unittest.TestCase):
             with self.assertRaisesRegex(ContractError, "true, false"):
                 _locale_presentation_from_environment(1)
 
+    def test_openai_collection_uses_independent_locale_generation_and_skips_without_key(self) -> None:
+        environment = {
+            "META_ADS_PERSONAL_FEED_PRESENTATION_PROVIDER": "openai",
+            "META_ADS_PERSONAL_FEED_JA_ENABLED": "true",
+        }
+        with patch.dict(os.environ, environment, clear=True):
+            self.assertIsNone(_locale_presentation_from_environment(1))
+        with patch.dict(os.environ, {**environment, "OPENAI_API_KEY": "test-key"}, clear=True), patch(
+            "meta_ads_personal_feed.request_openai_locale_presentation",
+            return_value={"shortHeadlineJa": "広告更新", "summaryJa": "Meta広告の更新。"},
+        ) as request:
+            renderer = _locale_presentation_from_environment(1)
+            self.assertIsNotNone(renderer)
+            output = renderer("Meta ads", "Source facts", {
+                "maxInputChars": 20, "shortHeadlineMaxChars": 80,
+                "summaryMaxChars": 360, "minRequestIntervalSeconds": 0,
+            }, "ja")
+        self.assertEqual(output["shortHeadlineJa"], "広告更新")
+        self.assertEqual(output.path, "strict_json_schema")
+        self.assertEqual(request.call_args.kwargs["locale"], "ja")
+        self.assertEqual(request.call_args.kwargs["api_key"], "test-key")
+
     def test_unofficial_rss_filters_only_admit_relevant_items(self) -> None:
         sources = {source["id"]: source for source in self.config["sources"]}
         social_media_today = extract_items(sources["social-media-today-meta-ads"], SOCIAL_MEDIA_TODAY)

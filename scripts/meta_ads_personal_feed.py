@@ -37,6 +37,7 @@ from meta_ads_personal_feed_presentation import (
     PresentationError,
     request_english_presentation_strict,
     request_japanese_backfill,
+    request_openai_locale_presentation,
     request_plaintext_presentation,
     request_presentation,
 )
@@ -2463,7 +2464,10 @@ def _locale_presentation_from_environment(
     setting = os.environ.get("META_ADS_PERSONAL_FEED_JA_ENABLED", "").strip().lower() or "true"
     if setting not in {"true", "false"}:
         raise ContractError("META_ADS_PERSONAL_FEED_JA_ENABLED must be true, false, or unset")
-    api_key = os.environ.get("GROQ_API_KEY", "").strip()
+    provider = os.environ.get("META_ADS_PERSONAL_FEED_PRESENTATION_PROVIDER", "groq").strip().lower()
+    if provider not in {"groq", "openai"}:
+        raise ContractError("META_ADS_PERSONAL_FEED_PRESENTATION_PROVIDER must be groq or openai")
+    api_key = os.environ.get("OPENAI_API_KEY" if provider == "openai" else "GROQ_API_KEY", "").strip()
     if setting == "false" or not api_key:
         return None
     model = os.environ.get("META_ADS_PERSONAL_FEED_GROQ_MODEL", "").strip() or "openai/gpt-oss-120b"
@@ -2477,6 +2481,16 @@ def _locale_presentation_from_environment(
         if delay:
             time.sleep(delay)
         try:
+            if provider == "openai":
+                return PresentationOutput(request_openai_locale_presentation(
+                    api_key=api_key,
+                    title=title,
+                    source_context=source_context[:policy["maxInputChars"]],
+                    locale=locale,
+                    short_headline_max_chars=policy["shortHeadlineMaxChars"],
+                    summary_max_chars=policy["summaryMaxChars"],
+                    timeout=timeout,
+                ), "strict_json_schema")
             try:
                 if locale == "en":
                     return PresentationOutput(request_english_presentation_strict(
