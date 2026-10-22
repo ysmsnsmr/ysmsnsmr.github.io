@@ -278,12 +278,12 @@ def main() -> int:
             fail("Personal Feed presentation backfill must not depend on candidate, weekly, decision, or Groq stages")
         backfill_collect = next((step for step in backfill_steps if step.get("name") == "Backfill published Japanese text without source fetches"), None)
         backfill_env = backfill_collect.get("env", {}) if isinstance(backfill_collect, dict) else {}
-        if not isinstance(backfill_env, dict) or backfill_env.get("GROQ_API_KEY") != "${{ secrets.GROQ_API_KEY }}":
-            fail("Personal Feed presentation backfill must provide the optional Japanese-presentation API key")
+        if not isinstance(backfill_env, dict) or backfill_env.get("OPENAI_API_KEY") != "${{ secrets.OPENAI_API_KEY }}":
+            fail("Personal Feed presentation backfill must provide the OpenAI presentation API key")
         if backfill_env.get("PRESENTATION_LIMIT") != "${{ inputs.presentation_limit }}":
             fail("Personal Feed presentation backfill must pass the input through an environment variable")
-        if "META_ADS_PERSONAL_FEED_JA_ENABLED" not in backfill_env or "META_ADS_PERSONAL_FEED_GROQ_MODEL" not in backfill_env:
-            fail("Personal Feed presentation backfill must expose Japanese-presentation controls")
+        if "META_ADS_PERSONAL_FEED_JA_ENABLED" not in backfill_env:
+            fail("Personal Feed presentation backfill must expose the Japanese-presentation control")
         if 'git add -- data/meta_ads_personal_feed_state.json meta-ads-updates/personal-feed.json' not in backfill_runs:
             fail("Personal Feed presentation backfill must stage only its explicit state and public feed paths")
         backfill_artifact = next((step for step in backfill_steps if step.get("name") == "Upload Personal Feed backfill artifact"), None)
