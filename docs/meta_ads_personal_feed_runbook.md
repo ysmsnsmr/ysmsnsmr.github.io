@@ -79,15 +79,15 @@ Meta Newsroom Product News RSSは候補を広く取得し、広告・計測・AP
 
 ## 英語・日本語の短見出し・要約
 
-収集時には、RSSの説明文またはSDK release notesを**そのrunの一時入力だけ**として、欠けているlocaleごとにOpenAIの`gpt-6-luna`へ独立して要求します。英語は英語の短見出し・要約の2項目、日本語は日本語の短見出し・要約の2項目です。英日4項目を同時に生成するリクエストは使いません。保存は`英語/日本語 × 短見出し/要約`の4項目が独立単位です。再生成時にすでに成功した同じlocaleの項目を上書きせず、英語のいずれかが更新された場合だけ、それを入力とする日本語の2項目を再生成対象へ戻します。通常生成では最小のStrict JSON Schema形式を要求し、schemaは2つの必須文字列と追加field禁止だけに限定します。返答は保存前にPythonが対象localeの項目完全一致、文字列型、空文字、文字数上限を検証します。Groq特有の`json_validate_failed`を条件にしたプレーンテキストfallbackはGroq経路にだけ残し、OpenAIのHTTP 400へ流用しません。元の本文・説明文・release notes、モデル応答はstate、公開JSON、artifact、ログへ保存しません。
+収集時には、RSSの説明文またはSDK release notesを**そのrunの一時入力だけ**として、欠けているlocaleごとにOpenAIの`gpt-6-luna`へ独立して要求します。英語は英語の短見出し・要約の2項目、日本語は日本語の短見出し・要約の2項目です。英日4項目を同時に生成するリクエストは使いません。保存は`英語/日本語 × 短見出し/要約`の4項目が独立単位です。`machine`・`reviewed`の項目はモデル切替や兄弟localeの補完を理由に上書きせず、`missing`の項目だけ生成します。通常生成では最小のStrict JSON Schema形式を要求し、schemaは2つの必須文字列と追加field禁止だけに限定します。返答は保存前にPythonが対象localeの項目完全一致、文字列型、空文字、文字数上限を検証します。Groq特有の`json_validate_failed`を条件にしたプレーンテキストfallbackはGroq経路にだけ残し、OpenAIのHTTP 400へ流用しません。元の本文・説明文・release notes、モデル応答はstate、公開JSON、artifact、ログへ保存しません。
 
-生成済みの表示データは記事内容のfingerprintに結び付けて再利用します。同じ内容には再課金しません。英語と日本語はlocaleごとに`machine`または`missing`を保持し、片方の生成失敗で成功済みのもう片方を消しません。内容が変わった記事、または未生成localeのある記事だけを新しい順に1 runあたり最大50件処理します。英語を再生成した場合、日本語は新しい英語に基づくoverlayとして再生成対象になります。
+生成済みの表示データは記事内容のfingerprintに結び付けて再利用します。同じ内容には再課金しません。`generatorRevision`はモデル名ではなく入力ハッシュの契約バージョンです。Luna移行時にも既存値と生成済み項目の`inputHash`を保持し、モデル識別情報をstate/feedへ追加しません。既存の英日`machine`・`reviewed`は残し、新規記事か再試行時刻に達した`missing`だけを新しい順に1 runあたり最大50件処理します。英語を後から補完しても、以前の英語欠落を入力にした日本語生成文とそのハッシュは履歴として維持します。未生成の日本語項目のみ、新しい英語に対応する入力ハッシュへ更新します。内容のfingerprintが変わった場合は新しい記事入力として扱います。
 
 通常収集ではOpenAIのAPIキーがない、生成に失敗する、または出力契約に合わない場合でも公開を継続します。失敗したlocaleだけを`missing`として記録し、原文タイトルのまま表示できます。両localeが失敗した場合も同様です。手動の日本語補完はキー未設定なら開始せず失敗します。表示データは事実確認や運用判断を代替しません。
 
 各runは本文を出さずに `PRESENTATION` と `PRESENTATION_SOURCE` の行を出力します。ここでは記事候補数、記事単位の試行数、locale単位の試行・成功・失敗数、次回以降へ繰り越した数を確認します。`PRESENTATION_PATH` と `PRESENTATION_SOURCE_PATH` は `strict_json_schema`、`plaintext_fallback`、`legacy` ごとの成功件数だけを示します。失敗がある場合は、全体の `PRESENTATION_FAILURE` / `PRESENTATION_FALLBACK_FAILURE` とソース別の同名ログに安全な理由コードと件数を出します。
 
-表示生成の失敗は、公開feedとは分離したstate内の `presentationRetryQueue` にlocale単位で隔離します。各エントリはsource、item fingerprint、locale、`failureCount`、`lastFailureAt`、`nextRetryAt`、安全な失敗コード、安全なprovider error code、`quarantined`だけを持ち、本文やモデル応答は保存しません。再試行間隔は1時間、2時間、4時間…と指数バックオフし、5回目の失敗で隔離して自動再試行を止めます。再試行時刻前のrunは外部モデルを呼ばず、公開feedはそのまま更新できます。
+表示生成の失敗は、公開feedとは分離したstate内の `presentationRetryQueue` にlocale単位で隔離します。各エントリはsource、item fingerprint、locale、`failureCount`、`lastFailureAt`、`nextRetryAt`、安全な失敗コード、安全なprovider error code、`quarantined`だけを持ち、本文やモデル応答は保存しません。再試行間隔は1時間、2時間、4時間…と指数バックオフし、5回目の失敗で隔離して自動再試行を止めます。再試行時刻前・隔離中のrunは通常収集でも日本語補完でも外部モデルを呼ばず、公開feedはそのまま更新できます。Luna移行では隔離キューを一括解除しません。
 
 `json_validate_failed` と記録された隔離だけを再試行する場合は、daily collectのworkflow_dispatchで `retry_json_validate_failed=true` を指定します。これはその分類の隔離だけを解除し、他の原因の隔離は維持します。以前のv1 stateはprovider error codeを記録していないため、この操作で対象と推測しません。ログを確認済みの旧HTTP 400隔離を今回に限り回復させる場合は、`retry_json_validate_failed=true` と `retry_legacy_http_400=true` を**両方**指定します。後者だけの実行は拒否されます。原因を限定できない場合は、従来どおり `retry_failed=true` で全キューを手動解除できますが、これは最後の手段です。
 
