@@ -1174,7 +1174,7 @@ class PersonalFeedTest(unittest.TestCase):
         validate_state(state, self.config)
         validate_feed(feed, self.config)
 
-    def test_english_retry_rebuilds_japanese_overlay_from_new_english(self) -> None:
+    def test_english_retry_preserves_existing_japanese_overlay_and_hash(self) -> None:
         def failing_presenter(_title: str, _context: str, _policy: dict) -> dict[str, str]:
             raise PresentationError("http_400")
 
@@ -1193,6 +1193,11 @@ class PersonalFeedTest(unittest.TestCase):
             failing_presenter,
             japanese_only_fallback,
         )
+        prior_presentations = {
+            record["url"]: copy.deepcopy(record["presentation"]["locales"]["ja"])
+            for source in partial_state["sources"].values() for record in source["items"].values()
+            if record["presentation"]["locales"]["ja"]["status"] == "machine"
+        }
         calls: list[str] = []
 
         def locale_presenter(_title: str, _context: str, _policy: dict, locale: str) -> dict[str, str]:
@@ -1209,16 +1214,43 @@ class PersonalFeedTest(unittest.TestCase):
             self.fetcher(),
             locale_item=locale_presenter,
         )
-        self.assertEqual(calls, ["en", "ja"] * 4)
+        self.assertEqual(calls, ["en"] * 4)
         self.assertTrue(
             all(
                 item["presentation"]["locales"]["en"]["shortHeadline"] == "New English headline"
-                and item["presentation"]["locales"]["ja"]["shortHeadline"] == "新日本語見出し"
+                and item["presentation"]["locales"]["ja"] == prior_presentations[item["url"]]
                 for item in feed["items"]
             )
         )
         validate_state(state, self.config)
         validate_feed(feed, self.config)
+
+    def test_english_retry_preserves_reviewed_japanese_and_revision(self) -> None:
+        fingerprint = "a" * 64
+        revision = "legacy-custom-v1"
+        presentation = _missing_bilingual_presentation(fingerprint, revision)
+        presentation = _merge_locale_presentation(
+            presentation, fingerprint, "ja",
+            {"shortHeadlineJa": "承認済み見出し", "summaryJa": "承認済み要約"},
+            "2026-08-29T09:00:00Z",
+        )
+        for field in ("shortHeadline", "summary"):
+            presentation["locales"]["ja"]["fields"][field]["status"] = "reviewed"
+            presentation["locales"]["ja"]["fields"][field]["reviewedAt"] = "2026-08-29T10:00:00Z"
+        presentation["locales"]["ja"] = _locale_from_fields(presentation["locales"]["ja"]["fields"])
+        original_ja = copy.deepcopy(presentation["locales"]["ja"])
+        updated = _merge_locale_presentation(
+            presentation, fingerprint, "en",
+            {"shortHeadlineEn": "English headline", "summaryEn": "English summary"},
+            "2026-08-30T09:00:00Z",
+        )
+        self.assertEqual(updated["generatorRevision"], revision)
+        self.assertEqual(updated["locales"]["ja"], original_ja)
+        personal_feed._validate_bilingual_presentation(updated, fingerprint, "presentation")
+        tampered = copy.deepcopy(updated)
+        tampered["locales"]["ja"]["fields"]["summary"]["inputHash"] = "0" * 64
+        with self.assertRaises(ContractError):
+            personal_feed._validate_bilingual_presentation(tampered, fingerprint, "presentation")
 
     def test_discovery_origin_rss_extracts_only_canonical_meta_business_news_links(self) -> None:
         sources = {source["id"]: source for source in self.config["sources"]}
@@ -1837,14 +1869,14 @@ class PersonalFeedTest(unittest.TestCase):
         )
         self.assertEqual(stats, {"eligible": 3, "attempted": 2, "completed": 1, "headlineOnly": 1, "failed": 0})
         self.assertEqual(calls[0], ("English headline", "Verified English summary"))
-        self.assertEqual(calls[1], (title_item["title"], None))
+        self.assertNotIn((title_item["title"], None), calls)
         self.assertEqual([item["id"] for item in updated_feed["items"]], [item["id"] for item in feed["items"]])
         self.assertEqual(updated_feed["generatedAt"], feed["generatedAt"])
         self.assertEqual(updated_feed["items"][0]["presentation"]["locales"]["ja"]["status"], "machine")
         title_fields = updated_feed["items"][1]["presentation"]["locales"]["ja"]["fields"]
-        self.assertEqual(title_fields["shortHeadline"]["value"], "タイトルの日本語訳")
+        self.assertEqual(title_fields["shortHeadline"]["status"], "missing")
         self.assertEqual(title_fields["summary"]["status"], "missing")
-        self.assertFalse(any(entry["itemKey"] == title_key and entry["locale"] == "ja" for entry in updated_state["presentationRetryQueue"]["entries"]))
+        self.assertTrue(any(entry["itemKey"] == title_key and entry["locale"] == "ja" and entry["quarantined"] for entry in updated_state["presentationRetryQueue"]["entries"]))
         self.assertNotIn(original_feed["items"][-1]["url"], {item["url"] for item in updated_feed["items"]})
         validate_state(updated_state, self.config)
         validate_feed(updated_feed, self.config)

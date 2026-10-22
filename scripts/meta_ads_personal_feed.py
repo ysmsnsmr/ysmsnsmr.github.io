@@ -1521,11 +1521,16 @@ def _validate_presentation_field(value: Any, label: str, maximum: int, *, expect
     return field
 
 
-def _validate_bilingual_fields_locale(value: Any, label: str, *, expected_input_hash: str) -> dict[str, Any]:
+def _validate_bilingual_fields_locale(value: Any, label: str, *, expected_input_hash: str, historical_hashes: dict[str, set[str]] | None = None) -> dict[str, Any]:
     locale = _expect_keys(value, {"status", "shortHeadline", "summary", "inputHash", "generatedAt", "reviewedAt", "fields"}, label)
     fields = _expect_keys(locale["fields"], set(PRESENTATION_FIELDS), f"{label}.fields")
-    _validate_presentation_field(fields["shortHeadline"], f"{label}.fields.shortHeadline", 240, expected_input_hash=expected_input_hash)
-    _validate_presentation_field(fields["summary"], f"{label}.fields.summary", 1600, expected_input_hash=expected_input_hash)
+    for field, maximum in (("shortHeadline", 240), ("summary", 1600)):
+        entry = fields[field]
+        allowed = historical_hashes.get(field) if historical_hashes and entry["status"] in {"machine", "reviewed"} else None
+        if allowed is not None and entry["inputHash"] in allowed:
+            _validate_presentation_field(entry, f"{label}.fields.{field}", maximum)
+        else:
+            _validate_presentation_field(entry, f"{label}.fields.{field}", maximum, expected_input_hash=expected_input_hash)
     expected = _locale_from_fields(fields)
     for key in ("status", "shortHeadline", "summary", "inputHash", "generatedAt", "reviewedAt"):
         if locale[key] != expected[key]:
@@ -1560,7 +1565,29 @@ def _validate_bilingual_presentation(value: Any, fingerprint: str | None, label:
         english_fields["summary"]["value"] or "missing",
         generator_revision,
     )
-    _validate_bilingual_fields_locale(locales["ja"], f"{label}.locales.ja", expected_input_hash=japanese_expected)
+    # A Japanese field may have been generated while an English field was
+    # missing. Filling that English field later must not erase reviewed text or
+    # rewrite the input hash of already generated Japanese text. Only hashes
+    # derived from English values available at the Japanese generation time
+    # are valid historical inputs.
+    historical_hashes: dict[str, set[str]] = {}
+    for field_name, japanese_field in locales["ja"]["fields"].items():
+        if japanese_field["status"] not in {"machine", "reviewed"}:
+            continue
+        generated_at = _timestamp(japanese_field["generatedAt"], f"{label}.locales.ja.fields.{field_name}.generatedAt")
+        generated_time = datetime.fromisoformat(generated_at.replace("Z", "+00:00"))
+        prior_values = []
+        for english_field in (english_fields["shortHeadline"], english_fields["summary"]):
+            values = [english_field["value"] or "missing"]
+            if (english_field["generatedAt"] and japanese_field["generatedAt"]
+                    and datetime.fromisoformat(english_field["generatedAt"].replace("Z", "+00:00")) > generated_time):
+                values.append("missing")
+            prior_values.append(values)
+        historical_hashes[field_name] = {
+            _sha256_text(headline, summary, generator_revision)
+            for headline in prior_values[0] for summary in prior_values[1]
+        }
+    _validate_bilingual_fields_locale(locales["ja"], f"{label}.locales.ja", expected_input_hash=japanese_expected, historical_hashes=historical_hashes)
     return presentation
 
 
@@ -2858,13 +2885,15 @@ def _merge_locale_presentation(
     locale: str,
     generated: dict[str, Any],
     generated_at: str,
-    generator_revision: str = DEFAULT_PRESENTATION_GENERATOR_REVISION,
+    generator_revision: str | None = None,
 ) -> dict[str, Any]:
     """Persist only missing fields for one locale, preserving completed fields."""
     if locale not in SUPPORTED_LOCALES:
         raise PresentationError("response_invalid_shape")
-    revision = _expect_identifier(generator_revision, "generator_revision")
     presentation = copy.deepcopy(_migrate_bilingual_presentation_v2_to_v3(existing))
+    revision = _expect_identifier(generator_revision or presentation["generatorRevision"], "generator_revision")
+    if revision != presentation["generatorRevision"]:
+        raise PresentationError("generator_revision_mismatch")
     presentation["schemaVersion"] = BILINGUAL_PRESENTATION_FIELDS_SCHEMA_VERSION
     presentation["sourceFingerprint"] = fingerprint
     presentation["generatorRevision"] = revision
@@ -2894,10 +2923,11 @@ def _merge_locale_presentation(
     if locale == "en":
         english = presentation["locales"]["en"]["fields"]
         japanese_hash = _sha256_text(english["shortHeadline"]["value"] or "missing", english["summary"]["value"] or "missing", revision)
+        japanese = presentation["locales"]["ja"]["fields"]
         presentation["locales"]["ja"] = _locale_from_fields({
-                field: _missing_presentation_field(japanese_hash)
-                for field in PRESENTATION_FIELDS
-            })
+            field: _missing_presentation_field(japanese_hash) if japanese[field]["status"] == "missing" else japanese[field]
+            for field in PRESENTATION_FIELDS
+        })
     return presentation
 
 
@@ -3225,10 +3255,6 @@ def collect(
             stats["attempted"] += 1
             stats["sources"][source_id]["attempted"] += 1
             pending = _pending_presentation_locales(record["presentation"])
-            initial_statuses = {
-                locale: "machine" if _locale_presentation_complete(record["presentation"], locale) else "missing"
-                for locale in SUPPORTED_LOCALES
-            }
             full_attempt = (
                 present_item is not None
                 and locale_item is None
@@ -3240,7 +3266,9 @@ def collect(
                 stats["sources"][source_id]["localeAttempted"] += len(SUPPORTED_LOCALES)
                 try:
                     generated = present_item(record["title"], _presentation_context_for_model(raw, presentation_policy), presentation_policy)
-                    record["presentation"] = _machine_bilingual_presentation(record["fingerprint"], generated, generated_at)
+                    record["presentation"] = _machine_bilingual_presentation(
+                        record["fingerprint"], generated, generated_at, record["presentation"]["generatorRevision"]
+                    )
                     _record_generation_path(stats, source_id, generated)
                     for locale in SUPPORTED_LOCALES:
                         retry_queue.pop(_retry_queue_key(source_id, raw["key"], locale), None)
@@ -3278,16 +3306,17 @@ def collect(
                     if fallback_generated:
                         try:
                             record["presentation"] = _partial_bilingual_presentation(
-                                record["fingerprint"], fallback_generated, generated_at
+                                record["fingerprint"], fallback_generated, generated_at,
+                                record["presentation"]["generatorRevision"],
                             )
                         except (KeyError, PresentationError, ValueError) as fallback_error:
                             _record_fallback_failure(stats, source_id, "presentation", _presentation_failure_code(fallback_error))
                             complete_locales = set()
-                            record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION)
+                            record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], record["presentation"]["generatorRevision"])
                     else:
                         # Model errors must not block publication. The source title
                         # remains available while both generated locales stay missing.
-                        record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], DEFAULT_PRESENTATION_GENERATOR_REVISION)
+                        record["presentation"] = _missing_bilingual_presentation(record["fingerprint"], record["presentation"]["generatorRevision"])
 
                     generated_locales = len(complete_locales)
                     fallback_failed_locales = len(set(SUPPORTED_LOCALES) - complete_locales)
@@ -3320,16 +3349,8 @@ def collect(
                 # because its sibling is missing. Each locale has its own
                 # lifecycle and can recover on a later run independently.
                 locales_to_attempt = list(due_locales)
-                # If English was pending and regenerating it invalidates a
-                # previously successful Japanese overlay, refresh that overlay
-                # immediately. A Japanese locale already deferred by the queue
-                # remains deferred and is not silently retried.
-                if (
-                    "en" in locales_to_attempt
-                    and initial_statuses.get("ja") in {"machine", "reviewed"}
-                    and "ja" not in locales_to_attempt
-                ):
-                    locales_to_attempt.append("ja")
+                # Existing Japanese text is historical output, not an implicit
+                # retry target when a missing English field becomes available.
                 for locale in locales_to_attempt:
                     if locale not in _pending_presentation_locales(record["presentation"]):
                         continue
@@ -3479,6 +3500,8 @@ def backfill_published_japanese(
         if not (missing_headline or (missing_summary and english_summary)):
             continue
         stats["eligible"] += 1
+        if not _retry_is_due(queue.get(_retry_queue_key(source_id, item_key, "ja")), now):
+            continue
         if stats["attempted"] >= request_limit:
             continue
         stats["attempted"] += 1
