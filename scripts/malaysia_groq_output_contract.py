@@ -170,6 +170,24 @@ EDITORIAL_ENTRY_V3_REPAIR_SCHEMA = {
 EDITORIAL_ENTRY_V4_SCHEMA = EDITORIAL_ENTRY_V3_REPAIR_SCHEMA
 EDITORIAL_ENTRY_V4_REPAIR_SCHEMA = EDITORIAL_ENTRY_V4_SCHEMA
 
+EDITORIAL_ENTRY_V5_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "editorial_entry": {
+            "type": "object",
+            "properties": {
+                "headline_ja": {"type": "string", "minLength": 1, "maxLength": HEADLINE_MAX_LENGTH},
+                "entry_ja": {"type": "string", "minLength": 1},
+            },
+            "required": ["headline_ja", "entry_ja"],
+            "additionalProperties": False,
+        }
+    },
+    "required": ["editorial_entry"],
+    "additionalProperties": False,
+}
+EDITORIAL_ENTRY_V5_REPAIR_SCHEMA = EDITORIAL_ENTRY_V5_SCHEMA
+
 
 SUMMARY_ENTRY_SCHEMA = {
     "type": "object",
@@ -349,6 +367,22 @@ def editorial_entry_repair_schema_error(value: Any) -> str:
 
 def editorial_entry_v4_schema_error(value: Any) -> str:
     return editorial_entry_repair_schema_error(value)
+
+
+def editorial_entry_v5_schema_error(value: Any) -> str:
+    if not _exact_keys(value, {"editorial_entry"}):
+        return "root_shape"
+    entry = value["editorial_entry"]
+    if not _exact_keys(entry, {"headline_ja", "entry_ja"}):
+        return "editorial_entry_shape"
+    headline_error = editorial_headline_error(entry["headline_ja"])
+    if headline_error:
+        return headline_error
+    if not _is_string(entry["entry_ja"]):
+        return "editorial_entry_type"
+    if not entry["entry_ja"].strip():
+        return "editorial_entry_empty"
+    return ""
 
 
 def editorial_entry_forbidden_patterns(value: str) -> list[str]:

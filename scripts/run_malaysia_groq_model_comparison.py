@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare Groq model profiles against the Editorial Entry v4 contract."""
+"""Compare Groq model profiles against the Editorial Entry v5 contract."""
 
 import argparse
 import json
@@ -20,9 +20,9 @@ from malaysia_groq_model_profiles import (
     load_model_profile_registry,
     resolve_model_profile,
 )
-from malaysia_groq_output_contract import EDITORIAL_ENTRY_V4_SCHEMA, editorial_entry_v4_schema_error
+from malaysia_groq_output_contract import EDITORIAL_ENTRY_V5_SCHEMA, editorial_entry_v5_schema_error
 from malaysia_groq_transport import error_diagnostic, request_chat_completion
-from render_malaysia_news_with_groq import EDITORIAL_ENTRY_V4_CONTRACT_INSTRUCTION
+from render_malaysia_news_with_groq import EDITORIAL_ENTRY_V5_CONTRACT_INSTRUCTION
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -94,7 +94,7 @@ def compatibility_probe_messages(profile: ModelProfile, item: dict[str, Any]) ->
     prompt = (
         "Use only the supplied article. Return one Japanese editorial entry that preserves "
         "subject, attribution, and certainty.\n\n"
-        f"{EDITORIAL_ENTRY_V4_CONTRACT_INSTRUCTION}"
+        f"{EDITORIAL_ENTRY_V5_CONTRACT_INSTRUCTION}"
     )
     if profile.comparison_prompt_layout == "production":
         return [{"role": "system", "content": prompt}, {"role": "user", "content": article_json}]
@@ -140,9 +140,9 @@ def run_compatibility_probe(profile: ModelProfile, api_key: str, path: Path) -> 
             max_tokens=profile.comparison_max_tokens,
             timeout_seconds=30,
             max_response_chars=4000,
-            json_schema_name="malaysia_news_editorial_entry_v4",
-            json_schema=EDITORIAL_ENTRY_V4_SCHEMA,
-            schema_error=editorial_entry_v4_schema_error,
+            json_schema_name="malaysia_news_editorial_entry_v5",
+            json_schema=EDITORIAL_ENTRY_V5_SCHEMA,
+            schema_error=editorial_entry_v5_schema_error,
             api_key=api_key,
         )
         diagnostic = completion.diagnostic

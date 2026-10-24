@@ -141,7 +141,7 @@ class MalaysiaJevEditorialRoutingTests(unittest.TestCase):
         self.assertEqual(output["items"], [])
         self.assertEqual(report["results"][0]["publicationDecision"], "excluded_unclear")
 
-    def test_source_diversity_is_applied_after_relevance(self) -> None:
+    def test_source_limit_is_ignored_after_relevance(self) -> None:
         first = item("Paul Tan transport one", "https://example.test/pt-1", source="Paul Tan")
         second = item("Paul Tan transport two", "https://example.test/pt-2", source="Paul Tan")
         pool = payload(
@@ -163,10 +163,10 @@ class MalaysiaJevEditorialRoutingTests(unittest.TestCase):
             post_json=lambda *_: response("direct_life_impact"),
         )
 
-        self.assertEqual([value["title"] for value in output["items"]], ["Paul Tan transport one"])
-        self.assertEqual(report["results"][1]["publicationDecision"], "excluded_source_diversity")
+        self.assertEqual([value["title"] for value in output["items"]], ["Paul Tan transport one", "Paul Tan transport two"])
+        self.assertEqual(report["results"][1]["publicationDecision"], "selected")
 
-    def test_financial_diversity_is_applied_after_relevance_and_metadata_is_not_published(self) -> None:
+    def test_financial_limit_is_ignored_and_metadata_is_not_published(self) -> None:
         first = item("Ringgit one", "https://example.test/ringgit-1", financial_bucket="ringgit")
         second = item("Ringgit two", "https://example.test/ringgit-2", financial_bucket="ringgit")
         pool = payload(
@@ -188,9 +188,9 @@ class MalaysiaJevEditorialRoutingTests(unittest.TestCase):
             post_json=lambda *_: response("public_information"),
         )
 
-        self.assertEqual([value["title"] for value in output["items"]], ["Ringgit one"])
+        self.assertEqual([value["title"] for value in output["items"]], ["Ringgit one", "Ringgit two"])
         self.assertNotIn("routing_metadata", output["items"][0])
-        self.assertEqual(report["results"][1]["publicationDecision"], "excluded_financial_diversity")
+        self.assertEqual(report["results"][1]["publicationDecision"], "selected")
 
     def test_disabled_routing_keeps_the_legacy_selector_items(self) -> None:
         output, report = routing.route_candidates(
@@ -305,7 +305,7 @@ class MalaysiaJevEditorialRoutingTests(unittest.TestCase):
         self.assertEqual(report["results"][0]["publicationDecision"], "excluded_covered_event")
         self.assertEqual(report["results"][0]["coveredByCandidateRank"], 3)
 
-    def test_later_representative_not_selected_keeps_earlier_story(self) -> None:
+    def test_later_representative_can_replace_earlier_story_without_source_cap(self) -> None:
         reports = [
             item("Earlier blocked-source story", "https://example.test/other", source="Blocked"),
             item("Earlier district closure", "https://example.test/district", source="Available"),
@@ -321,9 +321,9 @@ class MalaysiaJevEditorialRoutingTests(unittest.TestCase):
             post_json=lambda *_: response("direct_life_impact"), event_enabled=True,
             event_observer=lambda *args, **kwargs: coverage,
         )
-        self.assertEqual([row["title"] for row in output["items"]], [reports[0]["title"], reports[1]["title"]])
-        self.assertEqual(report["results"][1]["publicationDecision"], "selected")
-        self.assertEqual(report["results"][2]["publicationDecision"], "excluded_source_diversity")
+        self.assertEqual([row["title"] for row in output["items"]], [reports[0]["title"], reports[2]["title"]])
+        self.assertEqual(report["results"][1]["publicationDecision"], "excluded_covered_event")
+        self.assertEqual(report["results"][2]["publicationDecision"], "selected")
 
     def test_public_information_representative_does_not_replace_direct_impact(self) -> None:
         reports = [
@@ -403,7 +403,7 @@ class MalaysiaJevEditorialRoutingTests(unittest.TestCase):
             self.assertEqual(len(output["items"]), 2)
             self.assertEqual(report["eventCoverage"]["suppressedCount"], 0)
 
-    def test_unselected_representative_does_not_hide_other_report(self) -> None:
+    def test_covered_report_is_hidden_when_representative_is_selected(self) -> None:
         reports = [item("First", "https://example.test/first"), item("Second", "https://example.test/second")]
         pool = payload(reports, post_relevance_policy={"source_limits": {"Fixture Source": 1}})
         # A representative rejected by an earlier selection cannot cover the later report.
@@ -421,9 +421,9 @@ class MalaysiaJevEditorialRoutingTests(unittest.TestCase):
             post_json=lambda *_: response("direct_life_impact"), event_enabled=True,
             event_observer=lambda *args, **kwargs: coverage,
         )
-        self.assertEqual([row["title"] for row in output["items"]], [third["title"], reports[1]["title"]])
-        self.assertEqual(report["results"][1]["publicationDecision"], "excluded_source_diversity")
-        self.assertEqual(report["results"][2]["publicationDecision"], "selected")
+        self.assertEqual([row["title"] for row in output["items"]], [third["title"], reports[0]["title"]])
+        self.assertEqual(report["results"][1]["publicationDecision"], "selected")
+        self.assertEqual(report["results"][2]["publicationDecision"], "excluded_covered_event")
 
 
 if __name__ == "__main__":

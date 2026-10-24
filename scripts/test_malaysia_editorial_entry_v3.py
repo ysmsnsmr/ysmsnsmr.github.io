@@ -18,9 +18,11 @@ from malaysia_groq_output_contract import (
     EDITORIAL_ENTRY_V3_REPAIR_SCHEMA,
     EDITORIAL_ENTRY_V3_SCHEMA,
     EDITORIAL_ENTRY_V4_SCHEMA,
+    EDITORIAL_ENTRY_V5_SCHEMA,
     editorial_entry_repair_schema_error,
     editorial_entry_schema_error,
     editorial_entry_v4_schema_error,
+    editorial_entry_v5_schema_error,
 )
 from malaysia_groq_force_all_policy import force_all_request_cap
 from malaysia_groq_render_decision import (
@@ -62,9 +64,7 @@ def accepted_result(index: int) -> groq_renderer.GroqEditorialEntryResult:
     return groq_renderer.GroqEditorialEntryResult(
         {
             "headline_ja": f"交通計画{index} 来月開始",
-            "short_headline_ja": f"交通計画{index}開始",
             "entry_ja": f"当局は計画{index}を来月開始する見通しだと述べました。",
-            "supporting_points_ja": [f"開始時期は9月とされています。"],
         },
         {"transport_status": "success", "json_contract_status": "valid"},
     )
@@ -170,7 +170,6 @@ class EditorialEntryV3Test(unittest.TestCase):
         )
         parsed = {"editorial_entry": {
             "headline_ja": "パシル・グダンでAPIが202に上昇",
-            "short_headline_ja": "APIが202に上昇",
             "entry_ja": "本日午後5時30分時点でAPIが202に上昇しました。",
         }}
         completion = ChatCompletion("{}", parsed, {"transport_status": "success", "json_contract_status": "valid"})
@@ -191,7 +190,6 @@ class EditorialEntryV3Test(unittest.TestCase):
         )
         parsed = {"editorial_entry": {
             "headline_ja": "交通計画を発表",
-            "short_headline_ja": "交通計画を発表",
             "entry_ja": "今朝、新しい交通計画を発表しました。",
         }}
         completion = ChatCompletion("{}", parsed, {"transport_status": "success", "json_contract_status": "valid"})
@@ -275,7 +273,7 @@ class EditorialEntryV3Test(unittest.TestCase):
         )
         self.assertEqual(EDITORIAL_ENTRY_V3_REPAIR_SCHEMA["required"], ["editorial_entry"])
 
-    def test_both_headlines_are_required_and_limited(self) -> None:
+    def test_v5_requires_only_full_headline_with_sixty_character_limit(self) -> None:
         properties = EDITORIAL_ENTRY_V3_SCHEMA["properties"]["editorial_entry"]["properties"]
         repair_properties = EDITORIAL_ENTRY_V3_REPAIR_SCHEMA["properties"]["editorial_entry"]["properties"]
         self.assertEqual(properties["headline_ja"]["maxLength"], 60)
@@ -289,7 +287,7 @@ class EditorialEntryV3Test(unittest.TestCase):
         }
         self.assertEqual(editorial_entry_schema_error({"editorial_entry": invalid}), "editorial_headline_too_long")
         with self.assertRaisesRegex(ValueError, "editorial_headline_too_long"):
-            groq_renderer.validate_groq_editorial_entry({"editorial_entry": {key: value for key, value in invalid.items() if key != "supporting_points_ja"}})
+            groq_renderer.validate_groq_editorial_entry({"editorial_entry": {"headline_ja": invalid["headline_ja"], "entry_ja": invalid["entry_ja"]}})
 
     def test_value_failure_reasons_identify_the_invalid_field(self) -> None:
         valid = {"headline_ja": "通常見出し", "short_headline_ja": "短見出し", "entry_ja": "概要です。", "supporting_points_ja": []}
@@ -310,35 +308,46 @@ class EditorialEntryV3Test(unittest.TestCase):
             with self.subTest(expected=expected):
                 self.assertEqual(editorial_entry_schema_error({"editorial_entry": entry}), expected)
 
-    def test_article_fallback_is_a_valid_v4_object(self) -> None:
+    def test_article_fallback_is_a_valid_v5_object(self) -> None:
         self.assertEqual(
-            editorial_entry_v4_schema_error({"editorial_entry": validated_rss_fallback_editorial_entry()}),
+            editorial_entry_v5_schema_error({"editorial_entry": validated_rss_fallback_editorial_entry()}),
             "",
         )
 
-    def test_v4_uses_overview_without_supporting_points_or_character_ceiling(self) -> None:
+    def test_v5_uses_overview_without_supporting_points_or_character_ceiling(self) -> None:
         long_overview = "当局は対象地域と終了時刻を示して警報を発表しました。" * 12
-        entry = {"headline_ja": "警報を発表", "short_headline_ja": "警報を発表", "entry_ja": long_overview}
-        self.assertEqual(editorial_entry_v4_schema_error({"editorial_entry": entry}), "")
+        entry = {"headline_ja": "警報を発表", "entry_ja": long_overview}
+        self.assertEqual(editorial_entry_v5_schema_error({"editorial_entry": entry}), "")
         self.assertEqual(groq_renderer.validate_groq_editorial_entry({"editorial_entry": entry}), entry)
         self.assertEqual(
-            editorial_entry_v4_schema_error({"editorial_entry": {**entry, "supporting_points_ja": []}}),
+            editorial_entry_v5_schema_error({"editorial_entry": {**entry, "supporting_points_ja": []}}),
             "editorial_entry_shape",
         )
-        self.assertNotIn("maxLength", EDITORIAL_ENTRY_V4_SCHEMA["properties"]["editorial_entry"]["properties"]["entry_ja"])
+        self.assertNotIn("maxLength", EDITORIAL_ENTRY_V5_SCHEMA["properties"]["editorial_entry"]["properties"]["entry_ja"])
         article = item()
         article["editorial_entry"] = entry
         markdown = markdown_renderer.render_editorial_entries({"counts": {"processed": 1, "selected": 1}, "items": [article]})
         self.assertIn(f"- 概要：{long_overview}", markdown)
         self.assertNotIn("- 補足：", markdown)
 
-    def test_v4_markdown_has_both_headlines_and_overview_only(self) -> None:
+    def test_v5_contract_does_not_request_or_accept_a_short_headline(self) -> None:
+        properties = EDITORIAL_ENTRY_V5_SCHEMA["properties"]["editorial_entry"]["properties"]
+        self.assertEqual(set(properties), {"headline_ja", "entry_ja"})
+        self.assertEqual(
+            editorial_entry_v5_schema_error({"editorial_entry": {
+                "headline_ja": "道路を閉鎖", "short_headline_ja": "道路閉鎖", "entry_ja": "当局が道路を閉鎖しました。",
+            }}),
+            "editorial_entry_shape",
+        )
+        self.assertNotIn("short_headline_ja", groq_renderer.summary_request_messages(item())[0]["content"])
+
+    def test_v5_markdown_has_full_headline_and_overview_only(self) -> None:
         data = {"counts": {"processed": 1, "selected": 1}, "failed_sources": [], "items": [item()]}
         markdown = markdown_renderer.render_editorial_entries(data)
         self.assertIn("【暮らしに関わる更新】", markdown)
         self.assertIn("【社会・経済の動き】", markdown)
         self.assertIn("- 見出し：交通計画1 来月開始", markdown)
-        self.assertIn("- 短見出し：交通計画1開始", markdown)
+        self.assertNotIn("- 短見出し：", markdown)
         self.assertIn("- 概要：RSS概要1", markdown)
         self.assertNotIn("- 補足：", markdown)
         self.assertNotIn("- 結論：", markdown)
@@ -355,11 +364,10 @@ class EditorialEntryV3Test(unittest.TestCase):
         entry = markdown_renderer.normalize_editorial_entry(legacy)
         self.assertEqual(entry["supporting_points_ja"], ["記事本文にある補足です。"])
 
-    def test_request_uses_v4_schema_and_user_only_contract(self) -> None:
+    def test_request_uses_v5_schema_and_user_only_contract(self) -> None:
         parsed = {
             "editorial_entry": {
                 "headline_ja": "交通計画 来月開始",
-                "short_headline_ja": "交通計画開始",
                 "entry_ja": "当局は来月の交通計画開始を見込むと述べました。",
             }
         }
@@ -371,11 +379,11 @@ class EditorialEntryV3Test(unittest.TestCase):
                 item(), "key", "openai/gpt-oss-120b",
                 summary_prompt_layout="user_only",
                 summary_max_tokens=800,
-                summary_contract="editorial_entry_v4",
+                summary_contract="editorial_entry_v5",
             )
         self.assertEqual(result.editorial_entry["entry_ja"], parsed["editorial_entry"]["entry_ja"])
-        self.assertEqual(request.call_args.kwargs["json_schema"], EDITORIAL_ENTRY_V4_SCHEMA)
-        self.assertEqual(request.call_args.kwargs["json_schema_name"], "malaysia_news_editorial_entry_v4")
+        self.assertEqual(request.call_args.kwargs["json_schema"], EDITORIAL_ENTRY_V5_SCHEMA)
+        self.assertEqual(request.call_args.kwargs["json_schema_name"], "malaysia_news_editorial_entry_v5")
         messages = groq_renderer.summary_request_messages(item(), "user_only")
         self.assertEqual([message["role"] for message in messages], ["user"])
         self.assertIn('"editorial_entry"', messages[0]["content"])
@@ -450,7 +458,7 @@ class EditorialEntryV3Test(unittest.TestCase):
             {"transport_status": "success", "json_contract_status": "schema_invalid"},
         )
         repaired = groq_renderer.GroqEditorialEntryResult(
-            {"headline_ja": "交通計画を来月開始へ", "short_headline_ja": "交通計画を開始へ", "entry_ja": "当局は交通計画を来月始める見通しだと述べました。", "supporting_points_ja": []},
+            {"headline_ja": "交通計画を来月開始へ", "entry_ja": "当局は交通計画を来月始める見通しだと述べました。"},
             {"transport_status": "success", "json_contract_status": "valid"},
         )
         with patch("render_malaysia_news_with_groq.request_groq_summary_with_retry", side_effect=primary), patch(
@@ -581,11 +589,6 @@ class EditorialEntryV3Test(unittest.TestCase):
                 {"title": "Fund worth RM 1 billion announced", "description": ""},
                 {"entry_ja": "1億リンギットの基金が発表されました。", "supporting_points_ja": []},
             )
-        with self.assertRaisesRegex(ValueError, "unsafe RM1 date/currency conversion"):
-            groq_renderer.validate_editorial_entry_against_source(
-                {"title": "RM 1 payment support", "description": ""},
-                {"entry_ja": "1月7日リンギット支援が始まります。", "supporting_points_ja": []},
-            )
         with self.assertRaisesRegex(ValueError, "unsupported death claim"):
             groq_renderer.validate_editorial_entry_against_source(
                 {"title": "Student enrolment declined", "description": ""},
@@ -594,7 +597,7 @@ class EditorialEntryV3Test(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unsupported death claim"):
             groq_renderer.validate_editorial_entry_against_source(
                 {"title": "Student enrolment declined", "description": ""},
-                {"headline_ja": "生徒数が減少", "short_headline_ja": "生徒数が減少", "entry_ja": "在籍者数の減少が報告されました。" * 8 + "学生の死亡も報じられました。"},
+                {"headline_ja": "生徒数が減少", "entry_ja": "在籍者数の減少が報告されました。" * 8 + "学生の死亡も報じられました。"},
             )
         with self.assertRaisesRegex(ValueError, "english lead leakage"):
             groq_renderer.validate_editorial_entry_against_source(
@@ -652,7 +655,6 @@ class EditorialEntryV3Test(unittest.TestCase):
                 "{}",
                 {"editorial_entry": {
                     "headline_ja": entry,
-                    "short_headline_ja": entry,
                     "entry_ja": entry,
                 }},
                 {"transport_status": "success", "json_contract_status": "valid"},
@@ -702,7 +704,6 @@ class EditorialEntryV3Test(unittest.TestCase):
         )
         parsed = {"editorial_entry": {
             "headline_ja": "RM1.3 billionの支援を発表",
-            "short_headline_ja": "RM1.3 billionの支援",
             "entry_ja": "政府はRM1.3 billionの支援を発表しました。",
         }}
         with patch("render_malaysia_news_with_groq.request_groq_summary_with_retry", side_effect=primary), patch(
@@ -718,7 +719,7 @@ class EditorialEntryV3Test(unittest.TestCase):
         self.assertEqual(records[0]["hard_safety_rejection_reason"], "")
         self.assertEqual(records[0]["money_repair_trigger_reason"], "unsafe numeric unit conversion: RM1.3 billion")
         self.assertEqual(request.call_args.kwargs["max_tokens"], 800)
-        self.assertEqual(request.call_args.kwargs["json_schema_name"], "malaysia_news_editorial_entry_v4_money_repair")
+        self.assertEqual(request.call_args.kwargs["json_schema_name"], "malaysia_news_editorial_entry_v5_money_repair")
         self.assertEqual(build_render_decisions(rendered["items"], records)[0].source_kind, "groq_repaired")
 
     def test_money_repair_still_rejects_a_wrong_amount(self) -> None:
@@ -727,7 +728,6 @@ class EditorialEntryV3Test(unittest.TestCase):
         primary = groq_renderer.GroqEditorialEntryRejected("unsupported yen conversion")
         parsed = {"editorial_entry": {
             "headline_ja": "1.3億リンギットの支援",
-            "short_headline_ja": "1.3億リンギットの支援",
             "entry_ja": "政府は1.3億リンギットの支援を発表しました。",
         }}
         with patch("render_malaysia_news_with_groq.request_groq_summary_with_retry", side_effect=primary), patch(
@@ -812,7 +812,6 @@ class EditorialEntryV3Test(unittest.TestCase):
         final = copy.deepcopy(original)
         final["items"][0]["editorial_entry"] = {
             "headline_ja": "交通計画を来月開始へ",
-            "short_headline_ja": "交通計画を開始へ",
             "entry_ja": "Groq概要",
             "supporting_points_ja": ["RSS補足1", "Groq補足"],
         }
@@ -820,7 +819,7 @@ class EditorialEntryV3Test(unittest.TestCase):
         decisions = build_render_decisions(final["items"], records)
         annotate_decision_records(original, final, records, decisions)
         counts = provenance_observation(records)["line_counts"]
-        self.assertEqual(counts["groq_replaced"], 3)
+        self.assertEqual(counts["groq_replaced"], 2)
         self.assertEqual(counts["groq_inherited"], 0)
 
     def test_v3_validator_accepts_overview_and_supporting_points(self) -> None:

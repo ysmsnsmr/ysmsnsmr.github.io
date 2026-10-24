@@ -31,7 +31,6 @@ class MalaysiaEditorialCandidatePoolTests(unittest.TestCase):
             patch.object(summary, "should_exclude_item", lambda item: False),
             patch.object(summary, "category_for", lambda item: "【知っておくと得】"),
             patch.object(summary, "is_forced_final_noise", lambda item: False),
-            patch.object(summary, "financial_topic_bucket", lambda item: ""),
         ):
             selected = summary.select_items(items, now)
 
@@ -48,6 +47,7 @@ class MalaysiaEditorialCandidatePoolTests(unittest.TestCase):
         self.assertFalse(payload["candidate_policy"]["overall_selector_cap_applied"])
         self.assertFalse(payload["candidate_policy"]["source_limits_applied"])
         self.assertFalse(payload["candidate_policy"]["financial_limits_applied"])
+        self.assertEqual(payload["post_relevance_policy"], {"target_card_count": 20})
         self.assertEqual(payload["counts"]["candidates"], 9)
 
     def test_candidate_pool_keeps_items_rejected_by_legacy_relevance_rules(self) -> None:
@@ -79,7 +79,6 @@ class MalaysiaEditorialCandidatePoolTests(unittest.TestCase):
             patch.object(summary, "should_exclude_item", lambda item: False),
             patch.object(summary, "category_for", lambda item: "【知っておくと得】"),
             patch.object(summary, "is_forced_final_noise", lambda item: item is final_noise),
-            patch.object(summary, "financial_topic_bucket", lambda item: ""),
         ):
             selected = summary.select_items([low_score, final_noise], now)
 
@@ -100,7 +99,6 @@ class MalaysiaEditorialCandidatePoolTests(unittest.TestCase):
             patch.object(summary, "should_exclude_item", lambda item: False),
             patch.object(summary, "category_for", lambda item: "【知っておくと得】"),
             patch.object(summary, "is_forced_final_noise", lambda item: False),
-            patch.object(summary, "financial_topic_bucket", lambda item: ""),
         ):
             summary.select_items([older_url, invalid, newest], now)
 
@@ -125,7 +123,6 @@ class MalaysiaEditorialCandidatePoolTests(unittest.TestCase):
             patch.object(summary, "should_exclude_item", lambda item: False),
             patch.object(summary, "category_for", lambda item: "【知っておくと得】"),
             patch.object(summary, "is_forced_final_noise", lambda item: False),
-            patch.object(summary, "financial_topic_bucket", lambda item: ""),
         ):
             summary.select_items([penang, johor], now)
 

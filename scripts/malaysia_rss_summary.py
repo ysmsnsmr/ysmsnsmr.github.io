@@ -92,8 +92,6 @@ RECENT_WINDOW_HOURS = 24
 FRESHNESS_OBSERVATION_WINDOW_HOURS = 24
 FRESHNESS_REFERENCE_WINDOW_HOURS = 48
 CATEGORY_PRIORITY = {"【速報】": 0, "【生活インパクト】": 1, "【知っておくと得】": 2}
-FINANCIAL_LIMITS = {"ringgit": 2, "bursa": 1, "bnm_policy": 2}
-SOURCE_LIMITS = {"Paul Tan": 1}
 PRACTICAL_LIFE_TAGS = {
     "weather",
     "flood",
@@ -1493,18 +1491,6 @@ def category_for(item: Item) -> str:
     return "【知っておくと得】"
 
 
-def financial_topic_bucket(item: Item) -> str:
-    text = item_text(item)
-    flags = ensure_flags(item)
-    if flags[FLAG_MARKET]:
-        return "bursa"
-    if has_any(text, ["bnm", "bank negara", "opr", "monetary policy", "loan costs", "targeted solutions"]):
-        return "bnm_policy"
-    if flags[FLAG_CURRENCY]:
-        return "ringgit"
-    return ""
-
-
 def final_sort_key(item: Item) -> tuple[int, int, float]:
     return (CATEGORY_PRIORITY.get(item.category, 9), -item.score, -item.pub_date.timestamp())
 
@@ -1600,7 +1586,6 @@ def finalize_selected_items(selected: list[Item]) -> list[Item]:
     gated = final_noise_gate(selected)
     seen_links: set[str] = set()
     seen_keys: set[str] = set()
-    financial_counts: Counter[str] = Counter()
     finalized: list[Item] = []
     stats = {
         "input_items": len(selected),
@@ -1608,7 +1593,6 @@ def finalize_selected_items(selected: list[Item]) -> list[Item]:
         "removed_noise_gate": len(selected) - len(gated),
         "removed_duplicate_url": 0,
         "removed_duplicate_key": 0,
-        "removed_financial_cap": 0,
         "validation_errors": [],
     }
     for item in sorted(gated, key=final_sort_key):
@@ -1620,17 +1604,11 @@ def finalize_selected_items(selected: list[Item]) -> list[Item]:
         if canonical_key and canonical_key in seen_keys:
             stats["removed_duplicate_key"] += 1
             continue
-        financial_bucket = financial_topic_bucket(item) if item.category == "【知っておくと得】" else ""
-        if financial_bucket and financial_counts[financial_bucket] >= FINANCIAL_LIMITS[financial_bucket]:
-            stats["removed_financial_cap"] += 1
-            continue
         finalized.append(item)
         if link_key:
             seen_links.add(link_key)
         if canonical_key:
             seen_keys.add(canonical_key)
-        if financial_bucket:
-            financial_counts[financial_bucket] += 1
     stats["output_items"] = len(finalized)
     stats["validation_errors"] = validate_final_items(finalized)
     LAST_FINALIZE_STATS = stats
@@ -1653,15 +1631,6 @@ def validate_final_items(selected: list[Item]) -> list[str]:
             errors.append("duplicate_item_across_categories")
             break
         category_by_key[key] = item.category
-    financial_counts: Counter[str] = Counter()
-    for item in selected:
-        if item.category == "【知っておくと得】":
-            bucket = financial_topic_bucket(item)
-            if bucket:
-                financial_counts[bucket] += 1
-    for bucket, limit in FINANCIAL_LIMITS.items():
-        if financial_counts[bucket] > limit:
-            errors.append(f"{bucket}_limit_exceeded")
     return errors
 
 
@@ -1805,9 +1774,6 @@ def build_editorial_candidate_pool_json(
         },
         "post_relevance_policy": {
             "target_card_count": 20,
-            "default_source_limit": 24,
-            "source_limits": dict(SOURCE_LIMITS),
-            "financial_limits": dict(FINANCIAL_LIMITS),
         },
         "counts": {
             "processed": processed_count,
@@ -1815,15 +1781,7 @@ def build_editorial_candidate_pool_json(
             "failed_sources": len(failed_sources),
         },
         "failed_sources": list(failed_sources),
-        "items": [
-            {
-                **item_json(item),
-                "routing_metadata": {
-                    "financial_bucket": financial_topic_bucket(item),
-                },
-            }
-            for item in LAST_EDITORIAL_CANDIDATE_POOL
-        ],
+        "items": [item_json(item) for item in LAST_EDITORIAL_CANDIDATE_POOL],
     }
 
 
@@ -1965,10 +1923,8 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
     candidates.sort(key=lambda item: (item.score, item.pub_date), reverse=True)
 
     selected: list[Item] = []
-    source_counts: Counter[str] = Counter()
     category_limits = {"【速報】": 3, "【生活インパクト】": 5, "【知っておくと得】": 8}
     category_counts: Counter[str] = Counter()
-    financial_counts: Counter[str] = Counter()
     for candidate_rank, item in enumerate(candidates, start=1):
         category = category_for(item)
         item.category = category
@@ -1980,29 +1936,11 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
                 "candidate_rank": candidate_rank,
             }
             continue
-        financial_bucket = financial_topic_bucket(item) if category == "【知っておくと得】" else ""
-        source_limit = SOURCE_LIMITS.get(item.source, 24)
-        if source_counts[item.source] >= source_limit:
-            decisions[id(item)] = {
-                "decision": "excluded",
-                "decision_stage": "source_cap",
-                "decision_reason": f"source cap reached ({source_limit})",
-                "candidate_rank": candidate_rank,
-            }
-            continue
         if category_counts[category] >= category_limits[category]:
             decisions[id(item)] = {
                 "decision": "excluded",
                 "decision_stage": "category_cap",
                 "decision_reason": f"category cap reached ({category_limits[category]})",
-                "candidate_rank": candidate_rank,
-            }
-            continue
-        if financial_bucket and financial_counts[financial_bucket] >= FINANCIAL_LIMITS[financial_bucket]:
-            decisions[id(item)] = {
-                "decision": "excluded",
-                "decision_stage": "financial_cap",
-                "decision_reason": f"financial topic cap reached ({FINANCIAL_LIMITS[financial_bucket]})",
                 "candidate_rank": candidate_rank,
             }
             continue
@@ -2013,10 +1951,7 @@ def select_items(items: list[Item], now: datetime) -> list[Item]:
             "decision_reason": "selected before final deduplication and validation",
             "candidate_rank": candidate_rank,
         }
-        source_counts[item.source] += 1
         category_counts[category] += 1
-        if financial_bucket:
-            financial_counts[financial_bucket] += 1
         if len(selected) >= 15:
             for remaining_rank, remaining_item in enumerate(candidates[candidate_rank:], start=candidate_rank + 1):
                 decisions[id(remaining_item)] = {
@@ -2098,7 +2033,6 @@ def selection_summary(items: list[Item], selected: list[Item], now: datetime) ->
         f"- final_removed_noise_gate: {LAST_FINALIZE_STATS.get('removed_noise_gate', 0)}",
         f"- final_removed_duplicate_url: {LAST_FINALIZE_STATS.get('removed_duplicate_url', 0)}",
         f"- final_removed_duplicate_key: {LAST_FINALIZE_STATS.get('removed_duplicate_key', 0)}",
-        f"- final_removed_financial_cap: {LAST_FINALIZE_STATS.get('removed_financial_cap', 0)}",
         f"- final_validation_errors: {validation_text}",
     ]
     selected_over_items = freshness.get("selected_over_24h_items")
@@ -2315,7 +2249,6 @@ def editorial_entry_json(item: Item) -> dict[str, object]:
     entry_ja = str(summary.get("conclusion") or "").strip()
     return {
         "headline_ja": "記事詳細は出典へ",
-        "short_headline_ja": "記事詳細は出典へ",
         "entry_ja": entry_ja,
     }
 
@@ -2799,7 +2732,7 @@ def self_test() -> int:
     check("Paul Tan JPJ data-only EV ranking is excluded", should_exclude_item(paul_ev_ranking))
 
     paul_selected = select_items([paul_lrt, paul_ron95, paul_recall], now)
-    check("Paul Tan source cap keeps at most one item", sum(1 for test_item in paul_selected if test_item.source == "Paul Tan") <= 1)
+    check("Paul Tan items are not limited to one", sum(1 for test_item in paul_selected if test_item.source == "Paul Tan") >= 2)
 
     petronas_chairman = item("Petronas Dagangan appoints new chairman")
     evaluate_item(petronas_chairman)
@@ -2813,20 +2746,12 @@ def self_test() -> int:
     evaluate_item(road_low_value_guard)
     check("Road impact overrides low-value fallback", not should_exclude_item(road_low_value_guard))
 
-    ringgit_items = [
-        item("Ringgit expected to trade in narrow range ahead of US data"),
-        item("Ringgit strengthens as Malaysia economy outlook improves"),
-        item("Ringgit forecast revised after IMF economy update"),
-    ]
-    selected_ringgit = select_items(ringgit_items, now)
-    check("Ringgit selected items stay within cap", sum(1 for test_item in selected_ringgit if financial_topic_bucket(test_item) == "ringgit") <= 2)
-
     bursa_items = [
         item("Bursa Malaysia seen trading range-bound between 1,700 and 1,730"),
         item("Bursa Malaysia market index expected to trade cautiously"),
     ]
     selected_bursa = select_items(bursa_items, now)
-    check("Bursa selected items stay within cap", sum(1 for test_item in selected_bursa if financial_topic_bucket(test_item) == "bursa") <= 1)
+    check("Bursa selection has no financial cap error", not validate_final_items(selected_bursa))
 
     bnm_items = [
         item("BNM targeted solutions aim to help households manage loan costs"),
@@ -2834,7 +2759,7 @@ def self_test() -> int:
         item("BNM monetary policy update focuses on loan costs"),
     ]
     selected_bnm = select_items(bnm_items, now)
-    check("BNM selected items stay within cap", sum(1 for test_item in selected_bnm if financial_topic_bucket(test_item) == "bnm_policy") <= 2)
+    check("BNM items are not limited to two", len(selected_bnm) >= 3)
 
     ktmb_life = item("KTMB rolls out 186 extra trains for Hari Raya Aidiladha", link="https://example.test/ktmb")
     ktmb_info = item("KTMB rolls out 186 extra trains for Hari Raya Aidiladha", link="https://example.test/ktmb")
@@ -2866,17 +2791,6 @@ def self_test() -> int:
     evaluate_item(cruise_ship)
     check("No Malaysians cruise ship has no background value", not cruise_ship.background_value)
     check("No Malaysians cruise ship is excluded", should_exclude_item(cruise_ship))
-
-    ringgit_final_items = [
-        item("Ringgit expected to trade in narrow range ahead of US data", link="https://example.test/ringgit-1"),
-        item("Ringgit strengthens as Malaysia economy outlook improves", link="https://example.test/ringgit-2"),
-        item("Ringgit forecast revised after IMF economy update", link="https://example.test/ringgit-3"),
-    ]
-    for test_item in ringgit_final_items:
-        evaluate_item(test_item)
-        test_item.category = "【知っておくと得】"
-    finalized_ringgit = finalize_selected_items(ringgit_final_items)
-    check("Final Ringgit items stay within cap", sum(1 for test_item in finalized_ringgit if financial_topic_bucket(test_item) == "ringgit") <= 2)
 
     final_noise_titles = [
         "SkyeChip IPO oversubscribed by 20 times",
@@ -2958,12 +2872,11 @@ def self_test() -> int:
     check("JSON selected summary has next_action key", "next_action" in selected_summary)
     check("JSON selected summary splits what_happened like render", len(selected_summary["what_happened"]) <= 2)
     check(
-        "JSON item carries Editorial Entry v4 fallback",
+        "JSON item carries Editorial Entry v5 fallback",
         bool(editorial_entry["headline_ja"])
-        and bool(editorial_entry["short_headline_ja"])
         and bool(editorial_entry["entry_ja"]),
     )
-    check("Editorial Entry v4 has no supporting points", "supporting_points_ja" not in editorial_entry)
+    check("Editorial Entry v5 has no short headline or supporting points", set(editorial_entry) == {"headline_ja", "entry_ja"})
 
     observed_duplicate = Item(
         "Test Duplicate",
