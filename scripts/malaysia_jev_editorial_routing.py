@@ -99,21 +99,8 @@ def _post_relevance_policy(candidate_pool: dict[str, Any]) -> dict[str, Any]:
     raw = candidate_pool.get("post_relevance_policy")
     if not isinstance(raw, dict):
         raw = {}
-    source_limits = raw.get("source_limits")
-    financial_limits = raw.get("financial_limits")
     return {
         "target_card_count": _positive_int(raw.get("target_card_count"), TARGET_CARD_COUNT),
-        "default_source_limit": _positive_int(raw.get("default_source_limit"), 24),
-        "source_limits": {
-            str(name): value
-            for name, value in (source_limits.items() if isinstance(source_limits, dict) else [])
-            if isinstance(name, str) and isinstance(value, int) and not isinstance(value, bool) and value > 0
-        },
-        "financial_limits": {
-            str(name): value
-            for name, value in (financial_limits.items() if isinstance(financial_limits, dict) else [])
-            if isinstance(name, str) and isinstance(value, int) and not isinstance(value, bool) and value > 0
-        },
     }
 
 
@@ -292,8 +279,6 @@ def route_candidates(
     selected: list[dict[str, Any]] = []
     selected_fingerprints: set[str] = set()
     selected_ranks: set[int] = set()
-    source_counts: Counter[str] = Counter()
-    financial_counts: Counter[str] = Counter()
     results_by_fingerprint = {
         result["itemFingerprint"]: result
         for result in report["results"]
@@ -329,17 +314,6 @@ def route_candidates(
             result["coveredByCandidateRank"] = representative_rank
             result["coveredByFingerprint"] = report["results"][representative_rank - 1]["itemFingerprint"]
             continue
-        source = str(item.get("source") or "")
-        source_limit = policy["source_limits"].get(source, policy["default_source_limit"])
-        if source_counts[source] >= source_limit:
-            result["publicationDecision"] = "excluded_source_diversity"
-            continue
-        metadata = item.get("routing_metadata")
-        financial_bucket = metadata.get("financial_bucket") if isinstance(metadata, dict) else ""
-        financial_limit = policy["financial_limits"].get(financial_bucket) if financial_bucket else None
-        if financial_limit is not None and financial_counts[financial_bucket] >= financial_limit:
-            result["publicationDecision"] = "excluded_financial_diversity"
-            continue
         if len(selected) >= policy["target_card_count"]:
             result["publicationDecision"] = "excluded_editorial_budget"
             continue
@@ -347,9 +321,6 @@ def route_candidates(
         selected_fingerprints.add(fingerprint)
         selected_ranks.add(rank)
         result["publicationDecision"] = "selected"
-        source_counts[source] += 1
-        if financial_bucket:
-            financial_counts[financial_bucket] += 1
 
     coverage["productionEffect"] = any(
         result.get("coverageSource") == "general_event" for result in report["results"]
@@ -360,7 +331,7 @@ def route_candidates(
     routing = {
         "status": "applied",
         "applied": True,
-        "policy": "jev_relevance_then_event_coverage_then_diversity_and_editorial_budget",
+        "policy": "jev_relevance_then_event_coverage_then_editorial_budget",
         "event_coverage_status": coverage["status"],
         "event_coverage_suppressed_count": coverage["suppressedCount"],
         "haze_coverage_status": haze_coverage["status"],
@@ -368,8 +339,8 @@ def route_candidates(
         "target_card_count": policy["target_card_count"],
         "direct_life_impact_protected": True,
         "fixed_category_caps_applied": False,
-        "source_limits_applied_after_relevance": True,
-        "financial_limits_applied_after_relevance": True,
+        "source_limits_applied_after_relevance": False,
+        "financial_limits_applied_after_relevance": False,
         "summary_validation_stage": "after_summary_generation",
         "legacy_baseline_selected_count": len(baseline_items),
         "routed_selected_count": len(selected),

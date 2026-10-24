@@ -48,6 +48,7 @@ class MalaysiaEditorialCandidatePoolTests(unittest.TestCase):
         self.assertFalse(payload["candidate_policy"]["overall_selector_cap_applied"])
         self.assertFalse(payload["candidate_policy"]["source_limits_applied"])
         self.assertFalse(payload["candidate_policy"]["financial_limits_applied"])
+        self.assertEqual(payload["post_relevance_policy"], {"target_card_count": 20})
         self.assertEqual(payload["counts"]["candidates"], 9)
 
     def test_candidate_pool_keeps_items_rejected_by_legacy_relevance_rules(self) -> None:

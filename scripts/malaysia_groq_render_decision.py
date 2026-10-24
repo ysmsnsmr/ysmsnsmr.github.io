@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from malaysia_groq_common import clean_text
-from malaysia_groq_output_contract import editorial_entry_v4_schema_error
+from malaysia_groq_output_contract import editorial_entry_v5_schema_error
 
 
 GROQ_ACCEPTED = "groq_accepted"
@@ -29,7 +29,6 @@ PROVENANCE_ORIGINS = (
 # reintroduce unverified legacy RSS text into an otherwise valid document.
 RSS_FALLBACK_EDITORIAL_ENTRY = {
     "headline_ja": "記事詳細は出典へ",
-    "short_headline_ja": "記事詳細は出典へ",
     "entry_ja": "この記事の詳細は出典リンクで確認できます。",
 }
 
@@ -47,7 +46,6 @@ def editorial_entry_payload(value: Any) -> dict[str, Any]:
     entry = value if isinstance(value, dict) else {}
     return {
         "headline_ja": clean_text(entry.get("headline_ja")) or "記事詳細は出典へ",
-        "short_headline_ja": clean_text(entry.get("short_headline_ja")) or clean_text(entry.get("headline_ja")) or "記事詳細は出典へ",
         "entry_ja": clean_text(entry.get("entry_ja")),
     }
 
@@ -60,7 +58,7 @@ def validated_rss_fallback_editorial_entry() -> dict[str, Any]:
     that could conflict with a hard-safety rejection.
     """
     entry = editorial_entry_payload(RSS_FALLBACK_EDITORIAL_ENTRY)
-    error = editorial_entry_v4_schema_error({"editorial_entry": entry})
+    error = editorial_entry_v5_schema_error({"editorial_entry": entry})
     if error:
         raise ValueError(f"invalid code-owned RSS fallback entry: {error}")
     return entry
@@ -71,12 +69,11 @@ def validated_source_display_editorial_entry(item: dict[str, Any]) -> dict[str, 
     description = clean_text(item.get("description"))
     entry = {
         "headline_ja": "原題・出典情報",
-        "short_headline_ja": "原題・出典情報",
         "entry_ja": " ".join(
             filter(None, [clean_text(item.get("title")) or "原題は出典リンクで確認できます。", description])
         ),
     }
-    error = editorial_entry_v4_schema_error({"editorial_entry": entry})
+    error = editorial_entry_v5_schema_error({"editorial_entry": entry})
     if error:
         raise ValueError(f"invalid source display entry: {error}")
     return entry
@@ -179,9 +176,6 @@ def _entry_lines(entry: dict[str, Any]) -> list[tuple[str, str]]:
     headline = clean_text(entry.get("headline_ja"))
     if headline:
         lines.append(("headline_ja", headline))
-    short_headline = clean_text(entry.get("short_headline_ja"))
-    if short_headline:
-        lines.append(("short_headline_ja", short_headline))
     text = clean_text(entry.get("entry_ja"))
     if text:
         lines.append(("entry_ja", text))
@@ -223,7 +217,6 @@ def annotate_decision_records(
         final = editorial_entry_payload(final_items[item_index].get("editorial_entry"))
         remaining = {
             "headline_ja": {},
-            "short_headline_ja": {},
             "entry_ja": {},
         }
         for field, text in _entry_lines(original):
@@ -249,7 +242,7 @@ def provenance_observation(records: list[dict[str, Any]]) -> dict[str, Any]:
     counts = {origin: 0 for origin in PROVENANCE_ORIGINS}
     fields = {
         field: {origin: 0 for origin in PROVENANCE_ORIGINS}
-        for field in ("headline_ja", "short_headline_ja", "entry_ja")
+        for field in ("headline_ja", "entry_ja")
     }
     for record in records:
         raw_lines = record.get("editorial_entry_line_provenance") if isinstance(record, dict) else []
