@@ -31,7 +31,6 @@ class MalaysiaEditorialCandidatePoolTests(unittest.TestCase):
             patch.object(summary, "should_exclude_item", lambda item: False),
             patch.object(summary, "category_for", lambda item: "【知っておくと得】"),
             patch.object(summary, "is_forced_final_noise", lambda item: False),
-            patch.object(summary, "financial_topic_bucket", lambda item: ""),
         ):
             selected = summary.select_items(items, now)
 
@@ -80,7 +79,6 @@ class MalaysiaEditorialCandidatePoolTests(unittest.TestCase):
             patch.object(summary, "should_exclude_item", lambda item: False),
             patch.object(summary, "category_for", lambda item: "【知っておくと得】"),
             patch.object(summary, "is_forced_final_noise", lambda item: item is final_noise),
-            patch.object(summary, "financial_topic_bucket", lambda item: ""),
         ):
             selected = summary.select_items([low_score, final_noise], now)
 
@@ -101,7 +99,6 @@ class MalaysiaEditorialCandidatePoolTests(unittest.TestCase):
             patch.object(summary, "should_exclude_item", lambda item: False),
             patch.object(summary, "category_for", lambda item: "【知っておくと得】"),
             patch.object(summary, "is_forced_final_noise", lambda item: False),
-            patch.object(summary, "financial_topic_bucket", lambda item: ""),
         ):
             summary.select_items([older_url, invalid, newest], now)
 
@@ -126,7 +123,6 @@ class MalaysiaEditorialCandidatePoolTests(unittest.TestCase):
             patch.object(summary, "should_exclude_item", lambda item: False),
             patch.object(summary, "category_for", lambda item: "【知っておくと得】"),
             patch.object(summary, "is_forced_final_noise", lambda item: False),
-            patch.object(summary, "financial_topic_bucket", lambda item: ""),
         ):
             summary.select_items([penang, johor], now)
 

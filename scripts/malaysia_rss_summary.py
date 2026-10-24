@@ -1491,18 +1491,6 @@ def category_for(item: Item) -> str:
     return "【知っておくと得】"
 
 
-def financial_topic_bucket(item: Item) -> str:
-    text = item_text(item)
-    flags = ensure_flags(item)
-    if flags[FLAG_MARKET]:
-        return "bursa"
-    if has_any(text, ["bnm", "bank negara", "opr", "monetary policy", "loan costs", "targeted solutions"]):
-        return "bnm_policy"
-    if flags[FLAG_CURRENCY]:
-        return "ringgit"
-    return ""
-
-
 def final_sort_key(item: Item) -> tuple[int, int, float]:
     return (CATEGORY_PRIORITY.get(item.category, 9), -item.score, -item.pub_date.timestamp())
 
@@ -2758,14 +2746,6 @@ def self_test() -> int:
     evaluate_item(road_low_value_guard)
     check("Road impact overrides low-value fallback", not should_exclude_item(road_low_value_guard))
 
-    ringgit_items = [
-        item("Ringgit expected to trade in narrow range ahead of US data"),
-        item("Ringgit strengthens as Malaysia economy outlook improves"),
-        item("Ringgit forecast revised after IMF economy update"),
-    ]
-    selected_ringgit = select_items(ringgit_items, now)
-    check("Ringgit selected items stay within cap", sum(1 for test_item in selected_ringgit if financial_topic_bucket(test_item) == "ringgit") <= 2)
-
     bursa_items = [
         item("Bursa Malaysia seen trading range-bound between 1,700 and 1,730"),
         item("Bursa Malaysia market index expected to trade cautiously"),
@@ -2779,7 +2759,7 @@ def self_test() -> int:
         item("BNM monetary policy update focuses on loan costs"),
     ]
     selected_bnm = select_items(bnm_items, now)
-    check("BNM items are not limited to two", sum(1 for test_item in selected_bnm if financial_topic_bucket(test_item) == "bnm_policy") >= 3)
+    check("BNM items are not limited to two", len(selected_bnm) >= 3)
 
     ktmb_life = item("KTMB rolls out 186 extra trains for Hari Raya Aidiladha", link="https://example.test/ktmb")
     ktmb_info = item("KTMB rolls out 186 extra trains for Hari Raya Aidiladha", link="https://example.test/ktmb")
@@ -2811,17 +2791,6 @@ def self_test() -> int:
     evaluate_item(cruise_ship)
     check("No Malaysians cruise ship has no background value", not cruise_ship.background_value)
     check("No Malaysians cruise ship is excluded", should_exclude_item(cruise_ship))
-
-    ringgit_final_items = [
-        item("Ringgit expected to trade in narrow range ahead of US data", link="https://example.test/ringgit-1"),
-        item("Ringgit strengthens as Malaysia economy outlook improves", link="https://example.test/ringgit-2"),
-        item("Ringgit forecast revised after IMF economy update", link="https://example.test/ringgit-3"),
-    ]
-    for test_item in ringgit_final_items:
-        evaluate_item(test_item)
-        test_item.category = "【知っておくと得】"
-    finalized_ringgit = finalize_selected_items(ringgit_final_items)
-    check("Final Ringgit items stay within cap", sum(1 for test_item in finalized_ringgit if financial_topic_bucket(test_item) == "ringgit") <= 2)
 
     final_noise_titles = [
         "SkyeChip IPO oversubscribed by 20 times",
