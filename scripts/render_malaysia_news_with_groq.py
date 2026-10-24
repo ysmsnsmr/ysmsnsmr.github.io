@@ -122,7 +122,6 @@ published_atがpublication_as_ofより前の日付なら、原文のtodayやthis
 補足欄は作りません。生活影響や次アクションは入力に明確な根拠がある場合だけ概要へ自然に含めてください。
 RSSにない数値、対象者、死亡、事故、被害、収入減、因果関係を足さないでください。“lost students”, “losing students” は死亡を意味すると明確でない限り、利用者・生徒の減少として訳してください。
 金額を書く場合は、title、description、body_evidenceにある表記を通貨・数字・単位ごとそのまま使ってください。source_money_literalsはその原文表記です。RM130mを「1億3000万リンギット」に換算する必要はありません。RSS entry内の金額は根拠としません。原文にない円換算や「円相当」は書かないでください。
-原文にhazeやjerebuがある場合、その語を原文表記のまま概要に残してください。「濃霧」「霧」に置き換えないでください。大気汚染の指標API、IPU、APIMSも原文の略語と数値を保ち、別の意味に訳さないでください。見出しでも同じ現象を別のものとして表現しないでください。
 出力はJSONのみです。"""
 
 EDITORIAL_ENTRY_V4_CONTRACT_INSTRUCTION = """返答は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
@@ -134,14 +133,12 @@ REPAIR_SYSTEM_PROMPT = """あなたはマレーシア在住者向けニュース
 入力のpublication_as_ofとpublished_atを基準に、対象日時や終了時刻が明記されている場合は絶対表記で残し、終了済みの案内を現在も有効と書かないでください。「今日」「明日」「現在」だけの表現は避け、期限不明なら推測しないでください。
 published_atがpublication_as_ofより前の日付なら、原文のtodayやthis morningを掲載日の「本日」「今日」「今朝」に持ち越さず、原文が示す日付を絶対表記にしてください。
 金額を書く場合は原文の通貨・数字・単位をそのまま使い、億・万への換算や原文にない円換算をしないでください。RSS entry内の金額は根拠としません。
-原文のhaze、jerebuは概要に原文表記のまま残し、「濃霧」「霧」に置き換えないでください。大気汚染の指標API、IPU、APIMSも原文の略語と数値を保ってください。見出しでも別の現象として表現しないでください。
 通常見出しはUnicode文字数で60文字以内、短見出しは最大26文字の自然な日本語にしてください。短見出しで意味が落ちる場合は通常見出しと同じ文を使って構いません。概要は読者が出典を開くか判断できる長さで、必要な事実を省かず日本語で書いてください。
 出力は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
 {"editorial_entry":{"headline_ja":"string","short_headline_ja":"string","entry_ja":"string"}}"""
 
 MONEY_REPAIR_SYSTEM_PROMPT = """日本語のニュース概要を原文の事実だけから再生成してください。
 金額を書く場合はsource_money_literalsの表記を通貨・数字・単位ごと正確にコピーしてください。日本語の億・万や円へ換算しないでください。原文に金額がない場合は金額を書かないでください。
-原文のhaze、jerebuは概要に原文表記のまま残し、「濃霧」「霧」に置き換えないでください。大気汚染の指標API、IPU、APIMSも原文の略語と数値を保ってください。見出しでも別の現象として表現しないでください。
 原文にない事実を足さず、主体、対象、方向、計画・発言・予報などの確定度を保持してください。補足欄は作りません。
 published_atがpublication_as_ofより前の日付なら、原文のtodayやthis morningを「本日」「今日」「今朝」とせず、原文が示す日付を絶対表記にしてください。
 返答は次の形のJSON objectだけにしてください。追加のkey、説明文、Markdownは出力しません。
@@ -204,22 +201,6 @@ def anchor_previous_day_entry(item: dict[str, Any], entry: dict[str, Any]) -> di
         )
         for field in ("headline_ja", "short_headline_ja", "entry_ja")
     }
-
-
-def preserve_haze_term(item: dict[str, Any], entry: dict[str, Any]) -> dict[str, Any]:
-    """Keep source haze terminology when the model mistakes it for fog."""
-    source = money_source_text(item)
-    if re.search(r"\b(?:fog|mist|kabus)\b|霧", source, re.IGNORECASE):
-        return entry
-    term = re.search(r"\b(?:haze|jerebu)\b", source, re.IGNORECASE)
-    if not term:
-        return entry
-    normalized = entry.copy()
-    for field in ("headline_ja", "short_headline_ja", "entry_ja"):
-        value = normalized[field]
-        value = re.sub(r"\b(haze|jerebu)\s*[（(]\s*濃霧\s*[）)]", r"\1", value, flags=re.IGNORECASE)
-        normalized[field] = value.replace("濃霧", term.group())
-    return normalized
 
 
 def money_source_text(item: dict[str, Any]) -> str:
@@ -509,9 +490,9 @@ def request_groq_summary(
     except ValueError as error:
         raise GroqEditorialEntryContractError(str(error) or "contract validation failed", completion.diagnostic) from error
     try:
-        entry = anchor_previous_day_entry(item, preserve_haze_term(item, entry))
+        entry = anchor_previous_day_entry(item, entry)
         if not headline_is_valid(entry["headline_ja"]) or not short_headline_is_valid(entry["short_headline_ja"]):
-            raise ValueError("source haze term exceeds headline limit")
+            raise ValueError("headline exceeds limit")
         validate_editorial_entry_against_source(item, entry)
     except ValueError as error:
         raise GroqEditorialEntryRejected(str(error) or "validation failed", completion.diagnostic) from error
@@ -546,9 +527,9 @@ def request_groq_repair_entry(
     except ValueError as error:
         raise GroqEditorialEntryContractError(str(error) or "repair contract validation failed", completion.diagnostic) from error
     try:
-        entry = anchor_previous_day_entry(item, preserve_haze_term(item, entry))
+        entry = anchor_previous_day_entry(item, entry)
         if not headline_is_valid(entry["headline_ja"]) or not short_headline_is_valid(entry["short_headline_ja"]):
-            raise ValueError("source haze term exceeds headline limit")
+            raise ValueError("headline exceeds limit")
         validate_editorial_entry_against_source(item, entry)
     except ValueError as error:
         raise GroqEditorialEntryRejected(str(error) or "repair validation failed", completion.diagnostic) from error
