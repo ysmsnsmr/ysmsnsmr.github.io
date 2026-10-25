@@ -150,75 +150,6 @@
       }
     },
     {
-      "id": "social-media-today-meta-ads-2e30b8e47e8a2d2e1ef9",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Meta adds users and revenue as AI costs climb",
-      "url": "https://www.socialmediatoday.com/news/meta-adds-users-and-revenue-as-ai-costs-climb/833671/",
-      "publishedDate": "2026-10-21",
-      "updatedDate": null,
-      "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "2e30b8e47e8a2d2e1ef9c2c8c9a7998cd1f752f4b6b9cd515a6abb846546da27",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta reports user and revenue growth as expenses rise",
-            "summary": "Meta said its family daily active people count rose by 40 million to 3.64 billion in Q3. Revenue increased 26% year over year to $64.6 billion, while expenses rose 68%, driven primarily by capital expenditures. Ad impressions grew 10%, and ad prices rose 14%.",
-            "inputHash": "bffd4ddcad7f629007a28f0e1a3f4c50ef308f260e5ddf0135f479f0befecc60",
-            "generatedAt": "2026-10-22T20:11:32Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta reports user and revenue growth as expenses rise",
-                "inputHash": "bffd4ddcad7f629007a28f0e1a3f4c50ef308f260e5ddf0135f479f0befecc60",
-                "generatedAt": "2026-10-22T20:11:32Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta said its family daily active people count rose by 40 million to 3.64 billion in Q3. Revenue increased 26% year over year to $64.6 billion, while expenses rose 68%, driven primarily by capital expenditures. Ad impressions grew 10%, and ad prices rose 14%.",
-                "inputHash": "bffd4ddcad7f629007a28f0e1a3f4c50ef308f260e5ddf0135f479f0befecc60",
-                "generatedAt": "2026-10-22T20:11:32Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta、Q3売上高が26％増加",
-            "summary": "Metaの第3四半期の売上高は前年同期比26％増の646億ドルでした。アプリ群の1日あたり利用者数は4,000万人増えて36億4,000万人となり、広告表示回数は10％、広告単価は14％上昇しました。経費は主に設備投資を背景に68％増加しました。",
-            "inputHash": "7cf46ca185a69867668802d84cf5cd33f3a2aaf45511b387870feef3b4cafa90",
-            "generatedAt": "2026-10-22T20:11:32Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta、Q3売上高が26％増加",
-                "inputHash": "7cf46ca185a69867668802d84cf5cd33f3a2aaf45511b387870feef3b4cafa90",
-                "generatedAt": "2026-10-22T20:11:32Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaの第3四半期の売上高は前年同期比26％増の646億ドルでした。アプリ群の1日あたり利用者数は4,000万人増えて36億4,000万人となり、広告表示回数は10％、広告単価は14％上昇しました。経費は主に設備投資を背景に68％増加しました。",
-                "inputHash": "7cf46ca185a69867668802d84cf5cd33f3a2aaf45511b387870feef3b4cafa90",
-                "generatedAt": "2026-10-22T20:11:32Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "id": "adsuploader-blog-d75f47f36289b0205125",
       "sourceId": "adsuploader-blog",
       "title": "Meta Ads Placement Customization: Upload a Different Image or Video for Each Placement (2026)",
@@ -279,75 +210,6 @@
                 "status": "machine",
                 "value": "2026年のMeta広告における配置カスタマイズについて解説。フィード、ストーリーズ、リールごとに別の画像や動画を設定する方法、「置き換え」ボタンの場所、「有効な形式がありません」という表示への対処を取り上げています。",
                 "inputHash": "293493c6d83e534fed868f13b8b0ddcac4905db2f31ea143211653ef9518c552",
-                "generatedAt": "2026-10-22T20:11:32Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "social-media-today-meta-ads-143d29cb0408e47241a3",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Australia prepares to sue social platforms over age violations",
-      "url": "https://www.socialmediatoday.com/news/australia-prepares-to-sue-social-platforms-over-age-violations/833545/",
-      "publishedDate": "2026-10-20",
-      "updatedDate": null,
-      "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "143d29cb0408e47241a39586b3d9a9cda5020466ba98c95347cf2845f5071751",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Australia prepares legal action over teen social media ban",
-            "summary": "Australia is preparing to sue Meta, TikTok, Snapchat and YouTube over alleged non-compliance with its under-16 social media ban, Communications Minister Anika Wells said. Evidence is being gathered for federal court proceedings. The maximum penalty for confirmed breaches has doubled to $70 million.",
-            "inputHash": "0958b31eaa26ec977e5e3f154b2e70bb8f38ab94a43ef47bf193340eb6acb59f",
-            "generatedAt": "2026-10-22T20:11:32Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Australia prepares legal action over teen social media ban",
-                "inputHash": "0958b31eaa26ec977e5e3f154b2e70bb8f38ab94a43ef47bf193340eb6acb59f",
-                "generatedAt": "2026-10-22T20:11:32Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Australia is preparing to sue Meta, TikTok, Snapchat and YouTube over alleged non-compliance with its under-16 social media ban, Communications Minister Anika Wells said. Evidence is being gathered for federal court proceedings. The maximum penalty for confirmed breaches has doubled to $70 million.",
-                "inputHash": "0958b31eaa26ec977e5e3f154b2e70bb8f38ab94a43ef47bf193340eb6acb59f",
-                "generatedAt": "2026-10-22T20:11:32Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "豪政府、16歳未満のSNS規制違反で大手各社を提訴へ",
-            "summary": "オーストラリア政府は、16歳未満のSNS利用を禁じる法律への違反が疑われるとして、Meta、TikTok、Snapchat、YouTubeなどへの法的措置を検討しています。通信相のアニカ・ウェルズ氏によると、政府は連邦裁判所での手続きに向けて証拠を集めています。違反が確認された場合、罰金は最大7,000万豪ドルとなる可能性があります。",
-            "inputHash": "147d44daf7b296cfbfe6f363fa4954852356266944cf40a84dbf5a5b371e4518",
-            "generatedAt": "2026-10-22T20:11:32Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "豪政府、16歳未満のSNS規制違反で大手各社を提訴へ",
-                "inputHash": "147d44daf7b296cfbfe6f363fa4954852356266944cf40a84dbf5a5b371e4518",
-                "generatedAt": "2026-10-22T20:11:32Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "オーストラリア政府は、16歳未満のSNS利用を禁じる法律への違反が疑われるとして、Meta、TikTok、Snapchat、YouTubeなどへの法的措置を検討しています。通信相のアニカ・ウェルズ氏によると、政府は連邦裁判所での手続きに向けて証拠を集めています。違反が確認された場合、罰金は最大7,000万豪ドルとなる可能性があります。",
-                "inputHash": "147d44daf7b296cfbfe6f363fa4954852356266944cf40a84dbf5a5b371e4518",
                 "generatedAt": "2026-10-22T20:11:32Z",
                 "reviewedAt": null
               }
@@ -7007,6 +6869,144 @@
                 "value": "広告主はオーディエンスセグメントを定義しないか誤って設定しがちで、正しく設定すれば既存顧客・エンゲージド層・新規層別に費用と成果を把握できる。エンゲージドはメールリストと過去180日間のサイト訪問者、既存顧客は過去730日間の購入イベントと支払顧客のメールリストでカスタムオーディエンスを作成。Metaは購入イベントの保持期間を180日から730日に変更。セグメントはレポート用のみで配信には影響しない。",
                 "inputHash": "7de8c0f81ea69661280b244c9f876b2477d8fa1023c425020a4967fde9d6caea",
                 "generatedAt": "2026-09-25T05:01:44Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "jon-loomer-meta-ads-f9469b3198937ef22545",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Customer Lifecycle Strategy Is Not What Advertisers Thought",
+      "url": "https://www.jonloomer.com/customer-lifecycle-strategy-not-what-advertisers-thought/",
+      "publishedDate": "2026-06-04",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-10-19T21:07:34Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Customer Lifecycle Strategy uses manual audience exclusions, not AI",
+            "summary": "Meta’s Customer Lifecycle Strategy feature does not automatically exclude existing customers. When “acquire new customers” is chosen, users must manually select custom audiences to exclude; it does not pull from predefined segments or labels. A new “Legal and Operational” exclusion option is also provided, separate from the lifecycle setting.",
+            "inputHash": "87eecd7da912f32427c1ce01ffb6e4e711c1dd259a93c291caa9376a1bd41efb",
+            "generatedAt": "2026-09-09T04:45:10Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Customer Lifecycle Strategy uses manual audience exclusions, not AI",
+                "inputHash": "87eecd7da912f32427c1ce01ffb6e4e711c1dd259a93c291caa9376a1bd41efb",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta’s Customer Lifecycle Strategy feature does not automatically exclude existing customers. When “acquire new customers” is chosen, users must manually select custom audiences to exclude; it does not pull from predefined segments or labels. A new “Legal and Operational” exclusion option is also provided, separate from the lifecycle setting.",
+                "inputHash": "87eecd7da912f32427c1ce01ffb6e4e711c1dd259a93c291caa9376a1bd41efb",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "カスタマーライフサイクル戦略は手動でオーディエンス除外、AIなし",
+            "summary": "Meta のカスタマーライフサイクル戦略機能は、既存顧客を自動で除外しません。「新規顧客を獲得」を選択すると、カスタムオーディエンスを手動で選んで除外する必要があります。事前定義されたセグメントやラベルからは取得されません。また、「法的・運用上の」除外オプションが別途提供されています。",
+            "inputHash": "c65b9b8573e226c01a821a5471c7b4e139521bf378ae47c12af34d58f9ab4a10",
+            "generatedAt": "2026-09-09T04:45:10Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "カスタマーライフサイクル戦略は手動でオーディエンス除外、AIなし",
+                "inputHash": "c65b9b8573e226c01a821a5471c7b4e139521bf378ae47c12af34d58f9ab4a10",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta のカスタマーライフサイクル戦略機能は、既存顧客を自動で除外しません。「新規顧客を獲得」を選択すると、カスタムオーディエンスを手動で選んで除外する必要があります。事前定義されたセグメントやラベルからは取得されません。また、「法的・運用上の」除外オプションが別途提供されています。",
+                "inputHash": "c65b9b8573e226c01a821a5471c7b4e139521bf378ae47c12af34d58f9ab4a10",
+                "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "jon-loomer-meta-ads-92f06d7b808cb842157c",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Meta Ads Attribution Reporting: What Your Results Really Mean",
+      "url": "https://www.jonloomer.com/meta-ads-attribution-reporting/",
+      "publishedDate": "2026-06-02",
+      "updatedDate": null,
+      "firstObservedAt": "2026-08-29T09:59:42Z",
+      "lastObservedAt": "2026-10-15T19:54:50Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Understanding Meta Ads Attribution Reporting",
+            "summary": "The article explains Meta's standard attribution model (7‑day click‑through, 1‑day engage‑through, 1‑day view‑through) and how the Breakdown by Attribution Settings tool separates results into click, engagement and view rows. It contrasts standard with incremental models and stresses proper event setup and deduplication for accurate conversion insights.",
+            "inputHash": "77e9fd0e97035f1b3b7d749a734b17cf2de01d26357d4c82a3509ff8a6c74285",
+            "generatedAt": "2026-09-18T11:39:03Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Understanding Meta Ads Attribution Reporting",
+                "inputHash": "77e9fd0e97035f1b3b7d749a734b17cf2de01d26357d4c82a3509ff8a6c74285",
+                "generatedAt": "2026-09-18T11:39:03Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The article explains Meta's standard attribution model (7‑day click‑through, 1‑day engage‑through, 1‑day view‑through) and how the Breakdown by Attribution Settings tool separates results into click, engagement and view rows. It contrasts standard with incremental models and stresses proper event setup and deduplication for accurate conversion insights.",
+                "inputHash": "77e9fd0e97035f1b3b7d749a734b17cf2de01d26357d4c82a3509ff8a6c74285",
+                "generatedAt": "2026-09-18T11:39:03Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta広告の属性レポートで結果の意味を把握する方法",
+            "summary": "Meta広告の標準属性モデルは、クリック7日、エンゲージ1日、ビュー1日のウィンドウでコンバージョンを計測します。属性設定で「属性別ブレークダウン」を使用すると、クリック（1日・2‑7日）、エンゲージ、ビューの4行が表示され、各設定の貢献度が確認できます。正しくイベントを設定し重複を除去すれば、クリック経由のコンバージョンは広告効果を最も確実に示し、エンゲージやビューは他チャネルの影響も含む可能性があります。これにより、デフォルトレポートだけでは見えないコンバージョンやインクリメンタル効果を把握できます。",
+            "inputHash": "6f1b161e545c979330c31ad69de8bbd1da91d50e9d682478d6e815b72098957f",
+            "generatedAt": "2026-09-18T11:39:03Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告の属性レポートで結果の意味を把握する方法",
+                "inputHash": "6f1b161e545c979330c31ad69de8bbd1da91d50e9d682478d6e815b72098957f",
+                "generatedAt": "2026-09-18T11:39:03Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta広告の標準属性モデルは、クリック7日、エンゲージ1日、ビュー1日のウィンドウでコンバージョンを計測します。属性設定で「属性別ブレークダウン」を使用すると、クリック（1日・2‑7日）、エンゲージ、ビューの4行が表示され、各設定の貢献度が確認できます。正しくイベントを設定し重複を除去すれば、クリック経由のコンバージョンは広告効果を最も確実に示し、エンゲージやビューは他チャネルの影響も含む可能性があります。これにより、デフォルトレポートだけでは見えないコンバージョンやインクリメンタル効果を把握できます。",
+                "inputHash": "6f1b161e545c979330c31ad69de8bbd1da91d50e9d682478d6e815b72098957f",
+                "generatedAt": "2026-09-18T11:39:03Z",
                 "reviewedAt": null
               }
             }
