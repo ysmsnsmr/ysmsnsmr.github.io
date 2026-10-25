@@ -149,7 +149,7 @@ jobs:
           model_profile_line="$(python3 -B scripts/malaysia_groq_model_profiles.py resolve-production "${model_input}" --fallback-to-default)"
           IFS=$'\t' read -r model_profile model_short model_name model_prompt_layout model_max_tokens model_contract model_rate_reset_wait_max_seconds <<< "${model_profile_line}"
           read -r model_provider model_reasoning_setting <<< "$(PYTHONPATH=scripts python3 -B -c 'import sys; from malaysia_groq_model_profiles import profile_for_model_id; p=profile_for_model_id(sys.argv[1]); print(p.provider, p.reasoning_effort or p.reasoning_mode)' "${model_name}")"
-          export MALAYSIA_NEWS_EDITORIAL_REQUEST_CAP="20"
+          export MALAYSIA_NEWS_EDITORIAL_REQUEST_CAP="25"
           groq_request_cap="$(PYTHONPATH=scripts python3 -B -c 'from malaysia_groq_force_all_policy import force_all_request_cap; print(force_all_request_cap())')"
 
           today="$(TZ=Asia/Kuala_Lumpur date +%F)"
