@@ -33,7 +33,7 @@ from malaysia_news_display_categories import display_category_for_jev
 
 SCHEMA_VERSION = "malaysia-news-jev-editorial-routing/v2"
 MAX_ROUTING_CANDIDATES = 150
-TARGET_CARD_COUNT = 20
+TARGET_CARD_COUNT = 25
 CHOICE_ORDER = ("direct_life_impact", "public_information", "unclear")
 
 PostJson = Callable[[dict[str, Any], str, float], dict[str, Any]]
