@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2026年10月26日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       color-scheme: light;
@@ -65,6 +66,20 @@
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
     .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
@@ -80,6 +95,9 @@
       .daily-item { padding: 15px; }
       .air-quality-links { align-items: flex-start; flex-direction: column; }
       .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
     }
   </style>
 </head>
@@ -114,6 +132,51 @@
       <a href="#category-1">暮らしに関わる更新 11件</a><a href="#category-2">社会・経済の動き 12件</a>
     </nav>
 
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>22地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="tanjung-tokong" data-lat="5.46" data-lon="100.3" data-zoom="12"><strong>タンジュン・トコン</strong><ul><li><a href="#article-1">タンジュン・トコンで土砂崩れ、車2台が埋没 人的被害なし</a></li></ul></li>
+<li class="map-place" data-place-key="tanjung-bungah" data-lat="5.47" data-lon="100.29" data-zoom="12"><strong>タンジュン・ブンガ</strong><ul><li><a href="#article-1">タンジュン・トコンで土砂崩れ、車2台が埋没 人的被害なし</a></li></ul></li>
+<li class="map-place" data-place-key="johor" data-lat="2.0" data-lon="103.5" data-zoom="8"><strong>ジョホール州</strong><ul><li><a href="#article-3">ジョホール州、学校再開を段階的に実施 初回は試験を受ける生徒のみ</a></li>
+<li><a href="#article-4">10月25日午後6時、全国8地点でAPI「不健康」 最高はセリアンの192</a></li>
+<li><a href="#article-9">10月25日午前10時、APIはセリアンが194で最高、12地域が不健康</a></li>
+<li><a href="#article-20">ジョホール州、若者向け雇用機会2万6,000件を今年見込む</a></li></ul></li>
+<li class="map-place" data-place-key="serian" data-lat="1.17" data-lon="110.57" data-zoom="11"><strong>セリアン</strong><ul><li><a href="#article-4">10月25日午後6時、全国8地点でAPI「不健康」 最高はセリアンの192</a></li>
+<li><a href="#article-5">ヘイズでテブドゥの27校、10月26日に臨時休校</a></li>
+<li><a href="#article-9">10月25日午前10時、APIはセリアンが194で最高、12地域が不健康</a></li></ul></li>
+<li class="map-place" data-place-key="sarawak" data-lat="3.1" data-lon="113.0" data-zoom="7"><strong>サラワク州</strong><ul><li><a href="#article-4">10月25日午後6時、全国8地点でAPI「不健康」 最高はセリアンの192</a></li>
+<li><a href="#article-5">ヘイズでテブドゥの27校、10月26日に臨時休校</a></li>
+<li><a href="#article-9">10月25日午前10時、APIはセリアンが194で最高、12地域が不健康</a></li></ul></li>
+<li class="map-place" data-place-key="kuching" data-lat="1.55" data-lon="110.35" data-zoom="11"><strong>クチン</strong><ul><li><a href="#article-4">10月25日午後6時、全国8地点でAPI「不健康」 最高はセリアンの192</a></li>
+<li><a href="#article-9">10月25日午前10時、APIはセリアンが194で最高、12地域が不健康</a></li></ul></li>
+<li class="map-place" data-place-key="terengganu" data-lat="5.0" data-lon="103.0" data-zoom="8"><strong>トレンガヌ州</strong><ul><li><a href="#article-4">10月25日午後6時、全国8地点でAPI「不健康」 最高はセリアンの192</a></li>
+<li><a href="#article-9">10月25日午前10時、APIはセリアンが194で最高、12地域が不健康</a></li></ul></li>
+<li class="map-place" data-place-key="pasir-gudang" data-lat="1.46" data-lon="103.9" data-zoom="11"><strong>パシル・グダン</strong><ul><li><a href="#article-4">10月25日午後6時、全国8地点でAPI「不健康」 最高はセリアンの192</a></li></ul></li>
+<li class="map-place" data-place-key="tebedu" data-lat="1.02" data-lon="110.36" data-zoom="11"><strong>テブドゥ</strong><ul><li><a href="#article-5">ヘイズでテブドゥの27校、10月26日に臨時休校</a></li></ul></li>
+<li class="map-place" data-place-key="gua-musang" data-lat="4.88" data-lon="101.96" data-zoom="11"><strong>グア・ムサン</strong><ul><li><a href="#article-6">グア・ムサン近くの陥没現場、迂回路を軽車両向けに開通</a></li></ul></li>
+<li class="map-place" data-place-key="kota-bharu" data-lat="6.13" data-lon="102.24" data-zoom="11"><strong>コタバル</strong><ul><li><a href="#article-6">グア・ムサン近くの陥没現場、迂回路を軽車両向けに開通</a></li></ul></li>
+<li class="map-place" data-place-key="sabah" data-lat="5.6" data-lon="116.5" data-zoom="7"><strong>サバ州</strong><ul><li><a href="#article-8">サバ州内閣、長引く乾燥によるタワウの給水障害を協議</a></li>
+<li><a href="#article-16">サバ州の起業家・協同組合44,059者にRM950.78 jutaを融資</a></li></ul></li>
+<li class="map-place" data-place-key="tawau" data-lat="4.25" data-lon="117.89" data-zoom="11"><strong>タワウ</strong><ul><li><a href="#article-8">サバ州内閣、長引く乾燥によるタワウの給水障害を協議</a></li></ul></li>
+<li class="map-place" data-place-key="negeri-sembilan" data-lat="2.8" data-lon="102.2" data-zoom="9"><strong>ヌグリ・スンビラン州</strong><ul><li><a href="#article-9">10月25日午前10時、APIはセリアンが194で最高、12地域が不健康</a></li></ul></li>
+<li class="map-place" data-place-key="perlis" data-lat="6.5" data-lon="100.2" data-zoom="9"><strong>ペルリス州</strong><ul><li><a href="#article-10">MetMalaysia、ペナンなどに10月26日まで継続的な雨の警報</a></li></ul></li>
+<li class="map-place" data-place-key="penang" data-lat="5.4" data-lon="100.3" data-zoom="9"><strong>ペナン州</strong><ul><li><a href="#article-10">MetMalaysia、ペナンなどに10月26日まで継続的な雨の警報</a></li>
+<li><a href="#article-11">ペナン州で大雨による鉄砲水、タマン・カンテクの20戸が浸水</a></li>
+<li><a href="#article-18">ペナン州JPJ、無許可の違法タクシー496台に措置</a></li></ul></li>
+<li class="map-place" data-place-key="kedah" data-lat="6.1" data-lon="100.5" data-zoom="8"><strong>ケダ州</strong><ul><li><a href="#article-10">MetMalaysia、ペナンなどに10月26日まで継続的な雨の警報</a></li></ul></li>
+<li class="map-place" data-place-key="perak" data-lat="4.8" data-lon="101.1" data-zoom="8"><strong>ペラ州</strong><ul><li><a href="#article-10">MetMalaysia、ペナンなどに10月26日まで継続的な雨の警報</a></li>
+<li><a href="#article-21">ファドリナ教育相、校長の性的嫌がらせ疑惑を調査へ 一時異動も指示</a></li></ul></li>
+<li class="map-place" data-place-key="raub" data-lat="3.8" data-lon="101.85" data-zoom="11"><strong>ラウブ</strong><ul><li><a href="#article-12">ラウブのクラウ・ダムでピラニア確認されず、漁業局長</a></li></ul></li>
+<li class="map-place" data-place-key="kelantan" data-lat="5.4" data-lon="102.0" data-zoom="8"><strong>ケランタン州</strong><ul><li><a href="#article-13">ケランタン州で警察の取締り強化、薬物事件は減少</a></li></ul></li>
+<li class="map-place" data-place-key="melaka" data-lat="2.3" data-lon="102.3" data-zoom="9"><strong>マラッカ州</strong><ul><li><a href="#article-22">タキユディン氏、BersatuをRoS訴訟とマラッカ州選挙の協議に招待</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-22">タキユディン氏、BersatuをRoS訴訟とマラッカ州選挙の協議に招待</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
             <section class="daily-category" aria-labelledby="category-1">
               <div class="daily-category-head">
                 <h2 id="category-1">暮らしに関わる更新</h2>
@@ -121,19 +184,19 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>タンジュン・トコンで土砂崩れ、車2台が埋没 人的被害なし</h3>
-        <p class="daily-summary">10月25日、タンジュン・ブンガのタンジュン・トコン通りにある33 Leisure Bay Condominium付近で土砂崩れが発生し、車2台が土砂に埋まりました。車は大きく損傷しましたが、人的被害はありませんでした。</p>
+        <h3><a class="place-link" data-place-key="tanjung-tokong" href="https://www.openstreetmap.org/?mlat=5.46&amp;mlon=100.3#map=12/5.46/100.3" title="タンジュン・トコンの概略位置を地図で見る">タンジュン・トコン</a>で土砂崩れ、車2台が埋没 人的被害なし</h3>
+        <p class="daily-summary">10月25日、<a class="place-link" data-place-key="tanjung-bungah" href="https://www.openstreetmap.org/?mlat=5.47&amp;mlon=100.29#map=12/5.47/100.29" title="タンジュン・ブンガの概略位置を地図で見る">タンジュン・ブンガ</a>の<a class="place-link" data-place-key="tanjung-tokong" href="https://www.openstreetmap.org/?mlat=5.46&amp;mlon=100.3#map=12/5.46/100.3" title="タンジュン・トコンの概略位置を地図で見る">タンジュン・トコン</a>通りにある33 Leisure Bay Condominium付近で土砂崩れが発生し、車2台が土砂に埋まりました。車は大きく損傷しましたが、人的被害はありませんでした。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/dua-kereta-tertimbus-tanah-runtuh-di-tanjung-tokong-tiada-mangsa-terlibat">出典: Astro Awani（2026年10月25日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-2">
         <div class="daily-item-head">
           <span class="item-number">2</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -145,55 +208,55 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-3">
         <div class="daily-item-head">
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>ジョホール州、学校再開を段階的に実施 初回は試験を受ける生徒のみ</h3>
-        <p class="daily-summary">ジョホール州では学校の再開を段階的に実施する。州行政評議員によると、第1段階の10月26日（月）と27日（火）は、定められた日程に従い、試験を受ける必要のある生徒に限られる。</p>
+        <h3><a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>、学校再開を段階的に実施 初回は試験を受ける生徒のみ</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>では学校の再開を段階的に実施する。州行政評議員によると、第1段階の10月26日（月）と27日（火）は、定められた日程に従い、試験を受ける必要のある生徒に限られる。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-pembukaan-sekolah-di-johor-dilaksana-secara-berfasa-bermula-esok-exco">出典: Astro Awani（2026年10月25日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-4">
         <div class="daily-item-head">
           <span class="item-number">4</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>10月25日午後6時、全国8地点でAPI「不健康」 最高はセリアンの192</h3>
-        <p class="daily-summary">環境局の大気汚染指数管理システム（APIMS）によると、10月25日午後6時時点で全国8地点の大気汚染指数（API）が「不健康」水準でした。最高値はサラワク州セリアンの192で、同州のクチンは180、サマラハンは177、スリアマンは157、シブは152、サリケイは109でした。トレンガヌ州パカは156、ジョホール州パシル・グダンは152でした。全国ではほかに50地点が「中程度」、10地点が「良好」でした。APIは0～50が良好、51～100が中程度、101～200が不健康、201～300が非常に不健康、300超が危険とされています。</p>
+        <h3>10月25日午後6時、全国8地点でAPI「不健康」 最高は<a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>の192</h3>
+        <p class="daily-summary">環境局の大気汚染指数管理システム（APIMS）によると、10月25日午後6時時点で全国8地点の大気汚染指数（API）が「不健康」水準でした。最高値は<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a><a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>の192で、同州の<a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>は180、サマラハンは177、スリアマンは157、シブは152、サリケイは109でした。<a class="place-link" data-place-key="terengganu" href="https://www.openstreetmap.org/?mlat=5.0&amp;mlon=103.0#map=8/5.0/103.0" title="トレンガヌ州の概略位置を地図で見る">トレンガヌ州</a>パカは156、<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a><a class="place-link" data-place-key="pasir-gudang" href="https://www.openstreetmap.org/?mlat=1.46&amp;mlon=103.9#map=11/1.46/103.9" title="パシル・グダンの概略位置を地図で見る">パシル・グダン</a>は152でした。全国ではほかに50地点が「中程度」、10地点が「良好」でした。APIは0～50が良好、51～100が中程度、101～200が不健康、201～300が非常に不健康、300超が危険とされています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/25/haze-eight-areas-nationwide-record-unhealthy-api-as-of-6pm-serian-highest-at-192/240573">出典: Malay Mail（2026年10月25日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-5">
         <div class="daily-item-head">
           <span class="item-number">5</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>ヘイズでテブドゥの27校、10月26日に臨時休校</h3>
-        <p class="daily-summary">サラワク州教育局（JPN Sarawak）によると、ヘイズの状況を受け、セリアンのテブドゥ地区にある27校は2026年10月26日に臨時休校となります。大気汚染指数（IPU）の継続的な監視とマレーシア気象局の報告に基づく措置です。</p>
+        <h3>ヘイズで<a class="place-link" data-place-key="tebedu" href="https://www.openstreetmap.org/?mlat=1.02&amp;mlon=110.36#map=11/1.02/110.36" title="テブドゥの概略位置を地図で見る">テブドゥ</a>の27校、10月26日に臨時休校</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>教育局（JPN <a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">Sarawak</a>）によると、ヘイズの状況を受け、<a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>の<a class="place-link" data-place-key="tebedu" href="https://www.openstreetmap.org/?mlat=1.02&amp;mlon=110.36#map=11/1.02/110.36" title="テブドゥの概略位置を地図で見る">テブドゥ</a>地区にある27校は2026年10月26日に臨時休校となります。大気汚染指数（IPU）の継続的な監視とマレーシア気象局の報告に基づく措置です。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-27-sekolah-di-tebedu-ditutup-sementara-esok-jpn-sarawak">出典: Astro Awani（2026年10月25日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-6">
         <div class="daily-item-head">
           <span class="item-number">6</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>グア・ムサン近くの陥没現場、迂回路を軽車両向けに開通</h3>
-        <p class="daily-summary">グア・ムサン～コタバル道路の連邦道FT008、205.556キロ地点にある仮設迂回路が、2026年10月25日正午、軽車両向けに開通しました。グア・ムサン公共事業局（JKR）によると、迂回路はケセダル植物園レクリエーション公園近くの道路陥没現場にベイリー橋を使って設けられ、中央幹線道路（LTU）計画の第3B・3Cパッケージの一部です。大型車には別ルートの利用が推奨されています。通行する際は仮設標識や安全指示に従い、速度を落として慎重に進むよう呼びかけています。</p>
+        <h3><a class="place-link" data-place-key="gua-musang" href="https://www.openstreetmap.org/?mlat=4.88&amp;mlon=101.96#map=11/4.88/101.96" title="グア・ムサンの概略位置を地図で見る">グア・ムサン</a>近くの陥没現場、迂回路を軽車両向けに開通</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="gua-musang" href="https://www.openstreetmap.org/?mlat=4.88&amp;mlon=101.96#map=11/4.88/101.96" title="グア・ムサンの概略位置を地図で見る">グア・ムサン</a>～<a class="place-link" data-place-key="kota-bharu" href="https://www.openstreetmap.org/?mlat=6.13&amp;mlon=102.24#map=11/6.13/102.24" title="コタバルの概略位置を地図で見る">コタバル</a>道路の連邦道FT008、205.556キロ地点にある仮設迂回路が、2026年10月25日正午、軽車両向けに開通しました。<a class="place-link" data-place-key="gua-musang" href="https://www.openstreetmap.org/?mlat=4.88&amp;mlon=101.96#map=11/4.88/101.96" title="グア・ムサンの概略位置を地図で見る">グア・ムサン</a>公共事業局（JKR）によると、迂回路はケセダル植物園レクリエーション公園近くの道路陥没現場にベイリー橋を使って設けられ、中央幹線道路（LTU）計画の第3B・3Cパッケージの一部です。大型車には別ルートの利用が推奨されています。通行する際は仮設標識や安全指示に従い、速度を落として慎重に進むよう呼びかけています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/25/ft008-detour-near-gua-musang-now-open-to-light-traffic-after-sinkhole/240554">出典: Malay Mail（2026年10月25日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-7">
         <div class="daily-item-head">
           <span class="item-number">7</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -205,49 +268,49 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-8">
         <div class="daily-item-head">
           <span class="item-number">8</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>サバ州内閣、長引く乾燥によるタワウの給水障害を協議</h3>
-        <p class="daily-summary">タワウの給水障害が10月21日のサバ州内閣会議で取り上げられました。議題にしたサバ州青年開発・スポーツ振興・創造経済相のニザム・アブ・バカル・ティティンガン氏によると、乾燥と長期間の降雨不足で原水源に影響が出て、前週から浄水処理と配水に支障が生じています。ハジジ・ノール州首相は公共事業・公益事業省に対し、タワウ水道局に積極的な対応を取らせるよう指示し、影響地域への給水車による水の配送を強化することなどが含まれるといいます。ジョアヒム・ガンサラム同相は、状況を監視し、住民支援のための能力を動員していると説明しました。ニザム氏によれば、水道局の最新データでは、スンガイ・タワウの原水の水質問題により、ウタラ浄水場の運転にも引き続き影響が出ています。</p>
+        <h3><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>内閣、長引く乾燥による<a class="place-link" data-place-key="tawau" href="https://www.openstreetmap.org/?mlat=4.25&amp;mlon=117.89#map=11/4.25/117.89" title="タワウの概略位置を地図で見る">タワウ</a>の給水障害を協議</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="tawau" href="https://www.openstreetmap.org/?mlat=4.25&amp;mlon=117.89#map=11/4.25/117.89" title="タワウの概略位置を地図で見る">タワウ</a>の給水障害が10月21日の<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>内閣会議で取り上げられました。議題にした<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>青年開発・スポーツ振興・創造経済相のニザム・アブ・バカル・ティティンガン氏によると、乾燥と長期間の降雨不足で原水源に影響が出て、前週から浄水処理と配水に支障が生じています。ハジジ・ノール州首相は公共事業・公益事業省に対し、<a class="place-link" data-place-key="tawau" href="https://www.openstreetmap.org/?mlat=4.25&amp;mlon=117.89#map=11/4.25/117.89" title="タワウの概略位置を地図で見る">タワウ</a>水道局に積極的な対応を取らせるよう指示し、影響地域への給水車による水の配送を強化することなどが含まれるといいます。ジョアヒム・ガンサラム同相は、状況を監視し、住民支援のための能力を動員していると説明しました。ニザム氏によれば、水道局の最新データでは、スンガイ・<a class="place-link" data-place-key="tawau" href="https://www.openstreetmap.org/?mlat=4.25&amp;mlon=117.89#map=11/4.25/117.89" title="タワウの概略位置を地図で見る">タワウ</a>の原水の水質問題により、ウタラ浄水場の運転にも引き続き影響が出ています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/25/sabah-cabinet-discusses-tawau-water-supply-disruption-amid-prolonged-dry-spell/240516">出典: Malay Mail（2026年10月25日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-9">
         <div class="daily-item-head">
           <span class="item-number">9</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>10月25日午前10時、APIはセリアンが194で最高、12地域が不健康</h3>
-        <p class="daily-summary">マレーシア大気汚染指数管理システム（APIMS）によると、10月25日午前10時時点で、全国12地域の大気汚染指数（API）が不健康レベルでした。サラワク州セリアンが194で最も高く、クチン188、サマラハン182、スリアマン159も不健康レベルでした。ジョホール州ではパシルグダンとバトゥパハが各156、クルアン154、ラーキン151、コタティンギ102。ヌグリ・スンビラン州のニライとスレンバンは各151、トレンガヌ州パカは154でした。ほかに45地域が中程度、11地域が良好と記録されました。APIは0～50が良好、51～100が中程度、101～200が不健康、201～300が非常に不健康、300超が危険とされています。</p>
+        <h3>10月25日午前10時、APIは<a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>が194で最高、12地域が不健康</h3>
+        <p class="daily-summary">マレーシア大気汚染指数管理システム（APIMS）によると、10月25日午前10時時点で、全国12地域の大気汚染指数（API）が不健康レベルでした。<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a><a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>が194で最も高く、<a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>188、サマラハン182、スリアマン159も不健康レベルでした。<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>ではパシルグダンとバトゥパハが各156、クルアン154、ラーキン151、コタティンギ102。<a class="place-link" data-place-key="negeri-sembilan" href="https://www.openstreetmap.org/?mlat=2.8&amp;mlon=102.2#map=9/2.8/102.2" title="ヌグリ・スンビラン州の概略位置を地図で見る">ヌグリ・スンビラン州</a>のニライとスレンバンは各151、<a class="place-link" data-place-key="terengganu" href="https://www.openstreetmap.org/?mlat=5.0&amp;mlon=103.0#map=8/5.0/103.0" title="トレンガヌ州の概略位置を地図で見る">トレンガヌ州</a>パカは154でした。ほかに45地域が中程度、11地域が良好と記録されました。APIは0～50が良好、51～100が中程度、101～200が不健康、201～300が非常に不健康、300超が危険とされています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/25/serian-top-of-the-haze-chart-at-api-194-as-of-10am-as-12-areas-turn-unhealthy/240512">出典: Malay Mail（2026年10月25日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-10">
         <div class="daily-item-head">
           <span class="item-number">10</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>MetMalaysia、ペナンなどに10月26日まで継続的な雨の警報</h3>
-        <p class="daily-summary">マレーシア気象局（MetMalaysia）は10月25日、ペルリス州とペナン州、ケダ州の一部地区、ペラ州の一部地区に警戒レベルの継続的な雨の警報を発表しました。発表では警報は10月26日まで有効とされ、午前9時45分に更新されました。対象はケダ州のランカウイ、クバン・パス、コタ・スタル、ポコクセナ、ペンダン、ヤン、クアラ・ムダ、クリム、バンダル・バハル地区と、ペラ州のケリアン、セラマ、ラルット・マタン、マンジュン、ペラ・テンガ、バガン・ダトゥク、ヒリル・ペラ地区です。同局は、公式ウェブサイトやmyCuacaアプリ、公式SNSで最新の気象情報を確認するよう呼びかけています。問い合わせ先として、MetMalaysiaのホットライン（1-300-22-1638）も案内しています。</p>
+        <p class="daily-summary">マレーシア気象局（MetMalaysia）は10月25日、<a class="place-link" data-place-key="perlis" href="https://www.openstreetmap.org/?mlat=6.5&amp;mlon=100.2#map=9/6.5/100.2" title="ペルリス州の概略位置を地図で見る">ペルリス州</a>と<a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>、<a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">ケダ州</a>の一部地区、<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>の一部地区に警戒レベルの継続的な雨の警報を発表しました。発表では警報は10月26日まで有効とされ、午前9時45分に更新されました。対象は<a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">ケダ州</a>のランカウイ、クバン・パス、コタ・スタル、ポコクセナ、ペンダン、ヤン、クアラ・ムダ、クリム、バンダル・バハル地区と、<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>のケリアン、セラマ、ラルット・マタン、マンジュン、ペラ・テンガ、バガン・ダトゥク、ヒリル・ペラ地区です。同局は、公式ウェブサイトやmyCuacaアプリ、公式SNSで最新の気象情報を確認するよう呼びかけています。問い合わせ先として、MetMalaysiaのホットライン（1-300-22-1638）も案内しています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/25/metmalaysia-places-penang-and-northern-states-under-continuous-rain-warning/240509">出典: Malay Mail（2026年10月25日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-11">
         <div class="daily-item-head">
           <span class="item-number">11</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>ペナン州で大雨による鉄砲水、タマン・カンテクの20戸が浸水</h3>
-        <p class="daily-summary">ペナン州では数時間にわたる大雨で各地に鉄砲水が発生し、タマン・カンテクとジャラン・ジュラワットで住宅が浸水しました。タマン・カンテクでは20戸が影響を受け、水位は約0.3メートルと推定されています。バヤン・レパス、バヤン・バル、スブラング・ジャヤ、アンパン・ジャジャール、ブキット・メルタジャムでも浸水が報告されましたが、避難した住民はいませんでした。ペナン州消防・救助局のジョン・サグン・フランシス運用担当副局長によると、同局は10月25日午前0時24分に通報を受け、状況が落ち着いて水が引き始めた後、午前1時10分に対応を終了しました。</p>
+        <h3><a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>で大雨による鉄砲水、タマン・カンテクの20戸が浸水</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>では数時間にわたる大雨で各地に鉄砲水が発生し、タマン・カンテクとジャラン・ジュラワットで住宅が浸水しました。タマン・カンテクでは20戸が影響を受け、水位は約0.3メートルと推定されています。バヤン・レパス、バヤン・バル、スブラング・ジャヤ、アンパン・ジャジャール、ブキット・メルタジャムでも浸水が報告されましたが、避難した住民はいませんでした。<a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>消防・救助局のジョン・サグン・フランシス運用担当副局長によると、同局は10月25日午前0時24分に通報を受け、状況が落ち着いて水が引き始めた後、午前1時10分に対応を終了しました。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/25/overnight-downpour-floods-penang-neighbourhoods-leaving-dozens-of-homes-underwater/240507">出典: Malay Mail（2026年10月25日）</a>
       </article>
@@ -263,31 +326,31 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-12">
         <div class="daily-item-head">
           <span class="item-number">12</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>ラウブのクラウ・ダムでピラニア確認されず、漁業局長</h3>
-        <p class="daily-summary">漁業局のアドナン・フセイン局長によると、ラウブのクラウ・ダムで10月25日に始まった外来魚対策プログラムでは、2日間の実施期間中、ピラニアは発見も捕獲もされていません。</p>
+        <h3><a class="place-link" data-place-key="raub" href="https://www.openstreetmap.org/?mlat=3.8&amp;mlon=101.85#map=11/3.8/101.85" title="ラウブの概略位置を地図で見る">ラウブ</a>のクラウ・ダムでピラニア確認されず、漁業局長</h3>
+        <p class="daily-summary">漁業局のアドナン・フセイン局長によると、<a class="place-link" data-place-key="raub" href="https://www.openstreetmap.org/?mlat=3.8&amp;mlon=101.85#map=11/3.8/101.85" title="ラウブの概略位置を地図で見る">ラウブ</a>のクラウ・ダムで10月25日に始まった外来魚対策プログラムでは、2日間の実施期間中、ピラニアは発見も捕獲もされていません。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/tiada-piranha-ditemukan-dalam-program-mitigasi-di-empangan-klau-raub-dof">出典: Astro Awani（2026年10月26日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-13">
         <div class="daily-item-head">
           <span class="item-number">13</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>ケランタン州で警察の取締り強化、薬物事件は減少</h3>
-        <p class="daily-summary">ケランタン州では警察の取締り活動が増加する一方、薬物事件は減少した。1月から9月までの薬物押収額はRM17.25 jutaで、前年同期のRM30.79 jutaから44％減少した。</p>
+        <h3><a class="place-link" data-place-key="kelantan" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=102.0#map=8/5.4/102.0" title="ケランタン州の概略位置を地図で見る">ケランタン州</a>で警察の取締り強化、薬物事件は減少</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="kelantan" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=102.0#map=8/5.4/102.0" title="ケランタン州の概略位置を地図で見る">ケランタン州</a>では警察の取締り活動が増加する一方、薬物事件は減少した。1月から9月までの薬物押収額はRM17.25 jutaで、前年同期のRM30.79 jutaから44％減少した。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/operasi-penguatkuasaan-polis-kelantan-meningkat-kes-dadah-berkurang">出典: Astro Awani（2026年10月26日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-14">
         <div class="daily-item-head">
           <span class="item-number">14</span>
           <p class="item-category">社会・経済の動き</p>
@@ -299,7 +362,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-15">
         <div class="daily-item-head">
           <span class="item-number">15</span>
           <p class="item-category">社会・経済の動き</p>
@@ -311,19 +374,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-16">
         <div class="daily-item-head">
           <span class="item-number">16</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>サバ州の起業家・協同組合44,059者にRM950.78 jutaを融資</h3>
-        <p class="daily-summary">ハジジ氏によると、2026年9月までに、起業・協同組合開発省（KUSKOP）とその傘下機関を通じて、サバ州の起業家と協同組合44,059者にRM950.78 jutaの融資が実行されました。</p>
+        <h3><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>の起業家・協同組合44,059者にRM950.78 jutaを融資</h3>
+        <p class="daily-summary">ハジジ氏によると、2026年9月までに、起業・協同組合開発省（KUSKOP）とその傘下機関を通じて、<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>の起業家と協同組合44,059者にRM950.78 jutaの融資が実行されました。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/rm95078-juta-disalur-kepada-lebih-44000-usahawan-di-sabah-setakat-september-hajiji">出典: Astro Awani（2026年10月25日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-17">
         <div class="daily-item-head">
           <span class="item-number">17</span>
           <p class="item-category">社会・経済の動き</p>
@@ -335,19 +398,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-18">
         <div class="daily-item-head">
           <span class="item-number">18</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>ペナン州JPJ、無許可の違法タクシー496台に措置</h3>
-        <p class="daily-summary">ペナン州の道路交通局（JPJ）は、2026年初から10月24日までに、許可証と電子配車の認可を得ずに違法タクシーとして運行していた496台に対して措置を取ったと発表しました。</p>
+        <h3><a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>JPJ、無許可の違法タクシー496台に措置</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>の道路交通局（JPJ）は、2026年初から10月24日までに、許可証と電子配車の認可を得ずに違法タクシーとして運行していた496台に対して措置を取ったと発表しました。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jpj-pulau-pinang-ambil-tindakan-terhadap-496-kenderaan-beroperasi-sebagai-teksi-haram">出典: Astro Awani（2026年10月25日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-19">
         <div class="daily-item-head">
           <span class="item-number">19</span>
           <p class="item-category">社会・経済の動き</p>
@@ -359,43 +422,43 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-20">
         <div class="daily-item-head">
           <span class="item-number">20</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>ジョホール州、若者向け雇用機会2万6,000件を今年見込む</h3>
-        <p class="daily-summary">ジョホール州政府は、急速な経済成長と高付加価値投資の流入を受け、今年、州内の若者に2万6,000件の雇用機会が提供されると見込んでいる。州首相が明らかにした。</p>
+        <h3><a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>、若者向け雇用機会2万6,000件を今年見込む</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>政府は、急速な経済成長と高付加価値投資の流入を受け、今年、州内の若者に2万6,000件の雇用機会が提供されると見込んでいる。州首相が明らかにした。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/johor-sasar-26000-peluang-pekerjaan-kepada-golongan-muda-tahun-ini-mb">出典: Astro Awani（2026年10月25日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-21">
         <div class="daily-item-head">
           <span class="item-number">21</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
         <h3>ファドリナ教育相、校長の性的嫌がらせ疑惑を調査へ 一時異動も指示</h3>
-        <p class="daily-summary">ファドリナ教育相は、校長が生徒に性的嫌がらせをしたとの疑惑について、ペラ州教育局に調査を指示した。調査が終わるまで、校長はバガン・ダトゥク地区教育事務所に一時異動となる。ハリアン・メトロによると、発端はテルク・インタンの公立中等学校の校長をめぐるSNS投稿で、女子中学3年生に恋愛感情を示すメッセージを送ったことや、不適切な関係があったことなどが主張されている。これらは投稿による疑惑で、調査結果は示されていない。</p>
+        <p class="daily-summary">ファドリナ教育相は、校長が生徒に性的嫌がらせをしたとの疑惑について、<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>教育局に調査を指示した。調査が終わるまで、校長はバガン・ダトゥク地区教育事務所に一時異動となる。ハリアン・メトロによると、発端はテルク・インタンの公立中等学校の校長をめぐるSNS投稿で、女子中学3年生に恋愛感情を示すメッセージを送ったことや、不適切な関係があったことなどが主張されている。これらは投稿による疑惑で、調査結果は示されていない。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/25/fadhlina-orders-probe-removes-perak-principal-from-school-amid-harassment-allegations/240556">出典: Malay Mail（2026年10月25日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-22">
         <div class="daily-item-head">
           <span class="item-number">22</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>タキユディン氏、BersatuをRoS訴訟とマラッカ州選挙の協議に招待</h3>
-        <p class="daily-summary">ペリカタン・ナショナル（PN）のタキユディン・ハッサン事務局長によると、PNは10月25日夜、クアラルンプールで会合を開き、連合の活動停止をめぐる団体登録局（RoS）への法的異議申し立てと、マラッカ州選挙への準備について協議する予定でした。会合にはBersatuの幹部も招待されましたが、出席するかどうかは同党側の判断だとしています。PNに割り当てられた7議席の配分も議題で、タキユディン氏は、独自のロゴで選挙に臨むと決めたBersatuを除く連合構成党の間で議席を配分すると説明しました。</p>
+        <h3>タキユディン氏、BersatuをRoS訴訟と<a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>選挙の協議に招待</h3>
+        <p class="daily-summary">ペリカタン・ナショナル（PN）のタキユディン・ハッサン事務局長によると、PNは10月25日夜、<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>で会合を開き、連合の活動停止をめぐる団体登録局（RoS）への法的異議申し立てと、<a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>選挙への準備について協議する予定でした。会合にはBersatuの幹部も招待されましたが、出席するかどうかは同党側の判断だとしています。PNに割り当てられた7議席の配分も議題で、タキユディン氏は、独自のロゴで選挙に臨むと決めたBersatuを除く連合構成党の間で議席を配分すると説明しました。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/25/takiyuddin-bersatu-invited-to-pn-talks-on-ros-case-melaka-polls/240553">出典: Malay Mail（2026年10月25日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-23">
         <div class="daily-item-head">
           <span class="item-number">23</span>
           <p class="item-category">社会・経済の動き</p>
@@ -430,5 +493,7 @@
             </section>
 
   </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
 </body>
 </html>

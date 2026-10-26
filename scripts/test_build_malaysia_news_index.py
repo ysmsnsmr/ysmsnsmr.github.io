@@ -209,6 +209,56 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertIn("出典: Example News", page)
         self.assertNotIn("daily-details", page)
 
+    def test_daily_page_map_links_places_to_articles(self) -> None:
+        markdown = """【暮らしに関わる更新】
+
+- 見出し：ジョホール州の学校再開
+- 概要：ジョホール州では再開を段階的に進める。
+- 出典元URL：https://example.test/johor
+
+- 見出し：タワウで給水障害
+- 概要：サバ州のタワウで給水に支障が出た。
+- 出典元URL：https://example.test/tawau
+
+- 見出し：全国向けの案内
+- 概要：申請をオンラインで受け付ける。
+- 出典元URL：https://example.test/national
+"""
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "2026-10-26.md"
+            path.write_text(markdown, encoding="utf-8")
+            page = builder.render_daily_page(builder.parse_markdown(path))
+
+        self.assertEqual(page.count('id="news-map"'), 1)
+        self.assertIn('data-place-key="johor"', page)
+        self.assertIn('data-place-key="tawau"', page)
+        self.assertIn('href="#article-2"', page)
+        self.assertIn('id="article-2"', page)
+        self.assertIn('class="place-link" data-place-key="tawau"', page)
+        self.assertNotIn('data-place-key="national"', page)
+        self.assertIn('src="./location-map.js"', page)
+        self.assertIn('https://www.openstreetmap.org/copyright', page)
+
+    def test_daily_page_without_known_places_has_no_map(self) -> None:
+        page = builder.render_daily_page(self.parse_sample())
+        self.assertNotIn('id="news-map"', page)
+        self.assertNotIn('src="./location-map.js"', page)
+
+    def test_place_names_and_article_titles_remain_escaped(self) -> None:
+        item = builder.NewsItem(
+            category="【暮らしに関わる更新】",
+            headline="タワウ <script>alert(1)</script>",
+            conclusion="タワウで給水障害。",
+        )
+        day = builder.NewsDay(
+            date="2026-10-26", path=Path("2026-10-26.md"), conclusions=[],
+            items=[item], category_counts={}, processed_count="1",
+            summarized_count="1", failed_sources="なし",
+        )
+        page = builder.render_daily_page(day)
+        self.assertIn("タワウ &lt;script&gt;alert(1)&lt;/script&gt;", page)
+        self.assertNotIn("<script>alert(1)</script>", page)
+
     def test_editorial_short_headline_is_used_without_heuristic_rewrite(self) -> None:
         day = self.parse_sample()
         self.assertEqual(day.items[0].short_headline, "雷雨・大雨に注意")
