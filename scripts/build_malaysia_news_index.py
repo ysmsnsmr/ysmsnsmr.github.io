@@ -7,6 +7,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from malaysia_news_design_tokens import MALAYSIA_NEWS_TOKENS_CSS
+from malaysia_news_places import ALIASES, Place, find_places
 from malaysia_news_display_categories import (
     DISPLAY_CATEGORIES,
     MARKDOWN_CATEGORIES,
@@ -535,17 +536,79 @@ def render_daily_item(item: NewsItem, position: int) -> str:
     else:
         source = ""
 
+    headline = display_full_headline(item)
+    summary = item_summary_body(item)
+    places = find_places(f"{headline} {summary}")
     return f"""
-      <article class="daily-item">
+      <article class="daily-item" id="article-{position}">
         <div class="daily-item-head">
           <span class="item-number">{position}</span>
           <p class="item-category">{esc(category_label(item.category))}</p>
         </div>
-        <h3>{esc(display_full_headline(item))}</h3>
-        <p class="daily-summary">{esc(item_summary_body(item))}</p>
+        <h3>{render_place_links(headline, places)}</h3>
+        <p class="daily-summary">{render_place_links(summary, places)}</p>
 
         {source}
       </article>
+    """
+
+
+def render_place_links(text: str, places: list[Place]) -> str:
+    if not places:
+        return esc(text)
+    selected = {place.key for place in places}
+    aliases = [alias for alias, place in ALIASES if place.key in selected]
+    pattern = re.compile("|".join(re.escape(alias) for alias in aliases))
+    by_alias = {alias: place for alias, place in ALIASES}
+    parts = []
+    previous = 0
+    for match in pattern.finditer(text):
+        place = by_alias[match.group()]
+        parts.append(esc(text[previous:match.start()]))
+        parts.append(
+            f'<a class="place-link" data-place-key="{place.key}" '
+            f'href="https://www.openstreetmap.org/?mlat={place.latitude}&amp;mlon={place.longitude}'
+            f'#map={place.zoom}/{place.latitude}/{place.longitude}" '
+            f'title="{esc(place.label)}の概略位置を地図で見る">{esc(match.group())}</a>'
+        )
+        previous = match.end()
+    parts.append(esc(text[previous:]))
+    return "".join(parts)
+
+
+def render_location_map(day: NewsDay) -> str:
+    grouped: dict[str, tuple[Place, list[tuple[int, str]]]] = {}
+    for position, item in enumerate(ordered_items(day), start=1):
+        headline = display_full_headline(item)
+        for place in find_places(f"{headline} {item_summary_body(item)}"):
+            if place.key not in grouped:
+                grouped[place.key] = (place, [])
+            grouped[place.key][1].append((position, headline))
+    if not grouped:
+        return ""
+
+    rows = []
+    for place, articles in grouped.values():
+        links = "\n".join(
+            f'<li><a href="#article-{position}">{esc(headline)}</a></li>'
+            for position, headline in articles
+        )
+        rows.append(
+            f'<li class="map-place" data-place-key="{place.key}" '
+            f'data-lat="{place.latitude}" data-lon="{place.longitude}" data-zoom="{place.zoom}">'
+            f'<strong>{esc(place.label)}</strong><ul>{links}</ul></li>'
+        )
+    place_rows = "\n".join(rows)
+    return f"""
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>{len(grouped)}地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul>{place_rows}</ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
     """
 
 
@@ -604,12 +667,14 @@ def render_source_only_section(day: NewsDay) -> str:
 
 
 def render_daily_page(day: NewsDay, *, show_current_air_quality: bool = False) -> str:
+    location_map = render_location_map(day)
     return f"""<!doctype html>
 <html lang="ja">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{esc(format_date(day.date))}のニュースまとめ | マレーシア生活ニュース</title>
+  {'''<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">''' if location_map else ''}
   <style>
 {MALAYSIA_NEWS_TOKENS_CSS}
     * {{ box-sizing: border-box; }}
@@ -651,6 +716,20 @@ def render_daily_page(day: NewsDay, *, show_current_air_quality: bool = False) -
     .item-number {{ display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }}
     .item-category {{ margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }}
     .daily-summary {{ margin: 16px 0 0; overflow-wrap: anywhere; }}
+    .place-link {{ text-decoration-style: dotted; text-underline-offset: .17em; }}
+    .location-map {{ margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }}
+    .location-map > summary {{ cursor: pointer; color: var(--accent-strong); font-weight: 700; }}
+    .location-map > summary span {{ margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }}
+    .map-note {{ margin: 10px 0; color: var(--muted); font-size: .86rem; }}
+    .map-layout {{ display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }}
+    #location-map-canvas {{ min-height: 320px; background: var(--panel-subtle); }}
+    .map-index {{ max-height: 320px; overflow: auto; padding: 4px 12px; }}
+    .map-index h2 {{ font-size: 1rem; }}
+    .map-index > ul {{ margin: 8px 0; padding-left: 20px; }}
+    .map-place {{ margin-bottom: 10px; }}
+    .map-place ul {{ padding-left: 16px; font-size: .84rem; }}
+    .map-status {{ margin: 10px 0 0; color: var(--muted); font-size: .86rem; }}
+    .leaflet-popup-content a {{ display: block; margin-top: 5px; }}
     .item-asof {{ margin: 10px 0 0; color: var(--muted); font-size: .8rem; }}
     .source-link, .source-note {{ display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }}
     .source-note {{ color: var(--muted); }}
@@ -666,6 +745,9 @@ def render_daily_page(day: NewsDay, *, show_current_air_quality: bool = False) -
       .daily-item {{ padding: 15px; }}
       .air-quality-links {{ align-items: flex-start; flex-direction: column; }}
       .air-quality-actions {{ flex: 1 1 auto; }}
+      .map-layout {{ grid-template-columns: 1fr; }}
+      #location-map-canvas {{ min-height: 260px; }}
+      .map-index {{ max-height: 170px; padding: 4px 0; }}
     }}
   </style>
 </head>
@@ -687,9 +769,12 @@ def render_daily_page(day: NewsDay, *, show_current_air_quality: bool = False) -
     <nav class="category-nav" aria-label="カテゴリへ移動">
       {''.join(f'<a href="#category-{index + 1}">{esc(category_label(category))} {day.category_counts.get(category, 0)}件</a>' for index, category in enumerate(CATEGORIES))}
     </nav>
+    {location_map}
     {render_daily_sections(day)}
     {render_source_only_section(day)}
   </main>
+{'''<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>''' if location_map else ''}
 </body>
 </html>
 """

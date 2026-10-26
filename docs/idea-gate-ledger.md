@@ -1679,3 +1679,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: 新しい静的ページを作り、既存GitHub Pagesで公開してURLを検証する
 - Revisit when: 友人の反応を得て演出を追加する場合; 友人の画像を利用する許可を得た場合
+
+<!-- idea-gate:20261026t184336-malaysia-news-location-map -->
+## 日別ニュースから記事の地域を共通地図で確認する
+
+- Record ID: `20261026t184336-malaysia-news-location-map`
+- Evaluated: 2026-10-26T18:43:36+08:00
+- Project: Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 86/100
+- Confidence: medium - 実装経路は明確だが、日々の地名カバレッジと表示の使いやすさは運用観察が必要
+
+### Idea Card
+
+- Purpose: 記事に出る州や地域がマレーシアのどこにあるか分かるようにする
+- First experience: 日別ページの記事内の地名から共通地図を開き、地図から記事へ戻れる
+- Scope and cost: 既存の静的ページと確認済みの地名一覧だけを使い、追加の有料APIを使わない
+- Continuation boundary: 曖昧な地名や位置の誤表示が増える場合は地名一覧を見直すか表示を止める
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 13/15 |
+| `evidence_and_learning` | 12/15 |
+| `expected_outcome` | 13/15 |
+| `scope_and_fit` | 13/15 |
+| `ownership_and_reversibility` | 17/20 |
+| **Total** | **86/100** |
+
+### Next Step
+
+- Action: 日別ページに共通地図と記事への相互リンクを実装する
+- Revisit when: 地名の誤結合が見つかる; 表示対象外の地名が頻繁に必要になる; 地図の読み込みやモバイル表示が本文の閲覧を妨げる
