@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2026年9月26日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       color-scheme: light;
@@ -65,6 +66,20 @@
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
     .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
@@ -80,6 +95,9 @@
       .daily-item { padding: 15px; }
       .air-quality-links { align-items: flex-start; flex-direction: column; }
       .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
     }
   </style>
 </head>
@@ -103,6 +121,25 @@
       <a href="#category-1">暮らしに関わる更新 9件</a><a href="#category-2">社会・経済の動き 6件</a>
     </nav>
 
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>6地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="sabah" data-lat="5.6" data-lon="116.5" data-zoom="7"><strong>サバ州</strong><ul><li><a href="#article-1">サバ州クアムットで弱い地震が早朝に感知される</a></li>
+<li><a href="#article-15">原題・出典情報</a></li></ul></li>
+<li class="map-place" data-place-key="sarawak" data-lat="3.1" data-lon="113.0" data-zoom="7"><strong>サラワク州</strong><ul><li><a href="#article-2">サリアン地区が今朝唯一、不健康なIPUを記録</a></li>
+<li><a href="#article-6">クチンマラソン中止で13,000人の参加者に影響</a></li></ul></li>
+<li class="map-place" data-place-key="serian" data-lat="1.17" data-lon="110.57" data-zoom="11"><strong>セリアン</strong><ul><li><a href="#article-2">サリアン地区が今朝唯一、不健康なIPUを記録</a></li></ul></li>
+<li class="map-place" data-place-key="kuching" data-lat="1.55" data-lon="110.35" data-zoom="11"><strong>クチン</strong><ul><li><a href="#article-6">クチンマラソン中止で13,000人の参加者に影響</a></li>
+<li><a href="#article-9">クチンマラソン2026、濃霧のため当日中止</a></li></ul></li>
+<li class="map-place" data-place-key="kedah" data-lat="6.1" data-lon="100.5" data-zoom="8"><strong>ケダ州</strong><ul><li><a href="#article-12">首相アンワル、ケダ州のイスラム教育機関修復に280万リンギットを追加配分</a></li></ul></li>
+<li class="map-place" data-place-key="negeri-sembilan" data-lat="2.8" data-lon="102.2" data-zoom="9"><strong>ヌグリ・スンビラン州</strong><ul><li><a href="#article-14">原題・出典情報</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
             <section class="daily-category" aria-labelledby="category-1">
               <div class="daily-category-head">
                 <h2 id="category-1">暮らしに関わる更新</h2>
@@ -110,31 +147,31 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>サバ州クアムットで弱い地震が早朝に感知される</h3>
-        <p class="daily-summary">サバ州クアムット付近で弱い地震が早朝に感知され、震源はトンゴド西南西約34キロと報告されています。 震源はトンゴド西南西約34キロの地点とされています。</p>
+        <h3><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>クアムットで弱い地震が早朝に感知される</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>クアムット付近で弱い地震が早朝に感知され、震源はトンゴド西南西約34キロと報告されています。 震源はトンゴド西南西約34キロの地点とされています。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/gempa-bumi-lemah-landa-kuamut-sabah-awal-pagi">出典: Astro Awani（2026年9月26日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-2">
         <div class="daily-item-head">
           <span class="item-number">2</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>サリアン地区が今朝唯一、不健康なIPUを記録</h3>
-        <p class="daily-summary">サラワク州セリアン地区の行政本部にある監視ステーションが、今朝IPU 155を測定し「不健康」レベルと判定しました。今朝はこの地区だけが不健康とされました。 IPU 155は不健康カテゴリに該当し、セリアンは本日の唯一の対象地域です。</p>
+        <p class="daily-summary"><a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a><a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>地区の行政本部にある監視ステーションが、今朝IPU 155を測定し「不健康」レベルと判定しました。今朝はこの地区だけが不健康とされました。 IPU 155は不健康カテゴリに該当し、<a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>は本日の唯一の対象地域です。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-serian-satu-satunya-kawasan-catat-ipu-tidak-sihat-pagi-ini">出典: Astro Awani（2026年9月26日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-3">
         <div class="daily-item-head">
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -146,7 +183,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-4">
         <div class="daily-item-head">
           <span class="item-number">4</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -158,7 +195,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-5">
         <div class="daily-item-head">
           <span class="item-number">5</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -170,19 +207,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-6">
         <div class="daily-item-head">
           <span class="item-number">6</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>クチンマラソン中止で13,000人の参加者に影響</h3>
-        <p class="daily-summary">サラワク州スポーツ大臣は、濃霧の影響で中止となったクチンマラソン2026に対し、13,000人以上の参加者、特に他州からの旅行手配を済ませた人々が大きな失望を抱いていると述べた。 中止は濃霧が原因で、当初は開催予定日（9月27日）に向けて準備が進んでいた。 大臣はレース用パック受取会場に到着した直後に中止を知らされていなかったと語った。</p>
+        <h3><a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>マラソン中止で13,000人の参加者に影響</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>スポーツ大臣は、濃霧の影響で中止となった<a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>マラソン2026に対し、13,000人以上の参加者、特に他州からの旅行手配を済ませた人々が大きな失望を抱いていると述べた。 中止は濃霧が原因で、当初は開催予定日（9月27日）に向けて準備が進んでいた。 大臣はレース用パック受取会場に到着した直後に中止を知らされていなかったと語った。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/25/kuching-marathon-cancellation-a-blow-to-13000-participants-who-made-travel-plans-says-sarawak-sports-minister/236530">出典: Malay Mail（2026年9月25日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-7">
         <div class="daily-item-head">
           <span class="item-number">7</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -194,7 +231,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-8">
         <div class="daily-item-head">
           <span class="item-number">8</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -206,13 +243,13 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-9">
         <div class="daily-item-head">
           <span class="item-number">9</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>クチンマラソン2026、濃霧のため当日中止</h3>
-        <p class="daily-summary">クチンマラソン協会は、濃霧が続くことを受け、9月27日に予定されていたクチンマラソン2026を当日中止したと発表した。参加者・スタッフ・観客の健康安全を最優先し、API値や医療アドバイザーと協議の上での判断である。登録者はプラザ・メルデカのアルフレスコエリアでメダルとTシャツを受け取れる。 大会主催者は今後の詳細を公式SNSで案内する予定です。</p>
+        <h3><a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>マラソン2026、濃霧のため当日中止</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>マラソン協会は、濃霧が続くことを受け、9月27日に予定されていた<a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>マラソン2026を当日中止したと発表した。参加者・スタッフ・観客の健康安全を最優先し、API値や医療アドバイザーと協議の上での判断である。登録者はプラザ・メルデカのアルフレスコエリアでメダルとTシャツを受け取れる。 大会主催者は今後の詳細を公式SNSで案内する予定です。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/25/haze-forces-kuching-marathon-2026-cancellation-at-eleventh-hour/236499">出典: Malay Mail（2026年9月25日）</a>
       </article>
@@ -228,7 +265,7 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-10">
         <div class="daily-item-head">
           <span class="item-number">10</span>
           <p class="item-category">社会・経済の動き</p>
@@ -240,7 +277,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-11">
         <div class="daily-item-head">
           <span class="item-number">11</span>
           <p class="item-category">社会・経済の動き</p>
@@ -252,19 +289,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-12">
         <div class="daily-item-head">
           <span class="item-number">12</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>首相アンワル、ケダ州のイスラム教育機関修復に280万リンギットを追加配分</h3>
-        <p class="daily-summary">首相アンワル・イブラヒム氏は、ケダ州内の14校のイスラム教育機関の基礎インフラ修復のため、今年追加で280万リンギットを配分することを承認した。学生が安全で快適に学べる環境整備を目的としている。 同時に、ハディース関連プログラム実施のために25万リンギットが別途割り当てられた。 配分は首相府のケダ実施調整ユニットが調整することとなっている。</p>
+        <h3>首相アンワル、<a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">ケダ州</a>のイスラム教育機関修復に280万リンギットを追加配分</h3>
+        <p class="daily-summary">首相アンワル・イブラヒム氏は、<a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">ケダ州</a>内の14校のイスラム教育機関の基礎インフラ修復のため、今年追加で280万リンギットを配分することを承認した。学生が安全で快適に学べる環境整備を目的としている。 同時に、ハディース関連プログラム実施のために25万リンギットが別途割り当てられた。 配分は首相府のケダ実施調整ユニットが調整することとなっている。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/26/anwar-approves-rm28m-to-repair-islamic-education-institutions-in-kedah/236546">出典: Malay Mail（2026年9月26日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-13">
         <div class="daily-item-head">
           <span class="item-number">13</span>
           <p class="item-category">社会・経済の動き</p>
@@ -276,25 +313,25 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-14">
         <div class="daily-item-head">
           <span class="item-number">14</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
         <h3>原題・出典情報</h3>
-        <p class="daily-summary">Anwar firm on non‑interference, says Negeri Sembilan ruler’s position must be decided under Constitution PENDANG, Sept 26 — Prime Minister Datuk Seri Anwar Ibrahim stressed that he would not interfere in matters concern...</p>
+        <p class="daily-summary">Anwar firm on non‑interference, says <a class="place-link" data-place-key="negeri-sembilan" href="https://www.openstreetmap.org/?mlat=2.8&amp;mlon=102.2#map=9/2.8/102.2" title="ヌグリ・スンビラン州の概略位置を地図で見る">Negeri Sembilan</a> ruler’s position must be decided under Constitution PENDANG, Sept 26 — Prime Minister Datuk Seri Anwar Ibrahim stressed that he would not interfere in matters concern...</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/26/anwar-firm-on-noninterference-says-negeri-sembilan-rulers-position-must-be-decided-under-constitution/236536">出典: Malay Mail（2026年9月26日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-15">
         <div class="daily-item-head">
           <span class="item-number">15</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
         <h3>原題・出典情報</h3>
-        <p class="daily-summary">Weak 3.3-magnitude earthquake strikes Sabah’s Kuamut, no tsunami threat KUALA LUMPUR, Sept 26 — A weak earthquake measuring 3.3 in magnitude was detected in the Kuamut area of Kinabatang...</p>
+        <p class="daily-summary">Weak 3.3-magnitude earthquake strikes <a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">Sabah</a>’s Kuamut, no tsunami threat KUALA LUMPUR, Sept 26 — A weak earthquake measuring 3.3 in magnitude was detected in the Kuamut area of Kinabatang...</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/26/weak-33-magnitude-earthquake-strikes-sabahs-kuamut-no-tsunami-threat/236531">出典: Malay Mail（2026年9月26日）</a>
       </article>
@@ -304,5 +341,7 @@
 
 
   </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
 </body>
 </html>

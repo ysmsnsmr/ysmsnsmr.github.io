@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2026年9月30日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       color-scheme: light;
@@ -65,6 +66,20 @@
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
     .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
@@ -80,6 +95,9 @@
       .daily-item { padding: 15px; }
       .air-quality-links { align-items: flex-start; flex-direction: column; }
       .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
     }
   </style>
 </head>
@@ -103,6 +121,23 @@
       <a href="#category-1">暮らしに関わる更新 14件</a><a href="#category-2">社会・経済の動き 0件</a>
     </nav>
 
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>6地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="kedah" data-lat="6.1" data-lon="100.5" data-zoom="8"><strong>ケダ州</strong><ul><li><a href="#article-1">ケダ州JPV、チャンルンで狂犬病疑いの犬猫50サンプルを採取</a></li></ul></li>
+<li class="map-place" data-place-key="johor-bahru" data-lat="1.49" data-lon="103.76" data-zoom="11"><strong>ジョホールバル</strong><ul><li><a href="#article-2">ジョホールバル各地区で午後の大雨による突発洪水が発生</a></li></ul></li>
+<li class="map-place" data-place-key="klang-valley" data-lat="3.1" data-lon="101.55" data-zoom="9"><strong>クランバレー</strong><ul><li><a href="#article-5">PLUS JustGo ANPR、主要高速道路で利用開始へ</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-6">全国で20地域が不健康なAPIを記録、ジョハン・セティアが166で最高値</a></li>
+<li><a href="#article-7">マレーシア航空、F1期間中はKLIA到着を3時間前に推奨</a></li></ul></li>
+<li class="map-place" data-place-key="putrajaya" data-lat="2.93" data-lon="101.68" data-zoom="11"><strong>プトラジャヤ</strong><ul><li><a href="#article-9">Touch ‘n Go、年内に10本のRFIDレーンを追加しMLFFへ移行支援</a></li></ul></li>
+<li class="map-place" data-place-key="george-town" data-lat="5.41" data-lon="100.34" data-zoom="11"><strong>ジョージタウン</strong><ul><li><a href="#article-13">原題・出典情報</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
             <section class="daily-category" aria-labelledby="category-1">
               <div class="daily-category-head">
                 <h2 id="category-1">暮らしに関わる更新</h2>
@@ -110,31 +145,31 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>ケダ州JPV、チャンルンで狂犬病疑いの犬猫50サンプルを採取</h3>
-        <p class="daily-summary">ケダ州獣医サービス局（JPV）は、同州チャンルン周辺で報告された狂犬病疑い事例を受け、4日間で犬と猫合わせて50件のサンプルを採取し、感染の有無を調査しています。</p>
+        <h3><a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">ケダ州</a>JPV、チャンルンで狂犬病疑いの犬猫50サンプルを採取</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">ケダ州</a>獣医サービス局（JPV）は、同州チャンルン周辺で報告された狂犬病疑い事例を受け、4日間で犬と猫合わせて50件のサンプルを採取し、感染の有無を調査しています。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jpv-kedah-ambil-50-sampel-anjing-kucing-di-changlun-kesan-rabies">出典: Astro Awani（2026年9月30日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-2">
         <div class="daily-item-head">
           <span class="item-number">2</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>ジョホールバル各地区で午後の大雨による突発洪水が発生</h3>
-        <p class="daily-summary">9月30日午後1時からの大雨で、ジョホールバル地区のJalan Kolam Air、Jalan Ayer Molek、Jalan Yahya Awal、Jalan Pantai、Jalan Wong Ah Fookなどが冠水し、主要道路で渋滞が発生した。午後5時まで続き、午後7時頃に水位は低下した。 TampoiとTaman Perlingでも一部で突発洪水が報告された。 SNSに投稿された映像では、冠水した道路で車両が立ち往生している様子が確認された。</p>
+        <h3><a class="place-link" data-place-key="johor-bahru" href="https://www.openstreetmap.org/?mlat=1.49&amp;mlon=103.76#map=11/1.49/103.76" title="ジョホールバルの概略位置を地図で見る">ジョホールバル</a>各地区で午後の大雨による突発洪水が発生</h3>
+        <p class="daily-summary">9月30日午後1時からの大雨で、<a class="place-link" data-place-key="johor-bahru" href="https://www.openstreetmap.org/?mlat=1.49&amp;mlon=103.76#map=11/1.49/103.76" title="ジョホールバルの概略位置を地図で見る">ジョホールバル</a>地区のJalan Kolam Air、Jalan Ayer Molek、Jalan Yahya Awal、Jalan Pantai、Jalan Wong Ah Fookなどが冠水し、主要道路で渋滞が発生した。午後5時まで続き、午後7時頃に水位は低下した。 TampoiとTaman Perlingでも一部で突発洪水が報告された。 SNSに投稿された映像では、冠水した道路で車両が立ち往生している様子が確認された。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/30/several-areas-in-johor-bahru-hit-by-flash-floods-following-heavy-rain-video/237172">出典: Malay Mail（2026年9月30日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-3">
         <div class="daily-item-head">
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -146,7 +181,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-4">
         <div class="daily-item-head">
           <span class="item-number">4</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -158,43 +193,43 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-5">
         <div class="daily-item-head">
           <span class="item-number">5</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>PLUS JustGo ANPR、主要高速道路で利用開始へ</h3>
-        <p class="daily-summary">PLUSが提供する自動ナンバープレート認識（ANPR）式の料金支払いシステム「JustGo」が、クランバレーと東海岸の主要高速道路（DUKE、SPE、Karak、LPT2、BORR、Latar）で近日中に利用可能になることが発表されました。 対象となる高速道路はDUKE、SPE、Karak、LPT2、BORR、Latarです。 将来的にNPEやBesrayaへの拡大も検討されています。</p>
+        <p class="daily-summary">PLUSが提供する自動ナンバープレート認識（ANPR）式の料金支払いシステム「JustGo」が、<a class="place-link" data-place-key="klang-valley" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.55#map=9/3.1/101.55" title="クランバレーの概略位置を地図で見る">クランバレー</a>と東海岸の主要高速道路（DUKE、SPE、Karak、LPT2、BORR、Latar）で近日中に利用可能になることが発表されました。 対象となる高速道路はDUKE、SPE、Karak、LPT2、BORR、Latarです。 将来的にNPEやBesrayaへの拡大も検討されています。</p>
 
         <a class="source-link" href="https://paultan.org/2026/09/30/plus-justgo-anpr-toll-payment-will-soon-cover-duke-spe-karak-lpt2-borr-and-latar-npe-besraya-too/">出典: Paul Tan（2026年9月30日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-6">
         <div class="daily-item-head">
           <span class="item-number">6</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>全国で20地域が不健康なAPIを記録、ジョハン・セティアが166で最高値</h3>
-        <p class="daily-summary">2026年9月30日午後4時30分時点で、全国20地域が不健康（API101〜200）と判定されました。スランゴール州ジョハン・セティアが166で最高値を示し、同州のシャーアラム（164）やクラン（158）なども不健康レベルです。クアラルンプールのチェラス（162）とバトゥムダ（160）でも同様の状況が確認されています。 ジョハン・セティア以外に、パサール・グダン（164）やラルキン（162）などジョホールでも不健康APIが観測されています。</p>
+        <p class="daily-summary">2026年9月30日午後4時30分時点で、全国20地域が不健康（API101〜200）と判定されました。スランゴール州ジョハン・セティアが166で最高値を示し、同州のシャーアラム（164）やクラン（158）なども不健康レベルです。<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>のチェラス（162）とバトゥムダ（160）でも同様の状況が確認されています。 ジョハン・セティア以外に、パサール・グダン（164）やラルキン（162）などジョホールでも不健康APIが観測されています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/30/johan-setia-reports-highest-unhealthy-api-level-at-166-twenty-areas-in-total-experiencing-bad-air/237160">出典: Malay Mail（2026年9月30日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-7">
         <div class="daily-item-head">
           <span class="item-number">7</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>マレーシア航空、F1期間中はKLIA到着を3時間前に推奨</h3>
-        <p class="daily-summary">マレーシア航空は、2026年10月2日から4日までのフォーミュラ1バーレーンGP開催期間中、クアラルンプール国際空港（KLIA）へのアクセス渋滞が予想されるため、国際線は出発3時間前、国内線は2時間前に到着するよう呼び掛けている。チェックインカウンターは出発1時間前に閉まるほか、最新の道路情報は警察（PDRM）の発表を確認し、必要に応じて代替ルートやKLIAエクスプレスの利用を検討するよう案内している。 交通渋滞が予想されるため、余裕を持った移動と道路情報の確認が推奨される。 KLIAエクスプレス利用で空港へのアクセス時間短縮が可能。</p>
+        <p class="daily-summary">マレーシア航空は、2026年10月2日から4日までのフォーミュラ1バーレーンGP開催期間中、<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>国際空港（KLIA）へのアクセス渋滞が予想されるため、国際線は出発3時間前、国内線は2時間前に到着するよう呼び掛けている。チェックインカウンターは出発1時間前に閉まるほか、最新の道路情報は警察（PDRM）の発表を確認し、必要に応じて代替ルートやKLIAエクスプレスの利用を検討するよう案内している。 交通渋滞が予想されるため、余裕を持った移動と道路情報の確認が推奨される。 KLIAエクスプレス利用で空港へのアクセス時間短縮が可能。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/30/flying-this-weekend-malaysia-airlines-urges-klia-passengers-to-arrive-early-amid-sepang-f1-traffic/237157">出典: Malay Mail（2026年9月30日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-8">
         <div class="daily-item-head">
           <span class="item-number">8</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -206,19 +241,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-9">
         <div class="daily-item-head">
           <span class="item-number">9</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>Touch ‘n Go、年内に10本のRFIDレーンを追加しMLFFへ移行支援</h3>
-        <p class="daily-summary">Touch ‘n Go Sdn Bhdは、年内に10本の拡張RFIDレーンを5つの高速道路に導入すると発表した。これにより、マレーシアのマルチレーン・ファストフロー（MLFF）課金システムへの移行を支援する。Chief Operations OfficerのLiza Woon Yin Yinは、同社の30周年記念と合わせて、政府のバリアフリー課金イニシアチブに貢献する旨を述べた。新レーンは、Maju Expressway（MEX）のPutrajaya料金所、Kajang Dispersal Link Expressway（SILK）のSungai Ramal料金所、Grand Sepadu HighwayのBukit Raja料金所、Bukit Jelu料金所などに配置される予定である。</p>
+        <p class="daily-summary">Touch ‘n Go Sdn Bhdは、年内に10本の拡張RFIDレーンを5つの高速道路に導入すると発表した。これにより、マレーシアのマルチレーン・ファストフロー（MLFF）課金システムへの移行を支援する。Chief Operations OfficerのLiza Woon Yin Yinは、同社の30周年記念と合わせて、政府のバリアフリー課金イニシアチブに貢献する旨を述べた。新レーンは、Maju Expressway（MEX）の<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">Putrajaya</a>料金所、Kajang Dispersal Link Expressway（SILK）のSungai Ramal料金所、Grand Sepadu HighwayのBukit Raja料金所、Bukit Jelu料金所などに配置される予定である。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/30/touch-n-go-to-add-10-enhanced-rfid-lanes-for-malaysias-mlff-transition/237137">出典: Malay Mail（2026年9月30日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-10">
         <div class="daily-item-head">
           <span class="item-number">10</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -230,7 +265,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-11">
         <div class="daily-item-head">
           <span class="item-number">11</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -242,7 +277,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-12">
         <div class="daily-item-head">
           <span class="item-number">12</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -254,19 +289,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-13">
         <div class="daily-item-head">
           <span class="item-number">13</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>原題・出典情報</h3>
-        <p class="daily-summary">MRT Corp announces 45-day partial lane closures for Mutiara LRT in George Town GEORGE TOWN, Sept 30 — Long-term intermittent partial lane closures along Jalan Sultan Azlan Shah here will be imp...</p>
+        <p class="daily-summary">MRT Corp announces 45-day partial lane closures for Mutiara LRT in <a class="place-link" data-place-key="george-town" href="https://www.openstreetmap.org/?mlat=5.41&amp;mlon=100.34#map=11/5.41/100.34" title="ジョージタウンの概略位置を地図で見る">George Town</a> GEORGE TOWN, Sept 30 — Long-term intermittent partial lane closures along Jalan Sultan Azlan Shah here will be imp...</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/30/mrt-corp-announces-45-day-partial-lane-closures-for-mutiara-lrt-in-george-town/237094">出典: Malay Mail（2026年9月30日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-14">
         <div class="daily-item-head">
           <span class="item-number">14</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -307,5 +342,7 @@
             </section>
 
   </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
 </body>
 </html>

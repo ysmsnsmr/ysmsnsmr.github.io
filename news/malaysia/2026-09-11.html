@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2026年9月11日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       color-scheme: light;
@@ -65,6 +66,20 @@
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
     .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
@@ -80,6 +95,9 @@
       .daily-item { padding: 15px; }
       .air-quality-links { align-items: flex-start; flex-direction: column; }
       .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
     }
   </style>
 </head>
@@ -103,6 +121,19 @@
       <a href="#category-1">暮らしに関わる更新 2件</a><a href="#category-2">社会・経済の動き 3件</a>
     </nav>
 
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>2地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="putrajaya" data-lat="2.93" data-lon="101.68" data-zoom="11"><strong>プトラジャヤ</strong><ul><li><a href="#article-1">KL・プトラジャヤ他7州で本日午後6時まで豪雨と強風が予想</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-1">KL・プトラジャヤ他7州で本日午後6時まで豪雨と強風が予想</a></li>
+<li><a href="#article-4">原油価格上昇と金利上昇懸念の中、リンギットは小幅上昇で取引終了</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
             <section class="daily-category" aria-labelledby="category-1">
               <div class="daily-category-head">
                 <h2 id="category-1">暮らしに関わる更新</h2>
@@ -110,19 +141,19 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>KL・プトラジャヤ他7州で本日午後6時まで豪雨と強風が予想</h3>
-        <p class="daily-summary">マレーシア気象局は、クアラルンプール、プトラジャヤを含む7州で本日午後6時まで続く豪雨と強風の注意報を発表し、外出や移動時の注意を呼び掛けています。 MetMalaysiaが雷雨・強風の注意報を出しました。 対象地域では短時間の激しい雨や突風が見込まれます。</p>
+        <h3>KL・<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">プトラジャヤ</a>他7州で本日午後6時まで豪雨と強風が予想</h3>
+        <p class="daily-summary">マレーシア気象局は、<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>、<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">プトラジャヤ</a>を含む7州で本日午後6時まで続く豪雨と強風の注意報を発表し、外出や移動時の注意を呼び掛けています。 MetMalaysiaが雷雨・強風の注意報を出しました。 対象地域では短時間の激しい雨や突風が見込まれます。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/10/heavy-rain-strong-winds-expected-across-kl-putrajaya-and-seven-states-until-6pm/234705">出典: Malay Mail（2026年9月10日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-2">
         <div class="daily-item-head">
           <span class="item-number">2</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -144,7 +175,7 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-3">
         <div class="daily-item-head">
           <span class="item-number">3</span>
           <p class="item-category">社会・経済の動き</p>
@@ -156,19 +187,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-4">
         <div class="daily-item-head">
           <span class="item-number">4</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
         <h3>原油価格上昇と金利上昇懸念の中、リンギットは小幅上昇で取引終了</h3>
-        <p class="daily-summary">クアラルンプールで、原油価格が上昇し米金利上昇の懸念がある中、リンギットは米ドルに対してわずかに上昇し、取引を終えました。ムアマラット・マレーシア銀行のチーフエコノミスト、モハメド・アフザニザム氏は、ブレント原油が1バレル約101米ドルで推移することが次回の米連邦公開市場委員会（FOMC）での利上げ議論を後押しすると指摘しつつ、今後の米消費者物価指数（CPI）発表がリンギットの短期的な動向に影響すると述べました。 ブレント原油は約101米ドル／バレルで推移し、利上げ期待を高めています。</p>
+        <p class="daily-summary"><a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>で、原油価格が上昇し米金利上昇の懸念がある中、リンギットは米ドルに対してわずかに上昇し、取引を終えました。ムアマラット・マレーシア銀行のチーフエコノミスト、モハメド・アフザニザム氏は、ブレント原油が1バレル約101米ドルで推移することが次回の米連邦公開市場委員会（FOMC）での利上げ議論を後押しすると指摘しつつ、今後の米消費者物価指数（CPI）発表がリンギットの短期的な動向に影響すると述べました。 ブレント原油は約101米ドル／バレルで推移し、利上げ期待を高めています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/09/10/ringgit-shrugs-off-oil-spike-rate-hike-jitters-to-close-higher/234739">出典: Malay Mail（2026年9月10日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-5">
         <div class="daily-item-head">
           <span class="item-number">5</span>
           <p class="item-category">社会・経済の動き</p>
@@ -184,5 +215,7 @@
 
 
   </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
 </body>
 </html>

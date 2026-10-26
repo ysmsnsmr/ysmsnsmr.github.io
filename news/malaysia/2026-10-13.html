@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2026年10月13日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       color-scheme: light;
@@ -65,6 +66,20 @@
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
     .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
@@ -80,6 +95,9 @@
       .daily-item { padding: 15px; }
       .air-quality-links { align-items: flex-start; flex-direction: column; }
       .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
     }
   </style>
 </head>
@@ -103,6 +121,38 @@
       <a href="#category-1">暮らしに関わる更新 17件</a><a href="#category-2">社会・経済の動き 0件</a>
     </nav>
 
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>13地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="selangor" data-lat="3.1" data-lon="101.5" data-zoom="9"><strong>セランゴール州</strong><ul><li><a href="#article-1">Sungai Chuahで行方不明男性の捜索作業、雨天中止後本日再開</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-2">Firefly、hazeの影響でスバン‑シンガポール間便を10月14日までキャンセル</a></li>
+<li><a href="#article-8">バティックエア、KLIA発ジッダ行き便を安全確保のためキャンセル</a></li>
+<li><a href="#article-17">KLIAエクスプレスでケーブル切断、破壊行為が原因、結合列車運行継続</a></li></ul></li>
+<li class="map-place" data-place-key="johor" data-lat="2.0" data-lon="103.5" data-zoom="8"><strong>ジョホール州</strong><ul><li><a href="#article-4">ジョホールで7歳児が野良犬に襲われ重傷、同地点で10代は無事</a></li>
+<li><a href="#article-9">全国で23地点が『不健康』レベルのAPIを記録、Hazeが悪化</a></li>
+<li><a href="#article-10">ジョホール・マラッカ・ネグリ・スンビラン・プトラジャヤの全校がhaze悪化で明日休校</a></li>
+<li><a href="#article-12">マレーシア全土で本日午後6時までに激しい雨と突風が予報</a></li></ul></li>
+<li class="map-place" data-place-key="johor-bahru" data-lat="1.49" data-lon="103.76" data-zoom="11"><strong>ジョホールバル</strong><ul><li><a href="#article-4">ジョホールで7歳児が野良犬に襲われ重傷、同地点で10代は無事</a></li>
+<li><a href="#article-12">マレーシア全土で本日午後6時までに激しい雨と突風が予報</a></li></ul></li>
+<li class="map-place" data-place-key="pasir-gudang" data-lat="1.46" data-lon="103.9" data-zoom="11"><strong>パシル・グダン</strong><ul><li><a href="#article-9">全国で23地点が『不健康』レベルのAPIを記録、Hazeが悪化</a></li></ul></li>
+<li class="map-place" data-place-key="melaka" data-lat="2.3" data-lon="102.3" data-zoom="9"><strong>マラッカ州</strong><ul><li><a href="#article-9">全国で23地点が『不健康』レベルのAPIを記録、Hazeが悪化</a></li></ul></li>
+<li class="map-place" data-place-key="putrajaya" data-lat="2.93" data-lon="101.68" data-zoom="11"><strong>プトラジャヤ</strong><ul><li><a href="#article-10">ジョホール・マラッカ・ネグリ・スンビラン・プトラジャヤの全校がhaze悪化で明日休校</a></li>
+<li><a href="#article-12">マレーシア全土で本日午後6時までに激しい雨と突風が予報</a></li>
+<li><a href="#article-17">KLIAエクスプレスでケーブル切断、破壊行為が原因、結合列車運行継続</a></li></ul></li>
+<li class="map-place" data-place-key="pahang" data-lat="3.8" data-lon="103.2" data-zoom="8"><strong>パハン州</strong><ul><li><a href="#article-10">ジョホール・マラッカ・ネグリ・スンビラン・プトラジャヤの全校がhaze悪化で明日休校</a></li>
+<li><a href="#article-12">マレーシア全土で本日午後6時までに激しい雨と突風が予報</a></li></ul></li>
+<li class="map-place" data-place-key="labuan" data-lat="5.28" data-lon="115.24" data-zoom="11"><strong>ラブアン</strong><ul><li><a href="#article-12">マレーシア全土で本日午後6時までに激しい雨と突風が予報</a></li></ul></li>
+<li class="map-place" data-place-key="perak" data-lat="4.8" data-lon="101.1" data-zoom="8"><strong>ペラ州</strong><ul><li><a href="#article-12">マレーシア全土で本日午後6時までに激しい雨と突風が予報</a></li></ul></li>
+<li class="map-place" data-place-key="kelantan" data-lat="5.4" data-lon="102.0" data-zoom="8"><strong>ケランタン州</strong><ul><li><a href="#article-12">マレーシア全土で本日午後6時までに激しい雨と突風が予報</a></li></ul></li>
+<li class="map-place" data-place-key="gua-musang" data-lat="4.88" data-lon="101.96" data-zoom="11"><strong>グア・ムサン</strong><ul><li><a href="#article-12">マレーシア全土で本日午後6時までに激しい雨と突風が予報</a></li></ul></li>
+<li class="map-place" data-place-key="terengganu" data-lat="5.0" data-lon="103.0" data-zoom="8"><strong>トレンガヌ州</strong><ul><li><a href="#article-12">マレーシア全土で本日午後6時までに激しい雨と突風が予報</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
             <section class="daily-category" aria-labelledby="category-1">
               <div class="daily-category-head">
                 <h2 id="category-1">暮らしに関わる更新</h2>
@@ -110,31 +160,31 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>Sungai Chuahで行方不明男性の捜索作業、雨天中止後本日再開</h3>
-        <p class="daily-summary">JBPM SelangorのPenolong Pengarah Operasi、Ashrul Riezal Asbar氏は、激しい雨により中止されたSungai Chuahでの行方不明男性の捜索作業（SAR）を、本日再開すると述べました。</p>
+        <p class="daily-summary">JBPM <a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">Selangor</a>のPenolong Pengarah Operasi、Ashrul Riezal Asbar氏は、激しい雨により中止されたSungai Chuahでの行方不明男性の捜索作業（SAR）を、本日再開すると述べました。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/operasi-sar-lelaki-hanyut-di-sungai-chuah-disambung-hari-ini">出典: Astro Awani（2026年10月13日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-2">
         <div class="daily-item-head">
           <span class="item-number">2</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>Firefly、hazeの影響でスバン‑シンガポール間便を10月14日までキャンセル</h3>
-        <p class="daily-summary">現在の天候とhazeの影響により、Fireflyはスバン（スルタン・アブドゥル・アジズ・シャー空港）とシンガポール・セレタ空港間の定期便を10月14日までキャンセルすると発表しました。航空会社は、対象となる6路線（FY3122‑FY3133）について、乗客にマレーシア航空のクアラルンプール‑シンガポール路線への振替便（座席空き状況次第）または全額返金（30営業日以内に元の支払方法へ）を提供するとしています。Fireflyは以前、10月10日から12日まで同区間の全便を安全確保のためにキャンセルしていました。</p>
+        <p class="daily-summary">現在の天候とhazeの影響により、Fireflyはスバン（スルタン・アブドゥル・アジズ・シャー空港）とシンガポール・セレタ空港間の定期便を10月14日までキャンセルすると発表しました。航空会社は、対象となる6路線（FY3122‑FY3133）について、乗客にマレーシア航空の<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>‑シンガポール路線への振替便（座席空き状況次第）または全額返金（30営業日以内に元の支払方法へ）を提供するとしています。Fireflyは以前、10月10日から12日まで同区間の全便を安全確保のためにキャンセルしていました。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/12/firefly-cancels-subang-singapore-flights-until-october-14-as-haze-persists/238867">出典: Malay Mail（2026年10月12日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-3">
         <div class="daily-item-head">
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -146,19 +196,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-4">
         <div class="daily-item-head">
           <span class="item-number">4</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>ジョホールで7歳児が野良犬に襲われ重傷、同地点で10代は無事</h3>
-        <p class="daily-summary">ジョホール州リマ・ケダイの住宅団地内の遊び場で、7歳の男児が8匹の野良犬に襲われ、目・首・頭・体に重傷を負い、午後3時にジョホールバルのスルタン・アミナ病院（HSA）へ緊急搬送されました。Kota Iskandar選出議員のDatuk Pandak Ahmad氏は現場を訪れ、子どもや住民が公共施設を利用する際の安全確保のため、即時の対策を求めました。同じ場所では同日6時に18歳の男性が犬の群れに襲われましたが、怪我はなく無事に逃げたと報告されています。これらの出来事は、住宅団地内での野良犬問題への懸念を高めています。</p>
+        <p class="daily-summary"><a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>リマ・ケダイの住宅団地内の遊び場で、7歳の男児が8匹の野良犬に襲われ、目・首・頭・体に重傷を負い、午後3時に<a class="place-link" data-place-key="johor-bahru" href="https://www.openstreetmap.org/?mlat=1.49&amp;mlon=103.76#map=11/1.49/103.76" title="ジョホールバルの概略位置を地図で見る">ジョホールバル</a>のスルタン・アミナ病院（HSA）へ緊急搬送されました。Kota Iskandar選出議員のDatuk Pandak Ahmad氏は現場を訪れ、子どもや住民が公共施設を利用する際の安全確保のため、即時の対策を求めました。同じ場所では同日6時に18歳の男性が犬の群れに襲われましたが、怪我はなく無事に逃げたと報告されています。これらの出来事は、住宅団地内での野良犬問題への懸念を高めています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/12/seven-year-old-seriously-injured-in-johor-stray-dog-attack-teen-escapes-unhurt-in-earlier-incident-at-same-location/238859">出典: Malay Mail（2026年10月12日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-5">
         <div class="daily-item-head">
           <span class="item-number">5</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -170,7 +220,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-6">
         <div class="daily-item-head">
           <span class="item-number">6</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -182,7 +232,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-7">
         <div class="daily-item-head">
           <span class="item-number">7</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -194,43 +244,43 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-8">
         <div class="daily-item-head">
           <span class="item-number">8</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>バティックエア、KLIA発ジッダ行き便を安全確保のためキャンセル</h3>
-        <p class="daily-summary">バティックエアは2026年10月12日、クアラルンプール国際空港（KLIA）発サウジアラビア・ジッダ行き（フライト番号OD701）を、同国で続く紛争を受けた安全確保の予防措置としてキャンセルしたと発表した。航空会社は、乗客と乗務員の安全を最優先に判断したとし、影響を受けた乗客には次の利用可能な便へ振替える旨を連絡するとした。現在も事態を注視し、航空当局や空港運営者と連携して運航への影響を評価している。最新情報はバティックエアの公式ウェブサイトやSNSで確認できる。</p>
+        <p class="daily-summary">バティックエアは2026年10月12日、<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>国際空港（KLIA）発サウジアラビア・ジッダ行き（フライト番号OD701）を、同国で続く紛争を受けた安全確保の予防措置としてキャンセルしたと発表した。航空会社は、乗客と乗務員の安全を最優先に判断したとし、影響を受けた乗客には次の利用可能な便へ振替える旨を連絡するとした。現在も事態を注視し、航空当局や空港運営者と連携して運航への影響を評価している。最新情報はバティックエアの公式ウェブサイトやSNSで確認できる。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/12/batik-air-flight-od701-from-klia-to-jeddah-called-off-as-precautionary-measure/238835">出典: Malay Mail（2026年10月12日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-9">
         <div class="daily-item-head">
           <span class="item-number">9</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>全国で23地点が『不健康』レベルのAPIを記録、Hazeが悪化</h3>
-        <p class="daily-summary">環境省（DOE）の発表によると、2026年10月12日午後4時50分時点で、マレーシア全土の68監視地点のうち23地点がAir Pollutant Index（API）101〜200の「不健康」レベルを記録し、Hazeが悪化した。最高値はジョホール州パシル・グダンで174、続いて同州コタ・ティンギで170、ネゲリ・スンビラン州セレンバンで167となった。ジョホール州は合計7地点が不健康範囲に入り、他にもネゲリ・スンビラン州とマラッカ州で複数地点が同様の数値を示した。</p>
+        <p class="daily-summary">環境省（DOE）の発表によると、2026年10月12日午後4時50分時点で、マレーシア全土の68監視地点のうち23地点がAir Pollutant Index（API）101〜200の「不健康」レベルを記録し、Hazeが悪化した。最高値は<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a><a class="place-link" data-place-key="pasir-gudang" href="https://www.openstreetmap.org/?mlat=1.46&amp;mlon=103.9#map=11/1.46/103.9" title="パシル・グダンの概略位置を地図で見る">パシル・グダン</a>で174、続いて同州コタ・ティンギで170、ネゲリ・スンビラン州セレンバンで167となった。<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>は合計7地点が不健康範囲に入り、他にもネゲリ・スンビラン州と<a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>で複数地点が同様の数値を示した。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/12/haze-worsens-23-stations-record-unhealthy-api-levels-across-malaysia/238833">出典: Malay Mail（2026年10月12日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-10">
         <div class="daily-item-head">
           <span class="item-number">10</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>ジョホール・マラッカ・ネグリ・スンビラン・プトラジャヤの全校がhaze悪化で明日休校</h3>
-        <p class="daily-summary">教育相データック・スリ・ファドリナ・シデックは、2026年10月12日付の声明で、ジョホール、マラッカ、ネグリ・スンビラン、プトラジャヤの全ての小中学校が、hazeによる大気汚染の急激な悪化を受けて、2026年10月13日（明日）に授業を停止すると発表した。さらに、スランゴール州のフルー・ランガット、ペタリン・パーダナ、クアラ・ランガット、セパンの4つの地区教育局、及びパハン州のクアンタンとロムピン地区教育局の学校も同様に休校となる。他州・他地区の学校は通常通り運営される。環境省のデータによれば、当日22箇所（全68箇所中）が不健康な空気汚染指数（API101〜200）を示し、ジョホール州のコタ・ティンギで最高170の数値が記録された。</p>
+        <h3>ジョホール・マラッカ・ネグリ・スンビラン・<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">プトラジャヤ</a>の全校がhaze悪化で明日休校</h3>
+        <p class="daily-summary">教育相データック・スリ・ファドリナ・シデックは、2026年10月12日付の声明で、ジョホール、マラッカ、ネグリ・スンビラン、<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">プトラジャヤ</a>の全ての小中学校が、hazeによる大気汚染の急激な悪化を受けて、2026年10月13日（明日）に授業を停止すると発表した。さらに、スランゴール州のフルー・ランガット、ペタリン・パーダナ、クアラ・ランガット、セパンの4つの地区教育局、及び<a class="place-link" data-place-key="pahang" href="https://www.openstreetmap.org/?mlat=3.8&amp;mlon=103.2#map=8/3.8/103.2" title="パハン州の概略位置を地図で見る">パハン州</a>のクアンタンとロムピン地区教育局の学校も同様に休校となる。他州・他地区の学校は通常通り運営される。環境省のデータによれば、当日22箇所（全68箇所中）が不健康な空気汚染指数（API101〜200）を示し、<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>のコタ・ティンギで最高170の数値が記録された。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/12/fadhlina-schools-closed-tomorrow-in-johor-melaka-negeri-sembilan-putrajaya-as-haze-worsens/238832">出典: Malay Mail（2026年10月12日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-11">
         <div class="daily-item-head">
           <span class="item-number">11</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -242,19 +292,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-12">
         <div class="daily-item-head">
           <span class="item-number">12</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>マレーシア全土で本日午後6時までに激しい雨と突風が予報</h3>
-        <p class="daily-summary">マレーシア気象局は本日午後3時に、半島部・サラワク・サバ・ラブアン連邦直轄領を含む9州・プトラジャヤ・ラブアンで、激しい雨、雷雨、突風が午後6時まで続くとする雷雨警報を発令しました。警報は、ペラ州（フル・ペラ、クアラ・カンサル、キンタ、セラマ）、ケランタン州（ジェリ、グア・ムサン）、トレンガヌ州（ドゥングン、フル・トレンガヌ、ケママン）など北東部をはじめ、パハン州全10地区、スランゴール州（フル・ラガット、セパン）とプトラジャヤ、ネグリ・スンビラン州（ジェレブ、セレンバン、ポート・ディクソン、レンバウ、クアラ・ピラ）、ジョホール州（クライ、ポンティアン、コタ・ティンギ、ジョホールバル）にも警報が及びます。</p>
+        <p class="daily-summary">マレーシア気象局は本日午後3時に、半島部・サラワク・サバ・<a class="place-link" data-place-key="labuan" href="https://www.openstreetmap.org/?mlat=5.28&amp;mlon=115.24#map=11/5.28/115.24" title="ラブアンの概略位置を地図で見る">ラブアン</a>連邦直轄領を含む9州・<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">プトラジャヤ</a>・<a class="place-link" data-place-key="labuan" href="https://www.openstreetmap.org/?mlat=5.28&amp;mlon=115.24#map=11/5.28/115.24" title="ラブアンの概略位置を地図で見る">ラブアン</a>で、激しい雨、雷雨、突風が午後6時まで続くとする雷雨警報を発令しました。警報は、<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>（フル・ペラ、クアラ・カンサル、キンタ、セラマ）、<a class="place-link" data-place-key="kelantan" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=102.0#map=8/5.4/102.0" title="ケランタン州の概略位置を地図で見る">ケランタン州</a>（ジェリ、<a class="place-link" data-place-key="gua-musang" href="https://www.openstreetmap.org/?mlat=4.88&amp;mlon=101.96#map=11/4.88/101.96" title="グア・ムサンの概略位置を地図で見る">グア・ムサン</a>）、<a class="place-link" data-place-key="terengganu" href="https://www.openstreetmap.org/?mlat=5.0&amp;mlon=103.0#map=8/5.0/103.0" title="トレンガヌ州の概略位置を地図で見る">トレンガヌ州</a>（ドゥングン、フル・トレンガヌ、ケママン）など北東部をはじめ、<a class="place-link" data-place-key="pahang" href="https://www.openstreetmap.org/?mlat=3.8&amp;mlon=103.2#map=8/3.8/103.2" title="パハン州の概略位置を地図で見る">パハン州</a>全10地区、スランゴール州（フル・ラガット、セパン）と<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">プトラジャヤ</a>、ネグリ・スンビラン州（ジェレブ、セレンバン、ポート・ディクソン、レンバウ、クアラ・ピラ）、<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>（クライ、ポンティアン、コタ・ティンギ、<a class="place-link" data-place-key="johor-bahru" href="https://www.openstreetmap.org/?mlat=1.49&amp;mlon=103.76#map=11/1.49/103.76" title="ジョホールバルの概略位置を地図で見る">ジョホールバル</a>）にも警報が及びます。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/12/heavy-rain-gusty-winds-expected-across-nine-states-putrajaya-and-labuan-until-6pm/238820">出典: Malay Mail（2026年10月12日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-13">
         <div class="daily-item-head">
           <span class="item-number">13</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -266,7 +316,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-14">
         <div class="daily-item-head">
           <span class="item-number">14</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -278,7 +328,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-15">
         <div class="daily-item-head">
           <span class="item-number">15</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -290,7 +340,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-16">
         <div class="daily-item-head">
           <span class="item-number">16</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -302,13 +352,13 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-17">
         <div class="daily-item-head">
           <span class="item-number">17</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>KLIAエクスプレスでケーブル切断、破壊行為が原因、結合列車運行継続</h3>
-        <p class="daily-summary">今朝、KLIAエクスプレスのケーブルが破壊行為により切断され、クアラルンプール市内とクアラルンプール国際空港（KLIA）間の路線が影響を受けました。影響区間はプトラジャヤ・サイバージャヤ駅とサラクティンギ駅間です。運営側は6時のサービス更新で、さらなる通知があるまで結合列車サービスを継続すると発表しました。5時からはKLセンタルとKLIAターミナル2（T2）両方から20分間隔で全駅停車の列車が運行され、技術チームが復旧作業に当たっています。9時10分から9時20分にかけて、影響区間間のシャトル列車が開始され、両方向とも15分間隔で運行されています。乗客は最新情報や支援について駅スタッフに確認するよう案内されています。</p>
+        <p class="daily-summary">今朝、KLIAエクスプレスのケーブルが破壊行為により切断され、<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>市内と<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>国際空港（KLIA）間の路線が影響を受けました。影響区間は<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">プトラジャヤ</a>・サイバージャヤ駅とサラクティンギ駅間です。運営側は6時のサービス更新で、さらなる通知があるまで結合列車サービスを継続すると発表しました。5時からはKLセンタルとKLIAターミナル2（T2）両方から20分間隔で全駅停車の列車が運行され、技術チームが復旧作業に当たっています。9時10分から9時20分にかけて、影響区間間のシャトル列車が開始され、両方向とも15分間隔で運行されています。乗客は最新情報や支援について駅スタッフに確認するよう案内されています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/12/vandalism-causes-cable-cut-on-klia-ekspress-link-combined-service-in-effect/238783">出典: Malay Mail（2026年10月12日）</a>
       </article>
@@ -353,5 +403,7 @@
             </section>
 
   </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
 </body>
 </html>

@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2026年10月12日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       color-scheme: light;
@@ -65,6 +66,20 @@
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
     .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
@@ -80,6 +95,9 @@
       .daily-item { padding: 15px; }
       .air-quality-links { align-items: flex-start; flex-direction: column; }
       .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
     }
   </style>
 </head>
@@ -103,6 +121,37 @@
       <a href="#category-1">暮らしに関わる更新 17件</a><a href="#category-2">社会・経済の動き 0件</a>
     </nav>
 
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>13地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="george-town" data-lat="5.41" data-lon="100.34" data-zoom="11"><strong>ジョージタウン</strong><ul><li><a href="#article-3">Tun Dr Lim Chong Eu高速で10月12日から高架Uターン工事のため右側車線を一時閉鎖</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-4">クアラルンプール・チェラスのJerebu指標が111に低下、ジョホールは7時まで最高値を維持</a></li>
+<li><a href="#article-7">クアラルンプール周辺の大気質が改善、ジョホールは全国最高IPUを維持</a></li>
+<li><a href="#article-10">Fireflyがスランタン路線を中止、hazeと天候懸念で</a></li>
+<li><a href="#article-12">Jerebu：5州の学校とプトラジャヤが月曜から通常授業再開</a></li>
+<li><a href="#article-13">Jerebu：クアラルンプールの空気質が午後3時まで改善、チェラスで最大の低下</a></li>
+<li><a href="#article-17">マレーシア15地域で不健康なAPI、パシル・グダンが最高180を記録</a></li></ul></li>
+<li class="map-place" data-place-key="johor" data-lat="2.0" data-lon="103.5" data-zoom="8"><strong>ジョホール州</strong><ul><li><a href="#article-4">クアラルンプール・チェラスのJerebu指標が111に低下、ジョホールは7時まで最高値を維持</a></li>
+<li><a href="#article-7">クアラルンプール周辺の大気質が改善、ジョホールは全国最高IPUを維持</a></li>
+<li><a href="#article-17">マレーシア15地域で不健康なAPI、パシル・グダンが最高180を記録</a></li></ul></li>
+<li class="map-place" data-place-key="kuching" data-lat="1.55" data-lon="110.35" data-zoom="11"><strong>クチン</strong><ul><li><a href="#article-5">クチンとミリの大気質が改善、APIMSで中程度に</a></li></ul></li>
+<li class="map-place" data-place-key="sarawak" data-lat="3.1" data-lon="113.0" data-zoom="7"><strong>サラワク州</strong><ul><li><a href="#article-5">クチンとミリの大気質が改善、APIMSで中程度に</a></li></ul></li>
+<li class="map-place" data-place-key="klang-valley" data-lat="3.1" data-lon="101.55" data-zoom="9"><strong>クランバレー</strong><ul><li><a href="#article-7">クアラルンプール周辺の大気質が改善、ジョホールは全国最高IPUを維持</a></li></ul></li>
+<li class="map-place" data-place-key="pasir-gudang" data-lat="1.46" data-lon="103.9" data-zoom="11"><strong>パシル・グダン</strong><ul><li><a href="#article-7">クアラルンプール周辺の大気質が改善、ジョホールは全国最高IPUを維持</a></li>
+<li><a href="#article-17">マレーシア15地域で不健康なAPI、パシル・グダンが最高180を記録</a></li></ul></li>
+<li class="map-place" data-place-key="selangor" data-lat="3.1" data-lon="101.5" data-zoom="9"><strong>セランゴール州</strong><ul><li><a href="#article-8">スランゴール州、脆弱層向けに3,568件の求人を提供</a></li></ul></li>
+<li class="map-place" data-place-key="perak" data-lat="4.8" data-lon="101.1" data-zoom="8"><strong>ペラ州</strong><ul><li><a href="#article-9">ペラ州とネゲリ・スンビランの学校、2026年10月12日に再開へ</a></li></ul></li>
+<li class="map-place" data-place-key="putrajaya" data-lat="2.93" data-lon="101.68" data-zoom="11"><strong>プトラジャヤ</strong><ul><li><a href="#article-12">Jerebu：5州の学校とプトラジャヤが月曜から通常授業再開</a></li></ul></li>
+<li class="map-place" data-place-key="johor-bahru" data-lat="1.49" data-lon="103.76" data-zoom="11"><strong>ジョホールバル</strong><ul><li><a href="#article-15">Chery Omoda 5、リアアクスル不具合で型式認定一時停止 新規登録停止</a></li></ul></li>
+<li class="map-place" data-place-key="gua-musang" data-lat="4.88" data-lon="101.96" data-zoom="11"><strong>グア・ムサン</strong><ul><li><a href="#article-16">JKR、沈下穴で閉鎖されたグア・ムサン‑コタバル道路にベイリーブリッジを設置</a></li></ul></li>
+<li class="map-place" data-place-key="kota-bharu" data-lat="6.13" data-lon="102.24" data-zoom="11"><strong>コタバル</strong><ul><li><a href="#article-16">JKR、沈下穴で閉鎖されたグア・ムサン‑コタバル道路にベイリーブリッジを設置</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
             <section class="daily-category" aria-labelledby="category-1">
               <div class="daily-category-head">
                 <h2 id="category-1">暮らしに関わる更新</h2>
@@ -110,7 +159,7 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -122,7 +171,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-2">
         <div class="daily-item-head">
           <span class="item-number">2</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -134,43 +183,43 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-3">
         <div class="daily-item-head">
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>Tun Dr Lim Chong Eu高速で10月12日から高架Uターン工事のため右側車線を一時閉鎖</h3>
-        <p class="daily-summary">Tun Dr Lim Chong Eu高速（ジョージタウン方面・バヤンレパス方面）の両方向の右側最外車線が、2026年10月12日から2027年2月28日まで一時的に閉鎖されます。これは高架Uターンの次段階工事のための措置で、IJM Land Berhadが安全確保のために車線閉鎖と迂回路を設定すると発表しました。工事は2026年9月初めに第一段階が完了し、完成後はAir Itamバイパスと連携して道路接続性と交通流の改善が期待されています。ドライバーは事前にルートを計画し、案内標識に従い、該当区間付近では十分に注意して走行してください。</p>
+        <p class="daily-summary">Tun Dr Lim Chong Eu高速（<a class="place-link" data-place-key="george-town" href="https://www.openstreetmap.org/?mlat=5.41&amp;mlon=100.34#map=11/5.41/100.34" title="ジョージタウンの概略位置を地図で見る">ジョージタウン</a>方面・バヤンレパス方面）の両方向の右側最外車線が、2026年10月12日から2027年2月28日まで一時的に閉鎖されます。これは高架Uターンの次段階工事のための措置で、IJM Land Berhadが安全確保のために車線閉鎖と迂回路を設定すると発表しました。工事は2026年9月初めに第一段階が完了し、完成後はAir Itamバイパスと連携して道路接続性と交通流の改善が期待されています。ドライバーは事前にルートを計画し、案内標識に従い、該当区間付近では十分に注意して走行してください。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/11/temporary-lane-closures-diversions-on-tun-dr-lim-chong-eu-expressway-starting-oct-12-for-elevated-u-turn-works/238724">出典: Malay Mail（2026年10月11日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-4">
         <div class="daily-item-head">
           <span class="item-number">4</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>クアラルンプール・チェラスのJerebu指標が111に低下、ジョホールは7時まで最高値を維持</h3>
-        <p class="daily-summary">マレーシア大気汚染指数管理システム（APIMS）のデータによると、クアラルンプール・チェラス測定所のJerebu指標は午後5時の137から26ポイント下がり、午後7時時点で111となり「中程度」カテゴリーに近づきました。一方、ジョホール州は午後7時まで国内で最も高い指標を記録し続けています。</p>
+        <h3><a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>・チェラスのJerebu指標が111に低下、ジョホールは7時まで最高値を維持</h3>
+        <p class="daily-summary">マレーシア大気汚染指数管理システム（APIMS）のデータによると、<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>・チェラス測定所のJerebu指標は午後5時の137から26ポイント下がり、午後7時時点で111となり「中程度」カテゴリーに近づきました。一方、<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>は午後7時まで国内で最も高い指標を記録し続けています。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-di-lembah-klang-makin-reda-johor-kekal-catat-bacaan-tertinggi-setakat-7-malam">出典: Astro Awani（2026年10月11日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-5">
         <div class="daily-item-head">
           <span class="item-number">5</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>クチンとミリの大気質が改善、APIMSで中程度に</h3>
-        <p class="daily-summary">環境省（DOE）のマレーシア大気汚染指標（APIMS）ポータルによると、クチンとミリの大気質は改善し、いずれも「中程度」のカテゴリーに戻った。クチンでは本日02:00に不健康レベル（111）を記録した後、03:00に99に低下し、昨日15:00の153から本日15:00には85へと減少した。ミリでは本日正午に不健康レベル（104）を記録し、13:00に99へ下がった。昨日15:00から本日11:00までは中程度（101）で推移し、正午に104に上昇した。2026年10月12日07:11時点で、サラワク州内の全測定所は中程度のAPI値を示している。</p>
+        <h3><a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>とミリの大気質が改善、APIMSで中程度に</h3>
+        <p class="daily-summary">環境省（DOE）のマレーシア大気汚染指標（APIMS）ポータルによると、<a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>とミリの大気質は改善し、いずれも「中程度」のカテゴリーに戻った。<a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>では本日02:00に不健康レベル（111）を記録した後、03:00に99に低下し、昨日15:00の153から本日15:00には85へと減少した。ミリでは本日正午に不健康レベル（104）を記録し、13:00に99へ下がった。昨日15:00から本日11:00までは中程度（101）で推移し、正午に104に上昇した。2026年10月12日07:11時点で、<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>内の全測定所は中程度のAPI値を示している。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/11/haze-air-quality-in-kuching-miri-improves-to-moderate-levels-says-doe/238709">出典: Malay Mail（2026年10月11日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-6">
         <div class="daily-item-head">
           <span class="item-number">6</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -182,55 +231,55 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-7">
         <div class="daily-item-head">
           <span class="item-number">7</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>クアラルンプール周辺の大気質が改善、ジョホールは全国最高IPUを維持</h3>
-        <p class="daily-summary">マレーシア環境省が運営するAPIMS（大気汚染指数管理システム）による最新データによれば、クラン谷（Klang Valley）の大気質が改善傾向にあることが確認されました。一方、ジョホール州パシル・グダンはIPU（大気汚染指数）177という国内最高値を記録し、引き続き最高水準を保持しています。</p>
+        <h3><a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>周辺の大気質が改善、ジョホールは全国最高IPUを維持</h3>
+        <p class="daily-summary">マレーシア環境省が運営するAPIMS（大気汚染指数管理システム）による最新データによれば、クラン谷（<a class="place-link" data-place-key="klang-valley" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.55#map=9/3.1/101.55" title="クランバレーの概略位置を地図で見る">Klang Valley</a>）の大気質が改善傾向にあることが確認されました。一方、<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a><a class="place-link" data-place-key="pasir-gudang" href="https://www.openstreetmap.org/?mlat=1.46&amp;mlon=103.9#map=11/1.46/103.9" title="パシル・グダンの概略位置を地図で見る">パシル・グダン</a>はIPU（大気汚染指数）177という国内最高値を記録し、引き続き最高水準を保持しています。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-kualiti-udara-lembah-klang-bertambah-baik-johor-kekal-catat-ipu-tertinggi">出典: Astro Awani（2026年10月11日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-8">
         <div class="daily-item-head">
           <span class="item-number">8</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>スランゴール州、脆弱層向けに3,568件の求人を提供</h3>
-        <p class="daily-summary">スランゴール州は「Selangor JobCare Istimewa Career Carnival 2026」を開催し、脆弱層向けに3,568件の求人を提供すると発表しました。州人材・貧困根絶委員会委員長V.パッパライド氏は、対象はオラン・アスリ、退役軍人、障害者（OKU）および高齢者で、それぞれ1,603件、1,333件、472件、160件の枠が設けられていると説明しました。全体の80％にあたる2,854件はスランゴール州内で、残りは他州での配置となります。今回のカーニバルには40社の雇用主が参加し、求職者が資格や経験に合った職を見つけやすくなることを狙っています。開会式はシェアラム市議会コンベンションセンターで、州首相アミルディン・シャリ首相が式典を執り行いました。</p>
+        <p class="daily-summary">スランゴール州は「<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">Selangor</a> JobCare Istimewa Career Carnival 2026」を開催し、脆弱層向けに3,568件の求人を提供すると発表しました。州人材・貧困根絶委員会委員長V.パッパライド氏は、対象はオラン・アスリ、退役軍人、障害者（OKU）および高齢者で、それぞれ1,603件、1,333件、472件、160件の枠が設けられていると説明しました。全体の80％にあたる2,854件はスランゴール州内で、残りは他州での配置となります。今回のカーニバルには40社の雇用主が参加し、求職者が資格や経験に合った職を見つけやすくなることを狙っています。開会式はシェアラム市議会コンベンションセンターで、州首相アミルディン・シャリ首相が式典を執り行いました。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/11/selangor-career-carnival-offers-3568-jobs-for-vulnerable-groups/238698">出典: Malay Mail（2026年10月11日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-9">
         <div class="daily-item-head">
           <span class="item-number">9</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>ペラ州とネゲリ・スンビランの学校、2026年10月12日に再開へ</h3>
-        <p class="daily-summary">ペラ州のキンタウタラ、キンタセルタン、クアラカンサールの学校と、ネゲリ・スンビラン州の全教育機関は、空気質とAPIが150未満と確認されたため、2026年10月12日（月）に通常通り授業を再開します。ペラ州教育委員会委員長のダトゥク・カイルディン・アブ・ハニパ氏は、過去数日間の悪化した大気状況が改善したと述べ、天候が引き続き好転することを期待しています。また、同氏は閉鎖情報のデマ拡散に注意を呼びかけ、公式発表は州教育局からのみ行われると付け加えました。</p>
+        <h3><a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>とネゲリ・スンビランの学校、2026年10月12日に再開へ</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>のキンタウタラ、キンタセルタン、クアラカンサールの学校と、ネゲリ・スンビラン州の全教育機関は、空気質とAPIが150未満と確認されたため、2026年10月12日（月）に通常通り授業を再開します。<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>教育委員会委員長のダトゥク・カイルディン・アブ・ハニパ氏は、過去数日間の悪化した大気状況が改善したと述べ、天候が引き続き好転することを期待しています。また、同氏は閉鎖情報のデマ拡散に注意を呼びかけ、公式発表は州教育局からのみ行われると付け加えました。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/11/haze-schools-in-perak-negeri-sembilan-to-reopen-tomorrow/238695">出典: Malay Mail（2026年10月11日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-10">
         <div class="daily-item-head">
           <span class="item-number">10</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>Fireflyがスランタン路線を中止、hazeと天候懸念で</h3>
-        <p class="daily-summary">Fireflyは、hazeと天候の影響を受け、スルタン・アブドゥル・アジズ・シャ空港（スバン）とシンガポールのセレタ空港間の全定期便を2026年10月10日から12日まで中止すると発表しました。対象となるのは1日6便、計12便（FY3122～FY3133）です。航空会社は、影響を受けた乗客に対し、マレーシア航空のクアラルンプール‑シンガポール路線への振替便を座席空き状況に応じて案内し、振替を希望しない場合は全額返金し、30営業日以内に元の支払方法へ返金するとしています。</p>
+        <p class="daily-summary">Fireflyは、hazeと天候の影響を受け、スルタン・アブドゥル・アジズ・シャ空港（スバン）とシンガポールのセレタ空港間の全定期便を2026年10月10日から12日まで中止すると発表しました。対象となるのは1日6便、計12便（FY3122～FY3133）です。航空会社は、影響を受けた乗客に対し、マレーシア航空の<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>‑シンガポール路線への振替便を座席空き状況に応じて案内し、振替を希望しない場合は全額返金し、30営業日以内に元の支払方法へ返金するとしています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/money/2026/10/11/firefly-scraps-subang-seletar-flights-amid-haze-weather-concerns/238694">出典: Malay Mail（2026年10月11日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-11">
         <div class="daily-item-head">
           <span class="item-number">11</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -242,31 +291,31 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-12">
         <div class="daily-item-head">
           <span class="item-number">12</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>Jerebu：5州の学校とプトラジャヤが月曜から通常授業再開</h3>
-        <p class="daily-summary">Jerebuにより影響を受けているマレーシアの5州の学校とプトラジャヤの教育機関は、2026年10月12日（月）から通常の対面授業を再開すると発表されました。クアラルンプールについては、連邦首都教育局（JPWPKL）が、ペラバン・ペンダディディアン・センツル（PPD Sentul）とケラマット（PPD Keramat）管轄の学校が月曜から開校し、対面での指導が再開されることを明らかにしています。</p>
+        <h3>Jerebu：5州の学校と<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">プトラジャヤ</a>が月曜から通常授業再開</h3>
+        <p class="daily-summary">Jerebuにより影響を受けているマレーシアの5州の学校と<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">プトラジャヤ</a>の教育機関は、2026年10月12日（月）から通常の対面授業を再開すると発表されました。<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>については、連邦首都教育局（JPWPKL）が、ペラバン・ペンダディディアン・センツル（PPD Sentul）とケラマット（PPD Keramat）管轄の学校が月曜から開校し、対面での指導が再開されることを明らかにしています。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-sekolah-di-lima-negeri-putrajaya-beroperasi-semula-isnin">出典: Astro Awani（2026年10月11日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-13">
         <div class="daily-item-head">
           <span class="item-number">13</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>Jerebu：クアラルンプールの空気質が午後3時まで改善、チェラスで最大の低下</h3>
-        <p class="daily-summary">クアラルンプールのチェラス測定所では、IPU（大気汚染指数）の数値が昼前から13ポイント下がり、139となり、当日最大の低下を記録した。バトゥ・ムダ測定所は84のままで「中程度」のカテゴリーを維持した。</p>
+        <h3>Jerebu：<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>の空気質が午後3時まで改善、チェラスで最大の低下</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>のチェラス測定所では、IPU（大気汚染指数）の数値が昼前から13ポイント下がり、139となり、当日最大の低下を記録した。バトゥ・ムダ測定所は84のままで「中程度」のカテゴリーを維持した。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-kualiti-udara-lembah-klang-bertambah-baik-setakat-3-petang-cheras-catat-penurunan-ketara">出典: Astro Awani（2026年10月11日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-14">
         <div class="daily-item-head">
           <span class="item-number">14</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -278,37 +327,37 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-15">
         <div class="daily-item-head">
           <span class="item-number">15</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>Chery Omoda 5、リアアクスル不具合で型式認定一時停止 新規登録停止</h3>
-        <p class="daily-summary">ソーシャルメディアに掲載されたジョホールバルでの写真では、Chery Omoda 5のリアアクスルが完全に外れた様子が確認されています。この問題を受け、道路交通局（JPJ）は同車種の型式認定（VTA）を一時的に停止し、現在新規登録を受け付けていません。</p>
+        <p class="daily-summary">ソーシャルメディアに掲載された<a class="place-link" data-place-key="johor-bahru" href="https://www.openstreetmap.org/?mlat=1.49&amp;mlon=103.76#map=11/1.49/103.76" title="ジョホールバルの概略位置を地図で見る">ジョホールバル</a>での写真では、Chery Omoda 5のリアアクスルが完全に外れた様子が確認されています。この問題を受け、道路交通局（JPJ）は同車種の型式認定（VTA）を一時的に停止し、現在新規登録を受け付けていません。</p>
 
         <a class="source-link" href="https://paultan.org/2026/10/11/jpj-suspends-malaysian-vta-chery-omoda-5-all-new-registrations-halted-pending-safety-probe/">出典: Paul Tan（2026年10月11日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-16">
         <div class="daily-item-head">
           <span class="item-number">16</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>JKR、沈下穴で閉鎖されたグア・ムサン‑コタバル道路にベイリーブリッジを設置</h3>
-        <p class="daily-summary">公共事業局（JKR）は、ケセダー民族植物園近くで発生した沈下穴により全閉鎖となったグア・ムサン‑コタバル道路（FT08）の通行復旧のため、ベイリーブリッジを設置することを発表した。設置作業は10月14日に開始し、約1週間で完了する見込みだが、現場の地盤安定性と安全状況により期間は変動する可能性がある。JKRは作業中も現場の状況を監視し、道路利用者の安全確保を最優先するとともに、利用者に対し代替ルートとしてFT2747（ジャラン・プライ‑バンダール・バルウ・グア・ムサン）を利用するよう呼びかけている。また、現場に設置された安全標識に従うよう注意を促している。</p>
+        <h3>JKR、沈下穴で閉鎖された<a class="place-link" data-place-key="gua-musang" href="https://www.openstreetmap.org/?mlat=4.88&amp;mlon=101.96#map=11/4.88/101.96" title="グア・ムサンの概略位置を地図で見る">グア・ムサン</a>‑<a class="place-link" data-place-key="kota-bharu" href="https://www.openstreetmap.org/?mlat=6.13&amp;mlon=102.24#map=11/6.13/102.24" title="コタバルの概略位置を地図で見る">コタバル</a>道路にベイリーブリッジを設置</h3>
+        <p class="daily-summary">公共事業局（JKR）は、ケセダー民族植物園近くで発生した沈下穴により全閉鎖となった<a class="place-link" data-place-key="gua-musang" href="https://www.openstreetmap.org/?mlat=4.88&amp;mlon=101.96#map=11/4.88/101.96" title="グア・ムサンの概略位置を地図で見る">グア・ムサン</a>‑<a class="place-link" data-place-key="kota-bharu" href="https://www.openstreetmap.org/?mlat=6.13&amp;mlon=102.24#map=11/6.13/102.24" title="コタバルの概略位置を地図で見る">コタバル</a>道路（FT08）の通行復旧のため、ベイリーブリッジを設置することを発表した。設置作業は10月14日に開始し、約1週間で完了する見込みだが、現場の地盤安定性と安全状況により期間は変動する可能性がある。JKRは作業中も現場の状況を監視し、道路利用者の安全確保を最優先するとともに、利用者に対し代替ルートとしてFT2747（ジャラン・プライ‑バンダール・バルウ・<a class="place-link" data-place-key="gua-musang" href="https://www.openstreetmap.org/?mlat=4.88&amp;mlon=101.96#map=11/4.88/101.96" title="グア・ムサンの概略位置を地図で見る">グア・ムサン</a>）を利用するよう呼びかけている。また、現場に設置された安全標識に従うよう注意を促している。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/11/public-works-dept-to-install-bailey-bridge-after-sinkhole-closes-gua-musang-kota-bharu-road/238647">出典: Malay Mail（2026年10月11日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-17">
         <div class="daily-item-head">
           <span class="item-number">17</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>マレーシア15地域で不健康なAPI、パシル・グダンが最高180を記録</h3>
-        <p class="daily-summary">マレーシア国内で2026年10月11日午前9時時点、15地域が不健康な大気汚染指数（API）を記録した。ジョホール州パシル・グダンが180で最高値を示し、同州のラルキン（178）、コタ・ティンギ（166）、タンカック（164）、セガマット（162）、ペンガラン（160）、クルアン（159）、バトゥ・パハット（151）も不健康レベルだった。クアンタンのバロック・バルは159、ロムピンは53、クアラルンプールのチェラスは157と続く。テレンガヌ州のケマンとクアラ・テルエンガヌはそれぞれ156、パカは133、メラカのアル・ラ・ガジャは103が不健康と報告された。なお、50地域は中程度（API 51〜100）、3地域は良好（API 0〜50）とされた。</p>
+        <h3>マレーシア15地域で不健康なAPI、<a class="place-link" data-place-key="pasir-gudang" href="https://www.openstreetmap.org/?mlat=1.46&amp;mlon=103.9#map=11/1.46/103.9" title="パシル・グダンの概略位置を地図で見る">パシル・グダン</a>が最高180を記録</h3>
+        <p class="daily-summary">マレーシア国内で2026年10月11日午前9時時点、15地域が不健康な大気汚染指数（API）を記録した。<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a><a class="place-link" data-place-key="pasir-gudang" href="https://www.openstreetmap.org/?mlat=1.46&amp;mlon=103.9#map=11/1.46/103.9" title="パシル・グダンの概略位置を地図で見る">パシル・グダン</a>が180で最高値を示し、同州のラルキン（178）、コタ・ティンギ（166）、タンカック（164）、セガマット（162）、ペンガラン（160）、クルアン（159）、バトゥ・パハット（151）も不健康レベルだった。クアンタンのバロック・バルは159、ロムピンは53、<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>のチェラスは157と続く。テレンガヌ州のケマンとクアラ・テルエンガヌはそれぞれ156、パカは133、メラカのアル・ラ・ガジャは103が不健康と報告された。なお、50地域は中程度（API 51〜100）、3地域は良好（API 0〜50）とされた。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/11/haze-15-areas-in-malaysia-record-unhealthy-air-quality-pasir-gudang-records-highest-api-reading-at-180/238639">出典: Malay Mail（2026年10月11日）</a>
       </article>
@@ -353,5 +402,7 @@
             </section>
 
   </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
 </body>
 </html>

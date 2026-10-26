@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2026年10月11日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       color-scheme: light;
@@ -65,6 +66,20 @@
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
     .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
@@ -80,6 +95,9 @@
       .daily-item { padding: 15px; }
       .air-quality-links { align-items: flex-start; flex-direction: column; }
       .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
     }
   </style>
 </head>
@@ -103,6 +121,34 @@
       <a href="#category-1">暮らしに関わる更新 13件</a><a href="#category-2">社会・経済の動き 4件</a>
     </nav>
 
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>13地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="kedah" data-lat="6.1" data-lon="100.5" data-zoom="8"><strong>ケダ州</strong><ul><li><a href="#article-3">ケダ州・クランタン州・トレンガヌ州の学校、明日も通常通り運営へ</a></li>
+<li><a href="#article-6">ケダ州の全学校、API100未満で明日通常通り開校</a></li>
+<li><a href="#article-9">全州で午後6時まで雷雨警報、激しい雨と強風に注意</a></li></ul></li>
+<li class="map-place" data-place-key="terengganu" data-lat="5.0" data-lon="103.0" data-zoom="8"><strong>トレンガヌ州</strong><ul><li><a href="#article-3">ケダ州・クランタン州・トレンガヌ州の学校、明日も通常通り運営へ</a></li></ul></li>
+<li class="map-place" data-place-key="pasir-gudang" data-lat="1.46" data-lon="103.9" data-zoom="11"><strong>パシル・グダン</strong><ul><li><a href="#article-5">Jerebu：パシル・グダンが最高IPU、午後7時時点で28局が不健康</a></li></ul></li>
+<li class="map-place" data-place-key="kota-bharu" data-lat="6.13" data-lon="102.24" data-zoom="11"><strong>コタバル</strong><ul><li><a href="#article-8">8メートルの陥没でグアムサン‑コタバル道路が通行止めに</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-9">全州で午後6時まで雷雨警報、激しい雨と強風に注意</a></li></ul></li>
+<li class="map-place" data-place-key="penang" data-lat="5.4" data-lon="100.3" data-zoom="9"><strong>ペナン州</strong><ul><li><a href="#article-9">全州で午後6時まで雷雨警報、激しい雨と強風に注意</a></li>
+<li><a href="#article-17">ペナン州、NICE実現で高齢化社会対策を強化へ―チョウ氏</a></li></ul></li>
+<li class="map-place" data-place-key="perak" data-lat="4.8" data-lon="101.1" data-zoom="8"><strong>ペラ州</strong><ul><li><a href="#article-9">全州で午後6時まで雷雨警報、激しい雨と強風に注意</a></li></ul></li>
+<li class="map-place" data-place-key="pahang" data-lat="3.8" data-lon="103.2" data-zoom="8"><strong>パハン州</strong><ul><li><a href="#article-9">全州で午後6時まで雷雨警報、激しい雨と強風に注意</a></li></ul></li>
+<li class="map-place" data-place-key="johor" data-lat="2.0" data-lon="103.5" data-zoom="8"><strong>ジョホール州</strong><ul><li><a href="#article-9">全州で午後6時まで雷雨警報、激しい雨と強風に注意</a></li></ul></li>
+<li class="map-place" data-place-key="johor-bahru" data-lat="1.49" data-lon="103.76" data-zoom="11"><strong>ジョホールバル</strong><ul><li><a href="#article-9">全州で午後6時まで雷雨警報、激しい雨と強風に注意</a></li></ul></li>
+<li class="map-place" data-place-key="sarawak" data-lat="3.1" data-lon="113.0" data-zoom="7"><strong>サラワク州</strong><ul><li><a href="#article-9">全州で午後6時まで雷雨警報、激しい雨と強風に注意</a></li>
+<li><a href="#article-15">JENDELA 2第2フェーズ、サバ州・サラワクの奥地2000拠点でインターネット拡大</a></li></ul></li>
+<li class="map-place" data-place-key="sabah" data-lat="5.6" data-lon="116.5" data-zoom="7"><strong>サバ州</strong><ul><li><a href="#article-9">全州で午後6時まで雷雨警報、激しい雨と強風に注意</a></li>
+<li><a href="#article-15">JENDELA 2第2フェーズ、サバ州・サラワクの奥地2000拠点でインターネット拡大</a></li></ul></li>
+<li class="map-place" data-place-key="tawau" data-lat="4.25" data-lon="117.89" data-zoom="11"><strong>タワウ</strong><ul><li><a href="#article-9">全州で午後6時まで雷雨警報、激しい雨と強風に注意</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
             <section class="daily-category" aria-labelledby="category-1">
               <div class="daily-category-head">
                 <h2 id="category-1">暮らしに関わる更新</h2>
@@ -110,7 +156,7 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -122,7 +168,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-2">
         <div class="daily-item-head">
           <span class="item-number">2</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -134,19 +180,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-3">
         <div class="daily-item-head">
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>ケダ州・クランタン州・トレンガヌ州の学校、明日も通常通り運営へ</h3>
-        <p class="daily-summary">ケダ州、クランタン州、トレンガヌ州の学校は、2026年10月11日に通常通り授業を行うことが発表されました。これは、同3州の大気汚染指数（IPU）が依然として管理可能なレベルにとどまっているためです。</p>
+        <h3><a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">ケダ州</a>・クランタン州・<a class="place-link" data-place-key="terengganu" href="https://www.openstreetmap.org/?mlat=5.0&amp;mlon=103.0#map=8/5.0/103.0" title="トレンガヌ州の概略位置を地図で見る">トレンガヌ州</a>の学校、明日も通常通り運営へ</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">ケダ州</a>、クランタン州、<a class="place-link" data-place-key="terengganu" href="https://www.openstreetmap.org/?mlat=5.0&amp;mlon=103.0#map=8/5.0/103.0" title="トレンガヌ州の概略位置を地図で見る">トレンガヌ州</a>の学校は、2026年10月11日に通常通り授業を行うことが発表されました。これは、同3州の大気汚染指数（IPU）が依然として管理可能なレベルにとどまっているためです。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-sekolah-di-kedah-kelantan-terengganu-beroperasi-seperti-biasa-esok">出典: Astro Awani（2026年10月10日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-4">
         <div class="daily-item-head">
           <span class="item-number">4</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -158,31 +204,31 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-5">
         <div class="daily-item-head">
           <span class="item-number">5</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>Jerebu：パシル・グダンが最高IPU、午後7時時点で28局が不健康</h3>
-        <p class="daily-summary">マレーシア全土の68局の大気質モニタリングステーションのうち、パシル・グダンが最も高いIPUを記録しました。2026年10月10日午後7時時点で、28局が「不健康」レベル（IPU101〜200）にあり、39局が「中程度」レベル（IPU51〜100）、残り1局が「良好」レベル（IPU0〜50）となっています。</p>
+        <h3>Jerebu：<a class="place-link" data-place-key="pasir-gudang" href="https://www.openstreetmap.org/?mlat=1.46&amp;mlon=103.9#map=11/1.46/103.9" title="パシル・グダンの概略位置を地図で見る">パシル・グダン</a>が最高IPU、午後7時時点で28局が不健康</h3>
+        <p class="daily-summary">マレーシア全土の68局の大気質モニタリングステーションのうち、<a class="place-link" data-place-key="pasir-gudang" href="https://www.openstreetmap.org/?mlat=1.46&amp;mlon=103.9#map=11/1.46/103.9" title="パシル・グダンの概略位置を地図で見る">パシル・グダン</a>が最も高いIPUを記録しました。2026年10月10日午後7時時点で、28局が「不健康」レベル（IPU101〜200）にあり、39局が「中程度」レベル（IPU51〜100）、残り1局が「良好」レベル（IPU0〜50）となっています。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-pasir-gudang-catat-ipu-tertinggi-28-stesen-masih-tidak-sihat-setakat-7-malam">出典: Astro Awani（2026年10月10日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-6">
         <div class="daily-item-head">
           <span class="item-number">6</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>ケダ州の全学校、API100未満で明日通常通り開校</h3>
-        <p class="daily-summary">ケダ州教育省は、2026年10月11日に全ての教育機関が通常通り開校すると発表しました。午前2時時点で州内全監視地点の大気汚染指標（API）は100未満であり、健康リスクは低いと判断されたためです。ただし、教育省や関係当局からの追加指示がある場合は変更される可能性があります。声明では、スルタン・イブラヒム国王の関心に感謝しつつ、校長や教職員に最新のAPI情報を監視し、安全確保に努めるよう呼びかけています。</p>
+        <h3><a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">ケダ州</a>の全学校、API100未満で明日通常通り開校</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">ケダ州</a>教育省は、2026年10月11日に全ての教育機関が通常通り開校すると発表しました。午前2時時点で州内全監視地点の大気汚染指標（API）は100未満であり、健康リスクは低いと判断されたためです。ただし、教育省や関係当局からの追加指示がある場合は変更される可能性があります。声明では、スルタン・イブラヒム国王の関心に感謝しつつ、校長や教職員に最新のAPI情報を監視し、安全確保に努めるよう呼びかけています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/10/air-quality-acceptable-for-now-kedah-schools-to-open-as-usual-tomorrow/238595">出典: Malay Mail（2026年10月10日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-7">
         <div class="daily-item-head">
           <span class="item-number">7</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -194,31 +240,31 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-8">
         <div class="daily-item-head">
           <span class="item-number">8</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>8メートルの陥没でグアムサン‑コタバル道路が通行止めに</h3>
-        <p class="daily-summary">グアムサン‑コタバル道路（連邦道路FT08）の約8メートル深い陥没が確認され、本日9時05分頃から約9メートル区間（区間205.556～205.564）が全車両通行止めとなりました。陥没はセントラル・スパイン・ロード（LTU）プロジェクトのパッケージ3B・3Cに関わる箇所です。グアムサン公共事業局（JKR）とRoadcare（M）Sdn Bhdは、安全確保のための措置とし、利用者に代替ルートとしてFT2747（ジャラン・プライ経由）を通りバンダール・バハル・グアムサンへ向かうよう呼びかけています。グアムサン警察署長のシック・チュン・フー警部も事態を確認し、当局の指示に従うよう注意を促しました。</p>
+        <h3>8メートルの陥没でグアムサン‑<a class="place-link" data-place-key="kota-bharu" href="https://www.openstreetmap.org/?mlat=6.13&amp;mlon=102.24#map=11/6.13/102.24" title="コタバルの概略位置を地図で見る">コタバル</a>道路が通行止めに</h3>
+        <p class="daily-summary">グアムサン‑<a class="place-link" data-place-key="kota-bharu" href="https://www.openstreetmap.org/?mlat=6.13&amp;mlon=102.24#map=11/6.13/102.24" title="コタバルの概略位置を地図で見る">コタバル</a>道路（連邦道路FT08）の約8メートル深い陥没が確認され、本日9時05分頃から約9メートル区間（区間205.556～205.564）が全車両通行止めとなりました。陥没はセントラル・スパイン・ロード（LTU）プロジェクトのパッケージ3B・3Cに関わる箇所です。グアムサン公共事業局（JKR）とRoadcare（M）Sdn Bhdは、安全確保のための措置とし、利用者に代替ルートとしてFT2747（ジャラン・プライ経由）を通りバンダール・バハル・グアムサンへ向かうよう呼びかけています。グアムサン警察署長のシック・チュン・フー警部も事態を確認し、当局の指示に従うよう注意を促しました。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/10/eight-metre-deep-sinkhole-forces-closure-of-gua-musang-kota-bharu-road/238576">出典: Malay Mail（2026年10月10日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-9">
         <div class="daily-item-head">
           <span class="item-number">9</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>全州で午後6時まで雷雨警報、激しい雨と強風に注意</h3>
-        <p class="daily-summary">マレーシア気象局（MetMalaysia）は、2026年10月10日午後6時まで全州で雷雨警報を発令し、激しい雨と強風が予想されると発表しました。警報はペリス、クアラルンプールを含む計12州に及び、ケダ州のランカウイ、クバン・パス、パダン・テラプ、シック、バリン、ペナン州のティムール・ラウットとバラット・ダヤ、ペラ州のラルート・マタン、ケリアン、セラマ、マンジュン、バガン・ダトゥク、ペラ・テンガ、ヒリル・ペラ、フル・ペラ、クランタン州のクアラ・クライとジェリ、テレンガヌ全域、パハン州のロムピンとジェランツ、スランゴール州のサバク・ベルナム、フル・スランゴール、ゴンバック、クアラ・スランゴール、クラン、ペタリン、フル・ランガット、ネグリ・スンビランとメラカ、ジョホール州のクライとジョホールバル、サラワク州のルボック・アンツ（スリ・アマン地区）およびサバ州のタワウ、センポルナ、クナック、ラハド・ダトゥ、サンダカン（キナバタンガン、サンダカン、テリプド、ラブク、スグット、パイタン）、西海岸（コタ・ベルド、ラナウ）とクダットにも警報が適用されています。</p>
+        <p class="daily-summary">マレーシア気象局（MetMalaysia）は、2026年10月10日午後6時まで全州で雷雨警報を発令し、激しい雨と強風が予想されると発表しました。警報はペリス、<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>を含む計12州に及び、<a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">ケダ州</a>のランカウイ、クバン・パス、パダン・テラプ、シック、バリン、<a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>のティムール・ラウットとバラット・ダヤ、<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>のラルート・マタン、ケリアン、セラマ、マンジュン、バガン・ダトゥク、ペラ・テンガ、ヒリル・ペラ、フル・ペラ、クランタン州のクアラ・クライとジェリ、テレンガヌ全域、<a class="place-link" data-place-key="pahang" href="https://www.openstreetmap.org/?mlat=3.8&amp;mlon=103.2#map=8/3.8/103.2" title="パハン州の概略位置を地図で見る">パハン州</a>のロムピンとジェランツ、スランゴール州のサバク・ベルナム、フル・スランゴール、ゴンバック、クアラ・スランゴール、クラン、ペタリン、フル・ランガット、ネグリ・スンビランとメラカ、<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>のクライと<a class="place-link" data-place-key="johor-bahru" href="https://www.openstreetmap.org/?mlat=1.49&amp;mlon=103.76#map=11/1.49/103.76" title="ジョホールバルの概略位置を地図で見る">ジョホールバル</a>、<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>のルボック・アンツ（スリ・アマン地区）および<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>の<a class="place-link" data-place-key="tawau" href="https://www.openstreetmap.org/?mlat=4.25&amp;mlon=117.89#map=11/4.25/117.89" title="タワウの概略位置を地図で見る">タワウ</a>、センポルナ、クナック、ラハド・ダトゥ、サンダカン（キナバタンガン、サンダカン、テリプド、ラブク、スグット、パイタン）、西海岸（コタ・ベルド、ラナウ）とクダットにも警報が適用されています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/10/brace-for-bad-weather-thunderstorms-expected-in-all-malaysian-states-until-6pm/238571">出典: Malay Mail（2026年10月10日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-10">
         <div class="daily-item-head">
           <span class="item-number">10</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -230,7 +276,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-11">
         <div class="daily-item-head">
           <span class="item-number">11</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -242,7 +288,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-12">
         <div class="daily-item-head">
           <span class="item-number">12</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -254,7 +300,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-13">
         <div class="daily-item-head">
           <span class="item-number">13</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -276,7 +322,7 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-14">
         <div class="daily-item-head">
           <span class="item-number">14</span>
           <p class="item-category">社会・経済の動き</p>
@@ -288,19 +334,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-15">
         <div class="daily-item-head">
           <span class="item-number">15</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>JENDELA 2第2フェーズ、サバ州・サラワクの奥地2000拠点でインターネット拡大</h3>
-        <p class="daily-summary">JENDELA 2の第2フェーズは、サバ州とサラワク州の奥地に焦点を当て、約2,000カ所で最新技術を活用した様々なソリューションを導入し、地域に適した形でインターネット接続範囲を拡大する計画です。</p>
+        <h3>JENDELA 2第2フェーズ、<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>・サラワクの奥地2000拠点でインターネット拡大</h3>
+        <p class="daily-summary">JENDELA 2の第2フェーズは、<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>と<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>の奥地に焦点を当て、約2,000カ所で最新技術を活用した様々なソリューションを導入し、地域に適した形でインターネット接続範囲を拡大する計画です。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/pedalaman-sabah-sarawak-tumpuan-fasa-kedua-jendela-2-fahmi">出典: Astro Awani（2026年10月11日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-16">
         <div class="daily-item-head">
           <span class="item-number">16</span>
           <p class="item-category">社会・経済の動き</p>
@@ -312,13 +358,13 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-17">
         <div class="daily-item-head">
           <span class="item-number">17</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>ペナン州、NICE実現で高齢化社会対策を強化へ―チョウ氏</h3>
-        <p class="daily-summary">ペナン州は、統合介護センター（NICE）の建設を進め、増加する高齢者人口への備えを強化する方針を示しました。この取り組みは、州政府のチョウ氏が述べたもので、今後の高齢化社会への対応に重要な役割を果たすとされています。</p>
+        <h3><a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>、NICE実現で高齢化社会対策を強化へ―チョウ氏</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>は、統合介護センター（NICE）の建設を進め、増加する高齢者人口への備えを強化する方針を示しました。この取り組みは、州政府のチョウ氏が述べたもので、今後の高齢化社会への対応に重要な役割を果たすとされています。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/pulau-pinang-sedia-realisasikan-nice-perkukuh-persiapan-hadapi-masyarakat-menua-chow">出典: Astro Awani（2026年10月11日）</a>
       </article>
@@ -352,5 +398,7 @@
             </section>
 
   </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
 </body>
 </html>

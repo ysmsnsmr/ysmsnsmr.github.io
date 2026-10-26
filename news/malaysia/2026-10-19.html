@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2026年10月19日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       color-scheme: light;
@@ -65,6 +66,20 @@
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
     .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
@@ -80,6 +95,9 @@
       .daily-item { padding: 15px; }
       .air-quality-links { align-items: flex-start; flex-direction: column; }
       .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
     }
   </style>
 </head>
@@ -103,6 +121,25 @@
       <a href="#category-1">暮らしに関わる更新 12件</a><a href="#category-2">社会・経済の動き 0件</a>
     </nav>
 
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>8地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-4">Jerebuで胸痛訴えるクアラルンプールの低所得者、マスク購入が困難に</a></li></ul></li>
+<li class="map-place" data-place-key="pasir-gudang" data-lat="1.46" data-lon="103.9" data-zoom="11"><strong>パシル・グダン</strong><ul><li><a href="#article-7">Jerebu：全国26地区で午後までに不健康なIPUを記録、パシル・グダンが最高182</a></li></ul></li>
+<li class="map-place" data-place-key="johor" data-lat="2.0" data-lon="103.5" data-zoom="8"><strong>ジョホール州</strong><ul><li><a href="#article-7">Jerebu：全国26地区で午後までに不健康なIPUを記録、パシル・グダンが最高182</a></li></ul></li>
+<li class="map-place" data-place-key="kuching" data-lat="1.55" data-lon="110.35" data-zoom="11"><strong>クチン</strong><ul><li><a href="#article-8">クチン、サマラハン、セリアンで不健康なAPI測定値、サラワクにhazeが続く</a></li>
+<li><a href="#article-11">サラワク・テラクニャ浜で12フィートのワニ捕獲、住民協力で安全確保</a></li></ul></li>
+<li class="map-place" data-place-key="serian" data-lat="1.17" data-lon="110.57" data-zoom="11"><strong>セリアン</strong><ul><li><a href="#article-8">クチン、サマラハン、セリアンで不健康なAPI測定値、サラワクにhazeが続く</a></li></ul></li>
+<li class="map-place" data-place-key="perak" data-lat="4.8" data-lon="101.1" data-zoom="8"><strong>ペラ州</strong><ul><li><a href="#article-10">ペラ州、API改善でも屋外学習活動の禁止を継続</a></li></ul></li>
+<li class="map-place" data-place-key="sarawak" data-lat="3.1" data-lon="113.0" data-zoom="7"><strong>サラワク州</strong><ul><li><a href="#article-11">サラワク・テラクニャ浜で12フィートのワニ捕獲、住民協力で安全確保</a></li></ul></li>
+<li class="map-place" data-place-key="tawau" data-lat="4.25" data-lon="117.89" data-zoom="11"><strong>タワウ</strong><ul><li><a href="#article-12">タワウ住民、最長2週間の水供給停止に苦しむ 政府に早急な対策を要請</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
             <section class="daily-category" aria-labelledby="category-1">
               <div class="daily-category-head">
                 <h2 id="category-1">暮らしに関わる更新</h2>
@@ -110,7 +147,7 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -122,7 +159,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-2">
         <div class="daily-item-head">
           <span class="item-number">2</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -134,7 +171,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-3">
         <div class="daily-item-head">
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -146,19 +183,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-4">
         <div class="daily-item-head">
           <span class="item-number">4</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>Jerebuで胸痛訴えるクアラルンプールの低所得者、マスク購入が困難に</h3>
-        <p class="daily-summary">Jerebuがクアラルンプールの低所得者層にさらなる苦痛をもたらしており、胸の痛みや咳、風邪の症状を訴える人が増えています。マスクを購入できないため、NGOの支援に頼らざるを得ない状況です。</p>
+        <h3>Jerebuで胸痛訴える<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>の低所得者、マスク購入が困難に</h3>
+        <p class="daily-summary">Jerebuが<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>の低所得者層にさらなる苦痛をもたらしており、胸の痛みや咳、風邪の症状を訴える人が増えています。マスクを購入できないため、NGOの支援に頼らざるを得ない状況です。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-warga-miskin-kota-mengadu-sakit-dada-tidak-mampu-beli-pelitup-muka">出典: Astro Awani（2026年10月18日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-5">
         <div class="daily-item-head">
           <span class="item-number">5</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -170,7 +207,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-6">
         <div class="daily-item-head">
           <span class="item-number">6</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -182,31 +219,31 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-7">
         <div class="daily-item-head">
           <span class="item-number">7</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>Jerebu：全国26地区で午後までに不健康なIPUを記録、パシル・グダンが最高182</h3>
-        <p class="daily-summary">2026年10月18日午後までに、全国で26地区が大気汚染指標（IPU）で不健康レベルを記録しました。最高値はジョホール州パシル・グダンで182となっています。</p>
+        <h3>Jerebu：全国26地区で午後までに不健康なIPUを記録、<a class="place-link" data-place-key="pasir-gudang" href="https://www.openstreetmap.org/?mlat=1.46&amp;mlon=103.9#map=11/1.46/103.9" title="パシル・グダンの概略位置を地図で見る">パシル・グダン</a>が最高182</h3>
+        <p class="daily-summary">2026年10月18日午後までに、全国で26地区が大気汚染指標（IPU）で不健康レベルを記録しました。最高値は<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a><a class="place-link" data-place-key="pasir-gudang" href="https://www.openstreetmap.org/?mlat=1.46&amp;mlon=103.9#map=11/1.46/103.9" title="パシル・グダンの概略位置を地図で見る">パシル・グダン</a>で182となっています。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-26-kawasan-catat-ipu-tidak-sihat-setakat-petang-ini">出典: Astro Awani（2026年10月18日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-8">
         <div class="daily-item-head">
           <span class="item-number">8</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>クチン、サマラハン、セリアンで不健康なAPI測定値、サラワクにhazeが続く</h3>
-        <p class="daily-summary">2026年10月18日14時現在、クチン、サマラハン、セリアンの大気汚染指標（API）が不健康レベルとなった。自然資源環境委員会（NREB）のサイトによると、セリアンが155で最高、クチンが154、サマラハンが148と続く。その他の地区では、スリ・アマンが96、ベトンが93、ルボック・アンツが90など、17地区が中程度（51〜100）の測定値を示した。バリオは最も低い中程度の51、リンバンは良好レベルの50と報告されている。</p>
+        <h3><a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>、サマラハン、<a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>で不健康なAPI測定値、サラワクにhazeが続く</h3>
+        <p class="daily-summary">2026年10月18日14時現在、<a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>、サマラハン、<a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>の大気汚染指標（API）が不健康レベルとなった。自然資源環境委員会（NREB）のサイトによると、<a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>が155で最高、<a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>が154、サマラハンが148と続く。その他の地区では、スリ・アマンが96、ベトンが93、ルボック・アンツが90など、17地区が中程度（51〜100）の測定値を示した。バリオは最も低い中程度の51、リンバンは良好レベルの50と報告されている。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/18/kuching-samarahan-and-serian-record-unhealthy-api-readings-as-haze-lingers-over-sarawak/239600">出典: Malay Mail（2026年10月18日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-9">
         <div class="daily-item-head">
           <span class="item-number">9</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -218,37 +255,37 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-10">
         <div class="daily-item-head">
           <span class="item-number">10</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>ペラ州、API改善でも屋外学習活動の禁止を継続</h3>
-        <p class="daily-summary">ペラ州の4つのモニタリングステーションで大気汚染指標（API）の数値が低下したにもかかわらず、屋外での学校活動は引き続き禁止されています。州教育・高等教育・青年・スポーツ委員会委員長のダトゥク・カイルディン・アブ・ハニパ氏は、学校は通常通り運営されるが、授業や学習活動はすべて教室内で行わなければならないと説明しました。キャンプやスポーツなどの屋外活動、さらにはモチベーション向上プログラムも室内で実施するよう求められています。これは教育省が発行した通達に基づくもので、同氏は2026年10月18日に開催された「Gema Warisan Rakan Muda X Himpunan Mahabbah Pendekar Negeri Perak 2026」の開会式で記者団に語りました。</p>
+        <h3><a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>、API改善でも屋外学習活動の禁止を継続</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>の4つのモニタリングステーションで大気汚染指標（API）の数値が低下したにもかかわらず、屋外での学校活動は引き続き禁止されています。州教育・高等教育・青年・スポーツ委員会委員長のダトゥク・カイルディン・アブ・ハニパ氏は、学校は通常通り運営されるが、授業や学習活動はすべて教室内で行わなければならないと説明しました。キャンプやスポーツなどの屋外活動、さらにはモチベーション向上プログラムも室内で実施するよう求められています。これは教育省が発行した通達に基づくもので、同氏は2026年10月18日に開催された「Gema Warisan Rakan Muda X Himpunan Mahabbah Pendekar Negeri <a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">Perak</a> 2026」の開会式で記者団に語りました。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/18/perak-maintains-ban-on-outdoor-school-activities-despite-improving-api-readings-says-exco/239598">出典: Malay Mail（2026年10月18日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-11">
         <div class="daily-item-head">
           <span class="item-number">11</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>サラワク・テラクニャ浜で12フィートのワニ捕獲、住民協力で安全確保</h3>
-        <p class="daily-summary">2026年10月15日（木）に、サラワク州ブンタルのテラクニャ浜で全長約12フィート（約3.6メートル）のワニが捕獲されました。クアラ・チュン州民防隊（APM Kuching）は、サラワク森林公社（SFC）とNemo Hunterチームと共同で作業を行い、ライセンスを持つワニハンターのジェフリー・シュー氏が報告を受けて実施したものです。シュー氏は、55歳の男性からの通報によりワニが発見され、通報者は無事であったことに安堵の意を示しました。シュー氏は「今回の成功は住民の協力が地域の安全に不可欠であることを示す」と述め、浜辺や川辺などワニが生息し得る場所での警戒を呼び掛けました。</p>
+        <p class="daily-summary">2026年10月15日（木）に、<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>ブンタルのテラクニャ浜で全長約12フィート（約3.6メートル）のワニが捕獲されました。クアラ・チュン州民防隊（APM <a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">Kuching</a>）は、サラワク森林公社（SFC）とNemo Hunterチームと共同で作業を行い、ライセンスを持つワニハンターのジェフリー・シュー氏が報告を受けて実施したものです。シュー氏は、55歳の男性からの通報によりワニが発見され、通報者は無事であったことに安堵の意を示しました。シュー氏は「今回の成功は住民の協力が地域の安全に不可欠であることを示す」と述め、浜辺や川辺などワニが生息し得る場所での警戒を呼び掛けました。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/18/authorities-capture-12-foot-crocodile-at-teluk-nipah-beach-in-sarawak/239585">出典: Malay Mail（2026年10月18日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-12">
         <div class="daily-item-head">
           <span class="item-number">12</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>タワウ住民、最長2週間の水供給停止に苦しむ 政府に早急な対策を要請</h3>
-        <p class="daily-summary">タワウのバンダル・スリ・インダ、バトゥ・パユン、ラング、アパス・パルマイ、タマン・ミレニアム、コンシ10、タマン・スリ・バルンなど複数地区の住民が、最長で2週間に及ぶ水供給停止を余儀なくされています。バンダル・スリ・インダでは10日間の停止が報告され、他の地区でも2週間に及ぶ事態が続いています。パルティ・ワリサン・タワウのイステファン・コー氏は、州政府とサバ水道局に対し、即時かつ包括的な対応を求める声明を発表しました。氏は、停水が料理や入浴、洗濯、個人衛生といった日常生活に大きな支障を来し、特に幼児や高齢者、介護が必要な人々、そして小規模事業者に深刻な影響を与えていると指摘しています。</p>
+        <h3><a class="place-link" data-place-key="tawau" href="https://www.openstreetmap.org/?mlat=4.25&amp;mlon=117.89#map=11/4.25/117.89" title="タワウの概略位置を地図で見る">タワウ</a>住民、最長2週間の水供給停止に苦しむ 政府に早急な対策を要請</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="tawau" href="https://www.openstreetmap.org/?mlat=4.25&amp;mlon=117.89#map=11/4.25/117.89" title="タワウの概略位置を地図で見る">タワウ</a>のバンダル・スリ・インダ、バトゥ・パユン、ラング、アパス・パルマイ、タマン・ミレニアム、コンシ10、タマン・スリ・バルンなど複数地区の住民が、最長で2週間に及ぶ水供給停止を余儀なくされています。バンダル・スリ・インダでは10日間の停止が報告され、他の地区でも2週間に及ぶ事態が続いています。パルティ・ワリサン・<a class="place-link" data-place-key="tawau" href="https://www.openstreetmap.org/?mlat=4.25&amp;mlon=117.89#map=11/4.25/117.89" title="タワウの概略位置を地図で見る">タワウ</a>のイステファン・コー氏は、州政府とサバ水道局に対し、即時かつ包括的な対応を求める声明を発表しました。氏は、停水が料理や入浴、洗濯、個人衛生といった日常生活に大きな支障を来し、特に幼児や高齢者、介護が必要な人々、そして小規模事業者に深刻な影響を与えていると指摘しています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/18/warisan-leader-tawau-residents-endure-water-disruptions-of-up-to-two-weeks-urges-govt-to-act/239584">出典: Malay Mail（2026年10月18日）</a>
       </article>
@@ -318,5 +355,7 @@
             </section>
 
   </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
 </body>
 </html>

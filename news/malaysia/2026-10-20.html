@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2026年10月20日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       color-scheme: light;
@@ -65,6 +66,20 @@
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
     .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
@@ -80,6 +95,9 @@
       .daily-item { padding: 15px; }
       .air-quality-links { align-items: flex-start; flex-direction: column; }
       .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
     }
   </style>
 </head>
@@ -103,6 +121,29 @@
       <a href="#category-1">暮らしに関わる更新 9件</a><a href="#category-2">社会・経済の動き 7件</a>
     </nav>
 
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>11地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="selangor" data-lat="3.1" data-lon="101.5" data-zoom="9"><strong>セランゴール州</strong><ul><li><a href="#article-4">Jerebu: 26地区が午後6時にIPU不健康と記録、Seri Manjungが再び不健康カテゴリに</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-4">Jerebu: 26地区が午後6時にIPU不健康と記録、Seri Manjungが再び不健康カテゴリに</a></li>
+<li><a href="#article-6">マレーシア27地域で大気汚染指数が不健康レベル、スランゴール州ジョハン・セティアが最高169</a></li></ul></li>
+<li class="map-place" data-place-key="shah-alam" data-lat="3.07" data-lon="101.52" data-zoom="11"><strong>シャー・アラム</strong><ul><li><a href="#article-6">マレーシア27地域で大気汚染指数が不健康レベル、スランゴール州ジョハン・セティアが最高169</a></li>
+<li><a href="#article-9">KTMB、信号ケーブル盗難でKomuter路線に30分超の遅延</a></li></ul></li>
+<li class="map-place" data-place-key="melaka" data-lat="2.3" data-lon="102.3" data-zoom="9"><strong>マラッカ州</strong><ul><li><a href="#article-6">マレーシア27地域で大気汚染指数が不健康レベル、スランゴール州ジョハン・セティアが最高169</a></li></ul></li>
+<li class="map-place" data-place-key="putrajaya" data-lat="2.93" data-lon="101.68" data-zoom="11"><strong>プトラジャヤ</strong><ul><li><a href="#article-6">マレーシア27地域で大気汚染指数が不健康レベル、スランゴール州ジョハン・セティアが最高169</a></li></ul></li>
+<li class="map-place" data-place-key="johor" data-lat="2.0" data-lon="103.5" data-zoom="8"><strong>ジョホール州</strong><ul><li><a href="#article-6">マレーシア27地域で大気汚染指数が不健康レベル、スランゴール州ジョハン・セティアが最高169</a></li></ul></li>
+<li class="map-place" data-place-key="pasir-gudang" data-lat="1.46" data-lon="103.9" data-zoom="11"><strong>パシル・グダン</strong><ul><li><a href="#article-6">マレーシア27地域で大気汚染指数が不健康レベル、スランゴール州ジョハン・セティアが最高169</a></li></ul></li>
+<li class="map-place" data-place-key="pahang" data-lat="3.8" data-lon="103.2" data-zoom="8"><strong>パハン州</strong><ul><li><a href="#article-6">マレーシア27地域で大気汚染指数が不健康レベル、スランゴール州ジョハン・セティアが最高169</a></li></ul></li>
+<li class="map-place" data-place-key="sarawak" data-lat="3.1" data-lon="113.0" data-zoom="7"><strong>サラワク州</strong><ul><li><a href="#article-6">マレーシア27地域で大気汚染指数が不健康レベル、スランゴール州ジョハン・セティアが最高169</a></li></ul></li>
+<li class="map-place" data-place-key="serian" data-lat="1.17" data-lon="110.57" data-zoom="11"><strong>セリアン</strong><ul><li><a href="#article-6">マレーシア27地域で大気汚染指数が不健康レベル、スランゴール州ジョハン・セティアが最高169</a></li></ul></li>
+<li class="map-place" data-place-key="kota-bharu" data-lat="6.13" data-lon="102.24" data-zoom="11"><strong>コタバル</strong><ul><li><a href="#article-8">ECRL、ゴンバク‑クアンタン路線は片道60リンギット、クアラバルは125リンギットから</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
             <section class="daily-category" aria-labelledby="category-1">
               <div class="daily-category-head">
                 <h2 id="category-1">暮らしに関わる更新</h2>
@@ -110,7 +151,7 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -122,7 +163,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-2">
         <div class="daily-item-head">
           <span class="item-number">2</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -134,7 +175,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-3">
         <div class="daily-item-head">
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -146,19 +187,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-4">
         <div class="daily-item-head">
           <span class="item-number">4</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>Jerebu: 26地区が午後6時にIPU不健康と記録、Seri Manjungが再び不健康カテゴリに</h3>
-        <p class="daily-summary">マレーシアの大気汚染管理システム（APIMS）によると、2026年10月19日午後6時に26の地域がIPU不健康と記録され、Seri Manjungが再び不健康カテゴリに戻った。さらに、Selangor州のJohan Setiaは全国最高の166という数値を維持し、続いてKuala LumpurのBatu Mudaが165を示した。</p>
+        <p class="daily-summary">マレーシアの大気汚染管理システム（APIMS）によると、2026年10月19日午後6時に26の地域がIPU不健康と記録され、Seri Manjungが再び不健康カテゴリに戻った。さらに、<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">Selangor</a>州のJohan Setiaは全国最高の166という数値を維持し、続いて<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">Kuala Lumpur</a>のBatu Mudaが165を示した。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-26-kawasan-catat-ipu-tidak-sihat-jam-6-petang-seri-manjung-kembali-ke-kategori-tidak-sihat">出典: Astro Awani（2026年10月19日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-5">
         <div class="daily-item-head">
           <span class="item-number">5</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -170,19 +211,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-6">
         <div class="daily-item-head">
           <span class="item-number">6</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>マレーシア27地域で大気汚染指数が不健康レベル、スランゴール州ジョハン・セティアが最高169</h3>
-        <p class="daily-summary">2026年10月19日午後4時時点で、マレーシア全土の27地域が大気汚染指数（API）で不健康レベルを記録しました。スランゴール州ジョハン・セティアが169で最高値となり、同州のペタリン・ジャヤ（158）、クラン（156）、バンティン（154）とシャー・アラム（153）も不健康領域に入りました。その他、マラッカ州のアロール・ガジャ（165）、ブキット・ランバイ（164）、バンダラヤ・マラッカ（161）や、ネゲリ・スンビラン州のニライ（164）、セルンバン（164）、ポート・ディックソン（120）でも同様の数値が観測されています。クアラルンプールではバトゥ・ムダが164、チェラスが152、プトラジャヤが154と報告され、ジョホール州でもタンカク（161）やパシル・グダン（157）など6地域が不健康レベルでした。さらに、パハン州ロムピン（155）とインデラ・マコタ・クアンタン（152）、サラワク州IPDセリアン（139）とスリ・アマン（113）、ペラック州タセック・イポ（136）・ペゴ・イポ（125）・セリ・マンジュン（114）でも同様の結果が出ています。</p>
+        <p class="daily-summary">2026年10月19日午後4時時点で、マレーシア全土の27地域が大気汚染指数（API）で不健康レベルを記録しました。スランゴール州ジョハン・セティアが169で最高値となり、同州のペタリン・ジャヤ（158）、クラン（156）、バンティン（154）と<a class="place-link" data-place-key="shah-alam" href="https://www.openstreetmap.org/?mlat=3.07&amp;mlon=101.52#map=11/3.07/101.52" title="シャー・アラムの概略位置を地図で見る">シャー・アラム</a>（153）も不健康領域に入りました。その他、<a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>のアロール・ガジャ（165）、ブキット・ランバイ（164）、バンダラヤ・マラッカ（161）や、ネゲリ・スンビラン州のニライ（164）、セルンバン（164）、ポート・ディックソン（120）でも同様の数値が観測されています。<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>ではバトゥ・ムダが164、チェラスが152、<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">プトラジャヤ</a>が154と報告され、<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>でもタンカク（161）や<a class="place-link" data-place-key="pasir-gudang" href="https://www.openstreetmap.org/?mlat=1.46&amp;mlon=103.9#map=11/1.46/103.9" title="パシル・グダンの概略位置を地図で見る">パシル・グダン</a>（157）など6地域が不健康レベルでした。さらに、<a class="place-link" data-place-key="pahang" href="https://www.openstreetmap.org/?mlat=3.8&amp;mlon=103.2#map=8/3.8/103.2" title="パハン州の概略位置を地図で見る">パハン州</a>ロムピン（155）とインデラ・マコタ・クアンタン（152）、<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>IPD<a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>（139）とスリ・アマン（113）、ペラック州タセック・イポ（136）・ペゴ・イポ（125）・セリ・マンジュン（114）でも同様の結果が出ています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/19/haze-27-areas-in-malaysia-record-unhealthy-air-quality-as-of-4pm-johan-setia-in-selangor-records-highest-reading-of-169/239760">出典: Malay Mail（2026年10月19日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-7">
         <div class="daily-item-head">
           <span class="item-number">7</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -194,25 +235,25 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-8">
         <div class="daily-item-head">
           <span class="item-number">8</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>ECRL、ゴンバク‑クアンタン路線は片道60リンギット、クアラバルは125リンギットから</h3>
-        <p class="daily-summary">マレーシア鉄道リンク（MRL）は、東海岸鉄道（ECRL）の運賃を発表し、ゴンバク‑クアンタン（Kota Sultan Ahmad Shah）区間のエコノミートランジットは片道60リンギットから、ゴンバク‑クアラバル（Kota Bharu）523km区間は片道125リンギットから設定するとした。エクスプレスはそれぞれ68リンギット、147リンギットとなる。さらに、378kmのゴンバク‑クアラテレンガヌ区間はトランジット95リンギット、エクスプレス110リンギット、209kmのゴンバク‑クアンタン区間はトランジット60リンギット、エクスプレス68リンギットである。これらの運賃は、同方向の往復でも同額となり、トランジットは全駅停車、エクスプレスはゴンバク、クアンタン、クアラテレンガヌ、クアラバルの4駅のみが停車する。MRLのダトゥク・スリ・ダルウィス・アブドゥル・ラザクCEOは、10月16日に内閣が「手頃で国民に優しい動的運賃メカニズム」を承認したと述べ、2026年12月中旬の商業運転開始に先立ち、柔軟に運賃を適用できるようになると説明した。</p>
+        <p class="daily-summary">マレーシア鉄道リンク（MRL）は、東海岸鉄道（ECRL）の運賃を発表し、ゴンバク‑クアンタン（Kota Sultan Ahmad Shah）区間のエコノミートランジットは片道60リンギットから、ゴンバク‑クアラバル（<a class="place-link" data-place-key="kota-bharu" href="https://www.openstreetmap.org/?mlat=6.13&amp;mlon=102.24#map=11/6.13/102.24" title="コタバルの概略位置を地図で見る">Kota Bharu</a>）523km区間は片道125リンギットから設定するとした。エクスプレスはそれぞれ68リンギット、147リンギットとなる。さらに、378kmのゴンバク‑クアラテレンガヌ区間はトランジット95リンギット、エクスプレス110リンギット、209kmのゴンバク‑クアンタン区間はトランジット60リンギット、エクスプレス68リンギットである。これらの運賃は、同方向の往復でも同額となり、トランジットは全駅停車、エクスプレスはゴンバク、クアンタン、クアラテレンガヌ、クアラバルの4駅のみが停車する。MRLのダトゥク・スリ・ダルウィス・アブドゥル・ラザクCEOは、10月16日に内閣が「手頃で国民に優しい動的運賃メカニズム」を承認したと述べ、2026年12月中旬の商業運転開始に先立ち、柔軟に運賃を適用できるようになると説明した。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/19/ecrl-fares-start-at-rm60-for-gombak-kuantan-route-rm125-one-way-to-kota-bharu/239684">出典: Malay Mail（2026年10月19日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-9">
         <div class="daily-item-head">
           <span class="item-number">9</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>KTMB、信号ケーブル盗難でKomuter路線に30分超の遅延</h3>
-        <p class="daily-summary">KTMBは2026年10月19日6時20分に、パダン・ジャワ–シャー・アラム–バトゥ・ティガ区間のKomuter路線で信号ケーブルが盗まれたことが原因で、30分以上の遅延が発生したと確認した。約60メートルの4芯・16mm信号ケーブルが切断されており、現在修理・再接続作業が進められている。KTMBは同社の警備部隊が鉄道インフラの保護と列車運行の円滑化のため、巡回と監視を強化するとともに、線路付近で不審な活動を見かけた市民は24時間対応の情報センター（電話03 2263 1194）へ連絡するよう呼びかけている。</p>
+        <p class="daily-summary">KTMBは2026年10月19日6時20分に、パダン・ジャワ–<a class="place-link" data-place-key="shah-alam" href="https://www.openstreetmap.org/?mlat=3.07&amp;mlon=101.52#map=11/3.07/101.52" title="シャー・アラムの概略位置を地図で見る">シャー・アラム</a>–バトゥ・ティガ区間のKomuter路線で信号ケーブルが盗まれたことが原因で、30分以上の遅延が発生したと確認した。約60メートルの4芯・16mm信号ケーブルが切断されており、現在修理・再接続作業が進められている。KTMBは同社の警備部隊が鉄道インフラの保護と列車運行の円滑化のため、巡回と監視を強化するとともに、線路付近で不審な活動を見かけた市民は24時間対応の情報センター（電話03 2263 1194）へ連絡するよう呼びかけている。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/19/ktmb-says-cable-theft-sparks-delays-on-komuter-line-this-morning/239680">出典: Malay Mail（2026年10月19日）</a>
       </article>
@@ -228,7 +269,7 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-10">
         <div class="daily-item-head">
           <span class="item-number">10</span>
           <p class="item-category">社会・経済の動き</p>
@@ -240,7 +281,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-11">
         <div class="daily-item-head">
           <span class="item-number">11</span>
           <p class="item-category">社会・経済の動き</p>
@@ -252,7 +293,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-12">
         <div class="daily-item-head">
           <span class="item-number">12</span>
           <p class="item-category">社会・経済の動き</p>
@@ -264,7 +305,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-13">
         <div class="daily-item-head">
           <span class="item-number">13</span>
           <p class="item-category">社会・経済の動き</p>
@@ -276,7 +317,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-14">
         <div class="daily-item-head">
           <span class="item-number">14</span>
           <p class="item-category">社会・経済の動き</p>
@@ -288,7 +329,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-15">
         <div class="daily-item-head">
           <span class="item-number">15</span>
           <p class="item-category">社会・経済の動き</p>
@@ -300,7 +341,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-16">
         <div class="daily-item-head">
           <span class="item-number">16</span>
           <p class="item-category">社会・経済の動き</p>
@@ -345,5 +386,7 @@
             </section>
 
   </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
 </body>
 </html>

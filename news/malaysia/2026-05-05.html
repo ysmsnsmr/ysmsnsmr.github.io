@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2026年5月5日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       color-scheme: light;
@@ -65,6 +66,20 @@
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
     .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
@@ -80,6 +95,9 @@
       .daily-item { padding: 15px; }
       .air-quality-links { align-items: flex-start; flex-direction: column; }
       .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
     }
   </style>
 </head>
@@ -103,6 +121,26 @@
       <a href="#category-1">暮らしに関わる更新 3件</a><a href="#category-2">社会・経済の動き 26件</a>
     </nav>
 
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>7地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="penang" data-lat="5.4" data-lon="100.3" data-zoom="9"><strong>ペナン州</strong><ul><li><a href="#article-5">Penang manufacturer fined RM1…</a></li></ul></li>
+<li class="map-place" data-place-key="sabah" data-lat="5.6" data-lon="116.5" data-zoom="7"><strong>サバ州</strong><ul><li><a href="#article-11">Sabah’s 40pc revenue claim g…</a></li></ul></li>
+<li class="map-place" data-place-key="johor" data-lat="2.0" data-lon="103.5" data-zoom="8"><strong>ジョホール州</strong><ul><li><a href="#article-16">West Asia conflict has no imp…</a></li></ul></li>
+<li class="map-place" data-place-key="kedah" data-lat="6.1" data-lon="100.5" data-zoom="8"><strong>ケダ州</strong><ul><li><a href="#article-17">Kedah rice delays: Mada blame…</a></li>
+<li><a href="#article-21">PM Anwar orders urgent cloud…</a></li></ul></li>
+<li class="map-place" data-place-key="putrajaya" data-lat="2.93" data-lon="101.68" data-zoom="11"><strong>プトラジャヤ</strong><ul><li><a href="#article-20">Kes denggi di Putrajaya turun…</a></li>
+<li><a href="#article-24">Putrajaya dengue cases drop 36</a></li>
+<li><a href="#article-27">Court of Appeal rules emergen…</a></li></ul></li>
+<li class="map-place" data-place-key="perlis" data-lat="6.5" data-lon="100.2" data-zoom="9"><strong>ペルリス州</strong><ul><li><a href="#article-21">PM Anwar orders urgent cloud…</a></li></ul></li>
+<li class="map-place" data-place-key="pahang" data-lat="3.8" data-lon="103.2" data-zoom="8"><strong>パハン州</strong><ul><li><a href="#article-22">Pahang MB to meet Taiping Zoo…</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
             <section class="daily-category" aria-labelledby="category-1">
               <div class="daily-category-head">
                 <h2 id="category-1">暮らしに関わる更新</h2>
@@ -110,7 +148,7 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -122,7 +160,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-2">
         <div class="daily-item-head">
           <span class="item-number">2</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -134,7 +172,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-3">
         <div class="daily-item-head">
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -156,7 +194,7 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-4">
         <div class="daily-item-head">
           <span class="item-number">4</span>
           <p class="item-category">社会・経済の動き</p>
@@ -168,19 +206,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-5">
         <div class="daily-item-head">
           <span class="item-number">5</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>Penang manufacturer fined RM1…</h3>
-        <p class="daily-summary">Penang manufacturer fined RM120,000 after workers suffer hearing loss from industrial noise KUALA LUMPUR, May 4 — A manufacturing company was fined RM120,000 by the Sessions Court in Butterworth today for f... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <h3><a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">Penang</a> manufacturer fined RM1…</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">Penang</a> manufacturer fined RM120,000 after workers suffer hearing loss from industrial noise KUALA LUMPUR, May 4 — A manufacturing company was fined RM120,000 by the Sessions Court in Butterworth today for f... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/05/04/penang-manufacturer-fined-rm120000-after-workers-suffer-hearing-loss-from-industrial-noise/218685">出典: Malay Mail（2026年5月4日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-6">
         <div class="daily-item-head">
           <span class="item-number">6</span>
           <p class="item-category">社会・経済の動き</p>
@@ -192,7 +230,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-7">
         <div class="daily-item-head">
           <span class="item-number">7</span>
           <p class="item-category">社会・経済の動き</p>
@@ -204,7 +242,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-8">
         <div class="daily-item-head">
           <span class="item-number">8</span>
           <p class="item-category">社会・経済の動き</p>
@@ -216,7 +254,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-9">
         <div class="daily-item-head">
           <span class="item-number">9</span>
           <p class="item-category">社会・経済の動き</p>
@@ -228,7 +266,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-10">
         <div class="daily-item-head">
           <span class="item-number">10</span>
           <p class="item-category">社会・経済の動き</p>
@@ -240,19 +278,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-11">
         <div class="daily-item-head">
           <span class="item-number">11</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>Sabah’s 40pc revenue claim g…</h3>
-        <p class="daily-summary">Sabah’s 40pc revenue claim gains traction with structured federal-state talks, says minister KOTA KINABALU, May 5 — Negotiations between the federal government and the Sabah state government on the state&amp;rsq... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <h3><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">Sabah</a>’s 40pc revenue claim g…</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">Sabah</a>’s 40pc revenue claim gains traction with structured federal-state talks, says minister KOTA KINABALU, May 5 — Negotiations between the federal government and the <a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">Sabah</a> state government on the state&amp;rsq... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/05/05/sabahs-40pc-revenue-claim-gains-traction-with-structured-federal-state-talks-says-minister/218749">出典: Malay Mail（2026年5月5日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-12">
         <div class="daily-item-head">
           <span class="item-number">12</span>
           <p class="item-category">社会・経済の動き</p>
@@ -264,7 +302,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-13">
         <div class="daily-item-head">
           <span class="item-number">13</span>
           <p class="item-category">社会・経済の動き</p>
@@ -276,7 +314,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-14">
         <div class="daily-item-head">
           <span class="item-number">14</span>
           <p class="item-category">社会・経済の動き</p>
@@ -288,7 +326,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-15">
         <div class="daily-item-head">
           <span class="item-number">15</span>
           <p class="item-category">社会・経済の動き</p>
@@ -300,31 +338,31 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-16">
         <div class="daily-item-head">
           <span class="item-number">16</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
         <h3>West Asia conflict has no imp…</h3>
-        <p class="daily-summary">West Asia conflict has no impact on foreign investment in Johor, says MB ISKANDAR PUTERI, May 4 — The ongoing conflict in West Asia has not affected foreign investor interest in Johor aa... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <p class="daily-summary">West Asia conflict has no impact on foreign investment in <a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">Johor</a>, says MB ISKANDAR PUTERI, May 4 — The ongoing conflict in West Asia has not affected foreign investor interest in <a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">Johor</a> aa... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/05/04/west-asia-conflict-has-no-impact-on-foreign-investment-in-johor-says-mb/218663">出典: Malay Mail（2026年5月4日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-17">
         <div class="daily-item-head">
           <span class="item-number">17</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>Kedah rice delays: Mada blame…</h3>
-        <p class="daily-summary">Kedah rice delays: Mada blames water shortage, erratic weather ALOR SETAR, May 5 — The Muda Agricultural Development Authority (MADA) appeared to explain the real situatio... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <h3><a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">Kedah</a> rice delays: Mada blame…</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">Kedah</a> rice delays: Mada blames water shortage, erratic weather ALOR SETAR, May 5 — The Muda Agricultural Development Authority (MADA) appeared to explain the real situatio... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/05/05/kedah-rice-delays-mada-blames-water-shortage-erratic-weather/218754">出典: Malay Mail（2026年5月5日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-18">
         <div class="daily-item-head">
           <span class="item-number">18</span>
           <p class="item-category">社会・経済の動き</p>
@@ -336,7 +374,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-19">
         <div class="daily-item-head">
           <span class="item-number">19</span>
           <p class="item-category">社会・経済の動き</p>
@@ -348,43 +386,43 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-20">
         <div class="daily-item-head">
           <span class="item-number">20</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>Kes denggi di Putrajaya turun…</h3>
-        <p class="daily-summary">Kes denggi di Putrajaya turun 36.2 peratus, teknologi Wolbachia beri impak kawalan wabak Kes demam denggi di Putrajaya mencatatkan penurunan sebanyak 36.2 peratus bagi tempoh Januari hingga April 2026 berbanding tempoh sama tahun lepas. RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <h3>Kes denggi di <a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">Putrajaya</a> turun…</h3>
+        <p class="daily-summary">Kes denggi di <a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">Putrajaya</a> turun 36.2 peratus, teknologi Wolbachia beri impak kawalan wabak Kes demam denggi di <a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">Putrajaya</a> mencatatkan penurunan sebanyak 36.2 peratus bagi tempoh Januari hingga April 2026 berbanding tempoh sama tahun lepas. RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/kes-denggi-di-putrajaya-turun-362-peratus-teknologi-wolbachia-beri-impak-kawalan-wabak">出典: Astro Awani（2026年5月4日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-21">
         <div class="daily-item-head">
           <span class="item-number">21</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
         <h3>PM Anwar orders urgent cloud…</h3>
-        <p class="daily-summary">PM Anwar orders urgent cloud seeding in Kedah, Perlis, calls for drones to overcome aircraft shortage KUALA LUMPUR, May 4 — Prime Minister Datuk Seri Anwar Ibrahim has instructed the Malaysian Meteorological Departme... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <p class="daily-summary">PM Anwar orders urgent cloud seeding in <a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">Kedah</a>, <a class="place-link" data-place-key="perlis" href="https://www.openstreetmap.org/?mlat=6.5&amp;mlon=100.2#map=9/6.5/100.2" title="ペルリス州の概略位置を地図で見る">Perlis</a>, calls for drones to overcome aircraft shortage KUALA LUMPUR, May 4 — Prime Minister Datuk Seri Anwar Ibrahim has instructed the Malaysian Meteorological Departme... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/05/04/pm-anwar-orders-urgent-cloud-seeding-in-kedah-perlis-calls-for-drones-to-overcome-aircraft-shortage/218735">出典: Malay Mail（2026年5月4日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-22">
         <div class="daily-item-head">
           <span class="item-number">22</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>Pahang MB to meet Taiping Zoo…</h3>
-        <p class="daily-summary">Pahang MB to meet Taiping Zoo over fate of Malaysian elephants at Japan’s Tennoji Zoo KUALA LUMPUR, May 4 — Pahang Menteri Besar Datuk Seri Wan Rosdy Wan Ismail said he will hold a meeting with the Ta... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <h3><a class="place-link" data-place-key="pahang" href="https://www.openstreetmap.org/?mlat=3.8&amp;mlon=103.2#map=8/3.8/103.2" title="パハン州の概略位置を地図で見る">Pahang</a> MB to meet Taiping Zoo…</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="pahang" href="https://www.openstreetmap.org/?mlat=3.8&amp;mlon=103.2#map=8/3.8/103.2" title="パハン州の概略位置を地図で見る">Pahang</a> MB to meet Taiping Zoo over fate of Malaysian elephants at Japan’s Tennoji Zoo KUALA LUMPUR, May 4 — <a class="place-link" data-place-key="pahang" href="https://www.openstreetmap.org/?mlat=3.8&amp;mlon=103.2#map=8/3.8/103.2" title="パハン州の概略位置を地図で見る">Pahang</a> Menteri Besar Datuk Seri Wan Rosdy Wan Ismail said he will hold a meeting with the Ta... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/05/04/pahang-mb-to-meet-taiping-zoo-over-fate-of-malaysian-elephants-at-japans-tennoji-zoo/218729">出典: Malay Mail（2026年5月4日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-23">
         <div class="daily-item-head">
           <span class="item-number">23</span>
           <p class="item-category">社会・経済の動き</p>
@@ -396,19 +434,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-24">
         <div class="daily-item-head">
           <span class="item-number">24</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>Putrajaya dengue cases drop 36</h3>
-        <p class="daily-summary">Putrajaya dengue cases drop 36.2pc, Wolbachia method shows success PUTRAJAYA, May 4 — Dengue cases in Putrajaya fell by 36.2 per cent from January to April 2026 compared with the sa... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <h3><a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">Putrajaya</a> dengue cases drop 36</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">Putrajaya</a> dengue cases drop 36.2pc, Wolbachia method shows success PUTRAJAYA, May 4 — Dengue cases in <a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">Putrajaya</a> fell by 36.2 per cent from January to April 2026 compared with the sa... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/05/04/putrajaya-dengue-cases-drop-362pc-wolbachia-method-shows-success/218719">出典: Malay Mail（2026年5月4日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-25">
         <div class="daily-item-head">
           <span class="item-number">25</span>
           <p class="item-category">社会・経済の動き</p>
@@ -420,7 +458,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-26">
         <div class="daily-item-head">
           <span class="item-number">26</span>
           <p class="item-category">社会・経済の動き</p>
@@ -432,19 +470,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-27">
         <div class="daily-item-head">
           <span class="item-number">27</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
         <h3>Court of Appeal rules emergen…</h3>
-        <p class="daily-summary">Court of Appeal rules emergency proclamations beyond judicial review KUALA LUMPUR, May 4 — The Court of Appeal in Putrajaya today ruled that emergency proclamations issued by the Yang... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <p class="daily-summary">Court of Appeal rules emergency proclamations beyond judicial review KUALA LUMPUR, May 4 — The Court of Appeal in <a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">Putrajaya</a> today ruled that emergency proclamations issued by the Yang... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/05/04/court-of-appeal-rules-emergency-proclamations-beyond-judicial-review/218696">出典: Malay Mail（2026年5月4日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-28">
         <div class="daily-item-head">
           <span class="item-number">28</span>
           <p class="item-category">社会・経済の動き</p>
@@ -456,7 +494,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-29">
         <div class="daily-item-head">
           <span class="item-number">29</span>
           <p class="item-category">社会・経済の動き</p>
@@ -472,5 +510,7 @@
 
 
   </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
 </body>
 </html>

@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2026年10月17日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       color-scheme: light;
@@ -65,6 +66,20 @@
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
     .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
@@ -80,6 +95,9 @@
       .daily-item { padding: 15px; }
       .air-quality-links { align-items: flex-start; flex-direction: column; }
       .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
     }
   </style>
 </head>
@@ -103,6 +121,25 @@
       <a href="#category-1">暮らしに関わる更新 9件</a><a href="#category-2">社会・経済の動き 7件</a>
     </nav>
 
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>8地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="johor" data-lat="2.0" data-lon="103.5" data-zoom="8"><strong>ジョホール州</strong><ul><li><a href="#article-4">ジョホール州ラルキン・パシル・グダンでAPI202、全国29地域が不健康以上の大気</a></li></ul></li>
+<li class="map-place" data-place-key="pasir-gudang" data-lat="1.46" data-lon="103.9" data-zoom="11"><strong>パシル・グダン</strong><ul><li><a href="#article-4">ジョホール州ラルキン・パシル・グダンでAPI202、全国29地域が不健康以上の大気</a></li></ul></li>
+<li class="map-place" data-place-key="shah-alam" data-lat="3.07" data-lon="101.52" data-zoom="11"><strong>シャー・アラム</strong><ul><li><a href="#article-4">ジョホール州ラルキン・パシル・グダンでAPI202、全国29地域が不健康以上の大気</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-4">ジョホール州ラルキン・パシル・グダンでAPI202、全国29地域が不健康以上の大気</a></li>
+<li><a href="#article-7">スクールバス事業者へ、10月30日までに運転手情報更新でディワリ前にRM1,000支援</a></li></ul></li>
+<li class="map-place" data-place-key="putrajaya" data-lat="2.93" data-lon="101.68" data-zoom="11"><strong>プトラジャヤ</strong><ul><li><a href="#article-4">ジョホール州ラルキン・パシル・グダンでAPI202、全国29地域が不健康以上の大気</a></li></ul></li>
+<li class="map-place" data-place-key="kuching" data-lat="1.55" data-lon="110.35" data-zoom="11"><strong>クチン</strong><ul><li><a href="#article-6">クチンで豪雨が原因の突発洪水、道路やサラワクプラザ地下が浸水</a></li></ul></li>
+<li class="map-place" data-place-key="sarawak" data-lat="3.1" data-lon="113.0" data-zoom="7"><strong>サラワク州</strong><ul><li><a href="#article-6">クチンで豪雨が原因の突発洪水、道路やサラワクプラザ地下が浸水</a></li></ul></li>
+<li class="map-place" data-place-key="sabah" data-lat="5.6" data-lon="116.5" data-zoom="7"><strong>サバ州</strong><ul><li><a href="#article-13">サバ州の16協同組合がRM1.19 jutaの支援を受ける</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
             <section class="daily-category" aria-labelledby="category-1">
               <div class="daily-category-head">
                 <h2 id="category-1">暮らしに関わる更新</h2>
@@ -110,7 +147,7 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -122,7 +159,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-2">
         <div class="daily-item-head">
           <span class="item-number">2</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -134,7 +171,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-3">
         <div class="daily-item-head">
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -146,19 +183,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-4">
         <div class="daily-item-head">
           <span class="item-number">4</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>ジョホール州ラルキン・パシル・グダンでAPI202、全国29地域が不健康以上の大気</h3>
-        <p class="daily-summary">マレーシア航空汚染指数（API）が、ジョホール州ラルキンとパシル・グダンで本日午後5時30分時点で202に上昇し、非常に不健康レベルとなりました。全国では、他に27地域が不健康レベルの数値を記録しています。ジョホール州内では、ペンガラン（181）、バトゥ・パハットとコタ・ティンギ（各171）、クルアン（168）、タンカク（159）およびセガマット（156）でも不健康と判定されています。スランゴール州では、ジョハン・セティアが184で最高、クラン（176）、ペタリン・ジャヤ（173）、シャー・アラム（168）、バンティン（162）とクアラ・セルンゴール（152）も不健康です。ネゲリ・スンビラン州では、ニライ（181）、セレンバン（174）とポート・ディックソン（170）が該当します。その他、メラカ州バンダラヤ・メラカ（180）やブキ・ランバイ（175）などでも不健康が報告されています。クアラルンプールではバトゥ・ムダとチェラスが163、プトラジャヤが170と不健康レベルです。</p>
+        <h3><a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>ラルキン・<a class="place-link" data-place-key="pasir-gudang" href="https://www.openstreetmap.org/?mlat=1.46&amp;mlon=103.9#map=11/1.46/103.9" title="パシル・グダンの概略位置を地図で見る">パシル・グダン</a>でAPI202、全国29地域が不健康以上の大気</h3>
+        <p class="daily-summary">マレーシア航空汚染指数（API）が、<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>ラルキンと<a class="place-link" data-place-key="pasir-gudang" href="https://www.openstreetmap.org/?mlat=1.46&amp;mlon=103.9#map=11/1.46/103.9" title="パシル・グダンの概略位置を地図で見る">パシル・グダン</a>で本日午後5時30分時点で202に上昇し、非常に不健康レベルとなりました。全国では、他に27地域が不健康レベルの数値を記録しています。<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>内では、ペンガラン（181）、バトゥ・パハットとコタ・ティンギ（各171）、クルアン（168）、タンカク（159）およびセガマット（156）でも不健康と判定されています。スランゴール州では、ジョハン・セティアが184で最高、クラン（176）、ペタリン・ジャヤ（173）、<a class="place-link" data-place-key="shah-alam" href="https://www.openstreetmap.org/?mlat=3.07&amp;mlon=101.52#map=11/3.07/101.52" title="シャー・アラムの概略位置を地図で見る">シャー・アラム</a>（168）、バンティン（162）とクアラ・セルンゴール（152）も不健康です。ネゲリ・スンビラン州では、ニライ（181）、セレンバン（174）とポート・ディックソン（170）が該当します。その他、メラカ州バンダラヤ・メラカ（180）やブキ・ランバイ（175）などでも不健康が報告されています。<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>ではバトゥ・ムダとチェラスが163、<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">プトラジャヤ</a>が170と不健康レベルです。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/16/haze-watch-29-areas-recording-unhealthy-or-worse-air-larkin-pasir-gudang-api-hits-202/239370">出典: Malay Mail（2026年10月16日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-5">
         <div class="daily-item-head">
           <span class="item-number">5</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -170,31 +207,31 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-6">
         <div class="daily-item-head">
           <span class="item-number">6</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>クチンで豪雨が原因の突発洪水、道路やサラワクプラザ地下が浸水</h3>
-        <p class="daily-summary">10月16日午後、クチンの複数地域で豪雨に伴う突発洪水が発生し、サラワクプラザ地下やマイル3地下通路、ジャラン・トゥン・ジュガ、ジャラン・バトゥ・リンタンなどが浸水しました。雨は午後1時30分頃から始まり、強風とともにウィスマ・ナイム付近で倒木も報告されています。マレーシア気象局は午後2時45分時点で、クチンを含むサラワク州全域に対し、午後7時まで雷雨・豪雨・強風が続くと予報しています。</p>
+        <h3><a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>で豪雨が原因の突発洪水、道路やサラワクプラザ地下が浸水</h3>
+        <p class="daily-summary">10月16日午後、<a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>の複数地域で豪雨に伴う突発洪水が発生し、サラワクプラザ地下やマイル3地下通路、ジャラン・トゥン・ジュガ、ジャラン・バトゥ・リンタンなどが浸水しました。雨は午後1時30分頃から始まり、強風とともにウィスマ・ナイム付近で倒木も報告されています。マレーシア気象局は午後2時45分時点で、<a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>を含む<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>全域に対し、午後7時まで雷雨・豪雨・強風が続くと予報しています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/16/heavy-downpour-triggers-flash-floods-across-kuching-roads-and-sarawak-plaza-basement-swamped/239351">出典: Malay Mail（2026年10月16日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-7">
         <div class="daily-item-head">
           <span class="item-number">7</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>スクールバス事業者へ、10月30日までに運転手情報更新でディワリ前にRM1,000支援</h3>
-        <p class="daily-summary">ランド・パブリック・トランスポート・エージェンシー（APAD）は、全スクールバス所有者・事業者に対し、運転手の氏名・住所・電話番号・有効な運転免許・公共サービス車両（PSV）免許・支払口座番号などの情報を、本日から10月30日までに公式ポータル（https://bantuanpemandu.mot.gov.my/bas-sekolah）で更新するよう呼びかけました。この情報更新は、ディワリ（Deepavali）前にRM1,000の特別財政支援を迅速に支給するためのものです。APADは、マレーシアスクールバス協会連盟およびクアラルンプール・スランゴールスクールバス事業者協会と連携し、適格運転手の確認と支払い手続きを円滑に行うとしています。</p>
+        <p class="daily-summary">ランド・パブリック・トランスポート・エージェンシー（APAD）は、全スクールバス所有者・事業者に対し、運転手の氏名・住所・電話番号・有効な運転免許・公共サービス車両（PSV）免許・支払口座番号などの情報を、本日から10月30日までに公式ポータル（https://bantuanpemandu.mot.gov.my/bas-sekolah）で更新するよう呼びかけました。この情報更新は、ディワリ（Deepavali）前にRM1,000の特別財政支援を迅速に支給するためのものです。APADは、マレーシアスクールバス協会連盟および<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>・スランゴールスクールバス事業者協会と連携し、適格運転手の確認と支払い手続きを円滑に行うとしています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/16/school-bus-operators-told-to-update-driver-records-by-oct-30-for-rm1000-aid-before-deepavali/239320">出典: Malay Mail（2026年10月16日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-8">
         <div class="daily-item-head">
           <span class="item-number">8</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -206,7 +243,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-9">
         <div class="daily-item-head">
           <span class="item-number">9</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -228,7 +265,7 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-10">
         <div class="daily-item-head">
           <span class="item-number">10</span>
           <p class="item-category">社会・経済の動き</p>
@@ -240,7 +277,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-11">
         <div class="daily-item-head">
           <span class="item-number">11</span>
           <p class="item-category">社会・経済の動き</p>
@@ -252,7 +289,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-12">
         <div class="daily-item-head">
           <span class="item-number">12</span>
           <p class="item-category">社会・経済の動き</p>
@@ -264,19 +301,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-13">
         <div class="daily-item-head">
           <span class="item-number">13</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>サバ州の16協同組合がRM1.19 jutaの支援を受ける</h3>
-        <p class="daily-summary">サバ州の16協同組合は、マレーシア協同組合委員会（SKM）から今年度RM1.19 jutaの開発支援金を受け取ったと、同州の副首相兼産業・起業・輸送開発大臣であるエウォン・ベネディック氏が述べた。</p>
+        <h3><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>の16協同組合がRM1.19 jutaの支援を受ける</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>の16協同組合は、マレーシア協同組合委員会（SKM）から今年度RM1.19 jutaの開発支援金を受け取ったと、同州の副首相兼産業・起業・輸送開発大臣であるエウォン・ベネディック氏が述べた。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/16-koperasi-di-sabah-terima-bantuan-rm119-juta-ewon">出典: Astro Awani（2026年10月17日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-14">
         <div class="daily-item-head">
           <span class="item-number">14</span>
           <p class="item-category">社会・経済の動き</p>
@@ -288,7 +325,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-15">
         <div class="daily-item-head">
           <span class="item-number">15</span>
           <p class="item-category">社会・経済の動き</p>
@@ -300,7 +337,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-16">
         <div class="daily-item-head">
           <span class="item-number">16</span>
           <p class="item-category">社会・経済の動き</p>
@@ -345,5 +382,7 @@
             </section>
 
   </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
 </body>
 </html>

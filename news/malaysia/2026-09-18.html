@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2026年9月18日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       color-scheme: light;
@@ -65,6 +66,20 @@
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
     .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
@@ -80,6 +95,9 @@
       .daily-item { padding: 15px; }
       .air-quality-links { align-items: flex-start; flex-direction: column; }
       .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
     }
   </style>
 </head>
@@ -103,6 +121,22 @@
       <a href="#category-1">暮らしに関わる更新 4件</a><a href="#category-2">社会・経済の動き 8件</a>
     </nav>
 
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>4地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="sabah" data-lat="5.6" data-lon="116.5" data-zoom="7"><strong>サバ州</strong><ul><li><a href="#article-1">北部州・サバ・サラワクに本日正午まで雷雨警報</a></li></ul></li>
+<li class="map-place" data-place-key="sarawak" data-lat="3.1" data-lon="113.0" data-zoom="7"><strong>サラワク州</strong><ul><li><a href="#article-1">北部州・サバ・サラワクに本日正午まで雷雨警報</a></li></ul></li>
+<li class="map-place" data-place-key="johor" data-lat="2.0" data-lon="103.5" data-zoom="8"><strong>ジョホール州</strong><ul><li><a href="#article-2">JPJ eBidでJH_J・VRUの新ナンバープレートが入札開始</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-5">クアラルンプール、約49ヘクタールの新緑地とレクリエーション空間を整備</a></li>
+<li><a href="#article-6">クアラルンプールが約49ヘクタールの緑地を新設、ハンナ・ユウ氏が発表</a></li>
+<li><a href="#article-8">保健省、FDS事故犠牲者の葬儀不参加報道を否定</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
             <section class="daily-category" aria-labelledby="category-1">
               <div class="daily-category-head">
                 <h2 id="category-1">暮らしに関わる更新</h2>
@@ -110,31 +144,31 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>北部州・サバ・サラワクに本日正午まで雷雨警報</h3>
-        <p class="daily-summary">マレーシア気象局は本日正午まで、北部州、サバ州、サラワク州に雷雨警報を発令し、激しい雨や突風に注意するよう呼びかけています。 警報は雷雨・大雨・強風が予想される地域を対象としています。 警報は正午までの限定期間で、最新の気象情報を確認するよう勧められています。</p>
+        <p class="daily-summary">マレーシア気象局は本日正午まで、北部州、<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>、<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>に雷雨警報を発令し、激しい雨や突風に注意するよう呼びかけています。 警報は雷雨・大雨・強風が予想される地域を対象としています。 警報は正午までの限定期間で、最新の気象情報を確認するよう勧められています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/18/metmalaysia-issues-thunderstorm-warning-for-northern-states-sabah-and-sarawak-until-noon/235589">出典: Malay Mail（2026年9月18日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-2">
         <div class="daily-item-head">
           <span class="item-number">2</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>JPJ eBidでJH_J・VRUの新ナンバープレートが入札開始</h3>
-        <p class="daily-summary">JPJは、次のナンバープレートシリーズ「JH_J」と「VRU」をオンラインオークションプラットフォームJPJ eBidで入札にかけることを発表しました。JH_Jはジョホール州の最新走行番号シリーズです。 JH_Jはジョホール州の最新走行番号シリーズとして位置付けられています。</p>
+        <p class="daily-summary">JPJは、次のナンバープレートシリーズ「JH_J」と「VRU」をオンラインオークションプラットフォームJPJ eBidで入札にかけることを発表しました。JH_Jは<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>の最新走行番号シリーズです。 JH_Jは<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>の最新走行番号シリーズとして位置付けられています。</p>
 
         <a class="source-link" href="https://paultan.org/2026/09/17/jpj-ebid-jh_j-and-vru-number-plates-up-for-bidding/">出典: Paul Tan（2026年9月17日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-3">
         <div class="daily-item-head">
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -146,7 +180,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-4">
         <div class="daily-item-head">
           <span class="item-number">4</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -168,31 +202,31 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-5">
         <div class="daily-item-head">
           <span class="item-number">5</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>クアラルンプール、約49ヘクタールの新緑地とレクリエーション空間を整備</h3>
-        <p class="daily-summary">クアラルンプール市（DBKL）は、首都周辺に約49ヘクタールの新たなレクリエーション空間と公共公園を整備し、緑地ネットワークの拡充と市民のレジャー環境向上を目指すと発表しました。 この取り組みは、都市部の緑地保護を強化し、住民の憩いの場を増やすことを目的としています。</p>
+        <h3><a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>、約49ヘクタールの新緑地とレクリエーション空間を整備</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>市（DBKL）は、首都周辺に約49ヘクタールの新たなレクリエーション空間と公共公園を整備し、緑地ネットワークの拡充と市民のレジャー環境向上を目指すと発表しました。 この取り組みは、都市部の緑地保護を強化し、住民の憩いの場を増やすことを目的としています。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/kl-wujudkan-49-hektar-ruang-rekreasi-baharu-perkukuh-perlindungan-kawasan-hijau-hannah">出典: Astro Awani（2026年9月17日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-6">
         <div class="daily-item-head">
           <span class="item-number">6</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>クアラルンプールが約49ヘクタールの緑地を新設、ハンナ・ユウ氏が発表</h3>
-        <p class="daily-summary">クアラルンプール市は、約49ヘクタールの新たなレクリエーション空間や公園を整備し、すべての開放緑地を法的に保護する方針を示した。ハンナ・ユウ副首相は、散歩道や照明など高齢者や子どもにも利用しやすいインフラを整えると述べた。 散歩道や照明などの基本インフラを設置し、全世代が利用できるようにする計画です。 不法占拠や無許可商業活動の取り締まりを強化する方針です。</p>
+        <h3><a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>が約49ヘクタールの緑地を新設、ハンナ・ユウ氏が発表</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>市は、約49ヘクタールの新たなレクリエーション空間や公園を整備し、すべての開放緑地を法的に保護する方針を示した。ハンナ・ユウ副首相は、散歩道や照明など高齢者や子どもにも利用しやすいインフラを整えると述べた。 散歩道や照明などの基本インフラを設置し、全世代が利用できるようにする計画です。 不法占拠や無許可商業活動の取り締まりを強化する方針です。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/17/kl-to-add-49ha-of-green-spaces-as-city-moves-to-protect-open-areas-says-hannah-yeoh/235573">出典: Malay Mail（2026年9月17日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-7">
         <div class="daily-item-head">
           <span class="item-number">7</span>
           <p class="item-category">社会・経済の動き</p>
@@ -204,19 +238,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-8">
         <div class="daily-item-head">
           <span class="item-number">8</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
         <h3>保健省、FDS事故犠牲者の葬儀不参加報道を否定</h3>
-        <p class="daily-summary">保健省は、FDS事故で亡くなった犠牲者の葬儀に上級官が出席しなかったという報道は事実ではないと公式に否定した。 クアラルンプールで、上級保健官がFDS事故犠牲者の葬儀に出席しなかったとの主張を保健省が否定しました。</p>
+        <p class="daily-summary">保健省は、FDS事故で亡くなった犠牲者の葬儀に上級官が出席しなかったという報道は事実ではないと公式に否定した。 <a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>で、上級保健官がFDS事故犠牲者の葬儀に出席しなかったとの主張を保健省が否定しました。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/17/health-ministry-denies-claims-officials-absent-from-funerals-of-fds-crash-victims/235475">出典: Malay Mail（2026年9月17日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-9">
         <div class="daily-item-head">
           <span class="item-number">9</span>
           <p class="item-category">社会・経済の動き</p>
@@ -228,7 +262,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-10">
         <div class="daily-item-head">
           <span class="item-number">10</span>
           <p class="item-category">社会・経済の動き</p>
@@ -240,7 +274,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-11">
         <div class="daily-item-head">
           <span class="item-number">11</span>
           <p class="item-category">社会・経済の動き</p>
@@ -252,7 +286,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-12">
         <div class="daily-item-head">
           <span class="item-number">12</span>
           <p class="item-category">社会・経済の動き</p>
@@ -268,5 +302,7 @@
 
 
   </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
 </body>
 </html>

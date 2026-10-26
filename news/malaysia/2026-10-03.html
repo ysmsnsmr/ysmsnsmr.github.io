@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2026年10月3日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       color-scheme: light;
@@ -65,6 +66,20 @@
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
     .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
@@ -80,6 +95,9 @@
       .daily-item { padding: 15px; }
       .air-quality-links { align-items: flex-start; flex-direction: column; }
       .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
     }
   </style>
 </head>
@@ -103,6 +121,23 @@
       <a href="#category-1">暮らしに関わる更新 15件</a><a href="#category-2">社会・経済の動き 5件</a>
     </nav>
 
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>6地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="johor-bahru" data-lat="1.49" data-lon="103.76" data-zoom="11"><strong>ジョホールバル</strong><ul><li><a href="#article-3">RTSリンク乗客サービス、2027年2月開始見込み</a></li>
+<li><a href="#article-9">ジョホールバル‑シンガポールRTSリンクの乗客サービス開始が2027年2月に延期</a></li></ul></li>
+<li class="map-place" data-place-key="putrajaya" data-lat="2.93" data-lon="101.68" data-zoom="11"><strong>プトラジャヤ</strong><ul><li><a href="#article-10">マレーシア全土で午後7時まで雷雨警報、KL・スランゴール含む</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-11">KLマラソンは開催、子ども向けダッシュは濃霧で中止</a></li></ul></li>
+<li class="map-place" data-place-key="selangor" data-lat="3.1" data-lon="101.5" data-zoom="9"><strong>セランゴール州</strong><ul><li><a href="#article-12">スランゴール州、KTMコミューターへ月額30リンギット交通補助を即時拡大</a></li></ul></li>
+<li class="map-place" data-place-key="sabah" data-lat="5.6" data-lon="116.5" data-zoom="7"><strong>サバ州</strong><ul><li><a href="#article-16">セパングF1開催前に雲播種で雨を呼び、霧対策を期待</a></li></ul></li>
+<li class="map-place" data-place-key="sarawak" data-lat="3.1" data-lon="113.0" data-zoom="7"><strong>サラワク州</strong><ul><li><a href="#article-16">セパングF1開催前に雲播種で雨を呼び、霧対策を期待</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
             <section class="daily-category" aria-labelledby="category-1">
               <div class="daily-category-head">
                 <h2 id="category-1">暮らしに関わる更新</h2>
@@ -110,7 +145,7 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -122,7 +157,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-2">
         <div class="daily-item-head">
           <span class="item-number">2</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -134,19 +169,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-3">
         <div class="daily-item-head">
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>RTSリンク乗客サービス、2027年2月開始見込み</h3>
-        <p class="daily-summary">RTS Linkはマレーシアとシンガポールを結ぶ重要プロジェクトで、ジョホールバルのブキットチャガーとシンガポールのウッドランズ・ノースを結び、乗客サービスは2027年2月に開始される見込みです。 マレーシア・シンガポール間で、ジョホールバルのブキットチャガーとウッドランズ・ノースを結ぶ重要プロジェクトです。</p>
+        <p class="daily-summary">RTS Linkはマレーシアとシンガポールを結ぶ重要プロジェクトで、<a class="place-link" data-place-key="johor-bahru" href="https://www.openstreetmap.org/?mlat=1.49&amp;mlon=103.76#map=11/1.49/103.76" title="ジョホールバルの概略位置を地図で見る">ジョホールバル</a>のブキットチャガーとシンガポールのウッドランズ・ノースを結び、乗客サービスは2027年2月に開始される見込みです。 マレーシア・シンガポール間で、<a class="place-link" data-place-key="johor-bahru" href="https://www.openstreetmap.org/?mlat=1.49&amp;mlon=103.76#map=11/1.49/103.76" title="ジョホールバルの概略位置を地図で見る">ジョホールバル</a>のブキットチャガーとウッドランズ・ノースを結ぶ重要プロジェクトです。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/perkhidmatan-penumpang-rts-link-dijangka-bermula-februari-2027">出典: Astro Awani（2026年10月2日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-4">
         <div class="daily-item-head">
           <span class="item-number">4</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -158,7 +193,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-5">
         <div class="daily-item-head">
           <span class="item-number">5</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -170,7 +205,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-6">
         <div class="daily-item-head">
           <span class="item-number">6</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -182,7 +217,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-7">
         <div class="daily-item-head">
           <span class="item-number">7</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -194,7 +229,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-8">
         <div class="daily-item-head">
           <span class="item-number">8</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -206,55 +241,55 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-9">
         <div class="daily-item-head">
           <span class="item-number">9</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>ジョホールバル‑シンガポールRTSリンクの乗客サービス開始が2027年2月に延期</h3>
-        <p class="daily-summary">マレーシアとシンガポールの政府は、ジョホールバル‑シンガポール間の高速鉄道（RTS）リンクの乗客サービス開始が、当初の2026年1月から2027年2月に延期されたと発表した。両国の交通当局は、RTS Operationsが2026年12月31日までに最終システムテストと試運転を完了し、独立した安全評価機関の認証を取得した後、最終的な規制承認が下りることが条件とした。インフラ整備は両国で実質的に完了しており、残りの試験が完了すればサービス開始が可能になるという。 安全認証取得と最終規制承認が完了すればサービス開始が可能になる インフラ工事は両国で実質的に完了し、残りは試験と試運転のみ</p>
+        <h3><a class="place-link" data-place-key="johor-bahru" href="https://www.openstreetmap.org/?mlat=1.49&amp;mlon=103.76#map=11/1.49/103.76" title="ジョホールバルの概略位置を地図で見る">ジョホールバル</a>‑シンガポールRTSリンクの乗客サービス開始が2027年2月に延期</h3>
+        <p class="daily-summary">マレーシアとシンガポールの政府は、<a class="place-link" data-place-key="johor-bahru" href="https://www.openstreetmap.org/?mlat=1.49&amp;mlon=103.76#map=11/1.49/103.76" title="ジョホールバルの概略位置を地図で見る">ジョホールバル</a>‑シンガポール間の高速鉄道（RTS）リンクの乗客サービス開始が、当初の2026年1月から2027年2月に延期されたと発表した。両国の交通当局は、RTS Operationsが2026年12月31日までに最終システムテストと試運転を完了し、独立した安全評価機関の認証を取得した後、最終的な規制承認が下りることが条件とした。インフラ整備は両国で実質的に完了しており、残りの試験が完了すればサービス開始が可能になるという。 安全認証取得と最終規制承認が完了すればサービス開始が可能になる インフラ工事は両国で実質的に完了し、残りは試験と試運転のみ</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/02/jb-singapore-rts-link-service-start-pushed-back-to-february-2027/237411">出典: Malay Mail（2026年10月2日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-10">
         <div class="daily-item-head">
           <span class="item-number">10</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>マレーシア全土で午後7時まで雷雨警報、KL・スランゴール含む</h3>
-        <p class="daily-summary">マレーシア気象局は本日午後4時に、KL・プトラジャヤを含む連邦直轄領と、ペリス、ケダ、ペナン、ペラ、スランゴール7地区、ネグリ・スンビラン、メラカ、ジョホール、東海岸諸州、サラワク・サバに至る全州で、午後7時までの激しい雨、落雷、突風を伴う雷雨警報を発令しました。 警報は本日午後7時まで有効です。 対象地域では短時間の強い雨や突風が予想されています。</p>
+        <p class="daily-summary">マレーシア気象局は本日午後4時に、KL・<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">プトラジャヤ</a>を含む連邦直轄領と、ペリス、ケダ、ペナン、ペラ、スランゴール7地区、ネグリ・スンビラン、メラカ、ジョホール、東海岸諸州、サラワク・サバに至る全州で、午後7時までの激しい雨、落雷、突風を伴う雷雨警報を発令しました。 警報は本日午後7時まで有効です。 対象地域では短時間の強い雨や突風が予想されています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/02/thunderstorms-expected-in-kl-selangor-and-nine-states-until-7pm/237400">出典: Malay Mail（2026年10月2日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-11">
         <div class="daily-item-head">
           <span class="item-number">11</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>KLマラソンは開催、子ども向けダッシュは濃霧で中止</h3>
-        <p class="daily-summary">2026年10月2日付の発表によると、濃霧が続く中でもクアラルンプール・スタンダードチャータード・マラソンは今週末開催されるが、子ども向けのKids Dashレースは健康リスクを考慮し中止された。フルマラソン、ハーフマラソン、10km・5kmは予定通り実施され、子ども参加者の保護者は明日8時から12時までダタラン・メルデカの情報カウンターでレース権利証を受け取れる。主催者は成人ランナーにも体調に合わせた判断を呼び掛けている。 フルマラソン、ハーフマラソン、10km・5kmは予定通り開催 保護者は明日8時～12時に情報カウンターで子どものレース権利証を受け取れる</p>
+        <p class="daily-summary">2026年10月2日付の発表によると、濃霧が続く中でも<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>・スタンダードチャータード・マラソンは今週末開催されるが、子ども向けのKids Dashレースは健康リスクを考慮し中止された。フルマラソン、ハーフマラソン、10km・5kmは予定通り実施され、子ども参加者の保護者は明日8時から12時までダタラン・メルデカの情報カウンターでレース権利証を受け取れる。主催者は成人ランナーにも体調に合わせた判断を呼び掛けている。 フルマラソン、ハーフマラソン、10km・5kmは予定通り開催 保護者は明日8時～12時に情報カウンターで子どものレース権利証を受け取れる</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/02/kl-marathon-goes-ahead-this-weekend-but-kids-dash-cancelled-over-haze-concerns/237397">出典: Malay Mail（2026年10月2日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-12">
         <div class="daily-item-head">
           <span class="item-number">12</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>スランゴール州、KTMコミューターへ月額30リンギット交通補助を即時拡大</h3>
-        <p class="daily-summary">スランゴール州政府は、月額30リンギットの公共交通補助を即時にKTMコミューター路線へ拡大したと発表しました。この補助は当初、Rapid KLオンデマンドとKumpoolサービスのみ対象で、90％以上の利用者がRapid KLを利用していました。拡大により、通勤・通学で公共交通を利用する労働者や学生への支援が強化されます。補助はSelangor Resilience Packageの一環として、Rantaian Mesra Sdn Bhdが管理し、12月まで実施されます。 補助対象にKTMコミューターが加わり、利用者層が拡大しました。 プログラムは12月まで継続し、生活費負担軽減を目的としています。</p>
+        <p class="daily-summary">スランゴール州政府は、月額30リンギットの公共交通補助を即時にKTMコミューター路線へ拡大したと発表しました。この補助は当初、Rapid KLオンデマンドとKumpoolサービスのみ対象で、90％以上の利用者がRapid KLを利用していました。拡大により、通勤・通学で公共交通を利用する労働者や学生への支援が強化されます。補助は<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">Selangor</a> Resilience Packageの一環として、Rantaian Mesra Sdn Bhdが管理し、12月まで実施されます。 補助対象にKTMコミューターが加わり、利用者層が拡大しました。 プログラムは12月まで継続し、生活費負担軽減を目的としています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/02/selangor-expands-rm30-monthly-transport-subsidy-to-ktm-komuter-services-effective-immediately/237362">出典: Malay Mail（2026年10月2日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-13">
         <div class="daily-item-head">
           <span class="item-number">13</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -266,7 +301,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-14">
         <div class="daily-item-head">
           <span class="item-number">14</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -278,7 +313,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-15">
         <div class="daily-item-head">
           <span class="item-number">15</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -300,19 +335,19 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-16">
         <div class="daily-item-head">
           <span class="item-number">16</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
         <h3>セパングF1開催前に雲播種で雨を呼び、霧対策を期待</h3>
-        <p class="daily-summary">マレーシア全土で続くインドネシア発の煙による濃霧の中、セパング・インターナショナル・サーキットのCEOアザン・シャフリマン・ハニフ氏は、今週末のバーレーンF1開催に向けてサーキット周辺で雲播種を実施し、降雨を促して空気品質と視界の改善を図る方針を示した。全国でこれまでに14回、50機以上の飛行機を使った雲播種が行われており、サバ州・サラワク州でも実施されている。 濃霧はインドネシアの大規模森林・泥炭火災からの越境煙が原因で、約1か月以上続いている。 NADMAのマズリ・マズラン局長は、雲播種は降雨を増やし霧の軽減を狙う取り組みであると説明した。</p>
+        <p class="daily-summary">マレーシア全土で続くインドネシア発の煙による濃霧の中、セパング・インターナショナル・サーキットのCEOアザン・シャフリマン・ハニフ氏は、今週末のバーレーンF1開催に向けてサーキット周辺で雲播種を実施し、降雨を促して空気品質と視界の改善を図る方針を示した。全国でこれまでに14回、50機以上の飛行機を使った雲播種が行われており、<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>・<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>でも実施されている。 濃霧はインドネシアの大規模森林・泥炭火災からの越境煙が原因で、約1か月以上続いている。 NADMAのマズリ・マズラン局長は、雲播種は降雨を増やし霧の軽減を狙う取り組みであると説明した。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/03/how-does-cloud-seeding-work-what-it-could-do-for-haze-at-sepang-this-weekend/237311">出典: Malay Mail（2026年10月3日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-17">
         <div class="daily-item-head">
           <span class="item-number">17</span>
           <p class="item-category">社会・経済の動き</p>
@@ -324,7 +359,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-18">
         <div class="daily-item-head">
           <span class="item-number">18</span>
           <p class="item-category">社会・経済の動き</p>
@@ -336,7 +371,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-19">
         <div class="daily-item-head">
           <span class="item-number">19</span>
           <p class="item-category">社会・経済の動き</p>
@@ -348,7 +383,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-20">
         <div class="daily-item-head">
           <span class="item-number">20</span>
           <p class="item-category">社会・経済の動き</p>
@@ -364,5 +399,7 @@
 
 
   </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
 </body>
 </html>

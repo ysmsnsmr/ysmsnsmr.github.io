@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2026年10月1日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       color-scheme: light;
@@ -65,6 +66,20 @@
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
     .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
@@ -80,6 +95,9 @@
       .daily-item { padding: 15px; }
       .air-quality-links { align-items: flex-start; flex-direction: column; }
       .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
     }
   </style>
 </head>
@@ -103,6 +121,26 @@
       <a href="#category-1">暮らしに関わる更新 15件</a><a href="#category-2">社会・経済の動き 0件</a>
     </nav>
 
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>8地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="putrajaya" data-lat="2.93" data-lon="101.68" data-zoom="11"><strong>プトラジャヤ</strong><ul><li><a href="#article-3">Johan Setiaが最高濃度、6時時点で未改善は4地区</a></li>
+<li><a href="#article-8">マレーシア気象局、KL他10州で本日7時まで雷雨・大雨・強風警報</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-8">マレーシア気象局、KL他10州で本日7時まで雷雨・大雨・強風警報</a></li>
+<li><a href="#article-14">原題・出典情報</a></li></ul></li>
+<li class="map-place" data-place-key="labuan" data-lat="5.28" data-lon="115.24" data-zoom="11"><strong>ラブアン</strong><ul><li><a href="#article-8">マレーシア気象局、KL他10州で本日7時まで雷雨・大雨・強風警報</a></li></ul></li>
+<li class="map-place" data-place-key="kedah" data-lat="6.1" data-lon="100.5" data-zoom="8"><strong>ケダ州</strong><ul><li><a href="#article-8">マレーシア気象局、KL他10州で本日7時まで雷雨・大雨・強風警報</a></li></ul></li>
+<li class="map-place" data-place-key="perak" data-lat="4.8" data-lon="101.1" data-zoom="8"><strong>ペラ州</strong><ul><li><a href="#article-8">マレーシア気象局、KL他10州で本日7時まで雷雨・大雨・強風警報</a></li></ul></li>
+<li class="map-place" data-place-key="sarawak" data-lat="3.1" data-lon="113.0" data-zoom="7"><strong>サラワク州</strong><ul><li><a href="#article-8">マレーシア気象局、KL他10州で本日7時まで雷雨・大雨・強風警報</a></li></ul></li>
+<li class="map-place" data-place-key="george-town" data-lat="5.41" data-lon="100.34" data-zoom="11"><strong>ジョージタウン</strong><ul><li><a href="#article-11">ジョージタウンのジャラン・スルタン・アズラン・シャでMRTコープが夜間車線閉鎖、11月30日まで</a></li></ul></li>
+<li class="map-place" data-place-key="selangor" data-lat="3.1" data-lon="101.5" data-zoom="9"><strong>セランゴール州</strong><ul><li><a href="#article-13">原題・出典情報</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
             <section class="daily-category" aria-labelledby="category-1">
               <div class="daily-category-head">
                 <h2 id="category-1">暮らしに関わる更新</h2>
@@ -110,7 +148,7 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -122,7 +160,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-2">
         <div class="daily-item-head">
           <span class="item-number">2</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -134,19 +172,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-3">
         <div class="daily-item-head">
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>Johan Setiaが最高濃度、6時時点で未改善は4地区</h3>
-        <p class="daily-summary">環境省（JAS）のデータによると、Johan Setiaの大気汚染指数（IPU）は依然として最も高く、午後6時時点で健康基準を下回っている地域は4つだけです。また、PutrajayaとKlangはそれぞれIPUが16ポイント低下し、午後5時から最大の改善が見られました。 JASのデータでは、PutrajayaとKlangがIPUを16ポイント下げ、午後5時から最大の改善を記録しています。</p>
+        <p class="daily-summary">環境省（JAS）のデータによると、Johan Setiaの大気汚染指数（IPU）は依然として最も高く、午後6時時点で健康基準を下回っている地域は4つだけです。また、<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">Putrajaya</a>とKlangはそれぞれIPUが16ポイント低下し、午後5時から最大の改善が見られました。 JASのデータでは、<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">Putrajaya</a>とKlangがIPUを16ポイント下げ、午後5時から最大の改善を記録しています。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-johan-setia-kekal-tertinggi-hanya-empat-kawasan-masih-tidak-sihat-setakat-6-petang">出典: Astro Awani（2026年10月1日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-4">
         <div class="daily-item-head">
           <span class="item-number">4</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -158,7 +196,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-5">
         <div class="daily-item-head">
           <span class="item-number">5</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -170,7 +208,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-6">
         <div class="daily-item-head">
           <span class="item-number">6</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -182,7 +220,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-7">
         <div class="daily-item-head">
           <span class="item-number">7</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -194,19 +232,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-8">
         <div class="daily-item-head">
           <span class="item-number">8</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>マレーシア気象局、KL他10州で本日7時まで雷雨・大雨・強風警報</h3>
-        <p class="daily-summary">マレーシア気象局は、クアラルンプール、プトラジャヤ、ラブアンを含む10州で、本日19時まで雷雨・大雨・強風の警報を発表しました。ケダ州やペラ州、サラワク州など広範囲にわたり、激しい雨や突風が予想されています。 警報は本日19時まで有効です。 対象地域はKL・プトラジャヤ・ラブアンに加え、ケダ、ペラ、サラワクなど多数の州です。</p>
+        <p class="daily-summary">マレーシア気象局は、<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>、<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">プトラジャヤ</a>、<a class="place-link" data-place-key="labuan" href="https://www.openstreetmap.org/?mlat=5.28&amp;mlon=115.24#map=11/5.28/115.24" title="ラブアンの概略位置を地図で見る">ラブアン</a>を含む10州で、本日19時まで雷雨・大雨・強風の警報を発表しました。<a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">ケダ州</a>や<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>、<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>など広範囲にわたり、激しい雨や突風が予想されています。 警報は本日19時まで有効です。 対象地域はKL・<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">プトラジャヤ</a>・<a class="place-link" data-place-key="labuan" href="https://www.openstreetmap.org/?mlat=5.28&amp;mlon=115.24#map=11/5.28/115.24" title="ラブアンの概略位置を地図で見る">ラブアン</a>に加え、ケダ、ペラ、サラワクなど多数の州です。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/01/weather-alert-thunderstorms-heavy-rain-and-strong-winds-forecast-across-kl-putrajaya-labuan-and-10-states-until-7pm/237274">出典: Malay Mail（2026年10月1日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-9">
         <div class="daily-item-head">
           <span class="item-number">9</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -218,7 +256,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-10">
         <div class="daily-item-head">
           <span class="item-number">10</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -230,19 +268,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-11">
         <div class="daily-item-head">
           <span class="item-number">11</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>ジョージタウンのジャラン・スルタン・アズラン・シャでMRTコープが夜間車線閉鎖、11月30日まで</h3>
+        <h3><a class="place-link" data-place-key="george-town" href="https://www.openstreetmap.org/?mlat=5.41&amp;mlon=100.34#map=11/5.41/100.34" title="ジョージタウンの概略位置を地図で見る">ジョージタウン</a>のジャラン・スルタン・アズラン・シャでMRTコープが夜間車線閉鎖、11月30日まで</h3>
         <p class="daily-summary">MRT Corpは、ミュティアラ・ライン工事のため、ジャラン・スルタン・アズラン・シャの一部車線を本日から2026年11月30日まで、毎晩22時から翌5時まで閉鎖すると発表しました。閉鎖区間はスンガイ・ニボンバス停からバトゥ・ウバン道路運輸局までで、左側車線と右側車線の一部が影響を受けますが、他の車線は通常通り利用可能です。通行者は注意喚起に従い、現場の標識や誘導員の指示に従ってください。 閉鎖時間帯は夜間22時～翌5時で、工事は樹木伐採と移設作業が中心です。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/01/mrt-corp-overnight-lane-closures-on-jalan-sultan-azlan-shah-in-george-town-until-nov-30-for-mutiara-line-works/237251">出典: Malay Mail（2026年10月1日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-12">
         <div class="daily-item-head">
           <span class="item-number">12</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -254,31 +292,31 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-13">
         <div class="daily-item-head">
           <span class="item-number">13</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>原題・出典情報</h3>
-        <p class="daily-summary">Eight areas remain in unhealthy API range at noon, Johan Setia highest at 157 KUALA LUMPUR, Oct 1 — Eight areas recorded unhealthy air quality as of noon today, with Johan Setia in Selangor co...</p>
+        <p class="daily-summary">Eight areas remain in unhealthy API range at noon, Johan Setia highest at 157 KUALA LUMPUR, Oct 1 — Eight areas recorded unhealthy air quality as of noon today, with Johan Setia in <a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">Selangor</a> co...</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/01/eight-areas-remain-in-unhealthy-api-range-at-noon-johan-setia-highest-at-157/237228">出典: Malay Mail（2026年10月1日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-14">
         <div class="daily-item-head">
           <span class="item-number">14</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>原題・出典情報</h3>
-        <p class="daily-summary">Watching the F1 in Sepang this weekend? KLIA urges visitors to ditch cars, use public transport PUTRAJAYA, Oct 1 — Kuala Lumpur International Airport (KLIA) is advising visitors attending the Formula 1 (F1) Gul...</p>
+        <p class="daily-summary">Watching the F1 in Sepang this weekend? KLIA urges visitors to ditch cars, use public transport PUTRAJAYA, Oct 1 — <a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">Kuala Lumpur</a> International Airport (KLIA) is advising visitors attending the Formula 1 (F1) Gul...</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/01/watching-the-f1-in-sepang-this-weekend-klia-urges-visitors-to-ditch-cars-use-public-transport/237225">出典: Malay Mail（2026年10月1日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-15">
         <div class="daily-item-head">
           <span class="item-number">15</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -305,5 +343,7 @@
 
 
   </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
 </body>
 </html>

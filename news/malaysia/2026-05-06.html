@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2026年5月6日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       color-scheme: light;
@@ -65,6 +66,20 @@
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
     .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
@@ -80,6 +95,9 @@
       .daily-item { padding: 15px; }
       .air-quality-links { align-items: flex-start; flex-direction: column; }
       .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
     }
   </style>
 </head>
@@ -103,6 +121,27 @@
       <a href="#category-1">暮らしに関わる更新 6件</a><a href="#category-2">社会・経済の動き 24件</a>
     </nav>
 
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>8地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="sabah" data-lat="5.6" data-lon="116.5" data-zoom="7"><strong>サバ州</strong><ul><li><a href="#article-3">Sabahの電気代上昇懸念について…</a></li>
+<li><a href="#article-5">Sabahの電気代上昇懸念について…</a></li>
+<li><a href="#article-6">Sabahの電気代上昇懸念について…</a></li></ul></li>
+<li class="map-place" data-place-key="perak" data-lat="4.8" data-lon="101.1" data-zoom="8"><strong>ペラ州</strong><ul><li><a href="#article-4">Lelaki ditahan disyaki curi k…</a></li></ul></li>
+<li class="map-place" data-place-key="selangor" data-lat="3.1" data-lon="101.5" data-zoom="9"><strong>セランゴール州</strong><ul><li><a href="#article-7">Agihan zakat Selangor cecah RM1</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-8">KLIA aerotrain set to resume…</a></li>
+<li><a href="#article-18">Disneyland Hong Kong anjur uj…</a></li></ul></li>
+<li class="map-place" data-place-key="ipoh" data-lat="4.6" data-lon="101.09" data-zoom="11"><strong>イポー</strong><ul><li><a href="#article-13">Anggota polis kes tular didak…</a></li></ul></li>
+<li class="map-place" data-place-key="petaling-jaya" data-lat="3.11" data-lon="101.64" data-zoom="11"><strong>プタリン・ジャヤ</strong><ul><li><a href="#article-14">Polis tahan lelaki mengamuk g…</a></li></ul></li>
+<li class="map-place" data-place-key="shah-alam" data-lat="3.07" data-lon="101.52" data-zoom="11"><strong>シャー・アラム</strong><ul><li><a href="#article-17">Dr Fie didakwa langgar perint…</a></li></ul></li>
+<li class="map-place" data-place-key="putrajaya" data-lat="2.93" data-lon="101.68" data-zoom="11"><strong>プトラジャヤ</strong><ul><li><a href="#article-25">Anwar orders rent cuts at fed…</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
             <section class="daily-category" aria-labelledby="category-1">
               <div class="daily-category-head">
                 <h2 id="category-1">暮らしに関わる更新</h2>
@@ -110,7 +149,7 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -122,7 +161,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-2">
         <div class="daily-item-head">
           <span class="item-number">2</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -134,49 +173,49 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-3">
         <div class="daily-item-head">
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>Sabahの電気代上昇懸念について…</h3>
-        <p class="daily-summary">Sabahの電気代上昇懸念について、料金表は変わっていないと説明されました。 Sabah Electricityは、請求額増加への懸念に対し料金自体は未変更だと説明しました。 暑さによるエアコン使用増が主因とみられています。 暑い時期は家庭の電気代が上がりやすくなります。</p>
+        <h3><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">Sabah</a>の電気代上昇懸念について…</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">Sabah</a>の電気代上昇懸念について、料金表は変わっていないと説明されました。 <a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">Sabah</a> Electricityは、請求額増加への懸念に対し料金自体は未変更だと説明しました。 暑さによるエアコン使用増が主因とみられています。 暑い時期は家庭の電気代が上がりやすくなります。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/05/05/committee-aims-to-finalise-ag-pp-separation-bill-by-may-18-says-azalina/218840">出典: Malay Mail（2026年5月5日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-4">
         <div class="daily-item-head">
           <span class="item-number">4</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>Lelaki ditahan disyaki curi k…</h3>
-        <p class="daily-summary">Lelaki ditahan disyaki curi kabel KTMB Polis menahan seorang lelaki selepas disyaki mencuri kabel milik Keretapi Tanah Melayu Berhad (KTMB) di kawasan landasan kereta api Kilometer 181.9 berhampiran Jalan Tun Perak, semalam. RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <p class="daily-summary">Lelaki ditahan disyaki curi kabel KTMB Polis menahan seorang lelaki selepas disyaki mencuri kabel milik Keretapi Tanah Melayu Berhad (KTMB) di kawasan landasan kereta api Kilometer 181.9 berhampiran Jalan Tun <a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">Perak</a>, semalam. RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/lelaki-ditahan-disyaki-curi-kabel-ktmb">出典: Astro Awani（2026年5月5日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-5">
         <div class="daily-item-head">
           <span class="item-number">5</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>Sabahの電気代上昇懸念について…</h3>
-        <p class="daily-summary">Sabahの電気代上昇懸念について、料金表は変わっていないと説明されました。 Sabah Electricityは、請求額増加への懸念に対し料金自体は未変更だと説明しました。 暑さによるエアコン使用増が主因とみられています。 暑い時期は家庭の電気代が上がりやすくなります。</p>
+        <h3><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">Sabah</a>の電気代上昇懸念について…</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">Sabah</a>の電気代上昇懸念について、料金表は変わっていないと説明されました。 <a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">Sabah</a> Electricityは、請求額増加への懸念に対し料金自体は未変更だと説明しました。 暑さによるエアコン使用増が主因とみられています。 暑い時期は家庭の電気代が上がりやすくなります。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/05/05/pahang-sultan-grants-audience-to-singapores-lee-hsien-loong-and-delegation/218838">出典: Malay Mail（2026年5月5日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-6">
         <div class="daily-item-head">
           <span class="item-number">6</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>Sabahの電気代上昇懸念について…</h3>
-        <p class="daily-summary">Sabahの電気代上昇懸念について、料金表は変わっていないと説明されました。 Sabah Electricityは、請求額増加への懸念に対し料金自体は未変更だと説明しました。 暑さによるエアコン使用増が主因とみられています。 暑い時期は家庭の電気代が上がりやすくなります。</p>
+        <h3><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">Sabah</a>の電気代上昇懸念について…</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">Sabah</a>の電気代上昇懸念について、料金表は変わっていないと説明されました。 <a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">Sabah</a> Electricityは、請求額増加への懸念に対し料金自体は未変更だと説明しました。 暑さによるエアコン使用増が主因とみられています。 暑い時期は家庭の電気代が上がりやすくなります。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/05/05/bitcoin-mining-electricity-theft-costs-malaysia-rm700m-a-year-says-deputy-minister/218824">出典: Malay Mail（2026年5月5日）</a>
       </article>
@@ -192,31 +231,31 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-7">
         <div class="daily-item-head">
           <span class="item-number">7</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>Agihan zakat Selangor cecah RM1</h3>
-        <p class="daily-summary">Agihan zakat Selangor cecah RM1.33 bilion tahun lepas Lembaga Zakat Selangor (Zakat Selangor) merekodkan agihan zakat sebanyak RM1.33 bilion tahun lepas dengan lebih 60 peratus disalurkan kepada golongan fakir dan miskin melibatkan lebih 75,000 keluarga di seluruh negeri. RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <h3>Agihan zakat <a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">Selangor</a> cecah RM1</h3>
+        <p class="daily-summary">Agihan zakat <a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">Selangor</a> cecah RM1.33 bilion tahun lepas Lembaga Zakat <a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">Selangor</a> (Zakat <a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">Selangor</a>) merekodkan agihan zakat sebanyak RM1.33 bilion tahun lepas dengan lebih 60 peratus disalurkan kepada golongan fakir dan miskin melibatkan lebih 75,000 keluarga di seluruh negeri. RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/agihan-zakat-selangor-cecah-rm133-bilion-tahun-lepas">出典: Astro Awani（2026年5月5日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-8">
         <div class="daily-item-head">
           <span class="item-number">8</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
         <h3>KLIA aerotrain set to resume…</h3>
-        <p class="daily-summary">KLIA aerotrain set to resume 24-hour service by end-May, says Loke SEPANG, May 5 — The aerotrain service at Kuala Lumpur International Airport (KLIA) is expected to resume 24-hour o... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <p class="daily-summary">KLIA aerotrain set to resume 24-hour service by end-May, says Loke SEPANG, May 5 — The aerotrain service at <a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">Kuala Lumpur</a> International Airport (KLIA) is expected to resume 24-hour o... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/05/05/klia-aerotrain-set-to-resume-24-hour-service-by-end-may-says-loke/218815">出典: Malay Mail（2026年5月5日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-9">
         <div class="daily-item-head">
           <span class="item-number">9</span>
           <p class="item-category">社会・経済の動き</p>
@@ -228,7 +267,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-10">
         <div class="daily-item-head">
           <span class="item-number">10</span>
           <p class="item-category">社会・経済の動き</p>
@@ -240,7 +279,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-11">
         <div class="daily-item-head">
           <span class="item-number">11</span>
           <p class="item-category">社会・経済の動き</p>
@@ -252,7 +291,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-12">
         <div class="daily-item-head">
           <span class="item-number">12</span>
           <p class="item-category">社会・経済の動き</p>
@@ -264,31 +303,31 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-13">
         <div class="daily-item-head">
           <span class="item-number">13</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
         <h3>Anggota polis kes tular didak…</h3>
-        <p class="daily-summary">Anggota polis kes tular didakwa ambil wang ditukarkan sementara tunggu siasatan Anggota polis yang didakwa mengambil wang daripada seorang lelaki seperti yang tular di media sosial baru-baru ini ditempatkan di bahagian pentadbiran Ibu Pejabat Polis Daerah Ipoh sementara menunggu hasil siasatan lanjut. RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <p class="daily-summary">Anggota polis kes tular didakwa ambil wang ditukarkan sementara tunggu siasatan Anggota polis yang didakwa mengambil wang daripada seorang lelaki seperti yang tular di media sosial baru-baru ini ditempatkan di bahagian pentadbiran Ibu Pejabat Polis Daerah <a class="place-link" data-place-key="ipoh" href="https://www.openstreetmap.org/?mlat=4.6&amp;mlon=101.09#map=11/4.6/101.09" title="イポーの概略位置を地図で見る">Ipoh</a> sementara menunggu hasil siasatan lanjut. RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/anggota-polis-kes-tular-didakwa-ambil-wang-ditukarkan-sementara-tunggu-siasatan">出典: Astro Awani（2026年5月5日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-14">
         <div class="daily-item-head">
           <span class="item-number">14</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
         <h3>Polis tahan lelaki mengamuk g…</h3>
-        <p class="daily-summary">Polis tahan lelaki mengamuk guna pisau di Damansara Perdana Polis menahan seorang lelaki tempatan yang bertindak agresif dan mengamuk sambil memegang dua bilah pisau di kawasan lot kedai di Damansara Perdana dekat Petaling Jaya, semalam. RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <p class="daily-summary">Polis tahan lelaki mengamuk guna pisau di Damansara Perdana Polis menahan seorang lelaki tempatan yang bertindak agresif dan mengamuk sambil memegang dua bilah pisau di kawasan lot kedai di Damansara Perdana dekat <a class="place-link" data-place-key="petaling-jaya" href="https://www.openstreetmap.org/?mlat=3.11&amp;mlon=101.64#map=11/3.11/101.64" title="プタリン・ジャヤの概略位置を地図で見る">Petaling Jaya</a>, semalam. RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/polis-tahan-lelaki-mengamuk-guna-pisau-di-damansara-perdana">出典: Astro Awani（2026年5月5日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-15">
         <div class="daily-item-head">
           <span class="item-number">15</span>
           <p class="item-category">社会・経済の動き</p>
@@ -300,7 +339,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-16">
         <div class="daily-item-head">
           <span class="item-number">16</span>
           <p class="item-category">社会・経済の動き</p>
@@ -312,31 +351,31 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-17">
         <div class="daily-item-head">
           <span class="item-number">17</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
         <h3>Dr Fie didakwa langgar perint…</h3>
-        <p class="daily-summary">Dr Fie didakwa langgar perintah mahkamah, ibu mohon doa - &#x27;Moga anakku kuat&#x27; Dr Fie yang ditemui di Mahkamah Tinggi Syariah Shah Alam memaklumkan menerima notis berkenaan sekali gus memberi kesan kepada mental dan emosinya. RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <p class="daily-summary">Dr Fie didakwa langgar perintah mahkamah, ibu mohon doa - &#x27;Moga anakku kuat&#x27; Dr Fie yang ditemui di Mahkamah Tinggi Syariah <a class="place-link" data-place-key="shah-alam" href="https://www.openstreetmap.org/?mlat=3.07&amp;mlon=101.52#map=11/3.07/101.52" title="シャー・アラムの概略位置を地図で見る">Shah Alam</a> memaklumkan menerima notis berkenaan sekali gus memberi kesan kepada mental dan emosinya. RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.astroawani.com/hiburan-malaysia/dr-fie-didakwa-langgar-perintah-mahkamah-ibu-mohon-doa-moga-anakku-kuat">出典: Astro Awani（2026年5月6日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-18">
         <div class="daily-item-head">
           <span class="item-number">18</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
         <h3>Disneyland Hong Kong anjur uj…</h3>
-        <p class="daily-summary">Disneyland Hong Kong anjur uji bakat di Kuala Lumpur Jun ini Bakat seni persembahan Malaysia dipelawa untuk menyertai barisan pelakonnya sebagai penari dan pelakon watak. RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <p class="daily-summary">Disneyland Hong Kong anjur uji bakat di <a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">Kuala Lumpur</a> Jun ini Bakat seni persembahan Malaysia dipelawa untuk menyertai barisan pelakonnya sebagai penari dan pelakon watak. RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.astroawani.com/gaya-hidup-terkini-malaysia/disneyland-hong-kong-anjur-uji-bakat-di-kuala-lumpur-jun-ini">出典: Astro Awani（2026年5月6日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-19">
         <div class="daily-item-head">
           <span class="item-number">19</span>
           <p class="item-category">社会・経済の動き</p>
@@ -348,7 +387,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-20">
         <div class="daily-item-head">
           <span class="item-number">20</span>
           <p class="item-category">社会・経済の動き</p>
@@ -360,7 +399,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-21">
         <div class="daily-item-head">
           <span class="item-number">21</span>
           <p class="item-category">社会・経済の動き</p>
@@ -372,7 +411,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-22">
         <div class="daily-item-head">
           <span class="item-number">22</span>
           <p class="item-category">社会・経済の動き</p>
@@ -384,7 +423,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-23">
         <div class="daily-item-head">
           <span class="item-number">23</span>
           <p class="item-category">社会・経済の動き</p>
@@ -396,7 +435,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-24">
         <div class="daily-item-head">
           <span class="item-number">24</span>
           <p class="item-category">社会・経済の動き</p>
@@ -408,19 +447,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-25">
         <div class="daily-item-head">
           <span class="item-number">25</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
         <h3>Anwar orders rent cuts at fed…</h3>
-        <p class="daily-summary">Anwar orders rent cuts at federal govt-linked premises to aid small traders, urges states and local councils to follow suit KUALA LUMPUR, May 5 — Putrajaya will lower rental rates at federal government-owned commercial premises from this... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <p class="daily-summary">Anwar orders rent cuts at federal govt-linked premises to aid small traders, urges states and local councils to follow suit KUALA LUMPUR, May 5 — <a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">Putrajaya</a> will lower rental rates at federal government-owned commercial premises from this... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/05/05/anwar-orders-rent-cuts-at-federal-govt-linked-premises-to-aid-small-traders-urges-states-and-local-councils-to-follow-suit/218802">出典: Malay Mail（2026年5月5日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-26">
         <div class="daily-item-head">
           <span class="item-number">26</span>
           <p class="item-category">社会・経済の動き</p>
@@ -432,7 +471,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-27">
         <div class="daily-item-head">
           <span class="item-number">27</span>
           <p class="item-category">社会・経済の動き</p>
@@ -444,7 +483,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-28">
         <div class="daily-item-head">
           <span class="item-number">28</span>
           <p class="item-category">社会・経済の動き</p>
@@ -456,7 +495,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-29">
         <div class="daily-item-head">
           <span class="item-number">29</span>
           <p class="item-category">社会・経済の動き</p>
@@ -468,7 +507,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-30">
         <div class="daily-item-head">
           <span class="item-number">30</span>
           <p class="item-category">社会・経済の動き</p>
@@ -484,5 +523,7 @@
 
 
   </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
 </body>
 </html>

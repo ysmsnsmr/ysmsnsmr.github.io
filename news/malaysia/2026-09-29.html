@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2026年9月29日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       color-scheme: light;
@@ -65,6 +66,20 @@
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
     .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
@@ -80,6 +95,9 @@
       .daily-item { padding: 15px; }
       .air-quality-links { align-items: flex-start; flex-direction: column; }
       .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
     }
   </style>
 </head>
@@ -103,6 +121,21 @@
       <a href="#category-1">暮らしに関わる更新 10件</a><a href="#category-2">社会・経済の動き 5件</a>
     </nav>
 
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>4地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="kedah" data-lat="6.1" data-lon="100.5" data-zoom="8"><strong>ケダ州</strong><ul><li><a href="#article-2">ケダ州チャンルンで犬18匹の狂犬病サンプル採取、結果待ち</a></li>
+<li><a href="#article-7">ケダ州チャンルンで狂犬病疑い、DVSが18匹の犬の検体採取</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-9">AirAsiaがF1週末のKLIA利用者に余裕ある到着を呼びかけ</a></li></ul></li>
+<li class="map-place" data-place-key="serian" data-lat="1.17" data-lon="110.57" data-zoom="11"><strong>セリアン</strong><ul><li><a href="#article-10">マレーシアで再び濃霧、31地域が不健康レベルのAPI</a></li></ul></li>
+<li class="map-place" data-place-key="pasir-gudang" data-lat="1.46" data-lon="103.9" data-zoom="11"><strong>パシル・グダン</strong><ul><li><a href="#article-10">マレーシアで再び濃霧、31地域が不健康レベルのAPI</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
             <section class="daily-category" aria-labelledby="category-1">
               <div class="daily-category-head">
                 <h2 id="category-1">暮らしに関わる更新</h2>
@@ -110,7 +143,7 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -122,19 +155,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-2">
         <div class="daily-item-head">
           <span class="item-number">2</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>ケダ州チャンルンで犬18匹の狂犬病サンプル採取、結果待ち</h3>
-        <p class="daily-summary">ケダ州獣医サービス局（DVS）はチャンルンで狂犬病疑いの犬18匹からサンプルを採取し、現在検査結果を待っている。 サンプル採取は2026年9月29日に実施された。</p>
+        <h3><a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">ケダ州</a>チャンルンで犬18匹の狂犬病サンプル採取、結果待ち</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">ケダ州</a>獣医サービス局（DVS）はチャンルンで狂犬病疑いの犬18匹からサンプルを採取し、現在検査結果を待っている。 サンプル採取は2026年9月29日に実施された。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/rabies-18-anjing-diambil-sampel-tunggu-keputusan-makmal-dvs">出典: Astro Awani（2026年9月29日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-3">
         <div class="daily-item-head">
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -146,7 +179,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-4">
         <div class="daily-item-head">
           <span class="item-number">4</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -158,7 +191,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-5">
         <div class="daily-item-head">
           <span class="item-number">5</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -170,7 +203,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-6">
         <div class="daily-item-head">
           <span class="item-number">6</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -182,19 +215,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-7">
         <div class="daily-item-head">
           <span class="item-number">7</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>ケダ州チャンルンで狂犬病疑い、DVSが18匹の犬の検体採取</h3>
-        <p class="daily-summary">ケダ州獣医サービス局（DVS）は、同州チャンルン地区で31歳男性が野良犬に噛まれた事件を受け、2026年9月28日までに周辺で18匹の犬から検体を採取し、狂犬病の確認検査を実施中です。検査結果は現在待機中で、同局は調査を継続するとしています。 チャンルンはタイ国境から50kmの狂犬病バッファーゾーンに位置し、所有犬は動物法に基づき予防接種が義務付けられています。</p>
+        <h3><a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">ケダ州</a>チャンルンで狂犬病疑い、DVSが18匹の犬の検体採取</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="kedah" href="https://www.openstreetmap.org/?mlat=6.1&amp;mlon=100.5#map=8/6.1/100.5" title="ケダ州の概略位置を地図で見る">ケダ州</a>獣医サービス局（DVS）は、同州チャンルン地区で31歳男性が野良犬に噛まれた事件を受け、2026年9月28日までに周辺で18匹の犬から検体を採取し、狂犬病の確認検査を実施中です。検査結果は現在待機中で、同局は調査を継続するとしています。 チャンルンはタイ国境から50kmの狂犬病バッファーゾーンに位置し、所有犬は動物法に基づき予防接種が義務付けられています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/29/dvs-tests-18-dogs-following-rabies-scare-in-kedahs-changlun/236999">出典: Malay Mail（2026年9月29日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-8">
         <div class="daily-item-head">
           <span class="item-number">8</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -206,25 +239,25 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-9">
         <div class="daily-item-head">
           <span class="item-number">9</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>AirAsiaがF1週末のKLIA利用者に余裕ある到着を呼びかけ</h3>
-        <p class="daily-summary">AirAsiaは、10月2日から4日までのフォーミュラ1レース週末にクアラルンプール国際空港ターミナル2を利用するすべての旅行者に、混雑を見越して余裕を持った到着を推奨しています。国際線は出発3時間前、国内線は2時間前に空港に到着し、自己チェックインは出発14日前から1時間前まで利用できるとしています。また、マレーシアパスポート保持者はMyNIISeまたはMyBorderPassアプリを活用し、エクスプレス・レール・リンク（ERL）の利用も勧められています。 国際線は出発3時間前、国内線は2時間前に到着するよう案内 自己チェックインは出発14日前から1時間前まで利用可能</p>
+        <p class="daily-summary">AirAsiaは、10月2日から4日までのフォーミュラ1レース週末に<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>国際空港ターミナル2を利用するすべての旅行者に、混雑を見越して余裕を持った到着を推奨しています。国際線は出発3時間前、国内線は2時間前に空港に到着し、自己チェックインは出発14日前から1時間前まで利用できるとしています。また、マレーシアパスポート保持者はMyNIISeまたはMyBorderPassアプリを活用し、エクスプレス・レール・リンク（ERL）の利用も勧められています。 国際線は出発3時間前、国内線は2時間前に到着するよう案内 自己チェックインは出発14日前から1時間前まで利用可能</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/29/avoid-the-f1-rush-airasia-advises-extra-klia-travel-time-oct-2-4/236953">出典: Malay Mail（2026年9月29日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-10">
         <div class="daily-item-head">
           <span class="item-number">10</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>マレーシアで再び濃霧、31地域が不健康レベルのAPI</h3>
-        <p class="daily-summary">マレーシア全土で濃霧が再び広がり、今日午前9時時点で31の地域が不健康（API101〜200）と判定された。サラワクのセリアン警察本部（API175）やジョホールのパシル・グダン（170）などが高い数値を示す。 不健康と判定された主な地域は、セリアン警察本部（175）、パシル・グダン（170）、ラルキン（169）、バンダラヤ・メラカ（166）など。</p>
+        <p class="daily-summary">マレーシア全土で濃霧が再び広がり、今日午前9時時点で31の地域が不健康（API101〜200）と判定された。サラワクの<a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>警察本部（API175）やジョホールの<a class="place-link" data-place-key="pasir-gudang" href="https://www.openstreetmap.org/?mlat=1.46&amp;mlon=103.9#map=11/1.46/103.9" title="パシル・グダンの概略位置を地図で見る">パシル・グダン</a>（170）などが高い数値を示す。 不健康と判定された主な地域は、<a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>警察本部（175）、<a class="place-link" data-place-key="pasir-gudang" href="https://www.openstreetmap.org/?mlat=1.46&amp;mlon=103.9#map=11/1.46/103.9" title="パシル・グダンの概略位置を地図で見る">パシル・グダン</a>（170）、ラルキン（169）、バンダラヤ・メラカ（166）など。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/29/hazy-conditions-descend-on-malaysia-again-as-31-areas-hit-unhealthy-api/236948">出典: Malay Mail（2026年9月29日）</a>
       </article>
@@ -240,7 +273,7 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-11">
         <div class="daily-item-head">
           <span class="item-number">11</span>
           <p class="item-category">社会・経済の動き</p>
@@ -252,7 +285,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-12">
         <div class="daily-item-head">
           <span class="item-number">12</span>
           <p class="item-category">社会・経済の動き</p>
@@ -264,7 +297,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-13">
         <div class="daily-item-head">
           <span class="item-number">13</span>
           <p class="item-category">社会・経済の動き</p>
@@ -276,7 +309,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-14">
         <div class="daily-item-head">
           <span class="item-number">14</span>
           <p class="item-category">社会・経済の動き</p>
@@ -288,7 +321,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-15">
         <div class="daily-item-head">
           <span class="item-number">15</span>
           <p class="item-category">社会・経済の動き</p>
@@ -304,5 +337,7 @@
 
 
   </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
 </body>
 </html>

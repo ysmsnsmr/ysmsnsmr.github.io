@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2026年9月24日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       color-scheme: light;
@@ -65,6 +66,20 @@
     .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
     .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
     .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
     .source-note { color: var(--muted); }
@@ -80,6 +95,9 @@
       .daily-item { padding: 15px; }
       .air-quality-links { align-items: flex-start; flex-direction: column; }
       .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
     }
   </style>
 </head>
@@ -103,6 +121,27 @@
       <a href="#category-1">暮らしに関わる更新 15件</a><a href="#category-2">社会・経済の動き 0件</a>
     </nav>
 
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>6地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="serian" data-lat="1.17" data-lon="110.57" data-zoom="11"><strong>セリアン</strong><ul><li><a href="#article-1">サラワクの霧が拡大、ルンドゥの濃度急上昇、セリアンとカノウィットは依然“非常に不健康”</a></li>
+<li><a href="#article-2">セリアンのIPUが非常に不健康、他10地区も6時まで不健康</a></li>
+<li><a href="#article-3">セリアン地区の全学校が明日臨時休校、濃霧で大気汚染指数が201を超える</a></li>
+<li><a href="#article-9">サラワク13地区で午後5時までに大気汚染指数が不健康レベルに</a></li></ul></li>
+<li class="map-place" data-place-key="sarawak" data-lat="3.1" data-lon="113.0" data-zoom="7"><strong>サラワク州</strong><ul><li><a href="#article-1">サラワクの霧が拡大、ルンドゥの濃度急上昇、セリアンとカノウィットは依然“非常に不健康”</a></li>
+<li><a href="#article-9">サラワク13地区で午後5時までに大気汚染指数が不健康レベルに</a></li></ul></li>
+<li class="map-place" data-place-key="kuching" data-lat="1.55" data-lon="110.35" data-zoom="11"><strong>クチン</strong><ul><li><a href="#article-1">サラワクの霧が拡大、ルンドゥの濃度急上昇、セリアンとカノウィットは依然“非常に不健康”</a></li>
+<li><a href="#article-10">クチンマラソン2026の道路閉鎖は9月26日正午から段階的に実施</a></li></ul></li>
+<li class="map-place" data-place-key="melaka" data-lat="2.3" data-lon="102.3" data-zoom="9"><strong>マラッカ州</strong><ul><li><a href="#article-8">マラッカ州選挙の郵便投票申請が本日受付開始</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-11">マレーシア全土で午後6時まで雷雨と強風警報、クアラルンプール含む10州に注意</a></li></ul></li>
+<li class="map-place" data-place-key="kelantan" data-lat="5.4" data-lon="102.0" data-zoom="8"><strong>ケランタン州</strong><ul><li><a href="#article-13">原題・出典情報</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
             <section class="daily-category" aria-labelledby="category-1">
               <div class="daily-category-head">
                 <h2 id="category-1">暮らしに関わる更新</h2>
@@ -110,43 +149,43 @@
               </div>
               <div class="daily-item-list">
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>サラワクの霧が拡大、ルンドゥの濃度急上昇、セリアンとカノウィットは依然“非常に不健康”</h3>
-        <p class="daily-summary">サラワク州のルンドゥで今朝の大気汚染指数（API）が223に上昇し“非常に不健康”レベルとなり、前日夕方の163から急増しました。同じくセリアンは218、カノウィットは216と、いずれも200を超える非常に不健康な状態が続いています。クチンは‘不健康’（195）に上がり、他の地域でも濃度が上昇していますが、カピットやILPミリなどは改善し‘中程度’に戻りました。 カピットはAPIが121から100へ低下し、ILPミリは154から95へ改善しました。 ベラガやベトン、ビントゥルなど他の地域は‘不健康’レベルを維持しています。</p>
+        <h3>サラワクの霧が拡大、ルンドゥの濃度急上昇、<a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>とカノウィットは依然“非常に不健康”</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>のルンドゥで今朝の大気汚染指数（API）が223に上昇し“非常に不健康”レベルとなり、前日夕方の163から急増しました。同じく<a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>は218、カノウィットは216と、いずれも200を超える非常に不健康な状態が続いています。<a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>は‘不健康’（195）に上がり、他の地域でも濃度が上昇していますが、カピットやILPミリなどは改善し‘中程度’に戻りました。 カピットはAPIが121から100へ低下し、ILPミリは154から95へ改善しました。 ベラガやベトン、ビントゥルなど他の地域は‘不健康’レベルを維持しています。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/24/sarawak-haze-map-darkens-with-lundus-sharp-rise-serian-and-kanowit-still-choking/236286">出典: Malay Mail（2026年9月24日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-2">
         <div class="daily-item-head">
           <span class="item-number">2</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>セリアンのIPUが非常に不健康、他10地区も6時まで不健康</h3>
-        <p class="daily-summary">セリアンはIPU測定値が221で「非常に不健康」カテゴリに入り、午前6時までに他の10地区も不健康と報告されています。 セリアンはIPU測定値221で最高値を記録し、非常に不健康と分類されています。</p>
+        <h3><a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>のIPUが非常に不健康、他10地区も6時まで不健康</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>はIPU測定値が221で「非常に不健康」カテゴリに入り、午前6時までに他の10地区も不健康と報告されています。 <a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>はIPU測定値221で最高値を記録し、非常に不健康と分類されています。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-serian-catat-ipu-sangat-tidak-sihat-10-kawasan-lain-tidak-sihat-setakat-6-pagi">出典: Astro Awani（2026年9月24日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-3">
         <div class="daily-item-head">
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>セリアン地区の全学校が明日臨時休校、濃霧で大気汚染指数が201を超える</h3>
-        <p class="daily-summary">濃霧が続くセリアン地区で、大気汚染指数（IPU）が今夜201を超えたことを受け、同地区の全ての学校が明日臨時休校となります。 大気汚染指数が201を超えたことが休校の直接的な要因となっています。</p>
+        <h3><a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>地区の全学校が明日臨時休校、濃霧で大気汚染指数が201を超える</h3>
+        <p class="daily-summary">濃霧が続く<a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>地区で、大気汚染指数（IPU）が今夜201を超えたことを受け、同地区の全ての学校が明日臨時休校となります。 大気汚染指数が201を超えたことが休校の直接的な要因となっています。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-sekolah-di-serian-ditutup-esok">出典: Astro Awani（2026年9月23日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-4">
         <div class="daily-item-head">
           <span class="item-number">4</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -158,7 +197,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-5">
         <div class="daily-item-head">
           <span class="item-number">5</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -170,7 +209,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-6">
         <div class="daily-item-head">
           <span class="item-number">6</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -182,7 +221,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-7">
         <div class="daily-item-head">
           <span class="item-number">7</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -194,55 +233,55 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-8">
         <div class="daily-item-head">
           <span class="item-number">8</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>マラッカ州選挙の郵便投票申請が本日受付開始</h3>
-        <p class="daily-summary">選挙委員会（EC）のデータク・カイルル・シャリル委員長は、16回目のマラッカ州選挙に向けた国内外すべての郵便投票申請が本日からオンライン（MySPRポータル）で受け付けられると発表した。対象は警察・軍人、選挙関係者、メディア、海外在住マレーシア人、団体などで、申請にはMySPRアカウントが必要。問い合わせは電話（03‑88927080）またはメールで受け付けている。 カテゴリ1Aは警察・軍人・選挙職員・メディア、カテゴリ1Bは海外在住者、カテゴリ1Cは団体向けに設定されている。 申請締切日は後日発表されるため、早めの登録が推奨されている。</p>
+        <h3><a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>選挙の郵便投票申請が本日受付開始</h3>
+        <p class="daily-summary">選挙委員会（EC）のデータク・カイルル・シャリル委員長は、16回目の<a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>選挙に向けた国内外すべての郵便投票申請が本日からオンライン（MySPRポータル）で受け付けられると発表した。対象は警察・軍人、選挙関係者、メディア、海外在住マレーシア人、団体などで、申請にはMySPRアカウントが必要。問い合わせは電話（03‑88927080）またはメールで受け付けている。 カテゴリ1Aは警察・軍人・選挙職員・メディア、カテゴリ1Bは海外在住者、カテゴリ1Cは団体向けに設定されている。 申請締切日は後日発表されるため、早めの登録が推奨されている。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/23/spr-postal-voting-applications-for-melaka-polls-open-today/236276">出典: Malay Mail（2026年9月23日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-9">
         <div class="daily-item-head">
           <span class="item-number">9</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>サラワク13地区で午後5時までに大気汚染指数が不健康レベルに</h3>
-        <p class="daily-summary">サラワク州の13地区で、午後5時までに大気汚染指数（IPU）が不健康レベルとなり、セリアン地区警察本部が最高値197を記録した。 セリアン地区のIPDが197という最高値を記録</p>
+        <p class="daily-summary"><a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>の13地区で、午後5時までに大気汚染指数（IPU）が不健康レベルとなり、<a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>地区警察本部が最高値197を記録した。 <a class="place-link" data-place-key="serian" href="https://www.openstreetmap.org/?mlat=1.17&amp;mlon=110.57#map=11/1.17/110.57" title="セリアンの概略位置を地図で見る">セリアン</a>地区のIPDが197という最高値を記録</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-13-kawasan-di-sarawak-catat-kualiti-udara-tidak-sihat-setakat-5-petang">出典: Astro Awani（2026年9月23日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-10">
         <div class="daily-item-head">
           <span class="item-number">10</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>クチンマラソン2026の道路閉鎖は9月26日正午から段階的に実施</h3>
-        <p class="daily-summary">クチン警察は、2026年クチンマラソンに向けて9月26日正午から27日午前10時まで、道路閉鎖と迂回路を3段階で実施すると発表しました。初期段階ではレブウ・ワヤン‑ジャラン・メインバザール、ジャラン・メインバザール‑ジャラン・トゥン・アバン・ハジ・オペング、ジャラン・トゥン・アバン・ハジ・オペング‑カーペンター通りが閉鎖されます。 第2段階はジャラン・バラック‑ジャラン・パール交差点が26日22時から27日10時まで閉鎖され、最終段階では27日0時1分から10時までマラソンルート上の22か所が閉鎖・迂回されます。</p>
+        <h3><a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>マラソン2026の道路閉鎖は9月26日正午から段階的に実施</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>警察は、2026年<a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>マラソンに向けて9月26日正午から27日午前10時まで、道路閉鎖と迂回路を3段階で実施すると発表しました。初期段階ではレブウ・ワヤン‑ジャラン・メインバザール、ジャラン・メインバザール‑ジャラン・トゥン・アバン・ハジ・オペング、ジャラン・トゥン・アバン・ハジ・オペング‑カーペンター通りが閉鎖されます。 第2段階はジャラン・バラック‑ジャラン・パール交差点が26日22時から27日10時まで閉鎖され、最終段階では27日0時1分から10時までマラソンルート上の22か所が閉鎖・迂回されます。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/23/police-announce-threestage-road-closures-for-kuching-marathon-from-sept-26-to-27/236255">出典: Malay Mail（2026年9月23日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-11">
         <div class="daily-item-head">
           <span class="item-number">11</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>マレーシア全土で午後6時まで雷雨と強風警報、クアラルンプール含む10州に注意</h3>
-        <p class="daily-summary">マレーシア気象局は本日午後6時まで、クアラルンプール連邦直轄領とケダ、ペラ、ケランタン、トレンガヌ、パハン、スランゴール、ネゲリ・スンビラン、ジョホール、サラワク、サバの計10州に対し、雷雨・大雨・強風の警報を発令しました。各州の対象地域では短時間の激しい雨や突風が予想されます。 警報は各州の具体的な地域を指定しており、例えばケダのクリムやバンダル・バハル、パハンのキャメロンハイランドなどが含まれます。 悪天候に備え、外出時は傘や防水対策を行い、交通機関の遅延や道路状況に注意してください。</p>
+        <h3>マレーシア全土で午後6時まで雷雨と強風警報、<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>含む10州に注意</h3>
+        <p class="daily-summary">マレーシア気象局は本日午後6時まで、<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>連邦直轄領とケダ、ペラ、ケランタン、トレンガヌ、パハン、スランゴール、ネゲリ・スンビラン、ジョホール、サラワク、サバの計10州に対し、雷雨・大雨・強風の警報を発令しました。各州の対象地域では短時間の激しい雨や突風が予想されます。 警報は各州の具体的な地域を指定しており、例えばケダのクリムやバンダル・バハル、パハンのキャメロンハイランドなどが含まれます。 悪天候に備え、外出時は傘や防水対策を行い、交通機関の遅延や道路状況に注意してください。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/23/bring-umbrellas-thunderstorms-heavy-rain-expected-in-kl-and-10-states-until-6pm/236251">出典: Malay Mail（2026年9月23日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-12">
         <div class="daily-item-head">
           <span class="item-number">12</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -254,19 +293,19 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-13">
         <div class="daily-item-head">
           <span class="item-number">13</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>原題・出典情報</h3>
-        <p class="daily-summary">Kelantan telecoms at risk of major outages as cable vandalism and theft soar, says says regional MCMC official KOTA BHARU, Sept 23 — Vandalism and theft of telecommunications infrastructure in Kelantan have reached an alarmin...</p>
+        <p class="daily-summary"><a class="place-link" data-place-key="kelantan" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=102.0#map=8/5.4/102.0" title="ケランタン州の概略位置を地図で見る">Kelantan</a> telecoms at risk of major outages as cable vandalism and theft soar, says says regional MCMC official KOTA BHARU, Sept 23 — Vandalism and theft of telecommunications infrastructure in <a class="place-link" data-place-key="kelantan" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=102.0#map=8/5.4/102.0" title="ケランタン州の概略位置を地図で見る">Kelantan</a> have reached an alarmin...</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/09/23/kelantan-telecoms-at-risk-of-major-outages-as-cable-vandalism-and-theft-soar-says-says-regional-mcmc-official/236236">出典: Malay Mail（2026年9月23日）</a>
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-14">
         <div class="daily-item-head">
           <span class="item-number">14</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -278,7 +317,7 @@
       </article>
 
 
-      <article class="daily-item">
+      <article class="daily-item" id="article-15">
         <div class="daily-item-head">
           <span class="item-number">15</span>
           <p class="item-category">暮らしに関わる更新</p>
@@ -305,5 +344,7 @@
 
 
   </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
 </body>
 </html>
