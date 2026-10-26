@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from datetime import date, datetime, timedelta, timezone
+from datetime import date, datetime, time, timedelta, timezone
 
 
 MYT = timezone(timedelta(hours=8))
@@ -30,6 +30,9 @@ SOURCE_THIS_MORNING = re.compile(r"\bthis morning\b|\bpagi (?:ini|tadi)\b", re.I
 TODAY = re.compile(r"\btoday\b|\bhari ini\b", re.IGNORECASE)
 WEATHER_FORECAST = re.compile(r"\b(?:warning|warns?|forecast|expected|advisory|alert|amaran|dijangka|ramalan)\b", re.IGNORECASE)
 HAZE = re.compile(r"\bhaze\b|\bjerebu\b", re.IGNORECASE)
+AIR_QUALITY_READING = re.compile(r"\b(?:API|IPU|APIMS|air pollutant index|air quality index|indeks pencemar udara)\b", re.IGNORECASE)
+SNAPSHOT_CUE = re.compile(r"\b(?:as of|as at|readings?|records?|recorded|highest|top|bacaan|mencatat|paras)\b", re.IGNORECASE)
+SNAPSHOT_AS_OF = re.compile(r"\b(?:as of|as at)\s+(\d{1,2})(?::(\d{2}))?\s*(am|pm)\b", re.IGNORECASE)
 HAZE_ACTION = re.compile(r"\b(?:schools?|classes|examinations?|closures?|closed|reopen(?:ing)?|"
                          r"flights?|trains?|buses|roads?|transport|service disruption|services? suspended)\b", re.IGNORECASE)
 KLANG_VALLEY = re.compile(
@@ -94,6 +97,16 @@ def klang_valley_area_in_body(body: str) -> bool:
     return bool(KLANG_VALLEY.search(DATELINE.sub("", body)))
 
 
+def _snapshot_time(title: str, published_at: datetime) -> datetime:
+    match = SNAPSHOT_AS_OF.search(title)
+    if match:
+        hour, minute = int(match[1]), int(match[2] or "0")
+        if 1 <= hour <= 12 and minute <= 59:
+            hour = hour % 12 + (12 if match[3].lower() == "pm" else 0)
+            return datetime.combine(published_at.astimezone(MYT).date(), time(hour, minute), tzinfo=MYT)
+    return published_at.astimezone(MYT)
+
+
 def publication_rejection_reason(
     title: str, description: str, published_at: datetime, publication_as_of: datetime
 ) -> str | None:
@@ -101,12 +114,17 @@ def publication_rejection_reason(
     text = _article_text(title, description)
     short_weather = WEATHER_NOTICE.search(text) and (WEATHER_FORECAST.search(title) or UNTIL_HOUR.search(text))
     haze_action = HAZE.search(text) and HAZE_ACTION.search(text)
-    if not short_weather and not haze_action:
+    air_quality_snapshot = AIR_QUALITY_READING.search(title) and SNAPSHOT_CUE.search(title)
+    if not short_weather and not haze_action and not air_quality_snapshot:
         return None
     if published_at.tzinfo is None or publication_as_of.tzinfo is None:
         return "unverified_publication_time"
     source_day = published_at.astimezone(MYT).date()
     publication_day = publication_as_of.astimezone(MYT).date()
+    previous_noon = datetime.combine(publication_day - timedelta(days=1), time(12), tzinfo=MYT)
+    if air_quality_snapshot and not haze_action and _snapshot_time(title, published_at) <= previous_noon:
+        if _target_date(title, description, published_at) != publication_day:
+            return "stale_previous_noon_observation"
     if short_weather:
         deadline = notice_deadline(title, description, published_at)
         if deadline is not None and deadline <= publication_as_of.astimezone(MYT):
