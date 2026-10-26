@@ -1757,6 +1757,7 @@ def build_editorial_candidate_pool_json(
         "candidate_policy": {
             "freshness_applied": True,
             "expired_time_bound_notices_removed": True,
+            "stale_previous_noon_observations_removed": True,
             "current_day_weather_and_klang_valley_haze_applied": True,
             "ambiguous_haze_body_check_cap": HAZE_BODY_CHECK_CAP,
             "valid_url_required": True,

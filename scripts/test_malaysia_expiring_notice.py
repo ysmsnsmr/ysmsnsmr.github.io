@@ -87,6 +87,48 @@ class ExpiringNoticeTests(unittest.TestCase):
             datetime.fromisoformat("2026-10-13T20:00:00+08:00"), morning,
         ))
 
+    def test_previous_noon_api_snapshot_is_not_carried_into_next_morning(self) -> None:
+        morning = datetime.fromisoformat("2026-10-26T06:05:00+08:00")
+        old_title = "Serian top of the haze chart at API 194 as of 10am as 12 areas turn unhealthy"
+        old_published = datetime.fromisoformat("2026-10-25T11:54:08+08:00")
+        new_title = "Haze: Eight areas nationwide record unhealthy API as of 6pm, Serian highest at 192"
+        new_published = datetime.fromisoformat("2026-10-25T18:58:07+08:00")
+        self.assertEqual(publication_rejection_reason(
+            old_title, "Readings as of 10am today.", old_published, morning,
+        ), "stale_previous_noon_observation")
+        self.assertEqual(publication_rejection_reason(
+            old_title, "Readings as of 10am today.",
+            datetime.fromisoformat("2026-10-25T13:15:00+08:00"), morning,
+        ), "stale_previous_noon_observation")
+        self.assertIsNone(publication_rejection_reason(
+            new_title, "Readings as of 6pm today.", new_published, morning,
+        ))
+        self.assertIsNone(publication_rejection_reason(
+            "Haze: schools in Hulu Langat to close tomorrow as API rises",
+            "Schools will close tomorrow.", old_published, morning,
+        ))
+        self.assertIsNone(publication_rejection_reason(
+            "Heavy rain expected tomorrow until 6pm", "MetMalaysia warning",
+            old_published, morning,
+        ))
+
+        old_item = summary.Item(
+            "Malay Mail", "feed", old_title, "Readings as of 10am today.",
+            old_published, "fixture", "https://example.test/old-api",
+        )
+        new_item = summary.Item(
+            "Malay Mail", "feed", new_title, "Readings as of 6pm today.",
+            new_published, "fixture", "https://example.test/new-api",
+        )
+        with patch.object(summary, "evaluate_item", lambda candidate: None):
+            summary.select_items([old_item, new_item], morning)
+        self.assertEqual(summary.LAST_EDITORIAL_CANDIDATE_POOL, [new_item])
+        observation = summary.build_selection_observation_json([old_item, new_item], [], 2, [], morning)
+        self.assertEqual(observation["items"][0]["decision_stage"], "stale_previous_noon_observation")
+        self.assertTrue(summary.build_editorial_candidate_pool_json(2, [], morning)["candidate_policy"][
+            "stale_previous_noon_observations_removed"
+        ])
+
     def test_previous_day_haze_action_needs_target_day_and_klang_valley_evidence(self) -> None:
         published = datetime.fromisoformat("2026-10-13T19:38:57+08:00")
         morning = datetime.fromisoformat("2026-10-14T07:26:00+08:00")
