@@ -5,7 +5,6 @@
 ## 自動収集するソース
 
 - Meta Newsroom Product News RSS — Meta公式
-- Meta Business SDK Releases（Node.js）— Meta公式GitHub公開API
 - Social Media Today Facebook RSS（タイトルにMeta／Facebook／Instagram、かつタイトルまたは説明文に広告関連語）— 非公式・未確認
 - Jon Loomer Digital RSS — 非公式・未確認
 - Ads Uploader Blogの公開記事一覧 — 非公式。新着の見出し・日付・短い説明を収集し、運用解説も候補に含める
@@ -13,6 +12,8 @@
 - Meta for Developers Blog — 同じ2つのRSS本文から見つかった `developers.facebook.com/blog/post/YYYY/MM/DD/<slug>/` 形式だけを追加取得。Ads Uploader記事ページの巡回は行わない
 
 Search Engine Land Meta RSSは、2026-08-30にGitHub ActionsでHTTP 403が繰り返し再現したため一時停止しています。安定した自動取得を確認できるまで再導入しません。
+
+Meta Business SDK Releases（Node.js）の取得は利用頻度が低いため停止中です。設定の `fetchEnabled: false` により通常収集でAPIへアクセスせず、再seedも受け付けません。取得済み項目は従来の鮮度・保存期間に従って保持し、期限後は表示されなくなります。実行ログの `fetch_enabled=false` で停止状態を確認できます。
 
 Social Media TodayはFacebook専用RSSを使います。タイトルにMeta／Facebook／Instagramの語があり、さらにタイトルまたはRSS説明に広告・キャンペーン・Advertiser・Advantage+などの語がある記事だけを掲載候補にします。Creator Studioのようなクリエイター運用の記事は除外します。これは記事の正確性を保証するものではなく、フィードの対象範囲を絞るための機械的な条件です。
 
@@ -54,7 +55,7 @@ Ads Uploaderだけは追加ソースのアクセス拒否・HTML構造変更を�
 
 発表日または最終更新日の新しい方が365日より前の記事は、表示データ生成の前に除外します。どちらの日付もない記事だけは初回観測日を使います。再観測日時で期限を延長することはありません。期限切れの記事はstate、公開feed、artifactに残しません。
 
-Meta Newsroom Product News RSSは候補を広く取得し、広告・計測・API・事業導線に関する具体的な関連語がある記事を掲載対象にします。Business SDK releaseは常に掲載対象です。Jon LoomerとSocial Media Todayは、既存のソース固有候補条件を通過した記事を掲載対象にします。セキュリティ、訴訟、年齢制限など広告利用と関係しない候補は`DROP`へ置きます。`DROP`は公開せず、本文を保存せずにstateだけへ残します。
+Meta Newsroom Product News RSSは候補を広く取得し、広告・計測・API・事業導線に関する具体的な関連語がある記事を掲載対象にします。過去に取得したBusiness SDK releaseは掲載対象として保持します。Jon LoomerとSocial Media Todayは、既存のソース固有候補条件を通過した記事を掲載対象にします。セキュリティ、訴訟、年齢制限など広告利用と関係しない候補は`DROP`へ置きます。`DROP`は公開せず、本文を保存せずにstateだけへ残します。
 
 この判定は記事の重要度や、読者が取るべき対応を示すものではありません。掲載対象は、ソースと日付で並べて表示します。
 
