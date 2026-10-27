@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-10-22T20:11:32Z",
+  "generatedAt": "2026-10-27T12:55:38Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -81,6 +81,768 @@
   ],
   "items": [
     {
+      "id": "jon-loomer-meta-ads-d96c4f062767fe7b4d3e",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Meta Clarifies Upcoming Placement Control Changes",
+      "url": "https://www.jonloomer.com/meta-placement-control-changes/",
+      "publishedDate": "2026-10-27",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "d96c4f062767fe7b4d3e08cfb3ea443ce2a32d2a1990a00e018dc989bb77d9e8",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta Clarifies Changes to Ad-Set Placement Controls",
+            "summary": "Meta says ad-set placement controls are being removed for Sales, Leads, App Promotion and Engagement campaigns. Awareness and Traffic are the only objectives that retain them, regardless of performance goal.",
+            "inputHash": "f0ddd1d8620075ff5e8f625d5348f36b3cff5bb3461b07b46c2a7cfb524b39e6",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Clarifies Changes to Ad-Set Placement Controls",
+                "inputHash": "f0ddd1d8620075ff5e8f625d5348f36b3cff5bb3461b07b46c2a7cfb524b39e6",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta says ad-set placement controls are being removed for Sales, Leads, App Promotion and Engagement campaigns. Awareness and Traffic are the only objectives that retain them, regardless of performance goal.",
+                "inputHash": "f0ddd1d8620075ff5e8f625d5348f36b3cff5bb3461b07b46c2a7cfb524b39e6",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、広告配置コントロールの変更を明らかに",
+            "summary": "Metaの発表によると、広告セット単位で配置を制御できなくなる対象は、Sales、Leads、App Promotion、Engagementの各キャンペーン目的です。AwarenessとTrafficでは引き続き配置を制御できます。成果目標は変更の適用可否に影響しません。代替策として、配置ごとのクリエイティブ調整や配置価値ルールなどが紹介されています。",
+            "inputHash": "8c86eec6514ed5a790785ec7741817374889341bd815657dbd6ff94d4229f261",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、広告配置コントロールの変更を明らかに",
+                "inputHash": "8c86eec6514ed5a790785ec7741817374889341bd815657dbd6ff94d4229f261",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaの発表によると、広告セット単位で配置を制御できなくなる対象は、Sales、Leads、App Promotion、Engagementの各キャンペーン目的です。AwarenessとTrafficでは引き続き配置を制御できます。成果目標は変更の適用可否に影響しません。代替策として、配置ごとのクリエイティブ調整や配置価値ルールなどが紹介されています。",
+                "inputHash": "8c86eec6514ed5a790785ec7741817374889341bd815657dbd6ff94d4229f261",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      },
+      "officialReferences": [
+        "https://www.facebook.com/business/help/1546753450586085/"
+      ]
+    },
+    {
+      "id": "adsuploader-blog-7c8bd1da6df1f4a4e99c",
+      "sourceId": "adsuploader-blog",
+      "title": "Facebook Automotive Inventory Ads: A Dealer Setup Guide",
+      "url": "https://adsuploader.com/blog/facebook-automotive-inventory-ads",
+      "publishedDate": "2026-10-27",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "7c8bd1da6df1f4a4e99c07d74206fae1d65f3cc53d5558944ff882e870bcf3d5",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Guide to Facebook Automotive Inventory Ads",
+            "summary": "A dealer setup guide covering how Facebook automotive inventory ads work, a four-step setup, vehicle feed specifications, the Special Ad Category, and costs.",
+            "inputHash": "72b6ccf790762f5707fcc36a02f356e0ed4d4fb8effa79dc5b5a3ce46216f792",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Guide to Facebook Automotive Inventory Ads",
+                "inputHash": "72b6ccf790762f5707fcc36a02f356e0ed4d4fb8effa79dc5b5a3ce46216f792",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "A dealer setup guide covering how Facebook automotive inventory ads work, a four-step setup, vehicle feed specifications, the Special Ad Category, and costs.",
+                "inputHash": "72b6ccf790762f5707fcc36a02f356e0ed4d4fb8effa79dc5b5a3ce46216f792",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Facebook自動車在庫広告の設定ガイド",
+            "summary": "自動車在庫広告の仕組み、4段階の設定方法、車両フィードの仕様、Special Ad Categoryに関する注意点、費用について解説するガイドです。",
+            "inputHash": "c77a0b92810043cb747633cfc1d8e786c44b2383fb1a3dbdb5bb9fd2197e8129",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook自動車在庫広告の設定ガイド",
+                "inputHash": "c77a0b92810043cb747633cfc1d8e786c44b2383fb1a3dbdb5bb9fd2197e8129",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "自動車在庫広告の仕組み、4段階の設定方法、車両フィードの仕様、Special Ad Categoryに関する注意点、費用について解説するガイドです。",
+                "inputHash": "c77a0b92810043cb747633cfc1d8e786c44b2383fb1a3dbdb5bb9fd2197e8129",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-b4c7c91b12926f2977f1",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Australia’s proposed algorithmic opt-out gets pushback",
+      "url": "https://www.socialmediatoday.com/news/australias-proposed-algorithmic-opt-out-gets-pushback/872830/",
+      "publishedDate": "2026-10-26",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "b4c7c91b12926f2977f1d6d79c7892a2f269f87a9f140746065db4497703200e",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Instagram’s Mosseri warns against Australia’s algorithm opt-out proposal",
+            "summary": "Australia is investigating laws requiring social platforms to offer an algorithm opt-out and make nonalgorithmic feeds the default. Instagram chief Adam Mosseri said a following-only feed could make Instagram smaller and reduce reach for creators.",
+            "inputHash": "92b9f0cbcc1d54c43a9d9a3834d85375e8bcc185df0358d888aceaf4bed7e8fd",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Instagram’s Mosseri warns against Australia’s algorithm opt-out proposal",
+                "inputHash": "92b9f0cbcc1d54c43a9d9a3834d85375e8bcc185df0358d888aceaf4bed7e8fd",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Australia is investigating laws requiring social platforms to offer an algorithm opt-out and make nonalgorithmic feeds the default. Instagram chief Adam Mosseri said a following-only feed could make Instagram smaller and reduce reach for creators.",
+                "inputHash": "92b9f0cbcc1d54c43a9d9a3834d85375e8bcc185df0358d888aceaf4bed7e8fd",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "豪州のアルゴリズム停止案に反発",
+            "summary": "豪州政府は、SNSでアルゴリズムによるおすすめを停止できるようにし、非アルゴリズムのフィードを初期設定にする新法の予備調査を開始した。Instagramのアダム・モッセーリ氏は、フォロー中のアカウントだけを表示するフィードでは利用や投稿のリーチが減るとの見方を示した。氏の発言は豪州案に直接言及したものではない。",
+            "inputHash": "f7692cfa035e1999d09c932916101272ffb12f4d8ec68e5d09fee1c7e45637b1",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "豪州のアルゴリズム停止案に反発",
+                "inputHash": "f7692cfa035e1999d09c932916101272ffb12f4d8ec68e5d09fee1c7e45637b1",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "豪州政府は、SNSでアルゴリズムによるおすすめを停止できるようにし、非アルゴリズムのフィードを初期設定にする新法の予備調査を開始した。Instagramのアダム・モッセーリ氏は、フォロー中のアカウントだけを表示するフィードでは利用や投稿のリーチが減るとの見方を示した。氏の発言は豪州案に直接言及したものではない。",
+                "inputHash": "f7692cfa035e1999d09c932916101272ffb12f4d8ec68e5d09fee1c7e45637b1",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "jon-loomer-meta-ads-d6b20c1d6e103dbcdeb6",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Ads Super Burst, First Impression Ads, and Aggregated View Time",
+      "url": "https://www.jonloomer.com/qvt/ads-super-burst-first-impression-ads-aggregated-view-time/",
+      "publishedDate": "2026-10-26",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "d6b20c1d6e103dbcdeb60ef8a7bea2a2bc9f152a6393ce16ae5247f9053e164c",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta Shares Three Advertising Features",
+            "summary": "Meta introduced Ads Super Burst, which offers exclusive booking windows of three to 24 hours; First Impression Ads, a test in the US reserving the first feed ad spot for one brand per day; and Aggregated View Time, a reporting metric for average total weekly viewing time across a person’s videos.",
+            "inputHash": "010528fa0b2c3db59ea0bc6f03d5d74453016f3024103a26ec0b70636e2c715d",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Shares Three Advertising Features",
+                "inputHash": "010528fa0b2c3db59ea0bc6f03d5d74453016f3024103a26ec0b70636e2c715d",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta introduced Ads Super Burst, which offers exclusive booking windows of three to 24 hours; First Impression Ads, a test in the US reserving the first feed ad spot for one brand per day; and Aggregated View Time, a reporting metric for average total weekly viewing time across a person’s videos.",
+                "inputHash": "010528fa0b2c3db59ea0bc6f03d5d74453016f3024103a26ec0b70636e2c715d",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、3つの広告機能を発表",
+            "summary": "Metaは、3～24時間の広告枠をカテゴリー独占で予約できる「Ads Super Burst」、米国でテスト中のフィード最初の広告枠を1日1ブランドが利用できる「First Impression Ads」、1週間に動画が視聴された合計時間の平均を測る「Aggregated View Time」を紹介しました。Aggregated View Timeは現時点でレポート用の指標です。",
+            "inputHash": "d5f724068953fb81ad93825213502bcec90a96ff9cec7272d640cbf19081b1f8",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、3つの広告機能を発表",
+                "inputHash": "d5f724068953fb81ad93825213502bcec90a96ff9cec7272d640cbf19081b1f8",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは、3～24時間の広告枠をカテゴリー独占で予約できる「Ads Super Burst」、米国でテスト中のフィード最初の広告枠を1日1ブランドが利用できる「First Impression Ads」、1週間に動画が視聴された合計時間の平均を測る「Aggregated View Time」を紹介しました。Aggregated View Timeは現時点でレポート用の指標です。",
+                "inputHash": "d5f724068953fb81ad93825213502bcec90a96ff9cec7272d640cbf19081b1f8",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-81b45e003f81ff0815ef",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta says advertisers should let campaigns gather data",
+      "url": "https://www.socialmediatoday.com/news/meta-says-advertisers-should-let-campaigns-gather-data/833906/",
+      "publishedDate": "2026-10-25",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "81b45e003f81ff0815ef3f36c7a18f7a9eedddf9728f5354748eeecba7c1dbbc",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta advises giving ad campaigns time to gather data",
+            "summary": "Meta says advertisers should set clear campaign goals and allow ad sets enough time and data to learn before reacting to performance fluctuations. It recommends reviewing results against intended outcomes and says ad sets with roughly 50 conversions a week have more volume to learn from.",
+            "inputHash": "0c13cdf590208c3844a769f362879d61330e472f1069b62147f32bb9225fbdab",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta advises giving ad campaigns time to gather data",
+                "inputHash": "0c13cdf590208c3844a769f362879d61330e472f1069b62147f32bb9225fbdab",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta says advertisers should set clear campaign goals and allow ad sets enough time and data to learn before reacting to performance fluctuations. It recommends reviewing results against intended outcomes and says ad sets with roughly 50 conversions a week have more volume to learn from.",
+                "inputHash": "0c13cdf590208c3844a769f362879d61330e472f1069b62147f32bb9225fbdab",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、広告キャンペーンに学習時間とデータ量を確保するよう推奨",
+            "summary": "Metaはホリデーシーズン向けの広告運用ガイドで、キャンペーンの目標を明確にし、結果を評価できるだけの実施期間とデータ量を確保するよう説明しました。週約50件のコンバージョンを目安として挙げ、Metaの分析では、それを下回る広告セットは購入あたりの費用が約28％高かったとしています。成果の変動に早く反応すると、システムが最適なターゲティングを学ぶ時間が短くなるとも述べました。",
+            "inputHash": "d823492cc0fd2a6e921f5727952dce632380bb69f49a052c325b2575b127b56e",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、広告キャンペーンに学習時間とデータ量を確保するよう推奨",
+                "inputHash": "d823492cc0fd2a6e921f5727952dce632380bb69f49a052c325b2575b127b56e",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaはホリデーシーズン向けの広告運用ガイドで、キャンペーンの目標を明確にし、結果を評価できるだけの実施期間とデータ量を確保するよう説明しました。週約50件のコンバージョンを目安として挙げ、Metaの分析では、それを下回る広告セットは購入あたりの費用が約28％高かったとしています。成果の変動に早く反応すると、システムが最適なターゲティングを学ぶ時間が短くなるとも述べました。",
+                "inputHash": "d823492cc0fd2a6e921f5727952dce632380bb69f49a052c325b2575b127b56e",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-079ec0852f4dfc0ab6b7",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta delays business terms update over data scraping concerns",
+      "url": "https://www.socialmediatoday.com/news/meta-delays-business-terms-update-over-data-scraping-concerns/833905/",
+      "publishedDate": "2026-10-25",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "079ec0852f4dfc0ab6b7d839e2d692fba23dfa0e6acb15ad99022d48691f53ff",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta delays terms update amid data-scraping concerns",
+            "summary": "Meta has pushed the updated business terms’ launch from Oct. 30 to Nov. 20 after publishers, advertisers and regulators raised concerns about data scraping. Meta said the issue was largely a misunderstanding and that it removed references to training from the update.",
+            "inputHash": "eb14bcbab0306539d2ac2522e7de0857b568d2fb21bcd159b9db4d13bc3e5f43",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta delays terms update amid data-scraping concerns",
+                "inputHash": "eb14bcbab0306539d2ac2522e7de0857b568d2fb21bcd159b9db4d13bc3e5f43",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta has pushed the updated business terms’ launch from Oct. 30 to Nov. 20 after publishers, advertisers and regulators raised concerns about data scraping. Meta said the issue was largely a misunderstanding and that it removed references to training from the update.",
+                "inputHash": "eb14bcbab0306539d2ac2522e7de0857b568d2fb21bcd159b9db4d13bc3e5f43",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、データ収集懸念を受け規約改定を延期",
+            "summary": "Metaは、商用利用規約の改定について、当初予定していた10月30日から11月20日へ開始を延期しました。改定内容が事業者のウェブサイトからのデータ収集を認める可能性があるとの懸念を受け、EUと英国の当局が説明を求めています。Metaは問題は誤解によるものだとし、改定内容を説明する時間が必要と述べています。",
+            "inputHash": "55fcbd13bf1a3f13348071ed9351cf32300cd1d60581bccbf942ba26058cca11",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、データ収集懸念を受け規約改定を延期",
+                "inputHash": "55fcbd13bf1a3f13348071ed9351cf32300cd1d60581bccbf942ba26058cca11",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは、商用利用規約の改定について、当初予定していた10月30日から11月20日へ開始を延期しました。改定内容が事業者のウェブサイトからのデータ収集を認める可能性があるとの懸念を受け、EUと英国の当局が説明を求めています。Metaは問題は誤解によるものだとし、改定内容を説明する時間が必要と述べています。",
+                "inputHash": "55fcbd13bf1a3f13348071ed9351cf32300cd1d60581bccbf942ba26058cca11",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-236997880e9139b3a608",
+      "sourceId": "adsuploader-blog",
+      "title": "Church Facebook Ads Examples: 12 Real Ads Running in 2026",
+      "url": "https://adsuploader.com/blog/church-facebook-ads-examples",
+      "publishedDate": "2026-10-25",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "236997880e9139b3a6088934ca699c5cfefac669391ff96f49952e5127182ac1",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "12 Real Church Facebook Ads Running in 2026",
+            "summary": "Twelve church Facebook ads from the Meta Ad Library, grouped by offer type and presented with their copy, creative, and targeting details.",
+            "inputHash": "ffcecd3c2eecbea744136a57b7b8f5e957607ecc8b7e67ae3fb64797659d5ca5",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "12 Real Church Facebook Ads Running in 2026",
+                "inputHash": "ffcecd3c2eecbea744136a57b7b8f5e957607ecc8b7e67ae3fb64797659d5ca5",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Twelve church Facebook ads from the Meta Ad Library, grouped by offer type and presented with their copy, creative, and targeting details.",
+                "inputHash": "ffcecd3c2eecbea744136a57b7b8f5e957607ecc8b7e67ae3fb64797659d5ca5",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "2026年に配信中の教会Facebook広告12例",
+            "summary": "Meta広告ライブラリから取得した、教会の実際のFacebook広告12例を紹介。広告の種類ごとに分類し、広告文、クリエイティブ、ターゲティングの実情を取り上げています。",
+            "inputHash": "80b6f4e3ab7f0be8ec0c77b57f27d889ad4533c62415a0a964e5b3351e70796d",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "2026年に配信中の教会Facebook広告12例",
+                "inputHash": "80b6f4e3ab7f0be8ec0c77b57f27d889ad4533c62415a0a964e5b3351e70796d",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta広告ライブラリから取得した、教会の実際のFacebook広告12例を紹介。広告の種類ごとに分類し、広告文、クリエイティブ、ターゲティングの実情を取り上げています。",
+                "inputHash": "80b6f4e3ab7f0be8ec0c77b57f27d889ad4533c62415a0a964e5b3351e70796d",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-f2d2b3d53cc9647d5da4",
+      "sourceId": "adsuploader-blog",
+      "title": "How to Duplicate Meta Ads Without Losing Likes (or Rechecking Every Setting)",
+      "url": "https://adsuploader.com/blog/how-to-duplicate-meta-ads",
+      "publishedDate": "2026-10-23",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "f2d2b3d53cc9647d5da42e1e527830a75fbf1b087c7d639fd9bc0795ff06cc69",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Duplicate Meta Ads Without Losing Likes",
+            "summary": "Duplicate a winning Meta ad into new ad sets with its likes intact, or test new creative using proven settings without rechecking every field.",
+            "inputHash": "318f6ac9f313f0faa5823bf1cf10673ddd516e3e4bafdec757603764e138b342",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Duplicate Meta Ads Without Losing Likes",
+                "inputHash": "318f6ac9f313f0faa5823bf1cf10673ddd516e3e4bafdec757603764e138b342",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Duplicate a winning Meta ad into new ad sets with its likes intact, or test new creative using proven settings without rechecking every field.",
+                "inputHash": "318f6ac9f313f0faa5823bf1cf10673ddd516e3e4bafdec757603764e138b342",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "いいねを保ってMeta広告を複製する方法",
+            "summary": "実績のある広告をいいねを保ったまま新しい広告セットに複製する方法や、既存の設定を使って新しいクリエイティブを試す方法を紹介しています。",
+            "inputHash": "48bac675d3eb90b0c313c0d4670c23fab3f57d640915a00b0debcaf7f274b549",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "いいねを保ってMeta広告を複製する方法",
+                "inputHash": "48bac675d3eb90b0c313c0d4670c23fab3f57d640915a00b0debcaf7f274b549",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "実績のある広告をいいねを保ったまま新しい広告セットに複製する方法や、既存の設定を使って新しいクリエイティブを試す方法を紹介しています。",
+                "inputHash": "48bac675d3eb90b0c313c0d4670c23fab3f57d640915a00b0debcaf7f274b549",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-f930df35d4df417ce804",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta says shopping is Muse’s primary use case",
+      "url": "https://www.socialmediatoday.com/news/meta-says-shopping-is-muses-primary-use-case/833808/",
+      "publishedDate": "2026-10-22",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "f930df35d4df417ce804234c4cf2236a3533cc145dc6bf034b5c8ad639fb4231",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Shopping is Muse’s most common use case",
+            "summary": "Meta CEO Mark Zuckerberg said more than 25% of Muse users ask for help finding deals and making purchases. He said the average purchase through Muse exceeds $200.",
+            "inputHash": "9ece88656296f9c0e9d001cc04a3299fb8b94c0e5afd4a3f84e4405ebb311e80",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Shopping is Muse’s most common use case",
+                "inputHash": "9ece88656296f9c0e9d001cc04a3299fb8b94c0e5afd4a3f84e4405ebb311e80",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta CEO Mark Zuckerberg said more than 25% of Muse users ask for help finding deals and making purchases. He said the average purchase through Muse exceeds $200.",
+                "inputHash": "9ece88656296f9c0e9d001cc04a3299fb8b94c0e5afd4a3f84e4405ebb311e80",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、Museの主な用途は買い物と説明",
+            "summary": "Metaのマーク・ザッカーバーグCEOによると、AIエージェント「Muse」の利用で最も多いのは買い物です。利用者の25％超が、お得な商品探しや購入の支援を求めており、Muse経由の平均購入額は200ドルを超えると説明しました。",
+            "inputHash": "8eb3cc0f9afd6ae2490d171f487c00d19e488962a2740cbf1de77cb30522ae47",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、Museの主な用途は買い物と説明",
+                "inputHash": "8eb3cc0f9afd6ae2490d171f487c00d19e488962a2740cbf1de77cb30522ae47",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaのマーク・ザッカーバーグCEOによると、AIエージェント「Muse」の利用で最も多いのは買い物です。利用者の25％超が、お得な商品探しや購入の支援を求めており、Muse経由の平均購入額は200ドルを超えると説明しました。",
+                "inputHash": "8eb3cc0f9afd6ae2490d171f487c00d19e488962a2740cbf1de77cb30522ae47",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-ce87778a5fd83e661113",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta offers insights on individual platform growth",
+      "url": "https://www.socialmediatoday.com/news/meta-offers-insights-on-individual-platform-growth/833807/",
+      "publishedDate": "2026-10-22",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "ce87778a5fd83e6611133ad4022fc9039b8e10734192a2d53d915d684b57d117",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta reports growth across Instagram, Facebook and Threads",
+            "summary": "In Q3 2026, time spent per Instagram user reached an all-time high, while Reels time rose by over 4%. Facebook Reels time also hit an all-time high, growing double digits year over year. Threads time per user increased over 20% year over year, and Meta said Threads surpassed X in monthly active users.",
+            "inputHash": "856385f5ddf20d1e3c8ac70aebd0799d8906bedc1da30f58e7cb0d7d71416c2d",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta reports growth across Instagram, Facebook and Threads",
+                "inputHash": "856385f5ddf20d1e3c8ac70aebd0799d8906bedc1da30f58e7cb0d7d71416c2d",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "In Q3 2026, time spent per Instagram user reached an all-time high, while Reels time rose by over 4%. Facebook Reels time also hit an all-time high, growing double digits year over year. Threads time per user increased over 20% year over year, and Meta said Threads surpassed X in monthly active users.",
+                "inputHash": "856385f5ddf20d1e3c8ac70aebd0799d8906bedc1da30f58e7cb0d7d71416c2d",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、各プラットフォームの成長状況を報告",
+            "summary": "Metaは2026年第3四半期について、Instagramでは利用者1人あたりの利用時間が過去最高となり、おすすめReelsの約45％が投稿から1日未満だったと報告しました。FacebookではReelsの利用時間が過去最高となり、前年比で2桁成長。Threadsでは利用者1人あたりの利用時間が前年比20％超増加し、月間アクティブ利用者数がXを上回ったとザッカーバーグ氏が述べました。",
+            "inputHash": "6aad498bf93cea856048c0d65602cfa13bc11f12d5081b41d8bb07a9f4363359",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、各プラットフォームの成長状況を報告",
+                "inputHash": "6aad498bf93cea856048c0d65602cfa13bc11f12d5081b41d8bb07a9f4363359",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは2026年第3四半期について、Instagramでは利用者1人あたりの利用時間が過去最高となり、おすすめReelsの約45％が投稿から1日未満だったと報告しました。FacebookではReelsの利用時間が過去最高となり、前年比で2桁成長。Threadsでは利用者1人あたりの利用時間が前年比20％超増加し、月間アクティブ利用者数がXを上回ったとザッカーバーグ氏が述べました。",
+                "inputHash": "6aad498bf93cea856048c0d65602cfa13bc11f12d5081b41d8bb07a9f4363359",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-2941548ab40d2b2e9ec6",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta hit with $25B fine over privacy breaches",
+      "url": "https://www.socialmediatoday.com/news/meta-hit-with-25b-fine-over-privacy-breaches/833798/",
+      "publishedDate": "2026-10-22",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "2941548ab40d2b2e9ec60a6fc284d7a87a3ce4598a475802824b03bba4f612e1",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta ordered to pay $25 billion in New Mexico case",
+            "summary": "A New Mexico judge set a $25 billion penalty after a jury found Meta liable in a case involving privacy breaches and harmful content. Meta’s chief legal officer criticized the decision and said the company will appeal.",
+            "inputHash": "7bca01e6daddcab1b6cfd41491043e9022dcbcb7dbbebe4dc833a59a3c83051a",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta ordered to pay $25 billion in New Mexico case",
+                "inputHash": "7bca01e6daddcab1b6cfd41491043e9022dcbcb7dbbebe4dc833a59a3c83051a",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "A New Mexico judge set a $25 billion penalty after a jury found Meta liable in a case involving privacy breaches and harmful content. Meta’s chief legal officer criticized the decision and said the company will appeal.",
+                "inputHash": "7bca01e6daddcab1b6cfd41491043e9022dcbcb7dbbebe4dc833a59a3c83051a",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、プライバシー侵害で250億ドルの制裁金",
+            "summary": "ロイターによると、ニューメキシコ州の陪審はMetaにプライバシー侵害などの責任があると判断し、裁判官は同社に250億ドルの制裁金を命じました。Metaの最高法務責任者は判決を批判し、Metaは制裁金を不服として控訴する意向を示しました。",
+            "inputHash": "a5202c3b351e3e03a4ae12cb520acac22c9dd1294885ed2a0b1704f47cb07e10",
+            "generatedAt": "2026-10-27T12:55:38Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、プライバシー侵害で250億ドルの制裁金",
+                "inputHash": "a5202c3b351e3e03a4ae12cb520acac22c9dd1294885ed2a0b1704f47cb07e10",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "ロイターによると、ニューメキシコ州の陪審はMetaにプライバシー侵害などの責任があると判断し、裁判官は同社に250億ドルの制裁金を命じました。Metaの最高法務責任者は判決を批判し、Metaは制裁金を不服として控訴する意向を示しました。",
+                "inputHash": "a5202c3b351e3e03a4ae12cb520acac22c9dd1294885ed2a0b1704f47cb07e10",
+                "generatedAt": "2026-10-27T12:55:38Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "social-media-today-meta-ads-c16ca0d2ff85d661dee7",
       "sourceId": "social-media-today-meta-ads",
       "title": "Meta offers creative targeting for ads",
@@ -88,7 +850,7 @@
       "publishedDate": "2026-10-21",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -157,7 +919,7 @@
       "publishedDate": "2026-10-21",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -226,7 +988,7 @@
       "publishedDate": "2026-10-20",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -298,7 +1060,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -369,7 +1131,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -438,7 +1200,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -507,7 +1269,7 @@
       "publishedDate": "2026-10-18",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -576,7 +1338,7 @@
       "publishedDate": "2026-10-18",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -645,7 +1407,7 @@
       "publishedDate": "2026-10-17",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -714,7 +1476,7 @@
       "publishedDate": "2026-10-15",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -783,11 +1545,12 @@
       "publishedDate": "2026-10-15",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
+        "discovered-via:jon-loomer-meta-ads",
         "discovered-via:social-media-today-meta-ads"
       ],
       "presentation": {
@@ -854,7 +1617,7 @@
       "publishedDate": "2026-10-15",
       "updatedDate": null,
       "firstObservedAt": "2026-10-15T19:54:50Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -923,7 +1686,7 @@
       "publishedDate": "2026-10-13",
       "updatedDate": null,
       "firstObservedAt": "2026-10-15T19:54:50Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -995,7 +1758,7 @@
       "publishedDate": "2026-10-13",
       "updatedDate": null,
       "firstObservedAt": "2026-10-15T19:54:50Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1064,7 +1827,7 @@
       "publishedDate": "2026-10-12",
       "updatedDate": null,
       "firstObservedAt": "2026-10-12T23:02:27Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1133,7 +1896,7 @@
       "publishedDate": "2026-10-12",
       "updatedDate": null,
       "firstObservedAt": "2026-10-12T23:02:27Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1202,7 +1965,7 @@
       "publishedDate": "2026-10-11",
       "updatedDate": null,
       "firstObservedAt": "2026-10-12T23:02:27Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1271,7 +2034,7 @@
       "publishedDate": "2026-10-11",
       "updatedDate": null,
       "firstObservedAt": "2026-10-12T23:02:27Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1340,7 +2103,7 @@
       "publishedDate": "2026-10-09",
       "updatedDate": null,
       "firstObservedAt": "2026-10-12T23:02:27Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1411,7 +2174,7 @@
       "publishedDate": "2026-10-09",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1480,7 +2243,7 @@
       "publishedDate": "2026-10-07",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1758,7 +2521,7 @@
       "publishedDate": "2026-10-06",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1830,7 +2593,7 @@
       "publishedDate": "2026-10-05",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1899,7 +2662,7 @@
       "publishedDate": "2026-10-05",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2313,7 +3076,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -2382,7 +3145,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2520,7 +3283,7 @@
       "publishedDate": "2026-09-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T05:47:38Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2865,7 +3628,7 @@
       "publishedDate": "2026-09-22",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3004,7 +3767,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3418,7 +4181,7 @@
       "publishedDate": "2026-09-16",
       "updatedDate": null,
       "firstObservedAt": "2026-09-17T04:55:10Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -3694,7 +4457,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4039,7 +4802,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T04:45:10Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4108,7 +4871,7 @@
       "publishedDate": "2026-09-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4177,7 +4940,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4246,7 +5009,7 @@
       "publishedDate": "2026-08-31",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4454,7 +5217,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4592,7 +5355,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4802,7 +5565,7 @@
       "publishedDate": "2026-08-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4943,7 +5706,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5012,7 +5775,7 @@
       "publishedDate": "2026-08-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5081,7 +5844,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5150,7 +5913,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5289,7 +6052,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5427,7 +6190,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5496,7 +6259,7 @@
       "publishedDate": "2026-07-20",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5635,7 +6398,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5704,7 +6467,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5773,7 +6536,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5842,7 +6605,7 @@
       "publishedDate": "2026-07-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5983,7 +6746,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6052,7 +6815,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6121,7 +6884,7 @@
       "publishedDate": "2026-06-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6190,7 +6953,7 @@
       "publishedDate": "2026-06-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6244,769 +7007,6 @@
                 "value": "Metaはリード広告のインスタントフォームに「Book time」アクションを追加し、CalendlyやHighLevelなどのスケジューラリンクを埋め込んで予約を自動的にカレンダーへ転送できるようにした。また、ChatGPT広告でコンバージョン最適化キャンペーンが利用可能となり、コンバージョン目標と入札上限を設定できるが課金はクリック単位のまま。さらに、Creative Exploration Toolが発表されたが詳細は不明。加えて、Customer Lifecycle Strategyの除外対象やターゲティングラベル変更、Events Manager設定のバグ情報も含まれる。",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
                 "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "meta-business-news-discovered-b11f17611d54e3e828d3",
-      "sourceId": "meta-business-news-discovered",
-      "title": "Cannes Lions 2026: New Creative and Creator Tools for Every Marketer to Cross the AI Threshold",
-      "url": "https://www.facebook.com/business/news/cannes-2026-cross-ai-threshold",
-      "publishedDate": "2026-06-23",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [
-        "discovered-via:jon-loomer-meta-ads"
-      ],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta unveils AI creative tools and Creator Hub at Cannes Lions 2026",
-            "summary": "At Cannes Lions 2026, Meta announced AI-powered creative tools, a unified Creator Marketing Hub, and updates to its Business Agent, designed to help every marketer create better ads more quickly.",
-            "inputHash": "3ccea9eee351c57bf9bd57fa42ebdf1d95eff9d43549f6a557272417ba4e4db1",
-            "generatedAt": "2026-09-06T04:41:48Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta unveils AI creative tools and Creator Hub at Cannes Lions 2026",
-                "inputHash": "3ccea9eee351c57bf9bd57fa42ebdf1d95eff9d43549f6a557272417ba4e4db1",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "At Cannes Lions 2026, Meta announced AI-powered creative tools, a unified Creator Marketing Hub, and updates to its Business Agent, designed to help every marketer create better ads more quickly.",
-                "inputHash": "3ccea9eee351c57bf9bd57fa42ebdf1d95eff9d43549f6a557272417ba4e4db1",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "MetaがCannes Lions 2026でAIクリエイティブツールとCreator Hubを発表",
-            "summary": "Cannes Lions 2026でMetaは、AI搭載のクリエイティブツール、統合Creator Marketing Hub、Business Agentの更新を発表し、すべてのマーケターがより速く、より良い広告を作成できるよう支援することを目的とした。",
-            "inputHash": "e17323a80fb94549d8704db751d10db5835ecf842dba56f12d7edd4f26c13b3f",
-            "generatedAt": "2026-09-06T04:41:48Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "MetaがCannes Lions 2026でAIクリエイティブツールとCreator Hubを発表",
-                "inputHash": "e17323a80fb94549d8704db751d10db5835ecf842dba56f12d7edd4f26c13b3f",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Cannes Lions 2026でMetaは、AI搭載のクリエイティブツール、統合Creator Marketing Hub、Business Agentの更新を発表し、すべてのマーケターがより速く、より良い広告を作成できるよう支援することを目的とした。",
-                "inputHash": "e17323a80fb94549d8704db751d10db5835ecf842dba56f12d7edd4f26c13b3f",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "meta-business-news-discovered-0580a7992cbcdab917cc",
-      "sourceId": "meta-business-news-discovered",
-      "title": "Book appointments directly from your Lead Ads",
-      "url": "https://www.facebook.com/business/news/book-appointments-directly-from-your-lead-ads",
-      "publishedDate": "2026-06-23",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [
-        "discovered-via:jon-loomer-meta-ads"
-      ],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Book appointments directly from Lead Ads",
-            "summary": "We are launching Embedded Appointment Booking for Lead Ads Instant Forms on Facebook. It offers a seamless, in-app booking experience that lets leads schedule an appointment the moment they express interest, without ever leaving Facebook.",
-            "inputHash": "f2552f293ee01d58d188409e2c7eb674ab1f7cac75057fabd4ac868e2a2a4753",
-            "generatedAt": "2026-09-06T04:41:48Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Book appointments directly from Lead Ads",
-                "inputHash": "f2552f293ee01d58d188409e2c7eb674ab1f7cac75057fabd4ac868e2a2a4753",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "We are launching Embedded Appointment Booking for Lead Ads Instant Forms on Facebook. It offers a seamless, in-app booking experience that lets leads schedule an appointment the moment they express interest, without ever leaving Facebook.",
-                "inputHash": "f2552f293ee01d58d188409e2c7eb674ab1f7cac75057fabd4ac868e2a2a4753",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "リード広告から直接予約",
-            "summary": "Facebookでリード広告のインスタントフォーム向けに埋め込み型予約機能を開始します。シームレスなアプリ内予約体験を提供し、リードは関心を示した瞬間にFacebookを離れることなく予約できます。",
-            "inputHash": "2618596af6427c62c4fe0604800b4226169f374e4bdf672386722702b38664df",
-            "generatedAt": "2026-09-06T04:41:48Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "リード広告から直接予約",
-                "inputHash": "2618596af6427c62c4fe0604800b4226169f374e4bdf672386722702b38664df",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Facebookでリード広告のインスタントフォーム向けに埋め込み型予約機能を開始します。シームレスなアプリ内予約体験を提供し、リードは関心を示した瞬間にFacebookを離れることなく予約できます。",
-                "inputHash": "2618596af6427c62c4fe0604800b4226169f374e4bdf672386722702b38664df",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-25fc6458616225977766",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "How Many Active Ad Sets Should You Have in a Meta Ads Campaign?",
-      "url": "https://www.jonloomer.com/active-ad-sets-meta-ads-campaign/",
-      "publishedDate": "2026-06-23",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Guidelines for Number of Meta Ad Sets",
-            "summary": "Keep ad set count low to avoid budget dilution and audience fragmentation. $100 daily in one ad set outperforms splitting across five. Aim for at least 50 optimized events per week per ad set. Separate ad sets by location, age, or gender only as exceptions when sufficient budget exists.",
-            "inputHash": "7a5757a3ee8399c3783de50bff677c09192a18409486f30845625bcff83d467a",
-            "generatedAt": "2026-09-06T04:41:48Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Guidelines for Number of Meta Ad Sets",
-                "inputHash": "7a5757a3ee8399c3783de50bff677c09192a18409486f30845625bcff83d467a",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Keep ad set count low to avoid budget dilution and audience fragmentation. $100 daily in one ad set outperforms splitting across five. Aim for at least 50 optimized events per week per ad set. Separate ad sets by location, age, or gender only as exceptions when sufficient budget exists.",
-                "inputHash": "7a5757a3ee8399c3783de50bff677c09192a18409486f30845625bcff83d467a",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta広告のアクティブ広告セットは必要最小限に",
-            "summary": "Meta広告キャンペーンでの広告セットは、予算を分散させず効率を落とさないよう、できるだけ少なくまとめることが推奨されます。1日100ドルを5つに分けるより1つに集中した方が効果的で、週に50件の最適化イベントを確保できる規模が目安です。広告セットを増やす理由としては、地域や年齢・性別などで明確な差別化が必要で、かつ各セットに十分な予算がある場合に限ります。不要なセットは予算の希薄化やオーディエンスの分散を招くため、慎重に検討すべきです。",
-            "inputHash": "ff0bde0b320666ad3a34a8f0bbcf305d42598df1cff7ebac77180f159ab6656b",
-            "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta広告のアクティブ広告セットは必要最小限に",
-                "inputHash": "ff0bde0b320666ad3a34a8f0bbcf305d42598df1cff7ebac77180f159ab6656b",
-                "generatedAt": "2026-09-07T04:44:41Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta広告キャンペーンでの広告セットは、予算を分散させず効率を落とさないよう、できるだけ少なくまとめることが推奨されます。1日100ドルを5つに分けるより1つに集中した方が効果的で、週に50件の最適化イベントを確保できる規模が目安です。広告セットを増やす理由としては、地域や年齢・性別などで明確な差別化が必要で、かつ各セットに十分な予算がある場合に限ります。不要なセットは予算の希薄化やオーディエンスの分散を招くため、慎重に検討すべきです。",
-                "inputHash": "ff0bde0b320666ad3a34a8f0bbcf305d42598df1cff7ebac77180f159ab6656b",
-                "generatedAt": "2026-09-07T04:44:41Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-1841e5a6c23dbb8dadcd",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "Meta Restricted My Account for Sharing a Link to Meta’s Documentation",
-      "url": "https://www.jonloomer.com/qvt/meta-restricted-my-account/",
-      "publishedDate": "2026-06-21",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "1841e5a6c23dbb8dadcd208300abd7d77a90779b41a99f0c292c579a460cf150",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta restricted my account after I shared a link to its documentation",
-            "summary": "The user posted a screenshot of a new Meta ads feature and added a link to Meta’s official documentation in a private Facebook group. Meta then restricted actions on the account, prompting a \"Confirm Your Identity\" request. After uploading a driver’s license, verification failed, leaving the user unable to join or create groups, post, or comment.",
-            "inputHash": "9989ca1102e64ef203b32cbd46abbc87559f6c24e9a4ba75257c61e39b014e9d",
-            "generatedAt": "2026-09-29T05:47:38Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta restricted my account after I shared a link to its documentation",
-                "inputHash": "9989ca1102e64ef203b32cbd46abbc87559f6c24e9a4ba75257c61e39b014e9d",
-                "generatedAt": "2026-09-29T05:47:38Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "The user posted a screenshot of a new Meta ads feature and added a link to Meta’s official documentation in a private Facebook group. Meta then restricted actions on the account, prompting a \"Confirm Your Identity\" request. After uploading a driver’s license, verification failed, leaving the user unable to join or create groups, post, or comment.",
-                "inputHash": "9989ca1102e64ef203b32cbd46abbc87559f6c24e9a4ba75257c61e39b014e9d",
-                "generatedAt": "2026-09-29T05:47:38Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta、リンク共有でアカウントが制限される",
-            "summary": "ユーザーはプライベートFacebookグループでMetaの新機能のスクリーンショットと公式ドキュメントへのリンクを共有したところ、Metaから「本人確認が必要」とのメッセージを受け、運転免許証の写真をアップロードした。しかし本人確認が失敗し、現在は新しいグループへの参加やグループ内での投稿・コメントが制限されている。",
-            "inputHash": "cd2fe16f714ed8899f240697ba1ec3aefb534f70f651da50f744e83dcc72998d",
-            "generatedAt": "2026-09-29T05:47:38Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta、リンク共有でアカウントが制限される",
-                "inputHash": "cd2fe16f714ed8899f240697ba1ec3aefb534f70f651da50f744e83dcc72998d",
-                "generatedAt": "2026-09-29T05:47:38Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "ユーザーはプライベートFacebookグループでMetaの新機能のスクリーンショットと公式ドキュメントへのリンクを共有したところ、Metaから「本人確認が必要」とのメッセージを受け、運転免許証の写真をアップロードした。しかし本人確認が失敗し、現在は新しいグループへの参加やグループ内での投稿・コメントが制限されている。",
-                "inputHash": "cd2fe16f714ed8899f240697ba1ec3aefb534f70f651da50f744e83dcc72998d",
-                "generatedAt": "2026-09-29T05:47:38Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-f1344ee1988c130e2d4a",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "AI Disclosure Checkbox, ChatGPT Attribution, and More",
-      "url": "https://www.jonloomer.com/ai-disclosure-checkbox-chatgpt-attribution/",
-      "publishedDate": "2026-06-18",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "f8864dd5eb9a155c2c0172ede5e884006c2d858453f5d9912d22d33d036ec0cf",
-            "generatedAt": null,
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "f8864dd5eb9a155c2c0172ede5e884006c2d858453f5d9912d22d33d036ec0cf",
-                "generatedAt": null,
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "f8864dd5eb9a155c2c0172ede5e884006c2d858453f5d9912d22d33d036ec0cf",
-                "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta広告のAI開示チェックボックスとクリエイティブテスト上限が7件に増加",
-            "summary": "Meta Ads ManagerにAIで生成・編集した媒体を使用した場合にチェックするAI開示チェックボックスが追加されました。チェックするとAI情報ラベルが広告に表示され、地域によっては法令遵守のため目立つ形で表示されます。また、Creative Testing Toolの同時テスト可能な広告数上限が従来から7件に拡大されました。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta広告のAI開示チェックボックスとクリエイティブテスト上限が7件に増加",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-07T04:44:41Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta Ads ManagerにAIで生成・編集した媒体を使用した場合にチェックするAI開示チェックボックスが追加されました。チェックするとAI情報ラベルが広告に表示され、地域によっては法令遵守のため目立つ形で表示されます。また、Creative Testing Toolの同時テスト可能な広告数上限が従来から7件に拡大されました。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-07T04:44:41Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-b732201a5b57b7651d18",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "How Many Meta Ads Campaigns Should You Have at Once?",
-      "url": "https://www.jonloomer.com/how-many-meta-ads-campaigns/",
-      "publishedDate": "2026-06-16",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Guidelines for Determining Number of Meta Ads Campaigns",
-            "summary": "Start with a single Meta ads campaign and consolidate budget toward one business goal. Add more campaigns only when clear exceptions exist, such as distinct daily budget limits, a primary performance goal, or separate secondary goals. Aim for about 50 optimized actions per week to exit the learning phase.",
-            "inputHash": "fb728d991cda08f20f8ad33819fb29cb56702be77d94eabdac43de44abf0778d",
-            "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Guidelines for Determining Number of Meta Ads Campaigns",
-                "inputHash": "fb728d991cda08f20f8ad33819fb29cb56702be77d94eabdac43de44abf0778d",
-                "generatedAt": "2026-09-07T04:44:41Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Start with a single Meta ads campaign and consolidate budget toward one business goal. Add more campaigns only when clear exceptions exist, such as distinct daily budget limits, a primary performance goal, or separate secondary goals. Aim for about 50 optimized actions per week to exit the learning phase.",
-                "inputHash": "fb728d991cda08f20f8ad33819fb29cb56702be77d94eabdac43de44abf0778d",
-                "generatedAt": "2026-09-07T04:44:41Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta広告は1つのキャンペーンから始め、予算と目的で数を決める",
-            "summary": "Meta広告のキャンペーンは、まず1つに絞り予算を単一のビジネス目標に集約するのが基本とされる。例外がある場合のみ複数キャンペーンを作成すべきで、判断は日々の予算額と最重要目標に基づく。最適化アクションの平均コストや週50件のアクションという目安も考慮し、二次的な目標がある場合に限り追加キャンペーンを検討する。",
-            "inputHash": "06e022bda96aef987a73a5ebc2328c273daaaa6efd140ce66c83765fcddffc27",
-            "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta広告は1つのキャンペーンから始め、予算と目的で数を決める",
-                "inputHash": "06e022bda96aef987a73a5ebc2328c273daaaa6efd140ce66c83765fcddffc27",
-                "generatedAt": "2026-09-07T04:44:41Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta広告のキャンペーンは、まず1つに絞り予算を単一のビジネス目標に集約するのが基本とされる。例外がある場合のみ複数キャンペーンを作成すべきで、判断は日々の予算額と最重要目標に基づく。最適化アクションの平均コストや週50件のアクションという目安も考慮し、二次的な目標がある場合に限り追加キャンペーンを検討する。",
-                "inputHash": "06e022bda96aef987a73a5ebc2328c273daaaa6efd140ce66c83765fcddffc27",
-                "generatedAt": "2026-09-07T04:44:41Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-4765d055b9b7c5886994",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "Age, Gender, and Placement Restrictions",
-      "url": "https://www.jonloomer.com/qvt/age-gender-placement-restrictions/",
-      "publishedDate": "2026-06-14",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "4765d055b9b7c5886994d3a6ed2e50aa01eb3f8c1001a5c7edf377d55f906c75",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Avoid Unnecessary Age, Gender, and Placement Restrictions",
-            "summary": "Advertisers frequently add age, gender, or placement restrictions even when unnecessary. For purchase‑focused campaigns Meta auto‑optimizes, so removal isn’t required. When targeting top‑of‑funnel actions, low‑quality clicks can appear from Audience Network; use value rules or lower bids instead of outright bans. Restrictions are a common mistake.",
-            "inputHash": "36823b1a8156562d52c55f5c4230bc63e792c2e51c58457861949219bfec9882",
-            "generatedAt": "2026-09-23T13:03:46Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Avoid Unnecessary Age, Gender, and Placement Restrictions",
-                "inputHash": "36823b1a8156562d52c55f5c4230bc63e792c2e51c58457861949219bfec9882",
-                "generatedAt": "2026-09-23T13:03:46Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Advertisers frequently add age, gender, or placement restrictions even when unnecessary. For purchase‑focused campaigns Meta auto‑optimizes, so removal isn’t required. When targeting top‑of‑funnel actions, low‑quality clicks can appear from Audience Network; use value rules or lower bids instead of outright bans. Restrictions are a common mistake.",
-                "inputHash": "36823b1a8156562d52c55f5c4230bc63e792c2e51c58457861949219bfec9882",
-                "generatedAt": "2026-09-23T13:03:46Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "購入最適化では不要な年齢・性別・配置制限を避ける",
-            "summary": "広告主は購入を目的とした最適化時に、年齢・性別や配置（例：Audience Network）で不要に制限しがちだが、Metaは自動で調整する。クリックや閲覧など上位ファネルの指標を最適化する場合は、低品質なクリックや強制再生が増えることがある。その際は除外せず、価値ルールや入札額の調整で対応するのが推奨される。",
-            "inputHash": "4b9561f50edddc304bd32d13c98fa806291efaf335e844371b1eb054d994bbb1",
-            "generatedAt": "2026-09-24T10:49:46Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "購入最適化では不要な年齢・性別・配置制限を避ける",
-                "inputHash": "4b9561f50edddc304bd32d13c98fa806291efaf335e844371b1eb054d994bbb1",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "広告主は購入を目的とした最適化時に、年齢・性別や配置（例：Audience Network）で不要に制限しがちだが、Metaは自動で調整する。クリックや閲覧など上位ファネルの指標を最適化する場合は、低品質なクリックや強制再生が増えることがある。その際は除外せず、価値ルールや入札額の調整で対応するのが推奨される。",
-                "inputHash": "4b9561f50edddc304bd32d13c98fa806291efaf335e844371b1eb054d994bbb1",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-91d5e5eb74f466eaf0c9",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "Hands-On With Push Delivery to This Ad",
-      "url": "https://www.jonloomer.com/hands-on-push-delivery-to-this-ad/",
-      "publishedDate": "2026-06-09",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "91d5e5eb74f466eaf0c9bc09b080470ba1f73b5d67e5737c3bdb20357ddd1c78",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "339ff94e77500b0a604849e30fc0769bc554efd252fbaeb890763196e7bce5f9",
-            "generatedAt": null,
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "339ff94e77500b0a604849e30fc0769bc554efd252fbaeb890763196e7bce5f9",
-                "generatedAt": null,
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "339ff94e77500b0a604849e30fc0769bc554efd252fbaeb890763196e7bce5f9",
-                "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "「Push Delivery to This Ad」機能の概要と利用方法",
-            "summary": "Meta広告のテスト機能「Push Delivery to This Ad」は、広告セット内に2つ以上の広告がある場合に表示され、指定した予算の割合を一定期間（最短1日、最長30日）その広告に割り当てて配信を保証できる。設定はデフォルトでオフで、手動で予算比率と期間を入力する。キャンペーン目的や広告形式、既存・新規広告を問わず利用可能だが、同時に複数広告へ適用すると配信に影響する可能性がある。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-07T04:44:41Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "「Push Delivery to This Ad」機能の概要と利用方法",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-07T04:44:41Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta広告のテスト機能「Push Delivery to This Ad」は、広告セット内に2つ以上の広告がある場合に表示され、指定した予算の割合を一定期間（最短1日、最長30日）その広告に割り当てて配信を保証できる。設定はデフォルトでオフで、手動で予算比率と期間を入力する。キャンペーン目的や広告形式、既存・新規広告を問わず利用可能だが、同時に複数広告へ適用すると配信に影響する可能性がある。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-07T04:44:41Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-5695ecb547e935ecda99",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "Common Audience Segments Failures",
-      "url": "https://www.jonloomer.com/qvt/audience-segments-failures/",
-      "publishedDate": "2026-06-07",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "5695ecb547e935ecda99879bd723c583c879fef875a9d9cf6ef6bf1634313871",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Common Audience Segments Failures",
-            "summary": "Advertisers often miss or mis‑define audience segments. Proper segments—Engaged Audience, Existing Customers, New Audience—are set in Advertising Settings and used only for reporting, not delivery. They reveal spend and results distribution. Meta now retains purchase events for 730 days.",
-            "inputHash": "ab5b453c6d4a0163c98d64a05becbef736328fb1862bec608b43fab984fc1bf2",
-            "generatedAt": "2026-09-25T05:01:44Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Common Audience Segments Failures",
-                "inputHash": "ab5b453c6d4a0163c98d64a05becbef736328fb1862bec608b43fab984fc1bf2",
-                "generatedAt": "2026-09-25T05:01:44Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Advertisers often miss or mis‑define audience segments. Proper segments—Engaged Audience, Existing Customers, New Audience—are set in Advertising Settings and used only for reporting, not delivery. They reveal spend and results distribution. Meta now retains purchase events for 730 days.",
-                "inputHash": "ab5b453c6d4a0163c98d64a05becbef736328fb1862bec608b43fab984fc1bf2",
-                "generatedAt": "2026-09-25T05:01:44Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "広告主が陥りやすいオーディエンスセグメント設定の失敗",
-            "summary": "広告主はオーディエンスセグメントを定義しないか誤って設定しがちで、正しく設定すれば既存顧客・エンゲージド層・新規層別に費用と成果を把握できる。エンゲージドはメールリストと過去180日間のサイト訪問者、既存顧客は過去730日間の購入イベントと支払顧客のメールリストでカスタムオーディエンスを作成。Metaは購入イベントの保持期間を180日から730日に変更。セグメントはレポート用のみで配信には影響しない。",
-            "inputHash": "7de8c0f81ea69661280b244c9f876b2477d8fa1023c425020a4967fde9d6caea",
-            "generatedAt": "2026-09-25T05:01:44Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "広告主が陥りやすいオーディエンスセグメント設定の失敗",
-                "inputHash": "7de8c0f81ea69661280b244c9f876b2477d8fa1023c425020a4967fde9d6caea",
-                "generatedAt": "2026-09-25T05:01:44Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "広告主はオーディエンスセグメントを定義しないか誤って設定しがちで、正しく設定すれば既存顧客・エンゲージド層・新規層別に費用と成果を把握できる。エンゲージドはメールリストと過去180日間のサイト訪問者、既存顧客は過去730日間の購入イベントと支払顧客のメールリストでカスタムオーディエンスを作成。Metaは購入イベントの保持期間を180日から730日に変更。セグメントはレポート用のみで配信には影響しない。",
-                "inputHash": "7de8c0f81ea69661280b244c9f876b2477d8fa1023c425020a4967fde9d6caea",
-                "generatedAt": "2026-09-25T05:01:44Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-f9469b3198937ef22545",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "Customer Lifecycle Strategy Is Not What Advertisers Thought",
-      "url": "https://www.jonloomer.com/customer-lifecycle-strategy-not-what-advertisers-thought/",
-      "publishedDate": "2026-06-04",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-19T21:07:34Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "f9469b3198937ef22545ded90eeefd3b8df281cd31ca19dd136e913d9c33a8e4",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Customer Lifecycle Strategy uses manual audience exclusions, not AI",
-            "summary": "Meta’s Customer Lifecycle Strategy feature does not automatically exclude existing customers. When “acquire new customers” is chosen, users must manually select custom audiences to exclude; it does not pull from predefined segments or labels. A new “Legal and Operational” exclusion option is also provided, separate from the lifecycle setting.",
-            "inputHash": "87eecd7da912f32427c1ce01ffb6e4e711c1dd259a93c291caa9376a1bd41efb",
-            "generatedAt": "2026-09-09T04:45:10Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Customer Lifecycle Strategy uses manual audience exclusions, not AI",
-                "inputHash": "87eecd7da912f32427c1ce01ffb6e4e711c1dd259a93c291caa9376a1bd41efb",
-                "generatedAt": "2026-09-09T04:45:10Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta’s Customer Lifecycle Strategy feature does not automatically exclude existing customers. When “acquire new customers” is chosen, users must manually select custom audiences to exclude; it does not pull from predefined segments or labels. A new “Legal and Operational” exclusion option is also provided, separate from the lifecycle setting.",
-                "inputHash": "87eecd7da912f32427c1ce01ffb6e4e711c1dd259a93c291caa9376a1bd41efb",
-                "generatedAt": "2026-09-09T04:45:10Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "カスタマーライフサイクル戦略は手動でオーディエンス除外、AIなし",
-            "summary": "Meta のカスタマーライフサイクル戦略機能は、既存顧客を自動で除外しません。「新規顧客を獲得」を選択すると、カスタムオーディエンスを手動で選んで除外する必要があります。事前定義されたセグメントやラベルからは取得されません。また、「法的・運用上の」除外オプションが別途提供されています。",
-            "inputHash": "c65b9b8573e226c01a821a5471c7b4e139521bf378ae47c12af34d58f9ab4a10",
-            "generatedAt": "2026-09-09T04:45:10Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "カスタマーライフサイクル戦略は手動でオーディエンス除外、AIなし",
-                "inputHash": "c65b9b8573e226c01a821a5471c7b4e139521bf378ae47c12af34d58f9ab4a10",
-                "generatedAt": "2026-09-09T04:45:10Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta のカスタマーライフサイクル戦略機能は、既存顧客を自動で除外しません。「新規顧客を獲得」を選択すると、カスタムオーディエンスを手動で選んで除外する必要があります。事前定義されたセグメントやラベルからは取得されません。また、「法的・運用上の」除外オプションが別途提供されています。",
-                "inputHash": "c65b9b8573e226c01a821a5471c7b4e139521bf378ae47c12af34d58f9ab4a10",
-                "generatedAt": "2026-09-09T04:45:10Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-92f06d7b808cb842157c",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "Meta Ads Attribution Reporting: What Your Results Really Mean",
-      "url": "https://www.jonloomer.com/meta-ads-attribution-reporting/",
-      "publishedDate": "2026-06-02",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-15T19:54:50Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "92f06d7b808cb842157c0d970eef52f7c944d1a1b8dead5a4de2f275a3fec54d",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Understanding Meta Ads Attribution Reporting",
-            "summary": "The article explains Meta's standard attribution model (7‑day click‑through, 1‑day engage‑through, 1‑day view‑through) and how the Breakdown by Attribution Settings tool separates results into click, engagement and view rows. It contrasts standard with incremental models and stresses proper event setup and deduplication for accurate conversion insights.",
-            "inputHash": "77e9fd0e97035f1b3b7d749a734b17cf2de01d26357d4c82a3509ff8a6c74285",
-            "generatedAt": "2026-09-18T11:39:03Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Understanding Meta Ads Attribution Reporting",
-                "inputHash": "77e9fd0e97035f1b3b7d749a734b17cf2de01d26357d4c82a3509ff8a6c74285",
-                "generatedAt": "2026-09-18T11:39:03Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "The article explains Meta's standard attribution model (7‑day click‑through, 1‑day engage‑through, 1‑day view‑through) and how the Breakdown by Attribution Settings tool separates results into click, engagement and view rows. It contrasts standard with incremental models and stresses proper event setup and deduplication for accurate conversion insights.",
-                "inputHash": "77e9fd0e97035f1b3b7d749a734b17cf2de01d26357d4c82a3509ff8a6c74285",
-                "generatedAt": "2026-09-18T11:39:03Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta広告の属性レポートで結果の意味を把握する方法",
-            "summary": "Meta広告の標準属性モデルは、クリック7日、エンゲージ1日、ビュー1日のウィンドウでコンバージョンを計測します。属性設定で「属性別ブレークダウン」を使用すると、クリック（1日・2‑7日）、エンゲージ、ビューの4行が表示され、各設定の貢献度が確認できます。正しくイベントを設定し重複を除去すれば、クリック経由のコンバージョンは広告効果を最も確実に示し、エンゲージやビューは他チャネルの影響も含む可能性があります。これにより、デフォルトレポートだけでは見えないコンバージョンやインクリメンタル効果を把握できます。",
-            "inputHash": "6f1b161e545c979330c31ad69de8bbd1da91d50e9d682478d6e815b72098957f",
-            "generatedAt": "2026-09-18T11:39:03Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta広告の属性レポートで結果の意味を把握する方法",
-                "inputHash": "6f1b161e545c979330c31ad69de8bbd1da91d50e9d682478d6e815b72098957f",
-                "generatedAt": "2026-09-18T11:39:03Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta広告の標準属性モデルは、クリック7日、エンゲージ1日、ビュー1日のウィンドウでコンバージョンを計測します。属性設定で「属性別ブレークダウン」を使用すると、クリック（1日・2‑7日）、エンゲージ、ビューの4行が表示され、各設定の貢献度が確認できます。正しくイベントを設定し重複を除去すれば、クリック経由のコンバージョンは広告効果を最も確実に示し、エンゲージやビューは他チャネルの影響も含む可能性があります。これにより、デフォルトレポートだけでは見えないコンバージョンやインクリメンタル効果を把握できます。",
-                "inputHash": "6f1b161e545c979330c31ad69de8bbd1da91d50e9d682478d6e815b72098957f",
-                "generatedAt": "2026-09-18T11:39:03Z",
                 "reviewedAt": null
               }
             }
