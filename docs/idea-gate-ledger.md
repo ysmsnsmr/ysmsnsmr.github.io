@@ -1714,3 +1714,40 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: 日別ページに共通地図と記事への相互リンクを実装する
 - Revisit when: 地名の誤結合が見つかる; 表示対象外の地名が頻繁に必要になる; 地図の読み込みやモバイル表示が本文の閲覧を妨げる
+
+<!-- idea-gate:20261027-meta-ads-cloudflare-mirror-trial -->
+## Cloudflare Pagesへの限定公開と社内到達性の検証
+
+- Record ID: `20261027-meta-ads-cloudflare-mirror-trial`
+- Evaluated: 2026-10-27T18:59:12+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **TRY**
+- Score: 77/100
+- Confidence: medium - 既存サイトの構成は確認済みだが、社内からの閲覧と自動更新は未実証。
+
+### Idea Card
+
+- Purpose: 会社PCからMeta Ads更新情報を確認できる配信経路を試す
+- First experience: 公開ファイルだけのCloudflare複製で日英表示と詳細を開く
+- Scope and cost: 既存無料枠で1回の限定実験、追加課金なし、現行サイトと収集設定は維持
+- Continuation boundary: 社内到達性と更新反映を確認し、利用不能や運用負担が大きければ配信停止
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 12/15 |
+| `evidence_and_learning` | 9/15 |
+| `expected_outcome` | 10/15 |
+| `scope_and_fit` | 12/15 |
+| `ownership_and_reversibility` | 17/20 |
+| **Total** | **77/100** |
+- Trial limit: 1サイト・無料枠・追加課金なし
+- Trial stop condition: 日英詳細・配信範囲・更新反映を確認し、社内到達性の結果を待つ
+
+### Next Step
+
+- Action: 公開対象を限定したnoindexの複製を作成し、GitHub Pagesとは独立に検証する。
+- Revisit when: 社内PCでアクセスできない; 自動更新が反映されない; 無料枠や管理負担が許容範囲を超える
