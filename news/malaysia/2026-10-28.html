@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2026年10月28日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7f4;
+      --panel: #ffffff;
+      --panel-subtle: #fbfcfa;
+      --panel-translucent: rgba(255, 255, 255, 0.68);
+      --ink: #1b2420;
+      --muted: #65716c;
+      --line: #dce3dd;
+      --accent: #006b5f;
+      --accent-strong: #004c45;
+      --accent-soft: #e5f3ef;
+      --warn: #8f4c00;
+      --focus: #f4c04d;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --radius-control: 6px;
+      --radius-card: 8px;
+      --radius-pill: 999px;
+      --target-min: 44px;
+      --shadow: 0 12px 28px rgba(27, 36, 32, 0.07);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+    }
+    main { width: min(880px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 56px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 8px; font-size: clamp(2rem, 6vw, 3.1rem); line-height: 1.16; }
+    h2 { margin: 0; font-size: 1.25rem; }
+    h3 { margin: 0; font-size: 1.1rem; line-height: 1.55; overflow-wrap: anywhere; }
+    a { color: var(--accent); text-underline-offset: 0.18em; }
+    a:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: var(--radius-control); }
+    .page-header { margin-bottom: 28px; }
+    .page-nav { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 28px; }
+    .back-link { font-weight: 700; }
+    .markdown-link { color: var(--muted); font-size: .9rem; }
+    .eyebrow { margin-bottom: 3px; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .subhead { max-width: 650px; margin-bottom: 0; color: var(--muted); }
+    .summary-strip { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .count-pill { display: inline-flex; gap: 8px; align-items: center; min-height: 30px; border-radius: var(--radius-pill); background: var(--accent-soft); padding: 4px 10px; font-size: .88rem; }
+    .count-pill strong { color: var(--accent-strong); }
+    .category-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .category-nav a { border: 1px solid var(--line); border-radius: var(--radius-pill); background: var(--panel); padding: 6px 11px; color: var(--accent-strong); font-size: .9rem; font-weight: 700; text-decoration: none; }
+    .air-quality-links { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 24px; border-block: 1px solid var(--line); padding: 14px 0; }
+    .air-quality-links h2 { font-size: 1rem; }
+    .air-quality-links p { margin: 3px 0 0; color: var(--muted); font-size: .84rem; }
+    .air-quality-actions { display: flex; flex-wrap: wrap; gap: 8px 16px; flex: 0 0 auto; font-size: .88rem; }
+    .daily-category + .daily-category { margin-top: 32px; }
+    .daily-category-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; border-bottom: 2px solid var(--accent-soft); padding-bottom: 9px; }
+    .daily-category-head span { color: var(--muted); font-size: .9rem; }
+    .daily-item-list { display: grid; gap: 12px; margin-top: 12px; }
+    .daily-item { border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--panel); padding: 18px; box-shadow: var(--shadow); }
+    .daily-item-head { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+    .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
+    .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
+    .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
+    .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
+    .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
+    .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
+    .source-note { color: var(--muted); }
+    .source-only { margin-top: 32px; }
+    .source-only-list { width: 100%; max-width: 100%; margin: 12px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+    .source-only-list li { display: block; width: 100%; min-width: 0; max-width: 100%; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: .88rem; overflow-wrap: anywhere; }
+    .source-only-title { display: block; width: 100%; min-width: 0; max-width: 100%; color: var(--ink); white-space: normal; overflow-wrap: anywhere; word-break: break-all; }
+    .source-only-meta { color: var(--muted); font-size: .82rem; }
+    .muted { color: var(--muted); }
+    @media (max-width: 600px) {
+      main { width: min(100% - 20px, 880px); padding-top: 20px; }
+      .page-nav { align-items: flex-start; flex-direction: column; gap: 6px; margin-bottom: 24px; }
+      .daily-item { padding: 15px; }
+      .air-quality-links { align-items: flex-start; flex-direction: column; }
+      .air-quality-actions { flex: 1 1 auto; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <nav class="page-nav" aria-label="ページ内ナビゲーション">
+        <a class="back-link" href="./index.html">← マレーシア生活ニュース</a>
+        <a class="markdown-link" href="./2026-10-28.md">Markdown版</a>
+      </nav>
+      <p class="eyebrow">Daily summary</p>
+      <h1>2026年10月28日のニュースまとめ</h1>
+      <p class="subhead">2026年10月28日 07:14 MYT 時点のまとめ。期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。</p>
+      <div class="summary-strip" aria-label="カテゴリ別件数">
+        <span class="count-pill"><span>暮らしに関わる更新</span><strong>14</strong></span>
+<span class="count-pill"><span>社会・経済の動き</span><strong>11</strong></span>
+      </div>
+    </header>
+
+    <section class="air-quality-links" aria-labelledby="air-quality-heading">
+      <div>
+        <h2 id="air-quality-heading">大気情報（公式）</h2>
+        <p>クランバレー周辺の状況は、各ページで地域・更新時刻を確認してください。観測値と予報は別の情報です。</p>
+      </div>
+      <div class="air-quality-actions">
+        <a href="https://eqms.doe.gov.my/apims/main">APIMSの観測値を見る</a>
+        <a href="https://mycmaq.met.gov.my/">MyCMAQの予報を見る</a>
+      </div>
+    </section>
+
+    <nav class="category-nav" aria-label="カテゴリへ移動">
+      <a href="#category-1">暮らしに関わる更新 14件</a><a href="#category-2">社会・経済の動き 11件</a>
+    </nav>
+
+    <details class="location-map" id="news-map">
+      <summary>記事の場所を地図で見る <span>9地域</span></summary>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="penang" data-lat="5.4" data-lon="100.3" data-zoom="9"><strong>ペナン州</strong><ul><li><a href="#article-3">チョウ氏、土砂崩れ現場近くの開発業者に責任求める</a></li>
+<li><a href="#article-24">ペナン州の重点15カ所でホームレス46人を保護</a></li></ul></li>
+<li class="map-place" data-place-key="pahang" data-lat="3.8" data-lon="103.2" data-zoom="8"><strong>パハン州</strong><ul><li><a href="#article-7">パハン州、モンスーン対策にRM3.78mを割り当て、167拠点に物資配布へ</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-8">ルフトハンザ、KL―フランクフルト直行便を約10年ぶり再開</a></li>
+<li><a href="#article-13">配達員ら、Waze代替アプリ「TuJu」の実力見極めへ</a></li></ul></li>
+<li class="map-place" data-place-key="selangor" data-lat="3.1" data-lon="101.5" data-zoom="9"><strong>セランゴール州</strong><ul><li><a href="#article-11">マレーシア環境局、セランゴール州などでバイク排ガス・騒音を取り締まり</a></li></ul></li>
+<li class="map-place" data-place-key="sarawak" data-lat="3.1" data-lon="113.0" data-zoom="7"><strong>サラワク州</strong><ul><li><a href="#article-14">マレーシアの大気状況改善、サマラジュだけ不健康水準</a></li>
+<li><a href="#article-18">サラワク州、森林被覆率62％の目標維持に引き続き取り組む</a></li>
+<li><a href="#article-25">連邦政府、サバ州などの水道インフラを強化へ</a></li></ul></li>
+<li class="map-place" data-place-key="klang-valley" data-lat="3.1" data-lon="101.55" data-zoom="9"><strong>クランバレー</strong><ul><li><a href="#article-14">マレーシアの大気状況改善、サマラジュだけ不健康水準</a></li></ul></li>
+<li class="map-place" data-place-key="johor" data-lat="2.0" data-lon="103.5" data-zoom="8"><strong>ジョホール州</strong><ul><li><a href="#article-14">マレーシアの大気状況改善、サマラジュだけ不健康水準</a></li></ul></li>
+<li class="map-place" data-place-key="sabah" data-lat="5.6" data-lon="116.5" data-zoom="7"><strong>サバ州</strong><ul><li><a href="#article-25">連邦政府、サバ州などの水道インフラを強化へ</a></li></ul></li>
+<li class="map-place" data-place-key="labuan" data-lat="5.28" data-lon="115.24" data-zoom="11"><strong>ラブアン</strong><ul><li><a href="#article-25">連邦政府、サバ州などの水道インフラを強化へ</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </details>
+
+
+            <section class="daily-category" aria-labelledby="category-1">
+              <div class="daily-category-head">
+                <h2 id="category-1">暮らしに関わる更新</h2>
+                <span>14件</span>
+              </div>
+              <div class="daily-item-list">
+
+      <article class="daily-item" id="article-1">
+        <div class="daily-item-head">
+          <span class="item-number">1</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>ブキット・ジャリルのバンダルMADANI、15年かけ段階開発</h3>
+        <p class="daily-summary">ブキット・ジャリルのバンダルMADANIは、15年かけて段階的に開発される予定です。交通渋滞の緩和を目指し、道路の改良にRM250 jutaが充てられます。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/bandar-madani-bukit-jalil-dibangunkan-berfasa-selama-15-tahun-rm250-juta-naik-taraf-jalan">出典: Astro Awani（2026年10月28日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-2">
+        <div class="daily-item-head">
+          <span class="item-number">2</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>MetMalaysia、2027年初めの高温・乾燥化に警戒</h3>
+        <p class="daily-summary">マレーシア気象局（MetMalaysia）のマクルン・ファズリ・モハマド・ファミ気象・地震運用センター上級部長は、2026/2027年の北東モンスーン終盤にあたる2027年1月下旬から3月ごろ、国内で気温が高く雨が少なくなる可能性があると述べました。強い段階にあるエルニーニョ現象が、2026年末から2027年にかけて「スーパーエルニーニョ」と呼ばれる非常に強い段階に発達するとの見通しが背景にあり、降雨が減れば熱波や干ばつのリスクが高まる可能性があるとしています。一方、2026年10月27日に始まったモンスーンの初期には、2026年11月から2027年1月にかけて長雨が3～5回発生すると予想されると述べました。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/27/first-the-floods-then-the-heat-metmalaysia-warns-of-challenging-months-ahead/240835">出典: Malay Mail（2026年10月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-3">
+        <div class="daily-item-head">
+          <span class="item-number">3</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>チョウ氏、土砂崩れ現場近くの開発業者に責任求める</h3>
+        <p class="daily-summary">チョウ氏は、<a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>パヤ・トゥルボンのタマン・スリ・ランバイで起きた土砂崩れの現場近くにある斜面で、コンドミニアムや道路のプロジェクトを進める土地所有者と開発業者は責任を負う必要があると述べました。法的責任に加え、被災地域の安全確保に向けた緩和工事も含まれます。チョウ氏によると、MBPPは2日以内に詳細な報告書をまとめる予定です。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/tanah-runtuh-pemaju-perlu-bertanggungjawab-laporan-lengkap-mbpp-dalam-dua-hari-chow">出典: Astro Awani（2026年10月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-4">
+        <div class="daily-item-head">
+          <span class="item-number">4</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>スーパーエルニーニョでマレーシア、2027年1月末～3月に高温・乾燥の恐れ</h3>
+        <p class="daily-summary">スーパーエルニーニョ現象の発生が予想されることから、マレーシアでは2026／2027年の北東モンスーン終盤にあたる2027年1月末から3月にかけて、気温が高く乾燥した天候となる可能性があります。この現象により、降雨量が減ることも見込まれています。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/super-el-nino-malaysia-berisiko-alami-cuaca-lebih-panas-hujung-januari-hingga-mac-2027">出典: Astro Awani（2026年10月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-5">
+        <div class="daily-item-head">
+          <span class="item-number">5</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>政府、ブキット・ジャリルの道路改修にRM250mを配分へ</h3>
+        <p class="daily-summary">政府はブキット・ジャリルの道路改修にRM250mを配分する。バンダル・マダニ計画は段階的に進められ、完成まで15年を見込む。近隣で計画に反対している住民がいるとされ、アンワル・イブラヒム首相がこの計画を取り上げた。</p>
+
+        <a class="source-link" href="https://paultan.org/2026/10/27/govt-to-allocate-rm250m-to-upgrade-roads-in-bukit-jalil-bandar-madani-will-be-built-in-phases-over-15-years/">出典: Paul Tan（2026年10月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-6">
+        <div class="daily-item-head">
+          <span class="item-number">6</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>承認済み作業場は33か所、商用車の速度制限装置義務を延期</h3>
+        <p class="daily-summary">商用車への速度制限装置（SLD）の後付けに対応する、JPJ（道路交通局）承認済みの作業場は全国で33か所にとどまる。対象となる商用車は20万台を超えるとされ、この状況を受けて運輸省は装着要件の全面施行を延期した。アンソニー・ローク運輸相が議会で述べた。</p>
+
+        <a class="source-link" href="https://paultan.org/2026/10/27/only-33-jpj-approved-workshops-for-speed-limiter-retrofits-on-over-200000-commercial-vehicles-says-loke/">出典: Paul Tan（2026年10月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-7">
+        <div class="daily-item-head">
+          <span class="item-number">7</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3><a class="place-link" data-place-key="pahang" href="https://www.openstreetmap.org/?mlat=3.8&amp;mlon=103.2#map=8/3.8/103.2" title="パハン州の概略位置を地図で見る">パハン州</a>、モンスーン対策にRM3.78mを割り当て、167拠点に物資配布へ</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="pahang" href="https://www.openstreetmap.org/?mlat=3.8&amp;mlon=103.2#map=8/3.8/103.2" title="パハン州の概略位置を地図で見る">パハン州</a>政府は、2026/2027年の北東モンスーンに備え、州社会福祉局を通じてRM3,785,115.30を割り当てた。乾燥食品の調達や物流、輸送、人件費に充て、州内11地区の167カ所の前方拠点に物資を届ける。ワン・ロスディ州首相によると、基礎食品9品目、計332,906点（総重量225.11トン）を、2026年10月27日から11月14日までに配布する予定。道路が寸断される恐れのあるジェラントゥート郡とリピス郡の上流部や、ロンピン郡のティオマン島などへの早期の物流準備が重要だとしている。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/27/pahang-allocates-rm378m-for-monsoon-preparations-sends-aid-supplies-to-167-forward-bases/240794">出典: Malay Mail（2026年10月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-8">
+        <div class="daily-item-head">
+          <span class="item-number">8</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>ルフトハンザ、KL―フランクフルト直行便を約10年ぶり再開</h3>
+        <p class="daily-summary">ルフトハンザ航空が<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>とドイツ・フランクフルトを結ぶ直行便を就航させ、両都市の直行便が約10年ぶりに復活した。ティオン・キンシン観光・芸術・文化相は、この便がドイツや欧州市場との航空接続を強化し、観光、ビジネス、人々の交流の機会を広げるとの考えを示した。また、訪問マレーシア2026～2027キャンペーンを進める時期に合致しており、安定した航空接続は海外旅行者の誘致や国際観光市場での競争力維持に重要だと述べた。発言は<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>国際空港での初便歓迎行事で、チウ・チュンマン副観光・芸術・文化相が代読した。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/money/2026/10/27/lufthansa-resumes-direct-kuala-lumpurfrankfurt-flights-after-nearly-a-decade/240768">出典: Malay Mail（2026年10月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-9">
+        <div class="daily-item-head">
+          <span class="item-number">9</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>プスパコム・バンギ、11月2日から商用車の検査を終了</h3>
+        <p class="daily-summary">プスパコムによると、バンギ支店では2026年11月2日からサービス範囲を縮小し、商用車の検査を取り扱わなくなります。以降は、私用車向けのMV15およびB2検査のみを実施します。</p>
+
+        <a class="source-link" href="https://paultan.org/2026/10/27/reduced-service-scope-for-puspakom-bangi-from-nov-2-only-mv15-b2-tests-for-private-vehicles-no-more-cvs/">出典: Paul Tan（2026年10月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-10">
+        <div class="daily-item-head">
+          <span class="item-number">10</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>未払い管理費を理由に住戸から締め出せないと控訴裁判所</h3>
+        <p class="daily-summary">控訴裁判所は、管理費を滞納した所有者を自分の住戸から締め出す権限は共同管理団体（JMB）にないと判断しました。規則では、滞納者のアクセスカードを無効にしたり、建物への出入り時に記録簿への署名を求めたり、共用施設やサービスの利用を停止したりできますが、住戸への立ち入りを拒むことまでは認められていないとしました。判決は、ニライの商業施設セントラル・バザールを管理するJMBが、SL LandとFoong Wei Chingの役員および代理人の立ち入りを拒んだ件をめぐる控訴で、3人の裁判官からなる法廷が全員一致で認めました。控訴裁判所は、JMBに入場条件を課す権限があるとした高等裁判所の判断を取り消しました。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/27/locked-out-over-maintenance-fees-court-says-jmbs-cant-do-that/240749">出典: Malay Mail（2026年10月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-11">
+        <div class="daily-item-head">
+          <span class="item-number">11</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>マレーシア環境局、<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>などでバイク排ガス・騒音を取り締まり</h3>
+        <p class="daily-summary">マレーシア環境局（DOE）は10月、<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>とクランタン州で別々の取り締まりを強化した。オートバイの排ガスと、車両の過度な騒音という二つの環境汚染を対象としている。</p>
+
+        <a class="source-link" href="https://paultan.org/2026/10/27/malaysia-doe-targets-motorcycle-emissions-and-noise-pollution-in-joint-enforcement-operations/">出典: Paul Tan（2026年10月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-12">
+        <div class="daily-item-head">
+          <span class="item-number">12</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>副首相、北東モンスーン開始見込みで警戒呼びかけ</h3>
+        <p class="daily-summary">アハマド・ザヒド・ハミディ副首相は、2026年10月27日に始まる見込みの2026／2027年北東モンスーンに備え、国民に警戒と安全確保を呼びかけました。モンスーンは2027年3月まで続く見通しで、長雨や洪水、荒れた海をもたらす可能性があるとしています。マレーシア気象局（MetMalaysia）の予報では、2026年11月から2027年1月にかけて、長雨となる期間が3～5回発生する可能性があり、特に河川沿いや低地で洪水リスクが高まるおそれがあります。強風による海況の悪化や南シナ海の海面上昇にも注意を促しました。ザヒド副首相は、最新の予報や警報を確認し、洪水が起きやすい場所を避け、冠水した道路を渡らず、避難指示を含む当局の指示に従うよう勧めています。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/27/zahid-urges-public-to-stay-alert-as-northeast-monsoon-begins-today/240748">出典: Malay Mail（2026年10月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-13">
+        <div class="daily-item-head">
+          <span class="item-number">13</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>配達員ら、Waze代替アプリ「TuJu」の実力見極めへ</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>のSunway Wangsa Walk周辺で取材に応じた配達員3人は、政府がWazeの代替として推進するマレーシア開発のナビアプリ「TuJu」をまだ試していないと話しました。信頼性が高まるのを待ってから切り替えたいという人もいます。Grabの配達員ムハンマド・ナビル・カイルディンさんは、10月26日にTikTokとFacebookでTuJuを知り、既存アプリと比べるために試すことを検討中だと述べました。一方、配達先を探す際には、Grabのアプリ内ナビを利用していると話しています。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/27/waze-alternatives-delivery-riders-e-hailing-drivers-wait-for-tuju-to-prove-itself/240211">出典: Malay Mail（2026年10月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-14">
+        <div class="daily-item-head">
+          <span class="item-number">14</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>マレーシアの大気状況改善、サマラジュだけ不健康水準</h3>
+        <p class="daily-summary">マレーシア環境局の大気汚染指数管理システム（APIMS）によると、2026年10月27日午前9時時点で、国内で不健康水準を記録したのは<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>サマラジュの測定地点のみでした。APIは152で、午前7時の151から上昇しました。<a class="place-link" data-place-key="klang-valley" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.55#map=9/3.1/101.55" title="クランバレーの概略位置を地図で見る">クランバレー</a>の測定地点はすべて100未満で、バンティング（45）とクアラ・セランゴール（47）は「良好」、ほかの地点は「中程度」でした。<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>でも、全測定地点が100未満でした。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/27/fresher-air-in-malaysia-again-only-samalaju-in-sarawak-still-unhealthy-after-months-of-haze/240745">出典: Malay Mail（2026年10月27日）</a>
+      </article>
+
+              </div>
+            </section>
+
+
+            <section class="daily-category" aria-labelledby="category-2">
+              <div class="daily-category-head">
+                <h2 id="category-2">社会・経済の動き</h2>
+                <span>11件</span>
+              </div>
+              <div class="daily-item-list">
+
+      <article class="daily-item" id="article-15">
+        <div class="daily-item-head">
+          <span class="item-number">15</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>議会サービス評議会を設置、役割と権限は</h3>
+        <p class="daily-summary">2025年議会サービス法が2026年10月1日に施行され、議会の人事、財政、運営を政府の行政機構から独立して扱うことを目指す専用の議会サービスが復活しました。同法に基づき、このサービスを監督する議会サービス評議会が設置され、議会の行政府からの制度的な独立性を高めることが目的とされています。10月14日には下院が評議会に参加する議員4人を承認し、与党側と野党側からそれぞれ2人が選ばれました。評議会の具体的な役割や権限の範囲が記事の焦点です。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/28/parliament-gets-more-independence-what-will-its-new-council-actually-do/239188">出典: Malay Mail（2026年10月28日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-16">
+        <div class="daily-item-head">
+          <span class="item-number">16</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>老朽化する消防車両に対応、消防救助局がロボット導入と装備更新</h3>
+        <p class="daily-summary">マレーシア消防救助局（JBPM）は、資産の近代化と新技術の導入を通じて、活動・物流面の能力強化を進めています。遠隔操作システムの検討には、消火ロボット2台が含まれます。ノル・ヒシャム・モハマド局長は、さまざまな緊急事態への備えにこの取り組みが重要だと述べました。車両や装備の更新は、既存資産の使用年数と稼働能力に基づいて段階的に実施する方針で、消防救助車（FRT）80台の調達も含まれます。JBPMによると、2001年から2026年までにFRTを686台取得した一方、運用基準上の必要台数は592台です。この592台のうち372台（63％）は使用開始から10年を超えており、FRTの更新調達80台と既存の小型消防救助車（CFRT）150台が、備えや活動能力、サービス提供に目に見える効果をもたらすとしています。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/28/faced-with-an-ageing-fleet-malaysias-fire-department-turns-to-robots-and-upgrades/240792">出典: Malay Mail（2026年10月28日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-17">
+        <div class="daily-item-head">
+          <span class="item-number">17</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>WCE、バンティングからマスジド・タナへ延伸の見通し</h3>
+        <p class="daily-summary">アハマド・ザヒド氏は、WCEがバンティングからマスジド・タナまで延伸される見通しだと述べた。実現すれば、新たな区間は交通渋滞を緩和するだけでなく、事業対象地域の経済成長を促す起爆剤にもなるという。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/wce-dijangka-disambung-dari-banting-ke-masjid-tanah-ahmad-zahid">出典: Astro Awani（2026年10月28日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-18">
+        <div class="daily-item-head">
+          <span class="item-number">18</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3><a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>、森林被覆率62％の目標維持に引き続き取り組む</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>は、森林被覆率を62％に保つ目標への取り組みを続ける。持続可能な開発を通じて再生可能エネルギーの拡大と生物多様性の保護を進め、越境ヘイズへの対応でも協力するとしている。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/sarawak-kekal-komited-capai-sasaran-litupan-hutan-62-peratus">出典: Astro Awani（2026年10月28日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-19">
+        <div class="daily-item-head">
+          <span class="item-number">19</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>公務員に求められる技術変化への備えとスキル向上</h3>
+        <p class="daily-summary">デジタル技術の急速な発展を受け、公務員にはスキルの向上が求められている。ストレスを適切に管理し、情報の機密性を守るとともに、同僚との良好な関係を保つことも重要だとしている。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jangan-biar-teknologi-mendahului-kesediaan-penjawat-awam-berubah">出典: Astro Awani（2026年10月28日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-20">
+        <div class="daily-item-head">
+          <span class="item-number">20</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>チャン氏、マレーシアは技術の利用者から自国技術の開発者へ転換すべきと主張</h3>
+        <p class="daily-summary">チャン・リー・カン氏は、マレーシアが技術の利用者から自国技術の開発者へと転換する必要があると述べた。国の科学・技術・イノベーション（STI）の発展には、連邦政府と州政府の緊密な連携を含む「国全体」での取り組みを通じ、すべての関係者が協力することが必要だとしている。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/malaysia-perlu-beralih-daripada-pengguna-kepada-pembangun-teknologi-sendiri-chang-lih-kang">出典: Astro Awani（2026年10月28日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-21">
+        <div class="daily-item-head">
+          <span class="item-number">21</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>マレーシア軍の退職予定者・退役軍人1,400人超が再就職支援の恩恵</h3>
+        <p class="daily-summary">「Kerjaya Kedua Perwira」施策の恩恵を受けたマレーシア軍の退職予定者と退役軍人は1,400人を超えました。このうち退役軍人781人が、航空宇宙、自動車、物流、サービスなどの高付加価値分野で仕事を得たということです。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/lebih-1400-bakal-pesara-dan-veteran-atm-terima-manfaat-inisiatif-kerjaya-kedua-perwira">出典: Astro Awani（2026年10月28日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-22">
+        <div class="daily-item-head">
+          <span class="item-number">22</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>JCorp、国外に農園を保有していないとWALHIの主張を否定</h3>
+        <p class="daily-summary">JCorpは、マレーシア国外に農園を保有していないとして、WALHIの主張を否定した。同社によると、完全子会社のKulim (Malaysia) Berhad（Kulim）を通じて、2007年にインドネシアの複数企業への持分を処分したという。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/kebakaran-hutan-di-indonesia-jcorp-tidak-miliki-ladang-di-luar-malaysia-nafi-dakwaan-walhi">出典: Astro Awani（2026年10月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-23">
+        <div class="daily-item-head">
+          <span class="item-number">23</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>公立大学の直接入学枠、UPU割当枠を縮小せずと高等教育相</h3>
+        <p class="daily-summary">公立大学が独自のオープン枠を通じて入学を認めても、大学中央入学制度（UPU）に割り当てられた定員には影響せず、縮小もしないと、ザンブリー・アブドゥル・カディル高等教育相が述べました。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/kemasukan-saluran-terbuka-universiti-awam-tidak-kecilkan-kuota-upu-zambry">出典: Astro Awani（2026年10月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-24">
+        <div class="daily-item-head">
+          <span class="item-number">24</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3><a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>の重点15カ所でホームレス46人を保護</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>ティムール・ラウト地区の重点15カ所で、ホームレスの人々46人が保護された。保護活動は、ホームレスの人々を救助する統合作戦として10月27日に実施された。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/46-gelandangan-diselamatkan-di-15-lokasi-tumpuan-pulau-pinang">出典: Astro Awani（2026年10月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-25">
+        <div class="daily-item-head">
+          <span class="item-number">25</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>連邦政府、<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>などの水道インフラを強化へ</h3>
+        <p class="daily-summary">ファディラ氏によると、連邦政府は<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>、<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>、<a class="place-link" data-place-key="labuan" href="https://www.openstreetmap.org/?mlat=5.28&amp;mlon=115.24#map=11/5.28/115.24" title="ラブアンの概略位置を地図で見る">ラブアン</a>の水道供給インフラを強化する。<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>にはRM444.96 jutaの助成金を用意し、重要な水道管の交換や、無収水（NRW）率を下げる取り組みを進める。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/kerajaan-perkukuh-infrastruktur-bekalan-air-sabah-sarawak-dan-labuan-fadillah">出典: Astro Awani（2026年10月27日）</a>
+      </article>
+
+              </div>
+            </section>
+
+
+  </main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
+</body>
+</html>
