@@ -330,11 +330,15 @@ def validate_config(payload: Any) -> dict[str, Any]:
         expected_keys = {"id", "name", "classification", "sourceUrl", "fetchUrl", "parser", "expectedContentTypes", "contentLanguage", "platforms", "platformIds", "transport", "relevanceRevision", "match"}
         if isinstance(value, dict) and "failurePolicy" in value:
             expected_keys.add("failurePolicy")
+        if isinstance(value, dict) and "fetchEnabled" in value:
+            expected_keys.add("fetchEnabled")
         source = _expect_keys(value, expected_keys, label)
         source_id = _expect_identifier(source["id"], f"{label}.id")
         if source_id in ids:
             raise ContractError(f"duplicate personal feed source id: {source_id}")
         ids.add(source_id)
+        if not isinstance(source.get("fetchEnabled", True), bool):
+            raise ContractError(f"{label}.fetchEnabled must be a boolean")
         _text(source["name"], f"{label}.name")
         _expect_identifier(source["relevanceRevision"], f"{label}.relevanceRevision")
         if source["classification"] not in {"official", "unofficial"}:
@@ -2640,6 +2644,7 @@ def _source_pipeline_stats(config: dict[str, Any]) -> dict[str, Any]:
         "sources": {
             source["id"]: {
                 "mode": "direct" if source["id"] in direct_ids else "discovered_official",
+                "fetchEnabled": source.get("fetchEnabled", True),
                 "fetched": False,
                 "isolatedFailure": False,
                 "responseBytes": 0,
@@ -2822,6 +2827,7 @@ def _print_source_pipeline_stats(stats: dict[str, Any]) -> None:
         print(
             "SOURCE_PIPELINE: "
             f"id={source_id} mode={counts['mode']} parser_version={stats['parserVersion']} "
+            f"fetch_enabled={'true' if counts['fetchEnabled'] else 'false'} "
             f"fetched={'true' if counts['fetched'] else 'false'} "
             f"isolated_failure={'true' if counts['isolatedFailure'] else 'false'} "
             f"response_bytes={counts['responseBytes']} parsed={counts['parsedItems']} valid={counts['validItems']} "
@@ -2937,6 +2943,8 @@ def _reseed_source(config: dict[str, Any], value: str | None) -> str | None:
     source_id = _expect_identifier(value.strip(), "reseed source ID")
     if source_id not in {source["id"] for source in _all_sources(config)}:
         raise ContractError("reseed source ID must name a configured source")
+    if any(source["id"] == source_id and source.get("fetchEnabled") is False for source in config["sources"]):
+        raise ContractError("cannot reseed a source while fetching is disabled")
     return source_id
 
 
@@ -3023,6 +3031,9 @@ def collect(
     }
     for source in config["sources"]:
         source_pipeline = pipeline["sources"][source["id"]]
+        if source.get("fetchEnabled", True) is False:
+            parsed_by_source[source["id"]] = []
+            continue
         try:
             body, content_type = fetch_body(source, timeout)
             if not isinstance(body, str) or (content_type or "").split(";", 1)[0].strip().lower() not in source["expectedContentTypes"]:

@@ -154,6 +154,38 @@ class PersonalFeedTest(unittest.TestCase):
 
     def setUp(self) -> None:
         self.config = load_config()
+        # Existing parser/collector fixtures exercise all supported sources.
+        next(source for source in self.config["sources"] if source["id"] == "meta-business-sdk-releases")["fetchEnabled"] = True
+
+    def test_sdk_fetch_disabled_preserves_existing_entries_and_blocks_reseed(self) -> None:
+        enabled = copy.deepcopy(self.config)
+        feed, state = collect(enabled, {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}, 1, NOW, self.fetcher())
+        sdk_id = "meta-business-sdk-releases"
+        self.assertTrue(state["sources"][sdk_id]["items"])
+        disabled = load_config()
+        self.assertIs(next(source for source in disabled["sources"] if source["id"] == sdk_id)["fetchEnabled"], False)
+        fetch = self.fetcher()
+        calls = []
+
+        def guarded_fetch(source, timeout):
+            calls.append(source["id"])
+            if source["id"] == sdk_id:
+                self.fail("disabled SDK source was fetched")
+            return fetch(source, timeout)
+
+        stats = {}
+        updated_feed, updated_state = collect(disabled, state, 1, NOW, guarded_fetch, source_pipeline_stats=stats)
+        self.assertNotIn(sdk_id, calls)
+        self.assertEqual(updated_state["sources"][sdk_id], state["sources"][sdk_id])
+        self.assertEqual([item for item in updated_feed["items"] if item["sourceId"] == sdk_id],
+                         [item for item in feed["items"] if item["sourceId"] == sdk_id])
+        self.assertFalse(stats["sources"][sdk_id]["fetchEnabled"])
+        with self.assertRaisesRegex(ContractError, "cannot reseed"):
+            collect(disabled, state, 1, NOW, guarded_fetch, reseed_source_id=sdk_id)
+        invalid = copy.deepcopy(disabled)
+        next(source for source in invalid["sources"] if source["id"] == sdk_id)["fetchEnabled"] = "false"
+        with self.assertRaisesRegex(ContractError, "fetchEnabled must be a boolean"):
+            validate_config(invalid)
 
     def fetcher(self, *, fail: bool = False, bodies: dict[str, str] | None = None):
         source_bodies = {
@@ -1028,8 +1060,8 @@ class PersonalFeedTest(unittest.TestCase):
                 fetch_body=self.fetcher(),
         )
 
-        self.assertEqual(calls, ["en", "ja"] * 4)
-        self.assertEqual(len(feed["items"]), 4)
+        self.assertEqual(calls, ["en", "ja"] * 3)
+        self.assertEqual(len(feed["items"]), 3)
 
     def test_bilingual_failure_marks_both_locales_missing_without_blocking_feed(self) -> None:
         def failing_presenter(_title: str, _context: str, _policy: dict) -> dict[str, str]:
