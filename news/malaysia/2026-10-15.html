@@ -67,6 +67,10 @@
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .term-trigger { display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }
+    .term-trigger:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .term-icon { display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }
+    .term-popover { position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }
     .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
     .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
     .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
@@ -170,7 +174,7 @@
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>10月15日～21日、燃料価格が下がりディーゼルはRM5.17、RON95はRM4.62、RON97はRM5.10に</h3>
+        <h3>10月15日～21日、燃料価格が下がりディーゼルはRM5.17、<button type="button" class="term-trigger" popovertarget="term-3-ron95" title="オクタン価95のガソリンです。" aria-label="RON95の説明">RON95<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-3-ron95" class="term-popover"><strong>RON95</strong> オクタン価95のガソリンです。</span>はRM4.62、RON97はRM5.10に</h3>
         <p class="daily-summary">財務省は2026年10月15日から21日までの1週間分の小売燃料価格を発表し、全ての価格が下がったことを報告しました。ディーゼルはRM5.17、RON95はRM4.62、RON97はRM5.10となります。</p>
 
         <a class="source-link" href="https://paultan.org/2026/10/14/malaysian-fuel-prices-oct-15-21-2026-all-prices-down-diesel-to-rm5-17-ron95-to-rm4-62-ron97-to-rm5-10/">出典: Paul Tan（2026年10月14日）</a>
@@ -195,7 +199,7 @@
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>ジャーバが悪化、ラルキンと<a class="place-link" data-place-key="pasir-gudang" href="https://www.openstreetmap.org/?mlat=1.46&amp;mlon=103.9#map=11/1.46/103.9" title="パシル・グダンの概略位置を地図で見る">パシル・グダン</a>が午後7時までに最高IPUを記録</h3>
-        <p class="daily-summary">マレーシア気象局のAPIMSデータによると、ジャーバ（Jerebu）の状態が悪化し、ラルキンと<a class="place-link" data-place-key="pasir-gudang" href="https://www.openstreetmap.org/?mlat=1.46&amp;mlon=103.9#map=11/1.46/103.9" title="パシル・グダンの概略位置を地図で見る">パシル・グダン</a>の測定地点が午後7時までに最高の大気汚染指数（IPU）を記録しました。また、健康に影響する「不健康」カテゴリに属する測定ステーションは、午後6時時点で26駅から27駅に増加しています。</p>
+        <p class="daily-summary">マレーシア気象局の<button type="button" class="term-trigger" popovertarget="term-5-apims" title="マレーシアの大気汚染指数を公開するシステムです。" aria-label="APIMSの説明">APIMS<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-5-apims" class="term-popover"><strong>APIMS</strong> マレーシアの大気汚染指数を公開するシステムです。</span>データによると、ジャーバ（Jerebu）の状態が悪化し、ラルキンと<a class="place-link" data-place-key="pasir-gudang" href="https://www.openstreetmap.org/?mlat=1.46&amp;mlon=103.9#map=11/1.46/103.9" title="パシル・グダンの概略位置を地図で見る">パシル・グダン</a>の測定地点が午後7時までに最高の大気汚染指数（IPU）を記録しました。また、健康に影響する「不健康」カテゴリに属する測定ステーションは、午後6時時点で26駅から27駅に増加しています。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-bertambah-buruk-larkin-dan-pasir-gudang-catat-ipu-tertinggi-setakat-7-malam">出典: Astro Awani（2026年10月14日）</a>
       </article>

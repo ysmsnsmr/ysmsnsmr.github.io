@@ -67,6 +67,10 @@
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .term-trigger { display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }
+    .term-trigger:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .term-icon { display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }
+    .term-popover { position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }
     .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
     .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
     .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
@@ -174,7 +178,7 @@
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>RON97・RON95 無補助価格が5セン、ディーゼルが15セン下がる（10月1日～7日）</h3>
+        <h3>RON97・<button type="button" class="term-trigger" popovertarget="term-3-ron95" title="オクタン価95のガソリンです。" aria-label="RON95の説明">RON95<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-3-ron95" class="term-popover"><strong>RON95</strong> オクタン価95のガソリンです。</span> 無補助価格が5セン、ディーゼルが15セン下がる（10月1日～7日）</h3>
         <p class="daily-summary">政府は、10月1日から7日までの期間、補助なしのRON97とRON95の小売価格をそれぞれ5セン、ディーゼルを15セン下げると発表しました。 対象期間は2026年10月1日から7日までです。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/harga-ron97-dan-ron95-tanpa-subsidi-turun-5-sen-diesel-turun-15-sen-mulai-esok">出典: Astro Awani（2026年9月30日）</a>

@@ -67,6 +67,10 @@
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .term-trigger { display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }
+    .term-trigger:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .term-icon { display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }
+    .term-popover { position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }
     .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
     .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
     .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
@@ -229,7 +233,7 @@
           <p class="item-category">社会・経済の動き</p>
         </div>
         <h3>原石油価格格の上昇により、ガ…</h3>
-        <p class="daily-summary">原石油価格格の上昇により、ガソリン・軽油の補助金が月額35億リンギットに達する可能性があるとリー・チン・トン氏は述べた リー・チン・トン財務副大臣は、原石油価格格が1バレルあたり90ドル程度の場合、RON95ガソリンの補助金は月額約20億リンギット、軽油の補助金は約15億リンギットに達する見込みであると述べた 政府の財政状況は依然として強固であり、原石油価格格の上昇にもかかわらず財政予測に変更はない ガソリン・軽石油価格格の上昇により、生活費や交通費が増加する可能性があるため、補助金の増加が必要になるかもしれない</p>
+        <p class="daily-summary">原石油価格格の上昇により、ガソリン・軽油の補助金が月額35億リンギットに達する可能性があるとリー・チン・トン氏は述べた リー・チン・トン財務副大臣は、原石油価格格が1バレルあたり90ドル程度の場合、<button type="button" class="term-trigger" popovertarget="term-8-ron95" title="オクタン価95のガソリンです。" aria-label="RON95の説明">RON95<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-8-ron95" class="term-popover"><strong>RON95</strong> オクタン価95のガソリンです。</span>ガソリンの補助金は月額約20億リンギット、軽油の補助金は約15億リンギットに達する見込みであると述べた 政府の財政状況は依然として強固であり、原石油価格格の上昇にもかかわらず財政予測に変更はない ガソリン・軽石油価格格の上昇により、生活費や交通費が増加する可能性があるため、補助金の増加が必要になるかもしれない</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/07/22/higher-oil-prices-may-push-petrol-diesel-subsidies-to-rm35b-monthly-says-liew-chin-tong/228547">出典: Malay Mail（2026年7月22日）</a>
       </article>

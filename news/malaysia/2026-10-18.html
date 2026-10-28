@@ -67,6 +67,10 @@
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .term-trigger { display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }
+    .term-trigger:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .term-icon { display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }
+    .term-popover { position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }
     .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
     .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
     .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
@@ -186,7 +190,7 @@
           <span class="item-number">4</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>KPDN <a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">Selangor</a>が水混入疑いのRON95に関する10件の苦情を調査</h3>
+        <h3>KPDN <a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">Selangor</a>が水混入疑いの<button type="button" class="term-trigger" popovertarget="term-4-ron95" title="オクタン価95のガソリンです。" aria-label="RON95の説明">RON95<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-4-ron95" class="term-popover"><strong>RON95</strong> オクタン価95のガソリンです。</span>に関する10件の苦情を調査</h3>
         <p class="daily-summary">2026年10月17日、<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>州の国内貿易生活費省（KPDN <a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">Selangor</a>）は、RON95ガソリンに水が混入した疑いがあるとして、州内の複数地域で発生した車両損傷につながる10件の正式な苦情を調査すると発表した。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/kpdn-selangor-siasat-10-aduan-petrol-disyaki-bercampur-air">出典: Astro Awani（2026年10月17日）</a>
@@ -246,7 +250,7 @@
           <span class="item-number">9</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>KPDNが水汚染訴え受けセランゴール7駅でRON95サンプル27本を押収</h3>
+        <h3>KPDNが水汚染訴え受けセランゴール7駅で<button type="button" class="term-trigger" popovertarget="term-9-ron95" title="オクタン価95のガソリンです。" aria-label="RON95の説明">RON95<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-9-ron95" class="term-popover"><strong>RON95</strong> オクタン価95のガソリンです。</span>サンプル27本を押収</h3>
         <p class="daily-summary">KPDN（国内貿易生活費省）は、2026年10月17日、<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>のガソリンスタンド7箇所からRON95ガソリンのサンプル27本を押収したと発表しました。この措置は、ペナンとケダで水が混入した燃料が車両を損傷したとの報告を受け、同州で10件の水汚染に関する苦情が寄せられたことを受けて行われました。</p>
 
         <a class="source-link" href="https://paultan.org/2026/10/17/kpdn-seizes-ron95-petrol-samples-from-seven-stations-over-water-contamination-complaints-in-selangor/">出典: Paul Tan（2026年10月17日）</a>
@@ -270,7 +274,7 @@
           <span class="item-number">11</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>スランゴール州が水混入疑いのRON95を販売する7つのガソリンスタンドを調査</h3>
+        <h3>スランゴール州が水混入疑いの<button type="button" class="term-trigger" popovertarget="term-11-ron95" title="オクタン価95のガソリンです。" aria-label="RON95の説明">RON95<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-11-ron95" class="term-popover"><strong>RON95</strong> オクタン価95のガソリンです。</span>を販売する7つのガソリンスタンドを調査</h3>
         <p class="daily-summary">スランゴール州の国内貿易・生活費省のムハマド・ハニフ・アサリ局長は、RON95ガソリンに水が混入している疑いがあるとして、同州内の7つのガソリンスタンドを調査すると発表した。省はこれまでに10件の正式な苦情を受け、27本の燃料サンプルを採取し、ラボで分析した。苦情内容はエンジン異音、ジャーク、出力低下、始動不良、バルブ焼損などで、いくつかの整備工場は燃料タンク内の水が原因と確認している。初期点検では全駅が特別承認ライセンスと石油開発法1974年に基づくライセンスを保有していたが、同省は調査協力のため関連書類の提出を求める通知を出した。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/17/motorists-say-ron95-wrecked-their-engines-and-selangor-is-now-investigating-seven-petrol-stations-over-watery-fuel-claims/239463">出典: Malay Mail（2026年10月17日）</a>

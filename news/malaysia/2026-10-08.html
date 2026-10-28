@@ -67,6 +67,10 @@
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .term-trigger { display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }
+    .term-trigger:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .term-icon { display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }
+    .term-popover { position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }
     .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
     .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
     .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
@@ -179,7 +183,7 @@
           <span class="item-number">3</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>RON97・RON95 無補助価格が15セン上昇</h3>
+        <h3>RON97・<button type="button" class="term-trigger" popovertarget="term-3-ron95" title="オクタン価95のガソリンです。" aria-label="RON95の説明">RON95<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-3-ron95" class="term-popover"><strong>RON95</strong> オクタン価95のガソリンです。</span> 無補助価格が15セン上昇</h3>
         <p class="daily-summary">世界原油価格が高止まりし、ブレント原油が約100米ドル/バレルで推移していることから、マレーシアの無補助ガソリン（RON97・RON95）の価格が15セン上がったと発表された。 価格算定は自動価格メカニズム（APM）に基づく。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/harga-ron97-ron95-tanpa-subsidi-naik-15-sen-0">出典: Astro Awani（2026年10月7日）</a>
@@ -215,7 +219,7 @@
           <span class="item-number">6</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>2026年10月8日～14日、RON95はRM4.67、RON97はRM5.15、ディーゼルは変わらず</h3>
+        <h3>2026年10月8日～14日、<button type="button" class="term-trigger" popovertarget="term-6-ron95" title="オクタン価95のガソリンです。" aria-label="RON95の説明">RON95<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-6-ron95" class="term-popover"><strong>RON95</strong> オクタン価95のガソリンです。</span>はRM4.67、RON97はRM5.15、ディーゼルは変わらず</h3>
         <p class="daily-summary">財務省が2026年10月8日から14日までの燃料小売価格を発表し、RON95はRM4.67、RON97はRM5.15に上昇した。一方、補助対象外のB10/B15ディーゼルは前週と同じRM5.27で変わりがない。 RON95とRON97の価格がそれぞれ上昇し、ディーゼルは据え置きとなったことが確認されています。 B10/B15バイオディーゼルの価格も変わらず、車利用者は給油時に同価格で購入できます。</p>
 
         <a class="source-link" href="https://paultan.org/2026/10/07/malaysian-fuel-prices-oct-8-14-2026-petrol-up-ron95-to-rm4-67-ron97-to-rm5-15-diesel-unchanged-rm5-27/">出典: Paul Tan（2026年10月7日）</a>

@@ -67,6 +67,10 @@
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .term-trigger { display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }
+    .term-trigger:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .term-icon { display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }
+    .term-popover { position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }
     .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
     .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
     .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
@@ -207,7 +211,7 @@
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>RON97はRM5.10、ディーゼルはRM5.17に下落</h3>
-        <p class="daily-summary">財務省は、10月15日から21日までの期間、RON97と補助金なしのRON95ガソリンの小売価格がそれぞれ5センと5セン下がり、RON97はRM5.10、RON95はRM4.62になると発表した。また、補助金なしのディーゼルは10セン下がり、RM5.17になる。ブレント原油価格はUS$100（RM409）を上回っているが、地域の精製石油製品供給は回復の兆しを見せている。中国は10月の燃料輸出を再認可し、韓国は引き続き地域市場へ精製石油製品を供給して供給圧力を緩和している。一方、サウジアラビアでの攻撃を含む西アジアの紛争は供給中断と価格上昇リスクを高めており、中期的な価格変動が続く見通しだ。政府は2027年予算で来年の燃料補助金にRM40 billionを投じ、経済成長と生活基盤の持続可能性を支えるとした。</p>
+        <p class="daily-summary">財務省は、10月15日から21日までの期間、RON97と補助金なしの<button type="button" class="term-trigger" popovertarget="term-6-ron95" title="オクタン価95のガソリンです。" aria-label="RON95の説明">RON95<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-6-ron95" class="term-popover"><strong>RON95</strong> オクタン価95のガソリンです。</span>ガソリンの小売価格がそれぞれ5センと5セン下がり、RON97はRM5.10、RON95はRM4.62になると発表した。また、補助金なしのディーゼルは10セン下がり、RM5.17になる。ブレント原油価格はUS$100（RM409）を上回っているが、地域の精製石油製品供給は回復の兆しを見せている。中国は10月の燃料輸出を再認可し、韓国は引き続き地域市場へ精製石油製品を供給して供給圧力を緩和している。一方、サウジアラビアでの攻撃を含む西アジアの紛争は供給中断と価格上昇リスクを高めており、中期的な価格変動が続く見通しだ。政府は2027年予算で来年の燃料補助金にRM40 billionを投じ、経済成長と生活基盤の持続可能性を支えるとした。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/15/finance-ministry-ron97-down-to-rm510-diesel-to-rm517/239156">出典: Malay Mail（2026年10月15日）</a>
       </article>

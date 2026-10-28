@@ -67,6 +67,10 @@
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .term-trigger { display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }
+    .term-trigger:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .term-icon { display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }
+    .term-popover { position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }
     .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
     .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
     .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
@@ -193,7 +197,7 @@
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>Jerebu: 26地区が午後6時にIPU不健康と記録、Seri Manjungが再び不健康カテゴリに</h3>
-        <p class="daily-summary">マレーシアの大気汚染管理システム（APIMS）によると、2026年10月19日午後6時に26の地域がIPU不健康と記録され、Seri Manjungが再び不健康カテゴリに戻った。さらに、<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">Selangor</a>州のJohan Setiaは全国最高の166という数値を維持し、続いて<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">Kuala Lumpur</a>のBatu Mudaが165を示した。</p>
+        <p class="daily-summary">マレーシアの大気汚染管理システム（<button type="button" class="term-trigger" popovertarget="term-4-apims" title="マレーシアの大気汚染指数を公開するシステムです。" aria-label="APIMSの説明">APIMS<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-4-apims" class="term-popover"><strong>APIMS</strong> マレーシアの大気汚染指数を公開するシステムです。</span>）によると、2026年10月19日午後6時に26の地域がIPU不健康と記録され、Seri Manjungが再び不健康カテゴリに戻った。さらに、<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">Selangor</a>州のJohan Setiaは全国最高の166という数値を維持し、続いて<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">Kuala Lumpur</a>のBatu Mudaが165を示した。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jerebu-26-kawasan-catat-ipu-tidak-sihat-jam-6-petang-seri-manjung-kembali-ke-kategori-tidak-sihat">出典: Astro Awani（2026年10月19日）</a>
       </article>

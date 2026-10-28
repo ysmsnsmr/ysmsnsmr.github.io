@@ -67,6 +67,10 @@
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .term-trigger { display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }
+    .term-trigger:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .term-icon { display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }
+    .term-popover { position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }
     .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
     .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
     .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
@@ -190,7 +194,7 @@
           <span class="item-number">4</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3>RON97・RON95の小売価格が20セン上昇、ディーゼルは15セン上昇</h3>
+        <h3>RON97・<button type="button" class="term-trigger" popovertarget="term-4-ron95" title="オクタン価95のガソリンです。" aria-label="RON95の説明">RON95<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-4-ron95" class="term-popover"><strong>RON95</strong> オクタン価95のガソリンです。</span>の小売価格が20セン上昇、ディーゼルは15セン上昇</h3>
         <p class="daily-summary">マレーシアで、補助金なしのRON97とRON95の小売価格がリットルあたり20セン、ディーゼルが15セン上がることが、2026年9月24日から30日までの期間で発表されました。</p>
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/harga-ron97-ron95-tanpa-subsidi-naik-20-sen-diesel-meningkat-15-sen-mulai-esok">出典: Astro Awani（2026年9月23日）</a>
@@ -203,7 +207,7 @@
           <p class="item-category">暮らしに関わる更新</p>
         </div>
         <h3>来週（9月24日〜30日）のマレーシア燃料価格が全種上昇、ディーゼルはRM5.42に</h3>
-        <p class="daily-summary">財務省が9月24日から30日までの燃料価格を発表し、全ての種類で値上げが決定しました。ディーゼルはRM5.42、RON95はRM4.57、RON97はRM5.05となります。 今回の価格改定は毎週行われる燃料価格更新の一環です。 価格上昇により、車利用者は給油費用の増加を考慮する必要があります。</p>
+        <p class="daily-summary">財務省が9月24日から30日までの燃料価格を発表し、全ての種類で値上げが決定しました。ディーゼルはRM5.42、<button type="button" class="term-trigger" popovertarget="term-5-ron95" title="オクタン価95のガソリンです。" aria-label="RON95の説明">RON95<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-5-ron95" class="term-popover"><strong>RON95</strong> オクタン価95のガソリンです。</span>はRM4.57、RON97はRM5.05となります。 今回の価格改定は毎週行われる燃料価格更新の一環です。 価格上昇により、車利用者は給油費用の増加を考慮する必要があります。</p>
 
         <a class="source-link" href="https://paultan.org/2026/09/23/malaysian-fuel-prices-sept-24-30-2026-all-go-up-diesel-to-rm5-42-ron95-petrol-to-rm4-57-ron97-to-rm5-05/">出典: Paul Tan（2026年9月23日）</a>
       </article>

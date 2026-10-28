@@ -67,6 +67,10 @@
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .term-trigger { display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }
+    .term-trigger:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .term-icon { display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }
+    .term-popover { position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }
     .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
     .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
     .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
@@ -116,17 +120,6 @@
 <span class="count-pill"><span>社会・経済の動き</span><strong>11</strong></span>
       </div>
     </header>
-
-    <section class="air-quality-links" aria-labelledby="air-quality-heading">
-      <div>
-        <h2 id="air-quality-heading">大気情報（公式）</h2>
-        <p>クランバレー周辺の状況は、各ページで地域・更新時刻を確認してください。観測値と予報は別の情報です。</p>
-      </div>
-      <div class="air-quality-actions">
-        <a href="https://eqms.doe.gov.my/apims/main">APIMSの観測値を見る</a>
-        <a href="https://mycmaq.met.gov.my/">MyCMAQの予報を見る</a>
-      </div>
-    </section>
 
     <nav class="category-nav" aria-label="カテゴリへ移動">
       <a href="#category-1">暮らしに関わる更新 14件</a><a href="#category-2">社会・経済の動き 11件</a>

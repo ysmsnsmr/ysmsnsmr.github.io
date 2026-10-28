@@ -67,6 +67,10 @@
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .term-trigger { display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }
+    .term-trigger:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .term-icon { display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }
+    .term-popover { position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }
     .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
     .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
     .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
@@ -212,7 +216,7 @@
           <span class="item-number">5</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3><a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>とミリの大気質が改善、APIMSで中程度に</h3>
+        <h3><a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>とミリの大気質が改善、<button type="button" class="term-trigger" popovertarget="term-5-apims" title="マレーシアの大気汚染指数を公開するシステムです。" aria-label="APIMSの説明">APIMS<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-5-apims" class="term-popover"><strong>APIMS</strong> マレーシアの大気汚染指数を公開するシステムです。</span>で中程度に</h3>
         <p class="daily-summary">環境省（DOE）のマレーシア大気汚染指標（APIMS）ポータルによると、<a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>とミリの大気質は改善し、いずれも「中程度」のカテゴリーに戻った。<a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>では本日02:00に不健康レベル（111）を記録した後、03:00に99に低下し、昨日15:00の153から本日15:00には85へと減少した。ミリでは本日正午に不健康レベル（104）を記録し、13:00に99へ下がった。昨日15:00から本日11:00までは中程度（101）で推移し、正午に104に上昇した。2026年10月12日07:11時点で、<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>内の全測定所は中程度のAPI値を示している。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/10/11/haze-air-quality-in-kuching-miri-improves-to-moderate-levels-says-doe/238709">出典: Malay Mail（2026年10月11日）</a>

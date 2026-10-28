@@ -67,6 +67,10 @@
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .term-trigger { display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }
+    .term-trigger:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .term-icon { display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }
+    .term-popover { position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }
     .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
     .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
     .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
@@ -193,7 +197,7 @@
           <span class="item-number">4</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3>来週（9月17〜23日）の燃料価格、ディーゼルは5.27リンギット、RON95は4.37リンギットに上昇</h3>
+        <h3>来週（9月17〜23日）の燃料価格、ディーゼルは5.27リンギット、<button type="button" class="term-trigger" popovertarget="term-4-ron95" title="オクタン価95のガソリンです。" aria-label="RON95の説明">RON95<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-4-ron95" class="term-popover"><strong>RON95</strong> オクタン価95のガソリンです。</span>は4.37リンギットに上昇</h3>
         <p class="daily-summary">財務省が9月17日から23日までの燃料価格を発表し、ディーゼルは5.27リンギット、RON95は4.37リンギット、RON97は4.85リンギットへと35セン上昇しました。車利用者は来週の給油費用を確認する必要があります。 価格は前週に続き上昇し、全ての燃料で35センの値上げとなっています。 発表は財務省からの公式情報で、出典リンクで詳細を確認できます。</p>
 
         <a class="source-link" href="https://paultan.org/2026/09/16/malaysian-fuel-prices-september-17-23-2026-up-35-sen-diesel-to-rm5-27-ron95-to-rm4-37-ron97-to-rm4-85/">出典: Paul Tan（2026年9月16日）</a>

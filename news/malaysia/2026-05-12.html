@@ -67,6 +67,10 @@
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .term-trigger { display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }
+    .term-trigger:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .term-icon { display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }
+    .term-popover { position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }
     .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
     .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
     .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
@@ -254,7 +258,7 @@
           <p class="item-category">社会・経済の動き</p>
         </div>
         <h3>‘Don’t turn middle class in…</h3>
-        <p class="daily-summary">‘Don’t turn middle class into govt’s ATM’, Kepong MP tells <a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">Putrajaya</a> over RON95 subsidy reform KUALA LUMPUR, May 12 — Kepong MP Lim Lip Eng today urged the government to fully explain its proposed... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
+        <p class="daily-summary">‘Don’t turn middle class into govt’s ATM’, Kepong MP tells <a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">Putrajaya</a> over <button type="button" class="term-trigger" popovertarget="term-9-ron95" title="オクタン価95のガソリンです。" aria-label="RON95の説明">RON95<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-9-ron95" class="term-popover"><strong>RON95</strong> オクタン価95のガソリンです。</span> subsidy reform KUALA LUMPUR, May 12 — Kepong MP Lim Lip Eng today urged the government to fully explain its proposed... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/05/12/dont-turn-middle-class-into-govts-atm-kepong-mp-tells-putrajaya-over-ron95-subsidy-reform/219584">出典: Malay Mail（2026年5月12日）</a>
       </article>
@@ -289,7 +293,7 @@
           <span class="item-number">12</span>
           <p class="item-category">社会・経済の動き</p>
         </div>
-        <h3><a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">Putrajaya</a> weighs RON95 subsid…</h3>
+        <h3><a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">Putrajaya</a> weighs <button type="button" class="term-trigger" popovertarget="term-12-ron95" title="オクタン価95のガソリンです。" aria-label="RON95の説明">RON95<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-12-ron95" class="term-popover"><strong>RON95</strong> オクタン価95のガソリンです。</span> subsid…</h3>
         <p class="daily-summary"><a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">Putrajaya</a> weighs RON95 subsidy cuts, admits tough call on who should lose aid PUTRAJAYA, May 11 — The government has acknowledged the difficulty in determining which Malaysians should be... RSS内のタイトルと説明をもとに整理しました。 生活・仕事・家計に関わる背景ニュースとして把握しておく価値があります。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/05/11/putrajaya-weighs-ron95-subsidy-cuts-admits-tough-call-on-who-should-lose-aid/219501">出典: Malay Mail（2026年5月11日）</a>

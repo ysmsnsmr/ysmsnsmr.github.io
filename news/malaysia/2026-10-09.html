@@ -67,6 +67,10 @@
     .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
     .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
     .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .term-trigger { display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }
+    .term-trigger:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .term-icon { display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }
+    .term-popover { position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }
     .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
     .location-map > summary { cursor: pointer; color: var(--accent-strong); font-weight: 700; }
     .location-map > summary span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
@@ -246,7 +250,7 @@
           <span class="item-number">9</span>
           <p class="item-category">暮らしに関わる更新</p>
         </div>
-        <h3><a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>のRON95ガソリンで水混入疑惑、33件の苦情がKPDNに届く</h3>
+        <h3><a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>の<button type="button" class="term-trigger" popovertarget="term-9-ron95" title="オクタン価95のガソリンです。" aria-label="RON95の説明">RON95<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-9-ron95" class="term-popover"><strong>RON95</strong> オクタン価95のガソリンです。</span>ガソリンで水混入疑惑、33件の苦情がKPDNに届く</h3>
         <p class="daily-summary"><a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>の国内貿易・生活費担当省（KPDN）は、同州内約30の給油所で販売されているRON95ガソリンに水が混入した疑いについて、33件の苦情を受け付けたと報じられました。苦情件数は2日前の21件から増加していますが、現時点で事実確認はされていません。 苦情は<a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>内の約30の給油所で報告された 苦情件数は2日前の21件から増加し、現在33件となっている</p>
 
         <a class="source-link" href="https://paultan.org/2026/10/08/complaints-for-alleged-water-contamination-in-ron95-petrol-involving-30-stations-in-penang-lodged-with-kpdn/">出典: Paul Tan（2026年10月8日）</a>
