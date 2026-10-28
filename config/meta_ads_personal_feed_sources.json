@@ -42,6 +42,7 @@
     {
       "id": "meta-business-sdk-releases",
       "name": "Meta Business SDK Releases",
+      "fetchEnabled": false,
       "classification": "official",
       "sourceUrl": "https://github.com/facebook/facebook-nodejs-business-sdk/releases",
       "fetchUrl": "https://api.github.com/repos/facebook/facebook-nodejs-business-sdk/releases",

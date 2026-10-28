@@ -116,6 +116,14 @@
     {
       "url": "https://www.socialmediatoday.com/news/meta-adds-users-and-revenue-as-ai-costs-climb/833671/",
       "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.socialmediatoday.com/news/australias-proposed-algorithmic-opt-out-gets-pushback/872830/",
+      "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.socialmediatoday.com/news/meta-delays-business-terms-update-over-data-scraping-concerns/833905/",
+      "reason": "human-reviewed-out-of-scope"
     }
   ]
 }

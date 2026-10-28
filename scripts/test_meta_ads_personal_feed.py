@@ -154,6 +154,38 @@ class PersonalFeedTest(unittest.TestCase):
 
     def setUp(self) -> None:
         self.config = load_config()
+        # Existing parser/collector fixtures exercise all supported sources.
+        next(source for source in self.config["sources"] if source["id"] == "meta-business-sdk-releases")["fetchEnabled"] = True
+
+    def test_sdk_fetch_disabled_preserves_existing_entries_and_blocks_reseed(self) -> None:
+        enabled = copy.deepcopy(self.config)
+        feed, state = collect(enabled, {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}, 1, NOW, self.fetcher())
+        sdk_id = "meta-business-sdk-releases"
+        self.assertTrue(state["sources"][sdk_id]["items"])
+        disabled = load_config()
+        self.assertIs(next(source for source in disabled["sources"] if source["id"] == sdk_id)["fetchEnabled"], False)
+        fetch = self.fetcher()
+        calls = []
+
+        def guarded_fetch(source, timeout):
+            calls.append(source["id"])
+            if source["id"] == sdk_id:
+                self.fail("disabled SDK source was fetched")
+            return fetch(source, timeout)
+
+        stats = {}
+        updated_feed, updated_state = collect(disabled, state, 1, NOW, guarded_fetch, source_pipeline_stats=stats)
+        self.assertNotIn(sdk_id, calls)
+        self.assertEqual(updated_state["sources"][sdk_id], state["sources"][sdk_id])
+        self.assertEqual([item for item in updated_feed["items"] if item["sourceId"] == sdk_id],
+                         [item for item in feed["items"] if item["sourceId"] == sdk_id])
+        self.assertFalse(stats["sources"][sdk_id]["fetchEnabled"])
+        with self.assertRaisesRegex(ContractError, "cannot reseed"):
+            collect(disabled, state, 1, NOW, guarded_fetch, reseed_source_id=sdk_id)
+        invalid = copy.deepcopy(disabled)
+        next(source for source in invalid["sources"] if source["id"] == sdk_id)["fetchEnabled"] = "false"
+        with self.assertRaisesRegex(ContractError, "fetchEnabled must be a boolean"):
+            validate_config(invalid)
 
     def fetcher(self, *, fail: bool = False, bodies: dict[str, str] | None = None):
         source_bodies = {
@@ -278,7 +310,7 @@ class PersonalFeedTest(unittest.TestCase):
     def test_manual_exclusions_are_validated_and_match_the_reviewed_urls(self) -> None:
         manifest = json.loads(personal_feed.DEFAULT_MANUAL_EXCLUSIONS.read_text(encoding="utf-8"))
         urls = personal_feed.validate_manual_exclusions(manifest, self.config)
-        self.assertEqual(len(urls), 29)
+        self.assertEqual(len(urls), 31)
         self.assertIn("https://www.jonloomer.com/chatgpt-ads-initial-impressions/", urls)
         self.assertIn("https://www.socialmediatoday.com/news/meta-settles-landmark-lawsuit-for-18b/828900/", urls)
         self.assertIn("https://www.socialmediatoday.com/news/will-meta-be-found-guilty-of-driving-social-media-addiction/828553/", urls)
@@ -1028,8 +1060,8 @@ class PersonalFeedTest(unittest.TestCase):
                 fetch_body=self.fetcher(),
         )
 
-        self.assertEqual(calls, ["en", "ja"] * 4)
-        self.assertEqual(len(feed["items"]), 4)
+        self.assertEqual(calls, ["en", "ja"] * 3)
+        self.assertEqual(len(feed["items"]), 3)
 
     def test_bilingual_failure_marks_both_locales_missing_without_blocking_feed(self) -> None:
         def failing_presenter(_title: str, _context: str, _policy: dict) -> dict[str, str]:
@@ -1376,6 +1408,30 @@ class PersonalFeedTest(unittest.TestCase):
         counts = pipeline["sources"]["social-media-today-meta-ads"]
         self.assertEqual((counts["articlePagesAttempted"], counts["articlePagesDeferred"]), (10, 2))
 
+    def test_article_page_rotation_visits_deferred_even_after_failure(self) -> None:
+        items = "".join(
+            f"<item><title>Meta Ads update {index}</title>"
+            f"<link>https://www.socialmediatoday.com/news/meta-ads-update/{index}/</link>"
+            "<description>Advertisers can review campaign changes.</description>"
+            "<pubDate>Fri, 29 Aug 2026 02:00:00 -0400</pubDate></item>"
+            for index in range(12)
+        )
+        regular_fetch = self.fetcher(bodies={"social-media-today-meta-ads": f"<rss><channel>{items}</channel></rss>"})
+        attempted: list[str] = []
+        def fetch(source: dict, timeout: float) -> tuple[str, str]:
+            if source["parser"] == "article_page_html" and source["id"] == "social-media-today-meta-ads":
+                attempted.append(source["fetchUrl"])
+                raise URLError("private failure")
+            return regular_fetch(source, timeout)
+        _, state = collect(self.config, {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}, 1, NOW, fetch)
+        first = set(attempted)
+        attempted.clear()
+        _, state = collect(self.config, state, 1, NOW + timedelta(days=1), fetch)
+        self.assertEqual(len(first), 10)
+        self.assertEqual(len(set(attempted) - first), 2)
+        self.assertNotIn("private failure", json.dumps(state))
+        validate_state(state, self.config)
+
     def test_article_page_discovery_can_be_disabled_without_disabling_rss_links(self) -> None:
         pipeline: dict[str, Any] = {}
         feed, _state = collect(
@@ -1557,10 +1613,15 @@ class PersonalFeedTest(unittest.TestCase):
             "Announcement · April 15, 2026": "2026-04-15",
             "Announcements · June 23, 2026": "2026-06-23",
             "[Announcement] · [July 7, 2026]": "2026-07-07",
+            "Best Practices · October 21, 2026": "2026-10-21",
         }
         for value, expected in cases.items():
             with self.subTest(value=value):
                 self.assertEqual(_meta_business_news_date(value), expected)
+        self.assertEqual(_meta_business_news_date("no visible date", {"article:published_time": "2026-10-21T08:00:00+08:00"}), "2026-10-21")
+        for text, metadata in [("Event October 21, 2026", {}), ("Best Practices · October 21, 2026", {"article:published_time": "2026-10-22"}), ("", {"article:published_time": "2026-02-30"})]:
+            with self.subTest(text=text, metadata=metadata), self.assertRaises(ContractError):
+                _meta_business_news_date(text, metadata)
 
     def test_discovered_meta_page_is_verified_and_promoted_as_official(self) -> None:
         bodies = {
