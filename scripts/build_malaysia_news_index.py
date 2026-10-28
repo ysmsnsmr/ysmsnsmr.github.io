@@ -527,6 +527,13 @@ def render_archive(days: list[NewsDay]) -> str:
     return "\n".join(groups)
 
 
+GLOSSARY = {
+    "RON95": ("オクタン価95のガソリンです。", ("オクタン価95", "オクタン価が95")),
+    "APIMS": ("マレーシアの大気汚染指数を公開するシステムです。", ("大気汚染指数管理システム",)),
+    "MENTARI": ("マレーシアの地域精神保健センターです。", ("地域精神保健センター",)),
+}
+
+
 def render_daily_item(item: NewsItem, position: int) -> str:
     if item.source_url:
         source_label = item.source or "出典を開く"
@@ -539,38 +546,64 @@ def render_daily_item(item: NewsItem, position: int) -> str:
     headline = display_full_headline(item)
     summary = item_summary_body(item)
     places = find_places(f"{headline} {summary}")
+    article_text = f"{headline} {summary}"
+    terms = {term for term, (_, definitions) in GLOSSARY.items()
+             if not any(definition in article_text for definition in definitions)}
+    seen_terms: set[str] = set()
     return f"""
       <article class="daily-item" id="article-{position}">
         <div class="daily-item-head">
           <span class="item-number">{position}</span>
           <p class="item-category">{esc(category_label(item.category))}</p>
         </div>
-        <h3>{render_place_links(headline, places)}</h3>
-        <p class="daily-summary">{render_place_links(summary, places)}</p>
+        <h3>{render_place_links(headline, places, terms, seen_terms, position)}</h3>
+        <p class="daily-summary">{render_place_links(summary, places, terms, seen_terms, position)}</p>
 
         {source}
       </article>
     """
 
 
-def render_place_links(text: str, places: list[Place]) -> str:
-    if not places:
+def render_place_links(text: str, places: list[Place], terms: set[str] | None = None,
+                       seen_terms: set[str] | None = None, position: int = 0) -> str:
+    terms = terms or set()
+    if seen_terms is None:
+        seen_terms = set()
+    if not places and not terms:
         return esc(text)
     selected = {place.key for place in places}
     aliases = [alias for alias, place in ALIASES if place.key in selected]
-    pattern = re.compile("|".join(re.escape(alias) for alias in aliases))
+    tokens = [(re.escape(alias), len(alias)) for alias in aliases]
+    tokens.extend((rf"(?<![A-Za-z0-9_]){re.escape(term)}(?![A-Za-z0-9_])", len(term)) for term in terms)
+    pattern = re.compile("|".join(token for token, _ in sorted(tokens, key=lambda entry: -entry[1])))
     by_alias = {alias: place for alias, place in ALIASES}
     parts = []
     previous = 0
     for match in pattern.finditer(text):
-        place = by_alias[match.group()]
         parts.append(esc(text[previous:match.start()]))
-        parts.append(
-            f'<a class="place-link" data-place-key="{place.key}" '
-            f'href="https://www.openstreetmap.org/?mlat={place.latitude}&amp;mlon={place.longitude}'
-            f'#map={place.zoom}/{place.latitude}/{place.longitude}" '
-            f'title="{esc(place.label)}の概略位置を地図で見る">{esc(match.group())}</a>'
-        )
+        word = match.group()
+        if word in terms:
+            if word in seen_terms:
+                parts.append(esc(word))
+            else:
+                seen_terms.add(word)
+                explanation = GLOSSARY[word][0]
+                popover_id = f"term-{position}-{word.lower()}"
+                parts.append(
+                    f'<button type="button" class="term-trigger" popovertarget="{popover_id}" '
+                    f'title="{esc(explanation)}" aria-label="{esc(word)}の説明">{esc(word)}'
+                    f'<span aria-hidden="true" class="term-icon">?</span></button>'
+                    f'<span popover id="{popover_id}" class="term-popover">'
+                    f'<strong>{esc(word)}</strong> {esc(explanation)}</span>'
+                )
+        else:
+            place = by_alias[word]
+            parts.append(
+                f'<a class="place-link" data-place-key="{place.key}" '
+                f'href="https://www.openstreetmap.org/?mlat={place.latitude}&amp;mlon={place.longitude}'
+                f'#map={place.zoom}/{place.latitude}/{place.longitude}" '
+                f'title="{esc(place.label)}の概略位置を地図で見る">{esc(word)}</a>'
+            )
         previous = match.end()
     parts.append(esc(text[previous:]))
     return "".join(parts)
@@ -717,6 +750,10 @@ def render_daily_page(day: NewsDay, *, show_current_air_quality: bool = False) -
     .item-category {{ margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }}
     .daily-summary {{ margin: 16px 0 0; overflow-wrap: anywhere; }}
     .place-link {{ text-decoration-style: dotted; text-underline-offset: .17em; }}
+    .term-trigger {{ display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }}
+    .term-trigger:focus-visible {{ outline: 3px solid var(--focus); outline-offset: 3px; }}
+    .term-icon {{ display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }}
+    .term-popover {{ position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }}
     .location-map {{ margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }}
     .location-map > summary {{ cursor: pointer; color: var(--accent-strong); font-weight: 700; }}
     .location-map > summary span {{ margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }}

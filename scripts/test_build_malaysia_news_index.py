@@ -108,6 +108,28 @@ SOURCE_ONLY_MARKDOWN = V3_MARKDOWN + """
 
 
 class MalaysiaNewsIndexTests(unittest.TestCase):
+    def test_term_explanations_are_once_per_article_and_do_not_replace_places(self) -> None:
+        item = builder.NewsItem(
+            category="【暮らしに関わる更新】",
+            headline="ジョホール州でRON95を調査",
+            conclusion="RON95について調査。APIMSの値を確認。",
+        )
+        html = builder.render_daily_item(item, 2)
+        self.assertEqual(html.count('popovertarget="term-2-ron95"'), 1)
+        self.assertIn('popovertarget="term-2-apims"', html)
+        self.assertIn('data-place-key="johor"', html)
+        self.assertIn("オクタン価95のガソリン", html)
+
+    def test_defined_terms_and_partial_words_do_not_get_explanations(self) -> None:
+        item = builder.NewsItem(
+            category="【暮らしに関わる更新】",
+            headline="APIMSとRON950の情報",
+            conclusion="大気汚染指数管理システム（APIMS）を確認。",
+        )
+        html = builder.render_daily_item(item, 3)
+        self.assertNotIn('popovertarget="term-3-apims"', html)
+        self.assertNotIn('popovertarget="term-3-ron95"', html)
+
     def parse_sample(self) -> builder.NewsDay:
         with tempfile.TemporaryDirectory() as temp_dir:
             path = Path(temp_dir) / "2026-08-20.md"

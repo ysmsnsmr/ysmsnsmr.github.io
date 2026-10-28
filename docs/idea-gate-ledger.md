@@ -1751,3 +1751,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: 公開対象を限定したnoindexの複製を作成し、GitHub Pagesとは独立に検証する。
 - Revisit when: 社内PCでアクセスできない; 自動更新が反映されない; 無料枠や管理負担が許容範囲を超える
+
+<!-- idea-gate:20261028t101800-malaysia-news-term-explanations -->
+## 日別記事の用語に短い説明を付ける
+
+- Record ID: `20261028t101800-malaysia-news-term-explanations`
+- Evaluated: 2026-10-28T10:18:00+08:00
+- Project: Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 82/100
+- Confidence: medium - 記事中の必要性は確認できるが、表示の使いやすさは運用観察が必要
+
+### Idea Card
+
+- Purpose: 記事中の分かりにくい用語を読みながら確認する
+- First experience: 少数の用語を押すと短い説明が開く
+- Scope and cost: 既存ページに3語の手動辞書を追加し、追加APIを使わない
+- Continuation boundary: 説明が邪魔になったり辞書の維持が負担になれば対象を見直す
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 12/15 |
+| `evidence_and_learning` | 11/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 13/15 |
+| `ownership_and_reversibility` | 17/20 |
+| **Total** | **82/100** |
+
+### Next Step
+
+- Action: 日別記事に少数の用語説明を追加して操作を検証する
+- Revisit when: 説明が重複する; 地名リンクと混同する; 辞書の維持が負担になる
