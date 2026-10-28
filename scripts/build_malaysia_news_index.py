@@ -337,10 +337,6 @@ def category_label(category: str) -> str:
     return category.strip("【】")
 
 
-def failed_label(day: NewsDay) -> str:
-    return "失敗なし" if day.failed_sources == "なし" else f"失敗: {day.failed_sources}"
-
-
 def ordered_items(day: NewsDay) -> list[NewsItem]:
     return [
         item
@@ -467,6 +463,10 @@ def render_recent_day(day: NewsDay) -> str:
     else:
         headline_list = '<p class="muted">見出しを抽出できませんでした。</p>'
 
+    failed = ""
+    if day.failed_sources and day.failed_sources != "なし":
+        failed = f'<p class="recent-status">失敗: {esc(day.failed_sources)}</p>'
+
     return f"""
         <article class="recent-day-row">
           <div class="recent-day-meta">
@@ -474,7 +474,7 @@ def render_recent_day(day: NewsDay) -> str:
             <div class="counts compact-counts" aria-label="カテゴリ別件数">
               {render_counts(day)}
             </div>
-            <p class="recent-status">{esc(format_count(day.summarized_count))} / {esc(failed_label(day))}</p>
+            {failed}
           </div>
           <div class="recent-day-headlines">
             {headline_list}
@@ -1206,7 +1206,6 @@ def render_html(days: list[NewsDay]) -> str:
     <section aria-labelledby="today-heading">
       <div class="section-head">
         <h2 id="today-heading">今日のピックアップ3件</h2>
-        <p>暮らしに関わる更新、社会・経済の動きの順に表示</p>
       </div>
       {latest_summary}
     </section>
