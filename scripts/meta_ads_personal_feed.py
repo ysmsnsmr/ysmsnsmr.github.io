@@ -615,16 +615,20 @@ class _MetaBusinessNewsParser(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.metadata: dict[str, str] = {}
         self.text: list[str] = []
+        self.article_text: list[str] = []
         self.canonical_link = ""
         self.headings: list[str] = []
         self._in_h1 = False
         self._skip_depth = 0
+        self._content_depth = 0
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         normalized = tag.casefold()
         if normalized in {"script", "style", "noscript"}:
             self._skip_depth += 1
             return
+        if normalized in {"main", "article"} and not self._skip_depth:
+            self._content_depth += 1
         if normalized == "h1":
             self._in_h1 = True
         if normalized == "link":
@@ -640,6 +644,8 @@ class _MetaBusinessNewsParser(HTMLParser):
             self.metadata.setdefault(key, _normalise(content))
 
     def handle_endtag(self, tag: str) -> None:
+        if tag.casefold() in {"main", "article"} and not self._skip_depth and self._content_depth:
+            self._content_depth -= 1
         if tag.casefold() == "h1":
             self._in_h1 = False
         if tag.casefold() in {"script", "style", "noscript"} and self._skip_depth:
@@ -648,6 +654,8 @@ class _MetaBusinessNewsParser(HTMLParser):
     def handle_data(self, data: str) -> None:
         if not self._skip_depth and data.strip():
             self.text.append(data)
+            if self._content_depth:
+                self.article_text.append(data)
             if self._in_h1:
                 self.headings.append(data)
 
@@ -754,19 +762,27 @@ def _validate_official_references(value: Any, label: str) -> list[str]:
     return value
 
 
-def _meta_business_news_date(text: str) -> str:
+def _meta_business_news_date(text: str, metadata: dict[str, str] | None = None) -> str:
     months = "January|February|March|April|May|June|July|August|September|October|November|December"
-    match = re.search(
-        rf"\[?Announcements?\]?\s*(?:·\s*)?\[?(({months})\s+\d{{1,2}},\s+\d{{4}})\]?",
+    matches = re.findall(
+        rf"\[?(?:Announcements?|Best Practices?|Insights|News|Updates?)\]?\s*(?:·\s*)?\[?((?:{months})\s+\d{{1,2}},\s+\d{{4}})\]?",
         text,
         flags=re.IGNORECASE,
     )
-    if match is None:
-        raise ContractError("Meta for Business News article is missing its announcement date")
+    dates: set[str] = set()
     try:
-        return datetime.strptime(match.group(1), "%B %d, %Y").date().isoformat()
+        for value in matches:
+            dates.add(datetime.strptime(value.title(), "%B %d, %Y").date().isoformat())
+        published = (metadata or {}).get("article:published_time")
+        if published:
+            if not re.fullmatch(r"\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2}))?", published):
+                raise ValueError("invalid published time")
+            dates.add(datetime.fromisoformat(published.replace("Z", "+00:00")).date().isoformat())
     except ValueError as error:
-        raise ContractError("Meta for Business News article has an invalid announcement date") from error
+        raise ContractError("Meta for Business News article has an invalid publication date") from error
+    if len(dates) != 1:
+        raise ContractError("Meta for Business News article has missing or conflicting publication dates")
+    return dates.pop()
 
 
 def _meta_business_news_item(source: dict[str, Any], url: str, body: str, origin_ids: list[str]) -> dict[str, Any]:
@@ -777,7 +793,7 @@ def _meta_business_news_item(source: dict[str, Any], url: str, body: str, origin
         raise ContractError("Meta for Business News article metadata does not match its discovered URL")
     title = _text(parser.metadata.get("og:title"), "Meta for Business News article title")[:280]
     description = _text(parser.metadata.get("og:description"), "Meta for Business News article description")[:3500]
-    published = _meta_business_news_date(_normalise(" ".join(parser.text)))
+    published = _meta_business_news_date(_normalise(" ".join(parser.article_text)), parser.metadata)
     return {
         "key": url,
         "url": url,
@@ -1296,11 +1312,15 @@ def _discover_links_from_article_pages(
     fetch_body: Callable[[dict[str, Any], float], tuple[str, str]],
     timeout: float,
     reference_candidates: dict[str, dict[str, list[str]]] | None = None,
+    scan_history: dict[str, dict[str, str]] | None = None,
+    scanned_at: str | None = None,
 ) -> None:
     """Use bounded, best-effort article HTML only to augment eligible RSS links."""
     for origin in config["sources"]:
         discoveries = discovery_by_origin.get(origin["id"], [])
         if not discoveries:
+            continue
+        if not pipeline["sources"][origin["id"]]["fetched"]:
             continue
         stored_links = discovery_links.get(origin["id"], {})
         eligible_keys = {
@@ -1312,16 +1332,25 @@ def _discover_links_from_article_pages(
             raw for raw in parsed_by_source.get(origin["id"], [])
             if raw["key"] in eligible_keys and _canonical_url(raw["url"]) not in manual_exclusions
         ]
-        # Spend the limited fetch budget on articles with no RSS-discovered
-        # official link first, preserving feed order within each group.
-        candidates.sort(key=lambda raw: any(
-            stored_links.get(discovered["id"], {}).get(raw["key"], ([], 0))[0]
-            for discovered in discoveries
+        history = (scan_history if scan_history is not None else {}).setdefault(origin["id"], {})
+        def item_hash(raw: dict[str, Any]) -> str:
+            return hashlib.sha256(raw["key"].encode("utf-8")).hexdigest()
+        # Never-scanned articles first, then least recently attempted. Failed
+        # requests also advance the rotation, so one blocked page cannot starve others.
+        candidates.sort(key=lambda raw: (
+            history.get(item_hash(raw), ""),
+            any(stored_links.get(discovered["id"], {}).get(raw["key"], ([], 0))[0] for discovered in discoveries),
         ))
+        current_hashes = {item_hash(raw) for raw in candidates}
+        for key in list(history):
+            if key not in current_hashes:
+                del history[key]
         counts = pipeline["sources"][origin["id"]]
         counts["articlePagesDeferred"] = max(0, len(candidates) - MAX_ARTICLE_PAGE_FETCHES_PER_SOURCE)
         for raw in candidates[:MAX_ARTICLE_PAGE_FETCHES_PER_SOURCE]:
             counts["articlePagesAttempted"] += 1
+            if scanned_at is not None:
+                history[item_hash(raw)] = scanned_at
             request_source = {
                 **origin,
                 "fetchUrl": raw["url"],
@@ -1889,6 +1918,8 @@ def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
     expected_state_keys = {"schemaVersion", "updatedAt", "sources"}
     if "presentationRetryQueue" in payload:
         expected_state_keys.add("presentationRetryQueue")
+    if "articlePageScans" in payload:
+        expected_state_keys.add("articlePageScans")
     state = _expect_keys(payload, expected_state_keys, "personal feed state")
     if state["schemaVersion"] not in {LEGACY_STATE_SCHEMA_VERSION, STATE_SCHEMA_VERSION, STATE_V3_SCHEMA_VERSION, STATE_V4_SCHEMA_VERSION, STATE_V5_SCHEMA_VERSION}:
         raise ContractError(f"personal feed state schemaVersion must be {LEGACY_STATE_SCHEMA_VERSION}, {STATE_SCHEMA_VERSION}, {STATE_V3_SCHEMA_VERSION}, {STATE_V4_SCHEMA_VERSION}, or {STATE_V5_SCHEMA_VERSION}")
@@ -1898,6 +1929,17 @@ def validate_state(payload: Any, config: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(state["sources"], dict):
         raise ContractError("personal feed state.sources must be an object")
     valid_ids = {source["id"] for source in _all_sources(config)}
+    scans = state.get("articlePageScans", {})
+    scan_source_ids = {origin for source in config["discoveredSources"] for origin in source["discovery"]["fromSourceIds"]}
+    if not isinstance(scans, dict) or set(scans) - scan_source_ids or (scans and state["schemaVersion"] != STATE_V5_SCHEMA_VERSION):
+        raise ContractError("personal feed articlePageScans has unsupported sources or schema")
+    for entries in scans.values():
+        if not isinstance(entries, dict) or len(entries) > 1000:
+            raise ContractError("personal feed articlePageScans entries must be bounded")
+        for key, timestamp in entries.items():
+            if not isinstance(key, str) or not re.fullmatch(r"[a-f0-9]{64}", key):
+                raise ContractError("personal feed articlePageScans key must be a SHA-256 hash")
+            _timestamp(timestamp, "personal feed articlePageScans timestamp")
     if set(state["sources"]) - valid_ids:
         raise ContractError("personal feed state has an unknown source")
     for source_id, source_state in state["sources"].items():
@@ -3068,10 +3110,11 @@ def collect(
             manual_exclusions=manual_exclusions,
         )
 
+    scan_history = copy.deepcopy(state.get("articlePageScans", {}))
     if article_page_discovery:
         _discover_links_from_article_pages(
             config, parsed_by_source, discovery_by_origin, discovered_links_by_source,
-            pipeline, manual_exclusions, fetch_body, timeout, reference_candidates,
+            pipeline, manual_exclusions, fetch_body, timeout, reference_candidates, scan_history, generated_at,
         )
 
     # A discovered official source is deliberately independent: an inaccessible
@@ -3139,7 +3182,7 @@ def collect(
         for record in state["sources"].get(source["id"], {"items": {}})["items"].values()
         if _is_fresh(record, record["firstObservedAt"], now, config["policies"]["freshness"])
     )
-    next_state: dict[str, Any] = {"schemaVersion": STATE_V5_SCHEMA_VERSION, "updatedAt": generated_at, "sources": {}}
+    next_state: dict[str, Any] = {"schemaVersion": STATE_V5_SCHEMA_VERSION, "updatedAt": generated_at, "sources": {}, "articlePageScans": scan_history}
     presentation_candidates: list[tuple[str, dict[str, Any], dict[str, Any], list[str]]] = []
     for source in _all_sources(config):
         prior = state["sources"].get(source["id"], {"items": {}})["items"]

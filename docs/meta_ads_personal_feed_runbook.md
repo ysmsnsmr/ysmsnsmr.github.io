@@ -8,8 +8,8 @@
 - Social Media Today Facebook RSS（タイトルにMeta／Facebook／Instagram、かつタイトルまたは説明文に広告関連語）— 非公式・未確認
 - Jon Loomer Digital RSS — 非公式・未確認
 - Ads Uploader Blogの公開記事一覧 — 非公式。新着の見出し・日付・短い説明を収集し、運用解説も候補に含める
-- Meta for Business News — Jon Loomer DigitalまたはSocial Media TodayのRSS本文から見つかったMeta公式記事だけを追加取得
-- Meta for Developers Blog — 同じ2つのRSS本文から見つかった `developers.facebook.com/blog/post/YYYY/MM/DD/<slug>/` 形式だけを追加取得。Ads Uploader記事ページの巡回は行わない
+- Meta for Business News — Jon Loomer DigitalまたはSocial Media TodayのRSS本文・記事ページから見つかったMeta公式記事だけを追加取得
+- Meta for Developers Blog — 同じ2媒体のRSS本文・記事ページから見つかった `developers.facebook.com/blog/post/YYYY/MM/DD/<slug>/` 形式だけを追加取得。Ads Uploader記事ページの巡回は行わない
 
 Search Engine Land Meta RSSは、2026-08-30にGitHub ActionsでHTTP 403が繰り返し再現したため一時停止しています。安定した自動取得を確認できるまで再導入しません。
 
@@ -22,6 +22,8 @@ Jon Loomerは `Meta Advertising` カテゴリだけでなく、タイトルま�
 Meta公式ページはRSSや公開APIではなくHTMLから限定的なmetadataを読むため、アクセス制限や構造変更の影響を受けます。この追加取得だけが失敗した場合は該当候補を掲載せず、他のPersonal Feed収集は継続します。本文・失敗URL・例外本文は保存またはログ出力せず、許可ホスト、最大3回のredirect、1 MiBの応答上限、1 run最大20件を維持します。
 
 記事ページからのリンク発見を一時停止する場合は、repository variable `META_ADS_ARTICLE_PAGE_DISCOVERY_ENABLED=false` を設定します。RSS本文からの既存のリンク発見と公式ページ自身の検証は続きます。手動CLIでは `--disable-article-page-discovery` を使えます。最初の2回のscheduled runで記事ページ取得の成功・拒否・新規リンク数と収集時間を確認し、増分がなく失敗や遅延が目立つ場合はこの経路を停止します。
+
+記事ページの探索は未試行を優先し、以降は最も以前に試行した記事を優先します。試行の成否にかかわらず順番を進め、stateには記事キーのハッシュと試行時刻だけを保存します。上限で見送った記事は、引き続きRSSに残り鮮度・人間除外の条件を満たす間、後続runで探索されます。RSSから消えた記事や収集run自体が失敗した場合の探索は保証されません。Business Newsの日付は `article:published_time` または本文領域の対応カテゴリに紐づく日付を使用し、不明・不正・不一致の場合は昇格しません。発表日がないMeta Helpはニュース扱いにしません。
 
 非公式記事の詳細では、記事本文段落で見つけたMeta公式URLを最大10件、参考リンクとして表示できます。対象は `www.facebook.com/business/help/<数字>`、既存のBusiness News記事、Developer Blog記事パスだけです。HelpはURLのホスト・パス形式だけを確認し、ページの内容・公開日・到達可能性を保証しません。ニュースとして昇格させず、元記事も非公式のままです。Business News／Developer Blogは既存の公式ページ検証に成功したURLだけを参考リンクへ含めます。リンク先の本文や非公式記事本文は保存しません。参考リンクのURLのみstateと公開feedに保存し、記事が再取得できないrunでは既存の参考リンクを保持します。`META_ADS_ARTICLE_PAGE_DISCOVERY_ENABLED=false` では新規参考リンクの探索も止まります。
 
