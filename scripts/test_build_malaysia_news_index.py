@@ -319,8 +319,18 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
             self.assertNotIn(f"短見出し{index}", html)
         self.assertNotIn("長い要約本文", html)
         self.assertIn('aria-label="カテゴリ別件数"', html)
-        self.assertIn('class="recent-status"', html)
+        self.assertNotIn('class="recent-status"', html)
+        self.assertNotIn("失敗なし", html)
         self.assertIn('href="./2026-08-28.html">その日のまとめ</a>', html)
+
+        day.failed_sources = "Example News"
+        failed_html = builder.render_recent_day(day)
+        self.assertIn('失敗: Example News', failed_html)
+        self.assertNotIn('6件 /', failed_html)
+
+    def test_today_section_omits_category_order_description(self) -> None:
+        html = builder.render_html([self.parse_sample()])
+        self.assertNotIn("暮らしに関わる更新、社会・経済の動きの順に表示", html)
 
     def test_daily_html_keeps_fallback_heading_and_source_aligned(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
