@@ -1408,6 +1408,30 @@ class PersonalFeedTest(unittest.TestCase):
         counts = pipeline["sources"]["social-media-today-meta-ads"]
         self.assertEqual((counts["articlePagesAttempted"], counts["articlePagesDeferred"]), (10, 2))
 
+    def test_article_page_rotation_visits_deferred_even_after_failure(self) -> None:
+        items = "".join(
+            f"<item><title>Meta Ads update {index}</title>"
+            f"<link>https://www.socialmediatoday.com/news/meta-ads-update/{index}/</link>"
+            "<description>Advertisers can review campaign changes.</description>"
+            "<pubDate>Fri, 29 Aug 2026 02:00:00 -0400</pubDate></item>"
+            for index in range(12)
+        )
+        regular_fetch = self.fetcher(bodies={"social-media-today-meta-ads": f"<rss><channel>{items}</channel></rss>"})
+        attempted: list[str] = []
+        def fetch(source: dict, timeout: float) -> tuple[str, str]:
+            if source["parser"] == "article_page_html" and source["id"] == "social-media-today-meta-ads":
+                attempted.append(source["fetchUrl"])
+                raise URLError("private failure")
+            return regular_fetch(source, timeout)
+        _, state = collect(self.config, {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}, 1, NOW, fetch)
+        first = set(attempted)
+        attempted.clear()
+        _, state = collect(self.config, state, 1, NOW + timedelta(days=1), fetch)
+        self.assertEqual(len(first), 10)
+        self.assertEqual(len(set(attempted) - first), 2)
+        self.assertNotIn("private failure", json.dumps(state))
+        validate_state(state, self.config)
+
     def test_article_page_discovery_can_be_disabled_without_disabling_rss_links(self) -> None:
         pipeline: dict[str, Any] = {}
         feed, _state = collect(
@@ -1589,10 +1613,15 @@ class PersonalFeedTest(unittest.TestCase):
             "Announcement · April 15, 2026": "2026-04-15",
             "Announcements · June 23, 2026": "2026-06-23",
             "[Announcement] · [July 7, 2026]": "2026-07-07",
+            "Best Practices · October 21, 2026": "2026-10-21",
         }
         for value, expected in cases.items():
             with self.subTest(value=value):
                 self.assertEqual(_meta_business_news_date(value), expected)
+        self.assertEqual(_meta_business_news_date("no visible date", {"article:published_time": "2026-10-21T08:00:00+08:00"}), "2026-10-21")
+        for text, metadata in [("Event October 21, 2026", {}), ("Best Practices · October 21, 2026", {"article:published_time": "2026-10-22"}), ("", {"article:published_time": "2026-02-30"})]:
+            with self.subTest(text=text, metadata=metadata), self.assertRaises(ContractError):
+                _meta_business_news_date(text, metadata)
 
     def test_discovered_meta_page_is_verified_and_promoted_as_official(self) -> None:
         bodies = {
