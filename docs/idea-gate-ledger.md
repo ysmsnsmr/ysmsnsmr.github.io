@@ -1786,3 +1786,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: 日別記事に少数の用語説明を追加して操作を検証する
 - Revisit when: 説明が重複する; 地名リンクと混同する; 辞書の維持が負担になる
+
+<!-- idea-gate:20261028-malaysia-cloudflare-public-mirror -->
+## Cloudflare PagesでMalaysia Newsを公開する
+
+- Record ID: `20261028-malaysia-cloudflare-public-mirror`
+- Evaluated: 2026-10-28T10:54:00+08:00
+- Project: Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 82/100
+- Confidence: medium - 静的ファイルは再利用できるがCloudflare側の初期設定と自動更新は未確認
+
+### Idea Card
+
+- Purpose: 既存のMalaysia NewsをCloudflareからも閲覧できるようにする
+- First experience: 一覧、日別記事、地図、MarkdownをCloudflare版で開く
+- Scope and cost: 公開済みニュースファイルだけを別のPagesプロジェクトで配信し、追加の有料APIを使わない
+- Continuation boundary: 更新が反映されないか運用負担が大きければCloudflare側の自動配信を停止する
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 12/15 |
+| `evidence_and_learning` | 11/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 13/15 |
+| `ownership_and_reversibility` | 17/20 |
+| **Total** | **82/100** |
+
+### Next Step
+
+- Action: ニュース用の限定ビルドを作成しCloudflare Pagesで公開と自動更新を確認する
+- Revisit when: 定期更新が反映されない; 配信費用や運用負担が許容範囲を超える; 地図など外部資産が表示されない
