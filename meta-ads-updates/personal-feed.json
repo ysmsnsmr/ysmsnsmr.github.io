@@ -222,75 +222,6 @@
       }
     },
     {
-      "id": "social-media-today-meta-ads-b4c7c91b12926f2977f1",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Australia’s proposed algorithmic opt-out gets pushback",
-      "url": "https://www.socialmediatoday.com/news/australias-proposed-algorithmic-opt-out-gets-pushback/872830/",
-      "publishedDate": "2026-10-26",
-      "updatedDate": null,
-      "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "b4c7c91b12926f2977f1d6d79c7892a2f269f87a9f140746065db4497703200e",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Instagram’s Mosseri warns against Australia’s algorithm opt-out proposal",
-            "summary": "Australia is investigating laws requiring social platforms to offer an algorithm opt-out and make nonalgorithmic feeds the default. Instagram chief Adam Mosseri said a following-only feed could make Instagram smaller and reduce reach for creators.",
-            "inputHash": "92b9f0cbcc1d54c43a9d9a3834d85375e8bcc185df0358d888aceaf4bed7e8fd",
-            "generatedAt": "2026-10-27T12:55:38Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Instagram’s Mosseri warns against Australia’s algorithm opt-out proposal",
-                "inputHash": "92b9f0cbcc1d54c43a9d9a3834d85375e8bcc185df0358d888aceaf4bed7e8fd",
-                "generatedAt": "2026-10-27T12:55:38Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Australia is investigating laws requiring social platforms to offer an algorithm opt-out and make nonalgorithmic feeds the default. Instagram chief Adam Mosseri said a following-only feed could make Instagram smaller and reduce reach for creators.",
-                "inputHash": "92b9f0cbcc1d54c43a9d9a3834d85375e8bcc185df0358d888aceaf4bed7e8fd",
-                "generatedAt": "2026-10-27T12:55:38Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "豪州のアルゴリズム停止案に反発",
-            "summary": "豪州政府は、SNSでアルゴリズムによるおすすめを停止できるようにし、非アルゴリズムのフィードを初期設定にする新法の予備調査を開始した。Instagramのアダム・モッセーリ氏は、フォロー中のアカウントだけを表示するフィードでは利用や投稿のリーチが減るとの見方を示した。氏の発言は豪州案に直接言及したものではない。",
-            "inputHash": "f7692cfa035e1999d09c932916101272ffb12f4d8ec68e5d09fee1c7e45637b1",
-            "generatedAt": "2026-10-27T12:55:38Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "豪州のアルゴリズム停止案に反発",
-                "inputHash": "f7692cfa035e1999d09c932916101272ffb12f4d8ec68e5d09fee1c7e45637b1",
-                "generatedAt": "2026-10-27T12:55:38Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "豪州政府は、SNSでアルゴリズムによるおすすめを停止できるようにし、非アルゴリズムのフィードを初期設定にする新法の予備調査を開始した。Instagramのアダム・モッセーリ氏は、フォロー中のアカウントだけを表示するフィードでは利用や投稿のリーチが減るとの見方を示した。氏の発言は豪州案に直接言及したものではない。",
-                "inputHash": "f7692cfa035e1999d09c932916101272ffb12f4d8ec68e5d09fee1c7e45637b1",
-                "generatedAt": "2026-10-27T12:55:38Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "id": "jon-loomer-meta-ads-d6b20c1d6e103dbcdeb6",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Ads Super Burst, First Impression Ads, and Aggregated View Time",
@@ -420,75 +351,6 @@
                 "status": "machine",
                 "value": "Metaはホリデーシーズン向けの広告運用ガイドで、キャンペーンの目標を明確にし、結果を評価できるだけの実施期間とデータ量を確保するよう説明しました。週約50件のコンバージョンを目安として挙げ、Metaの分析では、それを下回る広告セットは購入あたりの費用が約28％高かったとしています。成果の変動に早く反応すると、システムが最適なターゲティングを学ぶ時間が短くなるとも述べました。",
                 "inputHash": "d823492cc0fd2a6e921f5727952dce632380bb69f49a052c325b2575b127b56e",
-                "generatedAt": "2026-10-27T12:55:38Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "social-media-today-meta-ads-079ec0852f4dfc0ab6b7",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Meta delays business terms update over data scraping concerns",
-      "url": "https://www.socialmediatoday.com/news/meta-delays-business-terms-update-over-data-scraping-concerns/833905/",
-      "publishedDate": "2026-10-25",
-      "updatedDate": null,
-      "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "079ec0852f4dfc0ab6b7d839e2d692fba23dfa0e6acb15ad99022d48691f53ff",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta delays terms update amid data-scraping concerns",
-            "summary": "Meta has pushed the updated business terms’ launch from Oct. 30 to Nov. 20 after publishers, advertisers and regulators raised concerns about data scraping. Meta said the issue was largely a misunderstanding and that it removed references to training from the update.",
-            "inputHash": "eb14bcbab0306539d2ac2522e7de0857b568d2fb21bcd159b9db4d13bc3e5f43",
-            "generatedAt": "2026-10-27T12:55:38Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta delays terms update amid data-scraping concerns",
-                "inputHash": "eb14bcbab0306539d2ac2522e7de0857b568d2fb21bcd159b9db4d13bc3e5f43",
-                "generatedAt": "2026-10-27T12:55:38Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta has pushed the updated business terms’ launch from Oct. 30 to Nov. 20 after publishers, advertisers and regulators raised concerns about data scraping. Meta said the issue was largely a misunderstanding and that it removed references to training from the update.",
-                "inputHash": "eb14bcbab0306539d2ac2522e7de0857b568d2fb21bcd159b9db4d13bc3e5f43",
-                "generatedAt": "2026-10-27T12:55:38Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta、データ収集懸念を受け規約改定を延期",
-            "summary": "Metaは、商用利用規約の改定について、当初予定していた10月30日から11月20日へ開始を延期しました。改定内容が事業者のウェブサイトからのデータ収集を認める可能性があるとの懸念を受け、EUと英国の当局が説明を求めています。Metaは問題は誤解によるものだとし、改定内容を説明する時間が必要と述べています。",
-            "inputHash": "55fcbd13bf1a3f13348071ed9351cf32300cd1d60581bccbf942ba26058cca11",
-            "generatedAt": "2026-10-27T12:55:38Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta、データ収集懸念を受け規約改定を延期",
-                "inputHash": "55fcbd13bf1a3f13348071ed9351cf32300cd1d60581bccbf942ba26058cca11",
-                "generatedAt": "2026-10-27T12:55:38Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaは、商用利用規約の改定について、当初予定していた10月30日から11月20日へ開始を延期しました。改定内容が事業者のウェブサイトからのデータ収集を認める可能性があるとの懸念を受け、EUと英国の当局が説明を求めています。Metaは問題は誤解によるものだとし、改定内容を説明する時間が必要と述べています。",
-                "inputHash": "55fcbd13bf1a3f13348071ed9351cf32300cd1d60581bccbf942ba26058cca11",
                 "generatedAt": "2026-10-27T12:55:38Z",
                 "reviewedAt": null
               }
@@ -7006,6 +6868,148 @@
                 "status": "machine",
                 "value": "Metaはリード広告のインスタントフォームに「Book time」アクションを追加し、CalendlyやHighLevelなどのスケジューラリンクを埋め込んで予約を自動的にカレンダーへ転送できるようにした。また、ChatGPT広告でコンバージョン最適化キャンペーンが利用可能となり、コンバージョン目標と入札上限を設定できるが課金はクリック単位のまま。さらに、Creative Exploration Toolが発表されたが詳細は不明。加えて、Customer Lifecycle Strategyの除外対象やターゲティングラベル変更、Events Manager設定のバグ情報も含まれる。",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "meta-business-news-discovered-b11f17611d54e3e828d3",
+      "sourceId": "meta-business-news-discovered",
+      "title": "Cannes Lions 2026: New Creative and Creator Tools for Every Marketer to Cross the AI Threshold",
+      "url": "https://www.facebook.com/business/news/cannes-2026-cross-ai-threshold",
+      "publishedDate": "2026-06-23",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "discovered-via:jon-loomer-meta-ads"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta unveils AI creative tools and Creator Hub at Cannes Lions 2026",
+            "summary": "At Cannes Lions 2026, Meta announced AI-powered creative tools, a unified Creator Marketing Hub, and updates to its Business Agent, designed to help every marketer create better ads more quickly.",
+            "inputHash": "3ccea9eee351c57bf9bd57fa42ebdf1d95eff9d43549f6a557272417ba4e4db1",
+            "generatedAt": "2026-09-06T04:41:48Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta unveils AI creative tools and Creator Hub at Cannes Lions 2026",
+                "inputHash": "3ccea9eee351c57bf9bd57fa42ebdf1d95eff9d43549f6a557272417ba4e4db1",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "At Cannes Lions 2026, Meta announced AI-powered creative tools, a unified Creator Marketing Hub, and updates to its Business Agent, designed to help every marketer create better ads more quickly.",
+                "inputHash": "3ccea9eee351c57bf9bd57fa42ebdf1d95eff9d43549f6a557272417ba4e4db1",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "MetaがCannes Lions 2026でAIクリエイティブツールとCreator Hubを発表",
+            "summary": "Cannes Lions 2026でMetaは、AI搭載のクリエイティブツール、統合Creator Marketing Hub、Business Agentの更新を発表し、すべてのマーケターがより速く、より良い広告を作成できるよう支援することを目的とした。",
+            "inputHash": "e17323a80fb94549d8704db751d10db5835ecf842dba56f12d7edd4f26c13b3f",
+            "generatedAt": "2026-09-06T04:41:48Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "MetaがCannes Lions 2026でAIクリエイティブツールとCreator Hubを発表",
+                "inputHash": "e17323a80fb94549d8704db751d10db5835ecf842dba56f12d7edd4f26c13b3f",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Cannes Lions 2026でMetaは、AI搭載のクリエイティブツール、統合Creator Marketing Hub、Business Agentの更新を発表し、すべてのマーケターがより速く、より良い広告を作成できるよう支援することを目的とした。",
+                "inputHash": "e17323a80fb94549d8704db751d10db5835ecf842dba56f12d7edd4f26c13b3f",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "meta-business-news-discovered-0580a7992cbcdab917cc",
+      "sourceId": "meta-business-news-discovered",
+      "title": "Book appointments directly from your Lead Ads",
+      "url": "https://www.facebook.com/business/news/book-appointments-directly-from-your-lead-ads",
+      "publishedDate": "2026-06-23",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-02T11:59:49Z",
+      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "discovered-via:jon-loomer-meta-ads"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Book appointments directly from Lead Ads",
+            "summary": "We are launching Embedded Appointment Booking for Lead Ads Instant Forms on Facebook. It offers a seamless, in-app booking experience that lets leads schedule an appointment the moment they express interest, without ever leaving Facebook.",
+            "inputHash": "f2552f293ee01d58d188409e2c7eb674ab1f7cac75057fabd4ac868e2a2a4753",
+            "generatedAt": "2026-09-06T04:41:48Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Book appointments directly from Lead Ads",
+                "inputHash": "f2552f293ee01d58d188409e2c7eb674ab1f7cac75057fabd4ac868e2a2a4753",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "We are launching Embedded Appointment Booking for Lead Ads Instant Forms on Facebook. It offers a seamless, in-app booking experience that lets leads schedule an appointment the moment they express interest, without ever leaving Facebook.",
+                "inputHash": "f2552f293ee01d58d188409e2c7eb674ab1f7cac75057fabd4ac868e2a2a4753",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "リード広告から直接予約",
+            "summary": "Facebookでリード広告のインスタントフォーム向けに埋め込み型予約機能を開始します。シームレスなアプリ内予約体験を提供し、リードは関心を示した瞬間にFacebookを離れることなく予約できます。",
+            "inputHash": "2618596af6427c62c4fe0604800b4226169f374e4bdf672386722702b38664df",
+            "generatedAt": "2026-09-06T04:41:48Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "リード広告から直接予約",
+                "inputHash": "2618596af6427c62c4fe0604800b4226169f374e4bdf672386722702b38664df",
+                "generatedAt": "2026-09-06T04:41:48Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebookでリード広告のインスタントフォーム向けに埋め込み型予約機能を開始します。シームレスなアプリ内予約体験を提供し、リードは関心を示した瞬間にFacebookを離れることなく予約できます。",
+                "inputHash": "2618596af6427c62c4fe0604800b4226169f374e4bdf672386722702b38664df",
                 "generatedAt": "2026-09-06T04:41:48Z",
                 "reviewedAt": null
               }
