@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-10-27T12:55:38Z",
+  "generatedAt": "2026-10-29T21:12:33Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -81,6 +81,213 @@
   ],
   "items": [
     {
+      "id": "adsuploader-blog-5847f530a469180f1b9c",
+      "sourceId": "adsuploader-blog",
+      "title": "Facebook Ads for Coaches: Funnels, Costs and Meta's Rules",
+      "url": "https://adsuploader.com/blog/facebook-ads-for-coaches",
+      "publishedDate": "2026-10-29",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-29T21:12:33Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "5847f530a469180f1b9ce3c048e9e739d1864cd9deadd5639df4cd1afdc8663f",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Facebook Ads for Coaches: Costs, Funnels and Meta Rules",
+            "summary": "The source covers Facebook ad costs by coaching niche, funnel math that determines profitability, and Meta rules that get coaching ads rejected.",
+            "inputHash": "fa1bb8954414ae8b1876e707a55f248eaada24a3e2055421c55a7b7f9a4efeab",
+            "generatedAt": "2026-10-29T21:12:33Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook Ads for Coaches: Costs, Funnels and Meta Rules",
+                "inputHash": "fa1bb8954414ae8b1876e707a55f248eaada24a3e2055421c55a7b7f9a4efeab",
+                "generatedAt": "2026-10-29T21:12:33Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The source covers Facebook ad costs by coaching niche, funnel math that determines profitability, and Meta rules that get coaching ads rejected.",
+                "inputHash": "fa1bb8954414ae8b1876e707a55f248eaada24a3e2055421c55a7b7f9a4efeab",
+                "generatedAt": "2026-10-29T21:12:33Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "コーチ向けFacebook広告の費用とMetaのルール",
+            "summary": "コーチ向けFacebook広告について、分野別の費用、収益性を決めるファネルの計算、広告が却下されるMetaのルールを扱います。",
+            "inputHash": "28fe6ad745f127586b85fda476e8c211028d0f04496b9627002ec3fbe9693278",
+            "generatedAt": "2026-10-29T21:12:33Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "コーチ向けFacebook広告の費用とMetaのルール",
+                "inputHash": "28fe6ad745f127586b85fda476e8c211028d0f04496b9627002ec3fbe9693278",
+                "generatedAt": "2026-10-29T21:12:33Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "コーチ向けFacebook広告について、分野別の費用、収益性を決めるファネルの計算、広告が却下されるMetaのルールを扱います。",
+                "inputHash": "28fe6ad745f127586b85fda476e8c211028d0f04496b9627002ec3fbe9693278",
+                "generatedAt": "2026-10-29T21:12:33Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-6aef3e84220669b47391",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta says its expanded processing capacity is driving ad results",
+      "url": "https://www.socialmediatoday.com/news/meta-says-its-expanded-processing-capacity-is-driving-ad-results/873133/",
+      "publishedDate": "2026-10-28",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-29T21:12:33Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "6aef3e84220669b4739110ad3a54498d15c8dbcd9475b415a97b9ddc588e8df4",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta links expanded processing capacity to ad gains",
+            "summary": "Meta says AI-driven ad system improvements increased Facebook ad clicks by 8.3% and conversions by 15.7% in Q2 2026. In Q3, Andromeda improvements lifted Facebook conversions by 1.4%, while generative retrieval in Facebook Feed increased conversions by nearly 2% across targeted segments.",
+            "inputHash": "4bf3e55d0900d0f7ba576da6e2a3b464e5f9771532a15e66bd77050241959e7c",
+            "generatedAt": "2026-10-29T21:12:33Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta links expanded processing capacity to ad gains",
+                "inputHash": "4bf3e55d0900d0f7ba576da6e2a3b464e5f9771532a15e66bd77050241959e7c",
+                "generatedAt": "2026-10-29T21:12:33Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta says AI-driven ad system improvements increased Facebook ad clicks by 8.3% and conversions by 15.7% in Q2 2026. In Q3, Andromeda improvements lifted Facebook conversions by 1.4%, while generative retrieval in Facebook Feed increased conversions by nearly 2% across targeted segments.",
+                "inputHash": "4bf3e55d0900d0f7ba576da6e2a3b464e5f9771532a15e66bd77050241959e7c",
+                "generatedAt": "2026-10-29T21:12:33Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、広告処理能力の拡大と成果を説明",
+            "summary": "Metaによると、広告ランキングシステムの改善により、2026年第2四半期はFacebookで広告クリックが8.3％、コンバージョンが15.7％増加しました。第3四半期にはAndromedaの改善でFacebookのコンバージョンが1.4％増え、Facebookフィードでの生成AI検索機能は対象セグメントのコンバージョンを約2％押し上げたとしています。",
+            "inputHash": "23e59b8ea7d4f37435dea0190c9079af40edea0e8553eb818f23e4e19ee3cd15",
+            "generatedAt": "2026-10-29T21:12:33Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、広告処理能力の拡大と成果を説明",
+                "inputHash": "23e59b8ea7d4f37435dea0190c9079af40edea0e8553eb818f23e4e19ee3cd15",
+                "generatedAt": "2026-10-29T21:12:33Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaによると、広告ランキングシステムの改善により、2026年第2四半期はFacebookで広告クリックが8.3％、コンバージョンが15.7％増加しました。第3四半期にはAndromedaの改善でFacebookのコンバージョンが1.4％増え、Facebookフィードでの生成AI検索機能は対象セグメントのコンバージョンを約2％押し上げたとしています。",
+                "inputHash": "23e59b8ea7d4f37435dea0190c9079af40edea0e8553eb818f23e4e19ee3cd15",
+                "generatedAt": "2026-10-29T21:12:33Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-5bfe62570b130d041fc6",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta adds individual performance data for ad creative",
+      "url": "https://www.socialmediatoday.com/news/meta-adds-individual-performance-data-for-ad-creative/872981/",
+      "publishedDate": "2026-10-27",
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-29T21:12:33Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "5bfe62570b130d041fc660970b3a37b83e0a50c5f822425df107d73e00305b57",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta adds ad creative performance breakdowns",
+            "summary": "Meta Ads Manager’s Breakdown feature shows how individual ad elements perform, including images, videos and text variations. Ads using multi-post formats such as collections or carousels, and some custom conversion elements such as Donate and Subscribe, are excluded.",
+            "inputHash": "0ae5efc967c8f8275236149fc21a93debcb68e291dec9c0454db019c03efb0db",
+            "generatedAt": "2026-10-29T21:12:33Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta adds ad creative performance breakdowns",
+                "inputHash": "0ae5efc967c8f8275236149fc21a93debcb68e291dec9c0454db019c03efb0db",
+                "generatedAt": "2026-10-29T21:12:33Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta Ads Manager’s Breakdown feature shows how individual ad elements perform, including images, videos and text variations. Ads using multi-post formats such as collections or carousels, and some custom conversion elements such as Donate and Subscribe, are excluded.",
+                "inputHash": "0ae5efc967c8f8275236149fc21a93debcb68e291dec9c0454db019c03efb0db",
+                "generatedAt": "2026-10-29T21:12:33Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、広告クリエイティブの要素別パフォーマンス表示を追加",
+            "summary": "Metaの広告管理ツール「Ads Manager」に、広告の各要素のパフォーマンスを確認できる「Breakdown」が追加されました。画像・動画などのメディアやテキストのバリエーションごとに確認できます。複数投稿形式の広告や、「Donate」「Subscribe」など一部のカスタムコンバージョン要素は対象外です。",
+            "inputHash": "a4a96f6db7d72b9b7070ea551902aedd811417269f03477b99828b217884a0c6",
+            "generatedAt": "2026-10-29T21:12:33Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、広告クリエイティブの要素別パフォーマンス表示を追加",
+                "inputHash": "a4a96f6db7d72b9b7070ea551902aedd811417269f03477b99828b217884a0c6",
+                "generatedAt": "2026-10-29T21:12:33Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaの広告管理ツール「Ads Manager」に、広告の各要素のパフォーマンスを確認できる「Breakdown」が追加されました。画像・動画などのメディアやテキストのバリエーションごとに確認できます。複数投稿形式の広告や、「Donate」「Subscribe」など一部のカスタムコンバージョン要素は対象外です。",
+                "inputHash": "a4a96f6db7d72b9b7070ea551902aedd811417269f03477b99828b217884a0c6",
+                "generatedAt": "2026-10-29T21:12:33Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "jon-loomer-meta-ads-d96c4f062767fe7b4d3e",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta Clarifies Upcoming Placement Control Changes",
@@ -88,7 +295,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -160,7 +367,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -229,7 +436,7 @@
       "publishedDate": "2026-10-26",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -298,7 +505,7 @@
       "publishedDate": "2026-10-25",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -367,7 +574,7 @@
       "publishedDate": "2026-10-25",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -436,7 +643,7 @@
       "publishedDate": "2026-10-23",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -505,7 +712,7 @@
       "publishedDate": "2026-10-22",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -574,7 +781,7 @@
       "publishedDate": "2026-10-22",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -643,7 +850,7 @@
       "publishedDate": "2026-10-22",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -712,7 +919,7 @@
       "publishedDate": "2026-10-21",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -781,7 +988,7 @@
       "publishedDate": "2026-10-21",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -850,7 +1057,7 @@
       "publishedDate": "2026-10-20",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -922,7 +1129,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -993,7 +1200,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1062,7 +1269,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1131,7 +1338,7 @@
       "publishedDate": "2026-10-18",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1200,7 +1407,7 @@
       "publishedDate": "2026-10-18",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1269,7 +1476,7 @@
       "publishedDate": "2026-10-17",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1338,7 +1545,7 @@
       "publishedDate": "2026-10-15",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1479,7 +1686,7 @@
       "publishedDate": "2026-10-15",
       "updatedDate": null,
       "firstObservedAt": "2026-10-15T19:54:50Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1548,7 +1755,7 @@
       "publishedDate": "2026-10-13",
       "updatedDate": null,
       "firstObservedAt": "2026-10-15T19:54:50Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1620,7 +1827,7 @@
       "publishedDate": "2026-10-13",
       "updatedDate": null,
       "firstObservedAt": "2026-10-15T19:54:50Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1689,7 +1896,7 @@
       "publishedDate": "2026-10-12",
       "updatedDate": null,
       "firstObservedAt": "2026-10-12T23:02:27Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1758,7 +1965,7 @@
       "publishedDate": "2026-10-12",
       "updatedDate": null,
       "firstObservedAt": "2026-10-12T23:02:27Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1896,7 +2103,7 @@
       "publishedDate": "2026-10-11",
       "updatedDate": null,
       "firstObservedAt": "2026-10-12T23:02:27Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2036,7 +2243,7 @@
       "publishedDate": "2026-10-09",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2105,7 +2312,7 @@
       "publishedDate": "2026-10-07",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2383,7 +2590,7 @@
       "publishedDate": "2026-10-06",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2455,7 +2662,7 @@
       "publishedDate": "2026-10-05",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2938,7 +3145,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -3007,7 +3214,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3145,7 +3352,7 @@
       "publishedDate": "2026-09-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T05:47:38Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3490,7 +3697,7 @@
       "publishedDate": "2026-09-22",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3629,7 +3836,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4043,7 +4250,7 @@
       "publishedDate": "2026-09-16",
       "updatedDate": null,
       "firstObservedAt": "2026-09-17T04:55:10Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -4319,7 +4526,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4664,7 +4871,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T04:45:10Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4733,7 +4940,7 @@
       "publishedDate": "2026-09-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4802,7 +5009,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4871,7 +5078,7 @@
       "publishedDate": "2026-08-31",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5079,7 +5286,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5217,7 +5424,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5427,7 +5634,7 @@
       "publishedDate": "2026-08-17",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5568,7 +5775,7 @@
       "publishedDate": "2026-08-11",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5637,7 +5844,7 @@
       "publishedDate": "2026-08-10",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5706,7 +5913,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5775,7 +5982,7 @@
       "publishedDate": "2026-08-07",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5914,7 +6121,7 @@
       "publishedDate": "2026-07-28",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6052,7 +6259,7 @@
       "publishedDate": "2026-07-21",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6121,7 +6328,7 @@
       "publishedDate": "2026-07-20",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6260,7 +6467,7 @@
       "publishedDate": "2026-07-16",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6329,7 +6536,7 @@
       "publishedDate": "2026-07-14",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6398,7 +6605,7 @@
       "publishedDate": "2026-07-09",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6608,7 +6815,7 @@
       "publishedDate": "2026-07-02",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6677,7 +6884,7 @@
       "publishedDate": "2026-06-30",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6746,7 +6953,7 @@
       "publishedDate": "2026-06-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
+      "lastObservedAt": "2026-10-29T21:12:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6800,217 +7007,6 @@
                 "value": "Metaは広告セットのオーディエンス項目のボタンラベルを「Further limit the reach of your ads.」から「I need a specific audience.」に変更したが、機能的な違いはなく、詳細ターゲティングや類似オーディエンスは従来通り提案として扱われる。ラベル変更は今後の機能拡張やこの項目の利用抑制を示唆する可能性があるが、年齢・性別やカスタムオーディエンスの配信調整は既存の価値ルールで対応できる。",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
                 "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-0694839d999624448496",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "Book Appointments from Instant Forms, ChatGPT Conversion Optimization, and More",
-      "url": "https://www.jonloomer.com/instant-form-appointments-chatgpt-conversion-optimization/",
-      "publishedDate": "2026-06-25",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "dd93a62093ac2286ff3020021b447cabf279eb6f6d5bb84b260c8d43b5601e51",
-            "generatedAt": null,
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "dd93a62093ac2286ff3020021b447cabf279eb6f6d5bb84b260c8d43b5601e51",
-                "generatedAt": null,
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "dd93a62093ac2286ff3020021b447cabf279eb6f6d5bb84b260c8d43b5601e51",
-                "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta広告の新機能：インスタントフォームで予約、ChatGPT広告のコンバージョン最適化、クリエイティブ探索ツールなど",
-            "summary": "Metaはリード広告のインスタントフォームに「Book time」アクションを追加し、CalendlyやHighLevelなどのスケジューラリンクを埋め込んで予約を自動的にカレンダーへ転送できるようにした。また、ChatGPT広告でコンバージョン最適化キャンペーンが利用可能となり、コンバージョン目標と入札上限を設定できるが課金はクリック単位のまま。さらに、Creative Exploration Toolが発表されたが詳細は不明。加えて、Customer Lifecycle Strategyの除外対象やターゲティングラベル変更、Events Manager設定のバグ情報も含まれる。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-06T04:41:48Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta広告の新機能：インスタントフォームで予約、ChatGPT広告のコンバージョン最適化、クリエイティブ探索ツールなど",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaはリード広告のインスタントフォームに「Book time」アクションを追加し、CalendlyやHighLevelなどのスケジューラリンクを埋め込んで予約を自動的にカレンダーへ転送できるようにした。また、ChatGPT広告でコンバージョン最適化キャンペーンが利用可能となり、コンバージョン目標と入札上限を設定できるが課金はクリック単位のまま。さらに、Creative Exploration Toolが発表されたが詳細は不明。加えて、Customer Lifecycle Strategyの除外対象やターゲティングラベル変更、Events Manager設定のバグ情報も含まれる。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "meta-business-news-discovered-b11f17611d54e3e828d3",
-      "sourceId": "meta-business-news-discovered",
-      "title": "Cannes Lions 2026: New Creative and Creator Tools for Every Marketer to Cross the AI Threshold",
-      "url": "https://www.facebook.com/business/news/cannes-2026-cross-ai-threshold",
-      "publishedDate": "2026-06-23",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [
-        "discovered-via:jon-loomer-meta-ads"
-      ],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta unveils AI creative tools and Creator Hub at Cannes Lions 2026",
-            "summary": "At Cannes Lions 2026, Meta announced AI-powered creative tools, a unified Creator Marketing Hub, and updates to its Business Agent, designed to help every marketer create better ads more quickly.",
-            "inputHash": "3ccea9eee351c57bf9bd57fa42ebdf1d95eff9d43549f6a557272417ba4e4db1",
-            "generatedAt": "2026-09-06T04:41:48Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta unveils AI creative tools and Creator Hub at Cannes Lions 2026",
-                "inputHash": "3ccea9eee351c57bf9bd57fa42ebdf1d95eff9d43549f6a557272417ba4e4db1",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "At Cannes Lions 2026, Meta announced AI-powered creative tools, a unified Creator Marketing Hub, and updates to its Business Agent, designed to help every marketer create better ads more quickly.",
-                "inputHash": "3ccea9eee351c57bf9bd57fa42ebdf1d95eff9d43549f6a557272417ba4e4db1",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "MetaがCannes Lions 2026でAIクリエイティブツールとCreator Hubを発表",
-            "summary": "Cannes Lions 2026でMetaは、AI搭載のクリエイティブツール、統合Creator Marketing Hub、Business Agentの更新を発表し、すべてのマーケターがより速く、より良い広告を作成できるよう支援することを目的とした。",
-            "inputHash": "e17323a80fb94549d8704db751d10db5835ecf842dba56f12d7edd4f26c13b3f",
-            "generatedAt": "2026-09-06T04:41:48Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "MetaがCannes Lions 2026でAIクリエイティブツールとCreator Hubを発表",
-                "inputHash": "e17323a80fb94549d8704db751d10db5835ecf842dba56f12d7edd4f26c13b3f",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Cannes Lions 2026でMetaは、AI搭載のクリエイティブツール、統合Creator Marketing Hub、Business Agentの更新を発表し、すべてのマーケターがより速く、より良い広告を作成できるよう支援することを目的とした。",
-                "inputHash": "e17323a80fb94549d8704db751d10db5835ecf842dba56f12d7edd4f26c13b3f",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "meta-business-news-discovered-0580a7992cbcdab917cc",
-      "sourceId": "meta-business-news-discovered",
-      "title": "Book appointments directly from your Lead Ads",
-      "url": "https://www.facebook.com/business/news/book-appointments-directly-from-your-lead-ads",
-      "publishedDate": "2026-06-23",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-10-27T12:55:38Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [
-        "discovered-via:jon-loomer-meta-ads"
-      ],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Book appointments directly from Lead Ads",
-            "summary": "We are launching Embedded Appointment Booking for Lead Ads Instant Forms on Facebook. It offers a seamless, in-app booking experience that lets leads schedule an appointment the moment they express interest, without ever leaving Facebook.",
-            "inputHash": "f2552f293ee01d58d188409e2c7eb674ab1f7cac75057fabd4ac868e2a2a4753",
-            "generatedAt": "2026-09-06T04:41:48Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Book appointments directly from Lead Ads",
-                "inputHash": "f2552f293ee01d58d188409e2c7eb674ab1f7cac75057fabd4ac868e2a2a4753",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "We are launching Embedded Appointment Booking for Lead Ads Instant Forms on Facebook. It offers a seamless, in-app booking experience that lets leads schedule an appointment the moment they express interest, without ever leaving Facebook.",
-                "inputHash": "f2552f293ee01d58d188409e2c7eb674ab1f7cac75057fabd4ac868e2a2a4753",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "リード広告から直接予約",
-            "summary": "Facebookでリード広告のインスタントフォーム向けに埋め込み型予約機能を開始します。シームレスなアプリ内予約体験を提供し、リードは関心を示した瞬間にFacebookを離れることなく予約できます。",
-            "inputHash": "2618596af6427c62c4fe0604800b4226169f374e4bdf672386722702b38664df",
-            "generatedAt": "2026-09-06T04:41:48Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "リード広告から直接予約",
-                "inputHash": "2618596af6427c62c4fe0604800b4226169f374e4bdf672386722702b38664df",
-                "generatedAt": "2026-09-06T04:41:48Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Facebookでリード広告のインスタントフォーム向けに埋め込み型予約機能を開始します。シームレスなアプリ内予約体験を提供し、リードは関心を示した瞬間にFacebookを離れることなく予約できます。",
-                "inputHash": "2618596af6427c62c4fe0604800b4226169f374e4bdf672386722702b38664df",
-                "generatedAt": "2026-09-06T04:41:48Z",
                 "reviewedAt": null
               }
             }
