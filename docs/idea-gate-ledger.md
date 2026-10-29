@@ -1821,3 +1821,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: ニュース用の限定ビルドを作成しCloudflare Pagesで公開と自動更新を確認する
 - Revisit when: 定期更新が反映されない; 配信費用や運用負担が許容範囲を超える; 地図など外部資産が表示されない
+
+<!-- idea-gate:20261028-malaysia-post-markdown -->
+## 日次Markdownから投稿用Markdownを生成
+
+- Record ID: `20261028-malaysia-post-markdown`
+- Evaluated: 2026-10-28T12:00:00+08:00
+- Project: Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 80/100
+- Confidence: medium - 入力形式は確認済み、投稿先への貼り付けは未検証
+
+### Idea Card
+
+- Purpose: noteやSubstack向けに読みやすく転用する
+- First experience: 1日分を出典リンク付きで変換
+- Scope and cost: 手動のローカル変換、外部APIや自動公開なし
+- Continuation boundary: 表示や出典保持を確認し、合わなければ停止
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 12/15 |
+| `evidence_and_learning` | 10/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 13/15 |
+| `ownership_and_reversibility` | 16/20 |
+| **Total** | **80/100** |
+
+### Next Step
+
+- Action: 既存Markdownを変更しない手動変換を実装
+- Revisit when: 投稿先で書式が維持されない; 原文情報を保持できない
