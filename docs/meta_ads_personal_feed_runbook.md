@@ -23,7 +23,7 @@ Meta公式ページはRSSや公開APIではなくHTMLから限定的なmetadata�
 
 記事ページからのリンク発見を一時停止する場合は、repository variable `META_ADS_ARTICLE_PAGE_DISCOVERY_ENABLED=false` を設定します。RSS本文からの既存のリンク発見と公式ページ自身の検証は続きます。手動CLIでは `--disable-article-page-discovery` を使えます。最初の2回のscheduled runで記事ページ取得の成功・拒否・新規リンク数と収集時間を確認し、増分がなく失敗や遅延が目立つ場合はこの経路を停止します。
 
-記事ページの探索は未試行を優先し、以降は最も以前に試行した記事を優先します。試行の成否にかかわらず順番を進め、stateには記事キーのハッシュと試行時刻だけを保存します。上限で見送った記事は、引き続きRSSに残り鮮度・人間除外の条件を満たす間、後続runで探索されます。RSSから消えた記事や収集run自体が失敗した場合の探索は保証されません。Business Newsの日付は `article:published_time` または本文領域の対応カテゴリに紐づく日付を使用し、不明・不正・不一致の場合は昇格しません。発表日がないMeta Helpはニュース扱いにしません。
+記事ページの探索は未試行を優先し、以降は最も以前に試行した記事を優先します。試行の成否にかかわらず順番を進め、stateには記事キーのハッシュと試行時刻だけを保存します。上限で見送った記事は、引き続きRSSに残り鮮度・人間除外の条件を満たす間、後続runで探索されます。RSSから消えた記事や収集run自体が失敗した場合の探索は保証されません。Business Newsの日付は `article:published_time`、本文領域、またはMetaの `FB4BResponsiveMainContent` 内で公式タイトルと一致する見出しの直前にあるカテゴリ・日付を使用します。不明・不正・不一致の場合は昇格しません。発表日がないMeta Helpはニュース扱いにしません。
 
 非公式記事の詳細では、記事本文段落で見つけたMeta公式URLを最大10件、参考リンクとして表示できます。対象は `www.facebook.com/business/help/<数字>`、既存のBusiness News記事、Developer Blog記事パスだけです。HelpはURLのホスト・パス形式だけを確認し、ページの内容・公開日・到達可能性を保証しません。ニュースとして昇格させず、元記事も非公式のままです。Business News／Developer Blogは既存の公式ページ検証に成功したURLだけを参考リンクへ含めます。リンク先の本文や非公式記事本文は保存しません。参考リンクのURLのみstateと公開feedに保存し、記事が再取得できないrunでは既存の参考リンクを保持します。`META_ADS_ARTICLE_PAGE_DISCOVERY_ENABLED=false` では新規参考リンクの探索も止まります。
 
