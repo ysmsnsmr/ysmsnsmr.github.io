@@ -1623,6 +1623,23 @@ class PersonalFeedTest(unittest.TestCase):
             with self.subTest(text=text, metadata=metadata), self.assertRaises(ContractError):
                 _meta_business_news_date(text, metadata)
 
+    def test_meta_business_news_fb4b_header_date_is_bound_to_article_heading(self) -> None:
+        source = self.config["discoveredSources"][0]
+        url = "https://www.facebook.com/business/news/pixel-conversionsapi-updates"
+        head = META_BUSINESS_NEWS.split("</head>")[0] + "</head>"
+        title = "Removing Technical Barriers to Help Businesses Get More From Their Ads"
+        def page(header: str, heading: str = title) -> str:
+            return (head + '<body><h6>Announcements · January 1, 1999</h6>'
+                    '<div role="main" id="FB4BResponsiveMainContent">' + header
+                    + '<div><h1>' + heading + '</h1></div>'
+                    + '<h6>Announcements · December 1, 2025</h6></div></body></html>')
+        header = '<div><h6><span>Announcements</span> · <span>October 28, 2026</span></h6></div>'
+        item = personal_feed._meta_business_news_item(source, url, page(header), ["social-media-today-meta-ads"])
+        self.assertEqual(item["publishedDate"], "2026-10-28")
+        for body in (page(""), page(header, "Different article title"), page(header).replace('role="main"', 'role="navigation"')):
+            with self.subTest(body=body), self.assertRaises(ContractError):
+                personal_feed._meta_business_news_item(source, url, body, ["social-media-today-meta-ads"])
+
     def test_discovered_meta_page_is_verified_and_promoted_as_official(self) -> None:
         bodies = {
             "meta-product-news-rss": META,

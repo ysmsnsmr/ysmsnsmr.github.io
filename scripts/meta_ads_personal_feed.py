@@ -621,12 +621,31 @@ class _MetaBusinessNewsParser(HTMLParser):
         self._in_h1 = False
         self._skip_depth = 0
         self._content_depth = 0
+        self._fb4b_main_depth = 0
+        self._fb4b_in_date_heading = False
+        self._fb4b_in_first_heading = False
+        self._fb4b_seen_heading = False
+        self.fb4b_date_heading: list[str] = []
+        self.fb4b_title: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         normalized = tag.casefold()
         if normalized in {"script", "style", "noscript"}:
             self._skip_depth += 1
             return
+        if not self._skip_depth:
+            if normalized == "div":
+                values = {name.casefold(): value for name, value in attrs if value is not None}
+                if self._fb4b_main_depth:
+                    self._fb4b_main_depth += 1
+                elif values.get("id") == "FB4BResponsiveMainContent" and values.get("role", "").casefold() == "main":
+                    self._fb4b_main_depth = 1
+            if self._fb4b_main_depth and not self._fb4b_seen_heading:
+                if normalized == "h6":
+                    self._fb4b_in_date_heading = True
+                elif normalized == "h1":
+                    self._fb4b_seen_heading = True
+                    self._fb4b_in_first_heading = True
         if normalized in {"main", "article"} and not self._skip_depth:
             self._content_depth += 1
         if normalized == "h1":
@@ -644,6 +663,13 @@ class _MetaBusinessNewsParser(HTMLParser):
             self.metadata.setdefault(key, _normalise(content))
 
     def handle_endtag(self, tag: str) -> None:
+        if not self._skip_depth and self._fb4b_main_depth:
+            if tag.casefold() == "h6":
+                self._fb4b_in_date_heading = False
+            elif tag.casefold() == "h1":
+                self._fb4b_in_first_heading = False
+            elif tag.casefold() == "div":
+                self._fb4b_main_depth -= 1
         if tag.casefold() in {"main", "article"} and not self._skip_depth and self._content_depth:
             self._content_depth -= 1
         if tag.casefold() == "h1":
@@ -656,6 +682,10 @@ class _MetaBusinessNewsParser(HTMLParser):
             self.text.append(data)
             if self._content_depth:
                 self.article_text.append(data)
+            if self._fb4b_main_depth and self._fb4b_in_date_heading and not self._fb4b_seen_heading:
+                self.fb4b_date_heading.append(data)
+            if self._fb4b_in_first_heading:
+                self.fb4b_title.append(data)
             if self._in_h1:
                 self.headings.append(data)
 
@@ -791,9 +821,13 @@ def _meta_business_news_item(source: dict[str, Any], url: str, body: str, origin
     canonical = _canonical_official_news_url(parser.metadata.get("og:url", ""), source)
     if canonical != url or parser.metadata.get("og:type", "").casefold() != "article":
         raise ContractError("Meta for Business News article metadata does not match its discovered URL")
-    title = _text(parser.metadata.get("og:title"), "Meta for Business News article title")[:280]
+    full_title = _text(parser.metadata.get("og:title"), "Meta for Business News article title")
+    title = full_title[:280]
     description = _text(parser.metadata.get("og:description"), "Meta for Business News article description")[:3500]
-    published = _meta_business_news_date(_normalise(" ".join(parser.article_text)), parser.metadata)
+    date_text = list(parser.article_text)
+    if _normalise(" ".join(parser.fb4b_title)).casefold() == _normalise(full_title).casefold():
+        date_text.extend(parser.fb4b_date_heading)
+    published = _meta_business_news_date(_normalise(" ".join(date_text)), parser.metadata)
     return {
         "key": url,
         "url": url,
