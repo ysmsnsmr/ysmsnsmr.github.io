@@ -9,6 +9,7 @@
 - Jon Loomer Digital RSS — 非公式・未確認
 - Ads Uploader Blogの公開記事一覧 — 非公式。新着の見出し・日付・短い説明を収集し、運用解説も候補に含める
 - Meta for Business News — Jon Loomer DigitalまたはSocial Media TodayのRSS本文・記事ページから見つかったMeta公式記事だけを追加取得
+- Meta Business Help Center — 同じ2媒体から見つかった `/business/help/数字` 形式の公式資料を追加取得
 - Meta for Developers Blog — 同じ2媒体のRSS本文・記事ページから見つかった `developers.facebook.com/blog/post/YYYY/MM/DD/<slug>/` 形式だけを追加取得。Ads Uploader記事ページの巡回は行わない
 
 Search Engine Land Meta RSSは、2026-08-30にGitHub ActionsでHTTP 403が繰り返し再現したため一時停止しています。安定した自動取得を確認できるまで再導入しません。
@@ -17,13 +18,13 @@ Meta Business SDK Releases（Node.js）の取得は利用頻度が低いため�
 
 Social Media TodayはFacebook専用RSSを使います。タイトルにMeta／Facebook／Instagramの語があり、さらにタイトルまたはRSS説明に広告・キャンペーン・Advertiser・Advantage+などの語がある記事だけを掲載候補にします。Creator Studioのようなクリエイター運用の記事は除外します。これは記事の正確性を保証するものではなく、フィードの対象範囲を絞るための機械的な条件です。
 
-Jon Loomerは `Meta Advertising` カテゴリだけでなく、タイトルまたはRSS説明に広告運用を示す具体的な語（Ads Manager、campaign、pixel、Conversions API、audienceなど）がある記事だけを掲載候補にします。カテゴリだけの周辺記事は除外します。この判定はsource-localの`relevanceRevision`で管理します。Jon LoomerまたはSocial Media Todayの新鮮なRSS記事について、RSS本文に加え、発見元URLが人間確認済みの除外一覧にない場合だけ記事ページの本文段落から公式リンクを探します。記事ページの取得は各媒体1 run最大10件、5秒・1 MiB・redirect禁止の上限付きです。取得・解析失敗はリンク発見だけを諦め、通常の収集を止めません。記事ページ本文は保存せず、ナビゲーションや関連記事カードのリンクは探索しません。Jevによる発見元記事の掲載判定は、このリンク発見を妨げません。完全一致するHTTPSホストと既存のBusiness News／Developer Blog記事パスだけを候補にし、Meta Helpなどへ対象を広げません。Meta公式ページ自身からcanonical URL、タイトル、説明、発表日など必要情報を検証できた候補だけを「Meta公式」として掲載します。非公式側の見出しや説明をMeta公式情報として転用しません。同じMeta公式URLを複数の非公式記事が見つけた場合も、公式ページを1回だけ取得・掲載し、state内の`matchEvidence`に発見元のsource IDだけを併記します。
+Jon Loomerは `Meta Advertising` カテゴリだけでなく、タイトルまたはRSS説明に広告運用を示す具体的な語（Ads Manager、campaign、pixel、Conversions API、audienceなど）がある記事だけを掲載候補にします。カテゴリだけの周辺記事は除外します。この判定はsource-localの`relevanceRevision`で管理します。Jon LoomerまたはSocial Media Todayの新鮮なRSS記事について、RSS本文に加え、発見元URLが人間確認済みの除外一覧にない場合だけ記事ページの本文段落から公式リンクを探します。記事ページの取得は各媒体1 run最大10件、5秒・1 MiB・redirect禁止の上限付きです。取得・解析失敗はリンク発見だけを諦め、通常の収集を止めません。記事ページ本文は保存せず、ナビゲーションや関連記事カードのリンクは探索しません。Jevによる発見元記事の掲載判定は、このリンク発見を妨げません。完全一致するHTTPSホストとBusiness News／Developer Blog／数値IDのBusiness Helpだけを候補にします。Meta公式ページ自身のURL、タイトル、説明等を検証し、関連性判定を通過したものを「Meta公式」として掲載します。Helpはcanonicalとog:urlの両方の一致を要求します。非公式側の見出しや説明をMeta公式情報として転用しません。同じMeta公式URLを複数の非公式記事が見つけた場合も、公式ページを1回だけ取得・掲載し、state内の`matchEvidence`に発見元のsource IDだけを併記します。
 
 Meta公式ページはRSSや公開APIではなくHTMLから限定的なmetadataを読むため、アクセス制限や構造変更の影響を受けます。この追加取得だけが失敗した場合は該当候補を掲載せず、他のPersonal Feed収集は継続します。本文・失敗URL・例外本文は保存またはログ出力せず、許可ホスト、最大3回のredirect、1 MiBの応答上限、1 run最大20件を維持します。
 
 記事ページからのリンク発見を一時停止する場合は、repository variable `META_ADS_ARTICLE_PAGE_DISCOVERY_ENABLED=false` を設定します。RSS本文からの既存のリンク発見と公式ページ自身の検証は続きます。手動CLIでは `--disable-article-page-discovery` を使えます。最初の2回のscheduled runで記事ページ取得の成功・拒否・新規リンク数と収集時間を確認し、増分がなく失敗や遅延が目立つ場合はこの経路を停止します。
 
-記事ページの探索は未試行を優先し、以降は最も以前に試行した記事を優先します。試行の成否にかかわらず順番を進め、stateには記事キーのハッシュと試行時刻だけを保存します。上限で見送った記事は、引き続きRSSに残り鮮度・人間除外の条件を満たす間、後続runで探索されます。RSSから消えた記事や収集run自体が失敗した場合の探索は保証されません。Business Newsの日付は `article:published_time`、本文領域、またはMetaの `FB4BResponsiveMainContent` 内で公式タイトルと一致する見出しの直前にあるカテゴリ・日付を使用します。不明・不正・不一致の場合は昇格しません。発表日がないMeta Helpはニュース扱いにしません。
+記事ページの探索は未試行を優先し、以降は最も以前に試行した記事を優先します。試行の成否にかかわらず順番を進め、stateには記事キーのハッシュと試行時刻だけを保存します。上限で見送った記事は、引き続きRSSに残り鮮度・人間除外の条件を満たす間、後続runで探索されます。RSSから消えた記事や収集run自体が失敗した場合の探索は保証されません。Business Newsの日付は `article:published_time`、本文領域、またはMetaの `FB4BResponsiveMainContent` 内で公式タイトルと一致する見出しの直前にあるカテゴリ・日付を使用します。不正・不一致の場合は昇格しません。日付がないBusiness NewsとBusiness Helpは発表日・更新日を空のまま保持し、初回発見日を表示・鮮度判定に用います。発見日は公開日や更新日を意味せず、古い資料を新発表と誤認しないよう注意します。
 
 非公式記事の詳細では、記事本文段落で見つけたMeta公式URLを最大10件、参考リンクとして表示できます。対象は `www.facebook.com/business/help/<数字>`、既存のBusiness News記事、Developer Blog記事パスだけです。HelpはURLのホスト・パス形式だけを確認し、ページの内容・公開日・到達可能性を保証しません。ニュースとして昇格させず、元記事も非公式のままです。Business News／Developer Blogは既存の公式ページ検証に成功したURLだけを参考リンクへ含めます。リンク先の本文や非公式記事本文は保存しません。参考リンクのURLのみstateと公開feedに保存し、記事が再取得できないrunでは既存の参考リンクを保持します。`META_ADS_ARTICLE_PAGE_DISCOVERY_ENABLED=false` では新規参考リンクの探索も止まります。
 

@@ -10,7 +10,7 @@
   const words = locale === "ja" ? {
     allSources: "すべてのソース", allTypes: "すべて", official: "Meta公式", unofficial: "非公式",
     retrieved: "最終取得", waiting: "初回取得待ち", shown: "表示中：", automatic: "件（自動取得・要確認）",
-    published: "発表日", updated: "最終更新日", unknown: "確認できず", addFavorite: "お気に入りに追加", removeFavorite: "お気に入りから削除",
+    published: "発表日", updated: "最終更新日", observed: "初回発見日", unknown: "確認できず", addFavorite: "お気に入りに追加", removeFavorite: "お気に入りから削除",
     noMatches: "条件に一致する更新はありません", noMatchesCopy: "検索語または絞り込み条件を変更してください。",
     noItems: "取得済みの情報はありません", noItemsCopy: "初回取得後にソースからの情報を表示します。",
     error: "公開フィードを読み込めません", errorTitle: "現在の公開内容を表示できません", errorCopy: "公開フィードを読み込めませんでした。しばらくしてからもう一度お試しください。",
@@ -19,7 +19,7 @@
   } : {
     allSources: "All sources", allTypes: "All", official: "Official", unofficial: "Unofficial",
     retrieved: "Last retrieved", waiting: "Waiting for first retrieval", shown: "Showing ", automatic: " items · automatically collected, verify before use",
-    published: "Published", updated: "Updated", unknown: "Not found", addFavorite: "Add to favorites", removeFavorite: "Remove from favorites",
+    published: "Published", updated: "Updated", observed: "First found", unknown: "Not found", addFavorite: "Add to favorites", removeFavorite: "Remove from favorites",
     noMatches: "No updates match these filters", noMatchesCopy: "Change the keyword or filters and try again.",
     noItems: "No collected updates yet", noItemsCopy: "Items will appear after the first successful collection.",
     error: "Unable to load the published feed", errorTitle: "The current published content is unavailable", errorCopy: "Please try again later.",
@@ -152,6 +152,11 @@
       if (!value) continue;
       const date = make("time", "", `${label}: ${value}`);
       date.dateTime = value;
+      dates.append(date);
+    }
+    if (!item.publishedDate && !item.updatedDate && item.firstObservedAt) {
+      const date = make("time", "", `${words.observed}: ${item.firstObservedAt.slice(0, 10)}`);
+      date.dateTime = item.firstObservedAt;
       dates.append(date);
     }
     card.append(main);

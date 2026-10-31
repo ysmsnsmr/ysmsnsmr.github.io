@@ -359,6 +359,7 @@ try {
     assert(await page.locator(".unofficial-copy").count() === 0, `${label}: per-card non-official warning must not be rendered`);
     assert((await page.locator(".list-dates").allTextContents()).some((text) => text.includes("発表日: 2026-08-29")), `${label}: known publication date is missing from the list`);
     assert((await page.locator(".list-dates").allTextContents()).some((text) => text.includes("最終更新日: 2026-08-29")), `${label}: known final update date is missing from the list`);
+    assert((await page.locator(".list-dates").allTextContents()).some((text) => text.includes("初回発見日: 2026-08-29")), `${label}: undated items must label their observation date`);
     assert(!(await page.locator(".list-dates").allTextContents()).join(" ").includes("確認できず"), `${label}: unknown dates must be omitted from the list`);
     assert(!(await page.locator(".fact-label").allTextContents()).includes("対象"), `${label}: target platform must not be shown on the Personal Feed list`);
     assert(await page.locator("#official-list .fact-grid, #unofficial-list .fact-grid").count() === 0, `${label}: full metadata cards must not remain in the compact list`);
