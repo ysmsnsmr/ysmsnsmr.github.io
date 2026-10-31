@@ -86,6 +86,7 @@ CONTENT_TYPES = {
     "github_releases": ["application/json"],
     "adsuploader_blog_html": ["text/html"],
     "meta_business_news_html": ["text/html"],
+    "meta_business_help_html": ["text/html"],
     "meta_developer_blog_html": ["text/html"],
 }
 PRESENTATION_STATUSES = {"generated", "pending"}
@@ -381,7 +382,7 @@ def validate_config(payload: Any) -> dict[str, Any]:
         _expect_identifier(source["relevanceRevision"], f"{label}.relevanceRevision")
         if source["classification"] != "official":
             raise ContractError(f"{label}.classification must be official")
-        if source["parser"] not in {"meta_business_news_html", "meta_developer_blog_html"}:
+        if source["parser"] not in {"meta_business_news_html", "meta_business_help_html", "meta_developer_blog_html"}:
             raise ContractError(f"{label}.parser is unsupported")
         if source["expectedContentTypes"] != CONTENT_TYPES[source["parser"]]:
             raise ContractError(f"{label}.expectedContentTypes must match parser")
@@ -410,11 +411,11 @@ def validate_config(payload: Any) -> dict[str, Any]:
             origin = next(item for item in config["sources"] if item["id"] == origin_id)
             if origin["parser"] != "rss" or origin["classification"] != "unofficial":
                 raise ContractError(f"{label}.discovery.fromSourceIds must reference unofficial RSS sources")
-        expected_host, expected_prefix = (
-            ("www.facebook.com", "/business/news/")
-            if source["parser"] == "meta_business_news_html"
-            else ("developers.facebook.com", "/blog/post/")
-        )
+        expected_host, expected_prefix = {
+            "meta_business_news_html": ("www.facebook.com", "/business/news/"),
+            "meta_business_help_html": ("www.facebook.com", "/business/help/"),
+            "meta_developer_blog_html": ("developers.facebook.com", "/blog/post/"),
+        }[source["parser"]]
         if source["transport"]["allowedFetchHosts"] != [expected_host] or source["transport"]["allowedContentHosts"] != [expected_host]:
             raise ContractError(f"{label}.transport must be restricted to its official host")
         if discovery["allowedPathPrefix"] != expected_prefix:
@@ -627,6 +628,8 @@ class _MetaBusinessNewsParser(HTMLParser):
         self._fb4b_seen_heading = False
         self.fb4b_date_heading: list[str] = []
         self.fb4b_title: list[str] = []
+        self.html_title: list[str] = []
+        self._in_title = False
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         normalized = tag.casefold()
@@ -650,6 +653,8 @@ class _MetaBusinessNewsParser(HTMLParser):
             self._content_depth += 1
         if normalized == "h1":
             self._in_h1 = True
+        if normalized == "title":
+            self._in_title = True
         if normalized == "link":
             values = {name.casefold(): value for name, value in attrs if value is not None}
             if "canonical" in values.get("rel", "").casefold().split() and values.get("href"):
@@ -674,6 +679,8 @@ class _MetaBusinessNewsParser(HTMLParser):
             self._content_depth -= 1
         if tag.casefold() == "h1":
             self._in_h1 = False
+        if tag.casefold() == "title":
+            self._in_title = False
         if tag.casefold() in {"script", "style", "noscript"} and self._skip_depth:
             self._skip_depth -= 1
 
@@ -688,6 +695,8 @@ class _MetaBusinessNewsParser(HTMLParser):
                 self.fb4b_title.append(data)
             if self._in_h1:
                 self.headings.append(data)
+            if self._in_title:
+                self.html_title.append(data)
 
 
 def _canonical_official_news_url(value: str, source: dict[str, Any]) -> str | None:
@@ -717,6 +726,10 @@ def _canonical_official_news_url(value: str, source: dict[str, Any]) -> str | No
     if not parsed.path.startswith(prefix):
         return None
     slug = parsed.path[len(prefix):].strip("/")
+    if source["parser"] == "meta_business_help_html":
+        if not re.fullmatch(r"[0-9]+", slug):
+            return None
+        return urlunsplit(("https", parsed.netloc.lower(), f"{prefix}{slug}", "", ""))
     if source["parser"] == "meta_developer_blog_html":
         if not re.fullmatch(r"20\d{2}/(?:0?[1-9]|1[0-2])/(?:0?[1-9]|[12]\d|3[01])/[A-Za-z0-9][A-Za-z0-9_-]*", slug):
             return None
@@ -792,7 +805,7 @@ def _validate_official_references(value: Any, label: str) -> list[str]:
     return value
 
 
-def _meta_business_news_date(text: str, metadata: dict[str, str] | None = None) -> str:
+def _meta_business_news_date(text: str, metadata: dict[str, str] | None = None, *, allow_missing: bool = False) -> str | None:
     months = "January|February|March|April|May|June|July|August|September|October|November|December"
     matches = re.findall(
         rf"\[?(?:Announcements?|Best Practices?|Insights|News|Updates?)\]?\s*(?:·\s*)?\[?((?:{months})\s+\d{{1,2}},\s+\d{{4}})\]?",
@@ -810,6 +823,8 @@ def _meta_business_news_date(text: str, metadata: dict[str, str] | None = None) 
             dates.add(datetime.fromisoformat(published.replace("Z", "+00:00")).date().isoformat())
     except ValueError as error:
         raise ContractError("Meta for Business News article has an invalid publication date") from error
+    if not dates and allow_missing:
+        return None
     if len(dates) != 1:
         raise ContractError("Meta for Business News article has missing or conflicting publication dates")
     return dates.pop()
@@ -827,7 +842,7 @@ def _meta_business_news_item(source: dict[str, Any], url: str, body: str, origin
     date_text = list(parser.article_text)
     if _normalise(" ".join(parser.fb4b_title)).casefold() == _normalise(full_title).casefold():
         date_text.extend(parser.fb4b_date_heading)
-    published = _meta_business_news_date(_normalise(" ".join(date_text)), parser.metadata)
+    published = _meta_business_news_date(_normalise(" ".join(date_text)), parser.metadata, allow_missing=True)
     return {
         "key": url,
         "url": url,
@@ -838,7 +853,29 @@ def _meta_business_news_item(source: dict[str, Any], url: str, body: str, origin
         "sourceContext": description,
         "presentationContext": description,
         "presentationContextKind": "plain",
-        "fingerprint": _fingerprint(url, title, published, description),
+        "fingerprint": _fingerprint(url, title, published or "", description),
+    }
+
+
+def _meta_business_help_item(source: dict[str, Any], url: str, body: str, origin_ids: list[str]) -> dict[str, Any]:
+    parser = _MetaBusinessNewsParser()
+    parser.feed(body)
+    canonical = _canonical_official_news_url(parser.canonical_link, source)
+    og_url = _canonical_official_news_url(parser.metadata.get("og:url", ""), source)
+    if canonical != url or og_url != url or parser.metadata.get("og:type", "").casefold() != "website":
+        raise ContractError("Meta Business Help metadata does not match its discovered URL")
+    raw_title = _normalise(" ".join(parser.html_title))
+    title = raw_title.split(" | ", 1)[0].strip()
+    suffix = raw_title.split(" | ", 1)[1].casefold() if " | " in raw_title else ""
+    if not title or not any(brand in suffix for brand in ("meta", "facebook")) or title.casefold() in {"facebook", "meta", "log in", "login"}:
+        raise ContractError("Meta Business Help has no specific document title")
+    title = title[:280]
+    description = _text(parser.metadata.get("og:description"), "Meta Business Help description")[:3500]
+    return {
+        "key": url, "url": url, "title": title, "publishedDate": None, "updatedDate": None,
+        "matchEvidence": [f"discovered-via:{origin_id}" for origin_id in origin_ids],
+        "sourceContext": description, "presentationContext": description, "presentationContextKind": "plain",
+        "fingerprint": _fingerprint(url, title, "", description),
     }
 
 
@@ -3184,7 +3221,11 @@ def collect(
                 if not isinstance(body, str) or normalized_content_type not in source["expectedContentTypes"]:
                     raise ContractError("discovered official article returned an unexpected response")
                 source_pipeline["parsedItems"] += 1
-                item_parser = _meta_business_news_item if source["parser"] == "meta_business_news_html" else _meta_developer_blog_item
+                item_parser = {
+                    "meta_business_news_html": _meta_business_news_item,
+                    "meta_business_help_html": _meta_business_help_item,
+                    "meta_developer_blog_html": _meta_developer_blog_item,
+                }[source["parser"]]
                 promoted.append(item_parser(source, url, body, candidate_origins[url]))
                 source_pipeline["validItems"] += 1
             except (ContractError, OSError, ValueError, urllib.error.URLError):

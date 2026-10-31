@@ -205,7 +205,7 @@ class PersonalFeedTest(unittest.TestCase):
                 return "<html><article></article></html>", "text/html; charset=utf-8"
             if source["parser"] == "github_releases":
                 content_type = "application/json; charset=utf-8"
-            elif source["parser"] in {"meta_business_news_html", "meta_developer_blog_html", "adsuploader_blog_html"}:
+            elif source["parser"] in {"meta_business_news_html", "meta_business_help_html", "meta_developer_blog_html", "adsuploader_blog_html"}:
                 content_type = "text/html; charset=utf-8"
             else:
                 content_type = "application/rss+xml; charset=UTF-8"
@@ -218,7 +218,7 @@ class PersonalFeedTest(unittest.TestCase):
         sources = {source["id"]: source for source in self.config["sources"]}
         discovered = {source["id"]: source for source in self.config["discoveredSources"]}
         self.assertEqual(set(sources), {"meta-product-news-rss", "meta-business-sdk-releases", "social-media-today-meta-ads", "jon-loomer-meta-ads", "adsuploader-blog"})
-        self.assertEqual(set(discovered), {"meta-business-news-discovered", "meta-developer-blog-discovered"})
+        self.assertEqual(set(discovered), {"meta-business-news-discovered", "meta-developer-blog-discovered", "meta-business-help-discovered"})
         self.assertEqual(sources["social-media-today-meta-ads"]["sourceUrl"], "https://www.socialmediatoday.com/topic/facebook/")
         self.assertEqual(sources["social-media-today-meta-ads"]["fetchUrl"], "https://www.socialmediatoday.com/feeds/topic/facebook/")
         self.assertEqual(sources["social-media-today-meta-ads"]["match"]["kind"], "all_groups")
@@ -1323,7 +1323,7 @@ class PersonalFeedTest(unittest.TestCase):
         promoted = [item for item in feed["items"] if item["sourceId"] == "meta-business-news-discovered"]
         self.assertEqual([item["url"] for item in promoted], ["https://www.facebook.com/business/news/pixel-conversionsapi-updates"])
         self.assertEqual(promoted[0]["matchEvidence"], ["discovered-via:social-media-today-meta-ads"])
-        self.assertEqual(pipeline["sources"]["social-media-today-meta-ads"]["articlePageDiscoveredLinks"], 1)
+        self.assertEqual(pipeline["sources"]["social-media-today-meta-ads"]["articlePageDiscoveredLinks"], 2)
         self.assertEqual(len([item for item in fetches if item["id"] == "social-media-today-meta-ads"]), 2)
         origin = next(item for item in feed["items"] if item["sourceId"] == "social-media-today-meta-ads" and "123456" in item["url"])
         self.assertEqual(origin["officialReferences"], [
@@ -1637,8 +1637,49 @@ class PersonalFeedTest(unittest.TestCase):
         item = personal_feed._meta_business_news_item(source, url, page(header), ["social-media-today-meta-ads"])
         self.assertEqual(item["publishedDate"], "2026-10-28")
         for body in (page(""), page(header, "Different article title"), page(header).replace('role="main"', 'role="navigation"')):
-            with self.subTest(body=body), self.assertRaises(ContractError):
-                personal_feed._meta_business_news_item(source, url, body, ["social-media-today-meta-ads"])
+            with self.subTest(body=body):
+                self.assertIsNone(personal_feed._meta_business_news_item(source, url, body, ["social-media-today-meta-ads"])["publishedDate"])
+
+    def test_business_help_promotes_only_verified_numeric_document(self) -> None:
+        source = next(s for s in self.config["discoveredSources"] if s["id"] == "meta-business-help-discovered")
+        url = "https://www.facebook.com/business/help/1822387965412520"
+        body = (f'<html><head><title>View Creative Performance | Meta Business Help Center</title>'
+                f'<link rel="canonical" href="{url}"><meta property="og:url" content="{url}">'
+                '<meta property="og:type" content="website"><meta property="og:description" content="Review ad creative performance.">'
+                '</head><body></body></html>')
+        item = personal_feed._meta_business_help_item(source, url, body, ["social-media-today-meta-ads"])
+        self.assertEqual(item["title"], "View Creative Performance")
+        self.assertIsNone(item["publishedDate"])
+        self.assertEqual(personal_feed._canonical_official_news_url(url + "?_sp=tracking", source), url)
+        self.assertIsNone(personal_feed._canonical_official_news_url("https://www.facebook.com/business/help/not-news", source))
+        self.assertIsNone(personal_feed._canonical_official_news_url("https://www.facebook.com.evil.example/business/help/123", source))
+        for invalid in (body.replace('rel="canonical"', 'rel="alternate"'), body.replace('content="website"', 'content="article"'), body.replace('View Creative Performance |', 'Log in |')):
+            with self.subTest(invalid=invalid), self.assertRaises(ContractError):
+                personal_feed._meta_business_help_item(source, url, invalid, ["social-media-today-meta-ads"])
+
+    def test_undated_help_discovery_preserves_observation_and_runs_jev(self) -> None:
+        url = "https://www.facebook.com/business/help/1822387965412520"
+        help_html = (f'<html><head><title>View Creative Performance | Meta Business Help Center</title>'
+                     f'<link rel="canonical" href="{url}"><meta property="og:url" content="{url}">'
+                     '<meta property="og:type" content="website"><meta property="og:description" content="Review ad creative performance.">'
+                     '</head><body></body></html>')
+        rss = SOCIAL_MEDIA_TODAY_WITH_OFFICIAL_LINK.replace(
+            "https://www.facebook.com/business/news/pixel-conversionsapi-updates?utm_source=social", url
+        )
+        seen = []
+        def classify(source: dict, raw: dict) -> tuple[str, list[str]]:
+            if source["id"] == "meta-business-help-discovered":
+                seen.append(raw["url"])
+            return "included", ["jev:strategic_signal"]
+        fetch = self.fetcher(bodies={"social-media-today-meta-ads": rss, "meta-business-help-discovered": help_html})
+        empty = {"schemaVersion": STATE_SCHEMA_VERSION, "updatedAt": None, "sources": {}}
+        feed, state = collect(self.config, empty, 1, NOW, fetch, jev_classifier=classify)
+        item = next(item for item in feed["items"] if item["url"] == url)
+        self.assertEqual(item["sourceId"], "meta-business-help-discovered")
+        self.assertIsNone(item["publishedDate"])
+        self.assertEqual(seen, [url])
+        feed2, _ = collect(self.config, state, 1, NOW + timedelta(days=1), fetch, jev_classifier=classify)
+        self.assertEqual(next(item for item in feed2["items"] if item["url"] == url)["firstObservedAt"], item["firstObservedAt"])
 
     def test_discovered_meta_page_is_verified_and_promoted_as_official(self) -> None:
         bodies = {

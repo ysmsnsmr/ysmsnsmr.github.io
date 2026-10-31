@@ -1856,3 +1856,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: 既存Markdownを変更しない手動変換を実装
 - Revisit when: 投稿先で書式が維持されない; 原文情報を保持できない
+
+<!-- idea-gate:20261031t120000-meta-undated-official-build -->
+## Discover official Meta pages without publication dates
+
+- Record ID: `20261031t120000-meta-undated-official-build`
+- Evaluated: 2026-10-31T12:00:00+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 73/100
+- Confidence: medium - One help page has been verified; other help pages may have different metadata or access restrictions.
+
+### Idea Card
+
+- Purpose: Include useful official Meta information even when it has no publication date.
+- First experience: Determine whether an undated official article or help page can be safely identified and displayed.
+- Scope and cost: Read-only checks of representative pages, without API or publication changes.
+- Continuation boundary: Proceed to a narrowly scoped implementation once page identity and display behavior are clear.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 16/20 |
+| `reason_to_make` | 12/15 |
+| `evidence_and_learning` | 9/15 |
+| `expected_outcome` | 11/15 |
+| `scope_and_fit` | 10/15 |
+| `ownership_and_reversibility` | 15/20 |
+| **Total** | **73/100** |
+
+### Next Step
+
+- Action: Implement undated Business News and narrowly scoped numeric Business Help discovery with clearly labelled observation dates.
+- Revisit when: Reconsider if unrelated documents dominate, identity cannot be verified, or the source cannot be fetched.

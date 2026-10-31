@@ -1,6 +1,6 @@
 {
   "schemaVersion": "meta-ads-personal-feed-state/v5",
-  "updatedAt": "2026-10-29T21:12:33Z",
+  "updatedAt": "2026-10-31T02:08:43Z",
   "sources": {
     "meta-product-news-rss": {
       "relevanceRevision": "meta-ads-lanes-v1",
@@ -17,7 +17,7 @@
           ],
           "fingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
           "firstObservedAt": "2026-09-17T04:55:10Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
@@ -707,7 +707,7 @@
           ],
           "fingerprint": "4eaba66ff972adf270ab3d1f9f39c784a5c1dd47873fc9be29cb2b1c75da3228",
           "firstObservedAt": "2026-09-24T10:49:46Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4eaba66ff972adf270ab3d1f9f39c784a5c1dd47873fc9be29cb2b1c75da3228",
@@ -776,7 +776,7 @@
           ],
           "fingerprint": "81f32c25b7a71918ebf29c52f8eecf6a3a4751d1a48f3fad79366cb3d96220f2",
           "firstObservedAt": "2026-09-24T10:49:46Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "81f32c25b7a71918ebf29c52f8eecf6a3a4751d1a48f3fad79366cb3d96220f2",
@@ -845,7 +845,7 @@
           ],
           "fingerprint": "0adeaf0813b90a6ad3ae72fc6723f8206fbe4fcd963df8684360f2f523e34cce",
           "firstObservedAt": "2026-09-24T10:49:46Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0adeaf0813b90a6ad3ae72fc6723f8206fbe4fcd963df8684360f2f523e34cce",
@@ -914,7 +914,7 @@
           ],
           "fingerprint": "3a6042854a6149112069769c01503fa0a22b366f14a78569a9fc7646992b43ef",
           "firstObservedAt": "2026-09-25T05:01:44Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3a6042854a6149112069769c01503fa0a22b366f14a78569a9fc7646992b43ef",
@@ -983,7 +983,7 @@
           ],
           "fingerprint": "5246d21d9b0bec1aaa7cc2d1a4fc6fc647224b94bc170e314730f8ca94dc7a5a",
           "firstObservedAt": "2026-09-29T13:20:20Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5246d21d9b0bec1aaa7cc2d1a4fc6fc647224b94bc170e314730f8ca94dc7a5a",
@@ -1052,7 +1052,7 @@
           ],
           "fingerprint": "f4eb6e6aef14c99f36f113e388017c2ea1bd54d084dbec62a26733b05d947f66",
           "firstObservedAt": "2026-10-06T06:25:59Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f4eb6e6aef14c99f36f113e388017c2ea1bd54d084dbec62a26733b05d947f66",
@@ -1121,7 +1121,7 @@
           ],
           "fingerprint": "37c9fe7686b0a7083c37639fa74bbb69f3bf42280b4fc41cf5e56352607c98af",
           "firstObservedAt": "2026-10-15T19:54:50Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "37c9fe7686b0a7083c37639fa74bbb69f3bf42280b4fc41cf5e56352607c98af",
@@ -1190,7 +1190,7 @@
           ],
           "fingerprint": "f8ae1876567043552745b806ba4aaceae86231a4856c941a44c0db0367717b67",
           "firstObservedAt": "2026-10-15T19:54:50Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f8ae1876567043552745b806ba4aaceae86231a4856c941a44c0db0367717b67",
@@ -1259,7 +1259,7 @@
           ],
           "fingerprint": "2e93b8e8311c3f32ea128b2aca39f058b1c1015b5fa128b49ece07ebd6524cba",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "2e93b8e8311c3f32ea128b2aca39f058b1c1015b5fa128b49ece07ebd6524cba",
@@ -4176,7 +4176,7 @@
           ],
           "fingerprint": "7ba2707808fc98d06dff22ebb2df2bf2459c70a89098b80987acf874b3350c4c",
           "firstObservedAt": "2026-10-12T23:02:27Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7ba2707808fc98d06dff22ebb2df2bf2459c70a89098b80987acf874b3350c4c",
@@ -4245,7 +4245,7 @@
           ],
           "fingerprint": "d99a323d84ae40aeeb4e8047d11cfc22c221aa610d3172edcd3fd7dffbed1f6b",
           "firstObservedAt": "2026-10-12T23:02:27Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d99a323d84ae40aeeb4e8047d11cfc22c221aa610d3172edcd3fd7dffbed1f6b",
@@ -4452,7 +4452,7 @@
           ],
           "fingerprint": "23d8e65841a29db2acac41017d10c6b7bc4bd9c9e99328cb6bacfcb44e6978a6",
           "firstObservedAt": "2026-10-15T19:54:50Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "23d8e65841a29db2acac41017d10c6b7bc4bd9c9e99328cb6bacfcb44e6978a6",
@@ -4521,7 +4521,7 @@
           ],
           "fingerprint": "eadd43ca2df51b2e005b9d3f341a7626dc2ecd33d901d6a28f0e3d81bd7f1844",
           "firstObservedAt": "2026-10-15T19:54:50Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "eadd43ca2df51b2e005b9d3f341a7626dc2ecd33d901d6a28f0e3d81bd7f1844",
@@ -4590,7 +4590,7 @@
           ],
           "fingerprint": "14ee9261deab99beaad0c598d2109814071f450349efc89a04efba2b110d64a6",
           "firstObservedAt": "2026-10-19T21:07:34Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "14ee9261deab99beaad0c598d2109814071f450349efc89a04efba2b110d64a6",
@@ -4659,7 +4659,7 @@
           ],
           "fingerprint": "e6b833e73fe70dcdbed5496b35fdfa2250196cc55c274d84ef510f14bd50ac84",
           "firstObservedAt": "2026-10-19T21:07:34Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e6b833e73fe70dcdbed5496b35fdfa2250196cc55c274d84ef510f14bd50ac84",
@@ -4728,7 +4728,7 @@
           ],
           "fingerprint": "b9ec0070b55198a4b89a478eb712a155bece87a82bcfb9ab43b59a37ce75f014",
           "firstObservedAt": "2026-10-19T21:07:34Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b9ec0070b55198a4b89a478eb712a155bece87a82bcfb9ab43b59a37ce75f014",
@@ -4797,7 +4797,7 @@
           ],
           "fingerprint": "b0804d00bed1b106c2cb83afee97aab570a5f3f65e43d4963dede08953b73ec9",
           "firstObservedAt": "2026-10-19T21:07:34Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b0804d00bed1b106c2cb83afee97aab570a5f3f65e43d4963dede08953b73ec9",
@@ -4866,7 +4866,7 @@
           ],
           "fingerprint": "c16ca0d2ff85d661dee7d3394b5bc41a57d6262215ef5058c218e769b547028c",
           "firstObservedAt": "2026-10-22T20:11:32Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "c16ca0d2ff85d661dee7d3394b5bc41a57d6262215ef5058c218e769b547028c",
@@ -4935,7 +4935,7 @@
           ],
           "fingerprint": "2e30b8e47e8a2d2e1ef9c2c8c9a7998cd1f752f4b6b9cd515a6abb846546da27",
           "firstObservedAt": "2026-10-22T20:11:32Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "2e30b8e47e8a2d2e1ef9c2c8c9a7998cd1f752f4b6b9cd515a6abb846546da27",
@@ -5004,7 +5004,7 @@
           ],
           "fingerprint": "143d29cb0408e47241a39586b3d9a9cda5020466ba98c95347cf2845f5071751",
           "firstObservedAt": "2026-10-22T20:11:32Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "143d29cb0408e47241a39586b3d9a9cda5020466ba98c95347cf2845f5071751",
@@ -5073,7 +5073,7 @@
           ],
           "fingerprint": "23dcd0f7154a208d8152e038e44e0e43d5d99803cb88992951768e7b1d97a455",
           "firstObservedAt": "2026-10-22T20:11:32Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "23dcd0f7154a208d8152e038e44e0e43d5d99803cb88992951768e7b1d97a455",
@@ -5142,7 +5142,7 @@
           ],
           "fingerprint": "b4c7c91b12926f2977f1d6d79c7892a2f269f87a9f140746065db4497703200e",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b4c7c91b12926f2977f1d6d79c7892a2f269f87a9f140746065db4497703200e",
@@ -5211,7 +5211,7 @@
           ],
           "fingerprint": "81b45e003f81ff0815ef3f36c7a18f7a9eedddf9728f5354748eeecba7c1dbbc",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "81b45e003f81ff0815ef3f36c7a18f7a9eedddf9728f5354748eeecba7c1dbbc",
@@ -5280,7 +5280,7 @@
           ],
           "fingerprint": "079ec0852f4dfc0ab6b7d839e2d692fba23dfa0e6acb15ad99022d48691f53ff",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "079ec0852f4dfc0ab6b7d839e2d692fba23dfa0e6acb15ad99022d48691f53ff",
@@ -5349,7 +5349,7 @@
           ],
           "fingerprint": "f930df35d4df417ce804234c4cf2236a3533cc145dc6bf034b5c8ad639fb4231",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f930df35d4df417ce804234c4cf2236a3533cc145dc6bf034b5c8ad639fb4231",
@@ -5418,7 +5418,7 @@
           ],
           "fingerprint": "ce87778a5fd83e6611133ad4022fc9039b8e10734192a2d53d915d684b57d117",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ce87778a5fd83e6611133ad4022fc9039b8e10734192a2d53d915d684b57d117",
@@ -5487,7 +5487,7 @@
           ],
           "fingerprint": "2941548ab40d2b2e9ec60a6fc284d7a87a3ce4598a475802824b03bba4f612e1",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "2941548ab40d2b2e9ec60a6fc284d7a87a3ce4598a475802824b03bba4f612e1",
@@ -5556,7 +5556,7 @@
           ],
           "fingerprint": "6aef3e84220669b4739110ad3a54498d15c8dbcd9475b415a97b9ddc588e8df4",
           "firstObservedAt": "2026-10-29T21:12:33Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "6aef3e84220669b4739110ad3a54498d15c8dbcd9475b415a97b9ddc588e8df4",
@@ -5625,7 +5625,7 @@
           ],
           "fingerprint": "5bfe62570b130d041fc660970b3a37b83e0a50c5f822425df107d73e00305b57",
           "firstObservedAt": "2026-10-29T21:12:33Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5bfe62570b130d041fc660970b3a37b83e0a50c5f822425df107d73e00305b57",
@@ -5699,7 +5699,7 @@
           ],
           "fingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
           "firstObservedAt": "2026-09-02T04:36:59Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
@@ -5768,7 +5768,7 @@
           ],
           "fingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
@@ -5837,7 +5837,7 @@
           ],
           "fingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
@@ -5906,7 +5906,7 @@
           ],
           "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
@@ -5975,7 +5975,7 @@
           ],
           "fingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
@@ -6044,7 +6044,7 @@
           ],
           "fingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
@@ -6113,7 +6113,7 @@
           ],
           "fingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
@@ -6182,7 +6182,7 @@
           ],
           "fingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
@@ -6251,7 +6251,7 @@
           ],
           "fingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
@@ -6320,7 +6320,7 @@
           ],
           "fingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
@@ -6389,7 +6389,7 @@
           ],
           "fingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
@@ -6458,7 +6458,7 @@
           ],
           "fingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
@@ -6527,7 +6527,7 @@
           ],
           "fingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
@@ -6596,7 +6596,7 @@
           ],
           "fingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
@@ -6665,7 +6665,7 @@
           ],
           "fingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
@@ -6734,7 +6734,7 @@
           ],
           "fingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
@@ -6803,7 +6803,7 @@
           ],
           "fingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
@@ -6872,7 +6872,7 @@
           ],
           "fingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
@@ -6941,7 +6941,7 @@
           ],
           "fingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f1344ee1988c130e2d4a76efbfaae27eed1f4bb84a0dcda5fde9914dfefecda9",
@@ -7010,7 +7010,7 @@
           ],
           "fingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b732201a5b57b7651d18052b5cea5f45f99fb84cd5818c0b84828fa2cc708059",
@@ -7079,7 +7079,7 @@
           ],
           "fingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "cc283c612e938a72e7288df24e2f007e4fdf39aa727daee67c54d1c547ce705c",
@@ -7919,7 +7919,7 @@
           ],
           "fingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
           "firstObservedAt": "2026-09-09T04:45:10Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
@@ -7988,7 +7988,7 @@
           ],
           "fingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
@@ -8057,7 +8057,7 @@
           ],
           "fingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
@@ -8126,7 +8126,7 @@
           ],
           "fingerprint": "4aa58a1d9015c2e87532ffcf67da05612a70ab2224562cbe10a554a8efb30049",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4aa58a1d9015c2e87532ffcf67da05612a70ab2224562cbe10a554a8efb30049",
@@ -8195,7 +8195,7 @@
           ],
           "fingerprint": "7b84af3e65c26a3c2facace38301e1a3b57887ef09a34e1cfa0008852dcd1f8c",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7b84af3e65c26a3c2facace38301e1a3b57887ef09a34e1cfa0008852dcd1f8c",
@@ -8264,7 +8264,7 @@
           ],
           "fingerprint": "7e118c18c9a7eafed3392219c9c930ab728955ad17119f4b83752bb90596e63a",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7e118c18c9a7eafed3392219c9c930ab728955ad17119f4b83752bb90596e63a",
@@ -8333,7 +8333,7 @@
           ],
           "fingerprint": "36c97d1dd653bebefad321d32289082419452d7186bd74a6ac68a8b102dd120b",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "36c97d1dd653bebefad321d32289082419452d7186bd74a6ac68a8b102dd120b",
@@ -8402,7 +8402,7 @@
           ],
           "fingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
@@ -8471,7 +8471,7 @@
           ],
           "fingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
@@ -8540,7 +8540,7 @@
           ],
           "fingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
@@ -8609,7 +8609,7 @@
           ],
           "fingerprint": "2b92989d8e83f9d6a4e793958554dcf47ff39977e08bb8078a17f8ee2d7ca70f",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "2b92989d8e83f9d6a4e793958554dcf47ff39977e08bb8078a17f8ee2d7ca70f",
@@ -8678,7 +8678,7 @@
           ],
           "fingerprint": "740954a5f394867bf9fe5eb3e01abe0ae085d6f24477c5c260af08363e10ac76",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "740954a5f394867bf9fe5eb3e01abe0ae085d6f24477c5c260af08363e10ac76",
@@ -8747,7 +8747,7 @@
           ],
           "fingerprint": "71ba278f719424a43f5e5b3edf7b2b5db300c1033f3f3bea14595c68e91b4a8f",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "71ba278f719424a43f5e5b3edf7b2b5db300c1033f3f3bea14595c68e91b4a8f",
@@ -8816,7 +8816,7 @@
           ],
           "fingerprint": "bcd54ad6dad960c22cd207d1c9480c82c88d455d2161303c3ab0ea69ade9d260",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "bcd54ad6dad960c22cd207d1c9480c82c88d455d2161303c3ab0ea69ade9d260",
@@ -8885,7 +8885,7 @@
           ],
           "fingerprint": "ed38006cc4837fe23ac660bf174e18b9a2bd7f250705e0a27997c323cc136b53",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ed38006cc4837fe23ac660bf174e18b9a2bd7f250705e0a27997c323cc136b53",
@@ -8954,7 +8954,7 @@
           ],
           "fingerprint": "8d1d52727a5ae35c48f40a200de5b33f0ffd37a05d60b4b7c39ca83704aa8564",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "8d1d52727a5ae35c48f40a200de5b33f0ffd37a05d60b4b7c39ca83704aa8564",
@@ -9023,7 +9023,7 @@
           ],
           "fingerprint": "4e803170dfe0d9450cc16523a987e6f132b598c600b1621a69d956243129a651",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4e803170dfe0d9450cc16523a987e6f132b598c600b1621a69d956243129a651",
@@ -9092,7 +9092,7 @@
           ],
           "fingerprint": "1841e5a6c23dbb8dadcd208300abd7d77a90779b41a99f0c292c579a460cf150",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1841e5a6c23dbb8dadcd208300abd7d77a90779b41a99f0c292c579a460cf150",
@@ -9161,7 +9161,7 @@
           ],
           "fingerprint": "4765d055b9b7c5886994d3a6ed2e50aa01eb3f8c1001a5c7edf377d55f906c75",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4765d055b9b7c5886994d3a6ed2e50aa01eb3f8c1001a5c7edf377d55f906c75",
@@ -9437,7 +9437,7 @@
           ],
           "fingerprint": "57736eb5316a3299a1161d64d8be94c9e2e7083572a4d70ee15783c022ecf4c6",
           "firstObservedAt": "2026-09-29T05:47:38Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "57736eb5316a3299a1161d64d8be94c9e2e7083572a4d70ee15783c022ecf4c6",
@@ -9506,7 +9506,7 @@
           ],
           "fingerprint": "4d749c553b69bf36372452f017309a3b51ad63b6e1bc65eae5ef113590eff47d",
           "firstObservedAt": "2026-09-29T13:20:20Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4d749c553b69bf36372452f017309a3b51ad63b6e1bc65eae5ef113590eff47d",
@@ -9575,7 +9575,7 @@
           ],
           "fingerprint": "fc3ed58fb62c4b0612cdab6041acb27a164e4d3089b6ffbca62063518953f3c9",
           "firstObservedAt": "2026-10-06T06:25:59Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fc3ed58fb62c4b0612cdab6041acb27a164e4d3089b6ffbca62063518953f3c9",
@@ -9644,7 +9644,7 @@
           ],
           "fingerprint": "c416f019212a3f04fec6308c4b416dc3382280279f22d72225ba2b149dc6ca51",
           "firstObservedAt": "2026-10-09T06:14:01Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "c416f019212a3f04fec6308c4b416dc3382280279f22d72225ba2b149dc6ca51",
@@ -9716,7 +9716,7 @@
           ],
           "fingerprint": "eead0251a70d1bb6b63799b2c81cc151f15289a3c338e4b9bb07a8200f990a72",
           "firstObservedAt": "2026-10-12T23:02:27Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "eead0251a70d1bb6b63799b2c81cc151f15289a3c338e4b9bb07a8200f990a72",
@@ -9785,7 +9785,7 @@
           ],
           "fingerprint": "ced6b82ff8729175718e510ec2e2ba41d1301c596d2fef17b509608098732228",
           "firstObservedAt": "2026-10-15T19:54:50Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ced6b82ff8729175718e510ec2e2ba41d1301c596d2fef17b509608098732228",
@@ -9857,7 +9857,7 @@
           ],
           "fingerprint": "9c21e8eb6a68d8b37cf082dfcd35b8170238aa51547968578a1948b2b41ec384",
           "firstObservedAt": "2026-10-19T21:07:34Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "9c21e8eb6a68d8b37cf082dfcd35b8170238aa51547968578a1948b2b41ec384",
@@ -9926,7 +9926,7 @@
           ],
           "fingerprint": "ea07503f9d2f7797aec11c3c6bac1e76383775bc37c0dd7ef7c690a80afd2f5d",
           "firstObservedAt": "2026-10-22T20:11:32Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ea07503f9d2f7797aec11c3c6bac1e76383775bc37c0dd7ef7c690a80afd2f5d",
@@ -9998,7 +9998,7 @@
           ],
           "fingerprint": "d96c4f062767fe7b4d3e08cfb3ea443ce2a32d2a1990a00e018dc989bb77d9e8",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d96c4f062767fe7b4d3e08cfb3ea443ce2a32d2a1990a00e018dc989bb77d9e8",
@@ -10070,7 +10070,7 @@
           ],
           "fingerprint": "d6b20c1d6e103dbcdeb60ef8a7bea2a2bc9f152a6393ce16ae5247f9053e164c",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d6b20c1d6e103dbcdeb60ef8a7bea2a2bc9f152a6393ce16ae5247f9053e164c",
@@ -11175,11 +11175,11 @@
           "matchEvidence": [],
           "publicationStatus": "included",
           "publicationEvidence": [
-            "jev:direct_impact"
+            "jev:strategic_signal"
           ],
           "fingerprint": "ca9230e43ba0221eef6eec5606856796b9794aa76d81f129c85a783dfece3559",
           "firstObservedAt": "2026-10-09T06:14:01Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ca9230e43ba0221eef6eec5606856796b9794aa76d81f129c85a783dfece3559",
@@ -11317,7 +11317,7 @@
           ],
           "fingerprint": "7b2d5018d4e41e838f501f7b78cfa2375a1fa50a619be657754f22f4fccf4fca",
           "firstObservedAt": "2026-10-12T23:02:27Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7b2d5018d4e41e838f501f7b78cfa2375a1fa50a619be657754f22f4fccf4fca",
@@ -11386,7 +11386,7 @@
           ],
           "fingerprint": "868fed1cee3c4667b457c5554b4ed89f7a11a68d7fd6b8c7f0333743fcd171ff",
           "firstObservedAt": "2026-10-15T19:54:50Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "868fed1cee3c4667b457c5554b4ed89f7a11a68d7fd6b8c7f0333743fcd171ff",
@@ -11455,7 +11455,7 @@
           ],
           "fingerprint": "49248bddefcf06ed188c29ec46e8e64011679f24d91190388aa1a8acc499878b",
           "firstObservedAt": "2026-10-15T19:54:50Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "49248bddefcf06ed188c29ec46e8e64011679f24d91190388aa1a8acc499878b",
@@ -11524,7 +11524,7 @@
           ],
           "fingerprint": "f02784ae8650dc3ae2128b4477194a50e8fb7e3bd2e65807db6f68738b06c9ee",
           "firstObservedAt": "2026-10-19T21:07:34Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f02784ae8650dc3ae2128b4477194a50e8fb7e3bd2e65807db6f68738b06c9ee",
@@ -11593,7 +11593,7 @@
           ],
           "fingerprint": "bcd4975208cfc1001e729477a049c10b34bb0a1219eef072a3c153e6f71229bc",
           "firstObservedAt": "2026-10-19T21:07:34Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "bcd4975208cfc1001e729477a049c10b34bb0a1219eef072a3c153e6f71229bc",
@@ -11662,7 +11662,7 @@
           ],
           "fingerprint": "d75f47f36289b0205125c1da6f06644948dfe8b3edadc20019235ac231ec3864",
           "firstObservedAt": "2026-10-22T20:11:32Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d75f47f36289b0205125c1da6f06644948dfe8b3edadc20019235ac231ec3864",
@@ -11731,7 +11731,7 @@
           ],
           "fingerprint": "7c8bd1da6df1f4a4e99c07d74206fae1d65f3cc53d5558944ff882e870bcf3d5",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7c8bd1da6df1f4a4e99c07d74206fae1d65f3cc53d5558944ff882e870bcf3d5",
@@ -11800,7 +11800,7 @@
           ],
           "fingerprint": "236997880e9139b3a6088934ca699c5cfefac669391ff96f49952e5127182ac1",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "236997880e9139b3a6088934ca699c5cfefac669391ff96f49952e5127182ac1",
@@ -11869,7 +11869,7 @@
           ],
           "fingerprint": "f2d2b3d53cc9647d5da42e1e527830a75fbf1b087c7d639fd9bc0795ff06cc69",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f2d2b3d53cc9647d5da42e1e527830a75fbf1b087c7d639fd9bc0795ff06cc69",
@@ -11938,7 +11938,7 @@
           ],
           "fingerprint": "5847f530a469180f1b9ce3c048e9e739d1864cd9deadd5639df4cd1afdc8663f",
           "firstObservedAt": "2026-10-29T21:12:33Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5847f530a469180f1b9ce3c048e9e739d1864cd9deadd5639df4cd1afdc8663f",
@@ -11994,6 +11994,75 @@
               }
             }
           }
+        },
+        "https://adsuploader.com/blog/weight-loss-ads-on-facebook": {
+          "url": "https://adsuploader.com/blog/weight-loss-ads-on-facebook",
+          "title": "Weight Loss Ads on Facebook: What Meta Allows and Rejects",
+          "publishedDate": "2026-10-31",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "9bfa8b2e337bcb6f14b304672f9d82cd167fad7e7e755d5497cdd46f174a347e",
+          "firstObservedAt": "2026-10-31T02:08:43Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "9bfa8b2e337bcb6f14b304672f9d82cd167fad7e7e755d5497cdd46f174a347e",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Meta’s Rules for Weight-Loss Ads on Facebook",
+                "summary": "Meta’s 2026 weight-loss ad rules cover the 18+ requirement, personal-attribute rejections, changes to before-and-after ads, GLP-1 gating, and compliant copy.",
+                "inputHash": "b002bce7dd1747caa7175f3995f3ec44bed658831b73930174f75680669e77ba",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Meta’s Rules for Weight-Loss Ads on Facebook",
+                    "inputHash": "b002bce7dd1747caa7175f3995f3ec44bed658831b73930174f75680669e77ba",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta’s 2026 weight-loss ad rules cover the 18+ requirement, personal-attribute rejections, changes to before-and-after ads, GLP-1 gating, and compliant copy.",
+                    "inputHash": "b002bce7dd1747caa7175f3995f3ec44bed658831b73930174f75680669e77ba",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Metaの減量広告に関する掲載ルール",
+                "summary": "2026年のFacebookにおける減量広告について、18歳以上のルール、個人属性に関する不承認、ビフォー・アフター表現の変更、GLP-1の掲載条件、準拠した広告文を扱います。",
+                "inputHash": "6134e6a3b1d18ec6ed93371378c88cd62497e7662d98b1ee68df2a20ef22b5fa",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Metaの減量広告に関する掲載ルール",
+                    "inputHash": "6134e6a3b1d18ec6ed93371378c88cd62497e7662d98b1ee68df2a20ef22b5fa",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "2026年のFacebookにおける減量広告について、18歳以上のルール、個人属性に関する不承認、ビフォー・アフター表現の変更、GLP-1の掲載条件、準拠した広告文を扱います。",
+                    "inputHash": "6134e6a3b1d18ec6ed93371378c88cd62497e7662d98b1ee68df2a20ef22b5fa",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -12003,7 +12072,7 @@
         "https://www.facebook.com/business/news/muse-image-for-businesses": {
           "url": "https://www.facebook.com/business/news/muse-image-for-businesses",
           "title": "8M+ Advertisers Use Meta's AI Creative Tools. They Just Got a Major Upgrade.",
-          "publishedDate": "2026-07-07",
+          "publishedDate": null,
           "updatedDate": null,
           "matchEvidence": [
             "discovered-via:jon-loomer-meta-ads"
@@ -12012,58 +12081,58 @@
           "publicationEvidence": [
             "jev:direct_impact"
           ],
-          "fingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
+          "fingerprint": "75f8d64deb7a8335bb227c4bffdf4c7343df701211aafda2c29584ea098084c5",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-10-27T12:55:38Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-            "sourceFingerprint": "d68562a558cf5800029b004075e0fc710b0206df6f7c3e8a87d7da5575bcd501",
+            "sourceFingerprint": "75f8d64deb7a8335bb227c4bffdf4c7343df701211aafda2c29584ea098084c5",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
                 "status": "machine",
-                "shortHeadline": "Meta AI Creative Tools Reach 8M+ Advertisers with Major Upgrade",
-                "summary": "Over 8 million advertisers are using Meta's AI creative tools, which have just received a major upgrade. The Muse Image from Meta Superintelligence Labs adds agentic reasoning to ad creative and introduces AI-powered room restyling, allowing shoppers to visualize products in their own spaces.",
-                "inputHash": "0cdcbf18960a5c05b1b73db8217385abdf5e163c76d0a7a9e66abd3213355a7a",
-                "generatedAt": "2026-09-05T08:40:34Z",
+                "shortHeadline": "Meta upgrades AI creative tools used by 8M+ advertisers",
+                "summary": "Muse Image from Meta Superintelligence Labs brings agentic reasoning to ad creative and AI-powered room restyling to help shoppers visualize products in their own spaces.",
+                "inputHash": "9e1022845fe0383b2e3ecc668ed990132f2b502be09bfb007a8a2639e709a559",
+                "generatedAt": "2026-10-31T02:08:43Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
                     "status": "machine",
-                    "value": "Meta AI Creative Tools Reach 8M+ Advertisers with Major Upgrade",
-                    "inputHash": "0cdcbf18960a5c05b1b73db8217385abdf5e163c76d0a7a9e66abd3213355a7a",
-                    "generatedAt": "2026-09-05T08:40:34Z",
+                    "value": "Meta upgrades AI creative tools used by 8M+ advertisers",
+                    "inputHash": "9e1022845fe0383b2e3ecc668ed990132f2b502be09bfb007a8a2639e709a559",
+                    "generatedAt": "2026-10-31T02:08:43Z",
                     "reviewedAt": null
                   },
                   "summary": {
                     "status": "machine",
-                    "value": "Over 8 million advertisers are using Meta's AI creative tools, which have just received a major upgrade. The Muse Image from Meta Superintelligence Labs adds agentic reasoning to ad creative and introduces AI-powered room restyling, allowing shoppers to visualize products in their own spaces.",
-                    "inputHash": "0cdcbf18960a5c05b1b73db8217385abdf5e163c76d0a7a9e66abd3213355a7a",
-                    "generatedAt": "2026-09-05T08:40:34Z",
+                    "value": "Muse Image from Meta Superintelligence Labs brings agentic reasoning to ad creative and AI-powered room restyling to help shoppers visualize products in their own spaces.",
+                    "inputHash": "9e1022845fe0383b2e3ecc668ed990132f2b502be09bfb007a8a2639e709a559",
+                    "generatedAt": "2026-10-31T02:08:43Z",
                     "reviewedAt": null
                   }
                 }
               },
               "ja": {
                 "status": "machine",
-                "shortHeadline": "Meta AIクリエイティブツール、800万人以上の広告主が利用、主要アップグレード実施",
-                "summary": "800万人以上の広告主がMetaのAIクリエイティブツールを使用しており、ツールは最近大幅にアップグレードされました。Meta Superintelligence LabsのMuse Imageは広告クリエイティブにエージェント推論を導入し、AI搭載の部屋リスタイリング機能で、購入者が自分の空間で製品を視覚化できるようにします。",
-                "inputHash": "92efbb65819dc5baf2c9abefce32f9f19dea422193e5b93fff7cd1fedf1281d9",
-                "generatedAt": "2026-09-05T08:40:34Z",
+                "shortHeadline": "800万人超の広告主が利用するMetaのAIツールが大幅更新",
+                "summary": "Meta Superintelligence LabsのMuse Imageは、広告クリエイティブにエージェント型推論を導入します。また、AIによる部屋の模様替え機能で、買い物客が商品を自分の空間に置いた様子をイメージできます。",
+                "inputHash": "86aa543e6b49d4fc8e6cf546de927f3974aba7f0fef26ed3f0f17abd2589e3b0",
+                "generatedAt": "2026-10-31T02:08:43Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
                     "status": "machine",
-                    "value": "Meta AIクリエイティブツール、800万人以上の広告主が利用、主要アップグレード実施",
-                    "inputHash": "92efbb65819dc5baf2c9abefce32f9f19dea422193e5b93fff7cd1fedf1281d9",
-                    "generatedAt": "2026-09-05T08:40:34Z",
+                    "value": "800万人超の広告主が利用するMetaのAIツールが大幅更新",
+                    "inputHash": "86aa543e6b49d4fc8e6cf546de927f3974aba7f0fef26ed3f0f17abd2589e3b0",
+                    "generatedAt": "2026-10-31T02:08:43Z",
                     "reviewedAt": null
                   },
                   "summary": {
                     "status": "machine",
-                    "value": "800万人以上の広告主がMetaのAIクリエイティブツールを使用しており、ツールは最近大幅にアップグレードされました。Meta Superintelligence LabsのMuse Imageは広告クリエイティブにエージェント推論を導入し、AI搭載の部屋リスタイリング機能で、購入者が自分の空間で製品を視覚化できるようにします。",
-                    "inputHash": "92efbb65819dc5baf2c9abefce32f9f19dea422193e5b93fff7cd1fedf1281d9",
-                    "generatedAt": "2026-09-05T08:40:34Z",
+                    "value": "Meta Superintelligence LabsのMuse Imageは、広告クリエイティブにエージェント型推論を導入します。また、AIによる部屋の模様替え機能で、買い物客が商品を自分の空間に置いた様子をイメージできます。",
+                    "inputHash": "86aa543e6b49d4fc8e6cf546de927f3974aba7f0fef26ed3f0f17abd2589e3b0",
+                    "generatedAt": "2026-10-31T02:08:43Z",
                     "reviewedAt": null
                   }
                 }
@@ -12085,7 +12154,7 @@
           ],
           "fingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-10-27T12:55:38Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
@@ -12156,7 +12225,7 @@
           ],
           "fingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-10-27T12:55:38Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
@@ -12370,7 +12439,7 @@
           ],
           "fingerprint": "87773f83abd0a8fb86ac6e3199be202b9e55d31b5d4e2b96b2210cf6fceb1618",
           "firstObservedAt": "2026-10-19T21:07:34Z",
-          "lastObservedAt": "2026-10-27T12:55:38Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "87773f83abd0a8fb86ac6e3199be202b9e55d31b5d4e2b96b2210cf6fceb1618",
@@ -12420,6 +12489,290 @@
                     "value": "Metaブランド構築サミットにおいて、広告主向けにAds Super Burst、First Impression Ads、拡張されたReels Trending Ads、そしてAggregated View Timeといった新機能が紹介されました。",
                     "inputHash": "4751c47a3b1fa283e99e53569dfb90877d3a2e916766ae521c5c85020ffabb6a",
                     "generatedAt": "2026-10-19T21:07:34Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.facebook.com/business/news/introducing-meta-one-plans-for-businesses": {
+          "url": "https://www.facebook.com/business/news/introducing-meta-one-plans-for-businesses",
+          "title": "Introducing Meta One plans for businesses",
+          "publishedDate": null,
+          "updatedDate": null,
+          "matchEvidence": [
+            "discovered-via:jon-loomer-meta-ads"
+          ],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "1231b6977cfc6c742d68a27ba005cbf7949bb4be8b89b13bdb3ed7ac21be0fbd",
+          "firstObservedAt": "2026-10-31T02:08:43Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "1231b6977cfc6c742d68a27ba005cbf7949bb4be8b89b13bdb3ed7ac21be0fbd",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Introducing Meta One plans for businesses",
+                "summary": "Meta One offers four bundle plans covering credibility, AI-powered customer conversations, and deeper insights for businesses.",
+                "inputHash": "14c32a0a3e851ce3b3780759d356946c8d9f1c2d1fde993983056156bf57b79e",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Introducing Meta One plans for businesses",
+                    "inputHash": "14c32a0a3e851ce3b3780759d356946c8d9f1c2d1fde993983056156bf57b79e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta One offers four bundle plans covering credibility, AI-powered customer conversations, and deeper insights for businesses.",
+                    "inputHash": "14c32a0a3e851ce3b3780759d356946c8d9f1c2d1fde993983056156bf57b79e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Meta Oneの企業向けプランを発表",
+                "summary": "Meta Oneは、企業向けに4つのバンドルプランを提供します。顧客が商品やサービスを見つけ、つながり、購入する場で、信頼の構築、AIによる顧客との会話の拡大、より深いインサイトの獲得を支援するとしています。",
+                "inputHash": "ef43d247d953867394b0170f52b7d723e2c6406f6af244e47a66f4538c12ab0c",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Meta Oneの企業向けプランを発表",
+                    "inputHash": "ef43d247d953867394b0170f52b7d723e2c6406f6af244e47a66f4538c12ab0c",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta Oneは、企業向けに4つのバンドルプランを提供します。顧客が商品やサービスを見つけ、つながり、購入する場で、信頼の構築、AIによる顧客との会話の拡大、より深いインサイトの獲得を支援するとしています。",
+                    "inputHash": "ef43d247d953867394b0170f52b7d723e2c6406f6af244e47a66f4538c12ab0c",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.facebook.com/business/news/three-new-ai-innovations-in-ads-ranking": {
+          "url": "https://www.facebook.com/business/news/three-new-ai-innovations-in-ads-ranking",
+          "title": "Inside the Three New AI innovations in Ads Ranking Improving your Ad Performance",
+          "publishedDate": "2026-10-28",
+          "updatedDate": null,
+          "matchEvidence": [
+            "discovered-via:social-media-today-meta-ads"
+          ],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "8f0f771dc4fdf6cdf7659ddf7f664006227689f21cda724fce4d4b753b115db2",
+          "firstObservedAt": "2026-10-31T02:08:43Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "8f0f771dc4fdf6cdf7659ddf7f664006227689f21cda724fce4d4b753b115db2",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Three AI innovations in Ads Ranking",
+                "summary": "Three AI innovations across ads systems are driving advertiser performance.",
+                "inputHash": "04153930d021f80a5fea23888faa9c1f291810d7112d3c162e487529f558e068",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Three AI innovations in Ads Ranking",
+                    "inputHash": "04153930d021f80a5fea23888faa9c1f291810d7112d3c162e487529f558e068",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Three AI innovations across ads systems are driving advertiser performance.",
+                    "inputHash": "04153930d021f80a5fea23888faa9c1f291810d7112d3c162e487529f558e068",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "広告ランキングの新たなAI技術3件",
+                "summary": "広告システム全体で広告主の成果向上につながっているという、3つのAI技術を紹介しています。",
+                "inputHash": "76cfffb21e10cb5807155f4c8713862d0a8e5babb3e639b99c61324ce603d87e",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "広告ランキングの新たなAI技術3件",
+                    "inputHash": "76cfffb21e10cb5807155f4c8713862d0a8e5babb3e639b99c61324ce603d87e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "広告システム全体で広告主の成果向上につながっているという、3つのAI技術を紹介しています。",
+                    "inputHash": "76cfffb21e10cb5807155f4c8713862d0a8e5babb3e639b99c61324ce603d87e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.facebook.com/business/news/how-metas-ads-system-matches-your-ad-to-the-right-person": {
+          "url": "https://www.facebook.com/business/news/how-metas-ads-system-matches-your-ad-to-the-right-person",
+          "title": "How Meta's Ads System Matches Your Ad to the Right Person at the Right Time",
+          "publishedDate": "2026-10-28",
+          "updatedDate": null,
+          "matchEvidence": [
+            "discovered-via:social-media-today-meta-ads"
+          ],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "9759afda47f94b4f1d1166da4a3b1e6b2354495f35078f51c59810e302a3c0da",
+          "firstObservedAt": "2026-10-31T02:08:43Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "9759afda47f94b4f1d1166da4a3b1e6b2354495f35078f51c59810e302a3c0da",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "How Meta’s ad system selects ads for each person",
+                "summary": "Learn how Meta’s ads system decides which ad each person sees and what decisions advertisers control to manage their campaigns.",
+                "inputHash": "e494b10ee425d830660be5ab206cdcaf485f0a1ae29947bea9b01013cbbc44bd",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "How Meta’s ad system selects ads for each person",
+                    "inputHash": "e494b10ee425d830660be5ab206cdcaf485f0a1ae29947bea9b01013cbbc44bd",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Learn how Meta’s ads system decides which ad each person sees and what decisions advertisers control to manage their campaigns.",
+                    "inputHash": "e494b10ee425d830660be5ab206cdcaf485f0a1ae29947bea9b01013cbbc44bd",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Meta広告システムの広告表示の仕組み",
+                "summary": "Metaの広告システムが各ユーザーに表示する広告をどのように決めるか、また広告主がキャンペーン管理のためにどのような判断を行えるかを紹介しています。",
+                "inputHash": "cb88c0b5a739b6d60c9587ef9781f33fde34e021e047d6a6e7a4eb9f4d38bf21",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Meta広告システムの広告表示の仕組み",
+                    "inputHash": "cb88c0b5a739b6d60c9587ef9781f33fde34e021e047d6a6e7a4eb9f4d38bf21",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Metaの広告システムが各ユーザーに表示する広告をどのように決めるか、また広告主がキャンペーン管理のためにどのような判断を行えるかを紹介しています。",
+                    "inputHash": "cb88c0b5a739b6d60c9587ef9781f33fde34e021e047d6a6e7a4eb9f4d38bf21",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.facebook.com/business/news/you-dont-beat-the-auction-you-brief-it": {
+          "url": "https://www.facebook.com/business/news/you-dont-beat-the-auction-you-brief-it",
+          "title": "Peak Season 2026: You Don't Beat The Auction. You Brief It.",
+          "publishedDate": null,
+          "updatedDate": null,
+          "matchEvidence": [
+            "discovered-via:social-media-today-meta-ads"
+          ],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "92b92b5c34f6a014f2991b9885680929bef92d735391d31437247840839b9cc1",
+          "firstObservedAt": "2026-10-31T02:08:43Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "92b92b5c34f6a014f2991b9885680929bef92d735391d31437247840839b9cc1",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Preparing Meta ad campaigns for peak season",
+                "summary": "The content covers optimisation goals, bidding and attribution settings, and fewer disruptive account changes for Meta ad campaigns during peak season.",
+                "inputHash": "65c0eae410df9f1b38d39042d6fefb6b90f1f1b96a13c57fcc202b2bddfc8928",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Preparing Meta ad campaigns for peak season",
+                    "inputHash": "65c0eae410df9f1b38d39042d6fefb6b90f1f1b96a13c57fcc202b2bddfc8928",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "The content covers optimisation goals, bidding and attribution settings, and fewer disruptive account changes for Meta ad campaigns during peak season.",
+                    "inputHash": "65c0eae410df9f1b38d39042d6fefb6b90f1f1b96a13c57fcc202b2bddfc8928",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "ピークシーズン2026：オークションに情報を伝える",
+                "summary": "ピークシーズンに向けたMeta広告キャンペーンの準備について、明確な最適化目標、入札とアトリビューションの設定、アカウント変更を抑えることを解説します。",
+                "inputHash": "9de9f21a2a414df8ce6ce7a71b583aa46d58fdbc2f3e434fb300802e4ac838bc",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "ピークシーズン2026：オークションに情報を伝える",
+                    "inputHash": "9de9f21a2a414df8ce6ce7a71b583aa46d58fdbc2f3e434fb300802e4ac838bc",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "ピークシーズンに向けたMeta広告キャンペーンの準備について、明確な最適化目標、入札とアトリビューションの設定、アカウント変更を抑えることを解説します。",
+                    "inputHash": "9de9f21a2a414df8ce6ce7a71b583aa46d58fdbc2f3e434fb300802e4ac838bc",
+                    "generatedAt": "2026-10-31T02:08:43Z",
                     "reviewedAt": null
                   }
                 }
@@ -12588,7 +12941,7 @@
           ],
           "fingerprint": "86864d2e57f05735882cdf5c485d9d08652ed4d6f0e5cd731311eaae9baaf04e",
           "firstObservedAt": "2026-10-22T20:11:32Z",
-          "lastObservedAt": "2026-10-29T21:12:33Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "86864d2e57f05735882cdf5c485d9d08652ed4d6f0e5cd731311eaae9baaf04e",
@@ -12646,20 +12999,812 @@
           }
         }
       }
+    },
+    "meta-business-help-discovered": {
+      "relevanceRevision": "meta-business-help-discovered-v1",
+      "items": {
+        "https://www.facebook.com/business/help/1546753450586085": {
+          "url": "https://www.facebook.com/business/help/1546753450586085",
+          "title": "What's new in placement settings in Meta Ads Manager",
+          "publishedDate": null,
+          "updatedDate": null,
+          "matchEvidence": [
+            "discovered-via:jon-loomer-meta-ads",
+            "discovered-via:social-media-today-meta-ads"
+          ],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "72fe3824bad4d12b0792796a4772781b3fd8bb5f28b9bd8cd82db9c8564e0622",
+          "firstObservedAt": "2026-10-31T02:08:43Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "72fe3824bad4d12b0792796a4772781b3fd8bb5f28b9bd8cd82db9c8564e0622",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Updates to placement settings in Meta Ads Manager",
+                "summary": "Meta’s delivery system can allocate budget across placements based on where they’re likely to perform best.",
+                "inputHash": "6ee82f086ce04b44d534afa841f009d0ae9565db4fe05021a6e4c7ba6cdf850e",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Updates to placement settings in Meta Ads Manager",
+                    "inputHash": "6ee82f086ce04b44d534afa841f009d0ae9565db4fe05021a6e4c7ba6cdf850e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta’s delivery system can allocate budget across placements based on where they’re likely to perform best.",
+                    "inputHash": "6ee82f086ce04b44d534afa841f009d0ae9565db4fe05021a6e4c7ba6cdf850e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Meta広告マネージャの配置設定に更新",
+                "summary": "配置設定の更新により、Metaの配信システムが、より良い成果が見込まれる配置先に基づいて予算を配分できるようになります。",
+                "inputHash": "4650d21fe3e81ddd5b07c0ec8275b70d70a98b511df8ebc6c839d7c8adc88e74",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Meta広告マネージャの配置設定に更新",
+                    "inputHash": "4650d21fe3e81ddd5b07c0ec8275b70d70a98b511df8ebc6c839d7c8adc88e74",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "配置設定の更新により、Metaの配信システムが、より良い成果が見込まれる配置先に基づいて予算を配分できるようになります。",
+                    "inputHash": "4650d21fe3e81ddd5b07c0ec8275b70d70a98b511df8ebc6c839d7c8adc88e74",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.facebook.com/business/help/1740191093676743": {
+          "url": "https://www.facebook.com/business/help/1740191093676743",
+          "title": "Create a campaign to acquire new customers",
+          "publishedDate": null,
+          "updatedDate": null,
+          "matchEvidence": [
+            "discovered-via:jon-loomer-meta-ads"
+          ],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "dda0b96cd0050d7b9c296233601ee97e4dc501c2b4ebd28fefff95f977578fbe",
+          "firstObservedAt": "2026-10-31T02:08:43Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "dda0b96cd0050d7b9c296233601ee97e4dc501c2b4ebd28fefff95f977578fbe",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Customer lifecycle strategy for new customer acquisition",
+                "summary": "Customer lifecycle strategy is a tool for Sales objective advertisers who want to acquire new customers.",
+                "inputHash": "d2dfea1d422b133b267e76dbe8f547535f41fa773f914984a829fb750366f801",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Customer lifecycle strategy for new customer acquisition",
+                    "inputHash": "d2dfea1d422b133b267e76dbe8f547535f41fa773f914984a829fb750366f801",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Customer lifecycle strategy is a tool for Sales objective advertisers who want to acquire new customers.",
+                    "inputHash": "d2dfea1d422b133b267e76dbe8f547535f41fa773f914984a829fb750366f801",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "新規顧客獲得キャンペーンの作成",
+                "summary": "顧客ライフサイクル戦略は、新規顧客の獲得を目指す「Sales」目的の広告主向けツールです。",
+                "inputHash": "a4580c48dc8ee589095115f7352c33fc8e3004a209dcbea71e3314da6ad58c8e",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "新規顧客獲得キャンペーンの作成",
+                    "inputHash": "a4580c48dc8ee589095115f7352c33fc8e3004a209dcbea71e3314da6ad58c8e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "顧客ライフサイクル戦略は、新規顧客の獲得を目指す「Sales」目的の広告主向けツールです。",
+                    "inputHash": "a4580c48dc8ee589095115f7352c33fc8e3004a209dcbea71e3314da6ad58c8e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.facebook.com/business/help/867613249320005": {
+          "url": "https://www.facebook.com/business/help/867613249320005",
+          "title": "About Conversion Events for Lead Ads with Instant Form",
+          "publishedDate": null,
+          "updatedDate": null,
+          "matchEvidence": [
+            "discovered-via:jon-loomer-meta-ads"
+          ],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "572d7b9ceebdccc05974b2154aee3caa8191f074de516482ed71d3f8196855f9",
+          "firstObservedAt": "2026-10-31T02:08:43Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "572d7b9ceebdccc05974b2154aee3caa8191f074de516482ed71d3f8196855f9",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Conversion Events for Instant Form Lead Ads",
+                "summary": "Conversion events for lead ads with instant forms can help measure and improve the quality of leads generated across Meta technologies.",
+                "inputHash": "f9dd80ced9e7a951ed541da4e052647ced978be02a74cbd0a1b64bb680f91bb6",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Conversion Events for Instant Form Lead Ads",
+                    "inputHash": "f9dd80ced9e7a951ed541da4e052647ced978be02a74cbd0a1b64bb680f91bb6",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Conversion events for lead ads with instant forms can help measure and improve the quality of leads generated across Meta technologies.",
+                    "inputHash": "f9dd80ced9e7a951ed541da4e052647ced978be02a74cbd0a1b64bb680f91bb6",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "インスタントフォームのリード広告におけるコンバージョンイベント",
+                "summary": "インスタントフォームを使ったリード広告のコンバージョンイベントは、Metaの各種テクノロジーで獲得したリードの質を測定し、改善するのに役立ちます。",
+                "inputHash": "b8b753f13363bdc052dab02d891fb3edf9d66b0277991c3f49d794bc3593623c",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "インスタントフォームのリード広告におけるコンバージョンイベント",
+                    "inputHash": "b8b753f13363bdc052dab02d891fb3edf9d66b0277991c3f49d794bc3593623c",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "インスタントフォームを使ったリード広告のコンバージョンイベントは、Metaの各種テクノロジーで獲得したリードの質を測定し、改善するのに役立ちます。",
+                    "inputHash": "b8b753f13363bdc052dab02d891fb3edf9d66b0277991c3f49d794bc3593623c",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.facebook.com/business/help/1292598407460746": {
+          "url": "https://www.facebook.com/business/help/1292598407460746",
+          "title": "About Automatic Events",
+          "publishedDate": null,
+          "updatedDate": null,
+          "matchEvidence": [
+            "discovered-via:jon-loomer-meta-ads"
+          ],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "d03b347cd691b93841ccfc9132960e4bf193390ac5123db07761cd53911973b1",
+          "firstObservedAt": "2026-10-31T02:08:43Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "d03b347cd691b93841ccfc9132960e4bf193390ac5123db07761cd53911973b1",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "About Automatic Events",
+                "summary": "Automatic events are actions your Meta Pixel receives without requiring you to add additional code.",
+                "inputHash": "76ef3edf1f6f8f5aacfaaa912cb4f37ff16ab985843f9257da036c1e0063b39e",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "About Automatic Events",
+                    "inputHash": "76ef3edf1f6f8f5aacfaaa912cb4f37ff16ab985843f9257da036c1e0063b39e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Automatic events are actions your Meta Pixel receives without requiring you to add additional code.",
+                    "inputHash": "76ef3edf1f6f8f5aacfaaa912cb4f37ff16ab985843f9257da036c1e0063b39e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "自動イベントについて",
+                "summary": "自動イベントとは、追加のコードを記述しなくてもMeta Pixelが受信するアクションです。",
+                "inputHash": "280c767b190f336e5fd2457948ff4d56e9aa224298314987825a73f1bcefdb85",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "自動イベントについて",
+                    "inputHash": "280c767b190f336e5fd2457948ff4d56e9aa224298314987825a73f1bcefdb85",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "自動イベントとは、追加のコードを記述しなくてもMeta Pixelが受信するアクションです。",
+                    "inputHash": "280c767b190f336e5fd2457948ff4d56e9aa224298314987825a73f1bcefdb85",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.facebook.com/business/help/555177831677798": {
+          "url": "https://www.facebook.com/business/help/555177831677798",
+          "title": "Set Up Automatic Events in Meta Events Manager",
+          "publishedDate": null,
+          "updatedDate": null,
+          "matchEvidence": [
+            "discovered-via:jon-loomer-meta-ads"
+          ],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "ad575158846bcf435270b1451363dfc293656a6c58a5f5d0e42611b7049b0f6b",
+          "firstObservedAt": "2026-10-31T02:08:43Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "ad575158846bcf435270b1451363dfc293656a6c58a5f5d0e42611b7049b0f6b",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Manage Automatic Events in Events Manager",
+                "summary": "Meta Pixel detects automatic events on your website. You can turn these events on or off in Events Manager.",
+                "inputHash": "2805ec4bce244cbd8ac7be0295e58b5a5ec4ed2ebb8028609f104c4e477551b8",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Manage Automatic Events in Events Manager",
+                    "inputHash": "2805ec4bce244cbd8ac7be0295e58b5a5ec4ed2ebb8028609f104c4e477551b8",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta Pixel detects automatic events on your website. You can turn these events on or off in Events Manager.",
+                    "inputHash": "2805ec4bce244cbd8ac7be0295e58b5a5ec4ed2ebb8028609f104c4e477551b8",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Metaイベントマネージャで自動イベントを設定",
+                "summary": "Metaピクセルがウェブサイト上で検出する自動イベントは、イベントマネージャでオン・オフを切り替えられます。設定方法を案内しています。",
+                "inputHash": "3f1a8dd49b411282bcd8ffe283d02398d73b4693cea91089ec8ba4edeb956bf1",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Metaイベントマネージャで自動イベントを設定",
+                    "inputHash": "3f1a8dd49b411282bcd8ffe283d02398d73b4693cea91089ec8ba4edeb956bf1",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Metaピクセルがウェブサイト上で検出する自動イベントは、イベントマネージャでオン・オフを切り替えられます。設定方法を案内しています。",
+                    "inputHash": "3f1a8dd49b411282bcd8ffe283d02398d73b4693cea91089ec8ba4edeb956bf1",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.facebook.com/business/help/1521407946215030": {
+          "url": "https://www.facebook.com/business/help/1521407946215030",
+          "title": "About custom attribution",
+          "publishedDate": null,
+          "updatedDate": null,
+          "matchEvidence": [
+            "discovered-via:jon-loomer-meta-ads"
+          ],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "c31b0550d860c88bbcf089e13ebb460e6ba205c80991c87892f8c76f09076276",
+          "firstObservedAt": "2026-10-31T02:08:43Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "c31b0550d860c88bbcf089e13ebb460e6ba205c80991c87892f8c76f09076276",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Custom attribution",
+                "summary": "Information about custom attribution for advertising on Meta technologies.",
+                "inputHash": "d2b3973202e86831aceb28244a4bfecda3349371a7912324be3f7996bfbc1717",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Custom attribution",
+                    "inputHash": "d2b3973202e86831aceb28244a4bfecda3349371a7912324be3f7996bfbc1717",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Information about custom attribution for advertising on Meta technologies.",
+                    "inputHash": "d2b3973202e86831aceb28244a4bfecda3349371a7912324be3f7996bfbc1717",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "カスタムアトリビューションについて",
+                "summary": "Metaのテクノロジー上での広告におけるカスタムアトリビューションについて、詳しく知るための情報です。",
+                "inputHash": "e889b191fca5930290af6e26525a52b8b4b0d5dfcabc4b3389bb38d60f7ad5a3",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "カスタムアトリビューションについて",
+                    "inputHash": "e889b191fca5930290af6e26525a52b8b4b0d5dfcabc4b3389bb38d60f7ad5a3",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Metaのテクノロジー上での広告におけるカスタムアトリビューションについて、詳しく知るための情報です。",
+                    "inputHash": "e889b191fca5930290af6e26525a52b8b4b0d5dfcabc4b3389bb38d60f7ad5a3",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.facebook.com/business/help/1011010098188443": {
+          "url": "https://www.facebook.com/business/help/1011010098188443",
+          "title": "About Exclusion-Only Custom Audiences",
+          "publishedDate": null,
+          "updatedDate": null,
+          "matchEvidence": [
+            "discovered-via:jon-loomer-meta-ads"
+          ],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "fb4a1a125ac4feef548401eca2aadbaa3c573e0203c2b4edb3c30ad7afc35ec4",
+          "firstObservedAt": "2026-10-31T02:08:43Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "fb4a1a125ac4feef548401eca2aadbaa3c573e0203c2b4edb3c30ad7afc35ec4",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "About Exclusion-Only Custom Audiences",
+                "summary": "Learn what exclusion-only custom audiences are, how they work, and how to use them to exclude specific groups from seeing your ads on Meta technologies.",
+                "inputHash": "bf1d5a77992ac3d8d8d90eca8b863a8c70776d736234f60698fa2e924f0770c6",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "About Exclusion-Only Custom Audiences",
+                    "inputHash": "bf1d5a77992ac3d8d8d90eca8b863a8c70776d736234f60698fa2e924f0770c6",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Learn what exclusion-only custom audiences are, how they work, and how to use them to exclude specific groups from seeing your ads on Meta technologies.",
+                    "inputHash": "bf1d5a77992ac3d8d8d90eca8b863a8c70776d736234f60698fa2e924f0770c6",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "除外専用カスタムオーディエンスについて",
+                "summary": "除外専用カスタムオーディエンスとは何か、どのように機能するか、Metaの各サービスで特定のグループに広告が表示されないよう除外する方法を紹介します。",
+                "inputHash": "d637b869d9fa2e6d0ae06cf5fb62446bbac47706668ac3c925bd631972b4740e",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "除外専用カスタムオーディエンスについて",
+                    "inputHash": "d637b869d9fa2e6d0ae06cf5fb62446bbac47706668ac3c925bd631972b4740e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "除外専用カスタムオーディエンスとは何か、どのように機能するか、Metaの各サービスで特定のグループに広告が表示されないよう除外する方法を紹介します。",
+                    "inputHash": "d637b869d9fa2e6d0ae06cf5fb62446bbac47706668ac3c925bd631972b4740e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.facebook.com/business/help/1270229187942739": {
+          "url": "https://www.facebook.com/business/help/1270229187942739",
+          "title": "About Ads Creative Studio",
+          "publishedDate": null,
+          "updatedDate": null,
+          "matchEvidence": [
+            "discovered-via:jon-loomer-meta-ads"
+          ],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "b8086d6224e490eab9e9b1014a6a016091faf468a1a64f41191ed5eecb72fa50",
+          "firstObservedAt": "2026-10-31T02:08:43Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "b8086d6224e490eab9e9b1014a6a016091faf468a1a64f41191ed5eecb72fa50",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "About Ads Creative Studio",
+                "summary": "Ads Creative Studio is a creative exploration tool that gives you access to new AI-powered creative performance and insights capabilities.",
+                "inputHash": "435721dcfd4a83fbee995ca477dba6888cbc16629e2945c782e964e4f383a036",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "About Ads Creative Studio",
+                    "inputHash": "435721dcfd4a83fbee995ca477dba6888cbc16629e2945c782e964e4f383a036",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Ads Creative Studio is a creative exploration tool that gives you access to new AI-powered creative performance and insights capabilities.",
+                    "inputHash": "435721dcfd4a83fbee995ca477dba6888cbc16629e2945c782e964e4f383a036",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Ads Creative Studioについて",
+                "summary": "クリエイティブ探索ツールについて紹介しています。新しいAI搭載のクリエイティブパフォーマンス機能やインサイト機能を利用できます。",
+                "inputHash": "1710609504cf0ae23e6a98ac6652814fed641072762f01716d5999b319c74a2e",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Ads Creative Studioについて",
+                    "inputHash": "1710609504cf0ae23e6a98ac6652814fed641072762f01716d5999b319c74a2e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "クリエイティブ探索ツールについて紹介しています。新しいAI搭載のクリエイティブパフォーマンス機能やインサイト機能を利用できます。",
+                    "inputHash": "1710609504cf0ae23e6a98ac6652814fed641072762f01716d5999b319c74a2e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.facebook.com/business/help/1010479435004531": {
+          "url": "https://www.facebook.com/business/help/1010479435004531",
+          "title": "About AI info on ads created or edited with generative AI tools",
+          "publishedDate": null,
+          "updatedDate": null,
+          "matchEvidence": [
+            "discovered-via:jon-loomer-meta-ads"
+          ],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "ffc209011eca15b0210ee05012838a91abfe71497a9fb5d50d82cee6479bd127",
+          "firstObservedAt": "2026-10-31T02:08:43Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "ffc209011eca15b0210ee05012838a91abfe71497a9fb5d50d82cee6479bd127",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "AI info for ads created or edited with generative AI",
+                "summary": "Meta provides transparency information about ads created or edited with generative AI tools.",
+                "inputHash": "3f957c8659532557a1183dbf05d6f5d07cbc90f7027ef8d4f525bc115736d1e7",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "AI info for ads created or edited with generative AI",
+                    "inputHash": "3f957c8659532557a1183dbf05d6f5d07cbc90f7027ef8d4f525bc115736d1e7",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta provides transparency information about ads created or edited with generative AI tools.",
+                    "inputHash": "3f957c8659532557a1183dbf05d6f5d07cbc90f7027ef8d4f525bc115736d1e7",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "生成AIで作成・編集された広告のAI情報",
+                "summary": "Metaの、生成AIツールで作成または編集された広告に関する透明性情報です。",
+                "inputHash": "b7bfb6aa2f784760d6a2f9f419185665a8d31641afe661b94f630b7b9d07709b",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "生成AIで作成・編集された広告のAI情報",
+                    "inputHash": "b7bfb6aa2f784760d6a2f9f419185665a8d31641afe661b94f630b7b9d07709b",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Metaの、生成AIツールで作成または編集された広告に関する透明性情報です。",
+                    "inputHash": "b7bfb6aa2f784760d6a2f9f419185665a8d31641afe661b94f630b7b9d07709b",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.facebook.com/business/help/1423851372208214": {
+          "url": "https://www.facebook.com/business/help/1423851372208214",
+          "title": "Set Up a Creative Test in Meta Ads Manager",
+          "publishedDate": null,
+          "updatedDate": null,
+          "matchEvidence": [
+            "discovered-via:jon-loomer-meta-ads"
+          ],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "510778d27a551d6a20f59e2b4bd262e71da71cd5c7aa89401059d756a506c645",
+          "firstObservedAt": "2026-10-31T02:08:43Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "510778d27a551d6a20f59e2b4bd262e71da71cd5c7aa89401059d756a506c645",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Creative Test in Meta Ads Manager",
+                "summary": "Learn how to create a creative test in Meta Ads Manager.",
+                "inputHash": "b40599acbe3b5165c0f6b409ed40c7d4673803e263a1a423770f888a70952b7d",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Creative Test in Meta Ads Manager",
+                    "inputHash": "b40599acbe3b5165c0f6b409ed40c7d4673803e263a1a423770f888a70952b7d",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Learn how to create a creative test in Meta Ads Manager.",
+                    "inputHash": "b40599acbe3b5165c0f6b409ed40c7d4673803e263a1a423770f888a70952b7d",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Meta Ads Managerでクリエイティブテストを設定",
+                "summary": "Meta Ads Managerで広告クリエイティブのテストを作成し、クリエイティブの最適化に役立てる方法を紹介しています。",
+                "inputHash": "798dab60b9db47b69352100915a0d0ab308631689b52d85e4128c726ec05223e",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Meta Ads Managerでクリエイティブテストを設定",
+                    "inputHash": "798dab60b9db47b69352100915a0d0ab308631689b52d85e4128c726ec05223e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta Ads Managerで広告クリエイティブのテストを作成し、クリエイティブの最適化に役立てる方法を紹介しています。",
+                    "inputHash": "798dab60b9db47b69352100915a0d0ab308631689b52d85e4128c726ec05223e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.facebook.com/business/help/1822387965412520": {
+          "url": "https://www.facebook.com/business/help/1822387965412520",
+          "title": "View Creative Performance for Individual Media Assets in Your Ad",
+          "publishedDate": null,
+          "updatedDate": null,
+          "matchEvidence": [
+            "discovered-via:social-media-today-meta-ads"
+          ],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "dca1e1809d7e0b09329456acdb173c4364e656ee1a193a6916ad4fb9a79acf34",
+          "firstObservedAt": "2026-10-31T02:08:43Z",
+          "lastObservedAt": "2026-10-31T02:08:43Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "dca1e1809d7e0b09329456acdb173c4364e656ee1a193a6916ad4fb9a79acf34",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "View Performance for Individual Ad Assets",
+                "summary": "Learn how to view creative performance results for individual media assets in your ad in Meta Ads Manager.",
+                "inputHash": "3920981305836743656659d07b7805b2b02e2bc1b340c2e35447e4a8103b0eba",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "View Performance for Individual Ad Assets",
+                    "inputHash": "3920981305836743656659d07b7805b2b02e2bc1b340c2e35447e4a8103b0eba",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Learn how to view creative performance results for individual media assets in your ad in Meta Ads Manager.",
+                    "inputHash": "3920981305836743656659d07b7805b2b02e2bc1b340c2e35447e4a8103b0eba",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "広告内の個別メディア素材の成果確認",
+                "summary": "Meta広告マネージャで、広告内の個々のメディア素材についてクリエイティブのパフォーマンス結果を確認する方法を紹介します。",
+                "inputHash": "2024c3daf31532915d965bdbabb4c481c1be9bfe96e03f81bef553a13b8a4d4e",
+                "generatedAt": "2026-10-31T02:08:43Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "広告内の個別メディア素材の成果確認",
+                    "inputHash": "2024c3daf31532915d965bdbabb4c481c1be9bfe96e03f81bef553a13b8a4d4e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta広告マネージャで、広告内の個々のメディア素材についてクリエイティブのパフォーマンス結果を確認する方法を紹介します。",
+                    "inputHash": "2024c3daf31532915d965bdbabb4c481c1be9bfe96e03f81bef553a13b8a4d4e",
+                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "articlePageScans": {
     "social-media-today-meta-ads": {
       "0b64bffab387de94ff341323304e0ea738d49ce3777fc6b806647e6f26982096": "2026-10-29T21:12:33Z",
-      "2b4ad31ba2ed24e757b4b82df278683e139be57a63f4157499f4bc1e114f5667": "2026-10-29T21:12:33Z",
-      "e7c986e1b830956266b419a7ef1b95ed749879a7287247ab6f8ca25d8a67761d": "2026-10-29T21:12:33Z",
-      "fca0a7486084094cd57a2dceb87cc0a9ac592af9e4804dbe703b05d73771f7a3": "2026-10-29T21:12:33Z",
-      "0164cf04f7da2a93f26bd4cb4788cafe7e0bb492b56c5cdb2022a53511fa042b": "2026-10-29T21:12:33Z",
-      "120c8da0548d2b1c0fc0038a6c4f28e96a81d39e702b876abfe1d3624cf95974": "2026-10-29T21:12:33Z",
+      "2b4ad31ba2ed24e757b4b82df278683e139be57a63f4157499f4bc1e114f5667": "2026-10-31T02:08:43Z",
+      "e7c986e1b830956266b419a7ef1b95ed749879a7287247ab6f8ca25d8a67761d": "2026-10-31T02:08:43Z",
+      "fca0a7486084094cd57a2dceb87cc0a9ac592af9e4804dbe703b05d73771f7a3": "2026-10-31T02:08:43Z",
+      "0164cf04f7da2a93f26bd4cb4788cafe7e0bb492b56c5cdb2022a53511fa042b": "2026-10-31T02:08:43Z",
+      "120c8da0548d2b1c0fc0038a6c4f28e96a81d39e702b876abfe1d3624cf95974": "2026-10-31T02:08:43Z",
       "5274801103e3156977240e72a6505434c0c68386de467a8b5692b4021d1cd6dd": "2026-10-29T21:12:33Z",
       "d627aced3e78adb33d91a3db500af1136912bfb6b35b4a1db5839247cfd86b9b": "2026-10-29T21:12:33Z",
       "2e330c9044463a689d10385a590136418f3bd02bb2220fe0c20866b85005fb97": "2026-10-29T21:12:33Z",
-      "19fc12073292001ce3753df4c3d368d76a1df617c11d5de1647add8ec60e7897": "2026-10-29T21:12:33Z"
+      "19fc12073292001ce3753df4c3d368d76a1df617c11d5de1647add8ec60e7897": "2026-10-29T21:12:33Z",
+      "6d5e300a8f541b45baadc7c5f95923b84c8537edfbed95f9daefdfe10ef59d4d": "2026-10-31T02:08:43Z",
+      "49e0764267fe8be8bbdfea1f5661474fe13d201d83d906ef5679cba3620cda80": "2026-10-31T02:08:43Z",
+      "e40bb82517038e8b08fda33f5da8ae211913c59bb2aa57a20dfbf0671070b254": "2026-10-31T02:08:43Z",
+      "57729ae6c2f7c29b5e03400770dd7c385112e432befa2f3562332b6c01c84d28": "2026-10-31T02:08:43Z",
+      "260c65bd6c51171baeac93a1d342f2c06de494ad2d71a25b54dd9bbad168afa1": "2026-10-31T02:08:43Z"
     },
     "jon-loomer-meta-ads": {
       "c02865c594cb77e7f91e237135e0e966a0795d5bf0854ee6c000a5399ae778a8": "2026-10-29T21:12:33Z",
@@ -12671,7 +13816,17 @@
       "b81c6f90747b72ed131032630e293d040349f11fe08ae271f87636a732a68779": "2026-10-29T21:12:33Z",
       "f8db73d840c221fd2a9bd375a2f82e7259299c9082d00f4b833f2c6582e415a8": "2026-10-29T21:12:33Z",
       "2e2dd94c3cda6be160162fdf7938b65c022985834e946f6ac316371fe628fe4f": "2026-10-29T21:12:33Z",
-      "dda4539bea31d6357947139ea5bbc9a8d0770de8153c00262ad087cb95b59c25": "2026-10-29T21:12:33Z"
+      "dda4539bea31d6357947139ea5bbc9a8d0770de8153c00262ad087cb95b59c25": "2026-10-29T21:12:33Z",
+      "01b6c0d98d5c0170726bd3f8ed40bb6d6188d5375170008e58e5961787833d8b": "2026-10-31T02:08:43Z",
+      "3d8a86c0dddc0fc4aab1cc95490df0f81fa48f94ff1c807444b0ac4438494be0": "2026-10-31T02:08:43Z",
+      "973f5c8f453a1d12cef6de78edb4537cd0db01b2455d78f79309640bebd63c41": "2026-10-31T02:08:43Z",
+      "68734a1b073f701865d92d1bc95b491ad84f58668dfcecba3d7fe3c4446bba90": "2026-10-31T02:08:43Z",
+      "a78fcc15f39c8b2632a9bc7634fa156e01a46ad3ae8c01a58369bf83a7f341de": "2026-10-31T02:08:43Z",
+      "c70ef957ec35e7936dbc66e6d2aa4d461f5a722cf80a9a5021bbceb29d517132": "2026-10-31T02:08:43Z",
+      "e3ac37234dddc21d25845b6003c04317cc136d160785b6939f27a5ce3c19c58a": "2026-10-31T02:08:43Z",
+      "251851cc5714019fa1eeff587f95d49f80bf814dd176e3ae16b96c454f139cad": "2026-10-31T02:08:43Z",
+      "159f96ccfcc274969c8d7dfadd4cb8711e77dabb9713d492816a0fae84648439": "2026-10-31T02:08:43Z",
+      "8db615c72dc35571a643ddab5657aaf441e1107955847176b6784285b2f89128": "2026-10-31T02:08:43Z"
     }
   },
   "presentationRetryQueue": {

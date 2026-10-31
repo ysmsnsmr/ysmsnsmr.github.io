@@ -210,6 +210,30 @@
         "allowedPathPrefix": "/blog/post/",
         "maxLinksPerSourceItem": 5
       }
+    },
+    {
+      "id": "meta-business-help-discovered",
+      "name": "Meta Business Help Center",
+      "classification": "official",
+      "sourceUrl": "https://www.facebook.com/business/help/",
+      "parser": "meta_business_help_html",
+      "expectedContentTypes": ["text/html"],
+      "contentLanguage": "en",
+      "platforms": ["Meta Ads"],
+      "platformIds": ["meta-ads"],
+      "relevanceRevision": "meta-business-help-discovered-v1",
+      "transport": {
+        "allowedFetchHosts": ["www.facebook.com"],
+        "allowedContentHosts": ["www.facebook.com"],
+        "maxResponseBytes": 1048576,
+        "maxRedirects": 3,
+        "maxItems": 20
+      },
+      "discovery": {
+        "fromSourceIds": ["jon-loomer-meta-ads", "social-media-today-meta-ads"],
+        "allowedPathPrefix": "/business/help/",
+        "maxLinksPerSourceItem": 10
+      }
     }
   ]
 }
