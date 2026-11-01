@@ -17,6 +17,7 @@ class CloudflareBuildTest(unittest.TestCase):
             self.assertEqual(names, {
                 "404.html", "_headers", "meta-ads-updates/index.html", "meta-ads-updates/detail.html",
                 "meta-ads-updates/ja/index.html", "meta-ads-updates/ja/detail.html",
+                "meta-ads-updates/tags.html", "meta-ads-updates/ja/tags.html", "meta-ads-updates/tag-catalog.js", "meta-ads-updates/tags.js",
                 "meta-ads-updates/style.css", "meta-ads-updates/favorites.js",
                 "meta-ads-updates/localized-feed.js", "meta-ads-updates/localized-detail.js",
                 "meta-ads-updates/personal-feed.json", "meta-ads-updates/demo-latest.json",

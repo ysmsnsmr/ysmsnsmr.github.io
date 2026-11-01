@@ -12,6 +12,8 @@
 - Meta Business Help Center — 同じ2媒体から見つかった `/business/help/数字` 形式の公式資料を追加取得
 - Meta for Developers Blog — 同じ2媒体のRSS本文・記事ページから見つかった `developers.facebook.com/blog/post/YYYY/MM/DD/<slug>/` 形式だけを追加取得。Ads Uploader記事ページの巡回は行わない
 
+TOPの主要タグとタグ一覧は `meta-ads-updates/tag-catalog.js` の固定リストから表示します。公開中の記事の原文タイトルと利用可能な英日見出しだけに照合するため、新しいAI呼び出しや本文保存は行いません。件数は現在の公開フィードのみが対象で、表記揺れや見出しに製品名がない記事は漏れる場合があります。タグの追加・修正時は検索精度と日英ラベル、Cloudflare配信の表示を確認します。
+
 Search Engine Land Meta RSSは、2026-08-30にGitHub ActionsでHTTP 403が繰り返し再現したため一時停止しています。安定した自動取得を確認できるまで再導入しません。
 
 Meta Business SDK Releases（Node.js）の取得は利用頻度が低いため停止中です。設定の `fetchEnabled: false` により通常収集でAPIへアクセスせず、再seedも受け付けません。取得済み項目は従来の鮮度・保存期間に従って保持し、期限後は表示されなくなります。実行ログの `fetch_enabled=false` で停止状態を確認できます。
