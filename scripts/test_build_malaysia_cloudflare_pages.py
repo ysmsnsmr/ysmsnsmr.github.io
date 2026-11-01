@@ -11,13 +11,13 @@ class MalaysiaCloudflareBuildTests(unittest.TestCase):
             root = Path(temporary)
             source = root / "source"
             source.mkdir()
-            for name in ("index.html", "location-map.js", "2026-10-28.html", "2026-10-28.md", "private.json"):
+            for name in ("index.html", "location-map.js", "daily-page.js", "2026-10-28.html", "2026-10-28.md", "private.json"):
                 (source / name).write_text(name, encoding="utf-8")
             output = root / "output"
-            self.assertEqual(mirror.build(source, output), 4)
+            self.assertEqual(mirror.build(source, output), 5)
             target = output / "news" / "malaysia"
             self.assertEqual({path.name for path in target.iterdir()},
-                             {"index.html", "location-map.js", "2026-10-28.html", "2026-10-28.md"})
+                             {"index.html", "location-map.js", "daily-page.js", "2026-10-28.html", "2026-10-28.md"})
             self.assertEqual((output / "_redirects").read_text(), "/ /news/malaysia/ 302\n")
             self.assertFalse((output / "_headers").exists())
             with self.assertRaises(ValueError):
@@ -46,6 +46,7 @@ class MalaysiaCloudflareBuildTests(unittest.TestCase):
             for name in re.findall(r'href="\./(\d{4}-\d{2}-\d{2}\.(?:html|md))"', index):
                 self.assertTrue((target / name).is_file(), name)
             self.assertTrue((target / "location-map.js").is_file())
+            self.assertTrue((target / "daily-page.js").is_file())
 
 
 if __name__ == "__main__":

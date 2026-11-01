@@ -1891,3 +1891,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Implement undated Business News and narrowly scoped numeric Business Help discovery with clearly labelled observation dates.
 - Revisit when: Reconsider if unrelated documents dominate, identity cannot be verified, or the source cannot be fetched.
+
+<!-- idea-gate:20261101-malaysia-daily-page-cleanup -->
+## 日別ページの重複表示整理と常時地図・先頭移動
+
+- Record ID: `20261101-malaysia-daily-page-cleanup`
+- Evaluated: 2026-11-01T10:00:00+08:00
+- Project: Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 86/100
+- Confidence: high - 希望する変更と既存経路が明確
+
+### Idea Card
+
+- Purpose: 長い日別ニュースを読みやすくし場所と先頭へ移動しやすくする
+- First experience: 日別ページで地図が表示されスクロール後に先頭へ戻れる
+- Scope and cost: 既存rendererと静的JSの変更、追加料金なし
+- Continuation boundary: PCとスマートフォンで確認し読みやすさを損ねれば戻す
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 12/15 |
+| `evidence_and_learning` | 12/15 |
+| `expected_outcome` | 13/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 18/20 |
+| **Total** | **86/100** |
+
+### Next Step
+
+- Action: 日別rendererと地図JSを変更しPCとモバイルで確認
+- Revisit when: 地図の初期読込で操作性が悪化する; 先頭移動ボタンが記事を隠す
