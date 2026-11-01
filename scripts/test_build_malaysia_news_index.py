@@ -197,7 +197,7 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
 
     def test_air_quality_observations_and_forecasts_are_separate_from_news(self) -> None:
         day = self.parse_sample()
-        for page in (builder.render_html([day]), builder.render_daily_page(day, show_current_air_quality=True)):
+        for page in (builder.render_html([day]),):
             self.assertEqual(page.count('id="air-quality-heading"'), 1)
             self.assertIn(f'href="{builder.APIMS_URL}"', page)
             self.assertIn(f'href="{builder.MYCMAQ_URL}"', page)
@@ -208,7 +208,7 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertEqual(len(day.items), 2)
         self.assertNotIn('id="air-quality-heading"', builder.render_daily_page(day))
 
-    def test_air_quality_links_appear_only_on_latest_day(self) -> None:
+    def test_air_quality_links_appear_only_on_index(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             news_dir = Path(directory)
             for date in ("2026-10-11", "2026-10-12"):
@@ -216,7 +216,7 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
             with patch.object(builder, "NEWS_DIR", news_dir), patch.object(builder, "OUTPUT_PATH", news_dir / "index.html"):
                 self.assertEqual(builder.main(), 0)
             self.assertIn('id="air-quality-heading"', (news_dir / "index.html").read_text(encoding="utf-8"))
-            self.assertIn('id="air-quality-heading"', (news_dir / "2026-10-12.html").read_text(encoding="utf-8"))
+            self.assertNotIn('id="air-quality-heading"', (news_dir / "2026-10-12.html").read_text(encoding="utf-8"))
             self.assertNotIn('id="air-quality-heading"', (news_dir / "2026-10-11.html").read_text(encoding="utf-8"))
 
     def test_daily_page_has_short_headline_and_summary_body(self) -> None:
@@ -230,6 +230,11 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertIn("運行時間と乗り換え案内が更新されています。", page)
         self.assertIn("出典: Example News", page)
         self.assertNotIn("daily-details", page)
+        self.assertNotIn('class="summary-strip"', page)
+        self.assertIn('class="category-nav"', page)
+        self.assertIn('href="#page-top"', page)
+        self.assertIn('aria-label="ページの先頭へ戻る"', page)
+        self.assertIn('src="./daily-page.js"', page)
 
     def test_daily_page_map_links_places_to_articles(self) -> None:
         markdown = """【暮らしに関わる更新】
@@ -252,6 +257,8 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
             page = builder.render_daily_page(builder.parse_markdown(path))
 
         self.assertEqual(page.count('id="news-map"'), 1)
+        self.assertIn('<section class="location-map"', page)
+        self.assertNotIn('<details class="location-map"', page)
         self.assertIn('data-place-key="johor"', page)
         self.assertIn('data-place-key="tawau"', page)
         self.assertIn('href="#article-2"', page)

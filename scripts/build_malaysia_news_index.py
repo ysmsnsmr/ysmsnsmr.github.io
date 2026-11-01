@@ -633,15 +633,15 @@ def render_location_map(day: NewsDay) -> str:
         )
     place_rows = "\n".join(rows)
     return f"""
-    <details class="location-map" id="news-map">
-      <summary>記事の場所を地図で見る <span>{len(grouped)}地域</span></summary>
+    <section class="location-map" id="news-map" aria-labelledby="map-heading">
+      <h2 id="map-heading">記事の場所を地図で見る <span>{len(grouped)}地域</span></h2>
       <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
       <div class="map-layout">
         <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
         <div class="map-index"><h2>地域と記事</h2><ul>{place_rows}</ul></div>
       </div>
       <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
-    </details>
+    </section>
     """
 
 
@@ -699,7 +699,7 @@ def render_source_only_section(day: NewsDay) -> str:
             '''
 
 
-def render_daily_page(day: NewsDay, *, show_current_air_quality: bool = False) -> str:
+def render_daily_page(day: NewsDay) -> str:
     location_map = render_location_map(day)
     return f"""<!doctype html>
 <html lang="ja">
@@ -731,15 +731,8 @@ def render_daily_page(day: NewsDay, *, show_current_air_quality: bool = False) -
     .markdown-link {{ color: var(--muted); font-size: .9rem; }}
     .eyebrow {{ margin-bottom: 3px; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }}
     .subhead {{ max-width: 650px; margin-bottom: 0; color: var(--muted); }}
-    .summary-strip {{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }}
-    .count-pill {{ display: inline-flex; gap: 8px; align-items: center; min-height: 30px; border-radius: var(--radius-pill); background: var(--accent-soft); padding: 4px 10px; font-size: .88rem; }}
-    .count-pill strong {{ color: var(--accent-strong); }}
     .category-nav {{ display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }}
     .category-nav a {{ border: 1px solid var(--line); border-radius: var(--radius-pill); background: var(--panel); padding: 6px 11px; color: var(--accent-strong); font-size: .9rem; font-weight: 700; text-decoration: none; }}
-    .air-quality-links {{ display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 24px; border-block: 1px solid var(--line); padding: 14px 0; }}
-    .air-quality-links h2 {{ font-size: 1rem; }}
-    .air-quality-links p {{ margin: 3px 0 0; color: var(--muted); font-size: .84rem; }}
-    .air-quality-actions {{ display: flex; flex-wrap: wrap; gap: 8px 16px; flex: 0 0 auto; font-size: .88rem; }}
     .daily-category + .daily-category {{ margin-top: 32px; }}
     .daily-category-head {{ display: flex; justify-content: space-between; gap: 12px; align-items: baseline; border-bottom: 2px solid var(--accent-soft); padding-bottom: 9px; }}
     .daily-category-head span {{ color: var(--muted); font-size: .9rem; }}
@@ -755,8 +748,10 @@ def render_daily_page(day: NewsDay, *, show_current_air_quality: bool = False) -
     .term-icon {{ display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }}
     .term-popover {{ position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }}
     .location-map {{ margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }}
-    .location-map > summary {{ cursor: pointer; color: var(--accent-strong); font-weight: 700; }}
-    .location-map > summary span {{ margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }}
+    .location-map > h2 {{ color: var(--accent-strong); font-size: 1rem; }}
+    .location-map > h2 span {{ margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }}
+    .back-to-top {{ position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 1001; display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--line); border-radius: 50%; background: var(--accent-strong); color: #fff; box-shadow: var(--shadow); text-decoration: none; font-size: 1.6rem; line-height: 1; }}
+    .back-to-top[hidden] {{ display: none; }}
     .map-note {{ margin: 10px 0; color: var(--muted); font-size: .86rem; }}
     .map-layout {{ display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }}
     #location-map-canvas {{ min-height: 320px; background: var(--panel-subtle); }}
@@ -780,8 +775,6 @@ def render_daily_page(day: NewsDay, *, show_current_air_quality: bool = False) -
       main {{ width: min(100% - 20px, 880px); padding-top: 20px; }}
       .page-nav {{ align-items: flex-start; flex-direction: column; gap: 6px; margin-bottom: 24px; }}
       .daily-item {{ padding: 15px; }}
-      .air-quality-links {{ align-items: flex-start; flex-direction: column; }}
-      .air-quality-actions {{ flex: 1 1 auto; }}
       .map-layout {{ grid-template-columns: 1fr; }}
       #location-map-canvas {{ min-height: 260px; }}
       .map-index {{ max-height: 170px; padding: 4px 0; }}
@@ -789,7 +782,7 @@ def render_daily_page(day: NewsDay, *, show_current_air_quality: bool = False) -
   </style>
 </head>
 <body>
-  <main>
+  <main id="page-top" tabindex="-1">
     <header class="page-header">
       <nav class="page-nav" aria-label="ページ内ナビゲーション">
         <a class="back-link" href="./index.html">← マレーシア生活ニュース</a>
@@ -798,11 +791,7 @@ def render_daily_page(day: NewsDay, *, show_current_air_quality: bool = False) -
       <p class="eyebrow">Daily summary</p>
       <h1>{esc(format_date(day.date))}のニュースまとめ</h1>
       <p class="subhead">{esc(as_of_label(day))}。期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。</p>
-      <div class="summary-strip" aria-label="カテゴリ別件数">
-        {render_counts(day)}
-      </div>
     </header>
-    {render_air_quality_links() if show_current_air_quality else ''}
     <nav class="category-nav" aria-label="カテゴリへ移動">
       {''.join(f'<a href="#category-{index + 1}">{esc(category_label(category))} {day.category_counts.get(category, 0)}件</a>' for index, category in enumerate(CATEGORIES))}
     </nav>
@@ -810,6 +799,8 @@ def render_daily_page(day: NewsDay, *, show_current_air_quality: bool = False) -
     {render_daily_sections(day)}
     {render_source_only_section(day)}
   </main>
+  <a class="back-to-top" href="#page-top" aria-label="ページの先頭へ戻る" title="ページの先頭へ戻る" hidden><span aria-hidden="true">↑</span></a>
+  <script src="./daily-page.js" defer></script>
 {'''<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
 <script src="./location-map.js" defer></script>''' if location_map else ''}
 </body>
@@ -1247,7 +1238,7 @@ def main() -> int:
     for day in days:
         daily_output = NEWS_DIR / f"{day.date}.html"
         daily_rendered = "\n".join(
-            line.rstrip() for line in render_daily_page(day, show_current_air_quality=day is days[0]).splitlines()
+            line.rstrip() for line in render_daily_page(day).splitlines()
         ) + "\n"
         daily_output.write_text(daily_rendered, encoding="utf-8")
     print(f"Wrote index: {OUTPUT_PATH}")

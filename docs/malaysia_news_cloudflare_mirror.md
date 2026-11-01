@@ -1,7 +1,7 @@
 # Malaysia News Cloudflare Pages mirror
 
 The mirror publishes the existing public Malaysia News pages, Markdown and map
-script. It does not publish other repository files or require API secrets. The
+and daily-page scripts. It does not publish other repository files or require API secrets. The
 existing GitHub Pages site and news generation workflow remain unchanged.
 
 Cloudflare Pages Git integration settings:

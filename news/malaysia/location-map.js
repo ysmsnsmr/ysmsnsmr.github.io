@@ -63,16 +63,13 @@
     return true;
   }
 
-  panel.addEventListener("toggle", () => {
-    if (panel.open) requestAnimationFrame(initialize);
-  });
+  requestAnimationFrame(initialize);
   document.querySelectorAll(".place-link").forEach((link) => {
     link.addEventListener("click", (event) => {
       if (!window.L) return;
       const place = places.get(link.dataset.placeKey);
       if (!place) return;
       event.preventDefault();
-      panel.open = true;
       requestAnimationFrame(() => {
         if (!initialize()) return;
         map.setView([place.latitude, place.longitude], place.zoom);
