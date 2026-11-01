@@ -1774,7 +1774,7 @@ def build_editorial_candidate_pool_json(
             "summary_validation_applied": False,
         },
         "post_relevance_policy": {
-            "target_card_count": 25,
+            "target_card_count": 30,
         },
         "counts": {
             "processed": processed_count,
