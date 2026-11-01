@@ -31,9 +31,9 @@
     notice: document.querySelector("#unofficial-notice"), stamp: document.querySelector("#week-stamp"), form: document.querySelector("#filter-form"),
     source: document.querySelector("#source-filter"), type: document.querySelector("#priority-filter"), typeLabel: document.querySelector("#priority-filter-label"), query: document.querySelector("#query-filter"), reset: document.querySelector("#reset-button"),
     summary: document.querySelector("#result-summary"), legacy: document.querySelector("#legacy-list-section"), list: document.querySelector("#update-list"), officialGroup: document.querySelector("#official-group"), officialCount: document.querySelector("#official-group-count"), officialList: document.querySelector("#official-list"), sdkGroup: document.querySelector("#sdk-group"), sdkHeading: document.querySelector("#sdk-group-heading"), sdkList: document.querySelector("#sdk-list"), unofficialGroup: document.querySelector("#unofficial-group"), unofficialCount: document.querySelector("#unofficial-group-count"), unofficialList: document.querySelector("#unofficial-list"), empty: document.querySelector("#empty-state"), emptyTitle: document.querySelector("#empty-title"), emptyCopy: document.querySelector("#empty-copy"),
-    footer: document.querySelector("#tracker-footer"), en: document.querySelector("#locale-en"), ja: document.querySelector("#locale-ja")
+    footer: document.querySelector("#tracker-footer"), en: document.querySelector("#locale-en"), ja: document.querySelector("#locale-ja"), tags: document.querySelector("#featured-tags")
   };
-  const state = { source: "all", type: "all", q: "" };
+  const state = { source: "all", type: "all", q: "", tag: "" };
 
   // The fictional demo is intentionally Japanese-only; never present it as translated production data.
   if (demoMode && locale !== "ja" && !fixtureMode) {
@@ -53,7 +53,7 @@
   function retainedQuery() {
     const query = new URLSearchParams();
     if (!demoMode) {
-      for (const key of ["source", "type", "q", "personal-fixture"]) {
+      for (const key of ["source", "type", "q", "tag", "personal-fixture"]) {
         const value = params.get(key);
         if (value) query.set(key, value.slice(0, 160));
       }
@@ -108,6 +108,7 @@
     if (state.source !== "all") query.set("source", state.source);
     if (state.type !== "all") query.set("type", state.type);
     if (state.q.trim()) query.set("q", state.q.trim());
+    if (state.tag) query.set("tag", state.tag);
     const fixture = params.get("personal-fixture");
     if (["1", "v3", "v4", "v5", "fields"].includes(fixture)) query.set("personal-fixture", fixture);
     return `./detail.html?${query.toString()}`;
@@ -226,6 +227,7 @@
       state.source = sources.has(params.get("source")) ? params.get("source") : "all";
       state.type = ["official", "unofficial"].includes(params.get("type")) ? params.get("type") : "all";
       state.q = (params.get("q") || "").slice(0, 160);
+      state.tag = window.MetaAdsTags?.tags.some((tag) => tag.id === params.get("tag")) ? params.get("tag") : "";
     } else {
       el.stamp.textContent = report.week?.label || "";
       const legacySources = [
@@ -249,10 +251,11 @@
       if (state.source !== "all") next.set("source", state.source);
       if (state.type !== "all") next.set("type", state.type);
       if (state.q.trim()) next.set("q", state.q.trim());
+      if (state.tag) next.set("tag", state.tag);
       const fixture = params.get("personal-fixture");
       if (["1", "v3", "v4", "v5", "fields"].includes(fixture)) next.set("personal-fixture", fixture);
       window.history.replaceState(null, "", `${window.location.pathname}${next.size ? `?${next}` : ""}`);
-      for (const key of ["source", "type", "q"]) params.delete(key);
+      for (const key of ["source", "type", "q", "tag"]) params.delete(key);
       next.forEach((value, key) => params.set(key, value));
       setupLocaleLinks();
     }
@@ -261,7 +264,7 @@
       return (report.items || []).filter((item) => {
         const source = sources.get(item.sourceId);
         const text = personal && item.sourceId !== "meta-business-sdk-releases" ? `${item.title} ${headline(item)}` : item.title;
-        return (state.source === "all" || item.sourceId === state.source) && (state.type === "all" || (personal ? source?.classification : item.priority) === state.type) && (!needle || text.toLocaleLowerCase(locale).includes(needle));
+        return (state.source === "all" || item.sourceId === state.source) && (state.type === "all" || (personal ? source?.classification : item.priority) === state.type) && (!needle || text.toLocaleLowerCase(locale).includes(needle)) && (!state.tag || window.MetaAdsTags.matches(item, state.tag));
       }).sort((left, right) => {
         const newest = (item) => [item.publishedDate, item.updatedDate].filter(Boolean).sort().pop() || item.firstObservedAt || "";
         return newest(right).localeCompare(newest(left)) || String(right.id).localeCompare(String(left.id));
@@ -269,6 +272,24 @@
     }
     function render() {
       const items = visible();
+      if (el.tags && personal && !demoMode && window.MetaAdsTags) {
+        const shownTags = window.MetaAdsTags.tags.slice(0, 5);
+        const activeTag = window.MetaAdsTags.tags.find((tag) => tag.id === state.tag);
+        if (activeTag && !shownTags.includes(activeTag)) shownTags.push(activeTag);
+        const featured = shownTags.map((tag) => {
+          const link = make("a", "tag-chip", tag[locale]);
+          link.href = `?tag=${encodeURIComponent(tag.id)}`;
+          if (tag.id === state.tag) link.setAttribute("aria-current", "true");
+          link.addEventListener("click", (event) => {
+            if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+            event.preventDefault(); state.tag = tag.id; updateAddress(); render();
+          });
+          return link;
+        });
+        const all = make("a", "tag-chip tag-chip--all", locale === "ja" ? "すべてのタグ" : "All tags");
+        all.href = "./tags.html";
+        el.tags.replaceChildren(...featured, all);
+      }
       const groups = { official: [], sdk: [], unofficial: [] };
       if (personal) {
         for (const item of items) {
@@ -297,7 +318,7 @@
       }
       el.empty.hidden = items.length > 0;
       if (!items.length) {
-        const filtered = state.source !== "all" || state.type !== "all" || Boolean(state.q.trim());
+        const filtered = state.source !== "all" || state.type !== "all" || Boolean(state.q.trim()) || Boolean(state.tag);
         el.emptyTitle.textContent = filtered ? words.noMatches : personal ? words.noItems : "No updates";
         el.emptyCopy.textContent = filtered ? words.noMatchesCopy : personal ? words.noItemsCopy : "";
       }
@@ -310,7 +331,7 @@
     el.source.addEventListener("change", () => { state.source = el.source.value; updateAddress(); render(); });
     el.type.addEventListener("change", () => { state.type = el.type.value; updateAddress(); render(); });
     el.query.addEventListener("input", () => { state.q = el.query.value; updateAddress(); render(); });
-    el.reset.addEventListener("click", () => { state.source = "all"; state.type = "all"; state.q = ""; updateAddress(); syncControls(); render(); });
+    el.reset.addEventListener("click", () => { state.source = "all"; state.type = "all"; state.q = ""; state.tag = ""; updateAddress(); syncControls(); render(); });
     syncControls();
     render();
   } catch (error) {

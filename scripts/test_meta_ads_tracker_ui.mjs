@@ -327,6 +327,31 @@ try {
   assert(!unofficialNotice.includes("must be confirmed by Meta"), "Personal Feed must not imply that every unofficial item has an official counterpart");
   await productionPage.close();
 
+  const tagPage = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await tagPage.goto(`${server.origin}/meta-ads-updates/ja/`, { waitUntil: "networkidle" });
+  await tagPage.getByRole("link", { name: "Meta One", exact: true }).click();
+  assert(new URL(tagPage.url()).searchParams.get("tag") === "meta-one", "featured tag must update the URL");
+  assert(await tagPage.locator(".update-card").count() > 0, "Meta One tag must show matching updates");
+  assert(await tagPage.evaluate(() => !window.MetaAdsTags.matches({ title: "Unrelated update" }, "meta-one")), "unrelated articles must not match Meta One");
+  assert((await tagPage.locator("#locale-en").getAttribute("href")).includes("tag=meta-one"), "language switch must retain the selected tag");
+  await tagPage.locator(".update-title-link").first().click();
+  assert((await tagPage.locator("#back-link").getAttribute("href")).includes("tag=meta-one"), "detail return must retain the selected tag");
+  await tagPage.locator("#back-link").click();
+  await tagPage.getByRole("link", { name: "すべてのタグ" }).click();
+  assert((await tagPage.locator("h1").textContent()).includes("タグから記事を探す"), "tag directory must be reachable");
+  assert((await tagPage.locator("#tags-list").textContent()).includes("広告マネージャー"), "tag directory must include all catalog tags");
+  await tagPage.setViewportSize({ width: 375, height: 667 });
+  assert(await tagPage.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth <= 1), "tag directory must not overflow on mobile");
+  await tagPage.addScriptTag({ content: axeSource });
+  const tagAxe = await tagPage.evaluate(async () => globalThis.axe.run(document, { runOnly: ["wcag2a", "wcag2aa"] }));
+  assert(tagAxe.violations.length === 0, `tag directory accessibility violations: ${tagAxe.violations.map((item) => item.id).join(", ")}`);
+  await tagPage.getByRole("link", { name: /広告マネージャー/ }).click();
+  assert(new URL(tagPage.url()).searchParams.get("tag") === "ads-manager", "directory tag must filter the list");
+  assert(await tagPage.locator('.tag-chip[aria-current="true"]').count() === 1, "selected tag must remain visible");
+  await tagPage.locator("#reset-button").click();
+  assert(!new URL(tagPage.url()).searchParams.has("tag"), "reset must remove the selected tag");
+  await tagPage.close();
+
   for (const viewport of viewports) {
     const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });
     const consoleErrors = [];

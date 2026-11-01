@@ -1926,3 +1926,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: 日別rendererと地図JSを変更しPCとモバイルで確認
 - Revisit when: 地図の初期読込で操作性が悪化する; 先頭移動ボタンが記事を隠す
+
+<!-- idea-gate:20261101t150000-meta-ads-product-tags -->
+## Find current updates by product and feature tags
+
+- Record ID: `20261101t150000-meta-ads-product-tags`
+- Evaluated: 2026-11-01T15:00:00+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 82/100
+- Confidence: medium - Purpose is clear; deterministic title matching has not been evaluated against all topics.
+
+### Idea Card
+
+- Purpose: Find product and feature updates when explaining them to clients.
+- First experience: Select Meta Muse or Meta One on the home page or tag directory to see matching current articles.
+- Scope and cost: Use a small fixed bilingual tag catalog and existing published feed; no account, external API, or new model calls.
+- Continuation boundary: Keep if useful; refine terms when omissions or irrelevant results are noticed; remove the static pages and filter if unused.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 13/15 |
+| `evidence_and_learning` | 10/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 12/15 |
+| `ownership_and_reversibility` | 17/20 |
+| **Total** | **82/100** |
+
+### Next Step
+
+- Action: Add the fixed catalog, major tags and tag directory to the existing bilingual static feed, and verify filtering and deployment.
+- Revisit when: Tag matching misses useful updates or groups irrelevant content.

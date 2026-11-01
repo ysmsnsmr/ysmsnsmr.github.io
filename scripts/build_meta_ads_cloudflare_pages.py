@@ -9,8 +9,8 @@ ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "cloudflare-meta-ads-dist"
 FILES = (
     "index.html", "detail.html", "style.css", "favorites.js",
-    "localized-feed.js", "localized-detail.js", "personal-feed.json",
-    "demo-latest.json", "latest.json", "ja/index.html", "ja/detail.html",
+    "localized-feed.js", "localized-detail.js", "personal-feed.json", "tag-catalog.js", "tags.js", "tags.html",
+    "demo-latest.json", "latest.json", "ja/index.html", "ja/detail.html", "ja/tags.html",
 )
 
 
