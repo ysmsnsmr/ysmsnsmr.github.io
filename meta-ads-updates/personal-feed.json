@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-10-31T02:08:43Z",
+  "generatedAt": "2026-11-02T23:36:33Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -91,6 +91,213 @@
   ],
   "items": [
     {
+      "id": "jon-loomer-meta-ads-469235a3a796139fa383",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Lookalike Audience Suggestions for Leads Campaigns",
+      "url": "https://www.jonloomer.com/qvt/lookalike-audience-suggestions-leads-campaigns/",
+      "publishedDate": "2026-11-02",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-02T23:36:33Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "469235a3a796139fa3837a7b07c7d32a2271c1c03973c7303c392689f8bdc737",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta Shows Lookalike Suggestion for Leads Campaigns",
+            "summary": "During Leads campaign creation, Meta displayed a message saying a lookalike audience could lower cost per quality lead by 11%. The author says they have seen the message only for Leads campaigns, not as a global change.",
+            "inputHash": "117d1e45cea6865fb81072f8969229e35f3d79b077e1db5dfa76505fe7b40b93",
+            "generatedAt": "2026-11-02T23:36:33Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Shows Lookalike Suggestion for Leads Campaigns",
+                "inputHash": "117d1e45cea6865fb81072f8969229e35f3d79b077e1db5dfa76505fe7b40b93",
+                "generatedAt": "2026-11-02T23:36:33Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "During Leads campaign creation, Meta displayed a message saying a lookalike audience could lower cost per quality lead by 11%. The author says they have seen the message only for Leads campaigns, not as a global change.",
+                "inputHash": "117d1e45cea6865fb81072f8969229e35f3d79b077e1db5dfa76505fe7b40b93",
+                "generatedAt": "2026-11-02T23:36:33Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "リード広告に類似オーディエンスの提案を表示",
+            "summary": "Metaのリードキャンペーン作成時に、類似オーディエンスを使うと質の高いリード1件あたりの費用を11％抑えられる可能性があるとのメッセージが表示された。投稿者によると、この表示はリードキャンペーンでのみ確認されている。",
+            "inputHash": "7ef2b88e05d53d86bdd60d50665ff40dbc0558c09a0af68bc9fe178ef5442eae",
+            "generatedAt": "2026-11-02T23:36:33Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "リード広告に類似オーディエンスの提案を表示",
+                "inputHash": "7ef2b88e05d53d86bdd60d50665ff40dbc0558c09a0af68bc9fe178ef5442eae",
+                "generatedAt": "2026-11-02T23:36:33Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaのリードキャンペーン作成時に、類似オーディエンスを使うと質の高いリード1件あたりの費用を11％抑えられる可能性があるとのメッセージが表示された。投稿者によると、この表示はリードキャンペーンでのみ確認されている。",
+                "inputHash": "7ef2b88e05d53d86bdd60d50665ff40dbc0558c09a0af68bc9fe178ef5442eae",
+                "generatedAt": "2026-11-02T23:36:33Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-6b92db41d3cdc86fd2a7",
+      "sourceId": "adsuploader-blog",
+      "title": "Facebook Ads for SaaS: Objectives, Targeting and Costs",
+      "url": "https://adsuploader.com/blog/facebook-ads-for-saas",
+      "publishedDate": "2026-11-02",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-02T23:36:33Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "6b92db41d3cdc86fd2a76507800e18453b333ff92d64dae68fb1238159155a1f",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Facebook Ads for SaaS: Objectives, Targeting and Costs",
+            "summary": "Covers Facebook ad costs for SaaS, Meta campaign objectives, targeting buyers, and measuring pipeline rather than leads.",
+            "inputHash": "c7d1c811d588b36b301031276ee7d88c43f034713c6cb199313cb955b118fe17",
+            "generatedAt": "2026-11-02T23:36:33Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook Ads for SaaS: Objectives, Targeting and Costs",
+                "inputHash": "c7d1c811d588b36b301031276ee7d88c43f034713c6cb199313cb955b118fe17",
+                "generatedAt": "2026-11-02T23:36:33Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Covers Facebook ad costs for SaaS, Meta campaign objectives, targeting buyers, and measuring pipeline rather than leads.",
+                "inputHash": "c7d1c811d588b36b301031276ee7d88c43f034713c6cb199313cb955b118fe17",
+                "generatedAt": "2026-11-02T23:36:33Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "SaaS向けFacebook広告の目的・ターゲティング・費用",
+            "summary": "SaaS向けFacebook広告の費用、Metaが学習できるキャンペーン目的の選び方、購入者にリーチするターゲティング、リード数ではなく商談パイプラインを測定する方法を扱います。",
+            "inputHash": "860598aa277d4d49f25345cbab105558e75b91508cb53fed3ba323fffe7dae79",
+            "generatedAt": "2026-11-02T23:36:33Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "SaaS向けFacebook広告の目的・ターゲティング・費用",
+                "inputHash": "860598aa277d4d49f25345cbab105558e75b91508cb53fed3ba323fffe7dae79",
+                "generatedAt": "2026-11-02T23:36:33Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "SaaS向けFacebook広告の費用、Metaが学習できるキャンペーン目的の選び方、購入者にリーチするターゲティング、リード数ではなく商談パイプラインを測定する方法を扱います。",
+                "inputHash": "860598aa277d4d49f25345cbab105558e75b91508cb53fed3ba323fffe7dae79",
+                "generatedAt": "2026-11-02T23:36:33Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-59db08bd7ada8d8ac843",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta hires bipartisan political team",
+      "url": "https://www.socialmediatoday.com/news/meta-hires-bipartisan-political-team/873403/",
+      "publishedDate": "2026-11-01",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-02T23:36:33Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "59db08bd7ada8d8ac84322ba8ea3827a5898a97bbaa35ec87d4208252829eeb4",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "f4afc274b413a26077fb7235c759c265abced8d81c1081663d567e242b585ebc",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "f4afc274b413a26077fb7235c759c265abced8d81c1081663d567e242b585ebc",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "f4afc274b413a26077fb7235c759c265abced8d81c1081663d567e242b585ebc",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、超党派の政治チームを採用",
+            "summary": "Axiosの報道によると、Metaは民主・共和両党に関わる複数の政治経験者を採用、または昇進させました。OpenSecretsによると、同社の2025年の連邦ロビー活動費は2,629万ドルでした。Metaの社長は8月、下院の人工知能委員会とAI戦略やインフラ投資について協議しました。",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-11-02T23:36:33Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、超党派の政治チームを採用",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-11-02T23:36:33Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Axiosの報道によると、Metaは民主・共和両党に関わる複数の政治経験者を採用、または昇進させました。OpenSecretsによると、同社の2025年の連邦ロビー活動費は2,629万ドルでした。Metaの社長は8月、下院の人工知能委員会とAI戦略やインフラ投資について協議しました。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-11-02T23:36:33Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "meta-business-news-discovered-92b92b5c34f6a014f299",
       "sourceId": "meta-business-news-discovered",
       "title": "Peak Season 2026: You Don't Beat The Auction. You Brief It.",
@@ -98,7 +305,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -169,7 +376,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -240,7 +447,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -311,7 +518,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -382,7 +589,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -453,7 +660,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -524,7 +731,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -595,7 +802,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -666,7 +873,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -737,7 +944,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -808,7 +1015,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -880,7 +1087,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -951,7 +1158,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1022,7 +1229,7 @@
       "publishedDate": "2026-10-31",
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1091,7 +1298,7 @@
       "publishedDate": "2026-10-29",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1160,7 +1367,7 @@
       "publishedDate": "2026-10-28",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1229,7 +1436,7 @@
       "publishedDate": "2026-10-28",
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1300,7 +1507,7 @@
       "publishedDate": "2026-10-28",
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1371,7 +1578,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1440,7 +1647,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1512,7 +1719,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1581,7 +1788,7 @@
       "publishedDate": "2026-10-26",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1650,7 +1857,7 @@
       "publishedDate": "2026-10-25",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1719,7 +1926,7 @@
       "publishedDate": "2026-10-25",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1788,7 +1995,7 @@
       "publishedDate": "2026-10-23",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1857,7 +2064,7 @@
       "publishedDate": "2026-10-22",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1926,7 +2133,7 @@
       "publishedDate": "2026-10-22",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1995,7 +2202,7 @@
       "publishedDate": "2026-10-22",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2064,7 +2271,7 @@
       "publishedDate": "2026-10-21",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2133,7 +2340,7 @@
       "publishedDate": "2026-10-21",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2202,7 +2409,7 @@
       "publishedDate": "2026-10-20",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2274,7 +2481,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2345,7 +2552,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2414,7 +2621,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2483,7 +2690,7 @@
       "publishedDate": "2026-10-18",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2552,7 +2759,7 @@
       "publishedDate": "2026-10-18",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2621,7 +2828,7 @@
       "publishedDate": "2026-10-17",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2690,7 +2897,7 @@
       "publishedDate": "2026-10-15",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2759,7 +2966,7 @@
       "publishedDate": "2026-10-15",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2831,7 +3038,7 @@
       "publishedDate": "2026-10-15",
       "updatedDate": null,
       "firstObservedAt": "2026-10-15T19:54:50Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2900,7 +3107,7 @@
       "publishedDate": "2026-10-13",
       "updatedDate": null,
       "firstObservedAt": "2026-10-15T19:54:50Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2972,7 +3179,7 @@
       "publishedDate": "2026-10-13",
       "updatedDate": null,
       "firstObservedAt": "2026-10-15T19:54:50Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3041,7 +3248,7 @@
       "publishedDate": "2026-10-12",
       "updatedDate": null,
       "firstObservedAt": "2026-10-12T23:02:27Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3110,7 +3317,7 @@
       "publishedDate": "2026-10-12",
       "updatedDate": null,
       "firstObservedAt": "2026-10-12T23:02:27Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3248,7 +3455,7 @@
       "publishedDate": "2026-10-11",
       "updatedDate": null,
       "firstObservedAt": "2026-10-12T23:02:27Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3735,7 +3942,7 @@
       "publishedDate": "2026-10-06",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3807,7 +4014,7 @@
       "publishedDate": "2026-10-05",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4290,7 +4497,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -4359,7 +4566,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4497,7 +4704,7 @@
       "publishedDate": "2026-09-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T05:47:38Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4842,7 +5049,7 @@
       "publishedDate": "2026-09-22",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4981,7 +5188,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5395,7 +5602,7 @@
       "publishedDate": "2026-09-16",
       "updatedDate": null,
       "firstObservedAt": "2026-09-17T04:55:10Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -5671,7 +5878,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6016,7 +6223,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T04:45:10Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6085,7 +6292,7 @@
       "publishedDate": "2026-09-07",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6154,7 +6361,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6225,7 +6432,7 @@
       "publishedDate": "2026-09-01",
       "updatedDate": null,
       "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6294,7 +6501,7 @@
       "publishedDate": "2026-08-31",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6502,7 +6709,7 @@
       "publishedDate": "2026-08-25",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6640,7 +6847,7 @@
       "publishedDate": "2026-08-20",
       "updatedDate": null,
       "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6835,216 +7042,6 @@
                 "value": "MetaはMac向けにMeta AIアプリを提供開始した。モバイル版と同等の機能を備え、ウィンドウ共有や全アプリ対応の音声入力が可能だ。ビジネスユーザーは自社の広告実績やエンゲージメント情報、公開されている同業他社のデータを元に質問でき、資料作成やタスク設定もAIに依頼できる。基本は無料だが、より高度な利用には有料サブスクリプション「Meta One」の提供を予定している。",
                 "inputHash": "17eb881e5594f4ee6b00805ccb34b2870230d55c9b051cb3028d9e0df4667f91",
                 "generatedAt": "2026-09-19T04:39:53Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-25aec168c1f57351dbfd",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "What is Predicted Lifetime Value (pLTV)?",
-      "url": "https://www.jonloomer.com/qvt/predicted-lifetime-value-pltv/",
-      "publishedDate": "2026-08-17",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "8b2898b7b555ea315fd69b251e08b5158d55c9638088a422b4f7da372707ac46",
-            "generatedAt": null,
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "8b2898b7b555ea315fd69b251e08b5158d55c9638088a422b4f7da372707ac46",
-                "generatedAt": null,
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "8b2898b7b555ea315fd69b251e08b5158d55c9638088a422b4f7da372707ac46",
-                "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Predicted Lifetime Value（pLTV）とは何か",
-            "summary": "pLTVは単一のコンバージョンイベントを基に顧客の将来価値を予測し、価値が高いと見込まれるユーザーへ配信を最適化する機能です。利用にはWeb Conversions APIの統合、検証済みのpLTVモデル、5種以上の正のpLTV値（最高が最低の3倍以上）、過去4週間で週100件以上のコンバージョンが必要です。Core Setupに含まれないデータセットは対象外です。対応イベントはPurchase、Subscribe、StartTrial、CompleteRegistration、AddPaymentInfo、カスタムイベントなどで、主に高価格商品やリードファネル向けに有用とされています。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-23T10:27:45Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Predicted Lifetime Value（pLTV）とは何か",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "pLTVは単一のコンバージョンイベントを基に顧客の将来価値を予測し、価値が高いと見込まれるユーザーへ配信を最適化する機能です。利用にはWeb Conversions APIの統合、検証済みのpLTVモデル、5種以上の正のpLTV値（最高が最低の3倍以上）、過去4週間で週100件以上のコンバージョンが必要です。Core Setupに含まれないデータセットは対象外です。対応イベントはPurchase、Subscribe、StartTrial、CompleteRegistration、AddPaymentInfo、カスタムイベントなどで、主に高価格商品やリードファネル向けに有用とされています。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "social-media-today-meta-ads-c04837311b5913cc77c7",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Meta publishes holiday marketing guides",
-      "url": "https://www.socialmediatoday.com/news/meta-publishes-holiday-marketing-guides/827856/",
-      "publishedDate": "2026-08-13",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-09T22:29:27Z",
-      "lastObservedAt": "2026-09-15T04:56:51Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [
-        "keyword:meta",
-        "keyword:campaign"
-      ],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "c04837311b5913cc77c74ad2d4f3c03724c16e3ddb4a1e0ae315724aa9954730",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "04eca49a508c6dc957901089100f3b389f8caf17f24375bcbfbecba043e288bf",
-            "generatedAt": null,
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "04eca49a508c6dc957901089100f3b389f8caf17f24375bcbfbecba043e288bf",
-                "generatedAt": null,
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "04eca49a508c6dc957901089100f3b389f8caf17f24375bcbfbecba043e288bf",
-                "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta、ホリデー向けマーケティングガイドを公開 AI搭載Advantage+で効果的な広告配信を提案",
-            "summary": "Metaは今週、ホリデーシーズンのキャンペーン計画に関するブログ記事を公開した。購買行動が複数のプラットフォームに分散していることを踏まえ、AI搭載のAdvantage+キャンペーンで適切なクリエイティブを自動配信し、早期に学習フェーズを開始することを推奨している。ショッピングは発見、ディール、ギフト、リフレッシュの4段階に分かれ、ReelsやStoriesでのインスピレーションが特に高い。Conversion Liftで効果測定も提案されている。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-12T04:37:37Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta、ホリデー向けマーケティングガイドを公開 AI搭載Advantage+で効果的な広告配信を提案",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-12T04:37:37Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaは今週、ホリデーシーズンのキャンペーン計画に関するブログ記事を公開した。購買行動が複数のプラットフォームに分散していることを踏まえ、AI搭載のAdvantage+キャンペーンで適切なクリエイティブを自動配信し、早期に学習フェーズを開始することを推奨している。ショッピングは発見、ディール、ギフト、リフレッシュの4段階に分かれ、ReelsやStoriesでのインスピレーションが特に高い。Conversion Liftで効果測定も提案されている。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-12T04:37:37Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-43e38784bd796ab19923",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "Meta Ads AI Connectors Get More Security Controls",
-      "url": "https://www.jonloomer.com/meta-ads-ai-connectors-security-controls/",
-      "publishedDate": "2026-08-11",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-31T02:08:43Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "79930db4677b46dede194ad4ef175a458f29ffb036f65262db2ec837dedce7f2",
-            "generatedAt": null,
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "79930db4677b46dede194ad4ef175a458f29ffb036f65262db2ec837dedce7f2",
-                "generatedAt": null,
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "79930db4677b46dede194ad4ef175a458f29ffb036f65262db2ec837dedce7f2",
-                "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta Ads AIコネクタに新たなセキュリティ制御を追加",
-            "summary": "MetaはAIコネクタ（Claude、ChatGPT、Perplexity）向けに、広告ポートフォリオへのアクセス制御を強化した。初期設定時に、すべてのFacebookページ・Instagramアカウントやビジネスポートフォリオを自動的に連携するか、現在のものだけを選択でき、個別ページやアカウントを指定できるようになった。また、約100種のツールについて「常に許可」「ブロック」「承認要請」のいずれかを設定可能。ビジネスポートフォリオ側でも、広告アカウントやカタログのAIコネクタ露出状況を確認し、デフォルトで許可されていた予算変更やキャンペーン作成などの操作を個別に制御できる。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-05T08:40:34Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta Ads AIコネクタに新たなセキュリティ制御を追加",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-05T08:40:34Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "MetaはAIコネクタ（Claude、ChatGPT、Perplexity）向けに、広告ポートフォリオへのアクセス制御を強化した。初期設定時に、すべてのFacebookページ・Instagramアカウントやビジネスポートフォリオを自動的に連携するか、現在のものだけを選択でき、個別ページやアカウントを指定できるようになった。また、約100種のツールについて「常に許可」「ブロック」「承認要請」のいずれかを設定可能。ビジネスポートフォリオ側でも、広告アカウントやカタログのAIコネクタ露出状況を確認し、デフォルトで許可されていた予算変更やキャンペーン作成などの操作を個別に制御できる。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-05T08:40:34Z",
                 "reviewedAt": null
               }
             }
