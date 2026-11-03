@@ -282,6 +282,8 @@ h1 {
 }
 
 .tag-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+.tag-hint { margin: 0; color: var(--tracker-muted); font-size: 0.8125rem; }
+.tag-chips:empty + .tag-hint { display: none; }
 .tag-chip, .tag-back { display: inline-flex; align-items: center; min-width: 44px; min-height: 44px; border: 1px solid var(--tracker-line); border-radius: 999px; padding: 0.45rem 0.8rem; color: var(--tracker-navy); background: #fff; font-size: 0.875rem; font-weight: 650; text-decoration: none; }
 .tag-chip[aria-current="true"] { background: #0d3b78; color: #fff; border-color: #0d3b78; }
 .tag-chip--all { border-color: #0d3b78; }
