@@ -229,75 +229,6 @@
       }
     },
     {
-      "id": "social-media-today-meta-ads-59db08bd7ada8d8ac843",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Meta hires bipartisan political team",
-      "url": "https://www.socialmediatoday.com/news/meta-hires-bipartisan-political-team/873403/",
-      "publishedDate": "2026-11-01",
-      "updatedDate": null,
-      "firstObservedAt": "2026-11-02T23:36:33Z",
-      "lastObservedAt": "2026-11-02T23:36:33Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "59db08bd7ada8d8ac84322ba8ea3827a5898a97bbaa35ec87d4208252829eeb4",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "f4afc274b413a26077fb7235c759c265abced8d81c1081663d567e242b585ebc",
-            "generatedAt": null,
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "f4afc274b413a26077fb7235c759c265abced8d81c1081663d567e242b585ebc",
-                "generatedAt": null,
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "f4afc274b413a26077fb7235c759c265abced8d81c1081663d567e242b585ebc",
-                "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta、超党派の政治チームを採用",
-            "summary": "Axiosの報道によると、Metaは民主・共和両党に関わる複数の政治経験者を採用、または昇進させました。OpenSecretsによると、同社の2025年の連邦ロビー活動費は2,629万ドルでした。Metaの社長は8月、下院の人工知能委員会とAI戦略やインフラ投資について協議しました。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-11-02T23:36:33Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta、超党派の政治チームを採用",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-11-02T23:36:33Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Axiosの報道によると、Metaは民主・共和両党に関わる複数の政治経験者を採用、または昇進させました。OpenSecretsによると、同社の2025年の連邦ロビー活動費は2,629万ドルでした。Metaの社長は8月、下院の人工知能委員会とAI戦略やインフラ投資について協議しました。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-11-02T23:36:33Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "id": "meta-business-news-discovered-92b92b5c34f6a014f299",
       "sourceId": "meta-business-news-discovered",
       "title": "Peak Season 2026: You Don't Beat The Auction. You Brief It.",
@@ -2186,75 +2117,6 @@
                 "status": "machine",
                 "value": "Metaは2026年第3四半期について、Instagramでは利用者1人あたりの利用時間が過去最高となり、おすすめReelsの約45％が投稿から1日未満だったと報告しました。FacebookではReelsの利用時間が過去最高となり、前年比で2桁成長。Threadsでは利用者1人あたりの利用時間が前年比20％超増加し、月間アクティブ利用者数がXを上回ったとザッカーバーグ氏が述べました。",
                 "inputHash": "6aad498bf93cea856048c0d65602cfa13bc11f12d5081b41d8bb07a9f4363359",
-                "generatedAt": "2026-10-27T12:55:38Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "social-media-today-meta-ads-2941548ab40d2b2e9ec6",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Meta hit with $25B fine over privacy breaches",
-      "url": "https://www.socialmediatoday.com/news/meta-hit-with-25b-fine-over-privacy-breaches/833798/",
-      "publishedDate": "2026-10-22",
-      "updatedDate": null,
-      "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-02T23:36:33Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "2941548ab40d2b2e9ec60a6fc284d7a87a3ce4598a475802824b03bba4f612e1",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta ordered to pay $25 billion in New Mexico case",
-            "summary": "A New Mexico judge set a $25 billion penalty after a jury found Meta liable in a case involving privacy breaches and harmful content. Meta’s chief legal officer criticized the decision and said the company will appeal.",
-            "inputHash": "7bca01e6daddcab1b6cfd41491043e9022dcbcb7dbbebe4dc833a59a3c83051a",
-            "generatedAt": "2026-10-27T12:55:38Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta ordered to pay $25 billion in New Mexico case",
-                "inputHash": "7bca01e6daddcab1b6cfd41491043e9022dcbcb7dbbebe4dc833a59a3c83051a",
-                "generatedAt": "2026-10-27T12:55:38Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "A New Mexico judge set a $25 billion penalty after a jury found Meta liable in a case involving privacy breaches and harmful content. Meta’s chief legal officer criticized the decision and said the company will appeal.",
-                "inputHash": "7bca01e6daddcab1b6cfd41491043e9022dcbcb7dbbebe4dc833a59a3c83051a",
-                "generatedAt": "2026-10-27T12:55:38Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta、プライバシー侵害で250億ドルの制裁金",
-            "summary": "ロイターによると、ニューメキシコ州の陪審はMetaにプライバシー侵害などの責任があると判断し、裁判官は同社に250億ドルの制裁金を命じました。Metaの最高法務責任者は判決を批判し、Metaは制裁金を不服として控訴する意向を示しました。",
-            "inputHash": "a5202c3b351e3e03a4ae12cb520acac22c9dd1294885ed2a0b1704f47cb07e10",
-            "generatedAt": "2026-10-27T12:55:38Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta、プライバシー侵害で250億ドルの制裁金",
-                "inputHash": "a5202c3b351e3e03a4ae12cb520acac22c9dd1294885ed2a0b1704f47cb07e10",
-                "generatedAt": "2026-10-27T12:55:38Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "ロイターによると、ニューメキシコ州の陪審はMetaにプライバシー侵害などの責任があると判断し、裁判官は同社に250億ドルの制裁金を命じました。Metaの最高法務責任者は判決を批判し、Metaは制裁金を不服として控訴する意向を示しました。",
-                "inputHash": "a5202c3b351e3e03a4ae12cb520acac22c9dd1294885ed2a0b1704f47cb07e10",
                 "generatedAt": "2026-10-27T12:55:38Z",
                 "reviewedAt": null
               }
@@ -7042,6 +6904,147 @@
                 "value": "MetaはMac向けにMeta AIアプリを提供開始した。モバイル版と同等の機能を備え、ウィンドウ共有や全アプリ対応の音声入力が可能だ。ビジネスユーザーは自社の広告実績やエンゲージメント情報、公開されている同業他社のデータを元に質問でき、資料作成やタスク設定もAIに依頼できる。基本は無料だが、より高度な利用には有料サブスクリプション「Meta One」の提供を予定している。",
                 "inputHash": "17eb881e5594f4ee6b00805ccb34b2870230d55c9b051cb3028d9e0df4667f91",
                 "generatedAt": "2026-09-19T04:39:53Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "jon-loomer-meta-ads-25aec168c1f57351dbfd",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "What is Predicted Lifetime Value (pLTV)?",
+      "url": "https://www.jonloomer.com/qvt/predicted-lifetime-value-pltv/",
+      "publishedDate": "2026-08-17",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-23T10:27:45Z",
+      "lastObservedAt": "2026-11-02T23:36:33Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "8b2898b7b555ea315fd69b251e08b5158d55c9638088a422b4f7da372707ac46",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "8b2898b7b555ea315fd69b251e08b5158d55c9638088a422b4f7da372707ac46",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "8b2898b7b555ea315fd69b251e08b5158d55c9638088a422b4f7da372707ac46",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Predicted Lifetime Value（pLTV）とは何か",
+            "summary": "pLTVは単一のコンバージョンイベントを基に顧客の将来価値を予測し、価値が高いと見込まれるユーザーへ配信を最適化する機能です。利用にはWeb Conversions APIの統合、検証済みのpLTVモデル、5種以上の正のpLTV値（最高が最低の3倍以上）、過去4週間で週100件以上のコンバージョンが必要です。Core Setupに含まれないデータセットは対象外です。対応イベントはPurchase、Subscribe、StartTrial、CompleteRegistration、AddPaymentInfo、カスタムイベントなどで、主に高価格商品やリードファネル向けに有用とされています。",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-09-23T10:27:45Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Predicted Lifetime Value（pLTV）とは何か",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "pLTVは単一のコンバージョンイベントを基に顧客の将来価値を予測し、価値が高いと見込まれるユーザーへ配信を最適化する機能です。利用にはWeb Conversions APIの統合、検証済みのpLTVモデル、5種以上の正のpLTV値（最高が最低の3倍以上）、過去4週間で週100件以上のコンバージョンが必要です。Core Setupに含まれないデータセットは対象外です。対応イベントはPurchase、Subscribe、StartTrial、CompleteRegistration、AddPaymentInfo、カスタムイベントなどで、主に高価格商品やリードファネル向けに有用とされています。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-c04837311b5913cc77c7",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta publishes holiday marketing guides",
+      "url": "https://www.socialmediatoday.com/news/meta-publishes-holiday-marketing-guides/827856/",
+      "publishedDate": "2026-08-13",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-09T22:29:27Z",
+      "lastObservedAt": "2026-09-15T04:56:51Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "keyword:meta",
+        "keyword:campaign"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "c04837311b5913cc77c74ad2d4f3c03724c16e3ddb4a1e0ae315724aa9954730",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "missing",
+            "shortHeadline": null,
+            "summary": null,
+            "inputHash": "04eca49a508c6dc957901089100f3b389f8caf17f24375bcbfbecba043e288bf",
+            "generatedAt": null,
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "04eca49a508c6dc957901089100f3b389f8caf17f24375bcbfbecba043e288bf",
+                "generatedAt": null,
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "missing",
+                "value": null,
+                "inputHash": "04eca49a508c6dc957901089100f3b389f8caf17f24375bcbfbecba043e288bf",
+                "generatedAt": null,
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、ホリデー向けマーケティングガイドを公開 AI搭載Advantage+で効果的な広告配信を提案",
+            "summary": "Metaは今週、ホリデーシーズンのキャンペーン計画に関するブログ記事を公開した。購買行動が複数のプラットフォームに分散していることを踏まえ、AI搭載のAdvantage+キャンペーンで適切なクリエイティブを自動配信し、早期に学習フェーズを開始することを推奨している。ショッピングは発見、ディール、ギフト、リフレッシュの4段階に分かれ、ReelsやStoriesでのインスピレーションが特に高い。Conversion Liftで効果測定も提案されている。",
+            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+            "generatedAt": "2026-09-12T04:37:37Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、ホリデー向けマーケティングガイドを公開 AI搭載Advantage+で効果的な広告配信を提案",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-12T04:37:37Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは今週、ホリデーシーズンのキャンペーン計画に関するブログ記事を公開した。購買行動が複数のプラットフォームに分散していることを踏まえ、AI搭載のAdvantage+キャンペーンで適切なクリエイティブを自動配信し、早期に学習フェーズを開始することを推奨している。ショッピングは発見、ディール、ギフト、リフレッシュの4段階に分かれ、ReelsやStoriesでのインスピレーションが特に高い。Conversion Liftで効果測定も提案されている。",
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": "2026-09-12T04:37:37Z",
                 "reviewedAt": null
               }
             }

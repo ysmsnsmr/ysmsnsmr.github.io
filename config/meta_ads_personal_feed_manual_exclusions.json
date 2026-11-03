@@ -124,6 +124,14 @@
     {
       "url": "https://www.socialmediatoday.com/news/meta-delays-business-terms-update-over-data-scraping-concerns/833905/",
       "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.socialmediatoday.com/news/meta-hires-bipartisan-political-team/873403/",
+      "reason": "human-reviewed-out-of-scope"
+    },
+    {
+      "url": "https://www.socialmediatoday.com/news/meta-hit-with-25b-fine-over-privacy-breaches/833798/",
+      "reason": "human-reviewed-out-of-scope"
     }
   ]
 }
