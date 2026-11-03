@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "news" / "malaysia"
 OUTPUT = ROOT / "cloudflare-malaysia-news-dist"
 DAILY_FILE = re.compile(r"\d{4}-\d{2}-\d{2}\.(?:html|md)\Z")
-REQUIRED_FILES = ("index.html", "location-map.js", "daily-page.js")
+REQUIRED_FILES = ("index.html", "archive.html", "location-map.js", "daily-page.js")
 
 
 def build(source: Path, output: Path) -> int:
@@ -30,7 +30,9 @@ def build(source: Path, output: Path) -> int:
     target.mkdir(parents=True, exist_ok=True)
     for name in names:
         shutil.copyfile(source / name, target / name)
-    (output / "_redirects").write_text("/ /news/malaysia/ 302\n", encoding="utf-8")
+    home = (source / "index.html").read_text(encoding="utf-8")
+    home = home.replace('href="./', 'href="/news/malaysia/').replace('src="./', 'src="/news/malaysia/')
+    (output / "index.html").write_text(home, encoding="utf-8")
     print(f"Built {len(names)} Malaysia News public files in {output}")
     return len(names)
 
