@@ -843,11 +843,9 @@ def render_html(days: list[NewsDay]) -> str:
     older = days[7:]
 
     if latest:
-        latest_summary = render_latest_summary(latest).strip()
         status_chips = render_status_chips(latest, format_update_time(latest)).strip()
         recent_rows = render_recent(recent).strip()
     else:
-        latest_summary = '<p class="muted">まだ記事がありません。</p>'
         status_chips = '<p class="muted">まだ記事がありません。</p>'
         recent_rows = '<p class="muted">まだ記事がありません。</p>'
 
@@ -884,13 +882,13 @@ def render_html(days: list[NewsDay]) -> str:
     h1, h2, h3, p {{ margin-top: 0; }}
     h1 {{
       margin-bottom: 8px;
-      font-size: clamp(1.75rem, 3vw, 2.625rem);
-      line-height: 1.08;
+      font-size: 2.15rem;
+      line-height: 1.3;
       letter-spacing: 0;
     }}
     h2 {{
       margin-bottom: 0;
-      font-size: clamp(1.4rem, 2.4vw, 1.875rem);
+      font-size: 1.25rem;
       line-height: 1.16;
     }}
     h3 {{ margin: 0; font-size: 1rem; line-height: 1.35; }}
@@ -905,6 +903,7 @@ def render_html(days: list[NewsDay]) -> str:
       border-radius: var(--radius-control);
     }}
     .subhead {{ max-width: 620px; margin-bottom: 0; color: var(--muted); }}
+    .archive-back {{ display: inline-flex; align-items: center; min-height: 44px; margin-bottom: 8px; font-weight: 700; }}
     section + section {{ margin-top: 32px; }}
     .section-head {{
       display: flex;
@@ -1159,6 +1158,7 @@ def render_html(days: list[NewsDay]) -> str:
     .archive-list span {{ color: var(--muted); }}
     .muted {{ color: var(--muted); }}
     @media (max-width: 760px) {{
+      h1 {{ font-size: 1.7rem; }}
       main {{
         width: min(100% - 20px, 1120px);
         padding-top: 24px;
@@ -1215,7 +1215,7 @@ def render_html(days: list[NewsDay]) -> str:
 </head>
 <body>
   <main>
-    <nav aria-label="ページ内ナビゲーション"><a href="./index.html">← 今日のニュースまとめ</a></nav>
+    <nav aria-label="ページ内ナビゲーション"><a class="archive-back" href="./index.html">← 今日のニュースまとめ</a></nav>
     <header>
       <div>
         <h1>過去のニュースまとめ</h1>
@@ -1223,15 +1223,6 @@ def render_html(days: list[NewsDay]) -> str:
       </div>
     </header>
     {status_chips}
-
-    <section aria-labelledby="today-heading">
-      <div class="section-head">
-        <h2 id="today-heading">今日のピックアップ3件</h2>
-      </div>
-      {latest_summary}
-    </section>
-
-    {render_air_quality_links()}
 
     <section aria-labelledby="recent-heading">
       <div class="section-head">

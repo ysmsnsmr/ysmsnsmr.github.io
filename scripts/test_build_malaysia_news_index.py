@@ -177,32 +177,24 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertIn(f">{shortened}</h3>", card)
         self.assertNotIn("生活への影響", card)
 
-    def test_archive_page_has_separate_summary_and_markdown_routes(self) -> None:
+    def test_archive_page_focuses_on_previous_news(self) -> None:
         page = builder.render_html([self.parse_sample()])
 
         self.assertIn("<h1>過去のニュースまとめ</h1>", page)
         self.assertIn('href="./index.html">← 今日のニュースまとめ</a>', page)
         self.assertNotIn("今日のまとめを読む", page)
         self.assertNotIn('href="#archive-heading">過去分を見る</a>', page)
-        self.assertIn('href="./2026-08-20.html">すべて読む</a>', page)
-        self.assertGreater(page.index('class="today-footer"'), page.index('class="focus-grid"'))
         self.assertIn('href="./2026-08-20.md">Markdown版</a>', page)
-        self.assertIn("今日のピックアップ3件", page)
+        self.assertNotIn("今日のピックアップ3件", page)
+        self.assertNotIn('id="air-quality-heading"', page)
         self.assertIn("毎朝収集・要約", page)
         self.assertIn("直近7日のまとめ", page)
         self.assertIn("recent-headline-list", page)
-        self.assertIn("font-size: clamp(1.75rem, 3vw, 2.625rem)", page)
-        self.assertIn("font-size: clamp(1.4rem, 2.4vw, 1.875rem)", page)
-        self.assertIn(".focus-card h3", page)
-        self.assertIn("white-space: normal", page)
-        self.assertIn(".focus-dek", page)
-        self.assertIn('<p class="focus-dek">午後は雷雨に注意が必要です。</p>', page)
-        self.assertEqual(page.count('class="focus-dek"'), 2)
-        self.assertIn("-webkit-line-clamp: 1", page)
+        self.assertIn("font-size: 2.15rem", page)
 
     def test_air_quality_observations_and_forecasts_are_separate_from_news(self) -> None:
         day = self.parse_sample()
-        for page in (builder.render_html([day]), builder.render_daily_page(day, is_home=True)):
+        for page in (builder.render_daily_page(day, is_home=True),):
             self.assertEqual(page.count('id="air-quality-heading"'), 1)
             self.assertIn(f'href="{builder.APIMS_URL}"', page)
             self.assertIn(f'href="{builder.MYCMAQ_URL}"', page)
@@ -211,6 +203,7 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
             self.assertIn("観測値と予報は別の情報です", page)
             self.assertNotIn("今日のヘイズ予報", page)
         self.assertEqual(len(day.items), 2)
+        self.assertNotIn('id="air-quality-heading"', builder.render_html([day]))
         self.assertNotIn('id="air-quality-heading"', builder.render_daily_page(day))
 
     def test_air_quality_links_appear_only_on_index(self) -> None:
