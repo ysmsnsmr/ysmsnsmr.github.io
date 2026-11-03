@@ -329,6 +329,19 @@ try {
 
   const tagPage = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await tagPage.goto(`${server.origin}/meta-ads-updates/ja/`, { waitUntil: "networkidle" });
+  assert((await tagPage.locator(".tag-hint").textContent()).includes("記事の主題とは限りません"), "home tag guidance must describe mentions");
+  const summaryMatches = await tagPage.evaluate(() => {
+    const matches = (presentation) => window.MetaAdsTags.matches({ title: "General update", presentation }, "meta-muse");
+    return {
+      enOnly: matches({ schemaVersion: "meta-ads-personal-feed-presentation/v3", locales: { en: { status: "missing", fields: { summary: { status: "machine", value: "Muse is mentioned." } } } } }),
+      jaOnly: matches({ schemaVersion: "meta-ads-personal-feed-presentation/v3", locales: { ja: { status: "missing", fields: { summary: { status: "reviewed", value: "Museについての説明。" } } } } }),
+      missing: matches({ schemaVersion: "meta-ads-personal-feed-presentation/v3", locales: { en: { status: "missing", fields: { summary: { status: "missing", value: "Muse" } } } } }),
+      v2: matches({ schemaVersion: "meta-ads-personal-feed-presentation/v2", locales: { en: { status: "reviewed", summary: "Muse is mentioned." } } }),
+      v1: matches({ status: "generated", summaryJa: "Museに言及。" }),
+      v1Pending: matches({ status: "pending", summaryJa: "Museに言及。" }),
+    };
+  });
+  assert(summaryMatches.enOnly && summaryMatches.jaOnly && summaryMatches.v2 && summaryMatches.v1 && !summaryMatches.missing && !summaryMatches.v1Pending, "summary tags must honor field and locale status");
   await tagPage.getByRole("link", { name: "Meta One", exact: true }).click();
   assert(new URL(tagPage.url()).searchParams.get("tag") === "meta-one", "featured tag must update the URL");
   assert(await tagPage.locator(".update-card").count() > 0, "Meta One tag must show matching updates");
@@ -351,6 +364,23 @@ try {
   await tagPage.locator("#reset-button").click();
   assert(!new URL(tagPage.url()).searchParams.has("tag"), "reset must remove the selected tag");
   await tagPage.close();
+
+  const summaryTagPage = await browser.newPage();
+  const summaryOnlyItem = {
+    ...personalFeedV5Report.items[0], title: "General business update",
+    presentation: { schemaVersion: "meta-ads-personal-feed-presentation/v3", locales: {
+      en: { status: "missing", fields: { shortHeadline: { status: "missing", value: null }, summary: { status: "machine", value: "Muse is mentioned in this update." } } },
+      ja: { status: "missing", fields: { shortHeadline: { status: "missing", value: null }, summary: { status: "reviewed", value: "Museにも言及しています。" } } },
+    } },
+  };
+  await summaryTagPage.route("**/personal-feed.json", (route) => route.fulfill({ json: { ...personalFeedV5Report, items: [summaryOnlyItem] } }));
+  await summaryTagPage.goto(`${server.origin}/meta-ads-updates/ja/tags.html`, { waitUntil: "networkidle" });
+  assert((await summaryTagPage.locator(".tags-header").textContent()).includes("記事の主題とは限らず"), "tag directory must explain mentions");
+  assert((await summaryTagPage.getByRole("link", { name: /Meta Muse/ }).textContent()).includes("1件"), "summary match must count one article even if both locales match");
+  await summaryTagPage.getByRole("link", { name: /Meta Muse/ }).click();
+  await summaryTagPage.locator(".update-card").first().waitFor();
+  assert(await summaryTagPage.locator(".update-card").count() === 1, "summary-only match must appear in the filtered list");
+  await summaryTagPage.close();
 
   for (const viewport of viewports) {
     const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });

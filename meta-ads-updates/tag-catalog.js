@@ -1,7 +1,7 @@
 (function () {
   "use strict";
-  // Deliberately conservative title matching: an absent tag is not evidence
-  // that an article is unrelated. No source text or model output is generated.
+  // Tags indicate a mention, not necessarily the article's main subject.
+  // No new model output or source text is generated.
   const tags = [
     { id: "meta-muse", en: "Meta Muse", ja: "Meta Muse", pattern: /\bmuse\b|メタ\s*ミューズ/i },
     { id: "meta-one", en: "Meta One", ja: "Meta One", pattern: /\bmeta[\s-]+one\b|メタ\s*ワン/i },
@@ -15,13 +15,19 @@
   ];
   function texts(item) {
     const p = item.presentation || {};
-    const titles = [item.title, p.shortHeadlineJa];
+    const values = [item.title, p.shortHeadlineJa];
+    if (p.status === "generated") values.push(p.summaryJa);
     for (const locale of ["en", "ja"]) {
       const value = p.locales?.[locale];
-      if (["machine", "reviewed"].includes(value?.status)) titles.push(value.shortHeadline);
-      if (["machine", "reviewed"].includes(value?.fields?.shortHeadline?.status)) titles.push(value.fields.shortHeadline.value);
+      if (["machine", "reviewed"].includes(value?.status)) values.push(value.shortHeadline);
+      if (["machine", "reviewed"].includes(value?.fields?.shortHeadline?.status)) values.push(value.fields.shortHeadline.value);
+      if (p.schemaVersion === "meta-ads-personal-feed-presentation/v3") {
+        if (["machine", "reviewed"].includes(value?.fields?.summary?.status)) values.push(value.fields.summary.value);
+      } else if (["machine", "reviewed"].includes(value?.status)) {
+        values.push(value.summary);
+      }
     }
-    return titles.filter((text) => typeof text === "string" && text.trim());
+    return values.filter((text) => typeof text === "string" && text.trim());
   }
   function matches(item, id) {
     const tag = tags.find((entry) => entry.id === id);
