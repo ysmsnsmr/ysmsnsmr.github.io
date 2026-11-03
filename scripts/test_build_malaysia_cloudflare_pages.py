@@ -11,18 +11,23 @@ class MalaysiaCloudflareBuildTests(unittest.TestCase):
             root = Path(temporary)
             source = root / "source"
             source.mkdir()
-            for name in ("index.html", "location-map.js", "daily-page.js", "2026-10-28.html", "2026-10-28.md", "private.json"):
+            for name in ("index.html", "archive.html", "location-map.js", "daily-page.js", "2026-10-28.html", "2026-10-28.md", "private.json"):
                 (source / name).write_text(name, encoding="utf-8")
+            (source / "index.html").write_text('<a href="./archive.html">archive</a><a href="#article-1">article</a><script src="./daily-page.js"></script>', encoding="utf-8")
             output = root / "output"
-            self.assertEqual(mirror.build(source, output), 5)
+            self.assertEqual(mirror.build(source, output), 6)
             target = output / "news" / "malaysia"
             self.assertEqual({path.name for path in target.iterdir()},
-                             {"index.html", "location-map.js", "daily-page.js", "2026-10-28.html", "2026-10-28.md"})
-            self.assertEqual((output / "_redirects").read_text(), "/ /news/malaysia/ 302\n")
+                             {"index.html", "archive.html", "location-map.js", "daily-page.js", "2026-10-28.html", "2026-10-28.md"})
+            root_home = (output / "index.html").read_text(encoding="utf-8")
+            self.assertIn('href="/news/malaysia/archive.html"', root_home)
+            self.assertIn('href="#article-1"', root_home)
+            self.assertIn('src="/news/malaysia/daily-page.js"', root_home)
+            self.assertFalse((output / "_redirects").exists())
             self.assertFalse((output / "_headers").exists())
             with self.assertRaises(ValueError):
                 mirror.build(source, output)
-            self.assertEqual((target / "index.html").read_text(), "index.html")
+            self.assertEqual((target / "index.html").read_text(), (source / "index.html").read_text())
 
     def test_symbolic_links_and_missing_required_files_are_rejected(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -47,6 +52,8 @@ class MalaysiaCloudflareBuildTests(unittest.TestCase):
                 self.assertTrue((target / name).is_file(), name)
             self.assertTrue((target / "location-map.js").is_file())
             self.assertTrue((target / "daily-page.js").is_file())
+            self.assertTrue((target / "archive.html").is_file())
+            self.assertIn('href="/news/malaysia/archive.html"', (output / "index.html").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

@@ -699,8 +699,18 @@ def render_source_only_section(day: NewsDay) -> str:
             '''
 
 
-def render_daily_page(day: NewsDay) -> str:
+def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
     location_map = render_location_map(day)
+    home_navigation = '<span class="site-name">マレーシア生活ニュース</span><a class="archive-link" href="./archive.html">過去のニュースまとめ</a>'
+    daily_navigation = '<a class="back-link" href="./index.html">← マレーシア生活ニュース</a>'
+    home_styles = '''    .site-name { font-size: 1.15rem; font-weight: 750; color: var(--accent-strong); }
+    .archive-link { display: inline-flex; align-items: center; min-height: 44px; border: 1px solid var(--line); border-radius: 6px; padding: 6px 14px; background: var(--panel); color: var(--accent-strong); font-size: .9rem; font-weight: 700; text-decoration: none; }
+    .air-quality-links { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 24px; border-block: 1px solid var(--line); padding: 14px 0; }
+    .air-quality-links h2 { font-size: 1rem; }
+    .air-quality-links p { margin: 3px 0 0; color: var(--muted); font-size: .84rem; }
+    .air-quality-actions { display: flex; flex-wrap: wrap; gap: 8px 16px; flex: 0 0 auto; font-size: .88rem; }
+    @media (max-width: 600px) { .air-quality-links { align-items: flex-start; flex-direction: column; } .air-quality-actions { flex: 1 1 auto; } }
+''' if is_home else ''
     return f"""<!doctype html>
 <html lang="ja">
 <head>
@@ -726,7 +736,7 @@ def render_daily_page(day: NewsDay) -> str:
     a {{ color: var(--accent); text-underline-offset: 0.18em; }}
     a:focus-visible {{ outline: 3px solid var(--focus); outline-offset: 3px; border-radius: var(--radius-control); }}
     .page-header {{ margin-bottom: 28px; }}
-    .page-nav {{ display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 28px; }}
+{home_styles}    .page-nav {{ display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 28px; }}
     .back-link {{ font-weight: 700; }}
     .markdown-link {{ color: var(--muted); font-size: .9rem; }}
     .eyebrow {{ margin-bottom: 3px; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }}
@@ -785,14 +795,14 @@ def render_daily_page(day: NewsDay) -> str:
   <main id="page-top" tabindex="-1">
     <header class="page-header">
       <nav class="page-nav" aria-label="ページ内ナビゲーション">
-        <a class="back-link" href="./index.html">← マレーシア生活ニュース</a>
+        {home_navigation if is_home else daily_navigation}
         <a class="markdown-link" href="{markdown_link(day)}">Markdown版</a>
       </nav>
       <p class="eyebrow">Daily summary</p>
       <h1>{esc(format_date(day.date))}のニュースまとめ</h1>
       <p class="subhead">{esc(as_of_label(day))}。期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。</p>
     </header>
-    <nav class="category-nav" aria-label="カテゴリへ移動">
+    {render_air_quality_links() if is_home else ''}<nav class="category-nav" aria-label="カテゴリへ移動">
       {''.join(f'<a href="#category-{index + 1}">{esc(category_label(category))} {day.category_counts.get(category, 0)}件</a>' for index, category in enumerate(CATEGORIES))}
     </nav>
     {location_map}
@@ -827,7 +837,7 @@ def render_html(days: list[NewsDay]) -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>マレーシア生活ニュース</title>
+  <title>過去のニュースまとめ | マレーシア生活ニュース</title>
   <style>
 {MALAYSIA_NEWS_TOKENS_CSS}
     * {{ box-sizing: border-box; }}
@@ -1186,9 +1196,10 @@ def render_html(days: list[NewsDay]) -> str:
 </head>
 <body>
   <main>
+    <nav aria-label="ページ内ナビゲーション"><a href="./index.html">← 今日のニュースまとめ</a></nav>
     <header>
       <div>
-        <h1>マレーシア生活ニュース</h1>
+        <h1>過去のニュースまとめ</h1>
         <p class="subhead">生活に関わるマレーシアニュースを毎朝収集・要約しています。</p>
       </div>
     </header>
@@ -1233,8 +1244,10 @@ def main() -> int:
         for path in sorted(NEWS_DIR.glob("*.md"), reverse=True)
         if re.fullmatch(r"\d{4}-\d{2}-\d{2}", path.stem)
     ]
-    rendered = "\n".join(line.rstrip() for line in render_html(days).splitlines()) + "\n"
-    OUTPUT_PATH.write_text(rendered, encoding="utf-8")
+    archive = "\n".join(line.rstrip() for line in render_html(days).splitlines()) + "\n"
+    (NEWS_DIR / "archive.html").write_text(archive, encoding="utf-8")
+    home = render_daily_page(days[0], is_home=True) if days else render_html(days)
+    OUTPUT_PATH.write_text("\n".join(line.rstrip() for line in home.splitlines()) + "\n", encoding="utf-8")
     for day in days:
         daily_output = NEWS_DIR / f"{day.date}.html"
         daily_rendered = "\n".join(

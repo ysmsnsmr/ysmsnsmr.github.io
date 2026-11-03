@@ -1961,3 +1961,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Add the fixed catalog, major tags and tag directory to the existing bilingual static feed, and verify filtering and deployment.
 - Revisit when: Tag matching misses useful updates or groups irrelevant content.
+
+<!-- idea-gate:20261103-malaysia-home-production -->
+## 最新の日別まとめをTOPにし過去一覧へ遷移
+
+- Record ID: `20261103-malaysia-home-production`
+- Evaluated: 2026-11-03T18:00:00+08:00
+- Project: Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 87/100
+- Confidence: high - 承認済みモックと既存生成・配布経路を確認済み
+
+### Idea Card
+
+- Purpose: 最新ニュースと公式大気情報に直接アクセスし過去記事にも移動できるようにする
+- First experience: TOPに最新日別記事と大気情報、過去一覧へのリンクを表示
+- Scope and cost: 既存の静的生成とCloudflare配布を変更し、追加課金なし
+- Continuation boundary: 公開後に導線と日々の更新を確認し、使いにくさやリンク不具合があれば見直す
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 13/15 |
+| `evidence_and_learning` | 13/15 |
+| `expected_outcome` | 13/15 |
+| `scope_and_fit` | 13/15 |
+| `ownership_and_reversibility` | 17/20 |
+| **Total** | **87/100** |
+
+### Next Step
+
+- Action: 生成と配布を更新し自動更新と両公開先の導線を検証
+- Revisit when: 最新記事が自動更新されない; 既存リンクや地図が動かない; 過去記事への移動が分かりにくい
