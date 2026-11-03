@@ -103,18 +103,30 @@
       #location-map-canvas { min-height: 260px; }
       .map-index { max-height: 170px; padding: 4px 0; }
     }
+    .page-nav { justify-content: space-between; gap: 12px; margin-bottom: 24px; }
+    .header-actions { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 12px; }
+    .eyebrow { letter-spacing: 0; }
+    .page-header h1 { font-size: 2.15rem; line-height: 1.3; margin-bottom: 10px; }
+    .updated-at { margin: 0; color: var(--muted); font-size: .95rem; }
+    .notice { margin: 6px 0 0; max-width: 680px; color: var(--muted); font-size: .88rem; }
+    @media (max-width: 600px) {
+      .page-nav { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 12px; }
+      .site-name { flex: 1 0 100%; }
+      .header-actions { justify-content: flex-start; }
+      .page-header h1 { font-size: 1.7rem; }
+    }
   </style>
 </head>
 <body>
   <main id="page-top" tabindex="-1">
     <header class="page-header">
       <nav class="page-nav" aria-label="ページ内ナビゲーション">
-        <span class="site-name">マレーシア生活ニュース</span><a class="archive-link" href="./archive.html">過去のニュースまとめ</a>
-        <a class="markdown-link" href="./2026-11-03.md">Markdown版</a>
+        <span class="site-name">マレーシア生活ニュース</span><div class="header-actions"><a class="archive-link" href="./archive.html">過去のニュースまとめ</a><a class="markdown-link" href="./2026-11-03.md">Markdown版</a></div>
       </nav>
       <p class="eyebrow">Daily summary</p>
-      <h1>2026年11月3日のニュースまとめ</h1>
-      <p class="subhead">2026年11月3日 09:48 MYT 時点のまとめ。期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。</p>
+      <h1>2026年11月3日の<wbr>ニュースまとめ</h1>
+      <p class="updated-at">2026年11月3日 09:48 MYT 時点のまとめ</p>
+      <p class="notice">期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。</p>
     </header>
 
     <section class="air-quality-links" aria-labelledby="air-quality-heading">

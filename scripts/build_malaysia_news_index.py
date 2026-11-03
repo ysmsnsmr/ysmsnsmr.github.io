@@ -701,8 +701,15 @@ def render_source_only_section(day: NewsDay) -> str:
 
 def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
     location_map = render_location_map(day)
-    home_navigation = '<span class="site-name">マレーシア生活ニュース</span><a class="archive-link" href="./archive.html">過去のニュースまとめ</a>'
-    daily_navigation = '<a class="back-link" href="./index.html">← マレーシア生活ニュース</a>'
+    markdown_navigation = f'<a class="markdown-link" href="{markdown_link(day)}">Markdown版</a>'
+    home_navigation = ('<span class="site-name">マレーシア生活ニュース</span>'
+                       '<div class="header-actions"><a class="archive-link" href="./archive.html">過去のニュースまとめ</a>'
+                       f'{markdown_navigation}</div>')
+    daily_navigation = f'<a class="back-link" href="./index.html">← マレーシア生活ニュース</a>\n        {markdown_navigation}'
+    note = '期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。'
+    header_note = (f'<p class="updated-at">{esc(as_of_label(day))}</p>\n      <p class="notice">{note}</p>'
+                   if is_home else f'<p class="subhead">{esc(as_of_label(day))}。{note}</p>')
+    header_title = f'{esc(format_date(day.date))}の<wbr>ニュースまとめ' if is_home else f'{esc(format_date(day.date))}のニュースまとめ'
     home_styles = '''    .site-name { font-size: 1.15rem; font-weight: 750; color: var(--accent-strong); }
     .archive-link { display: inline-flex; align-items: center; min-height: 44px; border: 1px solid var(--line); border-radius: 6px; padding: 6px 14px; background: var(--panel); color: var(--accent-strong); font-size: .9rem; font-weight: 700; text-decoration: none; }
     .air-quality-links { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 24px; border-block: 1px solid var(--line); padding: 14px 0; }
@@ -710,6 +717,19 @@ def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
     .air-quality-links p { margin: 3px 0 0; color: var(--muted); font-size: .84rem; }
     .air-quality-actions { display: flex; flex-wrap: wrap; gap: 8px 16px; flex: 0 0 auto; font-size: .88rem; }
     @media (max-width: 600px) { .air-quality-links { align-items: flex-start; flex-direction: column; } .air-quality-actions { flex: 1 1 auto; } }
+''' if is_home else ''
+    home_layout_styles = '''    .page-nav { justify-content: space-between; gap: 12px; margin-bottom: 24px; }
+    .header-actions { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 12px; }
+    .eyebrow { letter-spacing: 0; }
+    .page-header h1 { font-size: 2.15rem; line-height: 1.3; margin-bottom: 10px; }
+    .updated-at { margin: 0; color: var(--muted); font-size: .95rem; }
+    .notice { margin: 6px 0 0; max-width: 680px; color: var(--muted); font-size: .88rem; }
+    @media (max-width: 600px) {
+      .page-nav { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 12px; }
+      .site-name { flex: 1 0 100%; }
+      .header-actions { justify-content: flex-start; }
+      .page-header h1 { font-size: 1.7rem; }
+    }
 ''' if is_home else ''
     return f"""<!doctype html>
 <html lang="ja">
@@ -789,18 +809,17 @@ def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
       #location-map-canvas {{ min-height: 260px; }}
       .map-index {{ max-height: 170px; padding: 4px 0; }}
     }}
-  </style>
+{home_layout_styles}  </style>
 </head>
 <body>
   <main id="page-top" tabindex="-1">
     <header class="page-header">
       <nav class="page-nav" aria-label="ページ内ナビゲーション">
         {home_navigation if is_home else daily_navigation}
-        <a class="markdown-link" href="{markdown_link(day)}">Markdown版</a>
       </nav>
       <p class="eyebrow">Daily summary</p>
-      <h1>{esc(format_date(day.date))}のニュースまとめ</h1>
-      <p class="subhead">{esc(as_of_label(day))}。期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。</p>
+      <h1>{header_title}</h1>
+      {header_note}
     </header>
     {render_air_quality_links() if is_home else ''}<nav class="category-nav" aria-label="カテゴリへ移動">
       {''.join(f'<a href="#category-{index + 1}">{esc(category_label(category))} {day.category_counts.get(category, 0)}件</a>' for index, category in enumerate(CATEGORIES))}
