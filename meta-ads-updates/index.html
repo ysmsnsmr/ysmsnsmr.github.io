@@ -48,12 +48,7 @@
             <p class="tag-hint">Tags show mentions in titles and AI summaries; they may not be the article's main subject.</p>
           </div>
         </form>
-        <p id="result-summary" class="result-summary" aria-live="polite"></p>
-      </section>
-
-      <section id="unofficial-notice" class="unofficial-notice" aria-label="About unofficial information" hidden>
-        <strong>About unofficial information</strong>
-        <span>Unofficial sources are early signals and do not represent Meta’s official position. For important decisions, cross-check with additional sources and your own environment.</span>
+        <p id="result-summary" class="result-summary visually-hidden" aria-live="polite"></p>
       </section>
 
       <section id="legacy-list-section" class="feed-group" hidden>
@@ -65,6 +60,10 @@
       </section>
       <section id="unofficial-group" class="feed-group" aria-labelledby="unofficial-group-heading" hidden>
         <header class="feed-group-heading"><h2 id="unofficial-group-heading">Unofficial</h2><p id="unofficial-group-count" class="group-count"></p></header>
+        <section id="unofficial-notice" class="unofficial-notice" aria-label="About unofficial information" hidden>
+          <strong>About unofficial information</strong>
+          <span>Unofficial sources are early signals and do not represent Meta’s official position. For important decisions, cross-check with additional sources and your own environment.</span>
+        </section>
         <ol id="unofficial-list" class="update-list" aria-live="polite"></ol>
       </section>
       <section id="sdk-group" class="feed-group" aria-labelledby="sdk-group-heading" hidden>
