@@ -12,6 +12,10 @@
     { id: "placements", en: "Ad placements", ja: "広告配置", pattern: /\b(?:ad\s+)?placements?\b|広告配置|配信面/i },
     { id: "creative", en: "Creative", ja: "クリエイティブ", pattern: /\bcreatives?\b|クリエイティブ/i },
     { id: "audiences", en: "Audiences", ja: "オーディエンス", pattern: /\baudiences?\b|オーディエンス/i },
+    { id: "budget", en: "Budget", ja: "予算", pattern: /\bbudgets?\b|予算/i },
+    { id: "campaign", en: "Campaign", ja: "キャンペーン", pattern: /\bcampaigns?\b|キャンペーン/i },
+    { id: "ai", en: "AI", ja: "AI", pattern: /\bai\b|\bartificial\s+intelligence\b|人工知能/i },
+    { id: "exclusion", en: "Exclusions", ja: "除外", pattern: /\bexclud(?:e|es|ed|ing)\b|\bexclusions?\b|除外/i },
   ];
   function texts(item) {
     const p = item.presentation || {};
