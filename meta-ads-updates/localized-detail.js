@@ -29,13 +29,13 @@
   }
   function selectedQuery() {
     const query = new URLSearchParams();
-    for (const key of ["id", "source", "type", "q", "tag", "personal-fixture"]) { const value = params.get(key); if (value) query.set(key, value.slice(0, 160)); }
+    for (const key of ["id", "q", "tag", "personal-fixture"]) { const value = params.get(key); if (value) query.set(key, value.slice(0, 160)); }
     return query;
   }
   function setHref(element, path, query) { const url = new URL(path, window.location.href); url.search = query.toString(); element.href = `${url.pathname}${url.search}`; }
   function setupNavigation() {
     const listQuery = new URLSearchParams();
-    for (const key of ["source", "type", "q", "tag", "personal-fixture"]) { const value = params.get(key); if (value) listQuery.set(key, value.slice(0, 160)); }
+    for (const key of ["q", "tag", "personal-fixture"]) { const value = params.get(key); if (value) listQuery.set(key, value.slice(0, 160)); }
     setHref(el.back, "./", listQuery);
     const fullQuery = selectedQuery();
     setHref(el.en, locale === "ja" ? "../detail.html" : "./detail.html", fullQuery);

@@ -2031,3 +2031,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Reorder existing elements and verify both locales.
 - Revisit when: The notice becomes difficult to find or the new layout is unclear.
+
+<!-- idea-gate:20261107-meta-ads-simple-search -->
+## Simplify search to keyword and product tags
+
+- Record ID: `20261107-meta-ads-simple-search`
+- Evaluated: 2026-11-07T12:00:00+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 88/100
+- Confidence: high - The requested scope and visual intent are explicit.
+
+### Idea Card
+
+- Purpose: Reduce clutter and find updates through search and tags.
+- First experience: See only the search field and featured tags instead of source filters.
+- Scope and cost: A reversible bilingual UI and filter removal; no new service or data.
+- Continuation boundary: Keep unless users need source filtering again; restore through a separate change if needed.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 18/20 |
+| `reason_to_make` | 13/15 |
+| `evidence_and_learning` | 12/15 |
+| `expected_outcome` | 13/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 18/20 |
+| **Total** | **88/100** |
+
+### Next Step
+
+- Action: Remove source filters and verify search, tags, return links and both locales.
+- Revisit when: Users need source-based filtering again.

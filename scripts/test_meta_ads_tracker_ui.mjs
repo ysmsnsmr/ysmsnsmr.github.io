@@ -201,8 +201,6 @@ async function startServer() {
 }
 
 async function applyFixtureFilters(page, fixture) {
-  if (fixture.filters.sourceId !== "all") await page.selectOption("#source-filter", fixture.filters.sourceId);
-  if (fixture.filters.priority !== "all") await page.selectOption("#priority-filter", fixture.filters.priority);
   if (fixture.filters.query) await page.fill("#query-filter", fixture.filters.query);
 }
 
@@ -248,7 +246,7 @@ async function assertAccessibilityAndLayout(page, label) {
     const style = getComputedStyle(active);
     return { id: active?.id, outline: style.outlineStyle, width: style.outlineWidth };
   });
-  assert(["locale-en", "source-filter"].includes(focus.id) && focus.outline !== "none" && focus.width === "3px", `${label}: keyboard focus is not visibly styled`);
+  assert(["locale-en", "query-filter"].includes(focus.id) && focus.outline !== "none" && focus.width === "3px", `${label}: keyboard focus is not visibly styled`);
   await page.addScriptTag({ content: axeSource });
   const axe = await page.evaluate(async () => globalThis.axe.run(document, { runOnly: ["wcag2a", "wcag2aa"] }));
   assert(axe.violations.length === 0, `${label}: axe violations: ${axe.violations.map((item) => item.id).join(", ")}`);
@@ -370,8 +368,8 @@ try {
   await tagPage.getByRole("link", { name: /広告マネージャー/ }).click();
   assert(new URL(tagPage.url()).searchParams.get("tag") === "ads-manager", "directory tag must filter the list");
   assert(await tagPage.locator('.tag-chip[aria-current="true"]').count() === 1, "selected tag must remain visible");
-  await tagPage.locator("#reset-button").click();
-  assert(!new URL(tagPage.url()).searchParams.has("tag"), "reset must remove the selected tag");
+  await tagPage.locator('.tag-chip[aria-current="true"]').click();
+  assert(!new URL(tagPage.url()).searchParams.has("tag"), "clicking the active tag must clear it");
   await tagPage.close();
 
   const summaryTagPage = await browser.newPage();
@@ -410,16 +408,7 @@ try {
     assert(await page.locator(".update-summary").count() === 2, `${label}: summaries must appear only for completed presentations`);
     assert((await page.locator(".update-summary").allTextContents()).includes("Meta Ads APIに関する観測記事です。"), `${label}: completed Japanese summary is missing from the list`);
     assert(await page.locator(".update-summary").first().evaluate((node) => getComputedStyle(node).whiteSpace) === "nowrap", `${label}: list summary must stay on one line`);
-    const filterLayout = await page.evaluate(() => {
-      const ids = [...document.querySelectorAll("#filter-form > .filter-field")].map((field) => field.classList.contains("filter-field--query") ? "query" : field.classList.contains("filter-field--source") ? "source" : "type");
-      const rect = (selector) => {
-        const { top, bottom, left, width } = document.querySelector(selector).getBoundingClientRect();
-        return { top, bottom, left, width };
-      };
-      return { ids, query: rect(".filter-field--query"), source: rect(".filter-field--source"), type: rect(".filter-field--type") };
-    });
-    assert(filterLayout.ids.join(",") === "query,source,type", `${label}: keyword search must precede source filters`);
-    assert(filterLayout.query.bottom <= filterLayout.source.top && Math.abs(filterLayout.source.top - filterLayout.type.top) <= 1, `${label}: search and source filters are not arranged in the reading-first order`);
+    assert(await page.locator("#source-filter, #priority-filter, #reset-button").count() === 0, `${label}: removed filters must not appear`);
     assert(await page.locator(".unofficial-copy").count() === 0, `${label}: per-card non-official warning must not be rendered`);
     assert((await page.locator(".list-dates").allTextContents()).some((text) => text.includes("発表日: 2026-08-29")), `${label}: known publication date is missing from the list`);
     assert((await page.locator(".list-dates").allTextContents()).some((text) => text.includes("最終更新日: 2026-08-29")), `${label}: known final update date is missing from the list`);
@@ -437,14 +426,10 @@ try {
     await assertTokens(page);
     await assertAccessibilityAndLayout(page, label);
     if (viewport.name === "desktop") {
-      await page.selectOption("#priority-filter", "unofficial");
-      assert(await page.locator(".update-card").count() === 2, "personal feed non-official filter failed");
-      await page.selectOption("#source-filter", "search-engine-land-meta-rss");
-      assert(await page.locator(".update-card").count() === 2, "personal feed source filter failed");
       await page.fill("#query-filter", "表示変更");
       assert(await page.locator(".update-card").count() === 1, "personal feed query filter failed");
-      await page.click("#reset-button");
-      assert(await page.locator(".update-card").count() === 3, "personal feed reset failed");
+      await page.fill("#query-filter", "");
+      assert(await page.locator(".update-card").count() === 3, "clearing the query must restore results");
     }
     if (artifactDirectory) {
       await page.screenshot({ path: path.join(artifactDirectory, `personal-feed-${viewport.name}-viewport.png`) });
@@ -496,13 +481,9 @@ try {
   assert(await v5List.locator("#sdk-list .update-card, #sdk-list .detail-link, #sdk-list .origin-label, #sdk-list .fact-grid").count() === 0, "v5 SDK release must only expose the compact log fields");
   assert(await v5List.locator("#sdk-list .sdk-update-log-link").evaluate((link) => link.href.startsWith("https://") && link.target === "_blank" && link.rel.includes("noreferrer")), "v5 SDK log link is unsafe");
   assert(await v5List.evaluate(() => document.querySelector("#unofficial-group").compareDocumentPosition(document.querySelector("#sdk-group")) & Node.DOCUMENT_POSITION_FOLLOWING), "v5 SDK log must follow the regular news groups");
-  await v5List.selectOption("#priority-filter", "official");
-  assert(await v5List.locator("#sdk-list .sdk-update-log-item").count() === 1, "v5 official filter must preserve the SDK update log");
-  await v5List.selectOption("#source-filter", "meta-business-sdk-releases");
-  assert(await v5List.locator(".update-card").count() === 0 && await v5List.locator("#sdk-list .sdk-update-log-item").count() === 1, "v5 SDK source filter must preserve the SDK update log");
   await v5List.fill("#query-filter", "v27.0.0");
   assert(await v5List.locator("#sdk-list .sdk-update-log-item").count() === 1, "v5 SDK query filter must search release titles");
-  await v5List.click("#reset-button");
+  await v5List.fill("#query-filter", "");
   assert(await v5List.locator(".update-card").count() === personalFeedV5Report.items.length - 1 && await v5List.locator("#sdk-list .sdk-update-log-item").count() === 1, "v5 reset must restore cards and the SDK update log");
   assert(await v5List.locator(".lane-label").count() === 0, "v5 list must not expose a lane label");
   await assertAccessibilityAndLayout(v5List, "personal-feed-v5/desktop");
@@ -561,11 +542,9 @@ try {
     page.on("pageerror", (error) => pageErrors.push(error.message));
     const label = `personal-detail/${viewport.name}`;
     await page.goto(`${server.origin}/meta-ads-updates/ja/?personal-fixture=1`, { waitUntil: "networkidle" });
-    await page.selectOption("#source-filter", "search-engine-land-meta-rss");
-    await page.selectOption("#priority-filter", "unofficial");
     await page.fill("#query-filter", "表示変更");
     const href = await page.locator(".update-title-link").getAttribute("href");
-    assert(href?.includes("personal-fixture=1") && href.includes("source=search-engine-land-meta-rss") && href.includes("type=unofficial") && href.includes("q=%E8%A1%A8%E7%A4%BA%E5%A4%89%E6%9B%B4"), `${label}: detail link did not preserve filters`);
+    assert(href?.includes("personal-fixture=1") && href.includes("q=%E8%A1%A8%E7%A4%BA%E5%A4%89%E6%9B%B4"), `${label}: detail link did not preserve search`);
     await page.locator(".update-title-link").click();
     await page.waitForURL(/detail\.html\?/);
     assert(await page.locator("#detail-card").isVisible(), `${label}: detail card is missing`);
@@ -578,7 +557,7 @@ try {
     const detailNotice = await page.locator("#detail-unofficial-notice").textContent();
     assert(detailNotice.includes("公式情報で確認できない内容もあるため") && detailNotice.includes("複数の情報源や実環境で追加確認"), `${label}: detail notice must explain that official confirmation may not exist`);
     assert(await page.locator("#detail-source-link").evaluate((link) => link.href.startsWith("https://") && link.target === "_blank" && link.rel.includes("noreferrer")), `${label}: source link is unsafe`);
-    assert((await page.locator("#back-link").getAttribute("href")).includes("source=search-engine-land-meta-rss"), `${label}: back link did not preserve filters`);
+    assert((await page.locator("#back-link").getAttribute("href")).includes("q="), `${label}: back link did not preserve search`);
     assert(consoleErrors.length === 0 && pageErrors.length === 0, `${label}: runtime errors: ${[...consoleErrors, ...pageErrors].join("; ")}`);
     await assertDetailAccessibilityAndLayout(page, label);
     if (artifactDirectory) {
@@ -587,8 +566,6 @@ try {
     }
     await page.locator("#back-link").click();
     await page.waitForURL(/\/ja\/\?/);
-    assert(await page.locator("#source-filter").inputValue() === "search-engine-land-meta-rss", `${label}: source filter was not restored`);
-    assert(await page.locator("#priority-filter").inputValue() === "unofficial", `${label}: classification filter was not restored`);
     assert(await page.locator("#query-filter").inputValue() === "表示変更", `${label}: query filter was not restored`);
     await page.close();
   }
@@ -716,21 +693,12 @@ try {
       await page.screenshot({ path: path.join(artifactDirectory, `demo-${viewport.name}-full-page.png`), fullPage: true });
     }
     if (viewport.name === "desktop") {
-      await page.selectOption("#source-filter", "meta-product-news-rss");
-      assert(await page.locator("#update-list .update-card").count() === 3, "demo Product News filter failed");
-      await page.click("#reset-button");
-      await page.selectOption("#source-filter", "meta-business-sdk-releases");
-      assert(await page.locator("#update-list .update-card").count() === 1, "demo SDK filter failed");
-      await page.click("#reset-button");
-      await page.selectOption("#priority-filter", "high");
-      assert(await page.locator("#update-list .update-card").count() === 1, "demo high-priority filter failed");
-      await page.click("#reset-button");
       await page.fill("#query-filter", "設定手順B");
       assert(await page.locator("#update-list .update-card").count() === 1, "demo query filter failed");
-      await page.selectOption("#priority-filter", "high");
-      assert(await page.locator("#update-list .update-card").count() === 0, "demo combined filters must show no results");
+      await page.fill("#query-filter", "no-such-update");
+      assert(await page.locator("#update-list .update-card").count() === 0, "demo search must show no results");
       assert(await page.locator("#empty-state").isVisible(), "demo filtered empty state is missing");
-      await page.click("#reset-button");
+      await page.fill("#query-filter", "");
       assert(await page.locator("#update-list .update-card").count() === demoReport.items.length, "demo reset failed");
     }
     await page.close();
@@ -739,12 +707,6 @@ try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await page.goto(`${server.origin}/meta-ads-updates/index.html?fixture=normal-week`, { waitUntil: "networkidle" });
   assert(await page.locator("#update-list .update-card").count() === 3, "normal-week initial count must be three");
-  await page.selectOption("#source-filter", "meta-business-sdk-releases");
-  assert(await page.locator("#update-list .update-card").count() === 1, "source filter failed");
-  await page.selectOption("#priority-filter", "high");
-  assert(await page.locator("#update-list .update-card").count() === 0, "combined filter failed");
-  await page.click("#reset-button");
-  assert(await page.locator("#update-list .update-card").count() === 3, "reset failed");
   await page.fill("#query-filter", "設定手順B");
   assert(await page.locator("#update-list .update-card").count() === 1, "query filter failed");
   await page.close();
@@ -754,7 +716,7 @@ try {
   assert((await englishList.locator("#official-list h2").textContent()) === "Meta Ads measurement update", "English route must use the English overlay");
   assert((await englishList.locator("#official-list .update-summary").textContent()) === "Meta announced an update for advertisers using measurement tools.", "English list must show its completed one-line summary");
   assert(await englishList.locator(".update-card").allTextContents().then((cards) => !cards.join(" ").includes("machine") && !cards.join(" ").includes("missing")), "list cards must not expose generation status");
-  assert(await englishList.locator("#locale-ja").getAttribute("href").then((href) => href === "/meta-ads-updates/ja/?source=meta-product-news-rss&type=official&q=measurement&personal-fixture=v3"), "language switch must retain supported list filters");
+  assert(await englishList.locator("#locale-ja").getAttribute("href").then((href) => href === "/meta-ads-updates/ja/?q=measurement&personal-fixture=v3"), "language switch must retain search and ignore removed filters");
   assert(await englishList.locator("#canonical-link").getAttribute("href") === "https://ysmsnsmr.github.io/meta-ads-updates/", "English list canonical is incorrect");
   assert(await englishList.locator("#alternate-ja").getAttribute("href") === "https://ysmsnsmr.github.io/meta-ads-updates/ja/", "English list hreflang is incorrect");
   await assertAccessibilityAndLayout(englishList, "english-list/desktop");
@@ -765,7 +727,7 @@ try {
   assert(await englishList.locator('meta[name="robots"]').getAttribute("content") === "noindex,follow", "detail must be noindex,follow");
   assert(await englishList.locator("#canonical-link").getAttribute("href").then((href) => href?.startsWith("https://ysmsnsmr.github.io/meta-ads-updates/detail.html?id=")), "English detail canonical is incorrect");
   assert(await englishList.locator("#alternate-ja").getAttribute("href").then((href) => href?.startsWith("https://ysmsnsmr.github.io/meta-ads-updates/ja/detail.html?id=")), "English detail hreflang is incorrect");
-  assert(await englishList.locator("#locale-ja").getAttribute("href").then((href) => href?.includes("/ja/detail.html?id=") && href.includes("source=meta-product-news-rss") && href.includes("type=official") && href.includes("q=measurement")), "detail language switch must retain id and filters");
+  assert(await englishList.locator("#locale-ja").getAttribute("href").then((href) => href?.includes("/ja/detail.html?id=") && href.includes("q=measurement") && !href.includes("source=") && !href.includes("type=")), "detail language switch must retain search and omit removed filters");
   await englishList.context().grantPermissions(["clipboard-read", "clipboard-write"], { origin: server.origin });
   await englishList.locator("#detail-copy-email").click();
   const englishCopy = await englishList.evaluate(() => navigator.clipboard.readText());
