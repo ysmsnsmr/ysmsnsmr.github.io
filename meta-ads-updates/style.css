@@ -222,13 +222,6 @@ h1 {
   letter-spacing: -0.03em;
 }
 
-.masthead-copy {
-  max-width: none;
-  margin: var(--tracker-space-2) 0 0;
-  color: var(--tracker-muted);
-  font-size: 0.95rem;
-}
-
 .week-stamp {
   margin: var(--tracker-space-2) 0 0;
   padding: 0;
