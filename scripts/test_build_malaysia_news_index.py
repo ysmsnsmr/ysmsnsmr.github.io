@@ -145,7 +145,7 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertEqual(builder.format_update_time(day), "2026年9月27日 17:08 MYT")
         self.assertIn("17:08 MYT 時点のまとめ", builder.render_daily_page(day))
         self.assertEqual(builder.render_daily_page(day).count("17:08 MYT"), 1)
-        self.assertEqual(builder.render_html([day]).count("17:08 MYT"), 1)
+        self.assertNotIn("17:08 MYT", builder.render_html([day]))
         self.assertNotIn("時点の記録</p>", builder.render_daily_page(day))
         self.assertNotIn("時点の記録</p>", builder.render_html([day]))
         self.assertIn("現在の発表は出典で確認してください", builder.render_daily_page(day))
@@ -187,10 +187,12 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertIn('href="./index.html">← 今日のニュースまとめ</a>', page)
         self.assertNotIn("今日のまとめを読む", page)
         self.assertNotIn('href="#archive-heading">過去分を見る</a>', page)
-        self.assertIn('href="./2026-08-20.md">Markdown版</a>', page)
+        self.assertNotIn('class="status-strip"', page)
+        self.assertNotIn('Markdown版</a>', page)
         self.assertNotIn("今日のピックアップ3件", page)
         self.assertNotIn('id="air-quality-heading"', page)
-        self.assertIn("毎朝収集・要約", page)
+        self.assertNotIn("毎朝収集・要約", page)
+        self.assertNotIn("今日を除く直近日を比較", page)
         self.assertIn("直近7日のまとめ", page)
         self.assertIn("recent-headline-list", page)
         self.assertIn("font-size: 2.15rem", page)
@@ -421,6 +423,19 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertIn('class="recent-day-row"', page)
         self.assertNotIn('class="recent-card"', page)
         self.assertIn("grid-template-columns: minmax(11rem, 0.8fr)", page)
+
+    def test_all_monthly_archives_start_closed_and_keep_daily_links(self) -> None:
+        days = []
+        for date in ("2026-11-01", "2026-10-15", "2026-09-20"):
+            day = self.parse_sample()
+            day.date = date
+            day.path = Path(f"{date}.md")
+            days.append(day)
+        archive = builder.render_archive(days)
+        self.assertEqual(archive.count('<details class="archive-month">'), 3)
+        self.assertNotIn('<details class="archive-month" open>', archive)
+        for day in days:
+            self.assertIn(f'href="./{day.date}.html"', archive)
 
     def test_source_only_entries_are_not_cards_but_remain_on_daily_page(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

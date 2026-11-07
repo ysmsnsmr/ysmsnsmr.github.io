@@ -499,7 +499,7 @@ def render_archive(days: list[NewsDay]) -> str:
         grouped.setdefault(format_month(day.date), []).append(day)
 
     groups = []
-    for index, (month, month_days) in enumerate(grouped.items()):
+    for month, month_days in grouped.items():
         rows = "\n".join(
             f"""
             <li>
@@ -510,10 +510,9 @@ def render_archive(days: list[NewsDay]) -> str:
             """
             for day in month_days
         )
-        open_attr = " open" if index == 0 else ""
         groups.append(
             f"""
-            <details class="archive-month"{open_attr}>
+            <details class="archive-month">
               <summary>
                 <span>{esc(month)}</span>
                 <span>{len(month_days)}日分</span>
@@ -842,16 +841,9 @@ def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
 
 
 def render_html(days: list[NewsDay]) -> str:
-    latest = days[0] if days else None
     recent = days[1:7]
     older = days[7:]
-
-    if latest:
-        status_chips = render_status_chips(latest, format_update_time(latest)).strip()
-        recent_rows = render_recent(recent).strip()
-    else:
-        status_chips = '<p class="muted">まだ記事がありません。</p>'
-        recent_rows = '<p class="muted">まだ記事がありません。</p>'
+    recent_rows = render_recent(recent).strip()
 
     return f"""<!doctype html>
 <html lang="ja">
@@ -1223,15 +1215,11 @@ def render_html(days: list[NewsDay]) -> str:
     <header>
       <div>
         <h1>過去のニュースまとめ</h1>
-        <p class="subhead">生活に関わるマレーシアニュースを毎朝収集・要約しています。</p>
       </div>
     </header>
-    {status_chips}
-
     <section aria-labelledby="recent-heading">
       <div class="section-head">
         <h2 id="recent-heading">直近7日のまとめ</h2>
-        <p>今日を除く直近日を比較</p>
       </div>
       <div class="recent-list">
         {recent_rows}
