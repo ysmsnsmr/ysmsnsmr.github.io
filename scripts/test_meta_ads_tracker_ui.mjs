@@ -360,6 +360,20 @@ try {
     };
   });
   assert(summaryMatches.enOnly && summaryMatches.jaOnly && summaryMatches.v2 && summaryMatches.v1 && !summaryMatches.missing && !summaryMatches.v1Pending, "summary tags must honor field and locale status");
+  const topicMatches = await tagPage.evaluate(() => {
+    const matches = (id, text) => window.MetaAdsTags.matches({ title: text }, id);
+    return {
+      budget: matches("budget", "Budgets and 予算"),
+      campaign: matches("campaign", "Campaigns and キャンペーン"),
+      ai: matches("ai", "AI and artificial intelligence"),
+      exclusion: matches("exclusion", "Excluding audiences and 除外"),
+      summary: window.MetaAdsTags.matches({ title: "Update", presentation: { schemaVersion: "meta-ads-personal-feed-presentation/v3", locales: { ja: { fields: { summary: { status: "machine", value: "予算の変更" } } } } } }, "budget"),
+      unrelatedAi: matches("ai", "Campaign details and email"),
+      unrelatedBudget: matches("budget", "Budgetary constraints"),
+      unrelatedExclude: matches("exclusion", "Exclusive feature"),
+    };
+  });
+  assert(topicMatches.budget && topicMatches.campaign && topicMatches.ai && topicMatches.exclusion && topicMatches.summary && !topicMatches.unrelatedAi && !topicMatches.unrelatedBudget && !topicMatches.unrelatedExclude, "topic tags must match supported terms without partial-word false positives");
   await tagPage.getByRole("link", { name: "Meta One", exact: true }).click();
   assert(new URL(tagPage.url()).searchParams.get("tag") === "meta-one", "featured tag must update the URL");
   assert(await tagPage.locator(".update-card").count() > 0, "Meta One tag must show matching updates");
@@ -371,6 +385,9 @@ try {
   await tagPage.getByRole("link", { name: "すべてのタグ" }).click();
   assert((await tagPage.locator("h1").textContent()).includes("タグから記事を探す"), "tag directory must be reachable");
   assert((await tagPage.locator("#tags-list").textContent()).includes("広告マネージャー"), "tag directory must include all catalog tags");
+  for (const label of ["予算", "キャンペーン", "AI", "除外"]) {
+    assert(await tagPage.getByRole("link", { name: new RegExp(`^${label} *[0-9]+件$`) }).count() === 1, `tag directory must include ${label}`);
+  }
   await tagPage.setViewportSize({ width: 375, height: 667 });
   assert(await tagPage.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth <= 1), "tag directory must not overflow on mobile");
   await tagPage.addScriptTag({ content: axeSource });
