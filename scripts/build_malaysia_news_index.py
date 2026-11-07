@@ -319,6 +319,14 @@ def format_date(date_text: str) -> str:
     return f"{parsed.year}年{parsed.month}月{parsed.day}日"
 
 
+def format_month_day(date_text: str) -> str:
+    try:
+        parsed = datetime.strptime(date_text, "%Y-%m-%d")
+    except ValueError:
+        return date_text
+    return f"{parsed.month}月{parsed.day}日"
+
+
 def format_month(date_text: str) -> str:
     try:
         parsed = datetime.strptime(date_text, "%Y-%m-%d")
@@ -388,7 +396,7 @@ def render_air_quality_links() -> str:
     <section class="air-quality-links" aria-labelledby="air-quality-heading">
       <div>
         <h2 id="air-quality-heading">大気情報（公式）</h2>
-        <p>クランバレー周辺の状況は、各ページで地域・更新時刻を確認してください。観測値と予報は別の情報です。</p>
+        <p>観測値と予報は異なります。地域・更新時刻をご確認ください。</p>
       </div>
       <div class="air-quality-actions">
         <a href="{esc(APIMS_URL)}">APIMSの観測値を見る</a>
@@ -707,9 +715,12 @@ def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
                        f'{markdown_navigation}</div>')
     daily_navigation = f'<a class="back-link" href="./index.html">← マレーシア生活ニュース</a>\n        {markdown_navigation}'
     note = '期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。'
-    header_note = (f'<p class="updated-at">{esc(as_of_label(day))}</p>\n      <p class="notice">{note}</p>'
+    home_updated = f'{format_update_time(day)} 更新' if day.updated_at else as_of_label(day)
+    home_note = '警報・運行案内は掲載時点の情報です。最新情報は出典をご確認ください。'
+    header_note = (f'<p class="updated-at">{esc(home_updated)}</p>\n      <p class="notice">{home_note}</p>'
                    if is_home else f'<p class="subhead">{esc(as_of_label(day))}。{note}</p>')
-    header_title = f'{esc(format_date(day.date))}の<wbr>ニュースまとめ' if is_home else f'{esc(format_date(day.date))}のニュースまとめ'
+    header_title = f'{esc(format_month_day(day.date))}のニュース' if is_home else f'{esc(format_date(day.date))}のニュースまとめ'
+    header_eyebrow = '' if is_home else '<p class="eyebrow">Daily summary</p>'
     home_styles = '''    .site-name { font-size: 1.15rem; font-weight: 750; color: var(--accent-strong); }
     .archive-link { display: inline-flex; align-items: center; min-height: 44px; border: 1px solid var(--line); border-radius: 6px; padding: 6px 14px; background: var(--panel); color: var(--accent-strong); font-size: .9rem; font-weight: 700; text-decoration: none; }
     .air-quality-links { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 24px; border-block: 1px solid var(--line); padding: 14px 0; }
@@ -724,6 +735,8 @@ def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
     .page-header h1 { font-size: 2.15rem; line-height: 1.3; margin-bottom: 10px; }
     .updated-at { margin: 0; color: var(--muted); font-size: .95rem; }
     .notice { margin: 6px 0 0; max-width: 680px; color: var(--muted); font-size: .88rem; }
+    .page-header { margin-bottom: 20px; }
+    .air-quality-links { padding: 12px 0; }
     @media (max-width: 600px) {
       .page-nav { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 12px; }
       .site-name { flex: 1 0 100%; }
@@ -817,7 +830,7 @@ def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
       <nav class="page-nav" aria-label="ページ内ナビゲーション">
         {home_navigation if is_home else daily_navigation}
       </nav>
-      <p class="eyebrow">Daily summary</p>
+      {header_eyebrow}
       <h1>{header_title}</h1>
       {header_note}
     </header>
