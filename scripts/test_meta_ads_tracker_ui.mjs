@@ -321,6 +321,16 @@ try {
   assert(!(await productionPage.locator("#recovery-banner").isVisible()), "ordinary production route must not show the delayed-recovery banner");
   assert(await productionPage.locator("#unofficial-notice").isVisible(), "Personal Feed must show the non-official-source notice");
   assert(await productionPage.evaluate(() => {
+    const group = document.querySelector("#unofficial-group");
+    const notice = document.querySelector("#unofficial-notice");
+    const heading = document.querySelector("#unofficial-group-heading");
+    const list = document.querySelector("#unofficial-list");
+    const count = document.querySelector("#result-summary");
+    return group.contains(notice) && !!(heading.compareDocumentPosition(notice) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+      !!(notice.compareDocumentPosition(list) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+      getComputedStyle(count).position === "absolute" && getComputedStyle(count).clip !== "auto";
+  }), "Unofficial notice must precede its list, and result count must be visually hidden");
+  assert(await productionPage.evaluate(() => {
     const header = document.querySelector(".masthead");
     const filters = document.querySelector(".control-panel");
     const notice = document.querySelector("#unofficial-notice");
@@ -438,6 +448,9 @@ try {
     if (viewport.name === "desktop") {
       await page.fill("#query-filter", "表示変更");
       assert(await page.locator(".update-card").count() === 1, "personal feed query filter failed");
+      assert(await page.locator("#unofficial-notice").isVisible(), "unofficial notice must remain visible when an unofficial article matches");
+      await page.fill("#query-filter", "Meta公式の製品更新");
+      assert(!(await page.locator("#unofficial-group").isVisible()), "unofficial section must be hidden when no unofficial articles match");
       await page.fill("#query-filter", "");
       assert(await page.locator(".update-card").count() === 3, "clearing the query must restore results");
     }
