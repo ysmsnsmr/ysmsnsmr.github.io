@@ -231,6 +231,7 @@ async function assertTokens(page) {
 }
 
 async function assertAccessibilityAndLayout(page, label) {
+  assert(await page.locator(".masthead-copy").count() === 0, `${label}: redundant masthead description must not be shown`);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   assert(overflow <= 1, `${label}: horizontal overflow ${overflow}px`);
   const undersized = await page.locator("button, select, input, .source-link, .detail-link, .update-title-link, .sdk-update-log-link, .back-link, .locale-switch a").evaluateAll((nodes) =>
