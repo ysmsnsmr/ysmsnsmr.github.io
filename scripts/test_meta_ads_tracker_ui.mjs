@@ -348,6 +348,18 @@ try {
   const tagPage = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await tagPage.goto(`${server.origin}/meta-ads-updates/ja/`, { waitUntil: "networkidle" });
   assert((await tagPage.locator(".tag-hint").textContent()).includes("記事の主題とは限りません"), "home tag guidance must describe mentions");
+  const homeTags = await tagPage.evaluate(() => ({
+    expected: window.MetaAdsTags.tags.map((tag) => tag.ja),
+    shown: [...document.querySelectorAll("#featured-tags .tag-chip:not(.tag-chip--all)")].map((link) => link.textContent),
+    ids: window.MetaAdsTags.tags.map((tag) => tag.id),
+  }));
+  assert(JSON.stringify(homeTags.shown) === JSON.stringify(homeTags.expected), "home must display every catalog tag exactly once");
+  assert(homeTags.shown.includes("配置") && !homeTags.shown.includes("広告配置"), "placement tag must use the requested Japanese label");
+  assert(["meta-pixel", "conversions-api", "advantage-plus"].every((id) => !homeTags.ids.includes(id)), "removed tags must not remain in the catalog");
+  await tagPage.setViewportSize({ width: 375, height: 667 });
+  assert(await tagPage.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth <= 1), "all home tags must not overflow on mobile");
+  assert(await tagPage.locator("#featured-tags .tag-chip:not(.tag-chip--all)").count() === homeTags.expected.length, "all home tags must remain available on mobile");
+  await tagPage.setViewportSize({ width: 1440, height: 900 });
   const summaryMatches = await tagPage.evaluate(() => {
     const matches = (presentation) => window.MetaAdsTags.matches({ title: "General update", presentation }, "meta-muse");
     return {

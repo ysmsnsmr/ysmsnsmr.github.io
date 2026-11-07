@@ -2101,3 +2101,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Reuse the published tag text selection for search and verify both locales and partial summaries.
 - Revisit when: Search results become misleading or users request locale-specific matching.
+
+<!-- idea-gate:20261107-meta-ads-all-tags-home -->
+## Show all retained tags on the feed home page
+
+- Record ID: `20261107-meta-ads-all-tags-home`
+- Evaluated: 2026-11-07T12:00:00+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 87/100
+- Confidence: high - The requested scope and existing tag interaction are clear.
+
+### Idea Card
+
+- Purpose: Access all relevant tags directly and remove tags the owner no longer wants.
+- First experience: See the complete revised tag list on the home page and select any tag.
+- Scope and cost: A reversible client-side catalog and layout adjustment; no extra service or saved data.
+- Continuation boundary: Keep while the list is readable; reconsider layout if the catalog grows.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 13/15 |
+| `evidence_and_learning` | 12/15 |
+| `expected_outcome` | 13/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 18/20 |
+| **Total** | **87/100** |
+
+### Next Step
+
+- Action: Update the fixed catalog and render the retained tags on TOP; verify responsive behavior.
+- Revisit when: The tag list grows enough to crowd the home page.

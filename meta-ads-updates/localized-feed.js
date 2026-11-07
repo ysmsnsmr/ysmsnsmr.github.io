@@ -251,9 +251,7 @@
     function render() {
       const items = visible();
       if (el.tags && personal && !demoMode && window.MetaAdsTags) {
-        const shownTags = window.MetaAdsTags.tags.slice(0, 5);
-        const activeTag = window.MetaAdsTags.tags.find((tag) => tag.id === state.tag);
-        if (activeTag && !shownTags.includes(activeTag)) shownTags.push(activeTag);
+        const shownTags = window.MetaAdsTags.tags;
         const featured = shownTags.map((tag) => {
           const active = tag.id === state.tag;
           const link = make("a", "tag-chip", `${tag[locale]}${active ? " ×" : ""}`);
