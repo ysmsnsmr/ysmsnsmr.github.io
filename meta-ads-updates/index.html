@@ -39,32 +39,14 @@
         </div>
       </header>
 
-      <section class="control-panel" aria-labelledby="filter-heading">
-        <p id="filter-heading" class="section-kicker">Filters</p>
+      <section class="control-panel" aria-label="Search updates">
         <form id="filter-form" class="filter-form">
           <div class="filter-field filter-field--query">
-            <label for="query-filter">Keyword</label>
+            <label class="visually-hidden" for="query-filter">Keyword</label>
             <input id="query-filter" name="query" type="search" placeholder="Search updates" autocomplete="off">
             <nav id="featured-tags" class="tag-chips" aria-label="Popular product and feature tags"></nav>
             <p class="tag-hint">Tags show mentions in titles and AI summaries; they may not be the article's main subject.</p>
           </div>
-          <div class="filter-field filter-field--source">
-            <label for="source-filter">Source</label>
-            <select id="source-filter" name="source">
-              <option value="all">All sources</option>
-              <option value="meta-product-news-rss">Product News</option>
-              <option value="meta-business-sdk-releases">Business SDK Releases</option>
-            </select>
-          </div>
-          <div class="filter-field filter-field--type">
-            <label id="priority-filter-label" for="priority-filter">Source type</label>
-            <select id="priority-filter" name="priority">
-              <option value="all">All</option>
-              <option value="official">Official</option>
-              <option value="unofficial">Unofficial</option>
-            </select>
-          </div>
-          <button id="reset-button" class="reset-button" type="button">Reset filters</button>
         </form>
         <p id="result-summary" class="result-summary" aria-live="polite"></p>
       </section>

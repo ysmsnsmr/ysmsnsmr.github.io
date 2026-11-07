@@ -29,11 +29,11 @@
   const el = {
     demo: document.querySelector("#demo-banner"), recovery: document.querySelector("#recovery-banner"), recoveryCopy: document.querySelector("#recovery-banner-copy"),
     notice: document.querySelector("#unofficial-notice"), stamp: document.querySelector("#week-stamp"), form: document.querySelector("#filter-form"),
-    source: document.querySelector("#source-filter"), type: document.querySelector("#priority-filter"), typeLabel: document.querySelector("#priority-filter-label"), query: document.querySelector("#query-filter"), reset: document.querySelector("#reset-button"),
+    query: document.querySelector("#query-filter"),
     summary: document.querySelector("#result-summary"), legacy: document.querySelector("#legacy-list-section"), list: document.querySelector("#update-list"), officialGroup: document.querySelector("#official-group"), officialCount: document.querySelector("#official-group-count"), officialList: document.querySelector("#official-list"), sdkGroup: document.querySelector("#sdk-group"), sdkHeading: document.querySelector("#sdk-group-heading"), sdkList: document.querySelector("#sdk-list"), unofficialGroup: document.querySelector("#unofficial-group"), unofficialCount: document.querySelector("#unofficial-group-count"), unofficialList: document.querySelector("#unofficial-list"), empty: document.querySelector("#empty-state"), emptyTitle: document.querySelector("#empty-title"), emptyCopy: document.querySelector("#empty-copy"),
     footer: document.querySelector("#tracker-footer"), en: document.querySelector("#locale-en"), ja: document.querySelector("#locale-ja"), tags: document.querySelector("#featured-tags")
   };
-  const state = { source: "all", type: "all", q: "", tag: "" };
+  const state = { q: "", tag: "" };
 
   function malaysiaTimestamp(value) {
     const date = new Date(value);
@@ -63,7 +63,7 @@
   function retainedQuery() {
     const query = new URLSearchParams();
     if (!demoMode) {
-      for (const key of ["source", "type", "q", "tag", "personal-fixture"]) {
+      for (const key of ["q", "tag", "personal-fixture"]) {
         const value = params.get(key);
         if (value) query.set(key, value.slice(0, 160));
       }
@@ -79,15 +79,6 @@
     japanese.search = query.toString();
     el.en.href = `${english.pathname}${english.search}`;
     el.ja.href = `${japanese.pathname}${japanese.search}`;
-  }
-
-  function setOptions(select, options, selected) {
-    select.replaceChildren(...options.map(({ value, label }) => {
-      const option = make("option", "", label);
-      option.value = value;
-      option.selected = value === selected;
-      return option;
-    }));
   }
 
   function presentation(item) {
@@ -115,8 +106,6 @@
 
   function detailUrl(item) {
     const query = new URLSearchParams({ id: item.id });
-    if (state.source !== "all") query.set("source", state.source);
-    if (state.type !== "all") query.set("type", state.type);
     if (state.q.trim()) query.set("q", state.q.trim());
     if (state.tag) query.set("tag", state.tag);
     const fixture = params.get("personal-fixture");
@@ -230,36 +219,16 @@
     if (demoMode) el.footer.textContent = words.demoFooter;
     if (personal) {
       el.stamp.textContent = report.generatedAt ? `${words.retrieved}: ${malaysiaTimestamp(report.generatedAt)}` : words.waiting;
-      el.typeLabel.textContent = locale === "ja" ? "ソース区分" : "Source type";
       el.sdkHeading.textContent = words.sdkGroup;
-      setOptions(el.source, [{ value: "all", label: words.allSources }, ...report.sources.map((source) => ({ value: source.id, label: source.name }))], "all");
-      setOptions(el.type, [{ value: "all", label: words.allTypes }, { value: "official", label: words.official }, { value: "unofficial", label: words.unofficial }], "all");
-      state.source = sources.has(params.get("source")) ? params.get("source") : "all";
-      state.type = ["official", "unofficial"].includes(params.get("type")) ? params.get("type") : "all";
       state.q = (params.get("q") || "").slice(0, 160);
       state.tag = window.MetaAdsTags?.tags.some((tag) => tag.id === params.get("tag")) ? params.get("tag") : "";
     } else {
       el.stamp.textContent = report.week?.label || "";
-      const legacySources = [
-        { value: "all", label: locale === "ja" ? "すべてのソース" : "All sources" },
-        { value: "meta-product-news-rss", label: "Product News" },
-        { value: "meta-business-sdk-releases", label: "Business SDK Releases" }
-      ];
-      const legacyTypes = [
-        { value: "all", label: locale === "ja" ? "すべて" : "All" },
-        { value: "high", label: locale === "ja" ? "高" : "High" },
-        { value: "standard", label: locale === "ja" ? "標準" : "Standard" },
-        { value: "low", label: locale === "ja" ? "低" : "Low" }
-      ];
-      setOptions(el.source, legacySources, "all");
-      setOptions(el.type, legacyTypes, "all");
     }
 
     function updateAddress() {
       if (!personal || demoMode || fixtureMode) return;
       const next = new URLSearchParams();
-      if (state.source !== "all") next.set("source", state.source);
-      if (state.type !== "all") next.set("type", state.type);
       if (state.q.trim()) next.set("q", state.q.trim());
       if (state.tag) next.set("tag", state.tag);
       const fixture = params.get("personal-fixture");
@@ -272,9 +241,8 @@
     function visible() {
       const needle = state.q.trim().toLocaleLowerCase(locale);
       return (report.items || []).filter((item) => {
-        const source = sources.get(item.sourceId);
         const text = personal && item.sourceId !== "meta-business-sdk-releases" ? `${item.title} ${headline(item)}` : item.title;
-        return (state.source === "all" || item.sourceId === state.source) && (state.type === "all" || (personal ? source?.classification : item.priority) === state.type) && (!needle || text.toLocaleLowerCase(locale).includes(needle)) && (!state.tag || window.MetaAdsTags.matches(item, state.tag));
+        return (!needle || text.toLocaleLowerCase(locale).includes(needle)) && (!state.tag || window.MetaAdsTags.matches(item, state.tag));
       }).sort((left, right) => {
         const newest = (item) => [item.publishedDate, item.updatedDate].filter(Boolean).sort().pop() || item.firstObservedAt || "";
         return newest(right).localeCompare(newest(left)) || String(right.id).localeCompare(String(left.id));
@@ -287,12 +255,20 @@
         const activeTag = window.MetaAdsTags.tags.find((tag) => tag.id === state.tag);
         if (activeTag && !shownTags.includes(activeTag)) shownTags.push(activeTag);
         const featured = shownTags.map((tag) => {
-          const link = make("a", "tag-chip", tag[locale]);
-          link.href = `?tag=${encodeURIComponent(tag.id)}`;
-          if (tag.id === state.tag) link.setAttribute("aria-current", "true");
+          const active = tag.id === state.tag;
+          const link = make("a", "tag-chip", `${tag[locale]}${active ? " ×" : ""}`);
+          link.dataset.tagId = tag.id;
+          const target = new URLSearchParams();
+          if (state.q.trim()) target.set("q", state.q.trim());
+          if (!active) target.set("tag", tag.id);
+          const fixture = params.get("personal-fixture");
+          if (["1", "v3", "v4", "v5", "fields"].includes(fixture)) target.set("personal-fixture", fixture);
+          link.href = target.size ? `?${target}` : "./";
+          if (active) { link.setAttribute("aria-current", "true"); link.setAttribute("aria-label", locale === "ja" ? `${tag.ja}の選択を解除` : `Clear ${tag.en} tag`); }
           link.addEventListener("click", (event) => {
             if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-            event.preventDefault(); state.tag = tag.id; updateAddress(); render();
+            event.preventDefault(); state.tag = active ? "" : tag.id; updateAddress(); render();
+            el.tags.querySelector(`[data-tag-id="${tag.id}"]`)?.focus();
           });
           return link;
         });
@@ -328,7 +304,7 @@
       }
       el.empty.hidden = items.length > 0;
       if (!items.length) {
-        const filtered = state.source !== "all" || state.type !== "all" || Boolean(state.q.trim()) || Boolean(state.tag);
+        const filtered = Boolean(state.q.trim()) || Boolean(state.tag);
         el.emptyTitle.textContent = filtered ? words.noMatches : personal ? words.noItems : "No updates";
         el.emptyCopy.textContent = filtered ? words.noMatchesCopy : personal ? words.noItemsCopy : "";
       }
@@ -336,13 +312,9 @@
           ? `${words.shown}${items.length}${words.automatic}`
           : `${words.shown}${items.length}${demoMode ? words.demoResult : ""}`;
     }
-    function syncControls() { el.source.value = state.source; el.type.value = state.type; el.query.value = state.q; }
     el.form.addEventListener("submit", (event) => event.preventDefault());
-    el.source.addEventListener("change", () => { state.source = el.source.value; updateAddress(); render(); });
-    el.type.addEventListener("change", () => { state.type = el.type.value; updateAddress(); render(); });
     el.query.addEventListener("input", () => { state.q = el.query.value; updateAddress(); render(); });
-    el.reset.addEventListener("click", () => { state.source = "all"; state.type = "all"; state.q = ""; state.tag = ""; updateAddress(); syncControls(); render(); });
-    syncControls();
+    el.query.value = state.q;
     render();
   } catch (error) {
     el.stamp.textContent = words.error;

@@ -250,9 +250,21 @@ h1 {
 
 .filter-form {
   display: grid;
-  grid-template-columns: minmax(0, 1.8fr) minmax(150px, 0.8fr) minmax(150px, 0.8fr) auto;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--tracker-space-3);
   align-items: end;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .filter-field {
