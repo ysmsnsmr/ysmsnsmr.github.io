@@ -1996,3 +1996,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: 生成と配布を更新し自動更新と両公開先の導線を検証
 - Revisit when: 最新記事が自動更新されない; 既存リンクや地図が動かない; 過去記事への移動が分かりにくい
+
+<!-- idea-gate:20261107-meta-ads-header-order -->
+## Reorder the header and unofficial information notice
+
+- Record ID: `20261107-meta-ads-header-order`
+- Evaluated: 2026-11-07T12:00:00+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 84/100
+- Confidence: medium - The layout issue is visible; usability after deployment is not yet observed.
+
+### Idea Card
+
+- Purpose: Make the feed title, controls and source caveat easier to understand.
+- First experience: See the title first and a concise caveat near the filters.
+- Scope and cost: One reversible bilingual static UI change, no new service.
+- Continuation boundary: Keep if readable on desktop and mobile; otherwise revert.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 16/20 |
+| `reason_to_make` | 12/15 |
+| `evidence_and_learning` | 11/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 19/20 |
+| **Total** | **84/100** |
+
+### Next Step
+
+- Action: Reorder existing elements and verify both locales.
+- Revisit when: The notice becomes difficult to find or the new layout is unclear.

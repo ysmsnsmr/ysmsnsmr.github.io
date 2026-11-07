@@ -35,6 +35,16 @@
   };
   const state = { source: "all", type: "all", q: "", tag: "" };
 
+  function malaysiaTimestamp(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return value;
+    const parts = Object.fromEntries(new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Asia/Kuala_Lumpur", year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23"
+    }).formatToParts(date).map(({ type, value: part }) => [type, part]));
+    return `${parts.year}-${parts.month}-${parts.day} ${parts.hour}:${parts.minute}:${parts.second} MYT`;
+  }
+
   // The fictional demo is intentionally Japanese-only; never present it as translated production data.
   if (demoMode && locale !== "ja" && !fixtureMode) {
     const destination = new URL("./ja/", window.location.href);
@@ -219,7 +229,7 @@
     el.notice.hidden = !personal;
     if (demoMode) el.footer.textContent = words.demoFooter;
     if (personal) {
-      el.stamp.textContent = report.generatedAt ? `${words.retrieved}: ${report.generatedAt.replace("T", " ").replace("Z", " UTC")}` : words.waiting;
+      el.stamp.textContent = report.generatedAt ? `${words.retrieved}: ${malaysiaTimestamp(report.generatedAt)}` : words.waiting;
       el.typeLabel.textContent = locale === "ja" ? "ソース区分" : "Source type";
       el.sdkHeading.textContent = words.sdkGroup;
       setOptions(el.source, [{ value: "all", label: words.allSources }, ...report.sources.map((source) => ({ value: source.id, label: source.name }))], "all");
