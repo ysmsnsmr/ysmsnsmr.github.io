@@ -319,14 +319,6 @@ def format_date(date_text: str) -> str:
     return f"{parsed.year}年{parsed.month}月{parsed.day}日"
 
 
-def format_month_day(date_text: str) -> str:
-    try:
-        parsed = datetime.strptime(date_text, "%Y-%m-%d")
-    except ValueError:
-        return date_text
-    return f"{parsed.month}月{parsed.day}日"
-
-
 def format_month(date_text: str) -> str:
     try:
         parsed = datetime.strptime(date_text, "%Y-%m-%d")
@@ -717,9 +709,9 @@ def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
     note = '期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。'
     home_updated = f'{format_update_time(day)} 更新' if day.updated_at else as_of_label(day)
     home_note = '警報・運行案内は掲載時点の情報です。最新情報は出典をご確認ください。'
-    header_note = (f'<p class="updated-at">{esc(home_updated)}</p>\n      <p class="notice">{home_note}</p>'
+    header_note = (f'<p class="notice">{home_note}</p>'
                    if is_home else f'<p class="subhead">{esc(as_of_label(day))}。{note}</p>')
-    header_title = f'{esc(format_month_day(day.date))}のニュース' if is_home else f'{esc(format_date(day.date))}のニュースまとめ'
+    header_title = esc(home_updated) if is_home else f'{esc(format_date(day.date))}のニュースまとめ'
     header_eyebrow = '' if is_home else '<p class="eyebrow">Daily summary</p>'
     home_styles = '''    .site-name { font-size: 1.15rem; font-weight: 750; color: var(--accent-strong); }
     .archive-link { display: inline-flex; align-items: center; min-height: 44px; border: 1px solid var(--line); border-radius: 6px; padding: 6px 14px; background: var(--panel); color: var(--accent-strong); font-size: .9rem; font-weight: 700; text-decoration: none; }
@@ -732,8 +724,7 @@ def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
     home_layout_styles = '''    .page-nav { justify-content: space-between; gap: 12px; margin-bottom: 24px; }
     .header-actions { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 12px; }
     .eyebrow { letter-spacing: 0; }
-    .page-header h1 { font-size: 2.15rem; line-height: 1.3; margin-bottom: 10px; }
-    .updated-at { margin: 0; color: var(--muted); font-size: .95rem; }
+    .page-header h1 { font-size: 1.6rem; line-height: 1.3; margin-bottom: 10px; word-break: keep-all; }
     .notice { margin: 6px 0 0; max-width: 680px; color: var(--muted); font-size: .88rem; }
     .page-header { margin-bottom: 20px; }
     .air-quality-links { padding: 12px 0; }
@@ -741,7 +732,7 @@ def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
       .page-nav { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 12px; }
       .site-name { flex: 1 0 100%; }
       .header-actions { justify-content: flex-start; }
-      .page-header h1 { font-size: 1.7rem; }
+      .page-header h1 { font-size: 1.35rem; }
     }
 ''' if is_home else ''
     return f"""<!doctype html>

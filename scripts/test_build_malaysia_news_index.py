@@ -150,12 +150,13 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertNotIn("時点の記録</p>", builder.render_html([day]))
         self.assertIn("現在の発表は出典で確認してください", builder.render_daily_page(day))
         home = builder.render_daily_page(day, is_home=True)
-        self.assertIn('<p class="updated-at">2026年9月27日 17:08 MYT 更新</p>', home)
+        self.assertIn('<h1>2026年9月27日 17:08 MYT 更新</h1>', home)
+        self.assertEqual(home.count('17:08 MYT'), 1)
         self.assertIn('<p class="notice">警報・運行案内は掲載時点の情報です。', home)
         self.assertNotIn('<p class="eyebrow">Daily summary</p>', home)
         self.assertIn('<div class="header-actions"><a class="archive-link"', home)
         self.assertEqual(builder.format_update_time(self.parse_sample()), "更新時刻不明")
-        self.assertIn('更新時刻は記録されていません', builder.render_daily_page(self.parse_sample(), is_home=True))
+        self.assertIn('<h1>更新時刻は記録されていません</h1>', builder.render_daily_page(self.parse_sample(), is_home=True))
 
     def test_parser_keeps_repeated_detail_lines(self) -> None:
         day = self.parse_sample()
@@ -218,7 +219,7 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
             self.assertIn('id="air-quality-heading"', (news_dir / "index.html").read_text(encoding="utf-8"))
             home = (news_dir / "index.html").read_text(encoding="utf-8")
             archive = (news_dir / "archive.html").read_text(encoding="utf-8")
-            self.assertIn('<h1>10月12日のニュース</h1>', home)
+            self.assertIn('<h1>更新時刻は記録されていません</h1>', home)
             self.assertIn('href="./archive.html">過去のニュースまとめ</a>', home)
             self.assertIn('href="./2026-10-12.md">Markdown版</a>', home)
             self.assertIn('href="./index.html">← 今日のニュースまとめ</a>', archive)
@@ -229,14 +230,14 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
     def test_home_updates_to_newest_day_and_preserves_older_daily_links(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             news_dir = Path(directory)
-            (news_dir / "2026-10-12.md").write_text(DISPLAY_CATEGORY_MARKDOWN, encoding="utf-8")
+            (news_dir / "2026-10-12.md").write_text('更新時点：2026-10-12T07:49:00+08:00\n\n' + DISPLAY_CATEGORY_MARKDOWN, encoding="utf-8")
             with patch.object(builder, "NEWS_DIR", news_dir), patch.object(builder, "OUTPUT_PATH", news_dir / "index.html"):
                 builder.main()
-                self.assertIn('<h1>10月12日のニュース</h1>', (news_dir / "index.html").read_text(encoding="utf-8"))
-                (news_dir / "2026-10-13.md").write_text(DISPLAY_CATEGORY_MARKDOWN, encoding="utf-8")
+                self.assertIn('<h1>2026年10月12日 07:49 MYT 更新</h1>', (news_dir / "index.html").read_text(encoding="utf-8"))
+                (news_dir / "2026-10-13.md").write_text('更新時点：2026-10-13T08:10:00+08:00\n\n' + DISPLAY_CATEGORY_MARKDOWN, encoding="utf-8")
                 builder.main()
             home = (news_dir / "index.html").read_text(encoding="utf-8")
-            self.assertIn('<h1>10月13日のニュース</h1>', home)
+            self.assertIn('<h1>2026年10月13日 08:10 MYT 更新</h1>', home)
             self.assertIn('href="./2026-10-13.md"', home)
             self.assertIn('href="./2026-10-12.html"', (news_dir / "archive.html").read_text(encoding="utf-8"))
             self.assertIn('href="./index.html"', (news_dir / "2026-10-12.html").read_text(encoding="utf-8"))
