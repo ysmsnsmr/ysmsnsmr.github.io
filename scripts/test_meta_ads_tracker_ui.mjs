@@ -376,8 +376,8 @@ try {
   const summaryOnlyItem = {
     ...personalFeedV5Report.items[0], title: "General business update",
     presentation: { schemaVersion: "meta-ads-personal-feed-presentation/v3", locales: {
-      en: { status: "missing", fields: { shortHeadline: { status: "missing", value: null }, summary: { status: "machine", value: "Muse is mentioned in this update." } } },
-      ja: { status: "missing", fields: { shortHeadline: { status: "missing", value: null }, summary: { status: "reviewed", value: "Museにも言及しています。" } } },
+      en: { status: "missing", fields: { shortHeadline: { status: "missing", value: "hiddenword" }, summary: { status: "machine", value: "Muse contains uniqueword in this update." } } },
+      ja: { status: "missing", fields: { shortHeadline: { status: "missing", value: null }, summary: { status: "reviewed", value: "Museと固有用語にも言及しています。" } } },
     } },
   };
   await summaryTagPage.route("**/personal-feed.json", (route) => route.fulfill({ json: { ...personalFeedV5Report, items: [summaryOnlyItem] } }));
@@ -387,6 +387,16 @@ try {
   await summaryTagPage.getByRole("link", { name: /Meta Muse/ }).click();
   await summaryTagPage.locator(".update-card").first().waitFor();
   assert(await summaryTagPage.locator(".update-card").count() === 1, "summary-only match must appear in the filtered list");
+  await summaryTagPage.fill("#query-filter", "固有用語");
+  assert(await summaryTagPage.locator(".update-card").count() === 1, "Japanese summary must be searchable with an active tag");
+  await summaryTagPage.fill("#query-filter", "UNIQUEWORD");
+  assert(await summaryTagPage.locator(".update-card").count() === 1, "English summary must be searchable case-insensitively on the Japanese page");
+  await summaryTagPage.fill("#query-filter", "hiddenword");
+  assert(await summaryTagPage.locator(".update-card").count() === 0, "missing fields must not be searchable");
+  await summaryTagPage.fill("#query-filter", "absentword");
+  assert(await summaryTagPage.locator("#empty-state").isVisible(), "no-match search must display the empty state");
+  await summaryTagPage.goto(`${server.origin}/meta-ads-updates/?q=${encodeURIComponent("固有用語")}`, { waitUntil: "networkidle" });
+  assert(await summaryTagPage.locator(".update-card").count() === 1, "Japanese summary must be searchable on the English page");
   await summaryTagPage.close();
 
   for (const viewport of viewports) {

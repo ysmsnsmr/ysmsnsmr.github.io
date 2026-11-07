@@ -241,8 +241,8 @@
     function visible() {
       const needle = state.q.trim().toLocaleLowerCase(locale);
       return (report.items || []).filter((item) => {
-        const text = personal && item.sourceId !== "meta-business-sdk-releases" ? `${item.title} ${headline(item)}` : item.title;
-        return (!needle || text.toLocaleLowerCase(locale).includes(needle)) && (!state.tag || window.MetaAdsTags.matches(item, state.tag));
+        const texts = personal && window.MetaAdsTags ? window.MetaAdsTags.texts(item) : [item.title];
+        return (!needle || texts.some((text) => typeof text === "string" && text.toLocaleLowerCase(locale).includes(needle))) && (!state.tag || window.MetaAdsTags.matches(item, state.tag));
       }).sort((left, right) => {
         const newest = (item) => [item.publishedDate, item.updatedDate].filter(Boolean).sort().pop() || item.firstObservedAt || "";
         return newest(right).localeCompare(newest(left)) || String(right.id).localeCompare(String(left.id));

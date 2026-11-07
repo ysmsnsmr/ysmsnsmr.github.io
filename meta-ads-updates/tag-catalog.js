@@ -15,8 +15,8 @@
   ];
   function texts(item) {
     const p = item.presentation || {};
-    const values = [item.title, p.shortHeadlineJa];
-    if (p.status === "generated") values.push(p.summaryJa);
+    const values = [item.title];
+    if (p.status === "generated") values.push(p.shortHeadlineJa, p.summaryJa);
     for (const locale of ["en", "ja"]) {
       const value = p.locales?.[locale];
       if (["machine", "reviewed"].includes(value?.status)) values.push(value.shortHeadline);
@@ -33,5 +33,5 @@
     const tag = tags.find((entry) => entry.id === id);
     return Boolean(tag && texts(item).some((text) => tag.pattern.test(text)));
   }
-  window.MetaAdsTags = { tags, matches };
+  window.MetaAdsTags = { tags, matches, texts };
 })();

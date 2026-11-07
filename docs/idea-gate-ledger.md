@@ -2066,3 +2066,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Remove source filters and verify search, tags, return links and both locales.
 - Revisit when: Users need source-based filtering again.
+
+<!-- idea-gate:20261107-meta-ads-summary-search -->
+## Search published AI summaries as well as headlines
+
+- Record ID: `20261107-meta-ads-summary-search`
+- Evaluated: 2026-11-07T12:00:00+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 89/100
+- Confidence: high - The requested outcome and existing data are clear; real-world result quality remains to be observed.
+
+### Idea Card
+
+- Purpose: Find relevant articles even when the keyword appears only in a summary.
+- First experience: A keyword in an available English or Japanese summary returns the article.
+- Scope and cost: Reuse existing public presentation fields; no extra AI calls, services, or saved data.
+- Continuation boundary: Keep if useful and relevant; revert or narrow if matching is confusing.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 13/15 |
+| `evidence_and_learning` | 12/15 |
+| `expected_outcome` | 14/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 19/20 |
+| **Total** | **89/100** |
+
+### Next Step
+
+- Action: Reuse the published tag text selection for search and verify both locales and partial summaries.
+- Revisit when: Search results become misleading or users request locale-specific matching.
