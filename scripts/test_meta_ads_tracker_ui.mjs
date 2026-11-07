@@ -322,6 +322,15 @@ try {
   assert(!(await productionPage.locator("#demo-banner").isVisible()), "production route must not show the demo banner");
   assert(!(await productionPage.locator("#recovery-banner").isVisible()), "ordinary production route must not show the delayed-recovery banner");
   assert(await productionPage.locator("#unofficial-notice").isVisible(), "Personal Feed must show the non-official-source notice");
+  assert(await productionPage.evaluate(() => {
+    const header = document.querySelector(".masthead");
+    const filters = document.querySelector(".control-panel");
+    const notice = document.querySelector("#unofficial-notice");
+    return !!(header.compareDocumentPosition(filters) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+      !!(filters.compareDocumentPosition(notice) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+      header.querySelector("#week-stamp") !== null;
+  }), "Header, filters, and notice must appear in the intended order");
+  assert((await productionPage.locator("#week-stamp").textContent()).includes("MYT"), "retrieval timestamp must identify Malaysia time");
   const unofficialNotice = await productionPage.locator("#unofficial-notice").textContent();
   assert(unofficialNotice.includes("do not represent Meta’s official position") && unofficialNotice.includes("cross-check with additional sources"), "English Personal Feed notice must explain how unofficial information is handled");
   assert(!unofficialNotice.includes("must be confirmed by Meta"), "Personal Feed must not imply that every unofficial item has an official counterpart");

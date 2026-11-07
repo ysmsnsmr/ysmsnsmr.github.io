@@ -133,15 +133,16 @@ button:hover {
 
 .unofficial-notice {
   display: block;
-  margin-bottom: var(--tracker-space-4);
-  padding: var(--tracker-space-2) 0;
+  margin: var(--tracker-space-4) 0;
+  padding: var(--tracker-space-3) 0;
   border-bottom: 1px solid var(--tracker-line);
   color: var(--tracker-muted);
   font-size: 0.8125rem;
 }
 
 .unofficial-notice strong {
-  margin-right: var(--tracker-space-1);
+  display: block;
+  margin-bottom: var(--tracker-space-1);
   color: var(--tracker-ink);
 }
 
@@ -229,7 +230,7 @@ h1 {
 }
 
 .week-stamp {
-  margin: 0;
+  margin: var(--tracker-space-2) 0 0;
   padding: 0;
   color: var(--tracker-muted);
   font-size: 0.8125rem;
