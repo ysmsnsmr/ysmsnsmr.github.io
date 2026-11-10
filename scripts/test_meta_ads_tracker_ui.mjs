@@ -459,10 +459,7 @@ try {
     assert(await page.locator(".update-summary").first().evaluate((node) => getComputedStyle(node).whiteSpace) === "nowrap", `${label}: list summary must stay on one line`);
     assert(await page.locator("#source-filter, #priority-filter, #reset-button").count() === 0, `${label}: removed filters must not appear`);
     assert(await page.locator(".unofficial-copy").count() === 0, `${label}: per-card non-official warning must not be rendered`);
-    assert((await page.locator(".list-dates").allTextContents()).some((text) => text.includes("発表日: 2026-08-29")), `${label}: known publication date is missing from the list`);
-    assert((await page.locator(".list-dates").allTextContents()).some((text) => text.includes("最終更新日: 2026-08-29")), `${label}: known final update date is missing from the list`);
-    assert(!(await page.locator(".list-dates").allTextContents()).join(" ").includes("初回発見日"), `${label}: first-observed dates must not appear in the list`);
-    assert(!(await page.locator(".list-dates").allTextContents()).join(" ").includes("確認できず"), `${label}: unknown dates must be omitted from the list`);
+    assert(await page.locator("#official-list .list-dates, #unofficial-list .list-dates").count() === 0, `${label}: publication, update, and first-observed dates must not appear in the list`);
     assert(!(await page.locator(".fact-label").allTextContents()).includes("対象"), `${label}: target platform must not be shown on the Personal Feed list`);
     assert(await page.locator("#official-list .fact-grid, #unofficial-list .fact-grid").count() === 0, `${label}: full metadata cards must not remain in the compact list`);
     assert(!(await page.locator(".fact-label").allTextContents()).includes("最終確認"), `${label}: automated observation timestamp must not be shown as human confirmation`);
