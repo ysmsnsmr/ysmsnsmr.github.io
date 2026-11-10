@@ -510,75 +510,6 @@
       }
     },
     {
-      "id": "social-media-today-meta-ads-164345463805a9d7d7d2",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Meta, TikTok and Google push back on California law",
-      "url": "https://www.socialmediatoday.com/news/meta-tiktok-and-google-push-back-on-california-law/873955/",
-      "publishedDate": "2026-11-05",
-      "updatedDate": null,
-      "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "164345463805a9d7d7d26b3fdd53ec2ff8d01eeadadc5cf0eccce3a4788781e7",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta, TikTok and Google challenge California law",
-            "summary": "Meta, TikTok and Google filed separate lawsuits seeking to block a California law that would restrict addictive platform features for users under 16. They argue the law violates the First Amendment and Section 230 protections.",
-            "inputHash": "72e1d99853d71daf925b7ad1b5af205668b0a5ce925e12600a261d8cdbe4d77f",
-            "generatedAt": "2026-11-10T00:17:31Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta, TikTok and Google challenge California law",
-                "inputHash": "72e1d99853d71daf925b7ad1b5af205668b0a5ce925e12600a261d8cdbe4d77f",
-                "generatedAt": "2026-11-10T00:17:31Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta, TikTok and Google filed separate lawsuits seeking to block a California law that would restrict addictive platform features for users under 16. They argue the law violates the First Amendment and Section 230 protections.",
-                "inputHash": "72e1d99853d71daf925b7ad1b5af205668b0a5ce925e12600a261d8cdbe4d77f",
-                "generatedAt": "2026-11-10T00:17:31Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta・TikTok・Google、カリフォルニア州法の差し止め求める",
-            "summary": "Meta、TikTok、Googleは、16歳未満の利用者に対し、依存性のあるフィードや無限スクロール、自動再生などを制限するカリフォルニア州法の執行差し止めを求め、別々に訴訟を起こした。各社は、同法が憲法修正第1条およびオンライン事業者を保護する通信品位法第230条に反すると主張している。同法は1月1日に施行予定。",
-            "inputHash": "e13c6035f6a6af10e24534bf459e2c7f75c6e218f6950f75d45d0889d50ff1da",
-            "generatedAt": "2026-11-10T00:17:31Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta・TikTok・Google、カリフォルニア州法の差し止め求める",
-                "inputHash": "e13c6035f6a6af10e24534bf459e2c7f75c6e218f6950f75d45d0889d50ff1da",
-                "generatedAt": "2026-11-10T00:17:31Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta、TikTok、Googleは、16歳未満の利用者に対し、依存性のあるフィードや無限スクロール、自動再生などを制限するカリフォルニア州法の執行差し止めを求め、別々に訴訟を起こした。各社は、同法が憲法修正第1条およびオンライン事業者を保護する通信品位法第230条に反すると主張している。同法は1月1日に施行予定。",
-                "inputHash": "e13c6035f6a6af10e24534bf459e2c7f75c6e218f6950f75d45d0889d50ff1da",
-                "generatedAt": "2026-11-10T00:17:31Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "id": "social-media-today-meta-ads-e050377e208621f0d2cc",
       "sourceId": "social-media-today-meta-ads",
       "title": "Facebook expands Creator Fast Track program to Brazil",
@@ -7047,6 +6978,75 @@
                 "value": "この投稿では、Meta広告のコントロール設定の管理方法を説明し、年齢、性別、カスタムオーディエンス、詳細ターゲティング、類似オーディエンス、配置について取り上げています。主にハンズオフのアプローチ、オーディエンス提案のオプション、価値ルールによる調整、年齢ターゲティングの最終的な制限について述べています。",
                 "inputHash": "5b6eeaaa0f1701e8e6863dd0210e13a5979f4dab90360d7a9bb5207e81244fec",
                 "generatedAt": "2026-09-09T04:45:10Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "jon-loomer-meta-ads-7e118c18c9a7eafed339",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Turn Off New Creative Workflow (Multimedia Experience)",
+      "url": "https://www.jonloomer.com/qvt/turn-off-new-creative-workflow-multimedia-experience/",
+      "publishedDate": "2026-09-07",
+      "updatedDate": null,
+      "firstObservedAt": "2026-09-23T10:27:45Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "7e118c18c9a7eafed3392219c9c930ab728955ad17119f4b83752bb90596e63a",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta's Multimedia Experience: optional multi‑media workflow with bugs",
+            "summary": "Meta rolled out a new creative workflow called Multimedia Experience in April, allowing up to ten images or videos per ad. Some advertisers report bugs in creation and reporting. The interface includes a tooltip that lets users switch back to the original single-media experience.",
+            "inputHash": "fe185186413ffd1a084beb810c5e3c554d685d3723da5979aeca261687d77c2f",
+            "generatedAt": "2026-09-23T10:27:45Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta's Multimedia Experience: optional multi‑media workflow with bugs",
+                "inputHash": "fe185186413ffd1a084beb810c5e3c554d685d3723da5979aeca261687d77c2f",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta rolled out a new creative workflow called Multimedia Experience in April, allowing up to ten images or videos per ad. Some advertisers report bugs in creation and reporting. The interface includes a tooltip that lets users switch back to the original single-media experience.",
+                "inputHash": "fe185186413ffd1a084beb810c5e3c554d685d3723da5979aeca261687d77c2f",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Metaのマルチメディア体験をオフにする方法",
+            "summary": "Metaは4月に新しいクリエイティブワークフロー（マルチメディア体験）を導入し、1つの広告で最大10枚の画像や動画を設定できるようにしました。しかし、多くの広告主がバグに悩んでおり、広告作成やメディア別レポートで問題が報告されています。広告作成画面でメディアツールチップにマウスを合わせ、表示される「元の単一メディア体験に戻す」リンクをクリックすれば、従来の単一メディア方式に切り替えられ、後で再度マルチメディアに戻すことも可能です。この切替オプションは、マルチメディア体験が正式にリリースされるまで利用できるとされています。",
+            "inputHash": "f83f19c1ff460c45a1b1e7871134b58b4bd8011c8db8abae0698ce38c97523d0",
+            "generatedAt": "2026-09-23T10:27:45Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Metaのマルチメディア体験をオフにする方法",
+                "inputHash": "f83f19c1ff460c45a1b1e7871134b58b4bd8011c8db8abae0698ce38c97523d0",
+                "generatedAt": "2026-09-23T10:27:45Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは4月に新しいクリエイティブワークフロー（マルチメディア体験）を導入し、1つの広告で最大10枚の画像や動画を設定できるようにしました。しかし、多くの広告主がバグに悩んでおり、広告作成やメディア別レポートで問題が報告されています。広告作成画面でメディアツールチップにマウスを合わせ、表示される「元の単一メディア体験に戻す」リンクをクリックすれば、従来の単一メディア方式に切り替えられ、後で再度マルチメディアに戻すことも可能です。この切替オプションは、マルチメディア体験が正式にリリースされるまで利用できるとされています。",
+                "inputHash": "f83f19c1ff460c45a1b1e7871134b58b4bd8011c8db8abae0698ce38c97523d0",
+                "generatedAt": "2026-09-23T10:27:45Z",
                 "reviewedAt": null
               }
             }
