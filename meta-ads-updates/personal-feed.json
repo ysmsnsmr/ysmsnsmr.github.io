@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-11-05T22:04:36Z",
+  "generatedAt": "2026-11-10T00:17:31Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -91,6 +91,494 @@
   ],
   "items": [
     {
+      "id": "meta-business-help-discovered-e3da71d0dc97dfdc6277",
+      "sourceId": "meta-business-help-discovered",
+      "title": "About measuring conversions on customer devices",
+      "url": "https://www.facebook.com/business/help/4237575203200036",
+      "publishedDate": null,
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "discovered-via:jon-loomer-meta-ads"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "e3da71d0dc97dfdc62774665097a848556736a3a4ad1de4761260eb3a017b9eb",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Measuring conversions on customer devices",
+            "summary": "Learn how Meta Pixel measures conversions on customer devices.",
+            "inputHash": "7cd06a9254162735499ccee82db00c0a132261812aac95aab3196adaabad800c",
+            "generatedAt": "2026-11-10T00:17:31Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Measuring conversions on customer devices",
+                "inputHash": "7cd06a9254162735499ccee82db00c0a132261812aac95aab3196adaabad800c",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Learn how Meta Pixel measures conversions on customer devices.",
+                "inputHash": "7cd06a9254162735499ccee82db00c0a132261812aac95aab3196adaabad800c",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "顧客デバイスでのコンバージョン測定",
+            "summary": "Meta Pixelが顧客デバイス上のコンバージョンを測定する方法について説明しています。",
+            "inputHash": "2804b72d8be57da9b8c037b8122ca165be1dc8de1d90cd6ddb387ee8606c4c12",
+            "generatedAt": "2026-11-10T00:17:31Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "顧客デバイスでのコンバージョン測定",
+                "inputHash": "2804b72d8be57da9b8c037b8122ca165be1dc8de1d90cd6ddb387ee8606c4c12",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta Pixelが顧客デバイス上のコンバージョンを測定する方法について説明しています。",
+                "inputHash": "2804b72d8be57da9b8c037b8122ca165be1dc8de1d90cd6ddb387ee8606c4c12",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "jon-loomer-meta-ads-6e893207a2d51a986189",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Measure Conversions on Customer Devices",
+      "url": "https://www.jonloomer.com/qvt/measure-conversions-on-customer-devices/",
+      "publishedDate": "2026-11-09",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "6e893207a2d51a9861891d8ace50d65c728dbfaf42217a42aa6d368beef92a6f",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta measures conversions on customer devices",
+            "summary": "Meta’s Events Manager includes a setting that measures ad conversions on customers’ devices using information they’ve shared and temporary, non-identifying device data. The setting is on by default and can be turned off.",
+            "inputHash": "24ef844e52df77c254acf3a4902fff6f7a740dcca8cfb9149605f0d6232b39f6",
+            "generatedAt": "2026-11-10T00:17:31Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta measures conversions on customer devices",
+                "inputHash": "24ef844e52df77c254acf3a4902fff6f7a740dcca8cfb9149605f0d6232b39f6",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta’s Events Manager includes a setting that measures ad conversions on customers’ devices using information they’ve shared and temporary, non-identifying device data. The setting is on by default and can be turned off.",
+                "inputHash": "24ef844e52df77c254acf3a4902fff6f7a740dcca8cfb9149605f0d6232b39f6",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、顧客端末でのコンバージョン測定機能を説明",
+            "summary": "Metaのイベントマネージャには、顧客の端末上でコンバージョンを測定する機能があります。共有済みの情報（メールアドレスなど）と一時的な非識別端末情報を使用すると説明されています。この機能は初期設定で有効で、オフにすることもできます。",
+            "inputHash": "3fb0544f5ebd6f15cd6e4d06faa54e9ca564fe82c144c312632114b612a08e14",
+            "generatedAt": "2026-11-10T00:17:31Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、顧客端末でのコンバージョン測定機能を説明",
+                "inputHash": "3fb0544f5ebd6f15cd6e4d06faa54e9ca564fe82c144c312632114b612a08e14",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaのイベントマネージャには、顧客の端末上でコンバージョンを測定する機能があります。共有済みの情報（メールアドレスなど）と一時的な非識別端末情報を使用すると説明されています。この機能は初期設定で有効で、オフにすることもできます。",
+                "inputHash": "3fb0544f5ebd6f15cd6e4d06faa54e9ca564fe82c144c312632114b612a08e14",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      },
+      "officialReferences": [
+        "https://www.facebook.com/business/help/4237575203200036/"
+      ]
+    },
+    {
+      "id": "social-media-today-meta-ads-5ce336ec96b92002f241",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta’s AI ads included unapproved discounts",
+      "url": "https://www.socialmediatoday.com/news/metas-ai-ads-included-unapproved-discounts/874067/",
+      "publishedDate": "2026-11-08",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "5ce336ec96b92002f2413b548f71790d17f16d88165fe11c75bc6e3bef5922e7",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta AI ads displayed unapproved discounts",
+            "summary": "Meta’s AI-powered ad tools detected discounts on a store’s website and displayed them in Facebook and Instagram ads, even when promotions were turned off on the copied ad. Commerce Manager settings control whether detected offers can appear in other ads.",
+            "inputHash": "cdc1933d08d8e89bd6150fdbf371a6a1dab578fb6234cc56e6b60179c32aa1bb",
+            "generatedAt": "2026-11-10T00:17:31Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta AI ads displayed unapproved discounts",
+                "inputHash": "cdc1933d08d8e89bd6150fdbf371a6a1dab578fb6234cc56e6b60179c32aa1bb",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta’s AI-powered ad tools detected discounts on a store’s website and displayed them in Facebook and Instagram ads, even when promotions were turned off on the copied ad. Commerce Manager settings control whether detected offers can appear in other ads.",
+                "inputHash": "cdc1933d08d8e89bd6150fdbf371a6a1dab578fb6234cc56e6b60179c32aa1bb",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "MetaのAI広告に未承認の割引が表示",
+            "summary": "PPC Landによると、MetaのAI広告ツールが店舗サイトで検出した割引を、元の広告でプロモーションをオフにしていた場合にも、FacebookやInstagramの広告に表示した事例が報告されました。デジタルマーケティングアドバイザーのBram Van der Hallen氏が発見し、Commerce Managerでサイトや広告から検出したオファーを表示する設定が有効な場合に起きると説明しています。",
+            "inputHash": "ed4e3a2c6eb09fda5744741dab8b35a38ab885b4fb4dce25c780f2c94ce1cab4",
+            "generatedAt": "2026-11-10T00:17:31Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "MetaのAI広告に未承認の割引が表示",
+                "inputHash": "ed4e3a2c6eb09fda5744741dab8b35a38ab885b4fb4dce25c780f2c94ce1cab4",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "PPC Landによると、MetaのAI広告ツールが店舗サイトで検出した割引を、元の広告でプロモーションをオフにしていた場合にも、FacebookやInstagramの広告に表示した事例が報告されました。デジタルマーケティングアドバイザーのBram Van der Hallen氏が発見し、Commerce Managerでサイトや広告から検出したオファーを表示する設定が有効な場合に起きると説明しています。",
+                "inputHash": "ed4e3a2c6eb09fda5744741dab8b35a38ab885b4fb4dce25c780f2c94ce1cab4",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-44419924e18c2726ecfa",
+      "sourceId": "adsuploader-blog",
+      "title": "Instagram Partnership Ads: How to Set Up and Run Them in Feed, Reels and Stories",
+      "url": "https://adsuploader.com/blog/instagram-partnership-ads",
+      "publishedDate": "2026-11-08",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "44419924e18c2726ecfa02578bba24ad813179f38994cfef1ce06520f526ecb2",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "How to Set Up Instagram Partnership Ads",
+            "summary": "Covers creator permissions, two Ads Manager setup routes, placement rules for Feed, Reels and Stories, and fixes for ads that won’t publish.",
+            "inputHash": "1539adb8818b2498481387c609749410b01816408c7b4bed0d35141b1e41f6d7",
+            "generatedAt": "2026-11-10T00:17:31Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "How to Set Up Instagram Partnership Ads",
+                "inputHash": "1539adb8818b2498481387c609749410b01816408c7b4bed0d35141b1e41f6d7",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Covers creator permissions, two Ads Manager setup routes, placement rules for Feed, Reels and Stories, and fixes for ads that won’t publish.",
+                "inputHash": "1539adb8818b2498481387c609749410b01816408c7b4bed0d35141b1e41f6d7",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Instagramのパートナーシップ広告の設定と配信方法",
+            "summary": "Instagramのパートナーシップ広告について、必要なクリエイターの許可、広告マネージャでの2つの作成方法、フィード・リール・ストーリーズでのルール、広告を公開できない場合の対処法を紹介しています。",
+            "inputHash": "9f66956ddda1f4518722a0f88aa54f22570a64cc1fd440c557b8f6f6da9a9afc",
+            "generatedAt": "2026-11-10T00:17:31Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Instagramのパートナーシップ広告の設定と配信方法",
+                "inputHash": "9f66956ddda1f4518722a0f88aa54f22570a64cc1fd440c557b8f6f6da9a9afc",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Instagramのパートナーシップ広告について、必要なクリエイターの許可、広告マネージャでの2つの作成方法、フィード・リール・ストーリーズでのルール、広告を公開できない場合の対処法を紹介しています。",
+                "inputHash": "9f66956ddda1f4518722a0f88aa54f22570a64cc1fd440c557b8f6f6da9a9afc",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-2342dd23dfb160fccfb8",
+      "sourceId": "adsuploader-blog",
+      "title": "Partnership Ad Code: How to Get, Share and Use It on Instagram and Facebook",
+      "url": "https://adsuploader.com/blog/partnership-ad-code",
+      "publishedDate": "2026-11-06",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "2342dd23dfb160fccfb8b8ef13e77f3f44e690f64dde1c2c11e8b78d8620c89b",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Instagram and Facebook Partnership Ad Codes",
+            "summary": "An overview of partnership ad codes, how creators generate and share them on Instagram and Facebook, where advertisers enter them in Ads Manager, and how to address codes that fail.",
+            "inputHash": "78a70211f082fc21d337f55e25364aa8cc1ab9845afe91e70789fcbfc04f4f6d",
+            "generatedAt": "2026-11-10T00:17:31Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Instagram and Facebook Partnership Ad Codes",
+                "inputHash": "78a70211f082fc21d337f55e25364aa8cc1ab9845afe91e70789fcbfc04f4f6d",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "An overview of partnership ad codes, how creators generate and share them on Instagram and Facebook, where advertisers enter them in Ads Manager, and how to address codes that fail.",
+                "inputHash": "78a70211f082fc21d337f55e25364aa8cc1ab9845afe91e70789fcbfc04f4f6d",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Instagram・Facebookのパートナーシップ広告コードの使い方",
+            "summary": "パートナーシップ広告コードとは何か、クリエイターがInstagramやFacebookでコードを生成・共有する方法、広告主が広告マネージャで入力する場所、コードが機能しない場合の対処方法を紹介します。",
+            "inputHash": "86480a36ccf7a409dc8df87cbbe9da380cb53764f3bf967c8bb5ec10d7e6d386",
+            "generatedAt": "2026-11-10T00:17:31Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Instagram・Facebookのパートナーシップ広告コードの使い方",
+                "inputHash": "86480a36ccf7a409dc8df87cbbe9da380cb53764f3bf967c8bb5ec10d7e6d386",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "パートナーシップ広告コードとは何か、クリエイターがInstagramやFacebookでコードを生成・共有する方法、広告主が広告マネージャで入力する場所、コードが機能しない場合の対処方法を紹介します。",
+                "inputHash": "86480a36ccf7a409dc8df87cbbe9da380cb53764f3bf967c8bb5ec10d7e6d386",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-b58e5af82711a0bb2d9c",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta adds new capabilities to Graph and Marketing API",
+      "url": "https://www.socialmediatoday.com/news/meta-adds-new-capabilities-to-graph-and-marketing-api/873951/",
+      "publishedDate": "2026-11-05",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "b58e5af82711a0bb2d9c2530512e2f36f7d27e03bb64ed5812ffe6d9e35578ba",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta updates Graph and Marketing APIs",
+            "summary": "Updates include Graph API v27.0 options to add or remove AI-generated post disclosures, expanded device reach by default for certain new sales ad sets, and possible automatic product showcase on API-created ads. From Nov. 4, new apps cannot use several specified features, and total video consumption rate is being deprecated.",
+            "inputHash": "313a7df2bf1d0e551025e1bde9437a9bfd6b5bbe8ea4dd5b8c73b2f223509f7d",
+            "generatedAt": "2026-11-10T00:17:31Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta updates Graph and Marketing APIs",
+                "inputHash": "313a7df2bf1d0e551025e1bde9437a9bfd6b5bbe8ea4dd5b8c73b2f223509f7d",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Updates include Graph API v27.0 options to add or remove AI-generated post disclosures, expanded device reach by default for certain new sales ad sets, and possible automatic product showcase on API-created ads. From Nov. 4, new apps cannot use several specified features, and total video consumption rate is being deprecated.",
+                "inputHash": "313a7df2bf1d0e551025e1bde9437a9bfd6b5bbe8ea4dd5b8c73b2f223509f7d",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、Graph APIとMarketing APIを更新",
+            "summary": "MetaはGraph APIとMarketing APIの変更を発表しました。Graph API v27.0では、投稿のAI生成に関する自己開示を追加・削除できるようになります。特定の端末やOSを対象とする新規販売広告セットでは、初期設定で他の端末にもリーチを拡大します。API作成広告では商品ショーケースが自動的に有効になる場合があります。11月4日以降、新規アプリでは複数の機能を利用できず、既存アプリもそれらの新たな用途を導入できません。また、動画の合計視聴率指標は廃止されます。",
+            "inputHash": "abcec978144ff390741a24991d5d90684e910251da9e2728a65b02d5465361ea",
+            "generatedAt": "2026-11-10T00:17:31Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、Graph APIとMarketing APIを更新",
+                "inputHash": "abcec978144ff390741a24991d5d90684e910251da9e2728a65b02d5465361ea",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "MetaはGraph APIとMarketing APIの変更を発表しました。Graph API v27.0では、投稿のAI生成に関する自己開示を追加・削除できるようになります。特定の端末やOSを対象とする新規販売広告セットでは、初期設定で他の端末にもリーチを拡大します。API作成広告では商品ショーケースが自動的に有効になる場合があります。11月4日以降、新規アプリでは複数の機能を利用できず、既存アプリもそれらの新たな用途を導入できません。また、動画の合計視聴率指標は廃止されます。",
+                "inputHash": "abcec978144ff390741a24991d5d90684e910251da9e2728a65b02d5465361ea",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-164345463805a9d7d7d2",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta, TikTok and Google push back on California law",
+      "url": "https://www.socialmediatoday.com/news/meta-tiktok-and-google-push-back-on-california-law/873955/",
+      "publishedDate": "2026-11-05",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "164345463805a9d7d7d26b3fdd53ec2ff8d01eeadadc5cf0eccce3a4788781e7",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta, TikTok and Google challenge California law",
+            "summary": "Meta, TikTok and Google filed separate lawsuits seeking to block a California law that would restrict addictive platform features for users under 16. They argue the law violates the First Amendment and Section 230 protections.",
+            "inputHash": "72e1d99853d71daf925b7ad1b5af205668b0a5ce925e12600a261d8cdbe4d77f",
+            "generatedAt": "2026-11-10T00:17:31Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta, TikTok and Google challenge California law",
+                "inputHash": "72e1d99853d71daf925b7ad1b5af205668b0a5ce925e12600a261d8cdbe4d77f",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta, TikTok and Google filed separate lawsuits seeking to block a California law that would restrict addictive platform features for users under 16. They argue the law violates the First Amendment and Section 230 protections.",
+                "inputHash": "72e1d99853d71daf925b7ad1b5af205668b0a5ce925e12600a261d8cdbe4d77f",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta・TikTok・Google、カリフォルニア州法の差し止め求める",
+            "summary": "Meta、TikTok、Googleは、16歳未満の利用者に対し、依存性のあるフィードや無限スクロール、自動再生などを制限するカリフォルニア州法の執行差し止めを求め、別々に訴訟を起こした。各社は、同法が憲法修正第1条およびオンライン事業者を保護する通信品位法第230条に反すると主張している。同法は1月1日に施行予定。",
+            "inputHash": "e13c6035f6a6af10e24534bf459e2c7f75c6e218f6950f75d45d0889d50ff1da",
+            "generatedAt": "2026-11-10T00:17:31Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta・TikTok・Google、カリフォルニア州法の差し止め求める",
+                "inputHash": "e13c6035f6a6af10e24534bf459e2c7f75c6e218f6950f75d45d0889d50ff1da",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta、TikTok、Googleは、16歳未満の利用者に対し、依存性のあるフィードや無限スクロール、自動再生などを制限するカリフォルニア州法の執行差し止めを求め、別々に訴訟を起こした。各社は、同法が憲法修正第1条およびオンライン事業者を保護する通信品位法第230条に反すると主張している。同法は1月1日に施行予定。",
+                "inputHash": "e13c6035f6a6af10e24534bf459e2c7f75c6e218f6950f75d45d0889d50ff1da",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "social-media-today-meta-ads-e050377e208621f0d2cc",
       "sourceId": "social-media-today-meta-ads",
       "title": "Facebook expands Creator Fast Track program to Brazil",
@@ -98,7 +586,7 @@
       "publishedDate": "2026-11-04",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -160,6 +648,77 @@
       }
     },
     {
+      "id": "meta-developer-blog-discovered-f33605e9c6ed38be3440",
+      "sourceId": "meta-developer-blog-discovered",
+      "title": "Introducing Graph API v27.0 and Marketing API v27.0",
+      "url": "https://developers.facebook.com/blog/post/2026/11/04/introducing-graph-api-v27-and-marketing-api-v27/",
+      "publishedDate": "2026-11-04",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "discovered-via:social-media-today-meta-ads"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "f33605e9c6ed38be3440fc2122af8dac2e5cf41e0515afc39d0b6c4fa17413b7",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Graph API and Marketing API v27.0 introduced",
+            "summary": "Facebook for Developers introduces Graph API v27.0 and Marketing API v27.0.",
+            "inputHash": "80d38e356f676d8f14cdaeedabbc719fa13d28fd6a225dad40033911f4495d06",
+            "generatedAt": "2026-11-10T00:17:31Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Graph API and Marketing API v27.0 introduced",
+                "inputHash": "80d38e356f676d8f14cdaeedabbc719fa13d28fd6a225dad40033911f4495d06",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebook for Developers introduces Graph API v27.0 and Marketing API v27.0.",
+                "inputHash": "80d38e356f676d8f14cdaeedabbc719fa13d28fd6a225dad40033911f4495d06",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Graph APIとMarketing APIのv27.0を発表",
+            "summary": "Facebook for Developersが、Graph API v27.0とMarketing API v27.0を発表しました。",
+            "inputHash": "f7cd5c4458ced712613b2c4c01c20d5ac56aa8a325ee3fcf476bab1fd3afeec0",
+            "generatedAt": "2026-11-10T00:17:31Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Graph APIとMarketing APIのv27.0を発表",
+                "inputHash": "f7cd5c4458ced712613b2c4c01c20d5ac56aa8a325ee3fcf476bab1fd3afeec0",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebook for Developersが、Graph API v27.0とMarketing API v27.0を発表しました。",
+                "inputHash": "f7cd5c4458ced712613b2c4c01c20d5ac56aa8a325ee3fcf476bab1fd3afeec0",
+                "generatedAt": "2026-11-10T00:17:31Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "adsuploader-blog-1741fcfde4f6cdd8a0d5",
       "sourceId": "adsuploader-blog",
       "title": "Meta Partnership Ads: How They Work, Setup and Examples (2026)",
@@ -167,7 +726,7 @@
       "publishedDate": "2026-11-04",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -236,7 +795,7 @@
       "publishedDate": "2026-11-03",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -305,7 +864,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -374,7 +933,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -443,7 +1002,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-02T23:36:33Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -512,7 +1071,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-02T23:36:33Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -581,7 +1140,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -652,7 +1211,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -723,7 +1282,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -794,7 +1353,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -865,7 +1424,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -936,7 +1495,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1007,7 +1566,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1078,7 +1637,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1149,7 +1708,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1220,7 +1779,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1291,7 +1850,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1362,7 +1921,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1433,7 +1992,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1504,7 +2063,7 @@
       "publishedDate": "2026-10-31",
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1573,7 +2132,7 @@
       "publishedDate": "2026-10-29",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1642,7 +2201,7 @@
       "publishedDate": "2026-10-28",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1711,7 +2270,7 @@
       "publishedDate": "2026-10-28",
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1782,7 +2341,7 @@
       "publishedDate": "2026-10-28",
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1853,7 +2412,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1922,7 +2481,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1994,7 +2553,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2063,7 +2622,7 @@
       "publishedDate": "2026-10-26",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2135,7 +2694,7 @@
       "publishedDate": "2026-10-25",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2204,7 +2763,7 @@
       "publishedDate": "2026-10-25",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2273,7 +2832,7 @@
       "publishedDate": "2026-10-23",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2342,7 +2901,7 @@
       "publishedDate": "2026-10-22",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2411,7 +2970,7 @@
       "publishedDate": "2026-10-22",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2480,7 +3039,7 @@
       "publishedDate": "2026-10-21",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2549,7 +3108,7 @@
       "publishedDate": "2026-10-21",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2618,7 +3177,7 @@
       "publishedDate": "2026-10-20",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2690,7 +3249,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2761,7 +3320,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2830,7 +3389,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3037,7 +3596,7 @@
       "publishedDate": "2026-10-17",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3175,13 +3734,12 @@
       "publishedDate": "2026-10-15",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
       "matchEvidence": [
-        "discovered-via:jon-loomer-meta-ads",
-        "discovered-via:social-media-today-meta-ads"
+        "discovered-via:jon-loomer-meta-ads"
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v3",
@@ -3316,7 +3874,7 @@
       "publishedDate": "2026-10-13",
       "updatedDate": null,
       "firstObservedAt": "2026-10-15T19:54:50Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3526,7 +4084,7 @@
       "publishedDate": "2026-10-12",
       "updatedDate": null,
       "firstObservedAt": "2026-10-12T23:02:27Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4151,7 +4709,7 @@
       "publishedDate": "2026-10-06",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4223,7 +4781,7 @@
       "publishedDate": "2026-10-05",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4706,7 +5264,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -4775,7 +5333,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4913,7 +5471,7 @@
       "publishedDate": "2026-09-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T05:47:38Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5258,7 +5816,7 @@
       "publishedDate": "2026-09-22",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5400,7 +5958,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6090,7 +6648,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6435,7 +6993,7 @@
       "publishedDate": "2026-09-08",
       "updatedDate": null,
       "firstObservedAt": "2026-09-09T04:45:10Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
+      "lastObservedAt": "2026-11-10T00:17:31Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6489,565 +7047,6 @@
                 "value": "この投稿では、Meta広告のコントロール設定の管理方法を説明し、年齢、性別、カスタムオーディエンス、詳細ターゲティング、類似オーディエンス、配置について取り上げています。主にハンズオフのアプローチ、オーディエンス提案のオプション、価値ルールによる調整、年齢ターゲティングの最終的な制限について述べています。",
                 "inputHash": "5b6eeaaa0f1701e8e6863dd0210e13a5979f4dab90360d7a9bb5207e81244fec",
                 "generatedAt": "2026-09-09T04:45:10Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-7e118c18c9a7eafed339",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "Turn Off New Creative Workflow (Multimedia Experience)",
-      "url": "https://www.jonloomer.com/qvt/turn-off-new-creative-workflow-multimedia-experience/",
-      "publishedDate": "2026-09-07",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "7e118c18c9a7eafed3392219c9c930ab728955ad17119f4b83752bb90596e63a",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta's Multimedia Experience: optional multi‑media workflow with bugs",
-            "summary": "Meta rolled out a new creative workflow called Multimedia Experience in April, allowing up to ten images or videos per ad. Some advertisers report bugs in creation and reporting. The interface includes a tooltip that lets users switch back to the original single-media experience.",
-            "inputHash": "fe185186413ffd1a084beb810c5e3c554d685d3723da5979aeca261687d77c2f",
-            "generatedAt": "2026-09-23T10:27:45Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta's Multimedia Experience: optional multi‑media workflow with bugs",
-                "inputHash": "fe185186413ffd1a084beb810c5e3c554d685d3723da5979aeca261687d77c2f",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta rolled out a new creative workflow called Multimedia Experience in April, allowing up to ten images or videos per ad. Some advertisers report bugs in creation and reporting. The interface includes a tooltip that lets users switch back to the original single-media experience.",
-                "inputHash": "fe185186413ffd1a084beb810c5e3c554d685d3723da5979aeca261687d77c2f",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Metaのマルチメディア体験をオフにする方法",
-            "summary": "Metaは4月に新しいクリエイティブワークフロー（マルチメディア体験）を導入し、1つの広告で最大10枚の画像や動画を設定できるようにしました。しかし、多くの広告主がバグに悩んでおり、広告作成やメディア別レポートで問題が報告されています。広告作成画面でメディアツールチップにマウスを合わせ、表示される「元の単一メディア体験に戻す」リンクをクリックすれば、従来の単一メディア方式に切り替えられ、後で再度マルチメディアに戻すことも可能です。この切替オプションは、マルチメディア体験が正式にリリースされるまで利用できるとされています。",
-            "inputHash": "f83f19c1ff460c45a1b1e7871134b58b4bd8011c8db8abae0698ce38c97523d0",
-            "generatedAt": "2026-09-23T10:27:45Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Metaのマルチメディア体験をオフにする方法",
-                "inputHash": "f83f19c1ff460c45a1b1e7871134b58b4bd8011c8db8abae0698ce38c97523d0",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaは4月に新しいクリエイティブワークフロー（マルチメディア体験）を導入し、1つの広告で最大10枚の画像や動画を設定できるようにしました。しかし、多くの広告主がバグに悩んでおり、広告作成やメディア別レポートで問題が報告されています。広告作成画面でメディアツールチップにマウスを合わせ、表示される「元の単一メディア体験に戻す」リンクをクリックすれば、従来の単一メディア方式に切り替えられ、後で再度マルチメディアに戻すことも可能です。この切替オプションは、マルチメディア体験が正式にリリースされるまで利用できるとされています。",
-                "inputHash": "f83f19c1ff460c45a1b1e7871134b58b4bd8011c8db8abae0698ce38c97523d0",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "meta-business-news-discovered-75f8d64deb7a8335bb22",
-      "sourceId": "meta-business-news-discovered",
-      "title": "8M+ Advertisers Use Meta's AI Creative Tools. They Just Got a Major Upgrade.",
-      "url": "https://www.facebook.com/business/news/muse-image-for-businesses",
-      "publishedDate": null,
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-02T11:59:49Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [
-        "discovered-via:jon-loomer-meta-ads"
-      ],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "75f8d64deb7a8335bb227c4bffdf4c7343df701211aafda2c29584ea098084c5",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta upgrades AI creative tools used by 8M+ advertisers",
-            "summary": "Muse Image from Meta Superintelligence Labs brings agentic reasoning to ad creative and AI-powered room restyling to help shoppers visualize products in their own spaces.",
-            "inputHash": "9e1022845fe0383b2e3ecc668ed990132f2b502be09bfb007a8a2639e709a559",
-            "generatedAt": "2026-10-31T02:08:43Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta upgrades AI creative tools used by 8M+ advertisers",
-                "inputHash": "9e1022845fe0383b2e3ecc668ed990132f2b502be09bfb007a8a2639e709a559",
-                "generatedAt": "2026-10-31T02:08:43Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Muse Image from Meta Superintelligence Labs brings agentic reasoning to ad creative and AI-powered room restyling to help shoppers visualize products in their own spaces.",
-                "inputHash": "9e1022845fe0383b2e3ecc668ed990132f2b502be09bfb007a8a2639e709a559",
-                "generatedAt": "2026-10-31T02:08:43Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "800万人超の広告主が利用するMetaのAIツールが大幅更新",
-            "summary": "Meta Superintelligence LabsのMuse Imageは、広告クリエイティブにエージェント型推論を導入します。また、AIによる部屋の模様替え機能で、買い物客が商品を自分の空間に置いた様子をイメージできます。",
-            "inputHash": "86aa543e6b49d4fc8e6cf546de927f3974aba7f0fef26ed3f0f17abd2589e3b0",
-            "generatedAt": "2026-10-31T02:08:43Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "800万人超の広告主が利用するMetaのAIツールが大幅更新",
-                "inputHash": "86aa543e6b49d4fc8e6cf546de927f3974aba7f0fef26ed3f0f17abd2589e3b0",
-                "generatedAt": "2026-10-31T02:08:43Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta Superintelligence LabsのMuse Imageは、広告クリエイティブにエージェント型推論を導入します。また、AIによる部屋の模様替え機能で、買い物客が商品を自分の空間に置いた様子をイメージできます。",
-                "inputHash": "86aa543e6b49d4fc8e6cf546de927f3974aba7f0fef26ed3f0f17abd2589e3b0",
-                "generatedAt": "2026-10-31T02:08:43Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-1d7817ec1f2ea9cdd05e",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "Meta Introduces a New Automatic Events Feature",
-      "url": "https://www.jonloomer.com/meta-automatic-events-feature/",
-      "publishedDate": "2026-09-01",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-02T04:36:59Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta launches new Automatic Events feature in Events Manager",
-            "summary": "Meta has added a new Automatic Events option in the Settings tab of Events Manager. The feature automatically creates standard events when related actions are detected, similar to the older “Track Events Automatically Without Code” tool, but is described as using AI and includes a dashboard for managing the generated events.",
-            "inputHash": "05642d48534c8f714f04678a41db5b9a2ee045b43b40ef04a4b1805f816ba460",
-            "generatedAt": "2026-09-03T04:35:39Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta launches new Automatic Events feature in Events Manager",
-                "inputHash": "05642d48534c8f714f04678a41db5b9a2ee045b43b40ef04a4b1805f816ba460",
-                "generatedAt": "2026-09-03T04:35:39Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta has added a new Automatic Events option in the Settings tab of Events Manager. The feature automatically creates standard events when related actions are detected, similar to the older “Track Events Automatically Without Code” tool, but is described as using AI and includes a dashboard for managing the generated events.",
-                "inputHash": "05642d48534c8f714f04678a41db5b9a2ee045b43b40ef04a4b1805f816ba460",
-                "generatedAt": "2026-09-03T04:35:39Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "MetaがEvents Managerに新しい自動イベント機能を導入",
-            "summary": "MetaはEvents Managerの設定タブに新しい自動イベントオプションを追加しました。この機能は関連するアクションを検出すると標準イベントを自動的に作成し、以前の「コードなしでイベントを自動的に追跡」ツールと同様ですが、AIを使用すると説明され、生成されたイベントを管理するダッシュボードが含まれています。",
-            "inputHash": "9477a7f84224c7b3326fbbfc5167c2a8cb7b877cd4b23fc92cbd3950003c8928",
-            "generatedAt": "2026-09-03T04:35:39Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "MetaがEvents Managerに新しい自動イベント機能を導入",
-                "inputHash": "9477a7f84224c7b3326fbbfc5167c2a8cb7b877cd4b23fc92cbd3950003c8928",
-                "generatedAt": "2026-09-03T04:35:39Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "MetaはEvents Managerの設定タブに新しい自動イベントオプションを追加しました。この機能は関連するアクションを検出すると標準イベントを自動的に作成し、以前の「コードなしでイベントを自動的に追跡」ツールと同様ですが、AIを使用すると説明され、生成されたイベントを管理するダッシュボードが含まれています。",
-                "inputHash": "9477a7f84224c7b3326fbbfc5167c2a8cb7b877cd4b23fc92cbd3950003c8928",
-                "generatedAt": "2026-09-03T04:35:39Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      },
-      "officialReferences": [
-        "https://www.facebook.com/business/help/1292598407460746/",
-        "https://www.facebook.com/business/help/555177831677798/"
-      ]
-    },
-    {
-      "id": "jon-loomer-meta-ads-36c97d1dd653bebefad3",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "Check Your Existing Customer Exclusions",
-      "url": "https://www.jonloomer.com/qvt/existing-customer-exclusions/",
-      "publishedDate": "2026-08-31",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "36c97d1dd653bebefad321d32289082419452d7186bd74a6ac68a8b102dd120b",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Check Your Existing Customer Exclusions",
-            "summary": "Meta’s Customer Lifecycle Strategy automatically adds custom audiences to the exclusion list when acquiring new customers, but the selections are often inaccurate and incomplete, requiring manual review. Engaged audiences are not auto‑excluded.",
-            "inputHash": "5ec7b60cd55ca60e3d01123ac0835e7a0d27f6e20c94893e7db7ade7e3524f20",
-            "generatedAt": "2026-09-23T10:27:45Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Check Your Existing Customer Exclusions",
-                "inputHash": "5ec7b60cd55ca60e3d01123ac0835e7a0d27f6e20c94893e7db7ade7e3524f20",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta’s Customer Lifecycle Strategy automatically adds custom audiences to the exclusion list when acquiring new customers, but the selections are often inaccurate and incomplete, requiring manual review. Engaged audiences are not auto‑excluded.",
-                "inputHash": "5ec7b60cd55ca60e3d01123ac0835e7a0d27f6e20c94893e7db7ade7e3524f20",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Metaの新規顧客取得設定で自動除外されるカスタムオーディエンスに注意",
-            "summary": "MetaのCustomer Lifecycle Strategyで「新規顧客取得」を選択すると、カスタムオーディエンスが自動的に除外リストに追加されるが、予測された除外対象は不正確で、既存顧客に合わないものも含まれる。エンゲージドオーディエンスは自動除外されず、手動で除外設定を確認・修正する必要がある。",
-            "inputHash": "7dc269fff64a93e9c3f26a36e059be106a248366659b1ab2793f873db6eeb0a5",
-            "generatedAt": "2026-09-23T10:27:45Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Metaの新規顧客取得設定で自動除外されるカスタムオーディエンスに注意",
-                "inputHash": "7dc269fff64a93e9c3f26a36e059be106a248366659b1ab2793f873db6eeb0a5",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "MetaのCustomer Lifecycle Strategyで「新規顧客取得」を選択すると、カスタムオーディエンスが自動的に除外リストに追加されるが、予測された除外対象は不正確で、既存顧客に合わないものも含まれる。エンゲージドオーディエンスは自動除外されず、手動で除外設定を確認・修正する必要がある。",
-                "inputHash": "7dc269fff64a93e9c3f26a36e059be106a248366659b1ab2793f873db6eeb0a5",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "social-media-today-meta-ads-d3fb5f3c45f341c06bab",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Meta updates login with Facebook",
-      "url": "https://www.socialmediatoday.com/news/meta-updates-login-with-facebook/829135/",
-      "publishedDate": "2026-08-30",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "d3fb5f3c45f341c06bab017f5c86d88dc6bcbd0e1ad985b8a2ce1a5135709e30",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta adds one‑tap Facebook login for Android, Web and iOS",
-            "summary": "Meta is rolling out a one‑tap sign‑on for Android and Web, improves its Limited Login flow, and updates the iOS fast app switch to use the native Facebook app. Developers can access these changes through the latest SDK.",
-            "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
-            "generatedAt": "2026-09-24T10:49:46Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta adds one‑tap Facebook login for Android, Web and iOS",
-                "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta is rolling out a one‑tap sign‑on for Android and Web, improves its Limited Login flow, and updates the iOS fast app switch to use the native Facebook app. Developers can access these changes through the latest SDK.",
-                "inputHash": "0d327405c799290c22723efd01060c5187c8a7e17bcf612eb1d5b9c73632fde4",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta、Facebookログインをワンタップで簡素化",
-            "summary": "Metaは、Facebookアカウントでのログイン機能を改善し、Android と Web でワンタップサインオンを提供します。既にデバイスにサインイン済みのユーザーは、1 回のタップで第三者アプリにログインでき、フローが短縮されます。また、Limited Login の再ログイン回数削減や、iOS ではネイティブ Facebook アプリへの高速スイッチにより、ブラウザ経由より速くログインできます。これらの機能は最新 SDK で利用可能で、開発者は必要な機能を選択して導入できます。",
-            "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
-            "generatedAt": "2026-09-24T10:49:46Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta、Facebookログインをワンタップで簡素化",
-                "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaは、Facebookアカウントでのログイン機能を改善し、Android と Web でワンタップサインオンを提供します。既にデバイスにサインイン済みのユーザーは、1 回のタップで第三者アプリにログインでき、フローが短縮されます。また、Limited Login の再ログイン回数削減や、iOS ではネイティブ Facebook アプリへの高速スイッチにより、ブラウザ経由より速くログインできます。これらの機能は最新 SDK で利用可能で、開発者は必要な機能を選択して導入できます。",
-                "inputHash": "e478a64cc20e612e6f849d25b53631d9d5e9b50bf064508d4db2e8545cf1efcd",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "meta-business-sdk-releases-8ada906f14c5e1731d04",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "v26.0.1",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v26.0.1",
-      "publishedDate": "2026-08-25",
-      "updatedDate": "2026-08-25",
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
-      "platformIds": [
-        "meta-business-sdk",
-        "marketing-api"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "8ada906f14c5e1731d046519dbd04825d379d50f5df2eeb9c7d327e4c1176bbb",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Version v26.0.1 released",
-            "summary": "The Facebook Node.js Business SDK has been updated to version v26.0.1.",
-            "inputHash": "6048a24b2f27a322478bd36981f16817d22c47fc6a2a11705024cb17ccbfe367",
-            "generatedAt": "2026-09-02T11:59:49Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Version v26.0.1 released",
-                "inputHash": "6048a24b2f27a322478bd36981f16817d22c47fc6a2a11705024cb17ccbfe367",
-                "generatedAt": "2026-09-02T11:59:49Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "The Facebook Node.js Business SDK has been updated to version v26.0.1.",
-                "inputHash": "6048a24b2f27a322478bd36981f16817d22c47fc6a2a11705024cb17ccbfe367",
-                "generatedAt": "2026-09-02T11:59:49Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "バージョン v26.0.1 がリリースされました",
-            "summary": "Facebook の Node.js Business SDK がバージョン v26.0.1 に更新されました。",
-            "inputHash": "4dd947980137e05819079425ac0d59ce5ed951cd467bfd0439292b4395e9a835",
-            "generatedAt": "2026-09-02T11:59:49Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "バージョン v26.0.1 がリリースされました",
-                "inputHash": "4dd947980137e05819079425ac0d59ce5ed951cd467bfd0439292b4395e9a835",
-                "generatedAt": "2026-09-02T11:59:49Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Facebook の Node.js Business SDK がバージョン v26.0.1 に更新されました。",
-                "inputHash": "4dd947980137e05819079425ac0d59ce5ed951cd467bfd0439292b4395e9a835",
-                "generatedAt": "2026-09-02T11:59:49Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-3ce7456cf5a0fb23730c",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "Reply to Keywords Meta Ads Feature",
-      "url": "https://www.jonloomer.com/reply-to-keywords-meta-ads-feature/",
-      "publishedDate": "2026-08-25",
-      "updatedDate": null,
-      "firstObservedAt": "2026-08-29T09:59:42Z",
-      "lastObservedAt": "2026-11-05T22:04:36Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta's Reply to Keywords automates Instagram comment DMs",
-            "summary": "Meta introduced a feature for Instagram ads that lets advertisers define up to five keywords; when a comment contains one, an automated private message (DM) is sent, which can include a link, phone number, or email. It shows previews and is aimed at high comment volume or comment‑to‑DM strategies. Currently Instagram‑only, may expand later.",
-            "inputHash": "ef1ec47afa854c922dceb1c565f598ff2ce7e5647bb4464564ffa0a98234d0b0",
-            "generatedAt": "2026-09-02T11:59:49Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta's Reply to Keywords automates Instagram comment DMs",
-                "inputHash": "ef1ec47afa854c922dceb1c565f598ff2ce7e5647bb4464564ffa0a98234d0b0",
-                "generatedAt": "2026-09-02T11:59:49Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta introduced a feature for Instagram ads that lets advertisers define up to five keywords; when a comment contains one, an automated private message (DM) is sent, which can include a link, phone number, or email. It shows previews and is aimed at high comment volume or comment‑to‑DM strategies. Currently Instagram‑only, may expand later.",
-                "inputHash": "ef1ec47afa854c922dceb1c565f598ff2ce7e5647bb4464564ffa0a98234d0b0",
-                "generatedAt": "2026-09-02T11:59:49Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Metaの「キーワード返信」機能でInstagramコメントを自動DM",
-            "summary": "MetaはInstagram広告向けに「Reply to Keywords」機能を提供し、最大5つのキーワードを設定できる。コメントにキーワードが含まれると自動でプライベートメッセージ（DM）が送信され、リンクや電話番号、メールを含められる。プレビューが表示され、コメントが多い場合やコメント→DMマーケティングに利用できるが、現時点ではInstagramのみで、将来的に他プラットフォームへ拡大する可能性がある。",
-            "inputHash": "1d38a8645e13c0bd0816a17da16d99c5a0add7e576bb336718a919046834b85b",
-            "generatedAt": "2026-09-02T11:59:49Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Metaの「キーワード返信」機能でInstagramコメントを自動DM",
-                "inputHash": "1d38a8645e13c0bd0816a17da16d99c5a0add7e576bb336718a919046834b85b",
-                "generatedAt": "2026-09-02T11:59:49Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "MetaはInstagram広告向けに「Reply to Keywords」機能を提供し、最大5つのキーワードを設定できる。コメントにキーワードが含まれると自動でプライベートメッセージ（DM）が送信され、リンクや電話番号、メールを含められる。プレビューが表示され、コメントが多い場合やコメント→DMマーケティングに利用できるが、現時点ではInstagramのみで、将来的に他プラットフォームへ拡大する可能性がある。",
-                "inputHash": "1d38a8645e13c0bd0816a17da16d99c5a0add7e576bb336718a919046834b85b",
-                "generatedAt": "2026-09-02T11:59:49Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "social-media-today-meta-ads-7acf956231436a87c7b7",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Meta removes option to exclude ad placements",
-      "url": "https://www.socialmediatoday.com/news/meta-removes-option-to-exclude-ad-placements/828461/",
-      "publishedDate": "2026-08-20",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-09T22:29:27Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "7acf956231436a87c7b7a9015db094361a079af2b65baf71f7b29d23f773fa11",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta to eliminate ad placement exclusion option",
-            "summary": "Meta announced it will soon remove the Placements option that lets advertisers exclude specific ad placements and also the ability to exclude platforms, requiring ads to run across all Meta apps. No timeline was given. The change is part of Meta’s push toward fully automated, AI‑driven ad campaigns.",
-            "inputHash": "95d2a3dc5fc4207feba2def37ef82a16aecdce00d67dc7d945e198b12b68e6a5",
-            "generatedAt": "2026-09-09T22:29:27Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta to eliminate ad placement exclusion option",
-                "inputHash": "95d2a3dc5fc4207feba2def37ef82a16aecdce00d67dc7d945e198b12b68e6a5",
-                "generatedAt": "2026-09-09T22:29:27Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta announced it will soon remove the Placements option that lets advertisers exclude specific ad placements and also the ability to exclude platforms, requiring ads to run across all Meta apps. No timeline was given. The change is part of Meta’s push toward fully automated, AI‑driven ad campaigns.",
-                "inputHash": "95d2a3dc5fc4207feba2def37ef82a16aecdce00d67dc7d945e198b12b68e6a5",
-                "generatedAt": "2026-09-09T22:29:27Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta、広告配置除外オプションを廃止",
-            "summary": "Metaは、広告主が特定の広告配置やプラットフォームを除外できる「Placements」オプションを近日中に廃止し、すべてのMetaアプリで広告を配信するよう求めると発表した。具体的な時期は示されていない。この変更は、完全に自動化されたAI駆動の広告キャンペーンへの移行の一環である。",
-            "inputHash": "11f8c70826855ec4092ac9a382f103714e0430096ea9faecfa4750a6c1f53dcf",
-            "generatedAt": "2026-09-09T22:29:27Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta、広告配置除外オプションを廃止",
-                "inputHash": "11f8c70826855ec4092ac9a382f103714e0430096ea9faecfa4750a6c1f53dcf",
-                "generatedAt": "2026-09-09T22:29:27Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaは、広告主が特定の広告配置やプラットフォームを除外できる「Placements」オプションを近日中に廃止し、すべてのMetaアプリで広告を配信するよう求めると発表した。具体的な時期は示されていない。この変更は、完全に自動化されたAI駆動の広告キャンペーンへの移行の一環である。",
-                "inputHash": "11f8c70826855ec4092ac9a382f103714e0430096ea9faecfa4750a6c1f53dcf",
-                "generatedAt": "2026-09-09T22:29:27Z",
                 "reviewedAt": null
               }
             }
