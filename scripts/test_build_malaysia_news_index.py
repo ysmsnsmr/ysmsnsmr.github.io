@@ -195,7 +195,7 @@ class MalaysiaNewsIndexTests(unittest.TestCase):
         self.assertNotIn("今日を除く直近日を比較", page)
         self.assertIn("直近7日のまとめ", page)
         self.assertIn("recent-headline-list", page)
-        self.assertIn("font-size: 2.15rem", page)
+        self.assertIn("font-size: 1.65rem", page)
 
     def test_air_quality_observations_and_forecasts_are_separate_from_news(self) -> None:
         day = self.parse_sample()
