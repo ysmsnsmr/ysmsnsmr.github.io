@@ -753,7 +753,7 @@ def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
     }}
     main {{ width: min(880px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 56px; }}
     h1, h2, h3, p {{ margin-top: 0; }}
-    h1 {{ margin-bottom: 8px; font-size: clamp(2rem, 6vw, 3.1rem); line-height: 1.16; }}
+    h1 {{ margin-bottom: 8px; font-size: 1.65rem; line-height: 1.3; }}
     h2 {{ margin: 0; font-size: 1.25rem; }}
     h3 {{ margin: 0; font-size: 1.1rem; line-height: 1.55; overflow-wrap: anywhere; }}
     a {{ color: var(--accent); text-underline-offset: 0.18em; }}
@@ -805,6 +805,7 @@ def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
     .source-only-meta {{ color: var(--muted); font-size: .82rem; }}
     .muted {{ color: var(--muted); }}
     @media (max-width: 600px) {{
+      h1 {{ font-size: 1.4rem; }}
       main {{ width: min(100% - 20px, 880px); padding-top: 20px; }}
       .page-nav {{ align-items: flex-start; flex-direction: column; gap: 6px; margin-bottom: 24px; }}
       .daily-item {{ padding: 15px; }}
@@ -878,7 +879,7 @@ def render_html(days: list[NewsDay]) -> str:
     h1, h2, h3, p {{ margin-top: 0; }}
     h1 {{
       margin-bottom: 8px;
-      font-size: 2.15rem;
+      font-size: 1.65rem;
       line-height: 1.3;
       letter-spacing: 0;
     }}
@@ -1154,7 +1155,7 @@ def render_html(days: list[NewsDay]) -> str:
     .archive-list span {{ color: var(--muted); }}
     .muted {{ color: var(--muted); }}
     @media (max-width: 760px) {{
-      h1 {{ font-size: 1.7rem; }}
+      h1 {{ font-size: 1.4rem; }}
       main {{
         width: min(100% - 20px, 1120px);
         padding-top: 24px;
