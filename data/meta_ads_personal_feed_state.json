@@ -1,6 +1,6 @@
 {
   "schemaVersion": "meta-ads-personal-feed-state/v5",
-  "updatedAt": "2026-11-10T00:17:31Z",
+  "updatedAt": "2026-11-12T22:17:09Z",
   "sources": {
     "meta-product-news-rss": {
       "relevanceRevision": "meta-ads-lanes-v1",
@@ -707,7 +707,7 @@
           ],
           "fingerprint": "4eaba66ff972adf270ab3d1f9f39c784a5c1dd47873fc9be29cb2b1c75da3228",
           "firstObservedAt": "2026-09-24T10:49:46Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4eaba66ff972adf270ab3d1f9f39c784a5c1dd47873fc9be29cb2b1c75da3228",
@@ -914,7 +914,7 @@
           ],
           "fingerprint": "3a6042854a6149112069769c01503fa0a22b366f14a78569a9fc7646992b43ef",
           "firstObservedAt": "2026-09-25T05:01:44Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3a6042854a6149112069769c01503fa0a22b366f14a78569a9fc7646992b43ef",
@@ -983,7 +983,7 @@
           ],
           "fingerprint": "5246d21d9b0bec1aaa7cc2d1a4fc6fc647224b94bc170e314730f8ca94dc7a5a",
           "firstObservedAt": "2026-09-29T13:20:20Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5246d21d9b0bec1aaa7cc2d1a4fc6fc647224b94bc170e314730f8ca94dc7a5a",
@@ -1052,7 +1052,7 @@
           ],
           "fingerprint": "f4eb6e6aef14c99f36f113e388017c2ea1bd54d084dbec62a26733b05d947f66",
           "firstObservedAt": "2026-10-06T06:25:59Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f4eb6e6aef14c99f36f113e388017c2ea1bd54d084dbec62a26733b05d947f66",
@@ -1121,7 +1121,7 @@
           ],
           "fingerprint": "37c9fe7686b0a7083c37639fa74bbb69f3bf42280b4fc41cf5e56352607c98af",
           "firstObservedAt": "2026-10-15T19:54:50Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "37c9fe7686b0a7083c37639fa74bbb69f3bf42280b4fc41cf5e56352607c98af",
@@ -1190,7 +1190,7 @@
           ],
           "fingerprint": "f8ae1876567043552745b806ba4aaceae86231a4856c941a44c0db0367717b67",
           "firstObservedAt": "2026-10-15T19:54:50Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f8ae1876567043552745b806ba4aaceae86231a4856c941a44c0db0367717b67",
@@ -1259,7 +1259,7 @@
           ],
           "fingerprint": "2e93b8e8311c3f32ea128b2aca39f058b1c1015b5fa128b49ece07ebd6524cba",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "2e93b8e8311c3f32ea128b2aca39f058b1c1015b5fa128b49ece07ebd6524cba",
@@ -1328,7 +1328,7 @@
           ],
           "fingerprint": "d04eda5bc8b0d1612863ca51f85a8e55c27a4c8b79839bb1d9947863d093a9f5",
           "firstObservedAt": "2026-11-05T22:04:36Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d04eda5bc8b0d1612863ca51f85a8e55c27a4c8b79839bb1d9947863d093a9f5",
@@ -1397,7 +1397,7 @@
           ],
           "fingerprint": "4a58572ffe672198587dd52569d21380d143af9cc1b456ea0cb712359c6733f7",
           "firstObservedAt": "2026-11-05T22:04:36Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4a58572ffe672198587dd52569d21380d143af9cc1b456ea0cb712359c6733f7",
@@ -1466,7 +1466,7 @@
           ],
           "fingerprint": "20e0f10a25f66e1304915af0c773507fbdf9d2246c02593f4e9a1eb0e3fb978a",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "20e0f10a25f66e1304915af0c773507fbdf9d2246c02593f4e9a1eb0e3fb978a",
@@ -5073,7 +5073,7 @@
           ],
           "fingerprint": "c16ca0d2ff85d661dee7d3394b5bc41a57d6262215ef5058c218e769b547028c",
           "firstObservedAt": "2026-10-22T20:11:32Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "c16ca0d2ff85d661dee7d3394b5bc41a57d6262215ef5058c218e769b547028c",
@@ -5349,7 +5349,7 @@
           ],
           "fingerprint": "b4c7c91b12926f2977f1d6d79c7892a2f269f87a9f140746065db4497703200e",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b4c7c91b12926f2977f1d6d79c7892a2f269f87a9f140746065db4497703200e",
@@ -5418,7 +5418,7 @@
           ],
           "fingerprint": "81b45e003f81ff0815ef3f36c7a18f7a9eedddf9728f5354748eeecba7c1dbbc",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "81b45e003f81ff0815ef3f36c7a18f7a9eedddf9728f5354748eeecba7c1dbbc",
@@ -5487,7 +5487,7 @@
           ],
           "fingerprint": "079ec0852f4dfc0ab6b7d839e2d692fba23dfa0e6acb15ad99022d48691f53ff",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "079ec0852f4dfc0ab6b7d839e2d692fba23dfa0e6acb15ad99022d48691f53ff",
@@ -5556,7 +5556,7 @@
           ],
           "fingerprint": "f930df35d4df417ce804234c4cf2236a3533cc145dc6bf034b5c8ad639fb4231",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f930df35d4df417ce804234c4cf2236a3533cc145dc6bf034b5c8ad639fb4231",
@@ -5625,7 +5625,7 @@
           ],
           "fingerprint": "ce87778a5fd83e6611133ad4022fc9039b8e10734192a2d53d915d684b57d117",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ce87778a5fd83e6611133ad4022fc9039b8e10734192a2d53d915d684b57d117",
@@ -5694,7 +5694,7 @@
           ],
           "fingerprint": "2941548ab40d2b2e9ec60a6fc284d7a87a3ce4598a475802824b03bba4f612e1",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "2941548ab40d2b2e9ec60a6fc284d7a87a3ce4598a475802824b03bba4f612e1",
@@ -5763,7 +5763,7 @@
           ],
           "fingerprint": "6aef3e84220669b4739110ad3a54498d15c8dbcd9475b415a97b9ddc588e8df4",
           "firstObservedAt": "2026-10-29T21:12:33Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "6aef3e84220669b4739110ad3a54498d15c8dbcd9475b415a97b9ddc588e8df4",
@@ -5832,7 +5832,7 @@
           ],
           "fingerprint": "5bfe62570b130d041fc660970b3a37b83e0a50c5f822425df107d73e00305b57",
           "firstObservedAt": "2026-10-29T21:12:33Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5bfe62570b130d041fc660970b3a37b83e0a50c5f822425df107d73e00305b57",
@@ -5901,7 +5901,7 @@
           ],
           "fingerprint": "59db08bd7ada8d8ac84322ba8ea3827a5898a97bbaa35ec87d4208252829eeb4",
           "firstObservedAt": "2026-11-02T23:36:33Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "59db08bd7ada8d8ac84322ba8ea3827a5898a97bbaa35ec87d4208252829eeb4",
@@ -5970,7 +5970,7 @@
           ],
           "fingerprint": "e050377e208621f0d2ccb1962585909b6deaa9c27146fb7e2d493252a12ae047",
           "firstObservedAt": "2026-11-05T22:04:36Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e050377e208621f0d2ccb1962585909b6deaa9c27146fb7e2d493252a12ae047",
@@ -6039,7 +6039,7 @@
           ],
           "fingerprint": "31b8230cd8d18a8f406bf29f370da5b03d6ce4d8c9d6012b6bbf8cc9b1c2bf29",
           "firstObservedAt": "2026-11-05T22:04:36Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "31b8230cd8d18a8f406bf29f370da5b03d6ce4d8c9d6012b6bbf8cc9b1c2bf29",
@@ -6108,7 +6108,7 @@
           ],
           "fingerprint": "3d1154c7eb921aec81d805deda0d176695096fb47fc27b69def10d937d59e659",
           "firstObservedAt": "2026-11-05T22:04:36Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3d1154c7eb921aec81d805deda0d176695096fb47fc27b69def10d937d59e659",
@@ -6177,7 +6177,7 @@
           ],
           "fingerprint": "5ce336ec96b92002f2413b548f71790d17f16d88165fe11c75bc6e3bef5922e7",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5ce336ec96b92002f2413b548f71790d17f16d88165fe11c75bc6e3bef5922e7",
@@ -6246,7 +6246,7 @@
           ],
           "fingerprint": "6caca36084a7f1a0b6a00c740cbc3301560b1ec0f3c8624f3d54d14a42de2631",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "6caca36084a7f1a0b6a00c740cbc3301560b1ec0f3c8624f3d54d14a42de2631",
@@ -6315,7 +6315,7 @@
           ],
           "fingerprint": "164345463805a9d7d7d26b3fdd53ec2ff8d01eeadadc5cf0eccce3a4788781e7",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "164345463805a9d7d7d26b3fdd53ec2ff8d01eeadadc5cf0eccce3a4788781e7",
@@ -6384,7 +6384,7 @@
           ],
           "fingerprint": "b58e5af82711a0bb2d9c2530512e2f36f7d27e03bb64ed5812ffe6d9e35578ba",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b58e5af82711a0bb2d9c2530512e2f36f7d27e03bb64ed5812ffe6d9e35578ba",
@@ -6453,7 +6453,7 @@
           ],
           "fingerprint": "84f03e5a1f064d299db857bd9c2526948dbbd9f6e8e528c4af96efb359e8e5ee",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "84f03e5a1f064d299db857bd9c2526948dbbd9f6e8e528c4af96efb359e8e5ee",
@@ -6509,6 +6509,144 @@
               }
             }
           }
+        },
+        "https://www.socialmediatoday.com/news/meta-publishes-explainer-on-your-algorithm-controls/874460/": {
+          "url": "https://www.socialmediatoday.com/news/meta-publishes-explainer-on-your-algorithm-controls/874460/",
+          "title": "Meta publishes explainer on Your Algorithm controls",
+          "publishedDate": "2026-11-11",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "drop",
+          "publicationEvidence": [
+            "jev:unrelated"
+          ],
+          "fingerprint": "f530e1f6f7ec46c22d09f298ca5373f5e18de1939c1c499bd1020376f4b41439",
+          "firstObservedAt": "2026-11-12T22:17:09Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "f530e1f6f7ec46c22d09f298ca5373f5e18de1939c1c499bd1020376f4b41439",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "ce482c2b90f047f8758e82cfe30e107be7027e656cb1f1c8ab2e29d0fb5af3fd",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "ce482c2b90f047f8758e82cfe30e107be7027e656cb1f1c8ab2e29d0fb5af3fd",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "ce482c2b90f047f8758e82cfe30e107be7027e656cb1f1c8ab2e29d0fb5af3fd",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://www.socialmediatoday.com/news/meta-expands-age-detection-measures-for-teens/874198/": {
+          "url": "https://www.socialmediatoday.com/news/meta-expands-age-detection-measures-for-teens/874198/",
+          "title": "Meta expands age detection measures for teens",
+          "publishedDate": "2026-11-09",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "drop",
+          "publicationEvidence": [
+            "jev:unrelated"
+          ],
+          "fingerprint": "542f2811d8cca22137c48f421790156224c75a8dcf7ee9504fe18625689045ef",
+          "firstObservedAt": "2026-11-12T22:17:09Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "542f2811d8cca22137c48f421790156224c75a8dcf7ee9504fe18625689045ef",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "4da0dbe07d2ec87fdb8a1c4ac469eeb12b3ccb2e842c83061904d7051da5a29d",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "4da0dbe07d2ec87fdb8a1c4ac469eeb12b3ccb2e842c83061904d7051da5a29d",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "4da0dbe07d2ec87fdb8a1c4ac469eeb12b3ccb2e842c83061904d7051da5a29d",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "missing",
+                "shortHeadline": null,
+                "summary": null,
+                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                "generatedAt": null,
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "missing",
+                    "value": null,
+                    "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
+                    "generatedAt": null,
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -6527,7 +6665,7 @@
           ],
           "fingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
           "firstObservedAt": "2026-09-02T04:36:59Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
@@ -6600,7 +6738,7 @@
           ],
           "fingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
@@ -6669,7 +6807,7 @@
           ],
           "fingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
@@ -6738,7 +6876,7 @@
           ],
           "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
@@ -6807,7 +6945,7 @@
           ],
           "fingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
@@ -6876,7 +7014,7 @@
           ],
           "fingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
@@ -6945,7 +7083,7 @@
           ],
           "fingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
@@ -7017,7 +7155,7 @@
           ],
           "fingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
@@ -7086,7 +7224,7 @@
           ],
           "fingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
@@ -7155,7 +7293,7 @@
           ],
           "fingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
@@ -7224,7 +7362,7 @@
           ],
           "fingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
@@ -7293,7 +7431,7 @@
           ],
           "fingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
@@ -7362,7 +7500,7 @@
           ],
           "fingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
@@ -7435,7 +7573,7 @@
           ],
           "fingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
@@ -7504,7 +7642,7 @@
           ],
           "fingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
@@ -7573,7 +7711,7 @@
           ],
           "fingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
@@ -7642,7 +7780,7 @@
           ],
           "fingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0694839d99962444849677cd52a6c3b68ee1f305ede414b96198f8a29ec98876",
@@ -7716,7 +7854,7 @@
           ],
           "fingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25fc6458616225977766eae4d97c24f5b6ed0bf91621505f2dc1f6fb7e7ac059",
@@ -8767,7 +8905,7 @@
           ],
           "fingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
           "firstObservedAt": "2026-09-09T04:45:10Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
@@ -8836,7 +8974,7 @@
           ],
           "fingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
@@ -8905,7 +9043,7 @@
           ],
           "fingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
@@ -8977,7 +9115,7 @@
           ],
           "fingerprint": "4aa58a1d9015c2e87532ffcf67da05612a70ab2224562cbe10a554a8efb30049",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4aa58a1d9015c2e87532ffcf67da05612a70ab2224562cbe10a554a8efb30049",
@@ -9046,7 +9184,7 @@
           ],
           "fingerprint": "7b84af3e65c26a3c2facace38301e1a3b57887ef09a34e1cfa0008852dcd1f8c",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7b84af3e65c26a3c2facace38301e1a3b57887ef09a34e1cfa0008852dcd1f8c",
@@ -9115,7 +9253,7 @@
           ],
           "fingerprint": "7e118c18c9a7eafed3392219c9c930ab728955ad17119f4b83752bb90596e63a",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7e118c18c9a7eafed3392219c9c930ab728955ad17119f4b83752bb90596e63a",
@@ -9184,7 +9322,7 @@
           ],
           "fingerprint": "36c97d1dd653bebefad321d32289082419452d7186bd74a6ac68a8b102dd120b",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "36c97d1dd653bebefad321d32289082419452d7186bd74a6ac68a8b102dd120b",
@@ -9253,7 +9391,7 @@
           ],
           "fingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
@@ -9322,7 +9460,7 @@
           ],
           "fingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
@@ -9391,7 +9529,7 @@
           ],
           "fingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
@@ -9460,7 +9598,7 @@
           ],
           "fingerprint": "2b92989d8e83f9d6a4e793958554dcf47ff39977e08bb8078a17f8ee2d7ca70f",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "2b92989d8e83f9d6a4e793958554dcf47ff39977e08bb8078a17f8ee2d7ca70f",
@@ -9532,7 +9670,7 @@
           ],
           "fingerprint": "740954a5f394867bf9fe5eb3e01abe0ae085d6f24477c5c260af08363e10ac76",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "740954a5f394867bf9fe5eb3e01abe0ae085d6f24477c5c260af08363e10ac76",
@@ -9601,7 +9739,7 @@
           ],
           "fingerprint": "71ba278f719424a43f5e5b3edf7b2b5db300c1033f3f3bea14595c68e91b4a8f",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "71ba278f719424a43f5e5b3edf7b2b5db300c1033f3f3bea14595c68e91b4a8f",
@@ -9670,7 +9808,7 @@
           ],
           "fingerprint": "bcd54ad6dad960c22cd207d1c9480c82c88d455d2161303c3ab0ea69ade9d260",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "bcd54ad6dad960c22cd207d1c9480c82c88d455d2161303c3ab0ea69ade9d260",
@@ -9739,7 +9877,7 @@
           ],
           "fingerprint": "ed38006cc4837fe23ac660bf174e18b9a2bd7f250705e0a27997c323cc136b53",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ed38006cc4837fe23ac660bf174e18b9a2bd7f250705e0a27997c323cc136b53",
@@ -9808,7 +9946,7 @@
           ],
           "fingerprint": "8d1d52727a5ae35c48f40a200de5b33f0ffd37a05d60b4b7c39ca83704aa8564",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "8d1d52727a5ae35c48f40a200de5b33f0ffd37a05d60b4b7c39ca83704aa8564",
@@ -9877,7 +10015,7 @@
           ],
           "fingerprint": "4e803170dfe0d9450cc16523a987e6f132b598c600b1621a69d956243129a651",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4e803170dfe0d9450cc16523a987e6f132b598c600b1621a69d956243129a651",
@@ -9946,7 +10084,7 @@
           ],
           "fingerprint": "1841e5a6c23dbb8dadcd208300abd7d77a90779b41a99f0c292c579a460cf150",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1841e5a6c23dbb8dadcd208300abd7d77a90779b41a99f0c292c579a460cf150",
@@ -10294,7 +10432,7 @@
           ],
           "fingerprint": "57736eb5316a3299a1161d64d8be94c9e2e7083572a4d70ee15783c022ecf4c6",
           "firstObservedAt": "2026-09-29T05:47:38Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "57736eb5316a3299a1161d64d8be94c9e2e7083572a4d70ee15783c022ecf4c6",
@@ -10363,7 +10501,7 @@
           ],
           "fingerprint": "4d749c553b69bf36372452f017309a3b51ad63b6e1bc65eae5ef113590eff47d",
           "firstObservedAt": "2026-09-29T13:20:20Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4d749c553b69bf36372452f017309a3b51ad63b6e1bc65eae5ef113590eff47d",
@@ -10432,7 +10570,7 @@
           ],
           "fingerprint": "fc3ed58fb62c4b0612cdab6041acb27a164e4d3089b6ffbca62063518953f3c9",
           "firstObservedAt": "2026-10-06T06:25:59Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fc3ed58fb62c4b0612cdab6041acb27a164e4d3089b6ffbca62063518953f3c9",
@@ -10501,7 +10639,7 @@
           ],
           "fingerprint": "c416f019212a3f04fec6308c4b416dc3382280279f22d72225ba2b149dc6ca51",
           "firstObservedAt": "2026-10-09T06:14:01Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "c416f019212a3f04fec6308c4b416dc3382280279f22d72225ba2b149dc6ca51",
@@ -10573,7 +10711,7 @@
           ],
           "fingerprint": "eead0251a70d1bb6b63799b2c81cc151f15289a3c338e4b9bb07a8200f990a72",
           "firstObservedAt": "2026-10-12T23:02:27Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "eead0251a70d1bb6b63799b2c81cc151f15289a3c338e4b9bb07a8200f990a72",
@@ -10642,7 +10780,7 @@
           ],
           "fingerprint": "ced6b82ff8729175718e510ec2e2ba41d1301c596d2fef17b509608098732228",
           "firstObservedAt": "2026-10-15T19:54:50Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ced6b82ff8729175718e510ec2e2ba41d1301c596d2fef17b509608098732228",
@@ -10714,7 +10852,7 @@
           ],
           "fingerprint": "9c21e8eb6a68d8b37cf082dfcd35b8170238aa51547968578a1948b2b41ec384",
           "firstObservedAt": "2026-10-19T21:07:34Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "9c21e8eb6a68d8b37cf082dfcd35b8170238aa51547968578a1948b2b41ec384",
@@ -10783,7 +10921,7 @@
           ],
           "fingerprint": "ea07503f9d2f7797aec11c3c6bac1e76383775bc37c0dd7ef7c690a80afd2f5d",
           "firstObservedAt": "2026-10-22T20:11:32Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ea07503f9d2f7797aec11c3c6bac1e76383775bc37c0dd7ef7c690a80afd2f5d",
@@ -10855,7 +10993,7 @@
           ],
           "fingerprint": "d96c4f062767fe7b4d3e08cfb3ea443ce2a32d2a1990a00e018dc989bb77d9e8",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d96c4f062767fe7b4d3e08cfb3ea443ce2a32d2a1990a00e018dc989bb77d9e8",
@@ -10927,7 +11065,7 @@
           ],
           "fingerprint": "d6b20c1d6e103dbcdeb60ef8a7bea2a2bc9f152a6393ce16ae5247f9053e164c",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d6b20c1d6e103dbcdeb60ef8a7bea2a2bc9f152a6393ce16ae5247f9053e164c",
@@ -10999,7 +11137,7 @@
           ],
           "fingerprint": "469235a3a796139fa3837a7b07c7d32a2271c1c03973c7303c392689f8bdc737",
           "firstObservedAt": "2026-11-02T23:36:33Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "469235a3a796139fa3837a7b07c7d32a2271c1c03973c7303c392689f8bdc737",
@@ -11068,7 +11206,7 @@
           ],
           "fingerprint": "a5a8fdc7b1196fc5a71600f2d967d6fd1463f1705bc09804fad723990a7b34a7",
           "firstObservedAt": "2026-11-05T22:04:36Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a5a8fdc7b1196fc5a71600f2d967d6fd1463f1705bc09804fad723990a7b34a7",
@@ -11137,7 +11275,7 @@
           ],
           "fingerprint": "6e893207a2d51a9861891d8ace50d65c728dbfaf42217a42aa6d368beef92a6f",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "6e893207a2d51a9861891d8ace50d65c728dbfaf42217a42aa6d368beef92a6f",
@@ -11195,6 +11333,78 @@
           },
           "officialReferences": [
             "https://www.facebook.com/business/help/4237575203200036/"
+          ]
+        },
+        "https://www.jonloomer.com/meta-ads-creative-enhancements/": {
+          "url": "https://www.jonloomer.com/meta-ads-creative-enhancements/",
+          "title": "47 Meta Ads Creative Enhancements: What They Do and When to Turn Them Off",
+          "publishedDate": "2026-11-10",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "9e5779dd812fb56ad4122a2cd63a99f55327dc0bfd38499838b9470d21f9d2ea",
+          "firstObservedAt": "2026-11-12T22:17:09Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "9e5779dd812fb56ad4122a2cd63a99f55327dc0bfd38499838b9470d21f9d2ea",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "A guide to 47 Meta Ads creative enhancements",
+                "summary": "The post reviews 47 Meta Ads creative enhancements, explaining what they do and whether they can be turned off. It covers settings such as website summaries, branding, site links, website highlights, product selections, destination optimization and product browsing.",
+                "inputHash": "94d00953d7d662a5f1d3bf864bc32dc652e4fb404ab0bab117d9454ca924205f",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "A guide to 47 Meta Ads creative enhancements",
+                    "inputHash": "94d00953d7d662a5f1d3bf864bc32dc652e4fb404ab0bab117d9454ca924205f",
+                    "generatedAt": "2026-11-12T22:17:09Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "The post reviews 47 Meta Ads creative enhancements, explaining what they do and whether they can be turned off. It covers settings such as website summaries, branding, site links, website highlights, product selections, destination optimization and product browsing.",
+                    "inputHash": "94d00953d7d662a5f1d3bf864bc32dc652e4fb404ab0bab117d9454ca924205f",
+                    "generatedAt": "2026-11-12T22:17:09Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Meta広告の47種類のクリエイティブ機能を解説",
+                "summary": "Meta広告のクリエイティブ機能47種類について、役割やオン・オフの設定方法を紹介する記事です。掲載部分では、AIによるウェブサイト要約、ブランド設定、サイトリンク、ウェブサイトの画像や見出し、商品カタログのほか、遷移先の最適化や商品閲覧機能を説明しています。",
+                "inputHash": "fc8f67a4e818af093b384e77a301236d39158546a985f1f5e8f3f94af7a0899d",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Meta広告の47種類のクリエイティブ機能を解説",
+                    "inputHash": "fc8f67a4e818af093b384e77a301236d39158546a985f1f5e8f3f94af7a0899d",
+                    "generatedAt": "2026-11-12T22:17:09Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta広告のクリエイティブ機能47種類について、役割やオン・オフの設定方法を紹介する記事です。掲載部分では、AIによるウェブサイト要約、ブランド設定、サイトリンク、ウェブサイトの画像や見出し、商品カタログのほか、遷移先の最適化や商品閲覧機能を説明しています。",
+                    "inputHash": "fc8f67a4e818af093b384e77a301236d39158546a985f1f5e8f3f94af7a0899d",
+                    "generatedAt": "2026-11-12T22:17:09Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          },
+          "officialReferences": [
+            "https://www.facebook.com/business/help/1413299579708509/"
           ]
         }
       }
@@ -12732,7 +12942,7 @@
           ],
           "fingerprint": "d75f47f36289b0205125c1da6f06644948dfe8b3edadc20019235ac231ec3864",
           "firstObservedAt": "2026-10-22T20:11:32Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d75f47f36289b0205125c1da6f06644948dfe8b3edadc20019235ac231ec3864",
@@ -12801,7 +13011,7 @@
           ],
           "fingerprint": "7c8bd1da6df1f4a4e99c07d74206fae1d65f3cc53d5558944ff882e870bcf3d5",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7c8bd1da6df1f4a4e99c07d74206fae1d65f3cc53d5558944ff882e870bcf3d5",
@@ -12870,7 +13080,7 @@
           ],
           "fingerprint": "236997880e9139b3a6088934ca699c5cfefac669391ff96f49952e5127182ac1",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "236997880e9139b3a6088934ca699c5cfefac669391ff96f49952e5127182ac1",
@@ -12939,7 +13149,7 @@
           ],
           "fingerprint": "f2d2b3d53cc9647d5da42e1e527830a75fbf1b087c7d639fd9bc0795ff06cc69",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f2d2b3d53cc9647d5da42e1e527830a75fbf1b087c7d639fd9bc0795ff06cc69",
@@ -13008,7 +13218,7 @@
           ],
           "fingerprint": "5847f530a469180f1b9ce3c048e9e739d1864cd9deadd5639df4cd1afdc8663f",
           "firstObservedAt": "2026-10-29T21:12:33Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5847f530a469180f1b9ce3c048e9e739d1864cd9deadd5639df4cd1afdc8663f",
@@ -13077,7 +13287,7 @@
           ],
           "fingerprint": "9bfa8b2e337bcb6f14b304672f9d82cd167fad7e7e755d5497cdd46f174a347e",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "9bfa8b2e337bcb6f14b304672f9d82cd167fad7e7e755d5497cdd46f174a347e",
@@ -13146,7 +13356,7 @@
           ],
           "fingerprint": "6b92db41d3cdc86fd2a76507800e18453b333ff92d64dae68fb1238159155a1f",
           "firstObservedAt": "2026-11-02T23:36:33Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "6b92db41d3cdc86fd2a76507800e18453b333ff92d64dae68fb1238159155a1f",
@@ -13215,7 +13425,7 @@
           ],
           "fingerprint": "1741fcfde4f6cdd8a0d5bc4256d71e3cad62eef46aabdb4303803916a292fb1e",
           "firstObservedAt": "2026-11-05T22:04:36Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1741fcfde4f6cdd8a0d5bc4256d71e3cad62eef46aabdb4303803916a292fb1e",
@@ -13284,7 +13494,7 @@
           ],
           "fingerprint": "44419924e18c2726ecfa02578bba24ad813179f38994cfef1ce06520f526ecb2",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "44419924e18c2726ecfa02578bba24ad813179f38994cfef1ce06520f526ecb2",
@@ -13353,7 +13563,7 @@
           ],
           "fingerprint": "2342dd23dfb160fccfb8b8ef13e77f3f44e690f64dde1c2c11e8b78d8620c89b",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "2342dd23dfb160fccfb8b8ef13e77f3f44e690f64dde1c2c11e8b78d8620c89b",
@@ -13409,6 +13619,144 @@
               }
             }
           }
+        },
+        "https://adsuploader.com/blog/branded-content-ads": {
+          "url": "https://adsuploader.com/blog/branded-content-ads",
+          "title": "Branded Content Ads: What They're Called Now and What Changed",
+          "publishedDate": "2026-11-12",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "5e65be6ffcc70cac6f237fab28abe106801c7751f93d7ab717234888208767c4",
+          "firstObservedAt": "2026-11-12T22:17:09Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "5e65be6ffcc70cac6f237fab28abe106801c7751f93d7ab717234888208767c4",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Branded content ads are now partnership ads",
+                "summary": "Meta renamed branded content ads to partnership ads in May 2023. The overview covers the old and new labels, what changed and stayed the same, and what the branded content tool still does.",
+                "inputHash": "d2e36bb2d52be43ca4d29de306fd7d7424c2489042b8c6ab35adb5b1021e6570",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Branded content ads are now partnership ads",
+                    "inputHash": "d2e36bb2d52be43ca4d29de306fd7d7424c2489042b8c6ab35adb5b1021e6570",
+                    "generatedAt": "2026-11-12T22:17:09Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta renamed branded content ads to partnership ads in May 2023. The overview covers the old and new labels, what changed and stayed the same, and what the branded content tool still does.",
+                    "inputHash": "d2e36bb2d52be43ca4d29de306fd7d7424c2489042b8c6ab35adb5b1021e6570",
+                    "generatedAt": "2026-11-12T22:17:09Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "ブランドコンテンツ広告を「パートナーシップ広告」に改称",
+                "summary": "Metaは2023年5月、ブランドコンテンツ広告をパートナーシップ広告に改称しました。名称変更に伴う変化や変わらない点、ブランドコンテンツツールの役割を扱っています。",
+                "inputHash": "c30b1f91d0fd5725ba8af9db224a69854c04fecf9ec7eefaa6b8b8ae68933c53",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "ブランドコンテンツ広告を「パートナーシップ広告」に改称",
+                    "inputHash": "c30b1f91d0fd5725ba8af9db224a69854c04fecf9ec7eefaa6b8b8ae68933c53",
+                    "generatedAt": "2026-11-12T22:17:09Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Metaは2023年5月、ブランドコンテンツ広告をパートナーシップ広告に改称しました。名称変更に伴う変化や変わらない点、ブランドコンテンツツールの役割を扱っています。",
+                    "inputHash": "c30b1f91d0fd5725ba8af9db224a69854c04fecf9ec7eefaa6b8b8ae68933c53",
+                    "generatedAt": "2026-11-12T22:17:09Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://adsuploader.com/blog/creator-whitelisting": {
+          "url": "https://adsuploader.com/blog/creator-whitelisting",
+          "title": "Creator Whitelisting vs Partnership Ads: How It Works on Meta",
+          "publishedDate": "2026-11-10",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "04c0022f48e3786f152fe0e9dad10d4eb28e2c200f58fb544cc6b44e4eca5eb8",
+          "firstObservedAt": "2026-11-12T22:17:09Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "04c0022f48e3786f152fe0e9dad10d4eb28e2c200f58fb544cc6b44e4eca5eb8",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Creator Whitelisting vs. Meta Partnership Ads",
+                "summary": "Creator whitelisting lets a brand run ads from a creator’s handle. The article compares it with Meta partnership ads and covers which permission to request and what deal terms to set first.",
+                "inputHash": "f9c6f402ae5c4d81df1f10fefe888e320115ec4931366b8abc0e3d577450279c",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Creator Whitelisting vs. Meta Partnership Ads",
+                    "inputHash": "f9c6f402ae5c4d81df1f10fefe888e320115ec4931366b8abc0e3d577450279c",
+                    "generatedAt": "2026-11-12T22:17:09Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Creator whitelisting lets a brand run ads from a creator’s handle. The article compares it with Meta partnership ads and covers which permission to request and what deal terms to set first.",
+                    "inputHash": "f9c6f402ae5c4d81df1f10fefe888e320115ec4931366b8abc0e3d577450279c",
+                    "generatedAt": "2026-11-12T22:17:09Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "クリエイターの広告利用とMetaパートナーシップ広告",
+                "summary": "クリエイターのアカウント名義でブランドが広告を配信する「クリエイター・ホワイトリスティング」とMetaのパートナーシップ広告を比較し、求める許可や事前に定める契約条件について解説します。",
+                "inputHash": "cc9da2bfb2399187fbd122b348b823aac3bf1cc7f2bd3baddf0b5ab20eddecd3",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "クリエイターの広告利用とMetaパートナーシップ広告",
+                    "inputHash": "cc9da2bfb2399187fbd122b348b823aac3bf1cc7f2bd3baddf0b5ab20eddecd3",
+                    "generatedAt": "2026-11-12T22:17:09Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "クリエイターのアカウント名義でブランドが広告を配信する「クリエイター・ホワイトリスティング」とMetaのパートナーシップ広告を比較し、求める許可や事前に定める契約条件について解説します。",
+                    "inputHash": "cc9da2bfb2399187fbd122b348b823aac3bf1cc7f2bd3baddf0b5ab20eddecd3",
+                    "generatedAt": "2026-11-12T22:17:09Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -13429,7 +13777,7 @@
           ],
           "fingerprint": "75f8d64deb7a8335bb227c4bffdf4c7343df701211aafda2c29584ea098084c5",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "75f8d64deb7a8335bb227c4bffdf4c7343df701211aafda2c29584ea098084c5",
@@ -13500,7 +13848,7 @@
           ],
           "fingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0580a7992cbcdab917cc281727e72569efb0fdf6f3bae4b74d7268cf861ce244",
@@ -13571,7 +13919,7 @@
           ],
           "fingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
           "firstObservedAt": "2026-09-02T11:59:49Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b11f17611d54e3e828d3b54c21c0117bd6b6dc87449f792bffa9af2a3211f978",
@@ -13784,7 +14132,7 @@
           ],
           "fingerprint": "87773f83abd0a8fb86ac6e3199be202b9e55d31b5d4e2b96b2210cf6fceb1618",
           "firstObservedAt": "2026-10-19T21:07:34Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "87773f83abd0a8fb86ac6e3199be202b9e55d31b5d4e2b96b2210cf6fceb1618",
@@ -13855,7 +14203,7 @@
           ],
           "fingerprint": "1231b6977cfc6c742d68a27ba005cbf7949bb4be8b89b13bdb3ed7ac21be0fbd",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1231b6977cfc6c742d68a27ba005cbf7949bb4be8b89b13bdb3ed7ac21be0fbd",
@@ -13926,7 +14274,7 @@
           ],
           "fingerprint": "8f0f771dc4fdf6cdf7659ddf7f664006227689f21cda724fce4d4b753b115db2",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "8f0f771dc4fdf6cdf7659ddf7f664006227689f21cda724fce4d4b753b115db2",
@@ -13997,7 +14345,7 @@
           ],
           "fingerprint": "9759afda47f94b4f1d1166da4a3b1e6b2354495f35078f51c59810e302a3c0da",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "9759afda47f94b4f1d1166da4a3b1e6b2354495f35078f51c59810e302a3c0da",
@@ -14068,7 +14416,7 @@
           ],
           "fingerprint": "92b92b5c34f6a014f2991b9885680929bef92d735391d31437247840839b9cc1",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "92b92b5c34f6a014f2991b9885680929bef92d735391d31437247840839b9cc1",
@@ -14286,7 +14634,7 @@
           ],
           "fingerprint": "86864d2e57f05735882cdf5c485d9d08652ed4d6f0e5cd731311eaae9baaf04e",
           "firstObservedAt": "2026-10-22T20:11:32Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "86864d2e57f05735882cdf5c485d9d08652ed4d6f0e5cd731311eaae9baaf04e",
@@ -14357,7 +14705,7 @@
           ],
           "fingerprint": "f33605e9c6ed38be3440fc2122af8dac2e5cf41e0515afc39d0b6c4fa17413b7",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f33605e9c6ed38be3440fc2122af8dac2e5cf41e0515afc39d0b6c4fa17413b7",
@@ -14433,7 +14781,7 @@
           ],
           "fingerprint": "72fe3824bad4d12b0792796a4772781b3fd8bb5f28b9bd8cd82db9c8564e0622",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "72fe3824bad4d12b0792796a4772781b3fd8bb5f28b9bd8cd82db9c8564e0622",
@@ -14504,7 +14852,7 @@
           ],
           "fingerprint": "dda0b96cd0050d7b9c296233601ee97e4dc501c2b4ebd28fefff95f977578fbe",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "dda0b96cd0050d7b9c296233601ee97e4dc501c2b4ebd28fefff95f977578fbe",
@@ -14575,7 +14923,7 @@
           ],
           "fingerprint": "572d7b9ceebdccc05974b2154aee3caa8191f074de516482ed71d3f8196855f9",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "572d7b9ceebdccc05974b2154aee3caa8191f074de516482ed71d3f8196855f9",
@@ -14646,7 +14994,7 @@
           ],
           "fingerprint": "d03b347cd691b93841ccfc9132960e4bf193390ac5123db07761cd53911973b1",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d03b347cd691b93841ccfc9132960e4bf193390ac5123db07761cd53911973b1",
@@ -14717,7 +15065,7 @@
           ],
           "fingerprint": "ad575158846bcf435270b1451363dfc293656a6c58a5f5d0e42611b7049b0f6b",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ad575158846bcf435270b1451363dfc293656a6c58a5f5d0e42611b7049b0f6b",
@@ -14788,7 +15136,7 @@
           ],
           "fingerprint": "c31b0550d860c88bbcf089e13ebb460e6ba205c80991c87892f8c76f09076276",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "c31b0550d860c88bbcf089e13ebb460e6ba205c80991c87892f8c76f09076276",
@@ -14859,7 +15207,7 @@
           ],
           "fingerprint": "fb4a1a125ac4feef548401eca2aadbaa3c573e0203c2b4edb3c30ad7afc35ec4",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fb4a1a125ac4feef548401eca2aadbaa3c573e0203c2b4edb3c30ad7afc35ec4",
@@ -14930,7 +15278,7 @@
           ],
           "fingerprint": "b8086d6224e490eab9e9b1014a6a016091faf468a1a64f41191ed5eecb72fa50",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b8086d6224e490eab9e9b1014a6a016091faf468a1a64f41191ed5eecb72fa50",
@@ -14999,58 +15347,58 @@
           "publicationEvidence": [
             "jev:direct_impact"
           ],
-          "fingerprint": "ffc209011eca15b0210ee05012838a91abfe71497a9fb5d50d82cee6479bd127",
+          "fingerprint": "d9e995c747f2a8845a368ec607111f979abab914607257da53af78e4838d17ce",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-            "sourceFingerprint": "ffc209011eca15b0210ee05012838a91abfe71497a9fb5d50d82cee6479bd127",
+            "sourceFingerprint": "d9e995c747f2a8845a368ec607111f979abab914607257da53af78e4838d17ce",
             "generatorRevision": "bilingual-v1",
             "locales": {
               "en": {
                 "status": "machine",
-                "shortHeadline": "AI info for ads created or edited with generative AI",
-                "summary": "Meta provides transparency information about ads created or edited with generative AI tools.",
-                "inputHash": "3f957c8659532557a1183dbf05d6f5d07cbc90f7027ef8d4f525bc115736d1e7",
-                "generatedAt": "2026-10-31T02:08:43Z",
+                "shortHeadline": "AI info labels on ads",
+                "summary": "Learn when Meta adds an AI info label to ads created or edited with generative AI tools.",
+                "inputHash": "6b4a17a34b4ed480b3ddb7ef61c483829f70cf3f5069dec74c7f9e93b0544d5a",
+                "generatedAt": "2026-11-12T22:17:09Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
                     "status": "machine",
-                    "value": "AI info for ads created or edited with generative AI",
-                    "inputHash": "3f957c8659532557a1183dbf05d6f5d07cbc90f7027ef8d4f525bc115736d1e7",
-                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "value": "AI info labels on ads",
+                    "inputHash": "6b4a17a34b4ed480b3ddb7ef61c483829f70cf3f5069dec74c7f9e93b0544d5a",
+                    "generatedAt": "2026-11-12T22:17:09Z",
                     "reviewedAt": null
                   },
                   "summary": {
                     "status": "machine",
-                    "value": "Meta provides transparency information about ads created or edited with generative AI tools.",
-                    "inputHash": "3f957c8659532557a1183dbf05d6f5d07cbc90f7027ef8d4f525bc115736d1e7",
-                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "value": "Learn when Meta adds an AI info label to ads created or edited with generative AI tools.",
+                    "inputHash": "6b4a17a34b4ed480b3ddb7ef61c483829f70cf3f5069dec74c7f9e93b0544d5a",
+                    "generatedAt": "2026-11-12T22:17:09Z",
                     "reviewedAt": null
                   }
                 }
               },
               "ja": {
                 "status": "machine",
-                "shortHeadline": "生成AIで作成・編集された広告のAI情報",
-                "summary": "Metaの、生成AIツールで作成または編集された広告に関する透明性情報です。",
-                "inputHash": "b7bfb6aa2f784760d6a2f9f419185665a8d31641afe661b94f630b7b9d07709b",
-                "generatedAt": "2026-10-31T02:08:43Z",
+                "shortHeadline": "生成AIで作成・編集した広告のAI情報",
+                "summary": "Metaが生成AIで作成された広告にAI情報ラベルを追加する場合について説明しています。",
+                "inputHash": "1290536f75361686d2285046d410b708512f6ac6689739a8dcc4b012ed994538",
+                "generatedAt": "2026-11-12T22:17:09Z",
                 "reviewedAt": null,
                 "fields": {
                   "shortHeadline": {
                     "status": "machine",
-                    "value": "生成AIで作成・編集された広告のAI情報",
-                    "inputHash": "b7bfb6aa2f784760d6a2f9f419185665a8d31641afe661b94f630b7b9d07709b",
-                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "value": "生成AIで作成・編集した広告のAI情報",
+                    "inputHash": "1290536f75361686d2285046d410b708512f6ac6689739a8dcc4b012ed994538",
+                    "generatedAt": "2026-11-12T22:17:09Z",
                     "reviewedAt": null
                   },
                   "summary": {
                     "status": "machine",
-                    "value": "Metaの、生成AIツールで作成または編集された広告に関する透明性情報です。",
-                    "inputHash": "b7bfb6aa2f784760d6a2f9f419185665a8d31641afe661b94f630b7b9d07709b",
-                    "generatedAt": "2026-10-31T02:08:43Z",
+                    "value": "Metaが生成AIで作成された広告にAI情報ラベルを追加する場合について説明しています。",
+                    "inputHash": "1290536f75361686d2285046d410b708512f6ac6689739a8dcc4b012ed994538",
+                    "generatedAt": "2026-11-12T22:17:09Z",
                     "reviewedAt": null
                   }
                 }
@@ -15143,7 +15491,7 @@
           ],
           "fingerprint": "dca1e1809d7e0b09329456acdb173c4364e656ee1a193a6916ad4fb9a79acf34",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "dca1e1809d7e0b09329456acdb173c4364e656ee1a193a6916ad4fb9a79acf34",
@@ -15214,7 +15562,7 @@
           ],
           "fingerprint": "19a1c652b1559c7d4d5daf23d082039b626cb78ea6bb7fb4a4ef7e22103b7e4c",
           "firstObservedAt": "2026-11-05T22:04:36Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "19a1c652b1559c7d4d5daf23d082039b626cb78ea6bb7fb4a4ef7e22103b7e4c",
@@ -15285,7 +15633,7 @@
           ],
           "fingerprint": "e3da71d0dc97dfdc62774665097a848556736a3a4ad1de4761260eb3a017b9eb",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-10T00:17:31Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e3da71d0dc97dfdc62774665097a848556736a3a4ad1de4761260eb3a017b9eb",
@@ -15341,6 +15689,77 @@
               }
             }
           }
+        },
+        "https://www.facebook.com/business/help/1413299579708509": {
+          "url": "https://www.facebook.com/business/help/1413299579708509",
+          "title": "About Using Prompts and Responses on Your Ads",
+          "publishedDate": null,
+          "updatedDate": null,
+          "matchEvidence": [
+            "discovered-via:jon-loomer-meta-ads"
+          ],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "822445794f57476cf2d114240d74a178d59b36ba4e87f64adcdb05ff66efaf2f",
+          "firstObservedAt": "2026-11-12T22:17:09Z",
+          "lastObservedAt": "2026-11-12T22:17:09Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "822445794f57476cf2d114240d74a178d59b36ba4e87f64adcdb05ff66efaf2f",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Use Prompts and Responses in Your Ads",
+                "summary": "Learn how to add Prompts and responses to your ads to help customers get quick answers about your business and products.",
+                "inputHash": "62251111a8ad0c155f7b40b48ea0ec59f8128e1ef7fb9b6fd9eec55d3fe85bf5",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Use Prompts and Responses in Your Ads",
+                    "inputHash": "62251111a8ad0c155f7b40b48ea0ec59f8128e1ef7fb9b6fd9eec55d3fe85bf5",
+                    "generatedAt": "2026-11-12T22:17:09Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Learn how to add Prompts and responses to your ads to help customers get quick answers about your business and products.",
+                    "inputHash": "62251111a8ad0c155f7b40b48ea0ec59f8128e1ef7fb9b6fd9eec55d3fe85bf5",
+                    "generatedAt": "2026-11-12T22:17:09Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "広告でプロンプトと回答を使う方法",
+                "summary": "広告にプロンプトと回答を追加し、顧客がビジネスや商品についての質問にすばやく答えを得られるようにする方法を紹介します。",
+                "inputHash": "f44a9c44788ff85a2ea5199960858ee2736935ea5a09e36dc24bc6e5d1240b53",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "広告でプロンプトと回答を使う方法",
+                    "inputHash": "f44a9c44788ff85a2ea5199960858ee2736935ea5a09e36dc24bc6e5d1240b53",
+                    "generatedAt": "2026-11-12T22:17:09Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "広告にプロンプトと回答を追加し、顧客がビジネスや商品についての質問にすばやく答えを得られるようにする方法を紹介します。",
+                    "inputHash": "f44a9c44788ff85a2ea5199960858ee2736935ea5a09e36dc24bc6e5d1240b53",
+                    "generatedAt": "2026-11-12T22:17:09Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -15350,36 +15769,37 @@
       "0b64bffab387de94ff341323304e0ea738d49ce3777fc6b806647e6f26982096": "2026-11-10T00:17:31Z",
       "2b4ad31ba2ed24e757b4b82df278683e139be57a63f4157499f4bc1e114f5667": "2026-11-10T00:17:31Z",
       "e7c986e1b830956266b419a7ef1b95ed749879a7287247ab6f8ca25d8a67761d": "2026-11-10T00:17:31Z",
-      "49e0764267fe8be8bbdfea1f5661474fe13d201d83d906ef5679cba3620cda80": "2026-11-05T22:04:36Z",
-      "e40bb82517038e8b08fda33f5da8ae211913c59bb2aa57a20dfbf0671070b254": "2026-11-05T22:04:36Z",
-      "57729ae6c2f7c29b5e03400770dd7c385112e432befa2f3562332b6c01c84d28": "2026-11-05T22:04:36Z",
-      "7faa26c5281915b0c2418fffc9fc9b31c47d4a00ad4f70dd24fe0388e4efe825": "2026-11-10T00:17:31Z",
+      "49e0764267fe8be8bbdfea1f5661474fe13d201d83d906ef5679cba3620cda80": "2026-11-12T22:17:09Z",
+      "e40bb82517038e8b08fda33f5da8ae211913c59bb2aa57a20dfbf0671070b254": "2026-11-12T22:17:09Z",
+      "57729ae6c2f7c29b5e03400770dd7c385112e432befa2f3562332b6c01c84d28": "2026-11-12T22:17:09Z",
+      "7faa26c5281915b0c2418fffc9fc9b31c47d4a00ad4f70dd24fe0388e4efe825": "2026-11-12T22:17:09Z",
       "b2e678302909ffcd62fb6e025c071ed2246674107af3562e885ae78530c62b84": "2026-11-10T00:17:31Z",
-      "02f9de8ecd0bc2cb296ce38d622e642b5df6567a8f10fc916d68afc43a7ba52a": "2026-11-05T22:04:36Z",
-      "81f9f02f4b3acd0827dd8134065fe7fa87e0aec540862e955be5b1eecb90498d": "2026-11-10T00:17:31Z",
-      "28655bc45e91edf029cbe5c19304eb7a3a2c866299df868c05ec6fdb3f5e68b8": "2026-11-10T00:17:31Z",
-      "88a4516cc70f03e9cfa2a72e8ce26e06adba756fc5a47b86aec4d14d22d7beb6": "2026-11-10T00:17:31Z",
-      "e54b131a21ad0d457a6d79f1cd12a732712d1fe220652200069af3181cded140": "2026-11-10T00:17:31Z",
-      "ca8d5f2b0182f8057250ec19ae0fd70a6ae0552e43c3355b0ec569332021f739": "2026-11-10T00:17:31Z"
+      "02f9de8ecd0bc2cb296ce38d622e642b5df6567a8f10fc916d68afc43a7ba52a": "2026-11-12T22:17:09Z",
+      "81f9f02f4b3acd0827dd8134065fe7fa87e0aec540862e955be5b1eecb90498d": "2026-11-12T22:17:09Z",
+      "28655bc45e91edf029cbe5c19304eb7a3a2c866299df868c05ec6fdb3f5e68b8": "2026-11-12T22:17:09Z",
+      "e54b131a21ad0d457a6d79f1cd12a732712d1fe220652200069af3181cded140": "2026-11-12T22:17:09Z",
+      "ca8d5f2b0182f8057250ec19ae0fd70a6ae0552e43c3355b0ec569332021f739": "2026-11-10T00:17:31Z",
+      "f78f89cc95afeda8e9fdd836d2c53e57c2201d3706b13ddf9021f046f131a6d8": "2026-11-12T22:17:09Z",
+      "705913cae67310ea583003bb1fb3afba4fe261a339dc25587f2754702032aceb": "2026-11-12T22:17:09Z"
     },
     "jon-loomer-meta-ads": {
       "c02865c594cb77e7f91e237135e0e966a0795d5bf0854ee6c000a5399ae778a8": "2026-11-10T00:17:31Z",
       "a3c91b783869d62d65fe403f8bb0be3ea4f83f834b2f7e2275210cecb58a53ca": "2026-11-10T00:17:31Z",
       "eecdd2c4c7b550e96dddb3d46fbb5646284863c800529b58d9f0faebd5767e6c": "2026-11-10T00:17:31Z",
-      "2acb78f17521a3ca06b43166efe6b41ae6736dafeee0a9528f073b215f6e410d": "2026-10-29T21:12:33Z",
+      "2acb78f17521a3ca06b43166efe6b41ae6736dafeee0a9528f073b215f6e410d": "2026-11-12T22:17:09Z",
       "e8b0b6e46c9192a51793549f1de2c8686207a17592024cac94c89e36a1ebb20c": "2026-11-10T00:17:31Z",
-      "29cfe5fe5b61632767c24bc2e1aa0ffa74fc605fa84de4a8354c658efdf7fcc6": "2026-10-29T21:12:33Z",
+      "29cfe5fe5b61632767c24bc2e1aa0ffa74fc605fa84de4a8354c658efdf7fcc6": "2026-11-12T22:17:09Z",
       "b81c6f90747b72ed131032630e293d040349f11fe08ae271f87636a732a68779": "2026-11-10T00:17:31Z",
       "f8db73d840c221fd2a9bd375a2f82e7259299c9082d00f4b833f2c6582e415a8": "2026-11-10T00:17:31Z",
       "2e2dd94c3cda6be160162fdf7938b65c022985834e946f6ac316371fe628fe4f": "2026-11-10T00:17:31Z",
       "dda4539bea31d6357947139ea5bbc9a8d0770de8153c00262ad087cb95b59c25": "2026-11-10T00:17:31Z",
-      "01b6c0d98d5c0170726bd3f8ed40bb6d6188d5375170008e58e5961787833d8b": "2026-10-31T02:08:43Z",
-      "3d8a86c0dddc0fc4aab1cc95490df0f81fa48f94ff1c807444b0ac4438494be0": "2026-10-31T02:08:43Z",
-      "973f5c8f453a1d12cef6de78edb4537cd0db01b2455d78f79309640bebd63c41": "2026-10-31T02:08:43Z",
-      "68734a1b073f701865d92d1bc95b491ad84f58668dfcecba3d7fe3c4446bba90": "2026-10-31T02:08:43Z",
-      "a78fcc15f39c8b2632a9bc7634fa156e01a46ad3ae8c01a58369bf83a7f341de": "2026-10-31T02:08:43Z",
-      "c70ef957ec35e7936dbc66e6d2aa4d461f5a722cf80a9a5021bbceb29d517132": "2026-10-31T02:08:43Z",
-      "e3ac37234dddc21d25845b6003c04317cc136d160785b6939f27a5ce3c19c58a": "2026-10-31T02:08:43Z",
+      "01b6c0d98d5c0170726bd3f8ed40bb6d6188d5375170008e58e5961787833d8b": "2026-11-12T22:17:09Z",
+      "3d8a86c0dddc0fc4aab1cc95490df0f81fa48f94ff1c807444b0ac4438494be0": "2026-11-12T22:17:09Z",
+      "973f5c8f453a1d12cef6de78edb4537cd0db01b2455d78f79309640bebd63c41": "2026-11-12T22:17:09Z",
+      "68734a1b073f701865d92d1bc95b491ad84f58668dfcecba3d7fe3c4446bba90": "2026-11-12T22:17:09Z",
+      "a78fcc15f39c8b2632a9bc7634fa156e01a46ad3ae8c01a58369bf83a7f341de": "2026-11-12T22:17:09Z",
+      "c70ef957ec35e7936dbc66e6d2aa4d461f5a722cf80a9a5021bbceb29d517132": "2026-11-12T22:17:09Z",
+      "e3ac37234dddc21d25845b6003c04317cc136d160785b6939f27a5ce3c19c58a": "2026-11-12T22:17:09Z",
       "251851cc5714019fa1eeff587f95d49f80bf814dd176e3ae16b96c454f139cad": "2026-10-31T02:08:43Z",
       "159f96ccfcc274969c8d7dfadd4cb8711e77dabb9713d492816a0fae84648439": "2026-10-31T02:08:43Z",
       "8db615c72dc35571a643ddab5657aaf441e1107955847176b6784285b2f89128": "2026-10-31T02:08:43Z",
@@ -15403,7 +15823,7 @@
       "f497b8388a4b3f76d79b1269a305ad7c1654b106ee9e713d6784ec0cbe2972cb": "2026-11-05T22:04:36Z",
       "fd58a4e3cab0a82c22b1a44043184a6c19078175a2a32d3079f749ded3ab4a4d": "2026-11-05T22:04:36Z",
       "64adba5259bab72740f318afeb2d374e26f0d66f1c7128c1b0dd5dcf2eb71824": "2026-11-10T00:17:31Z",
-      "e2bdf987ebcca0e2e7af5cfbbc6da8150e5efff57a302b3da905f22ddd2a7de3": "2026-11-10T00:17:31Z"
+      "20de98269450a5f97bb7c3ec06786b38f722e3c77172c4efd5d372ac20737cc3": "2026-11-12T22:17:09Z"
     }
   },
   "presentationRetryQueue": {

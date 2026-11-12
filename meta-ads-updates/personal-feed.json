@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-11-10T00:17:31Z",
+  "generatedAt": "2026-11-12T22:17:09Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -91,6 +91,146 @@
   ],
   "items": [
     {
+      "id": "meta-business-help-discovered-822445794f57476cf2d1",
+      "sourceId": "meta-business-help-discovered",
+      "title": "About Using Prompts and Responses on Your Ads",
+      "url": "https://www.facebook.com/business/help/1413299579708509",
+      "publishedDate": null,
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "discovered-via:jon-loomer-meta-ads"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "822445794f57476cf2d114240d74a178d59b36ba4e87f64adcdb05ff66efaf2f",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Use Prompts and Responses in Your Ads",
+            "summary": "Learn how to add Prompts and responses to your ads to help customers get quick answers about your business and products.",
+            "inputHash": "62251111a8ad0c155f7b40b48ea0ec59f8128e1ef7fb9b6fd9eec55d3fe85bf5",
+            "generatedAt": "2026-11-12T22:17:09Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Use Prompts and Responses in Your Ads",
+                "inputHash": "62251111a8ad0c155f7b40b48ea0ec59f8128e1ef7fb9b6fd9eec55d3fe85bf5",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Learn how to add Prompts and responses to your ads to help customers get quick answers about your business and products.",
+                "inputHash": "62251111a8ad0c155f7b40b48ea0ec59f8128e1ef7fb9b6fd9eec55d3fe85bf5",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "広告でプロンプトと回答を使う方法",
+            "summary": "広告にプロンプトと回答を追加し、顧客がビジネスや商品についての質問にすばやく答えを得られるようにする方法を紹介します。",
+            "inputHash": "f44a9c44788ff85a2ea5199960858ee2736935ea5a09e36dc24bc6e5d1240b53",
+            "generatedAt": "2026-11-12T22:17:09Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "広告でプロンプトと回答を使う方法",
+                "inputHash": "f44a9c44788ff85a2ea5199960858ee2736935ea5a09e36dc24bc6e5d1240b53",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "広告にプロンプトと回答を追加し、顧客がビジネスや商品についての質問にすばやく答えを得られるようにする方法を紹介します。",
+                "inputHash": "f44a9c44788ff85a2ea5199960858ee2736935ea5a09e36dc24bc6e5d1240b53",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-5e65be6ffcc70cac6f23",
+      "sourceId": "adsuploader-blog",
+      "title": "Branded Content Ads: What They're Called Now and What Changed",
+      "url": "https://adsuploader.com/blog/branded-content-ads",
+      "publishedDate": "2026-11-12",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "5e65be6ffcc70cac6f237fab28abe106801c7751f93d7ab717234888208767c4",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Branded content ads are now partnership ads",
+            "summary": "Meta renamed branded content ads to partnership ads in May 2023. The overview covers the old and new labels, what changed and stayed the same, and what the branded content tool still does.",
+            "inputHash": "d2e36bb2d52be43ca4d29de306fd7d7424c2489042b8c6ab35adb5b1021e6570",
+            "generatedAt": "2026-11-12T22:17:09Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Branded content ads are now partnership ads",
+                "inputHash": "d2e36bb2d52be43ca4d29de306fd7d7424c2489042b8c6ab35adb5b1021e6570",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta renamed branded content ads to partnership ads in May 2023. The overview covers the old and new labels, what changed and stayed the same, and what the branded content tool still does.",
+                "inputHash": "d2e36bb2d52be43ca4d29de306fd7d7424c2489042b8c6ab35adb5b1021e6570",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "ブランドコンテンツ広告を「パートナーシップ広告」に改称",
+            "summary": "Metaは2023年5月、ブランドコンテンツ広告をパートナーシップ広告に改称しました。名称変更に伴う変化や変わらない点、ブランドコンテンツツールの役割を扱っています。",
+            "inputHash": "c30b1f91d0fd5725ba8af9db224a69854c04fecf9ec7eefaa6b8b8ae68933c53",
+            "generatedAt": "2026-11-12T22:17:09Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "ブランドコンテンツ広告を「パートナーシップ広告」に改称",
+                "inputHash": "c30b1f91d0fd5725ba8af9db224a69854c04fecf9ec7eefaa6b8b8ae68933c53",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは2023年5月、ブランドコンテンツ広告をパートナーシップ広告に改称しました。名称変更に伴う変化や変わらない点、ブランドコンテンツツールの役割を扱っています。",
+                "inputHash": "c30b1f91d0fd5725ba8af9db224a69854c04fecf9ec7eefaa6b8b8ae68933c53",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "meta-business-help-discovered-e3da71d0dc97dfdc6277",
       "sourceId": "meta-business-help-discovered",
       "title": "About measuring conversions on customer devices",
@@ -98,7 +238,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -162,6 +302,147 @@
       }
     },
     {
+      "id": "jon-loomer-meta-ads-9e5779dd812fb56ad412",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "47 Meta Ads Creative Enhancements: What They Do and When to Turn Them Off",
+      "url": "https://www.jonloomer.com/meta-ads-creative-enhancements/",
+      "publishedDate": "2026-11-10",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "9e5779dd812fb56ad4122a2cd63a99f55327dc0bfd38499838b9470d21f9d2ea",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "A guide to 47 Meta Ads creative enhancements",
+            "summary": "The post reviews 47 Meta Ads creative enhancements, explaining what they do and whether they can be turned off. It covers settings such as website summaries, branding, site links, website highlights, product selections, destination optimization and product browsing.",
+            "inputHash": "94d00953d7d662a5f1d3bf864bc32dc652e4fb404ab0bab117d9454ca924205f",
+            "generatedAt": "2026-11-12T22:17:09Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "A guide to 47 Meta Ads creative enhancements",
+                "inputHash": "94d00953d7d662a5f1d3bf864bc32dc652e4fb404ab0bab117d9454ca924205f",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The post reviews 47 Meta Ads creative enhancements, explaining what they do and whether they can be turned off. It covers settings such as website summaries, branding, site links, website highlights, product selections, destination optimization and product browsing.",
+                "inputHash": "94d00953d7d662a5f1d3bf864bc32dc652e4fb404ab0bab117d9454ca924205f",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta広告の47種類のクリエイティブ機能を解説",
+            "summary": "Meta広告のクリエイティブ機能47種類について、役割やオン・オフの設定方法を紹介する記事です。掲載部分では、AIによるウェブサイト要約、ブランド設定、サイトリンク、ウェブサイトの画像や見出し、商品カタログのほか、遷移先の最適化や商品閲覧機能を説明しています。",
+            "inputHash": "fc8f67a4e818af093b384e77a301236d39158546a985f1f5e8f3f94af7a0899d",
+            "generatedAt": "2026-11-12T22:17:09Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告の47種類のクリエイティブ機能を解説",
+                "inputHash": "fc8f67a4e818af093b384e77a301236d39158546a985f1f5e8f3f94af7a0899d",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta広告のクリエイティブ機能47種類について、役割やオン・オフの設定方法を紹介する記事です。掲載部分では、AIによるウェブサイト要約、ブランド設定、サイトリンク、ウェブサイトの画像や見出し、商品カタログのほか、遷移先の最適化や商品閲覧機能を説明しています。",
+                "inputHash": "fc8f67a4e818af093b384e77a301236d39158546a985f1f5e8f3f94af7a0899d",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      },
+      "officialReferences": [
+        "https://www.facebook.com/business/help/1413299579708509/"
+      ]
+    },
+    {
+      "id": "adsuploader-blog-04c0022f48e3786f152f",
+      "sourceId": "adsuploader-blog",
+      "title": "Creator Whitelisting vs Partnership Ads: How It Works on Meta",
+      "url": "https://adsuploader.com/blog/creator-whitelisting",
+      "publishedDate": "2026-11-10",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "04c0022f48e3786f152fe0e9dad10d4eb28e2c200f58fb544cc6b44e4eca5eb8",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Creator Whitelisting vs. Meta Partnership Ads",
+            "summary": "Creator whitelisting lets a brand run ads from a creator’s handle. The article compares it with Meta partnership ads and covers which permission to request and what deal terms to set first.",
+            "inputHash": "f9c6f402ae5c4d81df1f10fefe888e320115ec4931366b8abc0e3d577450279c",
+            "generatedAt": "2026-11-12T22:17:09Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Creator Whitelisting vs. Meta Partnership Ads",
+                "inputHash": "f9c6f402ae5c4d81df1f10fefe888e320115ec4931366b8abc0e3d577450279c",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Creator whitelisting lets a brand run ads from a creator’s handle. The article compares it with Meta partnership ads and covers which permission to request and what deal terms to set first.",
+                "inputHash": "f9c6f402ae5c4d81df1f10fefe888e320115ec4931366b8abc0e3d577450279c",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "クリエイターの広告利用とMetaパートナーシップ広告",
+            "summary": "クリエイターのアカウント名義でブランドが広告を配信する「クリエイター・ホワイトリスティング」とMetaのパートナーシップ広告を比較し、求める許可や事前に定める契約条件について解説します。",
+            "inputHash": "cc9da2bfb2399187fbd122b348b823aac3bf1cc7f2bd3baddf0b5ab20eddecd3",
+            "generatedAt": "2026-11-12T22:17:09Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "クリエイターの広告利用とMetaパートナーシップ広告",
+                "inputHash": "cc9da2bfb2399187fbd122b348b823aac3bf1cc7f2bd3baddf0b5ab20eddecd3",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "クリエイターのアカウント名義でブランドが広告を配信する「クリエイター・ホワイトリスティング」とMetaのパートナーシップ広告を比較し、求める許可や事前に定める契約条件について解説します。",
+                "inputHash": "cc9da2bfb2399187fbd122b348b823aac3bf1cc7f2bd3baddf0b5ab20eddecd3",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "jon-loomer-meta-ads-6e893207a2d51a986189",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Measure Conversions on Customer Devices",
@@ -169,7 +450,7 @@
       "publishedDate": "2026-11-09",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -241,7 +522,7 @@
       "publishedDate": "2026-11-08",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -310,7 +591,7 @@
       "publishedDate": "2026-11-08",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -379,7 +660,7 @@
       "publishedDate": "2026-11-06",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -448,7 +729,7 @@
       "publishedDate": "2026-11-05",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -517,7 +798,7 @@
       "publishedDate": "2026-11-04",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -586,7 +867,7 @@
       "publishedDate": "2026-11-04",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -657,7 +938,7 @@
       "publishedDate": "2026-11-04",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -726,7 +1007,7 @@
       "publishedDate": "2026-11-03",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -795,7 +1076,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -864,7 +1145,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -933,7 +1214,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-02T23:36:33Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1002,7 +1283,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-02T23:36:33Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1071,7 +1352,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1142,7 +1423,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1206,77 +1487,6 @@
       }
     },
     {
-      "id": "meta-business-help-discovered-ffc209011eca15b0210e",
-      "sourceId": "meta-business-help-discovered",
-      "title": "About AI info on ads created or edited with generative AI tools",
-      "url": "https://www.facebook.com/business/help/1010479435004531",
-      "publishedDate": null,
-      "updatedDate": null,
-      "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [
-        "discovered-via:jon-loomer-meta-ads"
-      ],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "ffc209011eca15b0210ee05012838a91abfe71497a9fb5d50d82cee6479bd127",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "AI info for ads created or edited with generative AI",
-            "summary": "Meta provides transparency information about ads created or edited with generative AI tools.",
-            "inputHash": "3f957c8659532557a1183dbf05d6f5d07cbc90f7027ef8d4f525bc115736d1e7",
-            "generatedAt": "2026-10-31T02:08:43Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "AI info for ads created or edited with generative AI",
-                "inputHash": "3f957c8659532557a1183dbf05d6f5d07cbc90f7027ef8d4f525bc115736d1e7",
-                "generatedAt": "2026-10-31T02:08:43Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta provides transparency information about ads created or edited with generative AI tools.",
-                "inputHash": "3f957c8659532557a1183dbf05d6f5d07cbc90f7027ef8d4f525bc115736d1e7",
-                "generatedAt": "2026-10-31T02:08:43Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "生成AIで作成・編集された広告のAI情報",
-            "summary": "Metaの、生成AIツールで作成または編集された広告に関する透明性情報です。",
-            "inputHash": "b7bfb6aa2f784760d6a2f9f419185665a8d31641afe661b94f630b7b9d07709b",
-            "generatedAt": "2026-10-31T02:08:43Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "生成AIで作成・編集された広告のAI情報",
-                "inputHash": "b7bfb6aa2f784760d6a2f9f419185665a8d31641afe661b94f630b7b9d07709b",
-                "generatedAt": "2026-10-31T02:08:43Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaの、生成AIツールで作成または編集された広告に関する透明性情報です。",
-                "inputHash": "b7bfb6aa2f784760d6a2f9f419185665a8d31641afe661b94f630b7b9d07709b",
-                "generatedAt": "2026-10-31T02:08:43Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "id": "meta-business-help-discovered-fb4a1a125ac4feef5484",
       "sourceId": "meta-business-help-discovered",
       "title": "About Exclusion-Only Custom Audiences",
@@ -1284,7 +1494,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1355,7 +1565,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1426,7 +1636,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1490,6 +1700,77 @@
       }
     },
     {
+      "id": "meta-business-help-discovered-d9e995c747f2a8845a36",
+      "sourceId": "meta-business-help-discovered",
+      "title": "About AI info on ads created or edited with generative AI tools",
+      "url": "https://www.facebook.com/business/help/1010479435004531",
+      "publishedDate": null,
+      "updatedDate": null,
+      "firstObservedAt": "2026-10-31T02:08:43Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "discovered-via:jon-loomer-meta-ads"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "d9e995c747f2a8845a368ec607111f979abab914607257da53af78e4838d17ce",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "AI info labels on ads",
+            "summary": "Learn when Meta adds an AI info label to ads created or edited with generative AI tools.",
+            "inputHash": "6b4a17a34b4ed480b3ddb7ef61c483829f70cf3f5069dec74c7f9e93b0544d5a",
+            "generatedAt": "2026-11-12T22:17:09Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "AI info labels on ads",
+                "inputHash": "6b4a17a34b4ed480b3ddb7ef61c483829f70cf3f5069dec74c7f9e93b0544d5a",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Learn when Meta adds an AI info label to ads created or edited with generative AI tools.",
+                "inputHash": "6b4a17a34b4ed480b3ddb7ef61c483829f70cf3f5069dec74c7f9e93b0544d5a",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "生成AIで作成・編集した広告のAI情報",
+            "summary": "Metaが生成AIで作成された広告にAI情報ラベルを追加する場合について説明しています。",
+            "inputHash": "1290536f75361686d2285046d410b708512f6ac6689739a8dcc4b012ed994538",
+            "generatedAt": "2026-11-12T22:17:09Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "生成AIで作成・編集した広告のAI情報",
+                "inputHash": "1290536f75361686d2285046d410b708512f6ac6689739a8dcc4b012ed994538",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaが生成AIで作成された広告にAI情報ラベルを追加する場合について説明しています。",
+                "inputHash": "1290536f75361686d2285046d410b708512f6ac6689739a8dcc4b012ed994538",
+                "generatedAt": "2026-11-12T22:17:09Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "meta-business-help-discovered-d03b347cd691b93841cc",
       "sourceId": "meta-business-help-discovered",
       "title": "About Automatic Events",
@@ -1497,7 +1778,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1568,7 +1849,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1639,7 +1920,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1710,7 +1991,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1781,7 +2062,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1852,7 +2133,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1994,7 +2275,7 @@
       "publishedDate": "2026-10-31",
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2063,7 +2344,7 @@
       "publishedDate": "2026-10-29",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2132,7 +2413,7 @@
       "publishedDate": "2026-10-28",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2201,7 +2482,7 @@
       "publishedDate": "2026-10-28",
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2272,7 +2553,7 @@
       "publishedDate": "2026-10-28",
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2343,7 +2624,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2412,7 +2693,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2484,7 +2765,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2553,7 +2834,7 @@
       "publishedDate": "2026-10-26",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2625,7 +2906,7 @@
       "publishedDate": "2026-10-25",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2694,7 +2975,7 @@
       "publishedDate": "2026-10-25",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2763,7 +3044,7 @@
       "publishedDate": "2026-10-23",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2832,7 +3113,7 @@
       "publishedDate": "2026-10-22",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2901,7 +3182,7 @@
       "publishedDate": "2026-10-22",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2970,7 +3251,7 @@
       "publishedDate": "2026-10-21",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3039,7 +3320,7 @@
       "publishedDate": "2026-10-21",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3108,7 +3389,7 @@
       "publishedDate": "2026-10-20",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3180,7 +3461,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3251,7 +3532,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3665,7 +3946,7 @@
       "publishedDate": "2026-10-15",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3805,7 +4086,7 @@
       "publishedDate": "2026-10-13",
       "updatedDate": null,
       "firstObservedAt": "2026-10-15T19:54:50Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4015,7 +4296,7 @@
       "publishedDate": "2026-10-12",
       "updatedDate": null,
       "firstObservedAt": "2026-10-12T23:02:27Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4640,7 +4921,7 @@
       "publishedDate": "2026-10-06",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4712,7 +4993,7 @@
       "publishedDate": "2026-10-05",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5195,7 +5476,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -5264,7 +5545,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5402,7 +5683,7 @@
       "publishedDate": "2026-09-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T05:47:38Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5747,7 +6028,7 @@
       "publishedDate": "2026-09-22",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5889,7 +6170,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6579,7 +6860,7 @@
       "publishedDate": "2026-09-15",
       "updatedDate": null,
       "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
+      "lastObservedAt": "2026-11-12T22:17:09Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6771,282 +7052,6 @@
                 "value": "Facebookの商品フィードは、商品情報を登録するためのデータ形式です。必須項目は9項目で、各項目には決められたフォーマットとサイズ上限があります。画像は複数登録でき、動画も商品ごとに設定可能です。",
                 "inputHash": "5d738b3e09fa1115d793adb3cf1c699bb16aee736e53098313cb49ec151f19c3",
                 "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "adsuploader-blog-b763611bf40d7dfaa71f",
-      "sourceId": "adsuploader-blog",
-      "title": "Carousel Ads vs Catalog Ads: The Real Difference (2026)",
-      "url": "https://adsuploader.com/blog/carousel-ads-vs-catalog-ads",
-      "publishedDate": "2026-09-11",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "b763611bf40d7dfaa71f7e01917d2163215ef1be44813d27a9c025e34890ad85",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Carousel vs Catalog Ads: Creative vs Data‑Driven Formats",
-            "summary": "Carousel ads use a creative format, while catalog ads are data‑driven. The two formats differ in how they present products, and choosing the right type depends on your goals in 2026.",
-            "inputHash": "7e54397b5206719b9d6a84b85774cf0354654a8468b6a8151469f4ab49790239",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Carousel vs Catalog Ads: Creative vs Data‑Driven Formats",
-                "inputHash": "7e54397b5206719b9d6a84b85774cf0354654a8468b6a8151469f4ab49790239",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Carousel ads use a creative format, while catalog ads are data‑driven. The two formats differ in how they present products, and choosing the right type depends on your goals in 2026.",
-                "inputHash": "7e54397b5206719b9d6a84b85774cf0354654a8468b6a8151469f4ab49790239",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "カルーセル広告とカタログ広告の違い（2026年）",
-            "summary": "カルーセル広告は画像や動画をスライド形式で表示するクリエイティブなフォーマットで、複数のアイテムを1つの広告ユニットで見せられます。一方、カタログ広告は商品データフィードに基づき自動生成されるデータ駆動型の広告で、商品情報や在庫・価格の変化に応じて表示が変わります。2026年の選択基準としては、ブランドストーリーやビジュアル訴求を重視する場合はカルーセル広告、商品数が多く在庫や価格が頻繁に変わる場合はカタログ広告が適しています。",
-            "inputHash": "b56421f197acd642b444da73b66475ad5df75b2548a5435d88ec9d7ddc494cfa",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "カルーセル広告とカタログ広告の違い（2026年）",
-                "inputHash": "b56421f197acd642b444da73b66475ad5df75b2548a5435d88ec9d7ddc494cfa",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "カルーセル広告は画像や動画をスライド形式で表示するクリエイティブなフォーマットで、複数のアイテムを1つの広告ユニットで見せられます。一方、カタログ広告は商品データフィードに基づき自動生成されるデータ駆動型の広告で、商品情報や在庫・価格の変化に応じて表示が変わります。2026年の選択基準としては、ブランドストーリーやビジュアル訴求を重視する場合はカルーセル広告、商品数が多く在庫や価格が頻繁に変わる場合はカタログ広告が適しています。",
-                "inputHash": "b56421f197acd642b444da73b66475ad5df75b2548a5435d88ec9d7ddc494cfa",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "social-media-today-meta-ads-b35a1f5bd3df45609ea7",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Instagram chief warns against eliminating algorithms",
-      "url": "https://www.socialmediatoday.com/news/instagram-chief-warns-against-eliminating-algorithms/830130/",
-      "publishedDate": "2026-09-10",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-11T04:43:19Z",
-      "lastObservedAt": "2026-10-12T23:02:27Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "b35a1f5bd3df45609ea7344b16e5d345202e2951c5f6d1ffa6a0c6ed22ad3509",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Instagram chief warns against removing algorithms",
-            "summary": "Instagram chief Adam Mosseri told Australian journalists that eliminating content‑ranking algorithms would make Instagram less engaging, reduce creator reach, and shift the feed toward businesses and news publishers. He said only a vocal minority want a chronological timeline.",
-            "inputHash": "0ff6f956be28f0cda4fed48a02f1dfb80ff4db0feb2796a9ec5b39232fafe14d",
-            "generatedAt": "2026-09-17T04:55:10Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Instagram chief warns against removing algorithms",
-                "inputHash": "0ff6f956be28f0cda4fed48a02f1dfb80ff4db0feb2796a9ec5b39232fafe14d",
-                "generatedAt": "2026-09-17T04:55:10Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Instagram chief Adam Mosseri told Australian journalists that eliminating content‑ranking algorithms would make Instagram less engaging, reduce creator reach, and shift the feed toward businesses and news publishers. He said only a vocal minority want a chronological timeline.",
-                "inputHash": "0ff6f956be28f0cda4fed48a02f1dfb80ff4db0feb2796a9ec5b39232fafe14d",
-                "generatedAt": "2026-09-17T04:55:10Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Instagram CEO、アルゴリズム廃止は利用低下とクリエイター影響と警告",
-            "summary": "Instagramの最高責任者アダム・モスセリ氏は、報道陣に対し、コンテンツランキングアルゴリズムを廃止すれば利用者の関心が薄れ使用頻度が下がり、クリエイターやブランドのリーチが減少すると警告した。オーストラリア政府がエンゲージメント重視のアルゴリズム使用制限を検討中で、規制",
-            "inputHash": "cb5fe21a9ac90dc25787923abd6ee351aed6b0e6ee0a331d5fe8c2b2729d844d",
-            "generatedAt": "2026-09-19T04:39:53Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Instagram CEO、アルゴリズム廃止は利用低下とクリエイター影響と警告",
-                "inputHash": "cb5fe21a9ac90dc25787923abd6ee351aed6b0e6ee0a331d5fe8c2b2729d844d",
-                "generatedAt": "2026-09-19T04:39:53Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Instagramの最高責任者アダム・モスセリ氏は、報道陣に対し、コンテンツランキングアルゴリズムを廃止すれば利用者の関心が薄れ使用頻度が下がり、クリエイターやブランドのリーチが減少すると警告した。オーストラリア政府がエンゲージメント重視のアルゴリズム使用制限を検討中で、規制",
-                "inputHash": "cb5fe21a9ac90dc25787923abd6ee351aed6b0e6ee0a331d5fe8c2b2729d844d",
-                "generatedAt": "2026-09-19T04:39:53Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-d457987942b9d8c73735",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "How to Approach Meta Advertising Control",
-      "url": "https://www.jonloomer.com/meta-advertising-control/",
-      "publishedDate": "2026-09-08",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-09T04:45:10Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta Advertising Control: Age Targeting Approaches",
-            "summary": "The post outlines how to manage control settings in Meta ads, covering age, gender, custom audiences, detailed targeting, lookalike audiences, and placements. It describes a primary hands‑off approach, optional audience suggestions, secondary value‑rule adjustments, and last‑resort restrictions, especially for age targeting.",
-            "inputHash": "7a22ec6fe56ed9ebfa5b5364c5c46e929882ccaec3d440ea7558f07e985e3441",
-            "generatedAt": "2026-09-09T04:45:10Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta Advertising Control: Age Targeting Approaches",
-                "inputHash": "7a22ec6fe56ed9ebfa5b5364c5c46e929882ccaec3d440ea7558f07e985e3441",
-                "generatedAt": "2026-09-09T04:45:10Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "The post outlines how to manage control settings in Meta ads, covering age, gender, custom audiences, detailed targeting, lookalike audiences, and placements. It describes a primary hands‑off approach, optional audience suggestions, secondary value‑rule adjustments, and last‑resort restrictions, especially for age targeting.",
-                "inputHash": "7a22ec6fe56ed9ebfa5b5364c5c46e929882ccaec3d440ea7558f07e985e3441",
-                "generatedAt": "2026-09-09T04:45:10Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta広告のコントロール：年齢ターゲティングのアプローチ",
-            "summary": "この投稿では、Meta広告のコントロール設定の管理方法を説明し、年齢、性別、カスタムオーディエンス、詳細ターゲティング、類似オーディエンス、配置について取り上げています。主にハンズオフのアプローチ、オーディエンス提案のオプション、価値ルールによる調整、年齢ターゲティングの最終的な制限について述べています。",
-            "inputHash": "5b6eeaaa0f1701e8e6863dd0210e13a5979f4dab90360d7a9bb5207e81244fec",
-            "generatedAt": "2026-09-09T04:45:10Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta広告のコントロール：年齢ターゲティングのアプローチ",
-                "inputHash": "5b6eeaaa0f1701e8e6863dd0210e13a5979f4dab90360d7a9bb5207e81244fec",
-                "generatedAt": "2026-09-09T04:45:10Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "この投稿では、Meta広告のコントロール設定の管理方法を説明し、年齢、性別、カスタムオーディエンス、詳細ターゲティング、類似オーディエンス、配置について取り上げています。主にハンズオフのアプローチ、オーディエンス提案のオプション、価値ルールによる調整、年齢ターゲティングの最終的な制限について述べています。",
-                "inputHash": "5b6eeaaa0f1701e8e6863dd0210e13a5979f4dab90360d7a9bb5207e81244fec",
-                "generatedAt": "2026-09-09T04:45:10Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-7e118c18c9a7eafed339",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "Turn Off New Creative Workflow (Multimedia Experience)",
-      "url": "https://www.jonloomer.com/qvt/turn-off-new-creative-workflow-multimedia-experience/",
-      "publishedDate": "2026-09-07",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-11-10T00:17:31Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "7e118c18c9a7eafed3392219c9c930ab728955ad17119f4b83752bb90596e63a",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta's Multimedia Experience: optional multi‑media workflow with bugs",
-            "summary": "Meta rolled out a new creative workflow called Multimedia Experience in April, allowing up to ten images or videos per ad. Some advertisers report bugs in creation and reporting. The interface includes a tooltip that lets users switch back to the original single-media experience.",
-            "inputHash": "fe185186413ffd1a084beb810c5e3c554d685d3723da5979aeca261687d77c2f",
-            "generatedAt": "2026-09-23T10:27:45Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta's Multimedia Experience: optional multi‑media workflow with bugs",
-                "inputHash": "fe185186413ffd1a084beb810c5e3c554d685d3723da5979aeca261687d77c2f",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta rolled out a new creative workflow called Multimedia Experience in April, allowing up to ten images or videos per ad. Some advertisers report bugs in creation and reporting. The interface includes a tooltip that lets users switch back to the original single-media experience.",
-                "inputHash": "fe185186413ffd1a084beb810c5e3c554d685d3723da5979aeca261687d77c2f",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Metaのマルチメディア体験をオフにする方法",
-            "summary": "Metaは4月に新しいクリエイティブワークフロー（マルチメディア体験）を導入し、1つの広告で最大10枚の画像や動画を設定できるようにしました。しかし、多くの広告主がバグに悩んでおり、広告作成やメディア別レポートで問題が報告されています。広告作成画面でメディアツールチップにマウスを合わせ、表示される「元の単一メディア体験に戻す」リンクをクリックすれば、従来の単一メディア方式に切り替えられ、後で再度マルチメディアに戻すことも可能です。この切替オプションは、マルチメディア体験が正式にリリースされるまで利用できるとされています。",
-            "inputHash": "f83f19c1ff460c45a1b1e7871134b58b4bd8011c8db8abae0698ce38c97523d0",
-            "generatedAt": "2026-09-23T10:27:45Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Metaのマルチメディア体験をオフにする方法",
-                "inputHash": "f83f19c1ff460c45a1b1e7871134b58b4bd8011c8db8abae0698ce38c97523d0",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaは4月に新しいクリエイティブワークフロー（マルチメディア体験）を導入し、1つの広告で最大10枚の画像や動画を設定できるようにしました。しかし、多くの広告主がバグに悩んでおり、広告作成やメディア別レポートで問題が報告されています。広告作成画面でメディアツールチップにマウスを合わせ、表示される「元の単一メディア体験に戻す」リンクをクリックすれば、従来の単一メディア方式に切り替えられ、後で再度マルチメディアに戻すことも可能です。この切替オプションは、マルチメディア体験が正式にリリースされるまで利用できるとされています。",
-                "inputHash": "f83f19c1ff460c45a1b1e7871134b58b4bd8011c8db8abae0698ce38c97523d0",
-                "generatedAt": "2026-09-23T10:27:45Z",
                 "reviewedAt": null
               }
             }
