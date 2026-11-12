@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2026年11月12日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7f4;
+      --panel: #ffffff;
+      --panel-subtle: #fbfcfa;
+      --panel-translucent: rgba(255, 255, 255, 0.68);
+      --ink: #1b2420;
+      --muted: #65716c;
+      --line: #dce3dd;
+      --accent: #006b5f;
+      --accent-strong: #004c45;
+      --accent-soft: #e5f3ef;
+      --warn: #8f4c00;
+      --focus: #f4c04d;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --radius-control: 6px;
+      --radius-card: 8px;
+      --radius-pill: 999px;
+      --target-min: 44px;
+      --shadow: 0 12px 28px rgba(27, 36, 32, 0.07);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+    }
+    main { width: min(880px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 56px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 8px; font-size: 1.65rem; line-height: 1.3; }
+    h2 { margin: 0; font-size: 1.25rem; }
+    h3 { margin: 0; font-size: 1.1rem; line-height: 1.55; overflow-wrap: anywhere; }
+    a { color: var(--accent); text-underline-offset: 0.18em; }
+    a:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: var(--radius-control); }
+    .page-header { margin-bottom: 28px; }
+    .page-nav { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 28px; }
+    .back-link { font-weight: 700; }
+    .markdown-link { color: var(--muted); font-size: .9rem; }
+    .eyebrow { margin-bottom: 3px; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .subhead { max-width: 650px; margin-bottom: 0; color: var(--muted); }
+    .category-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .category-nav a { border: 1px solid var(--line); border-radius: var(--radius-pill); background: var(--panel); padding: 6px 11px; color: var(--accent-strong); font-size: .9rem; font-weight: 700; text-decoration: none; }
+    .daily-category + .daily-category { margin-top: 32px; }
+    .daily-category-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; border-bottom: 2px solid var(--accent-soft); padding-bottom: 9px; }
+    .daily-category-head span { color: var(--muted); font-size: .9rem; }
+    .daily-item-list { display: grid; gap: 12px; margin-top: 12px; }
+    .daily-item { border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--panel); padding: 18px; box-shadow: var(--shadow); }
+    .daily-item-head { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+    .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
+    .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
+    .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .term-trigger { display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }
+    .term-trigger:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .term-icon { display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }
+    .term-popover { position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > h2 { color: var(--accent-strong); font-size: 1rem; }
+    .location-map > h2 span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .back-to-top { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 1001; display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--line); border-radius: 50%; background: var(--accent-strong); color: #fff; box-shadow: var(--shadow); text-decoration: none; font-size: 1.6rem; line-height: 1; }
+    .back-to-top[hidden] { display: none; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
+    .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
+    .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
+    .source-note { color: var(--muted); }
+    .source-only { margin-top: 32px; }
+    .source-only-list { width: 100%; max-width: 100%; margin: 12px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+    .source-only-list li { display: block; width: 100%; min-width: 0; max-width: 100%; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: .88rem; overflow-wrap: anywhere; }
+    .source-only-title { display: block; width: 100%; min-width: 0; max-width: 100%; color: var(--ink); white-space: normal; overflow-wrap: anywhere; word-break: break-all; }
+    .source-only-meta { color: var(--muted); font-size: .82rem; }
+    .muted { color: var(--muted); }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.4rem; }
+      main { width: min(100% - 20px, 880px); padding-top: 20px; }
+      .page-nav { align-items: flex-start; flex-direction: column; gap: 6px; margin-bottom: 24px; }
+      .daily-item { padding: 15px; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
+    }
+  </style>
+</head>
+<body>
+  <main id="page-top" tabindex="-1">
+    <header class="page-header">
+      <nav class="page-nav" aria-label="ページ内ナビゲーション">
+        <a class="back-link" href="./index.html">← マレーシア生活ニュース</a>
+        <a class="markdown-link" href="./2026-11-12.md">Markdown版</a>
+      </nav>
+      <p class="eyebrow">Daily summary</p>
+      <h1>2026年11月12日のニュースまとめ</h1>
+      <p class="subhead">2026年11月12日 09:41 MYT 時点のまとめ。期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。</p>
+    </header>
+    <nav class="category-nav" aria-label="カテゴリへ移動">
+      <a href="#category-1">暮らしに関わる更新 11件</a><a href="#category-2">社会・経済の動き 18件</a>
+    </nav>
+
+    <section class="location-map" id="news-map" aria-labelledby="map-heading">
+      <h2 id="map-heading">記事の場所を地図で見る <span>9地域</span></h2>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="selangor" data-lat="3.1" data-lon="101.5" data-zoom="9"><strong>セランゴール州</strong><ul><li><a href="#article-6">セランゴール州で避難者増、ペラ州では減少</a></li>
+<li><a href="#article-10">ペラ州とセランゴール州で洪水避難者が増加、1,325人に</a></li></ul></li>
+<li class="map-place" data-place-key="perak" data-lat="4.8" data-lon="101.1" data-zoom="8"><strong>ペラ州</strong><ul><li><a href="#article-6">セランゴール州で避難者増、ペラ州では減少</a></li>
+<li><a href="#article-10">ペラ州とセランゴール州で洪水避難者が増加、1,325人に</a></li>
+<li><a href="#article-19">ペラ州キンタ川、雨季の増水でナマズ漁が好機に</a></li></ul></li>
+<li class="map-place" data-place-key="klang-valley" data-lat="3.1" data-lon="101.55" data-zoom="9"><strong>クランバレー</strong><ul><li><a href="#article-7">CarroでMV15名義変更検査を予約、RM37.80・クランバレー4拠点</a></li></ul></li>
+<li class="map-place" data-place-key="terengganu" data-lat="5.0" data-lon="103.0" data-zoom="8"><strong>トレンガヌ州</strong><ul><li><a href="#article-8">モンスーンの影響でクランタンなど3州に継続的な雨の警報</a></li></ul></li>
+<li class="map-place" data-place-key="sabah" data-lat="5.6" data-lon="116.5" data-zoom="7"><strong>サバ州</strong><ul><li><a href="#article-8">モンスーンの影響でクランタンなど3州に継続的な雨の警報</a></li>
+<li><a href="#article-24">サバ州の工芸振興、1,066事業で2万2,038人が恩恵</a></li></ul></li>
+<li class="map-place" data-place-key="kota-bharu" data-lat="6.13" data-lon="102.24" data-zoom="11"><strong>コタバル</strong><ul><li><a href="#article-8">モンスーンの影響でクランタンなど3州に継続的な雨の警報</a></li></ul></li>
+<li class="map-place" data-place-key="penang" data-lat="5.4" data-lon="100.3" data-zoom="9"><strong>ペナン州</strong><ul><li><a href="#article-9">ペナン州スンガイ・バカプの冠水、16人を救助</a></li></ul></li>
+<li class="map-place" data-place-key="negeri-sembilan" data-lat="2.8" data-lon="102.2" data-zoom="9"><strong>ヌグリ・スンビラン州</strong><ul><li><a href="#article-13">ザヒド氏、ヌグリ・スンビラン州政局危機は最終段階とし早期解決に期待</a></li></ul></li>
+<li class="map-place" data-place-key="melaka" data-lat="2.3" data-lon="102.3" data-zoom="9"><strong>マラッカ州</strong><ul><li><a href="#article-27">マラッカ州、住民苦情の75％を解決し産業投資先の魅力を維持</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </section>
+
+
+            <section class="daily-category" aria-labelledby="category-1">
+              <div class="daily-category-head">
+                <h2 id="category-1">暮らしに関わる更新</h2>
+                <span>11件</span>
+              </div>
+              <div class="daily-item-list">
+
+      <article class="daily-item" id="article-1">
+        <div class="daily-item-head">
+          <span class="item-number">1</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>マレーシア予算案、放棄住宅の購入者向け支援策を提案</h3>
+        <p class="daily-summary">放棄された住宅開発事業を購入したマレーシアの人々の中には、物件が完成するか分からないまま、入居できない住宅のローンを返済し続けている人もいます。2027年度予算案は、購入者の負担を一部軽減し、開発業者による事業再開を促す措置を提案しています。ただし支援には条件があり、政府が購入者の未返済住宅ローンを肩代わりするものではありません。工事が6カ月連続で停止した場合、開発業者が管財人の管理下に置かれた場合、清算申立てが提出された場合、または開発業者が事業を続けられないと認めた場合などは、事業が放棄されたと判断されることがあります。さらに、1966年住宅開発（管理・許可）法に基づき、住宅・地方自治担当大臣が正式に放棄事業と宣言する必要があります。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/12/still-paying-for-an-unfinished-home-in-malaysia-heres-what-budget-2027-offers-affected-buyers/242394">出典: Malay Mail（2026年11月12日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-2">
+        <div class="daily-item-head">
+          <span class="item-number">2</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>政府、ボトル入り食用油の価格上限維持へ月約RM15 jutaを承認</h3>
+        <p class="daily-summary">Armizan氏によると、政府は食用油価格管理メカニズム（MKHMM）の実施を承認した。ボトル入りの純パーム油の価格上限を維持し、市場での供給を安定させるため、月約RM15 jutaの特別奨励金を充てる。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/kerajaan-lulus-insentif-rm15-juta-sebulan-kekal-harga-siling-minyak-masak-botol-armizan">出典: Astro Awani（2026年11月11日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-3">
+        <div class="daily-item-head">
+          <span class="item-number">3</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>フル・セランゴールで鉄砲水9件、3河川が主要リスク地点</h3>
+        <p class="daily-summary">フル・セランゴール郡では、レクリエーションエリア14カ所が鉄砲水の危険がある場所として特定されました。スンガイ・プルタク、スンガイ・シリン、スンガイ・バタン・カリの3河川が主要なリスク地点とされ、鉄砲水の発生は9件報告されています。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/tiga-lokasi-hotspot-kepala-air-di-hulu-selangor-sembilan-insiden-dilaporkan">出典: Astro Awani（2026年11月11日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-4">
+        <div class="daily-item-head">
+          <span class="item-number">4</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>11月12～18日の燃料価格は全油種で値下がり</h3>
+        <p class="daily-summary">財務省は、11月12日から18日までの燃料小売価格を発表しました。全油種が値下がりし、ディーゼルはRM4.87、<button type="button" class="term-trigger" popovertarget="term-4-ron95" title="オクタン価95のガソリンです。" aria-label="RON95の説明">RON95<span aria-hidden="true" class="term-icon">?</span></button><span popover id="term-4-ron95" class="term-popover"><strong>RON95</strong> オクタン価95のガソリンです。</span>はRM3.87、RON97はRM4.20です。</p>
+
+        <a class="source-link" href="https://paultan.org/2026/11/11/malaysian-fuel-prices-november-12-18-2026-all-down-diesel-to-rm4-87-ron95-to-rm3-87-ron97-to-rm4-20/">出典: Paul Tan（2026年11月11日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-5">
+        <div class="daily-item-head">
+          <span class="item-number">5</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>Nadma、北東モンスーンに備え約10万2,000人を動員</h3>
+        <p class="daily-summary">国家災害管理庁（Nadma）は、2026/2027年の北東モンスーンに備え、各省庁・機関から約10万2,000人と約4万点の運用資産を動員した。Nadmaのアブドゥル・ガパル・アブ・バカル副業務局長によると、全国に8,321カ所の一時避難所を準備しており、最大190万人の被災者を収容できる。準備した資産には、約2,450隻のボートと3,000台を超える四輪駆動車・トラックなどが含まれる。また、避難所に到着した被災者向けの初期食料として、すぐに食べられる食事17万食を用意し、帰宅時に配布する生活必需品入りの食料キット6万個も準備した。アブドゥル・ガパル氏は11月11日、ベルナマ・ラジオの番組で説明した。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/11/nadma-deploys-102000-personnel-ahead-of-20262027-northeast-monsoon/242875">出典: Malay Mail（2026年11月11日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-6">
+        <div class="daily-item-head">
+          <span class="item-number">6</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3><a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>で避難者増、<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>では減少</h3>
+        <p class="daily-summary">2026年11月11日午後4時時点で、<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>クアラ・セランゴールの一時避難所5カ所に身を寄せる洪水避難者は、289世帯1,032人に増えました。同日朝の945人、265世帯から増加しています。<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>ヒリル・ペラ郡では、避難者は94世帯330人となり、同日朝の108世帯380人から減少しました。<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>災害管理委員会事務局によると、テルク・インタン市議会休憩所の避難所には257人、ランカップの市議会ホールには73人がいました。マレーシア気象局は、11月11日午後から夕方にかけて、<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>の全郡で雨や雷雨になると予報していました。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/11/flood-situation-worsens-in-selangor-as-evacuees-increase-improves-in-perak/242871">出典: Malay Mail（2026年11月11日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-7">
+        <div class="daily-item-head">
+          <span class="item-number">7</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>CarroでMV15名義変更検査を予約、RM37.80・<a class="place-link" data-place-key="klang-valley" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.55#map=9/3.1/101.55" title="クランバレーの概略位置を地図で見る">クランバレー</a>4拠点</h3>
+        <p class="daily-summary">車を売却する場合や家族に譲る場合、JPJが名義変更を処理する前に、MV15（旧B5）の名義変更検査に合格する必要があります。Carroではこの検査をRM37.80で予約でき、<a class="place-link" data-place-key="klang-valley" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.55#map=9/3.1/101.55" title="クランバレーの概略位置を地図で見る">クランバレー</a>の4拠点で受けられます。</p>
+
+        <a class="source-link" href="https://paultan.org/2026/11/11/carro-mv15-b5-ownership-transfer-inspection/">出典: Paul Tan（2026年11月11日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-8">
+        <div class="daily-item-head">
+          <span class="item-number">8</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>モンスーンの影響でクランタンなど3州に継続的な雨の警報</h3>
+        <p class="daily-summary">マレーシア気象局（MET Malaysia）は、モンスーンの強まりを受け、クランタン州、<a class="place-link" data-place-key="terengganu" href="https://www.openstreetmap.org/?mlat=5.0&amp;mlon=103.0#map=8/5.0/103.0" title="トレンガヌ州の概略位置を地図で見る">トレンガヌ州</a>、<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>の一部に継続的な雨の警報を更新しました。発表は2026年11月11日午後2時で、警報は11月12日までを対象としています。クランタン州では<a class="place-link" data-place-key="kota-bharu" href="https://www.openstreetmap.org/?mlat=6.13&amp;mlon=102.24#map=11/6.13/102.24" title="コタバルの概略位置を地図で見る">コタバル</a>、トゥンパット、パシルマス、パシルプテ、バチョ、マチャン、タナメラの7地区、<a class="place-link" data-place-key="terengganu" href="https://www.openstreetmap.org/?mlat=5.0&amp;mlon=103.0#map=8/5.0/103.0" title="トレンガヌ州の概略位置を地図で見る">トレンガヌ州</a>ではブスット、セティウ、クアラトレンガヌ、クアラネルスが対象です。<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>ではクダット管区のクダットとピタス、サンダカン管区のパイタンが含まれます。同局の3段階の継続的な雨の警報制度では、「Alert」は最初の段階です。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/11/monsoon-surge-triggers-continuous-rain-alert-for-kelantan-terengganu-and-sabah-until-tomorrow/242846">出典: Malay Mail（2026年11月11日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-9">
+        <div class="daily-item-head">
+          <span class="item-number">9</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3><a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>スンガイ・バカプの冠水、16人を救助</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>スンガイ・バカプのカンポン・セトゥで2026年11月11日未明、豪雨による冠水で住宅に閉じ込められた3世帯の16人（子ども6人を含む）が救助されました。<a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>消防救助局のジョン・サグン・フランシス作戦担当副局長によると、複数の住宅が約3フィート冠水し、消防隊は同日午前0時40分に通報を受けて出動。住民全員を救助して現場にいた親族に引き渡し、水位が徐々に下がっていることを確認した後、午前2時30分に安全が確認され、活動を終了しました。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/11/sixteen-including-six-children-rescued-in-sungai-bakap-flash-floods/242813">出典: Malay Mail（2026年11月11日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-10">
+        <div class="daily-item-head">
+          <span class="item-number">10</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3><a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>と<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>で洪水避難者が増加、1,325人に</h3>
+        <p class="daily-summary">11月11日朝時点で、<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>と<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>の避難所に373世帯、計1,325人が滞在していました。<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>では避難者が380人（108世帯）に増え、前日の10日午後の348人（99世帯）を上回りました。州災害管理委員会事務局によると、ヒリル・ペラの2カ所の避難所に分かれて滞在しています。<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>クアラ・セランゴールでも、5カ所の避難所の避難者が945人（265世帯）となり、前日の848人（236世帯）から増加しました。社会福祉局の災害情報ポータルによると、避難者数が最も多いのはSK Dato’ Maharaja Lelaの411人でした。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/11/more-than-1300-displaced-as-floods-worsen-in-perak-selangor/242810">出典: Malay Mail（2026年11月11日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-11">
+        <div class="daily-item-head">
+          <span class="item-number">11</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>財務副大臣、CP500未納だけでは出国禁止にならないと説明</h3>
+        <p class="daily-summary">財務副大臣のリュー・チン・トン氏は11月11日、国会下院で、CP500の分割納付を滞納しても、それだけで納税者が海外渡航を禁止されることはないと説明しました。CP500は最終的な税額査定ではなく、実際の納税額は該当年度の所得税申告書を提出した後に確定します。納付額は、すでに支払ったCP500の分割分を差し引いて再計算されます。その結果、残額があり、定められた期限までに納付しなかった場合に、未納税債務として扱われると同氏は述べました。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/11/taxpayers-behind-on-cp500-wont-be-barred-from-flying-yet-says-deputy-finance-minister/242800">出典: Malay Mail（2026年11月11日）</a>
+      </article>
+
+              </div>
+            </section>
+
+
+            <section class="daily-category" aria-labelledby="category-2">
+              <div class="daily-category-head">
+                <h2 id="category-2">社会・経済の動き</h2>
+                <span>18件</span>
+              </div>
+              <div class="daily-item-list">
+
+      <article class="daily-item" id="article-12">
+        <div class="daily-item-head">
+          <span class="item-number">12</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>リンギット、対米ドルで横ばい ユーロ・ポンド・円には上昇</h3>
+        <p class="daily-summary">11月12日朝、リンギットは米ドルに対してほぼ横ばいで始まり、ユーロ、英ポンド、円に対しては上昇しました。投資家が米国の最新のインフレ指標と金利見通しへの影響を見極めるなか、米連邦準備制度理事会（FRB）当局者のタカ派的な発言がドル高を支える主な要因になっていると、Bank Muamalat Malaysiaのチーフエコノミスト、モハド・アフザニザム・アブドゥル・ラシッド氏は述べました。同氏は、米ドル／リンギット相場について、2026年11月12日は「RM4.07 to RM4.08」の範囲で推移すると予想しています。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/money/2026/11/12/ringgit-holds-steady-against-us-dollar-but-gains-on-euro-pound-and-yen-at-open/242915">出典: Malay Mail（2026年11月12日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-13">
+        <div class="daily-item-head">
+          <span class="item-number">13</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>ザヒド氏、<a class="place-link" data-place-key="negeri-sembilan" href="https://www.openstreetmap.org/?mlat=2.8&amp;mlon=102.2#map=9/2.8/102.2" title="ヌグリ・スンビラン州の概略位置を地図で見る">ヌグリ・スンビラン州</a>政局危機は最終段階とし早期解決に期待</h3>
+        <p class="daily-summary">国民戦線（BN）議長で副首相のアフマド・ザヒド・ハミディ氏は、<a class="place-link" data-place-key="negeri-sembilan" href="https://www.openstreetmap.org/?mlat=2.8&amp;mlon=102.2#map=9/2.8/102.2" title="ヌグリ・スンビラン州の概略位置を地図で見る">ヌグリ・スンビラン州</a>の政治危機は最終段階に達しており、近く解決するとの自信を示した。関係政党が一体となって解決を目指すことに期待を寄せ、以前の州政府の形成も各党の協力によって実現したと述べた。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/12/zahid-says-negeri-sembilan-political-crisis-in-final-stage-solution-expected-soon/242912">出典: Malay Mail（2026年11月12日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-14">
+        <div class="daily-item-head">
+          <span class="item-number">14</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>シンガポール航空、旅客数過去最多も燃料高で純利益43.9％減</h3>
+        <p class="daily-summary">シンガポール航空（SIA）グループは11月11日、2026年度上半期の純利益がRM425 millionだったと発表しました。前年同期のRM758 millionから43.9％減少した一方、売上高は16.8％増の過去最高となるRM35.8 billionでした。SIAによると、燃料費が90.3％増えてRM14.9 billionとなり、利益を圧迫しました。SIAと傘下のスクートは同期間に、過去最多となる21.8 million人の乗客を運びました。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/money/2026/11/12/sia-flies-record-218-million-passengers-but-pricey-fuel-eats-into-earnings/242906">出典: Malay Mail（2026年11月12日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-15">
+        <div class="daily-item-head">
+          <span class="item-number">15</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>フジア氏、内閣改造を理由に議会解散を提案すべきでないと主張</h3>
+        <p class="daily-summary">フジア・サレ副国内取引・生活費相は、政府が機能し過半数の支持を得ている以上、内閣改造をめぐる疑問だけを理由に議会解散を提案すべきではないと述べました。内閣改造は行政を強化する過程の一部であり、過去に経験した政治的不安定を再び招く理由にすべきではないとの考えです。統一政府の発足から約4年がたつなか、投資、雇用機会、生活費、長年の制度改革といった優先課題に取り組むべきだとも述べています。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/12/cabinet-reshuffle-no-reason-to-dissolve-parliament-says-fuziah/242911">出典: Malay Mail（2026年11月12日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-16">
+        <div class="daily-item-head">
+          <span class="item-number">16</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>リム氏、非ブミプトラ向け配分求めるも首相動かず 今後も訴え</h3>
+        <p class="daily-summary">DAP顧問のリム・グアンエン氏は11月12日、非ブミプトラ系住民向けの政府予算を増やすよう、過去2年間にわたりアンワル首相へ繰り返し求めてきたものの、実現していないと述べた。リム氏は、ブミプトラ向けに特別配分される額の10％に相当する予算を毎年非ブミプトラ向けに配分し、既存のブミプトラ向け予算は減らさない案を提案している。実現しなかったことを理由に訴えをやめることはなく、全てのコミュニティーとマレーシア人の経済的・社会的正義を引き続き求めるとした。一方、他の経済政策については、自身やDAP幹部の度重なる要請を受け、アンワル首相が10項目を採用したとも述べた。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/12/guan-eng-says-two-year-push-for-non-bumi-funding-has-failed-to-sway-anwar-but-will-keep-pressing/242909">出典: Malay Mail（2026年11月12日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-17">
+        <div class="daily-item-head">
+          <span class="item-number">17</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>ギグワーカー60万人向け、2027年予算のRM160 juta策を論考</h3>
+        <p class="daily-summary">Astro Awaniのコラムは、高収入との見方がある一方、ギグワーカー60万人が運営コストや道路上の安全リスクに直面していると指摘しています。2027年予算のRM160 jutaのパッケージとPERKESO保険料の拠出マッチングを、重要な政策介入として評価しています。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/kolumnis-payung-lindung-jalanan-menilai-pakej-rm160-juta-belanjawan-2027-buat-600000-pekerja-gig">出典: Astro Awani（2026年11月12日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-18">
+        <div class="daily-item-head">
+          <span class="item-number">18</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>マレーシア下院、国の債務や台湾との投資関係を審議へ</h3>
+        <p class="daily-summary">11月12日のマレーシア下院では、国の債務や財政、アジア西部の紛争、マレーシアと台湾の関係、ナジブ氏の自宅軟禁、CCUS、稲作農家の福祉などが焦点となっています。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/hutang-negara-hubungan-pelaburan-malaysia-taiwan-antara-tumpuan-dewan-rakyat-hari-ini">出典: Astro Awani（2026年11月12日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-19">
+        <div class="daily-item-head">
+          <span class="item-number">19</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3><a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>キンタ川、雨季の増水でナマズ漁が好機に</h3>
+        <p class="daily-summary">雨季にキンタ川の水位が上がると、テルク・インタンの内陸漁師たちは伝統的な仕掛けを設置し、群れで川を移動するナマズの一種「イカン・ルンドゥ」を狙います。アブラヤシ農園も管理する49歳のアヌアル・オスマンさんにとって、この漁は本業ではなく、季節限定の副収入の機会です。漁獲量は1日100キログラムを超えることもあり、魚は卸売業者に販売されます。まとまった漁獲が見込める期間は、川の水位次第で約1週間続き、水位が下がると漁は止まるといいます。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/12/flood-season-brings-lucrative-catfish-haul-for-kinta-river-fishermen-in-perak/242847">出典: Malay Mail（2026年11月12日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-20">
+        <div class="daily-item-head">
+          <span class="item-number">20</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>アンワル首相、警察官への襲撃を非難</h3>
+        <p class="daily-summary">アンワル首相は、警察官への襲撃を非難した。国民の安全を守る任務に当たる法執行官へのものを含め、あらゆる犯罪や暴力は決して容認できないと述べた。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/pm-anwar-kecam-insiden-serangan-terhadap-anggota-polis">出典: Astro Awani（2026年11月12日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-21">
+        <div class="daily-item-head">
+          <span class="item-number">21</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>PRESMAに政府との協力で外国人労働者依存の低減を提言</h3>
+        <p class="daily-summary">PRESMAには、政府と協力して外国人労働者への依存を減らすことが勧められている。この取り組みはデータと包括的な調査に基づくべきで、オートメーションや機械化を活用できる可能性の特定も必要とされている。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/presma-disaran-bekerjasama-dengan-kerajaan-kurangkan-kebergantungan-pekerja-asing">出典: Astro Awani（2026年11月12日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-22">
+        <div class="daily-item-head">
+          <span class="item-number">22</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>野生動物との衝突に関するBKHTのSOP、来年1月に見直しへ</h3>
+        <p class="daily-summary">NRESは、野生動物との衝突に関するBKHTの標準運用手順（SOP）を来年1月に見直すとしています。また、人間と野生動物の衝突の原因に包括的に対処しなければ、資金援助を増やすだけでは不十分だとしています。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/konflik-hidupan-liar-sop-bkht-disemak-januari-depan-nres">出典: Astro Awani（2026年11月12日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-23">
+        <div class="daily-item-head">
+          <span class="item-number">23</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>人種を軸にした政治を退け、多様性の中で団結を</h3>
+        <p class="daily-summary">マレーシアでは、人種差別に対処するため、制度、法令、政策、地域社会に根ざした取り組みを組み合わせた包括的な対応が必要だとしている。記事は、人種を軸にした政治を退け、多様性の中での団結を強めるよう訴えている。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/tolak-politik-perkauman-perkukuh-perpaduan-dalam-kepelbagaian">出典: Astro Awani（2026年11月12日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-24">
+        <div class="daily-item-head">
+          <span class="item-number">24</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>の工芸振興、1,066事業で2万2,038人が恩恵</h3>
+        <p class="daily-summary">ハジジ氏によると、<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>工芸センター（PKS）が2011年から掲載時点までに実施した工芸産業の開発プログラム1,066件により、22,038人が恩恵を受けました。予算の総額はRM47.2 jutaです。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/industri-kraf-sabah-manfaatkan-22038-rakyat-dengan-peruntukan-rm472-juta-hajiji">出典: Astro Awani（2026年11月12日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-25">
+        <div class="daily-item-head">
+          <span class="item-number">25</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>ブミプトラ請負業者向け予算、2027年にRM7.5 bilionへ</h3>
+        <p class="daily-summary">アンワル首相によると、MADANI政府は2027年予算で、ブミプトラのG1～G4級請負業者向けの配分を、2026年のRM4 bilionからRM7.5 bilionに増やす。首相は、この増額が請負業者の能力強化や国民向け事業の実施につながるとしている。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/peningkatan-peruntukan-kontraktor-bumiputera-bantu-bina-keupayaan-laksana-projek-rakyat-pm">出典: Astro Awani（2026年11月11日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-26">
+        <div class="daily-item-head">
+          <span class="item-number">26</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>KKDWの国際評価と農村女性の経済的自立を論じるコラム</h3>
+        <p class="daily-summary">コラムは、ワワンシタ賞を通じたKKDWの国際的な評価について、アフマド・ザヒド・ハミディ副首相が指導する国家農村経済アジェンダ（EDN）の転換を示すものだと論じています。農村女性を受動的な支援の受け手から、自立した経済の担い手へと変える取り組みとして、MARAのDanaNITA基金によるRM20.92 jutaの融資を挙げています。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/kolumnis-menyingkap-kepentingan-pengiktirafan-antarabangsa-kkdw-dan-kebangkitan-wanita-desa">出典: Astro Awani（2026年11月11日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-27">
+        <div class="daily-item-head">
+          <span class="item-number">27</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3><a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>、住民苦情の75％を解決し産業投資先の魅力を維持</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>は住民からの苦情の75％に対応した。州政府が委任を受けて以降、州議会選挙区（DUN）28区すべてで継続的に現場へ赴き、苦情への対応に取り組んできたという。州は産業投資先としての魅力も維持している。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/melaka-selesai-75-peratus-aduan-rakyat-kekal-tarikan-pelaburan-industri">出典: Astro Awani（2026年11月11日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-28">
+        <div class="daily-item-head">
+          <span class="item-number">28</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>SIC、セパンでのF1・2027年開幕戦開催との憶測を否定</h3>
+        <p class="daily-summary">セパン・インターナショナル・サーキット（SIC）は、マレーシアがF1の2027年シーズン開幕戦を開催する可能性があるとの憶測を否定した。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-sukan-terkini-malaysia/sic-nafi-spekulasi-sepang-anjur-perlumbaan-pembukaan-musim-f1-2027">出典: Astro Awani（2026年11月11日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-29">
+        <div class="daily-item-head">
+          <span class="item-number">29</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>JSJN、活動強化へ追加1,000人分の定員を要請</h3>
+        <p class="daily-summary">JSJNは活動を強化するため、追加で1,000人分の職員定員を求めている。複数の新たな部門を設けるには人員の増員が必要で、オンライン捜査チームや、国際ネットワークが関わる事件に対応する特別部隊などを想定している。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jsjn-mohon-tambahan-1000-perjawatan-perkukuh-operasi">出典: Astro Awani（2026年11月11日）</a>
+      </article>
+
+              </div>
+            </section>
+
+
+            <section class="source-only" aria-labelledby="source-only-heading">
+              <div class="daily-category-head">
+                <h2 id="source-only-heading">原文のみ</h2>
+                <span>1件</span>
+              </div>
+              <ul class="source-only-list">
+                <li>
+          <span class="source-only-title">原題：Stay away from 14 Hulu Selangor rivers, waterfalls amid water surge danger, Fire Dept warns; Pertak, Siling, Batang Kali top hotspots</span>
+          <span class="source-only-meta">出典：Malay Mail（2026年11月11日）</span>
+          <a href="https://www.malaymail.com/news/malaysia/2026/11/11/stay-away-from-14-hulu-selangor-rivers-waterfalls-amid-water-surge-danger-fire-dept-warns-pertak-siling-batang-kali-top-hotspots/242890">原文URL</a>
+        </li>
+              </ul>
+            </section>
+
+  </main>
+  <a class="back-to-top" href="#page-top" aria-label="ページの先頭へ戻る" title="ページの先頭へ戻る" hidden><span aria-hidden="true">↑</span></a>
+  <script src="./daily-page.js" defer></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
+</body>
+</html>
