@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2026年11月15日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7f4;
+      --panel: #ffffff;
+      --panel-subtle: #fbfcfa;
+      --panel-translucent: rgba(255, 255, 255, 0.68);
+      --ink: #1b2420;
+      --muted: #65716c;
+      --line: #dce3dd;
+      --accent: #006b5f;
+      --accent-strong: #004c45;
+      --accent-soft: #e5f3ef;
+      --warn: #8f4c00;
+      --focus: #f4c04d;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --radius-control: 6px;
+      --radius-card: 8px;
+      --radius-pill: 999px;
+      --target-min: 44px;
+      --shadow: 0 12px 28px rgba(27, 36, 32, 0.07);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+    }
+    main { width: min(880px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 56px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 8px; font-size: 1.65rem; line-height: 1.3; }
+    h2 { margin: 0; font-size: 1.25rem; }
+    h3 { margin: 0; font-size: 1.1rem; line-height: 1.55; overflow-wrap: anywhere; }
+    a { color: var(--accent); text-underline-offset: 0.18em; }
+    a:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: var(--radius-control); }
+    .page-header { margin-bottom: 28px; }
+    .page-nav { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 28px; }
+    .back-link { font-weight: 700; }
+    .markdown-link { color: var(--muted); font-size: .9rem; }
+    .eyebrow { margin-bottom: 3px; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .subhead { max-width: 650px; margin-bottom: 0; color: var(--muted); }
+    .category-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .category-nav a { border: 1px solid var(--line); border-radius: var(--radius-pill); background: var(--panel); padding: 6px 11px; color: var(--accent-strong); font-size: .9rem; font-weight: 700; text-decoration: none; }
+    .daily-category + .daily-category { margin-top: 32px; }
+    .daily-category-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; border-bottom: 2px solid var(--accent-soft); padding-bottom: 9px; }
+    .daily-category-head span { color: var(--muted); font-size: .9rem; }
+    .daily-item-list { display: grid; gap: 12px; margin-top: 12px; }
+    .daily-item { border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--panel); padding: 18px; box-shadow: var(--shadow); }
+    .daily-item-head { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+    .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
+    .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
+    .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .term-trigger { display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }
+    .term-trigger:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .term-icon { display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }
+    .term-popover { position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > h2 { color: var(--accent-strong); font-size: 1rem; }
+    .location-map > h2 span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .back-to-top { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 1001; display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--line); border-radius: 50%; background: var(--accent-strong); color: #fff; box-shadow: var(--shadow); text-decoration: none; font-size: 1.6rem; line-height: 1; }
+    .back-to-top[hidden] { display: none; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
+    .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
+    .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
+    .source-note { color: var(--muted); }
+    .source-only { margin-top: 32px; }
+    .source-only-list { width: 100%; max-width: 100%; margin: 12px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+    .source-only-list li { display: block; width: 100%; min-width: 0; max-width: 100%; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: .88rem; overflow-wrap: anywhere; }
+    .source-only-title { display: block; width: 100%; min-width: 0; max-width: 100%; color: var(--ink); white-space: normal; overflow-wrap: anywhere; word-break: break-all; }
+    .source-only-meta { color: var(--muted); font-size: .82rem; }
+    .muted { color: var(--muted); }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.4rem; }
+      main { width: min(100% - 20px, 880px); padding-top: 20px; }
+      .page-nav { align-items: flex-start; flex-direction: column; gap: 6px; margin-bottom: 24px; }
+      .daily-item { padding: 15px; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
+    }
+  </style>
+</head>
+<body>
+  <main id="page-top" tabindex="-1">
+    <header class="page-header">
+      <nav class="page-nav" aria-label="ページ内ナビゲーション">
+        <a class="back-link" href="./index.html">← マレーシア生活ニュース</a>
+        <a class="markdown-link" href="./2026-11-15.md">Markdown版</a>
+      </nav>
+      <p class="eyebrow">Daily summary</p>
+      <h1>2026年11月15日のニュースまとめ</h1>
+      <p class="subhead">2026年11月15日 07:24 MYT 時点のまとめ。期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。</p>
+    </header>
+    <nav class="category-nav" aria-label="カテゴリへ移動">
+      <a href="#category-1">暮らしに関わる更新 5件</a><a href="#category-2">社会・経済の動き 25件</a>
+    </nav>
+
+    <section class="location-map" id="news-map" aria-labelledby="map-heading">
+      <h2 id="map-heading">記事の場所を地図で見る <span>9地域</span></h2>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="selangor" data-lat="3.1" data-lon="101.5" data-zoom="9"><strong>セランゴール州</strong><ul><li><a href="#article-2">セランゴール州の洪水避難者1,511人に増加、ペラ州は減少</a></li>
+<li><a href="#article-8">セランゴール州首相、人種感情に惑わされず団結を呼びかけ</a></li></ul></li>
+<li class="map-place" data-place-key="perak" data-lat="4.8" data-lon="101.1" data-zoom="8"><strong>ペラ州</strong><ul><li><a href="#article-2">セランゴール州の洪水避難者1,511人に増加、ペラ州は減少</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-3">スリ・パハン団地の住民647人、新居取得へ前進とファーミ氏</a></li>
+<li><a href="#article-27">DBKL、「スポンジシティ」推進で日陰樹2万2940本を植樹</a></li></ul></li>
+<li class="map-place" data-place-key="melaka" data-lat="2.3" data-lon="102.3" data-zoom="9"><strong>マラッカ州</strong><ul><li><a href="#article-4">マラッカ選管、登録確認に非公式リンクを使わないよう有権者に警告</a></li>
+<li><a href="#article-5">マラッカ州警察、州選挙後に主要施設周辺の警備強化へ</a></li>
+<li><a href="#article-6">マラッカ州選挙、BN・PNが28議席中24議席を獲得</a></li>
+<li><a href="#article-12">マラッカ州選、BN・PNが24議席 PHは都市部の4議席に</a></li>
+<li><a href="#article-13">ザヒド氏、BN・PNがアブ・ラウフ氏の州首相続投を指名へ</a></li>
+<li><a href="#article-14">マラッカ州選で苦戦、PHは結果を受け入れ改善を検討</a></li>
+<li><a href="#article-25">警察、マラッカ州選挙の捜査書類32件を法務長官室へ送付</a></li>
+<li><a href="#article-30">警察、マラッカ州議選関連の捜査書類32件を法務長官府に提出</a></li></ul></li>
+<li class="map-place" data-place-key="johor" data-lat="2.0" data-lon="103.5" data-zoom="8"><strong>ジョホール州</strong><ul><li><a href="#article-6">マラッカ州選挙、BN・PNが28議席中24議席を獲得</a></li>
+<li><a href="#article-14">マラッカ州選で苦戦、PHは結果を受け入れ改善を検討</a></li></ul></li>
+<li class="map-place" data-place-key="negeri-sembilan" data-lat="2.8" data-lon="102.2" data-zoom="9"><strong>ヌグリ・スンビラン州</strong><ul><li><a href="#article-6">マラッカ州選挙、BN・PNが28議席中24議席を獲得</a></li>
+<li><a href="#article-14">マラッカ州選で苦戦、PHは結果を受け入れ改善を検討</a></li></ul></li>
+<li class="map-place" data-place-key="penang" data-lat="5.4" data-lon="100.3" data-zoom="9"><strong>ペナン州</strong><ul><li><a href="#article-9">ペナン州の29校を改修、2027年の1年生受け入れへ校舎を増設</a></li></ul></li>
+<li class="map-place" data-place-key="sarawak" data-lat="3.1" data-lon="113.0" data-zoom="7"><strong>サラワク州</strong><ul><li><a href="#article-28">アバン・ジョハリ氏、サラワク州を技術の創造者に</a></li></ul></li>
+<li class="map-place" data-place-key="perlis" data-lat="6.5" data-lon="100.2" data-zoom="9"><strong>ペルリス州</strong><ul><li><a href="#article-29">ペルリス州、州民のアルジェリア留学機会拡大へ</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </section>
+
+
+            <section class="daily-category" aria-labelledby="category-1">
+              <div class="daily-category-head">
+                <h2 id="category-1">暮らしに関わる更新</h2>
+                <span>5件</span>
+              </div>
+              <div class="daily-item-list">
+
+      <article class="daily-item" id="article-1">
+        <div class="daily-item-head">
+          <span class="item-number">1</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>KKM、サイバー事案で主要システムや医療サービスに影響なしと発表</h3>
+        <p class="daily-summary">11月14日、KKMはFacebookに掲載した声明で、サイバーセキュリティ事案による主要システムや医療サービスへの影響はないと発表しました。KKMの施設での受診予約や治療は、心配せずに続けられるとしています。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/sistem-utama-perkhidmatan-kesihatan-kkm-tidak-terjejas-akibat-insiden-keselamatan-siber">出典: Astro Awani（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-2">
+        <div class="daily-item-head">
+          <span class="item-number">2</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3><a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>の洪水避難者1,511人に増加、<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>は減少</h3>
+        <p class="daily-summary">11月14日午後4時時点で、<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>クアラ・セランゴール郡の7カ所の一時避難所に身を寄せる洪水避難者は、405世帯1,511人に増えた。朝の時点では402世帯1,498人だった。<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>では避難者数が減少したが、人数は明らかにされていない。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/mangsa-banjir-di-selangor-meningkat-kepada-1511-orang-perak-rekod-penurunan-setakat-4-petang">出典: Astro Awani（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-3">
+        <div class="daily-item-head">
+          <span class="item-number">3</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>スリ・パハン団地の住民647人、新居取得へ前進とファーミ氏</h3>
+        <p class="daily-summary">スリ・パハン団地の住民716人のうち647人が、Residensi Maarofの住戸をめぐる抽選手続きと住戸の案内に登録しました。約10年待ってきた住民は、新居の取得に一歩近づいたといいます。手続きは2026年11月14日、<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>市役所（DBKL）の研修施設で行われました。ルンバ・パンタイ選出のファーミ・ファジル下院議員（通信相）は、再開発を通じた住民の忍耐と協力に感謝し、DBKLなど関係者と連携して住民の福祉と利益を優先すると、Facebookへの投稿で述べました。また、Residensi Maarofは近く、アンワル・イブラヒム首相によって正式に開所される予定だとしています。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/14/after-nearly-a-decade-647-sri-pahang-flat-residents-closer-to-new-homes-says-fahmi/243265">出典: Malay Mail（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-4">
+        <div class="daily-item-head">
+          <span class="item-number">4</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>マラッカ選管、登録確認に非公式リンクを使わないよう有権者に警告</h3>
+        <p class="daily-summary">マレーシア選挙管理委員会（EC）は、2026年11月14日の第16回<a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>議会選挙で、有権者登録情報の確認に認可されていないリンクを使わないよう注意を呼びかけました。登録状況は公式サイト（www.spr.gov.my）で確認し、情報を共有する前に確かめるよう、Facebookへの投稿で勧めています。投票は同日午前8時から午後6時まで、240カ所の投票所で行われ、28議席を選ぶために669,211人が投票資格を持っていました。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/14/ec-warns-melaka-voters-against-using-unofficial-links-to-check-registration-details/243239">出典: Malay Mail（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-5">
+        <div class="daily-item-head">
+          <span class="item-number">5</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3><a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>警察、州選挙後に主要施設周辺の警備強化へ</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>警察は、州選挙の結果発表後に政党支持者が集まると見込まれるとして、セリ・ベンダハラ、セリ・ネゲリ、イスタナ・マラッカなど、州政府の主要施設がある場所とその周辺で警備を強化する。ドゥルハイリ・ムクタール州警察本部長によると、治安維持のため、主要地点に警察官・職員1,000人超を配置する方針。なお、投票日の2026年11月14日には、州内の治安確保と投票の円滑な実施のため、警察官・職員計3,632人を配置した。この人数には、州外から投票に戻る有権者による交通量の増加に対応する交通警察官300人は含まれない。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/14/melaka-polls-police-to-step-up-security-at-hotspots-to-maintain-public-order/243228">出典: Malay Mail（2026年11月14日）</a>
+      </article>
+
+              </div>
+            </section>
+
+
+            <section class="daily-category" aria-labelledby="category-2">
+              <div class="daily-category-head">
+                <h2 id="category-2">社会・経済の動き</h2>
+                <span>25件</span>
+              </div>
+              <div class="daily-item-list">
+
+      <article class="daily-item" id="article-6">
+        <div class="daily-item-head">
+          <span class="item-number">6</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3><a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>選挙、BN・PNが28議席中24議席を獲得</h3>
+        <p class="daily-summary">2026年11月14日の<a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>選挙で、国民戦線（BN）と国民同盟（PN）は28議席中24議席を獲得しました。パカタン・ハラパン（PH）が<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>、<a class="place-link" data-place-key="negeri-sembilan" href="https://www.openstreetmap.org/?mlat=2.8&amp;mlon=102.2#map=9/2.8/102.2" title="ヌグリ・スンビラン州の概略位置を地図で見る">ヌグリ・スンビラン州</a>に続き、4カ月間で3度目となる州選挙で後退したと記事は伝えています。 BNとPNの合計議席は、2021年に両党が別々に獲得した23議席を上回りました。投票前、分析者らは、BNとPNの協力がマレー系票をまとめ、UMNO、PAS、Bersatuの票が分散していた状況を変える可能性を指摘していました。今回の結果は、第16回総選挙に向けて両党の正式な連携を求める声を強める一方、国会選挙区は州選挙区より広く多様であることや、BNとPASの間に重なる野心と指導権をめぐる利害対立が残ることも課題として挙げています。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/15/three-key-takeaways-from-bn-pns-commanding-melaka-victory/243299">出典: Malay Mail（2026年11月15日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-7">
+        <div class="daily-item-head">
+          <span class="item-number">7</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>マクロン仏大統領、レアアース供給源の多様化へマレーシア訪問</h3>
+        <p class="daily-summary">エマニュエル・マクロン仏大統領は、電気・電子産業に重要なレアアースの供給源を多様化し、サプライチェーンの混乱リスクを減らすため、マレーシアを訪問する予定です。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/lawatan-macron-ke-malaysia-tumpu-usaha-pelbagaikan-bekalan-unsur-nadir-bumi">出典: Astro Awani（2026年11月15日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-8">
+        <div class="daily-item-head">
+          <span class="item-number">8</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3><a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>首相、人種感情に惑わされず団結を呼びかけ</h3>
+        <p class="daily-summary">アミルディン・シャリ州首相は、<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>民に対し、人種感情をあおり州の調和を揺るがそうとする動きに惑わされないよう呼びかけた。州の発展と安定を保つうえで、団結が重要だと強調した。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/rakyat-selangor-jangan-mudah-terpengaruh-cubaan-goyahkan-keharmonian-negeri-mb">出典: Astro Awani（2026年11月15日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-9">
+        <div class="daily-item-head">
+          <span class="item-number">9</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3><a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>の29校を改修、2027年の1年生受け入れへ校舎を増設</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>の29校が改修され、2027年の学年度に入学する1年生の受け入れに向けて、IBS工法による校舎が追加で整備されました。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/29-sekolah-di-pulau-pinang-dinaik-taraf-terima-kemudahan-baharu">出典: Astro Awani（2026年11月15日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-10">
+        <div class="daily-item-head">
+          <span class="item-number">10</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>最低賃金引き上げ、企業に生産性向上の取り組み促す</h3>
+        <p class="daily-summary">最新の最低賃金引き上げにより、労働者の所得増加が見込まれています。一方、賃金コストの上昇を吸収し、商品やサービスの価格への圧力を強めないため、企業は生産性向上の取り組みを強化する必要があるとしています。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/perniagaan-perlu-tingkat-produktiviti-susulan-kenaikan-gaji-minimum">出典: Astro Awani（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-11">
+        <div class="daily-item-head">
+          <span class="item-number">11</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>産業強化へ、マレーシアは高付加価値製品の創出が必要</h3>
+        <p class="daily-summary">マレーシアは産業部門を強化するため、高付加価値製品の創出へ移行する必要がある。世界のサプライチェーンの一部にとどまるのではなく、革新的な知的財産や技術、ブランドを生み出し、保有する側になることが求められている。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/malaysia-perlu-beralih-kepada-penciptaan-produk-bernilai-tinggi-untuk-perkukuh-sektor-perindustrian">出典: Astro Awani（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-12">
+        <div class="daily-item-head">
+          <span class="item-number">12</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3><a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>選、BN・PNが24議席 PHは都市部の4議席に</h3>
+        <p class="daily-summary">11月14日夜の非公式結果によると、<a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>議会選でバリサン・ナショナル（BN）とペリカタン・ナショナル（PN）が計28議席中24議席を獲得し、3分の2を超える多数を得ました。BNが21議席、PNが3議席を獲得し、パカタン・ハラパン（PH）は都市部の4議席にとどまりました。BNのアハマド・ザヒド・ハミディ議長は有権者に謝意を表明。PHを代表して敗北を認めたアマナ党のアドリ・ザハリ氏は、草の根組織の立て直しに取り組むと述べました。現職のアブ・ラウフ・ユソー州首相はタンジュン・ビダラ選挙区で非公式に8,650票差をつけて議席を維持し、州政権を率いるための強い支持を得たと報じられています。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/14/bn-pn-sweep-melaka-in-24-seat-landslide-pakatan-reduced-to-just-four-urban-seats/243296">出典: Malay Mail（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-13">
+        <div class="daily-item-head">
+          <span class="item-number">13</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>ザヒド氏、BN・PNがアブ・ラウフ氏の州首相続投を指名へ</h3>
+        <p class="daily-summary">BN議長のアフマド・ザヒド・ハミディ氏は、BNと国民同盟（PN）が<a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>首相のアブ・ラウフ・ユソ氏を続投候補として指名すると発表しました。第16回<a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>議会選挙では、11月14日午後9時20分時点の非公式結果で、BN・PNが全28議席中24議席を獲得し、3分の2の過半数を確保。残る4議席は希望連盟（PH）が獲得しました。ザヒド氏によると、アブ・ラウフ氏の任命書は11月14日夜、<a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>元首のトゥン・モハド・アリ・ルスタム氏に提出される予定です。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/14/zahid-confirms-ab-rauf-as-melaka-cm-after-bn-pn-supermajority-win/243294">出典: Malay Mail（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-14">
+        <div class="daily-item-head">
+          <span class="item-number">14</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3><a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>選で苦戦、PHは結果を受け入れ改善を検討</h3>
+        <p class="daily-summary">パカタン・ハラパン（PH）は<a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>選の結果を受け入れ、有権者の意思を尊重すると表明した。非公式結果によると、PHが争った州議会24議席のうち獲得したのは4議席だった。<a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>PHのアドリー・ザハリ議長は、選挙結果を党の実績評価に生かし、国民の信頼回復に向けた取り組みを強化すると述べた。結果はPH大統領評議会に提出し、<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>や<a class="place-link" data-place-key="negeri-sembilan" href="https://www.openstreetmap.org/?mlat=2.8&amp;mlon=102.2#map=9/2.8/102.2" title="ヌグリ・スンビラン州の概略位置を地図で見る">ヌグリ・スンビラン州</a>の過去の州選結果も踏まえて包括的に検証するという。アドリー氏は、今回の結果を受けて説明し、振り返るべきことが多くあるとの認識を示した。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/14/much-to-explain-and-reflect-upon-pakatan-accepts-melaka-election-setback-says-state-chief/243292">出典: Malay Mail（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-15">
+        <div class="daily-item-head">
+          <span class="item-number">15</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>2027年東南アジア競技大会、43競技の実施を11カ国が合意</h3>
+        <p class="daily-summary">マレーシア五輪委員会（MOM）のモハマド・ノルザ・ザカリア会長によると、マレーシアで開催される2027年東南アジア競技大会で43競技を実施する決定は、東南アジア競技連盟（SEAGF）の加盟11カ国すべてが合意し、共同で行われたものです。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-sukan-terkini-malaysia/keputusan-senarai-43-jenis-sukan-pada-sukan-sea-2027-dibuat-secara-kolektif-mom">出典: Astro Awani（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-16">
+        <div class="daily-item-head">
+          <span class="item-number">16</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>マレーシア外相、南シナ海行動規範の交渉は約90％合意と説明</h3>
+        <p class="daily-summary">モハマド・ハサン外相によると、南シナ海の行動規範をめぐるASEANと中国の交渉では、文書の条項や文言の約90％で合意しており、交渉は最終段階にあるという。一方、残る論点には政治判断が必要なものや、関係国間で合意が必要な機微な表現がある。ASEAN・中国関係の調整役を務めるマレーシアは、交渉の早期妥結を目指しており、今年中の合意を目標としている。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/14/tok-mat-says-south-china-sea-code-talks-nearly-90pc-complete-malaysia-pushing-for-deal-by-this-year/243290">出典: Malay Mail（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-17">
+        <div class="daily-item-head">
+          <span class="item-number">17</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>マクロン氏が訪馬、両国関係を戦略的パートナーシップに格上げ</h3>
+        <p class="daily-summary">マクロン氏が2017年以来初めてマレーシアを訪問し、両国関係を戦略的パートナーシップに格上げする。両国は共通の優先事項に基づいて協力を強化し、地域・国際的な主要課題や欧州とASEANの関係をめぐる連携も深める方針。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/macron-adakan-lawatan-pertama-ke-malaysia-sejak-2017-tingkat-hubungan-kepada-perkongsian-strategik">出典: Astro Awani（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-18">
+        <div class="daily-item-head">
+          <span class="item-number">18</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>パーム油業界に中国の食用油汚染物質基準の確認促す</h3>
+        <p class="daily-summary">MPOBによると、中国が2026年9月に食用油の汚染物質管理基準を施行したことを受け、パーム油業界の関係者に基準を詳しく確認するよう促しています。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/industri-sawit-diminta-teliti-standard-kawalan-bahan-cemar-minyak-makanan-oleh-china">出典: Astro Awani（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-19">
+        <div class="daily-item-head">
+          <span class="item-number">19</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>教育省、学校建設の承認手続き円滑化に取り組む</h3>
+        <p class="daily-summary">マレーシア教育省（KPM）は、学校建設の承認手続きを円滑化することに取り組むと表明した。特に政府補助校を対象に、教育機関の開発プロジェクトがより円滑に実施できるようにするという。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/kpm-komited-mudah-cara-proses-kelulusan-pembinaan-sekolah">出典: Astro Awani（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-20">
+        <div class="daily-item-head">
+          <span class="item-number">20</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>東ティモールが2029年のASEAN議長国に、加盟国が合意</h3>
+        <p class="daily-summary">モハマド氏によると、ASEANは東ティモールを2029年の議長国とすることで合意しました。2026年11月14日の会合で決定され、東ティモールとミャンマーが同年のASEAN議長国および開催国になる意向を示していたということです。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/asean-setuju-timor-leste-pengerusi-2029-mohamad">出典: Astro Awani（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-21">
+        <div class="daily-item-head">
+          <span class="item-number">21</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>AIチップ不正疑惑、捜査は2025年4月に開始とサイフディン氏</h3>
+        <p class="daily-summary">サイフディン・ナスティオン氏によると、米国が指摘したAIチップをめぐる不正疑惑について、捜査は2025年4月に開始されました。疑惑には、高性能AIチップ（Nvidia製を含む）の不正調達や、マレーシアが中継拠点として利用されたとの主張が含まれています。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/dakwaan-penyelewengan-cip-ai-kertas-siasatan-dibuka-sejak-april-2025-saifuddin-nasution">出典: Astro Awani（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-22">
+        <div class="daily-item-head">
+          <span class="item-number">22</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>Jualan Agro MADANI、農産物・食品の市場アクセス拡大へ</h3>
+        <p class="daily-summary">Mustapha氏によると、Jualan Agro MADANIは、農家や畜産業者、漁業者が農産物や食品を消費者に直接販売する場として、市場へのアクセス拡大を図っている。仲介業者の関与を減らすことにもつながるという。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jualan-agro-madani-perluas-akses-pasaran-hasil-pertanian-agromakanan-mustapha">出典: Astro Awani（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-23">
+        <div class="daily-item-head">
+          <span class="item-number">23</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>警察長官、シュハイリー氏の警察復帰に追加指示なし</h3>
+        <p class="daily-summary">マレーシア警察長官のモハド・ハリド・イスマイル氏は、国境管理・保護庁（AKPS）の長官を務めるモハド・シュハイリー氏を警察に戻すかどうかについて、警察は追加の指示を受けていないと述べました。シュハイリー氏は警察官で、国王の任命によりAKPS長官を2年契約で務めており、指示が出るまでは通常どおり職務を続けているということです。また、内務相は11月14日、後任のAKPS長官について省としてまだ決定していないと説明したと報じられています。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/14/police-yet-to-receive-further-instructions-on-shuhailys-return-from-border-control-agency-says-igp/243284">出典: Malay Mail（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-24">
+        <div class="daily-item-head">
+          <span class="item-number">24</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>ハレド国防相、LCSのAtmaca導入で追加費用は統合・発射装置関連と説明</h3>
+        <p class="daily-summary">マレーシア海軍の沿岸戦闘艦（LCS）にトルコ製ミサイル「Atmaca」を採用したことに伴う追加費用には、統合作業と発射装置が関係すると、モハメド・ハレド・ノルディン国防相が述べた。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/atmaca-kos-tambahan-libat-integrasi-sistem-pelancar-mohamed-khaled">出典: Astro Awani（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-25">
+        <div class="daily-item-head">
+          <span class="item-number">25</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>警察、<a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>選挙の捜査書類32件を法務長官室へ送付</h3>
+        <p class="daily-summary">警察は、第16回<a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>選挙に関連する捜査書類32件を法務長官室（AGC）に提出し、指示を待っている。警察によると、14日間の選挙運動期間中に42件の通報があり、旗の撤去や焼却、扇動的な要素を含むとされる演説などが対象となった。警察長官は、ある政治家の選挙演説についても捜査書類を作成してAGCに提出したと説明。刑法505条と298条に基づいて捜査し、本人から供述を聴く予定だとしている。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/14/police-refer-32-melaka-election-cases-to-agc-including-alleged-seditious-speeches/243281">出典: Malay Mail（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-26">
+        <div class="daily-item-head">
+          <span class="item-number">26</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>業界関係者、インドネシアを参考に輸出監視強化を提言</h3>
+        <p class="daily-summary">海運業界関係者は、輸出申告額を実際より低くする過少申告を抑えるため、マレーシアは商品輸出の監視を強化すべきだと述べました。Maritime Network Sdn Bhdの最高経営責任者、Datuk Seri R. Jeyenderan氏は、インドネシアが主要な商品輸出を監視する中央機関を設置する動きを受け、マレーシアも自国の輸出監視制度の有効性を見直すべきだと指摘しました。インドネシアの機関DSIは、石炭、パーム油、フェロアロイを対象に、当初は約US$60 billion相当の輸出を監視する予定です。全面運用は2027年1月に始まる予定で、1トン当たり1桁台の米ドル額の手数料を導入する計画です。最終的な料金は12月に発表される見込みです。過少申告は、輸出業者が実際の貨物価値や数量より低く申告することで、政府が受け取る税収を損なう可能性があります。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/14/learn-from-indonesia-tighten-export-monitoring-to-stop-under-invoicing-say-industry-players/243282">出典: Malay Mail（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-27">
+        <div class="daily-item-head">
+          <span class="item-number">27</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>DBKL、「スポンジシティ」推進で日陰樹2万2940本を植樹</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>市庁（DBKL）は、首都での鉄砲水のリスクや周辺気温を抑えるため、緑のインフラを拡充し、「スポンジシティ」の取り組みを強化しています。日陰をつくる樹木2万2940本を植えました。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/dbkl-perkukuh-inisiatif-sponge-city-tanam-22940-pokok-teduhan">出典: Astro Awani（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-28">
+        <div class="daily-item-head">
+          <span class="item-number">28</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>アバン・ジョハリ氏、<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>を技術の創造者に</h3>
+        <p class="daily-summary">アバン・ジョハリ氏は、<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>が技術を単に利用するだけでなく、生み出す側になることを目指していると述べた。地元の技術力を高めることは、州民がデジタル発展の恩恵を受けるだけでなく、将来の産業を形作る上で主要な役割を担うために重要だとしている。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/sarawak-mahu-jadi-pencipta-teknologi-bukan-sekadar-pengguna-abang-johari">出典: Astro Awani（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-29">
+        <div class="daily-item-head">
+          <span class="item-number">29</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3><a class="place-link" data-place-key="perlis" href="https://www.openstreetmap.org/?mlat=6.5&amp;mlon=100.2#map=9/6.5/100.2" title="ペルリス州の概略位置を地図で見る">ペルリス州</a>、州民のアルジェリア留学機会拡大へ</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="perlis" href="https://www.openstreetmap.org/?mlat=6.5&amp;mlon=100.2#map=9/6.5/100.2" title="ペルリス州の概略位置を地図で見る">ペルリス州</a>は、州民がアルジェリアで学ぶ機会を広げる取り組みを進めています。州政府代表団による11月8～16日のアルジェリア訪問を受けたもので、2027/2028年度からの留学機会を探るとしています。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/perlis-usaha-perluas-peluang-anak-negeri-lanjut-pengajian-di-algeria">出典: Astro Awani（2026年11月14日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-30">
+        <div class="daily-item-head">
+          <span class="item-number">30</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>警察、<a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>議選関連の捜査書類32件を法務長官府に提出</h3>
+        <p class="daily-summary">警察は、第16回<a class="place-link" data-place-key="melaka" href="https://www.openstreetmap.org/?mlat=2.3&amp;mlon=102.3#map=9/2.3/102.3" title="マラッカ州の概略位置を地図で見る">マラッカ州</a>議会選挙に関連する捜査書類32件を法務長官府（AGC）に提出し、現在、次の指示を待っている。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/prn-melaka-polis-kemuka-32-kertas-siasatan-kepada-agc">出典: Astro Awani（2026年11月14日）</a>
+      </article>
+
+              </div>
+            </section>
+
+
+  </main>
+  <a class="back-to-top" href="#page-top" aria-label="ページの先頭へ戻る" title="ページの先頭へ戻る" hidden><span aria-hidden="true">↑</span></a>
+  <script src="./daily-page.js" defer></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
+</body>
+</html>
