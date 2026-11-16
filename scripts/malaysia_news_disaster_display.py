@@ -33,6 +33,10 @@ policy, budgets, mitigation projects, historical statistics, equipment/readiness
 preparedness advice, siren tests and drills. Water tank failures or roadworks without a
 natural-disaster cause are none. If uncertain use none. This is not a freshness/safety
 decision: retain the published article's dates; do not imply warnings are still active.
+Classify the article's MAIN new information, not incidental background: a mitigation,
+budget, planning or preparedness report is none even if it cites affected places or
+damage to explain why the project is needed. Group only reports whose main news is
+actual impacts or an issued warning/time-specific forecast.
 area = klang_valley ONLY if the actual affected place is explicitly in Klang Valley
 (e.g. Kuala Lumpur, Shah Alam, Petaling Jaya, Subang Jaya, Klang, Gombak, Putrajaya).
 A KL dateline, quoted official's office or press conference is NOT the affected place.
