@@ -119,6 +119,7 @@ class DisasterDisplayTests(unittest.TestCase):
         self.assertNotIn("DO NOT LOG", json.dumps(result))
         self.assertNotIn("secret", json.dumps(result))
         self.assertIn("budgets", request.call_args.kwargs["messages"][0]["content"])
+        self.assertIn("NOT issued warnings", request.call_args.kwargs["messages"][0]["content"])
 
     def test_failures_and_missing_key_keep_every_article(self):
         from unittest.mock import Mock
