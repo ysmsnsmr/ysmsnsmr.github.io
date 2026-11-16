@@ -51,15 +51,26 @@ class DisasterDisplayTests(unittest.TestCase):
 
     def test_strict_schema_and_exhaustive_binding(self):
         self.assertEqual(display.schema_error(response()), "")
-        for mutation in ("extra", "missing", "duplicate", "unknown", "unfounded"):
+        for mutation in ("extra", "missing", "duplicate", "unknown"):
             with self.subTest(mutation=mutation):
                 result = response()
                 if mutation == "extra": result["articles"][0]["extra"] = True
                 if mutation == "missing": result["articles"].pop()
                 if mutation == "duplicate": result["articles"][0]["id"] = 2
                 if mutation == "unknown": result["articles"][0]["kind"] = "flood_budget"
-                if mutation == "unfounded": result["articles"][1]["area_evidence"] = "Putrajaya"
                 with self.assertRaises(ValueError): display.bind_labels(result, self.articles)
+
+    def test_unverified_geography_loses_priority_without_losing_other_labels(self):
+        value = response()
+        value["articles"][1]["area_evidence"] = "Putrajaya"
+        warnings = []
+        labels = display.bind_labels(value, self.articles, warnings)
+        self.assertEqual(len(labels), 6)
+        label = next(row for row in labels.values() if row["id"] == 2)
+        self.assertEqual(label["area"], "unclear")
+        self.assertEqual(label["area_evidence"], "")
+        self.assertEqual(label["kind"], "disruption")
+        self.assertEqual(warnings, [{"id": 2, "reason": "display_ungrounded_area"}])
 
     def test_no_klang_priority_without_explicit_area_evidence(self):
         result = response()

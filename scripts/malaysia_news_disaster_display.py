@@ -89,7 +89,8 @@ def schema_error(value: Any) -> str:
     return "display_duplicate_id" if len(set(ids)) != len(ids) else ""
 
 
-def bind_labels(value: Any, articles: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+def bind_labels(value: Any, articles: list[dict[str, Any]],
+                warnings: list[dict[str, Any]] | None = None) -> dict[str, dict[str, Any]]:
     error = schema_error(value)
     if error:
         raise DisplayLabelError(error)
@@ -98,10 +99,13 @@ def bind_labels(value: Any, articles: list[dict[str, Any]]) -> dict[str, dict[st
         raise DisplayLabelError("display_id_mismatch")
     tags = {}
     for article in articles:
-        row = by_id[article["id"]]
+        row = dict(by_id[article["id"]])
         evidence = row["area_evidence"]
         if evidence and not any(evidence in article[field] for field in ("headline", "summary")):
-            raise DisplayLabelError("display_ungrounded_area")
+            # Unverified geography never earns local priority or a geographic label.
+            row.update(area="unclear", area_evidence="")
+            if warnings is not None:
+                warnings.append({"id": article["id"], "reason": "display_ungrounded_area"})
         key = article_key(article["headline"], article["summary"], article["url"])
         tags[key] = row
     return tags
@@ -130,7 +134,7 @@ def classify(markdown_path: Path, *, api_key: str, model: str = "", request=None
     text = markdown_path.read_text(encoding="utf-8")
     report: dict[str, Any] = {
         "schema_version": 1, "status": "skipped", "markdown_sha256": document_hash(text),
-        "labels": {}, "failure_class": "", "validation_reason": "",
+        "labels": {}, "failure_class": "", "validation_reason": "", "warnings": [],
         "diagnostic": {}, "classification_source": "model",
     }
     day = parse_markdown(markdown_path)
@@ -152,7 +156,7 @@ def classify(markdown_path: Path, *, api_key: str, model: str = "", request=None
                       {"role": "user", "content": json.dumps(articles, ensure_ascii=False)}],
         )
         diagnostic = completion.diagnostic
-        report["labels"] = bind_labels(completion.parsed, articles)
+        report["labels"] = bind_labels(completion.parsed, articles, report["warnings"])
         report["status"] = "applied"
     except Exception as error:
         diagnostic = error_diagnostic(error) or diagnostic

@@ -37,6 +37,9 @@ review artifact and never regenerates summaries or publishes. Local validation
 failures have a separate `validation_reason`, even when the API request succeeded.
 The main RSS workflow can invoke this same review via `disaster_display_review_run`;
 when provided, the normal collection, summary and publication job is skipped.
+If a region excerpt cannot be matched to the article text, that article loses
+geographic priority and its region label; other valid labels remain usable. The
+warning records only the article ID and failure code, not the unsupported excerpt.
 
 Inspect model grouping and geographic prioritization in real artifacts. These
 semantic choices are not guaranteed by the structural validator. If ambiguous,
