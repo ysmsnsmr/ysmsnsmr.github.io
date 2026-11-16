@@ -7,6 +7,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from malaysia_news_design_tokens import MALAYSIA_NEWS_TOKENS_CSS
+from malaysia_news_disaster_display import article_key, load_labels
 from malaysia_news_places import ALIASES, Place, find_places
 from malaysia_news_display_categories import (
     DISPLAY_CATEGORIES,
@@ -63,6 +64,7 @@ class NewsDay:
     failed_sources: str
     source_only_items: list[SourceOnlyItem] = field(default_factory=list)
     updated_at: datetime | None = None
+    display_labels: dict[str, dict] = field(default_factory=dict)
 
 
 def extract_label(text: str, label: str) -> str:
@@ -216,6 +218,7 @@ def parse_markdown(path: Path) -> NewsDay:
         failed_sources=extract_label(text, "失敗したソース一覧"),
         source_only_items=source_only_items,
         updated_at=parse_update_time(text),
+        display_labels=load_labels(path.with_suffix(".display.json"), text),
     )
 
 
@@ -644,16 +647,58 @@ def render_location_map(day: NewsDay) -> str:
     """
 
 
+def disaster_label(day: NewsDay, item: NewsItem) -> dict:
+    key = article_key(display_full_headline(item), item_summary_body(item), item.source_url)
+    return day.display_labels.get(key, {})
+
+
+def disaster_items(day: NewsDay) -> list[tuple[int, NewsItem]]:
+    candidates = [(i, item) for i, item in enumerate(ordered_items(day), 1)
+                  if disaster_label(day, item).get("kind") in {"damage", "warning", "disruption"}]
+    impact_order = {"disruption": 0, "warning": 1, "damage": 2}
+    return sorted(candidates, key=lambda pair: (
+        disaster_label(day, pair[1]).get("area") != "klang_valley",
+        impact_order[disaster_label(day, pair[1])["kind"]], pair[0],
+    ))
+
+
+def render_disaster_story(day: NewsDay, item: NewsItem, position: int) -> str:
+    label = disaster_label(day, item)
+    region = "Klang Valley周辺" if label.get("area") == "klang_valley" else ""
+    region_label = f'<span class="disaster-region">{region}</span>' if region else ""
+    # Preserve the original article ID and full content inside the disclosure.
+    return (f'<details class="disaster-story"><summary>{region_label}'
+            f'<span>{esc(display_full_headline(item))}</span></summary>'
+            f'{render_daily_item(item, position)}</details>')
+
+
+def render_disaster_group(day: NewsDay) -> str:
+    items = disaster_items(day)
+    if not items:
+        return ""
+    visible = "".join(render_disaster_story(day, item, i) for i, item in items[:3])
+    remaining = items[3:]
+    more = ""
+    if remaining:
+        rows = "".join(render_disaster_story(day, item, i) for i, item in remaining)
+        more = (f'<details class="disaster-more"><summary>関連ニュースをさらに読む '
+                f'{len(remaining)}件</summary>{rows}</details>')
+    return (f'<section class="disaster-group" aria-labelledby="disaster-heading">'
+            f'<div class="disaster-heading"><h2 id="disaster-heading">自然災害関連</h2>'
+            f'<span>{len(items)}件</span></div>{visible}{more}</section>')
+
+
 def render_daily_sections(day: NewsDay) -> str:
     sections = []
-    position = 0
+    grouped_positions = {i for i, _ in disaster_items(day)}
+    indexed = list(enumerate(ordered_items(day), 1))
     for category in CATEGORIES:
-        category_items = [item for item in ordered_items(day) if item.category == category]
+        category_items = [(i, item) for i, item in indexed
+                          if item.category == category and i not in grouped_positions]
+        if grouped_positions and not category_items:
+            continue
         if category_items:
-            cards = []
-            for item in category_items:
-                position += 1
-                cards.append(render_daily_item(item, position))
+            cards = [render_daily_item(item, i) for i, item in category_items]
             content = "\n".join(cards)
         else:
             content = '<p class="muted">このカテゴリの掲載はありません。</p>'
@@ -663,7 +708,7 @@ def render_daily_sections(day: NewsDay) -> str:
             <section class="daily-category" aria-labelledby="{category_id}">
               <div class="daily-category-head">
                 <h2 id="{category_id}">{esc(category_label(category))}</h2>
-                <span>{day.category_counts.get(category, 0)}件</span>
+                <span>{len(category_items) if grouped_positions else day.category_counts.get(category, 0)}件</span>
               </div>
               <div class="daily-item-list">
                 {content}
@@ -671,7 +716,21 @@ def render_daily_sections(day: NewsDay) -> str:
             </section>
             """
         )
-    return "\n".join(sections)
+    return render_disaster_group(day) + "\n".join(sections)
+
+
+def render_category_navigation(day: NewsDay) -> str:
+    grouped = disaster_items(day)
+    grouped_positions = {i for i, _ in grouped}
+    links = [f'<a href="#disaster-heading">自然災害関連 {len(grouped)}件</a>'] if grouped else []
+    for i, category in enumerate(CATEGORIES, 1):
+        count = sum(item.category == category and position not in grouped_positions
+                    for position, item in enumerate(ordered_items(day), 1))
+        if not grouped:
+            count = day.category_counts.get(category, 0)
+        if count or not grouped:
+            links.append(f'<a href="#category-{i}">{esc(category_label(category))} {count}件</a>')
+    return "".join(links)
 
 
 def render_source_only_section(day: NewsDay) -> str:
@@ -734,6 +793,26 @@ def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
       .page-header h1 { font-size: 1.35rem; }
     }
 ''' if is_home else ''
+    disaster_styles = '''
+    .disaster-group { border-block: 1px solid var(--line); padding: 18px 0; margin-bottom: 28px; }
+    .disaster-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    .disaster-heading h2 { font-size: 1.15rem; }
+    .disaster-heading > span { color: var(--muted); font-size: .85rem; }
+    .disaster-story { border-bottom: 1px solid var(--line); }
+    .disaster-story > summary { position: relative; list-style: none; cursor: pointer; padding: 14px 30px 14px 0; min-height: 44px; font-weight: 700; overflow-wrap: anywhere; }
+    .disaster-story > summary::-webkit-details-marker, .disaster-more > summary::-webkit-details-marker { display: none; }
+    .disaster-story > summary::after { content: '+'; position: absolute; right: 4px; top: 14px; color: var(--accent); font-size: 1.2rem; }
+    .disaster-story[open] > summary::after { content: '\\2212'; }
+    .disaster-region { display: block; color: var(--accent-strong); font-size: .8rem; font-weight: 400; margin-bottom: 3px; }
+    .disaster-story > .daily-item { border: 0; border-radius: 0; box-shadow: none; background: transparent; padding: 0 0 18px; }
+    .disaster-story > .daily-item > h3 { display: none; }
+    .disaster-story .daily-item-head { display: none; }
+    .disaster-more { margin-top: 8px; }
+    .disaster-more > summary { cursor: pointer; list-style: none; min-height: 44px; padding: 8px 0; font-size: .9rem; color: var(--accent); font-weight: 700; }
+    .disaster-more > summary::before { content: '+ '; }
+    .disaster-more[open] > summary::before { content: '\\2212 '; }
+    .disaster-story > summary:focus-visible, .disaster-more > summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+''' if disaster_items(day) else ''
     return f"""<!doctype html>
 <html lang="ja">
 <head>
@@ -813,7 +892,7 @@ def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
       #location-map-canvas {{ min-height: 260px; }}
       .map-index {{ max-height: 170px; padding: 4px 0; }}
     }}
-{home_layout_styles}  </style>
+{home_layout_styles}{disaster_styles}  </style>
 </head>
 <body>
   <main id="page-top" tabindex="-1">
@@ -826,7 +905,7 @@ def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
       {header_note}
     </header>
     {render_air_quality_links() if is_home else ''}<nav class="category-nav" aria-label="カテゴリへ移動">
-      {''.join(f'<a href="#category-{index + 1}">{esc(category_label(category))} {day.category_counts.get(category, 0)}件</a>' for index, category in enumerate(CATEGORIES))}
+      {render_category_navigation(day)}
     </nav>
     {location_map}
     {render_daily_sections(day)}

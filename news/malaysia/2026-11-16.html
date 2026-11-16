@@ -97,6 +97,25 @@
       #location-map-canvas { min-height: 260px; }
       .map-index { max-height: 170px; padding: 4px 0; }
     }
+
+    .disaster-group { border-block: 1px solid var(--line); padding: 18px 0; margin-bottom: 28px; }
+    .disaster-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    .disaster-heading h2 { font-size: 1.15rem; }
+    .disaster-heading > span { color: var(--muted); font-size: .85rem; }
+    .disaster-story { border-bottom: 1px solid var(--line); }
+    .disaster-story > summary { position: relative; list-style: none; cursor: pointer; padding: 14px 30px 14px 0; min-height: 44px; font-weight: 700; overflow-wrap: anywhere; }
+    .disaster-story > summary::-webkit-details-marker, .disaster-more > summary::-webkit-details-marker { display: none; }
+    .disaster-story > summary::after { content: '+'; position: absolute; right: 4px; top: 14px; color: var(--accent); font-size: 1.2rem; }
+    .disaster-story[open] > summary::after { content: '\2212'; }
+    .disaster-region { display: block; color: var(--accent-strong); font-size: .8rem; font-weight: 400; margin-bottom: 3px; }
+    .disaster-story > .daily-item { border: 0; border-radius: 0; box-shadow: none; background: transparent; padding: 0 0 18px; }
+    .disaster-story > .daily-item > h3 { display: none; }
+    .disaster-story .daily-item-head { display: none; }
+    .disaster-more { margin-top: 8px; }
+    .disaster-more > summary { cursor: pointer; list-style: none; min-height: 44px; padding: 8px 0; font-size: .9rem; color: var(--accent); font-weight: 700; }
+    .disaster-more > summary::before { content: '+ '; }
+    .disaster-more[open] > summary::before { content: '\2212 '; }
+    .disaster-story > summary:focus-visible, .disaster-more > summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
   </style>
 </head>
 <body>
@@ -111,7 +130,7 @@
       <p class="subhead">2026年11月16日 07:31 MYT 時点のまとめ。期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。</p>
     </header>
     <nav class="category-nav" aria-label="カテゴリへ移動">
-      <a href="#category-1">暮らしに関わる更新 8件</a><a href="#category-2">社会・経済の動き 22件</a>
+      <a href="#disaster-heading">自然災害関連 3件</a><a href="#category-1">暮らしに関わる更新 5件</a><a href="#category-2">社会・経済の動き 22件</a>
     </nav>
 
     <section class="location-map" id="news-map" aria-labelledby="map-heading">
@@ -137,14 +156,29 @@
       <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
     </section>
 
+    <section class="disaster-group" aria-labelledby="disaster-heading"><div class="disaster-heading"><h2 id="disaster-heading">自然災害関連</h2><span>3件</span></div><details class="disaster-story"><summary><span class="disaster-region">Klang Valley周辺</span><span>シャーアラムのi-Cityなどで冠水、豪雨で交通に影響</span></summary>
+      <article class="daily-item" id="article-6">
+        <div class="daily-item-head">
+          <span class="item-number">6</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>シャーアラムのi-Cityなどで冠水、豪雨で交通に影響</h3>
+        <p class="daily-summary">11月15日午後1時ごろから1時間以上にわたり強い雨が続き、シャーアラムのi-Cityとセクション7の道路で冠水が発生し、午後の交通に影響が出ました。Threadsの投稿には、冠水した道路で複数の車両、特にバイクが止まっている様子や、冠水箇所を進む車が映っていました。午後2時46分には、i-City方面からの出口付近で冠水したとの動画も投稿されました。別の投稿者は、セクション7の駐車場も冠水したとして、立ち往生を避けるため同エリアを訪れる予定を取りやめるよう呼びかけました。</p>
 
-            <section class="daily-category" aria-labelledby="category-1">
-              <div class="daily-category-head">
-                <h2 id="category-1">暮らしに関わる更新</h2>
-                <span>8件</span>
-              </div>
-              <div class="daily-item-list">
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/15/one-hour-of-rain-roads-under-water-flash-floods-hit-shah-alams-i-city/243384">出典: Malay Mail（2026年11月15日）</a>
+      </article>
+    </details><details class="disaster-story"><summary><span>セランゴール州の洪水避難者1,399人、ペラ州は191人に減少</span></summary>
+      <article class="daily-item" id="article-5">
+        <div class="daily-item-head">
+          <span class="item-number">5</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3><a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>の洪水避難者1,399人、<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>は191人に減少</h3>
+        <p class="daily-summary">11月15日午後4時時点で、洪水による避難者は<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>と<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>の一時避難所でいずれも減少しました。社会福祉局（JKM）のInfoBencanaポータルによると、<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>クアラ・セランゴールでは6カ所の避難所に370世帯1,399人が避難しており、同日朝の398世帯1,493人から減りました。最多はSK Parit Mahangの420人で、SK Dato’ Maharaja Lelaに391人、SRA Bukit <a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">Kuching</a>に287人、Bukit <a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">Kuching</a> Tengahコミュニティホールに119人、KAFA Integrasi Hidayah Bukit Cherakahに114人、SRA Batu 8 Ijokに68人が避難しています。<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>では58世帯191人となり、同日朝の85世帯293人から減少しました。191人全員がヒリル・ペラのテロック・インタン市議会休憩所ホールに避難しています。州災害管理委員会事務局によると、ムアリムのSK Khir Johari避難所は、カンポン・ベロップの洪水が完全に引いたため閉鎖されました。</p>
 
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/15/selangor-flood-evacuees-fall-to-1399-perak-down-to-191/243397">出典: Malay Mail（2026年11月15日）</a>
+      </article>
+    </details><details class="disaster-story"><summary><span>スンガイ・クチルの洪水で23世帯に影響</span></summary>
       <article class="daily-item" id="article-1">
         <div class="daily-item-head">
           <span class="item-number">1</span>
@@ -155,7 +189,13 @@
 
         <a class="source-link" href="https://www.astroawani.com/berita-malaysia/23-keluarga-terjejas-banjir-di-sungai-kechil">出典: Astro Awani（2026年11月16日）</a>
       </article>
-
+    </details></section>
+            <section class="daily-category" aria-labelledby="category-1">
+              <div class="daily-category-head">
+                <h2 id="category-1">暮らしに関わる更新</h2>
+                <span>5件</span>
+              </div>
+              <div class="daily-item-list">
 
       <article class="daily-item" id="article-2">
         <div class="daily-item-head">
@@ -190,30 +230,6 @@
         <p class="daily-summary">クアラ・カンサーのタマン・クアラ・カンサーにある容量455立方メートルの水槽が、2026年11月14日に破裂しました。<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>インフラ・エネルギー・水道・公共交通委員会のモハマド・ニザル・ジャマルディン委員長によると、築40年以上の水槽の構造状態が原因で、周辺の約520人に水道供給の影響が出ました。負傷者や物的損害は報告されていません。<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>水道局（LAP）は現場周辺の道路を洗浄・清掃し、タマン・クアラ・カンサーとタマン・ムランティへの本管からの直接給水を実施しました。破損した水槽パネルはすべて撤去済みで、新しい水槽への交換を計画しています。LAPは設置に先立ち、旧水槽の構造を包括的に技術評価するということです。</p>
 
         <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/15/ageing-40-year-old-water-tank-bursts-in-kuala-kangsar-affecting-520-consumers-no-damage-or-injuries-reported/243398">出典: Malay Mail（2026年11月15日）</a>
-      </article>
-
-
-      <article class="daily-item" id="article-5">
-        <div class="daily-item-head">
-          <span class="item-number">5</span>
-          <p class="item-category">暮らしに関わる更新</p>
-        </div>
-        <h3><a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>の洪水避難者1,399人、<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>は191人に減少</h3>
-        <p class="daily-summary">11月15日午後4時時点で、洪水による避難者は<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>と<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>の一時避難所でいずれも減少しました。社会福祉局（JKM）のInfoBencanaポータルによると、<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>クアラ・セランゴールでは6カ所の避難所に370世帯1,399人が避難しており、同日朝の398世帯1,493人から減りました。最多はSK Parit Mahangの420人で、SK Dato’ Maharaja Lelaに391人、SRA Bukit <a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">Kuching</a>に287人、Bukit <a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">Kuching</a> Tengahコミュニティホールに119人、KAFA Integrasi Hidayah Bukit Cherakahに114人、SRA Batu 8 Ijokに68人が避難しています。<a class="place-link" data-place-key="perak" href="https://www.openstreetmap.org/?mlat=4.8&amp;mlon=101.1#map=8/4.8/101.1" title="ペラ州の概略位置を地図で見る">ペラ州</a>では58世帯191人となり、同日朝の85世帯293人から減少しました。191人全員がヒリル・ペラのテロック・インタン市議会休憩所ホールに避難しています。州災害管理委員会事務局によると、ムアリムのSK Khir Johari避難所は、カンポン・ベロップの洪水が完全に引いたため閉鎖されました。</p>
-
-        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/15/selangor-flood-evacuees-fall-to-1399-perak-down-to-191/243397">出典: Malay Mail（2026年11月15日）</a>
-      </article>
-
-
-      <article class="daily-item" id="article-6">
-        <div class="daily-item-head">
-          <span class="item-number">6</span>
-          <p class="item-category">暮らしに関わる更新</p>
-        </div>
-        <h3>シャーアラムのi-Cityなどで冠水、豪雨で交通に影響</h3>
-        <p class="daily-summary">11月15日午後1時ごろから1時間以上にわたり強い雨が続き、シャーアラムのi-Cityとセクション7の道路で冠水が発生し、午後の交通に影響が出ました。Threadsの投稿には、冠水した道路で複数の車両、特にバイクが止まっている様子や、冠水箇所を進む車が映っていました。午後2時46分には、i-City方面からの出口付近で冠水したとの動画も投稿されました。別の投稿者は、セクション7の駐車場も冠水したとして、立ち往生を避けるため同エリアを訪れる予定を取りやめるよう呼びかけました。</p>
-
-        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/15/one-hour-of-rain-roads-under-water-flash-floods-hit-shah-alams-i-city/243384">出典: Malay Mail（2026年11月15日）</a>
       </article>
 
 

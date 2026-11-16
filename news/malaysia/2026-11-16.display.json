@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "status": "applied",
+  "classification_source": "human_review",
+  "markdown_sha256": "74dd9f46b36815cccf6bbcdf24a559ff513ac3564b2d366206e1a4443e8df36f",
+  "labels": {
+    "667005156df6332955909cd38ee470970706480302c63df2d52404a2916a87f7": {
+      "id": 1,
+      "kind": "damage",
+      "area": "other",
+      "area_evidence": "スンガイ・クチル"
+    },
+    "e75b032cd358121954331079ae01067c5d07ee949bf8de19df40548ae0aef195": {
+      "id": 2,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "3dda05c168c297322dc28c1c7ebabc386654fc1b949427bcdf55059c0033f364": {
+      "id": 3,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "e79c5251b78a58f454265aaf5fa274f3a386b8b0b875d6e1009265e8cf8cbacf": {
+      "id": 4,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "655a735203d7964251a648e838adbd44c901af6d45b7c06a758a87ecc80c1c30": {
+      "id": 5,
+      "kind": "disruption",
+      "area": "other",
+      "area_evidence": "クアラ・セランゴール"
+    },
+    "b40a04af47c2d8fe8d40b3d70f033196646b1ce1a5888dadab4dc7c90711bf62": {
+      "id": 6,
+      "kind": "disruption",
+      "area": "klang_valley",
+      "area_evidence": "シャーアラム"
+    },
+    "eebf771f684eb593b1510df66b2439aeb9ba7cad6384bdb8f58617f5e54d2110": {
+      "id": 7,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "172ec801e9d583db0096e556ef0f899bce5fb1308024ff248c25317da448b803": {
+      "id": 8,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "6fcab8d9f04692a71d2722855749aebc0d6a7f865271ed727d33b7da54a901f0": {
+      "id": 9,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "dbfc3d47e76f891d3bd2f1a6f1cd6fe00ec9b95523d63e525071467cac941e50": {
+      "id": 10,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "fa1b8291da6b9b95bd6d737574b69b8fe0422035e7af7c4482c793cb653e12db": {
+      "id": 11,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "6645dc5e554a641b2acb39dd0f022f7962a9d6c787aa14079ebfae6a98b69a65": {
+      "id": 12,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "aae081bcce2d30be0e207f4d5200f4fb328866d09ab6f42f90bee3673712e698": {
+      "id": 13,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "21b12697b8145041b5365bd0e4c3cdfa773c47bf0b5a20840cf884d82ed4c40a": {
+      "id": 14,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "8528218cc7de484637db2186139b1a37a673701757b51fe0cbf9fcc5b79940c8": {
+      "id": 15,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "9aef94734ee809508c8e9f2891bc5a0acc05159b068b26e87e726d73b42413e3": {
+      "id": 16,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "aa441100830617fea7494ffc9fdc3c7dbf409e97ab309b5479b5706319adfbad": {
+      "id": 17,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "5cc21db3c5631504e34069310a151e326bb5692024789b9ee7223bdd4c2133f8": {
+      "id": 18,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "fd419df4b7ef42fb1eb18e6d0b934786fa44be29bbaf310c3ff74aac6c6c95de": {
+      "id": 19,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "59b2fb346c19c3e1062b00c2f1a942ebc9e7a81ba981b9b8566a2844fc6afefa": {
+      "id": 20,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "d40ab060957816c7d9f92b90cbb5e3e5101249e98ce47e69ea1e5e3dfb78d842": {
+      "id": 21,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "64a7855314095d72dd2d51c8b757e57db8c2cdc5033234aecd14026210384b17": {
+      "id": 22,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "70c64fe2f4825ba66d81764e1f2c8e5a98aef66d6cd795989454359f2499479a": {
+      "id": 23,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "e7eb69d1460bbebc4e06de81e30e6b30bf392b9fb1618d7fe8193d5460474d47": {
+      "id": 24,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "e49fc99cca0905dfdf098d933d07d232ccb16275fb38faf33810359da5fa4812": {
+      "id": 25,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "b46c0e68ac46ff8852dc8791f84799c73d2861a4e8d6c84bd5f96bdd51f447ba": {
+      "id": 26,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "26f20cb8c24bacab6c1c36bc915444b589c458720f668714fdc1c35a4b976f60": {
+      "id": 27,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "28bbcff9b87ebb39b83f1256a5ce2b19b4e65f81c76b4fd235669646f840196f": {
+      "id": 28,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "47ae852e03b9498c1cdaa7dea5e6b79e2780e4f5787ef8673f662f84b62c5120": {
+      "id": 29,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "2bfacb798b12157a4cd2ebe616b130264194bd9a84df059f95efc4a33d4a35e0": {
+      "id": 30,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    }
+  }
+}

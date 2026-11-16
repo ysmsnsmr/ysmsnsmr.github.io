@@ -624,6 +624,30 @@ jobs:
             echo "::notice::Jev selector shadow failed; selector and public output are unchanged."
           fi
 
+      - name: Classify natural disaster display groups
+        if: steps.optional.outputs.enable_groq_rendering == 'true'
+        shell: bash
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          run_dir="${{ steps.optional.outputs.run_dir }}"
+          display_input="${{ steps.generate.outputs.output_path }}"
+          # Manual runs remain artifact-only and inspect the Luna candidate.
+          if [ "${EVENT_NAME}" = "workflow_dispatch" ] && [ -s "${run_dir}/groq_json_render_candidate.md" ]; then
+            display_input="${run_dir}/groq_json_render_candidate.md"
+          fi
+          if ! python3 -B scripts/malaysia_news_disaster_display.py \
+            --markdown "${display_input}" \
+            --output "${display_input%.md}.display.json" \
+            --diagnostics "${run_dir}/disaster_display.json" \
+            --html-output "${run_dir}/disaster_display_preview.html" \
+            --model "${{ steps.optional.outputs.groq_model_name }}"; then
+            echo "::warning::Disaster display classification failed; regular article layout is retained."
+          fi
+          cp news/malaysia/daily-page.js news/malaysia/location-map.js "${run_dir}/"
+
       - name: Build Malaysia news index
         shell: bash
         run: |

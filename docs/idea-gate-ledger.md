@@ -2136,3 +2136,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Update the fixed catalog and render the retained tags on TOP; verify responsive behavior.
 - Revisit when: The tag list grows enough to crowd the home page.
+
+<!-- idea-gate:20261116-malaysia-disaster-display-build -->
+## Group concrete natural disaster impacts for display, prioritizing Klang Valley representatives
+
+- Record ID: `20261116-malaysia-disaster-display-build`
+- Evaluated: 2026-11-16T10:00:00+08:00
+- Project: Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 83/100
+- Confidence: medium - Display intent is approved; semantic classification still requires live observation.
+
+### Idea Card
+
+- Purpose: Reduce disaster coverage visual dominance while preserving every selected article.
+- First experience: Show up to three representative headlines, remaining disaster impacts in a disclosure, and working map/deep links.
+- Scope and cost: Existing static renderer plus one daily Luna classification call; no selector, summary contract, or article budget changes.
+- Continuation boundary: Owner Yas reviews public output; remove display metadata to roll back if classification or grouping harms readability.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 12/15 |
+| `evidence_and_learning` | 11/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 13/15 |
+| `ownership_and_reversibility` | 18/20 |
+| **Total** | **83/100** |
+
+### Next Step
+
+- Action: Implement optional display-only metadata and renderer disclosures with fail-open behavior.
+- Revisit when: Disaster policy articles are repeatedly grouped incorrectly.; Non-Klang Valley locations are repeatedly prioritized as Klang Valley.; Daily classification cost or failures become disproportionate.
