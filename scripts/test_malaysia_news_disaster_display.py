@@ -141,6 +141,15 @@ class DisasterDisplayTests(unittest.TestCase):
         self.assertIn('secrets.OPENAI_API_KEY', step)
         self.assertNotIn('git push', step)
 
+    def test_successful_transport_does_not_mask_local_validation_failure(self):
+        result = response()
+        result["articles"].pop()
+        from unittest.mock import Mock
+        request = Mock(return_value=SimpleNamespace(parsed=result, diagnostic={"failure_class": "none"}))
+        report = display.classify(self.path, api_key="test", request=request)
+        self.assertEqual(report["failure_class"], "display_validation")
+        self.assertEqual(report["validation_reason"], "display_id_mismatch")
+
 
 if __name__ == "__main__":
     unittest.main()

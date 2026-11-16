@@ -6,6 +6,11 @@ on:
     - cron: "45 19 * * *"
   workflow_dispatch:
     inputs:
+      disaster_display_review_run:
+        description: "Optional existing artifact run ID: review only disaster display labels without regenerating summaries or publishing"
+        required: false
+        default: ""
+        type: string
       enable_apims_snapshot:
         description: "Create an artifact-only APIMS regional snapshot"
         required: false
@@ -64,7 +69,19 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  display_review:
+    if: github.event_name == 'workflow_dispatch' && inputs.disaster_display_review_run != ''
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/malaysia-disaster-display-review.yml
+    with:
+      source_run_id: ${{ inputs.disaster_display_review_run }}
+    secrets:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
   summarize:
+    if: github.event_name != 'workflow_dispatch' || inputs.disaster_display_review_run == ''
     runs-on: ubuntu-latest
 
     steps:

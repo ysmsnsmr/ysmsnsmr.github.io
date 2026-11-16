@@ -30,6 +30,14 @@ Diagnostics retain labels, token usage and bounded transport status, not prompts
 response bodies, provider error messages or keys. The existing article date and
 warning-expiry protections remain authoritative.
 
+`Malaysia disaster display review` is a manual-only, read-permission workflow for
+replaying just the classification. Its optional `source_run_id` reuses a previous
+RSS artifact; otherwise it reads the latest saved Markdown. It generates only a
+review artifact and never regenerates summaries or publishes. Local validation
+failures have a separate `validation_reason`, even when the API request succeeded.
+The main RSS workflow can invoke this same review via `disaster_display_review_run`;
+when provided, the normal collection, summary and publication job is skipped.
+
 Inspect model grouping and geographic prioritization in real artifacts. These
 semantic choices are not guaranteed by the structural validator. If ambiguous,
 the prompt asks for regular display or no Klang Valley preference. Classification
