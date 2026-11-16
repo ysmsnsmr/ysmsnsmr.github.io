@@ -6,6 +6,11 @@ on:
     - cron: "45 19 * * *"
   workflow_dispatch:
     inputs:
+      disaster_display_review_run:
+        description: "Optional existing artifact run ID: review only disaster display labels without regenerating summaries or publishing"
+        required: false
+        default: ""
+        type: string
       enable_apims_snapshot:
         description: "Create an artifact-only APIMS regional snapshot"
         required: false
@@ -64,7 +69,19 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  display_review:
+    if: github.event_name == 'workflow_dispatch' && inputs.disaster_display_review_run != ''
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/malaysia-disaster-display-review.yml
+    with:
+      source_run_id: ${{ inputs.disaster_display_review_run }}
+    secrets:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
   summarize:
+    if: github.event_name != 'workflow_dispatch' || inputs.disaster_display_review_run == ''
     runs-on: ubuntu-latest
 
     steps:
@@ -623,6 +640,30 @@ jobs:
             echo "runner_failed" > "${run_dir}/jev_selector_shadow_status.txt"
             echo "::notice::Jev selector shadow failed; selector and public output are unchanged."
           fi
+
+      - name: Classify natural disaster display groups
+        if: steps.optional.outputs.enable_groq_rendering == 'true'
+        shell: bash
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          run_dir="${{ steps.optional.outputs.run_dir }}"
+          display_input="${{ steps.generate.outputs.output_path }}"
+          # Manual runs remain artifact-only and inspect the Luna candidate.
+          if [ "${EVENT_NAME}" = "workflow_dispatch" ] && [ -s "${run_dir}/groq_json_render_candidate.md" ]; then
+            display_input="${run_dir}/groq_json_render_candidate.md"
+          fi
+          if ! python3 -B scripts/malaysia_news_disaster_display.py \
+            --markdown "${display_input}" \
+            --output "${display_input%.md}.display.json" \
+            --diagnostics "${run_dir}/disaster_display.json" \
+            --html-output "${run_dir}/disaster_display_preview.html" \
+            --model "${{ steps.optional.outputs.groq_model_name }}"; then
+            echo "::warning::Disaster display classification failed; regular article layout is retained."
+          fi
+          cp news/malaysia/daily-page.js news/malaysia/location-map.js "${run_dir}/"
 
       - name: Build Malaysia news index
         shell: bash
