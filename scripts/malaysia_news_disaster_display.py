@@ -12,6 +12,7 @@ from typing import Any
 KINDS = ("damage", "warning", "disruption", "none")
 AREAS = ("klang_valley", "other", "unclear")
 FIELDS = {"id", "kind", "area", "area_evidence"}
+DEFAULT_DISPLAY_MODEL = "gpt-6-luna"
 
 
 class DisplayLabelError(ValueError):
@@ -138,7 +139,9 @@ def classify(markdown_path: Path, *, api_key: str, model: str = "", request=None
         return report
     diagnostic = {}
     try:
-        profile = production_model_profile(model, load_model_profile_registry())
+        profile = production_model_profile(model or DEFAULT_DISPLAY_MODEL, load_model_profile_registry())
+        if profile.provider != "openai":
+            raise DisplayLabelError("display_model_provider")
         completion = (request or request_chat_completion)(
             profile=profile, api_key=api_key, max_completion_tokens=6000, timeout_seconds=90,
             max_response_chars=60000, json_schema_name="malaysia_disaster_display_v1",
@@ -171,7 +174,7 @@ def main() -> None:
     parser.add_argument("--markdown", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--diagnostics", type=Path)
-    parser.add_argument("--model", default="")
+    parser.add_argument("--model", default=DEFAULT_DISPLAY_MODEL)
     parser.add_argument("--html-output", type=Path)
     args = parser.parse_args()
     report = classify(args.markdown, api_key=os.environ.get("OPENAI_API_KEY", ""), model=args.model)

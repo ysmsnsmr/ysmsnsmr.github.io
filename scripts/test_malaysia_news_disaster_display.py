@@ -112,6 +112,8 @@ class DisasterDisplayTests(unittest.TestCase):
             request = Mock(return_value=completion)
             result = display.classify(self.path, api_key="not-a-real-key", request=request)
         request.assert_called_once()
+        self.assertEqual(request.call_args.kwargs["profile"].provider, "openai")
+        self.assertEqual(request.call_args.kwargs["profile"].model_id, "gpt-6-luna")
         self.assertEqual(result["status"], "applied")
         self.assertEqual(result["diagnostic"]["usage"]["total_tokens"], 300)
         self.assertNotIn("DO NOT LOG", json.dumps(result))
