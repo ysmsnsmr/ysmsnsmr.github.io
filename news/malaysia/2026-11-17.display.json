@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "status": "applied",
+  "markdown_sha256": "339a09a2164ccd0aacec0aee1168515aa3f32ba0f222f68f037ee1342ac277c7",
+  "labels": {
+    "bafdd303ade0c0a78a68210e5cff3c3f88d3332c9c31b1bfca0d2f4da4d1c0b6": {
+      "id": 1,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "75f0c42d9fdeea1a47cbb9fc21faadf45342bb9f1eaa4d2b0a6f3fd7d55c49d1": {
+      "id": 2,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "830653fd38508face4688721a45e173c9d7fd1781702a1f8aad87f2b8e88b35e": {
+      "id": 3,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "1b25740ae431314e1684ef915f5a27544e01cad20d1cc8eaca8f55897f462b5c": {
+      "id": 4,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "23aa606cee4aedd133340befe1e6fe43f029dd96ca8cfe96aedb27c78ae224d5": {
+      "id": 5,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "1b0200132b352ae5f09f7cbd147eab661207a8d1b4f5a2bccaa50d267a87fca5": {
+      "id": 6,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "d6e5d09300835eecd857eec1afb65fef49f3360dbd1ad4198fbd5b141e6b4eb1": {
+      "id": 7,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "63d14794859088c9c0c9bd349559d39675e1d392a20bedc7dbe5de7dd19b8808": {
+      "id": 8,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "3c7227f742520d98e16d20159df2268b46239655f522799caf0dc6e0ee388f5a": {
+      "id": 9,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "85e5e272d2751dd92623eb6226bad403472db35175246ce005fb3c405025d84c": {
+      "id": 10,
+      "kind": "damage",
+      "area": "other",
+      "area_evidence": "今年の煙害による損失をマレーシアに補償"
+    },
+    "cc13bd0c87964b58f459897688ecc5dba6be631f43a23f5a59fdd7664f3e6e62": {
+      "id": 11,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "9926b60c00bc2d2318ca15a90fcb48e22f8b9b4a1dc55c02e4c6698bb7177fc3": {
+      "id": 12,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "b9e924ab2db30e2ee00b233276988fd554b6f90431fc0e89e528954fbf7ef8f1": {
+      "id": 13,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "7799f7f5c47091798f232c4588e78a122f03e500df22e7e1d0c5148f4e19cac6": {
+      "id": 14,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "7919d79d3d0fa7ffbae5bdd45407080f6cc27d14fc54c4a69bfa4ec9cd4a1e8c": {
+      "id": 15,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "c637e0bc145504413760448bdfa444a6276e5c7706cb3f022d2a4badec38fbdc": {
+      "id": 16,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "ad4a1fb397d6600c0644b7e871eee6c705cb0cf69f9ea45f6a28eba5813305c2": {
+      "id": 17,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "861ac95292368eb54908527da881b10005c6eef54278084359401184dc60d3a3": {
+      "id": 18,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "8b8c770d1b7d8d9a0bc771ae6ddd85ea90bb47f0784b238b76d6f8364168ad9f": {
+      "id": 19,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "1e75e2cd481a1cc234ff6d2c1fa21768ac5742ba60360f80a6bd6f9e1b7be9e8": {
+      "id": 20,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "7b42ec5b1110dde54c99fd815eed0024bb2a5e3a0de9170772e2c44548c93a20": {
+      "id": 21,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "f192f7937130aefb14559fcaeb9b2fddcbd5818b86ebbc92bbe0f1bbf76f71a5": {
+      "id": 22,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "31394bcdf08a19991f925186a48c504e46a5db651446707262dae6efd899ea15": {
+      "id": 23,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "487419ee8be8a287fe3d5d68c5990fccc4f238541a9d2a67fc74ca04d115fe58": {
+      "id": 24,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "e3a0cb1648c6ce77053bb09fda4023ea7c1a90086d8b2d17748f2bf0429f99ea": {
+      "id": 25,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "92315d30d7683c79c9b6061e13ef87bd2dc3eb25f4bc65f44e92324924e17598": {
+      "id": 26,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "8b04f153f4c4cfa44c8617fa6c7d1887777d1cd8219df534c7e1c707dc473c42": {
+      "id": 27,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "8e0841ce274dac5c14898f124a43db24e48fc510c28b6951d6a6f75e9180383a": {
+      "id": 28,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "a803bcd77b368db912337ee3979dd26fb19836e3c8c69a13ea894f629fc984bd": {
+      "id": 29,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "78ff14622efb6aecda1f757b9ead386260cfb1e747872efa562381cd287f0927": {
+      "id": 30,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    }
+  },
+  "failure_class": "",
+  "validation_reason": "",
+  "warnings": [],
+  "diagnostic": {
+    "provider": "openai",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "medium",
+    "elapsed_ms": 8623,
+    "finish_reason": "stop",
+    "usage": {
+      "prompt_tokens": 7823,
+      "completion_tokens": 1002,
+      "total_tokens": 8825
+    },
+    "transport_status": "success",
+    "failure_class": "none",
+    "json_contract_reason": ""
+  },
+  "classification_source": "model"
+}
