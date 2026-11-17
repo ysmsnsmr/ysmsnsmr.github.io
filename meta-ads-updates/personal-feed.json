@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-11-12T22:17:09Z",
+  "generatedAt": "2026-11-17T00:17:08Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -91,14 +91,221 @@
   ],
   "items": [
     {
-      "id": "meta-business-help-discovered-822445794f57476cf2d1",
+      "id": "jon-loomer-meta-ads-e52e3d87d33073b58005",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Meta Simplifies Video Custom Audiences",
+      "url": "https://www.jonloomer.com/qvt/video-custom-audiences/",
+      "publishedDate": "2026-11-16",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "e52e3d87d33073b580057cbd018c95be2dc4163c71ac44857ca04a450a58f2dd",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta Simplifies Video Custom Audiences",
+            "summary": "Meta replaced seven video-view thresholds with three options: All Video Viewers (at least 3 seconds), Engaged Video Viewers (a meaningful portion), and Highly Engaged Video Viewers (most or all). The post says the new descriptions do not clarify exact thresholds, and audiences still require selecting individual videos.",
+            "inputHash": "d087557ddaf3fb7c3800b0c09b9097684f47b3f81facc10286e033ffaaddba95",
+            "generatedAt": "2026-11-17T00:17:08Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Simplifies Video Custom Audiences",
+                "inputHash": "d087557ddaf3fb7c3800b0c09b9097684f47b3f81facc10286e033ffaaddba95",
+                "generatedAt": "2026-11-17T00:17:08Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta replaced seven video-view thresholds with three options: All Video Viewers (at least 3 seconds), Engaged Video Viewers (a meaningful portion), and Highly Engaged Video Viewers (most or all). The post says the new descriptions do not clarify exact thresholds, and audiences still require selecting individual videos.",
+                "inputHash": "d087557ddaf3fb7c3800b0c09b9097684f47b3f81facc10286e033ffaaddba95",
+                "generatedAt": "2026-11-17T00:17:08Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、動画カスタムオーディエンスの選択肢を3つに変更",
+            "summary": "動画カスタムオーディエンスの選択肢が、従来の視聴秒数・割合による7項目から、「3秒以上視聴」「意味のある部分を視聴」「大部分または全体を視聴」の3項目に変更されました。新機能の追加はありません。",
+            "inputHash": "a16ee4fd2a04752c0aecd65f7023bf438d34d57494af7f80d575e9583de1640b",
+            "generatedAt": "2026-11-17T00:17:08Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、動画カスタムオーディエンスの選択肢を3つに変更",
+                "inputHash": "a16ee4fd2a04752c0aecd65f7023bf438d34d57494af7f80d575e9583de1640b",
+                "generatedAt": "2026-11-17T00:17:08Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "動画カスタムオーディエンスの選択肢が、従来の視聴秒数・割合による7項目から、「3秒以上視聴」「意味のある部分を視聴」「大部分または全体を視聴」の3項目に変更されました。新機能の追加はありません。",
+                "inputHash": "a16ee4fd2a04752c0aecd65f7023bf438d34d57494af7f80d575e9583de1640b",
+                "generatedAt": "2026-11-17T00:17:08Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-3d5ace75b80c704fbd7f",
+      "sourceId": "adsuploader-blog",
+      "title": "How to Connect Claude to Meta Ads (2026): Setup, Launches and Approvals",
+      "url": "https://adsuploader.com/blog/claude-meta-ads",
+      "publishedDate": "2026-11-16",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "3d5ace75b80c704fbd7f1e95ffc966bae17e55dbe93cd3eef3fa82824699de64",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "How to Connect Claude to Meta Ads in 2026",
+            "summary": "The article covers setup in Claude, Claude Desktop, Claude Code and Cowork, along with bulk launches, approvals before changes go live, and safe limits.",
+            "inputHash": "4daa6b08898ff19060614482b7395fab97eaa0abd11dc503cf17676e89b78ded",
+            "generatedAt": "2026-11-17T00:17:08Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "How to Connect Claude to Meta Ads in 2026",
+                "inputHash": "4daa6b08898ff19060614482b7395fab97eaa0abd11dc503cf17676e89b78ded",
+                "generatedAt": "2026-11-17T00:17:08Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "The article covers setup in Claude, Claude Desktop, Claude Code and Cowork, along with bulk launches, approvals before changes go live, and safe limits.",
+                "inputHash": "4daa6b08898ff19060614482b7395fab97eaa0abd11dc503cf17676e89b78ded",
+                "generatedAt": "2026-11-17T00:17:08Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "ClaudeとMeta広告の接続・設定方法",
+            "summary": "2026年版のClaudeとMeta広告の接続方法を紹介。Claude、Claude Desktop、Claude Code、Coworkでの設定や一括ローンチ、変更を反映する前の承認、安全上の制限を扱います。",
+            "inputHash": "4b68a948f9bd355bcbdd91ef86c02deec641bb923f5c8281527d1ae20d74e63c",
+            "generatedAt": "2026-11-17T00:17:08Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "ClaudeとMeta広告の接続・設定方法",
+                "inputHash": "4b68a948f9bd355bcbdd91ef86c02deec641bb923f5c8281527d1ae20d74e63c",
+                "generatedAt": "2026-11-17T00:17:08Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "2026年版のClaudeとMeta広告の接続方法を紹介。Claude、Claude Desktop、Claude Code、Coworkでの設定や一括ローンチ、変更を反映する前の承認、安全上の制限を扱います。",
+                "inputHash": "4b68a948f9bd355bcbdd91ef86c02deec641bb923f5c8281527d1ae20d74e63c",
+                "generatedAt": "2026-11-17T00:17:08Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-4401eb9368e171bf9e22",
+      "sourceId": "adsuploader-blog",
+      "title": "12 Best Meta Ads MCP Servers for Facebook & Instagram Ads (2026)",
+      "url": "https://adsuploader.com/blog/best-meta-ads-mcp",
+      "publishedDate": "2026-11-14",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "4401eb9368e171bf9e22a91c99399a7380db6959b62e697a6618a846fbce6ec1",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "12 Meta Ads MCP Servers for Facebook and Instagram Ads",
+            "summary": "A comparison of 12 Meta Ads MCP servers, including Meta’s official server, covering bulk launching, review before ads go live, work across client ad accounts, and pricing.",
+            "inputHash": "9cb3b2a14eabc411669ffabbf6e9f26a27fdf612db99a6fc19e1181812cca7d2",
+            "generatedAt": "2026-11-17T00:17:08Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "12 Meta Ads MCP Servers for Facebook and Instagram Ads",
+                "inputHash": "9cb3b2a14eabc411669ffabbf6e9f26a27fdf612db99a6fc19e1181812cca7d2",
+                "generatedAt": "2026-11-17T00:17:08Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "A comparison of 12 Meta Ads MCP servers, including Meta’s official server, covering bulk launching, review before ads go live, work across client ad accounts, and pricing.",
+                "inputHash": "9cb3b2a14eabc411669ffabbf6e9f26a27fdf612db99a6fc19e1181812cca7d2",
+                "generatedAt": "2026-11-17T00:17:08Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Facebook・Instagram広告向けMeta Ads MCPサーバー12選",
+            "summary": "Meta公式のものを含む12のMeta Ads MCPサーバーを、広告の一括配信、公開前のレビュー、クライアントの広告アカウントでの利用、料金の観点から比較します。",
+            "inputHash": "57d6fbeee531b93b16293e6ef21c6990cde27acd14c9e3a48da13921d52af70f",
+            "generatedAt": "2026-11-17T00:17:08Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook・Instagram広告向けMeta Ads MCPサーバー12選",
+                "inputHash": "57d6fbeee531b93b16293e6ef21c6990cde27acd14c9e3a48da13921d52af70f",
+                "generatedAt": "2026-11-17T00:17:08Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta公式のものを含む12のMeta Ads MCPサーバーを、広告の一括配信、公開前のレビュー、クライアントの広告アカウントでの利用、料金の観点から比較します。",
+                "inputHash": "57d6fbeee531b93b16293e6ef21c6990cde27acd14c9e3a48da13921d52af70f",
+                "generatedAt": "2026-11-17T00:17:08Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "meta-business-help-discovered-74154ec4f4cfaa675f60",
       "sourceId": "meta-business-help-discovered",
-      "title": "About Using Prompts and Responses on Your Ads",
+      "title": "About using Meta Business Agent on your ads",
       "url": "https://www.facebook.com/business/help/1413299579708509",
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-11-12T22:17:09Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -107,53 +314,53 @@
       ],
       "presentation": {
         "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "822445794f57476cf2d114240d74a178d59b36ba4e87f64adcdb05ff66efaf2f",
+        "sourceFingerprint": "74154ec4f4cfaa675f609d75e441f5ee8a894a8bf47370599c4817f85e9592f4",
         "generatorRevision": "bilingual-v1",
         "locales": {
           "en": {
             "status": "machine",
-            "shortHeadline": "Use Prompts and Responses in Your Ads",
-            "summary": "Learn how to add Prompts and responses to your ads to help customers get quick answers about your business and products.",
-            "inputHash": "62251111a8ad0c155f7b40b48ea0ec59f8128e1ef7fb9b6fd9eec55d3fe85bf5",
-            "generatedAt": "2026-11-12T22:17:09Z",
+            "shortHeadline": "Using Meta Business Agent in your ads",
+            "summary": "Learn how to create an ad with Meta Business Agent in Meta Ads Manager to help customers get instant answers about your business and products.",
+            "inputHash": "ef8f84bd03721e13cf695dff33cc4106fd467748345b40d41f8cd875323f73d7",
+            "generatedAt": "2026-11-17T00:17:08Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
-                "value": "Use Prompts and Responses in Your Ads",
-                "inputHash": "62251111a8ad0c155f7b40b48ea0ec59f8128e1ef7fb9b6fd9eec55d3fe85bf5",
-                "generatedAt": "2026-11-12T22:17:09Z",
+                "value": "Using Meta Business Agent in your ads",
+                "inputHash": "ef8f84bd03721e13cf695dff33cc4106fd467748345b40d41f8cd875323f73d7",
+                "generatedAt": "2026-11-17T00:17:08Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
-                "value": "Learn how to add Prompts and responses to your ads to help customers get quick answers about your business and products.",
-                "inputHash": "62251111a8ad0c155f7b40b48ea0ec59f8128e1ef7fb9b6fd9eec55d3fe85bf5",
-                "generatedAt": "2026-11-12T22:17:09Z",
+                "value": "Learn how to create an ad with Meta Business Agent in Meta Ads Manager to help customers get instant answers about your business and products.",
+                "inputHash": "ef8f84bd03721e13cf695dff33cc4106fd467748345b40d41f8cd875323f73d7",
+                "generatedAt": "2026-11-17T00:17:08Z",
                 "reviewedAt": null
               }
             }
           },
           "ja": {
             "status": "machine",
-            "shortHeadline": "広告でプロンプトと回答を使う方法",
-            "summary": "広告にプロンプトと回答を追加し、顧客がビジネスや商品についての質問にすばやく答えを得られるようにする方法を紹介します。",
-            "inputHash": "f44a9c44788ff85a2ea5199960858ee2736935ea5a09e36dc24bc6e5d1240b53",
-            "generatedAt": "2026-11-12T22:17:09Z",
+            "shortHeadline": "広告でMeta Business Agentを利用する方法",
+            "summary": "Meta広告マネージャでMeta Business Agentを使って広告を作成し、顧客がビジネスや商品についてすぐに回答を得られるようにする方法を紹介しています。",
+            "inputHash": "720193d05c83b138db1f2fda3176a0eb3465a467bca38a30f0265b6689ec0c38",
+            "generatedAt": "2026-11-17T00:17:08Z",
             "reviewedAt": null,
             "fields": {
               "shortHeadline": {
                 "status": "machine",
-                "value": "広告でプロンプトと回答を使う方法",
-                "inputHash": "f44a9c44788ff85a2ea5199960858ee2736935ea5a09e36dc24bc6e5d1240b53",
-                "generatedAt": "2026-11-12T22:17:09Z",
+                "value": "広告でMeta Business Agentを利用する方法",
+                "inputHash": "720193d05c83b138db1f2fda3176a0eb3465a467bca38a30f0265b6689ec0c38",
+                "generatedAt": "2026-11-17T00:17:08Z",
                 "reviewedAt": null
               },
               "summary": {
                 "status": "machine",
-                "value": "広告にプロンプトと回答を追加し、顧客がビジネスや商品についての質問にすばやく答えを得られるようにする方法を紹介します。",
-                "inputHash": "f44a9c44788ff85a2ea5199960858ee2736935ea5a09e36dc24bc6e5d1240b53",
-                "generatedAt": "2026-11-12T22:17:09Z",
+                "value": "Meta広告マネージャでMeta Business Agentを使って広告を作成し、顧客がビジネスや商品についてすぐに回答を得られるようにする方法を紹介しています。",
+                "inputHash": "720193d05c83b138db1f2fda3176a0eb3465a467bca38a30f0265b6689ec0c38",
+                "generatedAt": "2026-11-17T00:17:08Z",
                 "reviewedAt": null
               }
             }
@@ -169,7 +376,7 @@
       "publishedDate": "2026-11-12",
       "updatedDate": null,
       "firstObservedAt": "2026-11-12T22:17:09Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -238,7 +445,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -309,7 +516,7 @@
       "publishedDate": "2026-11-10",
       "updatedDate": null,
       "firstObservedAt": "2026-11-12T22:17:09Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -381,7 +588,7 @@
       "publishedDate": "2026-11-10",
       "updatedDate": null,
       "firstObservedAt": "2026-11-12T22:17:09Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -450,7 +657,7 @@
       "publishedDate": "2026-11-09",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -522,7 +729,7 @@
       "publishedDate": "2026-11-08",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -591,7 +798,7 @@
       "publishedDate": "2026-11-08",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -660,7 +867,7 @@
       "publishedDate": "2026-11-06",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -729,7 +936,7 @@
       "publishedDate": "2026-11-05",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -798,7 +1005,7 @@
       "publishedDate": "2026-11-04",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -867,7 +1074,7 @@
       "publishedDate": "2026-11-04",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -938,7 +1145,7 @@
       "publishedDate": "2026-11-04",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1007,7 +1214,7 @@
       "publishedDate": "2026-11-03",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1076,7 +1283,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1145,7 +1352,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1214,7 +1421,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-02T23:36:33Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1283,7 +1490,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-02T23:36:33Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1352,7 +1559,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1423,7 +1630,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1494,7 +1701,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1565,7 +1772,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1636,7 +1843,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1778,7 +1985,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1849,7 +2056,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1920,7 +2127,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1991,7 +2198,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2062,7 +2269,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2133,7 +2340,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2275,7 +2482,7 @@
       "publishedDate": "2026-10-31",
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2344,7 +2551,7 @@
       "publishedDate": "2026-10-29",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2413,7 +2620,7 @@
       "publishedDate": "2026-10-28",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2482,7 +2689,7 @@
       "publishedDate": "2026-10-28",
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2553,7 +2760,7 @@
       "publishedDate": "2026-10-28",
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2624,7 +2831,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2693,7 +2900,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2765,7 +2972,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2834,7 +3041,7 @@
       "publishedDate": "2026-10-26",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2906,7 +3113,7 @@
       "publishedDate": "2026-10-25",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2975,7 +3182,7 @@
       "publishedDate": "2026-10-25",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3113,7 +3320,7 @@
       "publishedDate": "2026-10-22",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3182,7 +3389,7 @@
       "publishedDate": "2026-10-22",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3389,7 +3596,7 @@
       "publishedDate": "2026-10-20",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3532,7 +3739,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3946,7 +4153,7 @@
       "publishedDate": "2026-10-15",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4086,7 +4293,7 @@
       "publishedDate": "2026-10-13",
       "updatedDate": null,
       "firstObservedAt": "2026-10-15T19:54:50Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4296,7 +4503,7 @@
       "publishedDate": "2026-10-12",
       "updatedDate": null,
       "firstObservedAt": "2026-10-12T23:02:27Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4921,7 +5128,7 @@
       "publishedDate": "2026-10-06",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4993,7 +5200,7 @@
       "publishedDate": "2026-10-05",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5476,7 +5683,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -5545,7 +5752,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5683,7 +5890,7 @@
       "publishedDate": "2026-09-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T05:47:38Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6028,7 +6235,7 @@
       "publishedDate": "2026-09-22",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6170,7 +6377,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
+      "lastObservedAt": "2026-11-17T00:17:08Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6845,213 +7052,6 @@
                 "value": "Metaは新たにサブスクリプションサービス「Meta One」を発表し、個人・クリエイター・企業向けにプランを提供する。Instagram Plus、Facebook Plus、WhatsApp Plusといった単体プランではカスタムフォントや通知、メッセンジャーのカスタマイズ、チャットバックアップなどの機能が追加され、Core・PremiumバンドルではAIによる画像・動画生成やRestyleなどの高度なAIツールが利用可能になる。価格は単体プランが月額2.99ドル、個人バンドルが7.99ドル、クリエイター・ビジネスバンドルが14.99ドルで、全世界で提供される。",
                 "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
                 "generatedAt": "2026-09-19T04:39:53Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-74b238dbbb04827cdb2d",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "What I Built With Muse, Meta’s New AI Agent",
-      "url": "https://www.jonloomer.com/muse-meta-ai-agent/",
-      "publishedDate": "2026-09-15",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-11-12T22:17:09Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Built a Value Rules Decision Tool using Meta’s Muse AI agent",
-            "summary": "Using Meta’s new AI agent Muse (named Frank), the author built a Value Rules Decision Tool that guides advertisers through age, gender, and placement restrictions to decide on using value rules. The tool was created in one evening without writing code, is live, and showcases Muse’s ability to research, build, and remember context.",
-            "inputHash": "ff576860c8135f74cc1809873ac1a867abc1b295b583e49b9817850dd98a9d35",
-            "generatedAt": "2026-09-17T04:55:10Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Built a Value Rules Decision Tool using Meta’s Muse AI agent",
-                "inputHash": "ff576860c8135f74cc1809873ac1a867abc1b295b583e49b9817850dd98a9d35",
-                "generatedAt": "2026-09-17T04:55:10Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Using Meta’s new AI agent Muse (named Frank), the author built a Value Rules Decision Tool that guides advertisers through age, gender, and placement restrictions to decide on using value rules. The tool was created in one evening without writing code, is live, and showcases Muse’s ability to research, build, and remember context.",
-                "inputHash": "ff576860c8135f74cc1809873ac1a867abc1b295b583e49b9817850dd98a9d35",
-                "generatedAt": "2026-09-17T04:55:10Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Metaの新AIエージェントMuseを使って作ったツール紹介",
-            "summary": "Metaは先週、個人向けAIエージェントMuseを公開した。iOS・Android・WhatsAppやデスクトップで利用でき、名前を付けてタスクを自動実行し、会話の文脈を保持する。筆者はエージェントを「Frank」と名付け、コンテンツ分析やツール作成に活用し、コード不要で「Value Rules Decision Tool」を構築した。現在も機能を検証中で、他のユーザーにも試用を呼びかけている。",
-            "inputHash": "3e844f3f37d0cd2c44aae0d57d977ea2366187b6760f1c7f274aaf13238447a6",
-            "generatedAt": "2026-09-18T11:07:09Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Metaの新AIエージェントMuseを使って作ったツール紹介",
-                "inputHash": "3e844f3f37d0cd2c44aae0d57d977ea2366187b6760f1c7f274aaf13238447a6",
-                "generatedAt": "2026-09-18T11:07:09Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaは先週、個人向けAIエージェントMuseを公開した。iOS・Android・WhatsAppやデスクトップで利用でき、名前を付けてタスクを自動実行し、会話の文脈を保持する。筆者はエージェントを「Frank」と名付け、コンテンツ分析やツール作成に活用し、コード不要で「Value Rules Decision Tool」を構築した。現在も機能を検証中で、他のユーザーにも試用を呼びかけている。",
-                "inputHash": "3e844f3f37d0cd2c44aae0d57d977ea2366187b6760f1c7f274aaf13238447a6",
-                "generatedAt": "2026-09-18T11:07:09Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "adsuploader-blog-dfb94894897a0ada2fe0",
-      "sourceId": "adsuploader-blog",
-      "title": "Facebook Shop vs Catalog: What the Difference Actually Is",
-      "url": "https://adsuploader.com/blog/facebook-shop-vs-catalog",
-      "publishedDate": "2026-09-15",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "dfb94894897a0ada2fe09583a269feafb587a65c14b1ccefeb2b9ba71de60570",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Facebook Catalog vs Shop: Key Differences",
-            "summary": "A Facebook catalog serves as a product database, while a Shop is an optional surface powered by that catalog. The feed explains how they connect and notes changes introduced in 2025.",
-            "inputHash": "fd2ac2568b7b30915796a652dd3610602c442fe46da96e56e563e6bbe252852f",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Facebook Catalog vs Shop: Key Differences",
-                "inputHash": "fd2ac2568b7b30915796a652dd3610602c442fe46da96e56e563e6bbe252852f",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "A Facebook catalog serves as a product database, while a Shop is an optional surface powered by that catalog. The feed explains how they connect and notes changes introduced in 2025.",
-                "inputHash": "fd2ac2568b7b30915796a652dd3610602c442fe46da96e56e563e6bbe252852f",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Facebookカタログとショップの違いと2025年の変更点",
-            "summary": "Facebookカタログは商品情報を管理するデータベースで、ショップはそのカタログを利用して表示できるオプションの販売面です。2025年に機能や連携方法に変更があり、利用目的に応じてカタログだけ、またはショップ併用を選択します。",
-            "inputHash": "ebe20e6dcaca42d6cd0fd80400a354fa46463b3ee125042ce5996fa2bd179d5b",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Facebookカタログとショップの違いと2025年の変更点",
-                "inputHash": "ebe20e6dcaca42d6cd0fd80400a354fa46463b3ee125042ce5996fa2bd179d5b",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Facebookカタログは商品情報を管理するデータベースで、ショップはそのカタログを利用して表示できるオプションの販売面です。2025年に機能や連携方法に変更があり、利用目的に応じてカタログだけ、またはショップ併用を選択します。",
-                "inputHash": "ebe20e6dcaca42d6cd0fd80400a354fa46463b3ee125042ce5996fa2bd179d5b",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "adsuploader-blog-c669f78cce90c5e26d9e",
-      "sourceId": "adsuploader-blog",
-      "title": "Facebook Product Feed: Required Fields, Formats and Images",
-      "url": "https://adsuploader.com/blog/facebook-product-feed",
-      "publishedDate": "2026-09-13",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-09-29T13:20:20Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "c669f78cce90c5e26d9ec1ca21b9c8bc6233f08ac7d02b0933a5318823213b5d",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Facebook product feed: required fields, formats, images",
-            "summary": "The guide explains what a Facebook product feed is, lists the nine required fields, details accepted formats and size limits, and describes how multiple images and video can be used for each product.",
-            "inputHash": "e7a95c12a4ee4cff7cdfbeb51088aab512683b5319f7e9ecb3bffdbd78b19f4c",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Facebook product feed: required fields, formats, images",
-                "inputHash": "e7a95c12a4ee4cff7cdfbeb51088aab512683b5319f7e9ecb3bffdbd78b19f4c",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "The guide explains what a Facebook product feed is, lists the nine required fields, details accepted formats and size limits, and describes how multiple images and video can be used for each product.",
-                "inputHash": "e7a95c12a4ee4cff7cdfbeb51088aab512683b5319f7e9ecb3bffdbd78b19f4c",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Facebook商品フィードの必須項目・フォーマット・画像要件",
-            "summary": "Facebookの商品フィードは、商品情報を登録するためのデータ形式です。必須項目は9項目で、各項目には決められたフォーマットとサイズ上限があります。画像は複数登録でき、動画も商品ごとに設定可能です。",
-            "inputHash": "5d738b3e09fa1115d793adb3cf1c699bb16aee736e53098313cb49ec151f19c3",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Facebook商品フィードの必須項目・フォーマット・画像要件",
-                "inputHash": "5d738b3e09fa1115d793adb3cf1c699bb16aee736e53098313cb49ec151f19c3",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Facebookの商品フィードは、商品情報を登録するためのデータ形式です。必須項目は9項目で、各項目には決められたフォーマットとサイズ上限があります。画像は複数登録でき、動画も商品ごとに設定可能です。",
-                "inputHash": "5d738b3e09fa1115d793adb3cf1c699bb16aee736e53098313cb49ec151f19c3",
-                "generatedAt": "2026-09-29T13:20:20Z",
                 "reviewedAt": null
               }
             }
