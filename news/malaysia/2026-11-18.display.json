@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "status": "applied",
+  "markdown_sha256": "d35b361917935b030acd681e9358ccb89c6a565bfa144cc87f78fd1459fc9a02",
+  "labels": {
+    "62017ba8d27bf459a37fff03c20bb372fe0bff37bc5d393d80005f5f4baa4b41": {
+      "id": 1,
+      "kind": "damage",
+      "area": "klang_valley",
+      "area_evidence": "シャーアラムとクラン"
+    },
+    "d722f648cf523d8c6a733d9003cbee39fdc8f5cbaf34f93910969f9dd89f3c44": {
+      "id": 2,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "2fbabf1807200d96f7efc64d2dc7ab5344c1707bc3a33bcd40224cca60bf1efd": {
+      "id": 3,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "ce0b2fde5e71461d2c72b45146a7faf3a2fbbf1528248520d5b8ff2f571b01cd": {
+      "id": 4,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "da100e9897f9bbdca3c71328633748fea72df428e9bb814a17cf80c0407d2fbc": {
+      "id": 5,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "6a31ddf59425086fca678bc4a1dc1446b90bce39388d4214614eb425556c88dd": {
+      "id": 6,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "52f8f71b1e9a5e6bb53aa422e846c4d030379510683f27de2649f58e43574583": {
+      "id": 7,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "4d8019dc4e55c9277baa821514f80856d07868b48065c4673106f7a555abd74a": {
+      "id": 8,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "0d57deaa26b78a27f41211d0a2fc1380e93b45b4f1eb2609c50b6b0256ed0a63": {
+      "id": 9,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "e96739140b10a4c0bb37c01dc8b6d88553d8e18677b8b6b52cfd05709b09a9ce": {
+      "id": 10,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "4ffb3f51a6c57dd5a6ed14ef8ef5acd9233759a0b8c97e40500965d80b5d3d75": {
+      "id": 11,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "72796f582609329bc65c5531c7958c810e5e2c2868b17a5e8d7770c23820d568": {
+      "id": 12,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "bf8f9ac1da124586dc3b665a5bc2f8d841e5bcfa8f2b4e49435f379c7020cdb9": {
+      "id": 13,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "609700dbfc5ab5dacc6cc738cf695b4f991d6f3430f0cfcb6a757fb3ec574f67": {
+      "id": 14,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "a77186b466ff81f7f9a74d6d02eb57a78a5afff0a527a279f752c38d2cc7108b": {
+      "id": 15,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "0399435e86b25e8c7a5f9504f0629ad648ca3210b6731eaea00fa9846fae4c12": {
+      "id": 16,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "487204b0baeb7d66e4a47abf274207455b52739fbbec9c3b80d41e10d6d18166": {
+      "id": 17,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "c38b05824f0c160be92ba5ddb0dccdb078a77017b2baf656df85ac9fb4ad996e": {
+      "id": 18,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "9dff102cc9e18d1fdf9d8810c59bd760421f6b7913d1996ce7654beb8661b62a": {
+      "id": 19,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "90842bc2b8d59a61673032dc8f1f8cebfa8af957116b54d57f065da398081afa": {
+      "id": 20,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "8ab024cf490e71f7a716a10f6ffc593ac7c7a7b299b6ad7518eb1f5b802ce65d": {
+      "id": 21,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "c1a327bd6a03bfcca804be79c41de9fd525060500e63f43f11b911bd3415dedc": {
+      "id": 22,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "490dcb684d3f3f83c37d0b0c89ec586ac650ebf3ca833f351e5e4c0ae4f9ad9b": {
+      "id": 23,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "49c5399d9554c00a71dc513a3fcbff9894a2d55e4d2f0fb94671483764494e45": {
+      "id": 24,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "d0bed8460664b37d86e50558ef81013657b0f3f9358569a935f40afbb25bf777": {
+      "id": 25,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "3c64972807c8d217395074de631a822f98d06810c502ff9d6fd647fa06fef78e": {
+      "id": 26,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "536f9abbefb7add9700e8cb18d05ce1ae510c32d939673c7d6fd42957b07da12": {
+      "id": 27,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "51e118b855c74c7d52de1d416ceb552961531236da06c8ad3b0139f55aa03beb": {
+      "id": 28,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "ef5b8fbc01fd5413d1d2143051650eaba8cdc13482a6002e26fb843f55b1bce6": {
+      "id": 29,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "72dce21c83d9d7551356ea1a68f38b807d456961ed4c4f0b67de1409d2893035": {
+      "id": 30,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    }
+  },
+  "failure_class": "",
+  "validation_reason": "",
+  "warnings": [],
+  "diagnostic": {
+    "provider": "openai",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "medium",
+    "elapsed_ms": 6044,
+    "finish_reason": "stop",
+    "usage": {
+      "prompt_tokens": 6407,
+      "completion_tokens": 752,
+      "total_tokens": 7159
+    },
+    "transport_status": "success",
+    "failure_class": "none",
+    "json_contract_reason": ""
+  },
+  "classification_source": "model"
+}
