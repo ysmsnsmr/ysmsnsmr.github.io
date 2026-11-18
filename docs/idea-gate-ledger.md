@@ -2171,3 +2171,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Implement optional display-only metadata and renderer disclosures with fail-open behavior.
 - Revisit when: Disaster policy articles are repeatedly grouped incorrectly.; Non-Klang Valley locations are repeatedly prioritized as Klang Valley.; Daily classification cost or failures become disproportionate.
+
+<!-- idea-gate:20261118-meta-ads-home-screen-icon -->
+## Provide recognizable home-screen shortcut icons for phones and tablets
+
+- Record ID: `20261118-meta-ads-home-screen-icon`
+- Evaluated: 2026-11-18T10:00:00+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 84/100
+- Confidence: medium - The need and low-risk scope are clear; actual home-screen behavior varies by browser and device.
+
+### Idea Card
+
+- Purpose: Make the feed easy and pleasant to recognize on phone and tablet home screens.
+- First experience: An existing feed shortcut uses a distinctive feed icon on a supported mobile browser.
+- Scope and cost: Static local assets and localized browser metadata only; no paid service, accounts, tracking, notifications, or offline feature.
+- Continuation boundary: Keep while useful; remove or adjust metadata and assets if browser behavior or appearance is unsatisfactory.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 12/15 |
+| `evidence_and_learning` | 10/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 19/20 |
+| **Total** | **84/100** |
+
+### Next Step
+
+- Action: Create a recognizable icon and wire it to both locale routes and mirror assets, then test without changing feed behavior.
+- Revisit when: The icon is unclear on real devices or browser installation behavior changes.

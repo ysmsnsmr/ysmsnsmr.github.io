@@ -1,0 +1,13 @@
+{
+  "name": "Meta Ads Update Feed",
+  "short_name": "Meta Ads Feed",
+  "start_url": "./",
+  "scope": "./",
+  "display": "browser",
+  "background_color": "#0d3b78",
+  "theme_color": "#0d3b78",
+  "icons": [
+    {"src": "../icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "../icon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}

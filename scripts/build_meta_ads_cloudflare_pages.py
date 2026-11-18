@@ -11,6 +11,7 @@ FILES = (
     "index.html", "detail.html", "style.css", "favorites.js",
     "localized-feed.js", "localized-detail.js", "personal-feed.json", "tag-catalog.js", "tags.js", "tags.html",
     "demo-latest.json", "latest.json", "ja/index.html", "ja/detail.html", "ja/tags.html",
+    "feed-icon.svg", "icon-180.png", "icon-192.png", "icon-512.png", "manifest.webmanifest", "ja/manifest.webmanifest",
 )
 
 
