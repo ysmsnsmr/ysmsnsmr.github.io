@@ -27,6 +27,16 @@ APIMS_URL = "https://eqms.doe.gov.my/apims/main"
 MYCMAQ_URL = "https://mycmaq.met.gov.my/"
 
 
+def shortcut_icon_head() -> str:
+    return '''<meta name="theme-color" content="#006b5f">
+  <meta name="apple-mobile-web-app-title" content="MY生活ニュース">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32-v1.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon-180-v1.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="./apple-touch-icon-167-v1.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="./apple-touch-icon-152-v1.png">
+  <link rel="manifest" href="./site.webmanifest">'''
+
+
 @dataclass
 class NewsItem:
     category: str
@@ -819,6 +829,7 @@ def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{esc(format_date(day.date))}のニュースまとめ | マレーシア生活ニュース</title>
+  {shortcut_icon_head()}
   {'''<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">''' if location_map else ''}
   <style>
 {MALAYSIA_NEWS_TOKENS_CSS}
@@ -931,6 +942,7 @@ def render_html(days: list[NewsDay]) -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>過去のニュースまとめ | マレーシア生活ニュース</title>
+  {shortcut_icon_head()}
   <style>
 {MALAYSIA_NEWS_TOKENS_CSS}
     * {{ box-sizing: border-box; }}

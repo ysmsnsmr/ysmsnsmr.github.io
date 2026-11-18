@@ -10,7 +10,12 @@ ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "news" / "malaysia"
 OUTPUT = ROOT / "cloudflare-malaysia-news-dist"
 DAILY_FILE = re.compile(r"\d{4}-\d{2}-\d{2}\.(?:html|md)\Z")
-REQUIRED_FILES = ("index.html", "archive.html", "location-map.js", "daily-page.js")
+ICON_FILES = (
+    "site.webmanifest", "icon-v1.svg", "favicon-32-v1.png",
+    "apple-touch-icon-152-v1.png", "apple-touch-icon-167-v1.png", "apple-touch-icon-180-v1.png",
+    "icon-192-v1.png", "icon-512-v1.png",
+)
+REQUIRED_FILES = ("index.html", "archive.html", "location-map.js", "daily-page.js", *ICON_FILES)
 
 
 def build(source: Path, output: Path) -> int:
