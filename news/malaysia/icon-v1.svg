@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <title>Malaysia News</title>
+  <rect width="512" height="512" fill="#006b5f"/>
+  <path fill="#f4c04d" d="M132 134h96v12h-96z"/>
+  <path fill="#fff" d="M128 175h26l26 63 26-63h26v132h-28v-83l-24 50-24-50v83h-28zM256 175h30l32 57 32-57h30l-48 86v46h-28v-46z"/>
+  <path fill="#fff" d="M132 338h248v14H132zM132 370h104v14H132zM252 370h128v14H252z"/>
+</svg>
