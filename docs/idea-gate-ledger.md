@@ -2172,6 +2172,41 @@ must use `supersedes` instead of editing an earlier entry.
 - Action: Implement optional display-only metadata and renderer disclosures with fail-open behavior.
 - Revisit when: Disaster policy articles are repeatedly grouped incorrectly.; Non-Klang Valley locations are repeatedly prioritized as Klang Valley.; Daily classification cost or failures become disproportionate.
 
+<!-- idea-gate:20261118-malaysia-home-screen-icons -->
+## Provide recognizable home-screen shortcut icons on phones and tablets
+
+- Record ID: `20261118-malaysia-home-screen-icons`
+- Evaluated: 2026-11-18T09:00:00+08:00
+- Project: Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 89/100
+- Confidence: high - Standard static metadata addresses the request without new operational responsibilities; physical-device appearance still requires owner confirmation.
+
+### Idea Card
+
+- Purpose: Recognize the news site quickly on the owner's phone and tablet home screens.
+- First experience: A coherent green MY news icon, touch icons and manifest work on both hosts.
+- Scope and cost: Static icons, head metadata and manifest only; no notifications, service worker, offline caching or recurring cost.
+- Continuation boundary: Owner reviews actual device appearance; revert metadata or replace image assets if unsatisfactory.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 12/15 |
+| `evidence_and_learning` | 12/15 |
+| `expected_outcome` | 14/15 |
+| `scope_and_fit` | 15/15 |
+| `ownership_and_reversibility` | 19/20 |
+| **Total** | **89/100** |
+
+### Next Step
+
+- Action: Add static icon assets and metadata; verify dimensions, hosting paths and browser loading before publication.
+- Revisit when: Physical-device shortcut appearance is not legible or cached icons do not update.
+
 <!-- idea-gate:20261118-meta-ads-home-screen-icon -->
 ## Provide recognizable home-screen shortcut icons for phones and tablets
 

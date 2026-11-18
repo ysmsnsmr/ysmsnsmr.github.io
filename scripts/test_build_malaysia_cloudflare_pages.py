@@ -11,18 +11,20 @@ class MalaysiaCloudflareBuildTests(unittest.TestCase):
             root = Path(temporary)
             source = root / "source"
             source.mkdir()
-            for name in ("index.html", "archive.html", "location-map.js", "daily-page.js", "2026-10-28.html", "2026-10-28.md", "private.json"):
+            for name in (*mirror.REQUIRED_FILES, "2026-10-28.html", "2026-10-28.md", "private.json"):
                 (source / name).write_text(name, encoding="utf-8")
-            (source / "index.html").write_text('<a href="./archive.html">archive</a><a href="#article-1">article</a><script src="./daily-page.js"></script>', encoding="utf-8")
+            (source / "index.html").write_text('<a href="./archive.html">archive</a><a href="#article-1">article</a><script src="./daily-page.js"></script><link rel="manifest" href="./site.webmanifest"><link rel="apple-touch-icon" href="./apple-touch-icon-180-v1.png">', encoding="utf-8")
             output = root / "output"
-            self.assertEqual(mirror.build(source, output), 6)
+            self.assertEqual(mirror.build(source, output), len(mirror.REQUIRED_FILES) + 2)
             target = output / "news" / "malaysia"
             self.assertEqual({path.name for path in target.iterdir()},
-                             {"index.html", "archive.html", "location-map.js", "daily-page.js", "2026-10-28.html", "2026-10-28.md"})
+                             {*mirror.REQUIRED_FILES, "2026-10-28.html", "2026-10-28.md"})
             root_home = (output / "index.html").read_text(encoding="utf-8")
             self.assertIn('href="/news/malaysia/archive.html"', root_home)
             self.assertIn('href="#article-1"', root_home)
             self.assertIn('src="/news/malaysia/daily-page.js"', root_home)
+            self.assertIn('href="/news/malaysia/site.webmanifest"', root_home)
+            self.assertIn('href="/news/malaysia/apple-touch-icon-180-v1.png"', root_home)
             self.assertFalse((output / "_redirects").exists())
             self.assertFalse((output / "_headers").exists())
             with self.assertRaises(ValueError):
@@ -54,6 +56,22 @@ class MalaysiaCloudflareBuildTests(unittest.TestCase):
             self.assertTrue((target / "daily-page.js").is_file())
             self.assertTrue((target / "archive.html").is_file())
             self.assertIn('href="/news/malaysia/archive.html"', (output / "index.html").read_text(encoding="utf-8"))
+
+    def test_icon_symlink_cannot_publish_an_unlisted_file(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "source"
+            source.mkdir()
+            for name in (*mirror.REQUIRED_FILES, "2026-10-28.html"):
+                (source / name).write_text("placeholder")
+            secret = root / "private.json"
+            secret.write_text("not public")
+            (source / "favicon-32-v1.png").unlink()
+            (source / "favicon-32-v1.png").symlink_to(secret)
+            output = root / "output"
+            with self.assertRaises(ValueError):
+                mirror.build(source, output)
+            self.assertFalse(output.exists())
 
 
 if __name__ == "__main__":
