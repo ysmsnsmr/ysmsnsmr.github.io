@@ -22,3 +22,7 @@ published JSON is updated; a successful collection alone is not proof of a
 successful deploy. Company network access remains a separate check. If the
 mirror is unusable, disable its automatic deployments in Cloudflare and keep
 using the existing GitHub Pages site.
+
+## ホーム画面ショートカット
+
+英語・日本語のTOPには、端末のホーム画面で使用するアイコンと各言語のWeb App Manifestを設定しています。Manifestは通常のブラウザ表示を指定し、オフライン機能や通知は追加しません。Cloudflare用ビルドの許可リストにはSVG、180／192／512pxのPNGと両言語のManifestを含めます。ホーム画面への追加手順や表示は端末・ブラウザによって異なり、既存ショートカットには更新が反映されない場合があります。
