@@ -9,7 +9,7 @@ import os
 from pathlib import Path
 from typing import Any
 
-KINDS = ("damage", "warning", "disruption", "none")
+KINDS = ("damage", "warning", "disruption", "political_statement", "none")
 AREAS = ("klang_valley", "other", "unclear")
 FIELDS = {"id", "kind", "area", "area_evidence"}
 DEFAULT_DISPLAY_MODEL = "gpt-6-luna"
@@ -28,15 +28,26 @@ warning = issued natural-disaster alerts or time-specific actionable weather for
 Seasonal hazard mapping, identifying flood-prone places and hypothetical rainfall/risk
 scenarios are preparedness, NOT issued warnings, even when specific places are named;
 disruption = concrete disaster-caused road closures, transport changes, school closures,
-evacuation or water/power disruption. none = everything else, including long-term flood
+evacuation or water/power disruption. These disaster kinds exclude long-term flood
 policy, budgets, mitigation projects, historical statistics, equipment/readiness, general
 preparedness advice, siren tests and drills. Water tank failures or roadworks without a
-natural-disaster cause are none. If uncertain use none. This is not a freshness/safety
+natural-disaster cause are not disaster impacts. If uncertain use none. This is not a freshness/safety
 decision: retain the published article's dates; do not imply warnings are still active.
 Classify the article's MAIN new information, not incidental background: a mitigation,
-budget, planning or preparedness report is none even if it cites affected places or
-damage to explain why the project is needed. Group only reports whose main news is
-actual impacts or an issued warning/time-specific forecast.
+budget, planning or preparedness report is NOT a disaster kind even if it cites affected
+places or damage as background. Use disaster kinds only when the main news is actual
+impacts or an issued warning/time-specific forecast.
+political_statement = the main news is an opinion, support, criticism, exhortation,
+political position, general pledge, or an intention not yet made concrete, expressed
+by a prime minister, minister, state leader, other politician or public official.
+Classify the CONTENT, not the speaker's title or the presence of words like 'said'.
+Confirmed new decisions, enacted rules, funded projects, public-service changes,
+benefit launches, fee changes and practical proposals with concrete amounts, terms
+or dates remain none (regular news), even if a minister announces them. Factual
+administrative explanations, enforcement or court events are not political statements
+merely because an official speaks. Private-company or expert opinions are also none.
+Actual disaster impacts announced by an official keep their disaster kind, never
+political_statement. Uncertain or mixed articles remain none. none = all other news.
 area = klang_valley ONLY if the actual affected place is explicitly in Klang Valley
 (e.g. Kuala Lumpur, Shah Alam, Petaling Jaya, Subang Jaya, Klang, Gombak, Putrajaya).
 A KL dateline, quoted official's office or press conference is NOT the affected place.
@@ -44,7 +55,7 @@ Selangor alone does not establish Klang Valley; Kuala Selangor and Sabak Bernam 
 automatically Klang Valley. Use other or unclear if uncertain.
 area_evidence: a short verbatim excerpt from headline or summary identifying the affected
 place (80 characters maximum), or empty if unknown. For klang_valley it MUST be nonempty.
-For kind none always return area unclear and empty area_evidence.
+For kind none or political_statement always return area unclear and empty area_evidence.
 """
 SCHEMA = {
     "type": "object",
@@ -85,7 +96,7 @@ def schema_error(value: Any) -> str:
             return "display_label"
         if not isinstance(row["area_evidence"], str) or len(row["area_evidence"]) > 80:
             return "display_area_evidence"
-        if row["kind"] == "none" and (row["area"] != "unclear" or row["area_evidence"]):
+        if row["kind"] in {"none", "political_statement"} and (row["area"] != "unclear" or row["area_evidence"]):
             return "display_regular_area"
         if row["area"] == "klang_valley" and not row["area_evidence"].strip():
             return "display_missing_area_evidence"
@@ -140,6 +151,7 @@ def classify(markdown_path: Path, *, api_key: str, model: str = "", request=None
         "schema_version": 1, "status": "skipped", "markdown_sha256": document_hash(text),
         "labels": {}, "failure_class": "", "validation_reason": "", "warnings": [],
         "diagnostic": {}, "classification_source": "model",
+        "policy_version": 2,
     }
     day = parse_markdown(markdown_path)
     articles = [{"id": i, "headline": display_full_headline(item), "summary": item_summary_body(item),
@@ -154,7 +166,7 @@ def classify(markdown_path: Path, *, api_key: str, model: str = "", request=None
             raise DisplayLabelError("display_model_provider")
         completion = (request or request_chat_completion)(
             profile=profile, api_key=api_key, max_completion_tokens=6000, timeout_seconds=90,
-            max_response_chars=60000, json_schema_name="malaysia_disaster_display_v1",
+            max_response_chars=60000, json_schema_name="malaysia_news_display_v2",
             json_schema=SCHEMA, schema_error=schema_error,
             messages=[{"role": "system", "content": SYSTEM_PROMPT},
                       {"role": "user", "content": json.dumps(articles, ensure_ascii=False)}],
@@ -200,7 +212,7 @@ def main() -> None:
         day.display_labels = report["labels"] if report["status"] == "applied" else {}
         args.html_output.parent.mkdir(parents=True, exist_ok=True)
         args.html_output.write_text(render_daily_page(day, is_home=True), encoding="utf-8")
-    print(f'Disaster display labels: {report["status"]}')
+    print(f'News display labels: {report["status"]}')
 
 
 if __name__ == "__main__":

@@ -2241,3 +2241,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Create a recognizable icon and wire it to both locale routes and mirror assets, then test without changing feed behavior.
 - Revisit when: The icon is unclear on real devices or browser installation behavior changes.
+
+<!-- idea-gate:20261119-malaysia-statements-display -->
+## Group political and administrative statements in the existing display classification
+
+- Record ID: `20261119-malaysia-statements-display`
+- Evaluated: 2026-11-19T09:00:00+08:00
+- Project: Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 85/100
+- Confidence: medium - Display behavior is established; the boundary between general statements and concrete decisions requires a real-data check.
+
+### Idea Card
+
+- Purpose: Keep political statements available without crowding out concrete news.
+- First experience: Up to three statement headlines, remaining headlines collapsed, every article and source retained.
+- Scope and cost: Extend the existing single Luna classification request and renderer; no extra API calls, selector changes, summary regeneration or publication-budget changes.
+- Continuation boundary: Owner Yas reviews real output; revert grouping metadata if concrete policy decisions are repeatedly misclassified.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 12/15 |
+| `evidence_and_learning` | 11/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 19/20 |
+| **Total** | **85/100** |
+
+### Next Step
+
+- Action: Extend the shared label enum and render disclosures; verify a saved news day with one artifact-only classification call before publication.
+- Revisit when: Actionable decisions or disaster information are repeatedly grouped as statements.; Grouping does not improve readability.
