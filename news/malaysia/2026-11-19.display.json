@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "status": "applied",
+  "markdown_sha256": "b47fb1af6b7f50f3b4591b40f8a4fcf08d85b5e2df77b602a9482d7dbd6c50dc",
+  "labels": {
+    "bc0578181f009f65f4db5ae2b09edadab2505359e8c3a6a5bb81f7b5dd869b8e": {
+      "id": 1,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "583ac650a8e2488717420d6b6bbb936213e9ea64d5dd780a73c8dbd83c8ebafc": {
+      "id": 2,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "527dd00e01b074ab30a96c941e43faa621c4a8f9bbe151ddd2f13d2cd4b8a4f9": {
+      "id": 3,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "79e308e89f1e49fbcc5b3145ddf997af16b1144afe30bef599c60f9216d7e8fa": {
+      "id": 4,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "0ab60b8a2b9d175d6d22f981f0565796d6858334c9be7ce1166ec5e665659668": {
+      "id": 5,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "e83babb86d44830924151ed6e259dc8203370087fe202ca762039335306623d8": {
+      "id": 6,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "3fdb6c580db3693e2b5d4d543be3a9d3e46bd3d03fb1444ae7eedcce54e72c4c": {
+      "id": 7,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "29250820a372315fc1f718b5d6a91d1b88582a6b201630a1a9c01d7543d14468": {
+      "id": 8,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "0afba583f56e3c89fbfd0bd235325d9dddceae4de05be2f9f23ccbd285486fc9": {
+      "id": 9,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "53f2f21f82ba72767344789e31d661fe5b6b7b452d5ae8545c86d945aaeee464": {
+      "id": 10,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "b0e47fcb54f9e27f44bc2d8aee91d96cd28db41bbf2f0c408e1434bb9669edfd": {
+      "id": 11,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "0a7dc46d8e63bc7f806d31613f4768e7f1945aaa73de2a11a5c2c2695ffe7d17": {
+      "id": 12,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "83a04491009e8e7956a4d7116ee0067a23325f2f099f745928b8a4525e451d27": {
+      "id": 13,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "b6c224af6592c9f8da89af9ae85cdc5f3ddd5f7c33fb680ecb892773c355be35": {
+      "id": 14,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "7bff2dd5bca29f4be17c7829fcde0a33b909ecc5f703eccf659b26bab989d82d": {
+      "id": 15,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "f88275f2e3ca284524ee6d9ad8c75795cb880160f110c5b04721651b8decdc4c": {
+      "id": 16,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "10b02fafd09a80a8766cbc0c00d3d927f06fcacac397af9548fc94923237ae76": {
+      "id": 17,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "12e6e16bd8e5d4b5ed3cf6760fef48f60b2bc10dcbe69c303e1914d8a4010d8a": {
+      "id": 18,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "b5a35094d1a0c28174b413c35c1808033a64ec964dfc56d93ecb7eaeb7780ece": {
+      "id": 19,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "6e562b58328c26d089858cce6a0a55ca8c64b407489004a10eda3d1ce8efb4d2": {
+      "id": 20,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "f3ee293ed09258c9f121d8dd81da041f24fc1a5848519fa1e1354ba1e3b2da8f": {
+      "id": 21,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "176755efc2ff08a06c92370eaa7fc1ec5e981d4db94f601b87ea20b663d5ffab": {
+      "id": 22,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "7aa96965f0c8961bc6ee9c35954e4bfc259df56a7914c7445f3b94b959164e39": {
+      "id": 23,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "8a6a85cd3b729eb874a01aac84f90feaab6c81bb58ef38112161dbd81fba25ea": {
+      "id": 24,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "1e62bd4f68dac0f82f0f0ba41b68da01f57add58462f981a7d930c3a0c57e05a": {
+      "id": 25,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "2adf3854eb9bdfe0df6512e0e075f5c4ed9baf2dd2cf5f5247784f2bc151c7fc": {
+      "id": 26,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "e01dba165d3f341b8525b0af175e0e4fe7484148bb79bffa9e79d72ce31747d5": {
+      "id": 27,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "7d2dc30a9c4568b4ee38cbbe4aad2bd6161fa90b7c487e61cfafcdd134a30eeb": {
+      "id": 28,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "5d025ef17de191e0d781440b90598d89d173c915f866aaeec81f5b80ef6289b4": {
+      "id": 29,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    }
+  },
+  "failure_class": "",
+  "validation_reason": "",
+  "warnings": [],
+  "diagnostic": {
+    "provider": "openai",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "medium",
+    "elapsed_ms": 7452,
+    "finish_reason": "stop",
+    "usage": {
+      "prompt_tokens": 6750,
+      "completion_tokens": 876,
+      "total_tokens": 7626
+    },
+    "transport_status": "success",
+    "failure_class": "none",
+    "json_contract_reason": ""
+  },
+  "classification_source": "model"
+}
