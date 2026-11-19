@@ -17,7 +17,7 @@
       parent = parent.parentElement;
     }
     if (opened) requestAnimationFrame(() => {
-      (article.closest(".disaster-story") || article).scrollIntoView({ block: "start" });
+      (article.closest(".disaster-story, .statement-story") || article).scrollIntoView({ block: "start" });
     });
   }
 

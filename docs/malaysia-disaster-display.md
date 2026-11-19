@@ -1,8 +1,29 @@
-# Natural Disaster Display Group
+# News Display Groups
 
 This is a presentation layer, not a selector, deduplicator, safety validator or
 live warning feed. All selected articles, summaries, sources and article anchors
 remain available. Publication budgets and Jev routing do not change.
+
+## Political And Administrative Statements
+
+The same classification request can also return `political_statement` (policy
+version 2). The existing script, sidecar and artifact filenames are retained for
+compatibility; there is no second model call or higher token/time limit.
+
+Group articles whose main news is a politician/public official's opinion,
+support, criticism, exhortation, general pledge or unformed intention. Concrete
+decisions, service changes, funded projects, benefits, fees and practical proposals
+with concrete amounts, terms or dates stay in regular news. Factual administrative,
+enforcement/court explanations and private-company/expert opinions are not grouped
+just because someone speaks. Disaster impacts retain their disaster kind.
+
+The section `政治・行政の発言` follows regular news. It shows up to three headlines
+in existing editorial order, never speaker-rank order; the rest are collapsed.
+An empty group is omitted. The shared disclosure renderer and deep-link behavior
+keep the full article, source, map links and original anchors accessible.
+Old version-1 sidecars remain valid without any new label and need no migration.
+
+## Natural Disaster Impacts
 
 - Group actual natural-disaster damage, specific warnings and concrete effects
   such as road closures, transport disruption, school closures and evacuation.

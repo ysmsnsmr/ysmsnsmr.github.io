@@ -105,24 +105,24 @@
       .map-index { max-height: 170px; padding: 4px 0; }
     }
 
-    .disaster-group { border-block: 1px solid var(--line); padding: 18px 0; margin-bottom: 28px; }
-    .disaster-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
-    .disaster-heading h2 { font-size: 1.15rem; }
-    .disaster-heading > span { color: var(--muted); font-size: .85rem; }
-    .disaster-story { border-bottom: 1px solid var(--line); }
-    .disaster-story > summary { position: relative; list-style: none; cursor: pointer; padding: 14px 30px 14px 0; min-height: 44px; font-weight: 700; overflow-wrap: anywhere; }
-    .disaster-story > summary::-webkit-details-marker, .disaster-more > summary::-webkit-details-marker { display: none; }
-    .disaster-story > summary::after { content: '+'; position: absolute; right: 4px; top: 14px; color: var(--accent); font-size: 1.2rem; }
-    .disaster-story[open] > summary::after { content: '\2212'; }
+    :is(.disaster-group, .statement-group) { border-block: 1px solid var(--line); padding: 18px 0; margin-bottom: 28px; }
+    :is(.disaster-heading, .statement-heading) { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    :is(.disaster-heading, .statement-heading) h2 { font-size: 1.15rem; }
+    :is(.disaster-heading, .statement-heading) > span { color: var(--muted); font-size: .85rem; }
+    :is(.disaster-story, .statement-story) { border-bottom: 1px solid var(--line); }
+    :is(.disaster-story, .statement-story) > summary { position: relative; list-style: none; cursor: pointer; padding: 14px 30px 14px 0; min-height: 44px; font-weight: 700; overflow-wrap: anywhere; }
+    :is(.disaster-story, .statement-story, .disaster-more, .statement-more) > summary::-webkit-details-marker { display: none; }
+    :is(.disaster-story, .statement-story) > summary::after { content: '+'; position: absolute; right: 4px; top: 14px; color: var(--accent); font-size: 1.2rem; }
+    :is(.disaster-story, .statement-story)[open] > summary::after { content: '\2212'; }
     .disaster-region { display: block; color: var(--accent-strong); font-size: .8rem; font-weight: 400; margin-bottom: 3px; }
-    .disaster-story > .daily-item { border: 0; border-radius: 0; box-shadow: none; background: transparent; padding: 0 0 18px; }
-    .disaster-story > .daily-item > h3 { display: none; }
-    .disaster-story .daily-item-head { display: none; }
-    .disaster-more { margin-top: 8px; }
-    .disaster-more > summary { cursor: pointer; list-style: none; min-height: 44px; padding: 8px 0; font-size: .9rem; color: var(--accent); font-weight: 700; }
-    .disaster-more > summary::before { content: '+ '; }
-    .disaster-more[open] > summary::before { content: '\2212 '; }
-    .disaster-story > summary:focus-visible, .disaster-more > summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    :is(.disaster-story, .statement-story) > .daily-item { border: 0; border-radius: 0; box-shadow: none; background: transparent; padding: 0 0 18px; }
+    :is(.disaster-story, .statement-story) > .daily-item > h3 { display: none; }
+    :is(.disaster-story, .statement-story) .daily-item-head { display: none; }
+    :is(.disaster-more, .statement-more) { margin-top: 8px; }
+    :is(.disaster-more, .statement-more) > summary { cursor: pointer; list-style: none; min-height: 44px; padding: 8px 0; font-size: .9rem; color: var(--accent); font-weight: 700; }
+    :is(.disaster-more, .statement-more) > summary::before { content: '+ '; }
+    :is(.disaster-more, .statement-more)[open] > summary::before { content: '\2212 '; }
+    :is(.disaster-story, .statement-story, .disaster-more, .statement-more) > summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
   </style>
 </head>
 <body>
