@@ -41,7 +41,7 @@
     },
     "3fdb6c580db3693e2b5d4d543be3a9d3e46bd3d03fb1444ae7eedcce54e72c4c": {
       "id": 7,
-      "kind": "none",
+      "kind": "political_statement",
       "area": "unclear",
       "area_evidence": ""
     },
@@ -53,13 +53,13 @@
     },
     "0afba583f56e3c89fbfd0bd235325d9dddceae4de05be2f9f23ccbd285486fc9": {
       "id": 9,
-      "kind": "none",
+      "kind": "political_statement",
       "area": "unclear",
       "area_evidence": ""
     },
     "53f2f21f82ba72767344789e31d661fe5b6b7b452d5ae8545c86d945aaeee464": {
       "id": 10,
-      "kind": "none",
+      "kind": "political_statement",
       "area": "unclear",
       "area_evidence": ""
     },
@@ -83,7 +83,7 @@
     },
     "b6c224af6592c9f8da89af9ae85cdc5f3ddd5f7c33fb680ecb892773c355be35": {
       "id": 14,
-      "kind": "none",
+      "kind": "political_statement",
       "area": "unclear",
       "area_evidence": ""
     },
@@ -107,7 +107,7 @@
     },
     "12e6e16bd8e5d4b5ed3cf6760fef48f60b2bc10dcbe69c303e1914d8a4010d8a": {
       "id": 18,
-      "kind": "none",
+      "kind": "political_statement",
       "area": "unclear",
       "area_evidence": ""
     },
@@ -119,7 +119,7 @@
     },
     "6e562b58328c26d089858cce6a0a55ca8c64b407489004a10eda3d1ce8efb4d2": {
       "id": 20,
-      "kind": "none",
+      "kind": "political_statement",
       "area": "unclear",
       "area_evidence": ""
     },
@@ -173,7 +173,7 @@
     },
     "5d025ef17de191e0d781440b90598d89d173c915f866aaeec81f5b80ef6289b4": {
       "id": 29,
-      "kind": "none",
+      "kind": "political_statement",
       "area": "unclear",
       "area_evidence": ""
     }
@@ -185,16 +185,17 @@
     "provider": "openai",
     "model": "gpt-6-luna",
     "reasoning_effort": "medium",
-    "elapsed_ms": 7452,
+    "elapsed_ms": 14066,
     "finish_reason": "stop",
     "usage": {
-      "prompt_tokens": 6750,
-      "completion_tokens": 876,
-      "total_tokens": 7626
+      "prompt_tokens": 6935,
+      "completion_tokens": 1359,
+      "total_tokens": 8294
     },
     "transport_status": "success",
     "failure_class": "none",
     "json_contract_reason": ""
   },
-  "classification_source": "model"
+  "classification_source": "model",
+  "policy_version": 2
 }
