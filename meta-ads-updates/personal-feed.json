@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-11-17T00:17:08Z",
+  "generatedAt": "2026-11-20T11:15:00Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -91,6 +91,428 @@
   ],
   "items": [
     {
+      "id": "meta-business-help-discovered-a6fbbdd05256e71d50d2",
+      "sourceId": "meta-business-help-discovered",
+      "title": "How to set up email sign-up offers for ads that lead to your website",
+      "url": "https://www.facebook.com/business/help/832707885973695",
+      "publishedDate": null,
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "discovered-via:jon-loomer-meta-ads"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "a6fbbdd05256e71d50d2c3db952faed36e42e78b117689b4493ea8b05401ff04",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Set Up Email Sign-Up Offers for Website Ads",
+            "summary": "Learn how to set up email sign-up offers and collect customer emails for ads that lead to your website.",
+            "inputHash": "c117355bf1c8a92e82c479394ed0afddda425768038af2f081f1d560d98aeda4",
+            "generatedAt": "2026-11-20T11:15:00Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Set Up Email Sign-Up Offers for Website Ads",
+                "inputHash": "c117355bf1c8a92e82c479394ed0afddda425768038af2f081f1d560d98aeda4",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Learn how to set up email sign-up offers and collect customer emails for ads that lead to your website.",
+                "inputHash": "c117355bf1c8a92e82c479394ed0afddda425768038af2f081f1d560d98aeda4",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "ウェブサイト誘導型広告のメール登録オファー設定方法",
+            "summary": "ウェブサイトに誘導する広告で、顧客のメールアドレスを収集する方法を紹介しています。",
+            "inputHash": "a7563477e2af435bfb66cc95f87c3cc7ddd1600a961be3987dcbf8ef4bfc5e62",
+            "generatedAt": "2026-11-20T11:15:00Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "ウェブサイト誘導型広告のメール登録オファー設定方法",
+                "inputHash": "a7563477e2af435bfb66cc95f87c3cc7ddd1600a961be3987dcbf8ef4bfc5e62",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "ウェブサイトに誘導する広告で、顧客のメールアドレスを収集する方法を紹介しています。",
+                "inputHash": "a7563477e2af435bfb66cc95f87c3cc7ddd1600a961be3987dcbf8ef4bfc5e62",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "meta-business-help-discovered-25c2c205373c405cf2c3",
+      "sourceId": "meta-business-help-discovered",
+      "title": "About promotions in Meta Ads Manager",
+      "url": "https://www.facebook.com/business/help/1467642254076258",
+      "publishedDate": null,
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "discovered-via:jon-loomer-meta-ads"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "25c2c205373c405cf2c3a6735dea0e0f81753e4356f6d25337b791b9a93cbc5b",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Promotions in Meta Ads Manager",
+            "summary": "Learn how promotions help shoppers discover and redeem offers on your ads.",
+            "inputHash": "8468aecf713e80ec72690b9d96e43e4ed1ca2a26695cbace1b9050b491291b59",
+            "generatedAt": "2026-11-20T11:15:00Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Promotions in Meta Ads Manager",
+                "inputHash": "8468aecf713e80ec72690b9d96e43e4ed1ca2a26695cbace1b9050b491291b59",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Learn how promotions help shoppers discover and redeem offers on your ads.",
+                "inputHash": "8468aecf713e80ec72690b9d96e43e4ed1ca2a26695cbace1b9050b491291b59",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta広告マネージャのプロモーション",
+            "summary": "プロモーションによって、買い物客が広告のオファーを見つけて利用できるようにする方法について説明しています。",
+            "inputHash": "1bd0074042f53844a718c2c4791a9471c67d91a9d18774e98d8af8fb36dbbf64",
+            "generatedAt": "2026-11-20T11:15:00Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告マネージャのプロモーション",
+                "inputHash": "1bd0074042f53844a718c2c4791a9471c67d91a9d18774e98d8af8fb36dbbf64",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "プロモーションによって、買い物客が広告のオファーを見つけて利用できるようにする方法について説明しています。",
+                "inputHash": "1bd0074042f53844a718c2c4791a9471c67d91a9d18774e98d8af8fb36dbbf64",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-97177e0c940eb79a628e",
+      "sourceId": "adsuploader-blog",
+      "title": "Facebook Ads Automation in 2026: Rules, AI Agents and What to Automate",
+      "url": "https://adsuploader.com/blog/facebook-ads-automation",
+      "publishedDate": "2026-11-20",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "97177e0c940eb79a628e6e57fceac7869bb94f427a3f11066ac5fa8806c651da",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Facebook Ads Automation in 2026",
+            "summary": "Explains Advantage+, automated rules, bulk launching, AI agents with approvals and Zapier, what to keep human, and a starter stack.",
+            "inputHash": "91b80e73db3678763fbffd4fe48b73586f256d8877370839da663f6c09ec42de",
+            "generatedAt": "2026-11-20T11:15:00Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook Ads Automation in 2026",
+                "inputHash": "91b80e73db3678763fbffd4fe48b73586f256d8877370839da663f6c09ec42de",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Explains Advantage+, automated rules, bulk launching, AI agents with approvals and Zapier, what to keep human, and a starter stack.",
+                "inputHash": "91b80e73db3678763fbffd4fe48b73586f256d8877370839da663f6c09ec42de",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "2026年のFacebook広告自動化",
+            "summary": "Advantage+や自動ルール、一括配信、承認を伴うAIエージェントとZapierの活用など、Facebook広告の自動化について解説。人が担う作業や導入時の基本構成も取り上げています。",
+            "inputHash": "365cc6e4a5a15c9e13eb3869e43fcdcc70cccfc71b88218e2c425147c33b5e26",
+            "generatedAt": "2026-11-20T11:15:00Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "2026年のFacebook広告自動化",
+                "inputHash": "365cc6e4a5a15c9e13eb3869e43fcdcc70cccfc71b88218e2c425147c33b5e26",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Advantage+や自動ルール、一括配信、承認を伴うAIエージェントとZapierの活用など、Facebook広告の自動化について解説。人が担う作業や導入時の基本構成も取り上げています。",
+                "inputHash": "365cc6e4a5a15c9e13eb3869e43fcdcc70cccfc71b88218e2c425147c33b5e26",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-3d214e350b57f2ef67ea",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta launches shopping platform Achados in Brazil",
+      "url": "https://www.socialmediatoday.com/news/meta-launches-shopping-platform-achados-in-brazil/875290/",
+      "publishedDate": "2026-11-19",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "3d214e350b57f2ef67eab58ab68afb09d758a38706175346e4fa8f794624570c",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta launches Achados shopping app in Brazil",
+            "summary": "Achados brings product listings from Meta Marketplace, Facebook Groups and Instagram into one feed. The app also offers price comparisons, seller profiles, customer reviews and sales histories. It launched in Brazil and is currently available only on Android.",
+            "inputHash": "dbdbbfe918ccf2482c11a88b220cdb0a0c4a32c3f9bf232224c1756dbefb3a1e",
+            "generatedAt": "2026-11-20T11:15:00Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta launches Achados shopping app in Brazil",
+                "inputHash": "dbdbbfe918ccf2482c11a88b220cdb0a0c4a32c3f9bf232224c1756dbefb3a1e",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Achados brings product listings from Meta Marketplace, Facebook Groups and Instagram into one feed. The app also offers price comparisons, seller profiles, customer reviews and sales histories. It launched in Brazil and is currently available only on Android.",
+                "inputHash": "dbdbbfe918ccf2482c11a88b220cdb0a0c4a32c3f9bf232224c1756dbefb3a1e",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、ブラジルで買い物アプリ「Achados」を公開",
+            "summary": "Metaは、買い物向けアプリ「Achados」をブラジルで公開しました。Marketplace、Facebookグループ、Instagramの出品を一つの画面にまとめ、類似商品の価格比較や、Facebook・Instagramの販売者プロフィール、購入者レビュー、販売履歴を確認できます。現時点ではAndroidのみで利用できます。",
+            "inputHash": "9f418c8aa287984f99985582f8e73594f1bb54138e2fff9ad5aa555ee6b21ae0",
+            "generatedAt": "2026-11-20T11:15:00Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、ブラジルで買い物アプリ「Achados」を公開",
+                "inputHash": "9f418c8aa287984f99985582f8e73594f1bb54138e2fff9ad5aa555ee6b21ae0",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは、買い物向けアプリ「Achados」をブラジルで公開しました。Marketplace、Facebookグループ、Instagramの出品を一つの画面にまとめ、類似商品の価格比較や、Facebook・Instagramの販売者プロフィール、購入者レビュー、販売履歴を確認できます。現時点ではAndroidのみで利用できます。",
+                "inputHash": "9f418c8aa287984f99985582f8e73594f1bb54138e2fff9ad5aa555ee6b21ae0",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-c04c6e7ddbab523f5a7f",
+      "sourceId": "adsuploader-blog",
+      "title": "Meta Marketing API (2026): What It Is, Access, Limits and When You Need It",
+      "url": "https://adsuploader.com/blog/meta-marketing-api",
+      "publishedDate": "2026-11-18",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "c04c6e7ddbab523f5a7f37d8cbcd6cdf56e53e5c144c3b67d44ddca128a0d874",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta Marketing API: Access, Limits, and Use",
+            "summary": "Covers Meta Marketing API access, App Review, rate limits, versions, how Ads MCP and CLI fit, and using the API through Ads Uploader.",
+            "inputHash": "db97727de27f60d082b29520c1f55a056e8f44f78ca517283f55e050380c1f80",
+            "generatedAt": "2026-11-20T11:15:00Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Marketing API: Access, Limits, and Use",
+                "inputHash": "db97727de27f60d082b29520c1f55a056e8f44f78ca517283f55e050380c1f80",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Covers Meta Marketing API access, App Review, rate limits, versions, how Ads MCP and CLI fit, and using the API through Ads Uploader.",
+                "inputHash": "db97727de27f60d082b29520c1f55a056e8f44f78ca517283f55e050380c1f80",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta Marketing APIのアクセスや制限を解説",
+            "summary": "メディアバイヤー向けに、Meta Marketing APIの概要やアクセス、アプリ審査、利用制限、バージョンについて解説。Ads MCPやCLIとの関係、Ads Uploaderを通じた運用も取り上げています。",
+            "inputHash": "d9cab1f1b99c8fecc473878b24c586f822cdefd631c992626fbbedba58919153",
+            "generatedAt": "2026-11-20T11:15:00Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Marketing APIのアクセスや制限を解説",
+                "inputHash": "d9cab1f1b99c8fecc473878b24c586f822cdefd631c992626fbbedba58919153",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "メディアバイヤー向けに、Meta Marketing APIの概要やアクセス、アプリ審査、利用制限、バージョンについて解説。Ads MCPやCLIとの関係、Ads Uploaderを通じた運用も取り上げています。",
+                "inputHash": "d9cab1f1b99c8fecc473878b24c586f822cdefd631c992626fbbedba58919153",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "jon-loomer-meta-ads-0d25e2c444891f3c74ef",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Meta Ads Promotions and Email Sign-up Offers: What They Do and How to Turn Them Off",
+      "url": "https://www.jonloomer.com/meta-ads-promotions-email-sign-up-offers/",
+      "publishedDate": "2026-11-17",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "0d25e2c444891f3c74ef943e8c41addef804ca30916082d6e741a3bd99a2e2e8",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta Ads Can Automatically Highlight Promotion Codes",
+            "summary": "Meta Ads may highlight promotion codes created in Meta or Shopify, found in ad copy, or detected on a website. Ads can show optimized or selected promotions, while automatic display of detected offers is controlled in Commerce Manager’s Offer Merchandising settings.",
+            "inputHash": "74ee888154bbf4ffd440d4db10cc749c81c4dbf6a44afd6bf60ecac72d429735",
+            "generatedAt": "2026-11-20T11:15:00Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Ads Can Automatically Highlight Promotion Codes",
+                "inputHash": "74ee888154bbf4ffd440d4db10cc749c81c4dbf6a44afd6bf60ecac72d429735",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta Ads may highlight promotion codes created in Meta or Shopify, found in ad copy, or detected on a website. Ads can show optimized or selected promotions, while automatic display of detected offers is controlled in Commerce Manager’s Offer Merchandising settings.",
+                "inputHash": "74ee888154bbf4ffd440d4db10cc749c81c4dbf6a44afd6bf60ecac72d429735",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta広告のプロモーション表示とメール登録特典",
+            "summary": "Meta広告には、広告文やウェブサイトなどから検出したプロモーションコードを自動で表示する機能があります。コードは広告をタップする前後に表示され、アプリ内ブラウザーではチェックアウト時に自動適用される場合があります。別の機能として、メールアドレスと引き換えにコードを提供する仕組みも紹介されています。",
+            "inputHash": "852eaf7334b425bbe5fa23bc52cd333869025a236ffdf71bf05bef6a6571f5bd",
+            "generatedAt": "2026-11-20T11:15:00Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告のプロモーション表示とメール登録特典",
+                "inputHash": "852eaf7334b425bbe5fa23bc52cd333869025a236ffdf71bf05bef6a6571f5bd",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta広告には、広告文やウェブサイトなどから検出したプロモーションコードを自動で表示する機能があります。コードは広告をタップする前後に表示され、アプリ内ブラウザーではチェックアウト時に自動適用される場合があります。別の機能として、メールアドレスと引き換えにコードを提供する仕組みも紹介されています。",
+                "inputHash": "852eaf7334b425bbe5fa23bc52cd333869025a236ffdf71bf05bef6a6571f5bd",
+                "generatedAt": "2026-11-20T11:15:00Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      },
+      "officialReferences": [
+        "https://www.facebook.com/business/help/1467642254076258/",
+        "https://www.facebook.com/business/help/832707885973695/"
+      ]
+    },
+    {
       "id": "jon-loomer-meta-ads-e52e3d87d33073b58005",
       "sourceId": "jon-loomer-meta-ads",
       "title": "Meta Simplifies Video Custom Audiences",
@@ -98,7 +520,7 @@
       "publishedDate": "2026-11-16",
       "updatedDate": null,
       "firstObservedAt": "2026-11-17T00:17:08Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -167,7 +589,7 @@
       "publishedDate": "2026-11-16",
       "updatedDate": null,
       "firstObservedAt": "2026-11-17T00:17:08Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -236,7 +658,7 @@
       "publishedDate": "2026-11-14",
       "updatedDate": null,
       "firstObservedAt": "2026-11-17T00:17:08Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -305,7 +727,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-11-12T22:17:09Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -376,7 +798,7 @@
       "publishedDate": "2026-11-12",
       "updatedDate": null,
       "firstObservedAt": "2026-11-12T22:17:09Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -445,7 +867,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -516,7 +938,7 @@
       "publishedDate": "2026-11-10",
       "updatedDate": null,
       "firstObservedAt": "2026-11-12T22:17:09Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -588,7 +1010,7 @@
       "publishedDate": "2026-11-10",
       "updatedDate": null,
       "firstObservedAt": "2026-11-12T22:17:09Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -657,7 +1079,7 @@
       "publishedDate": "2026-11-09",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -729,7 +1151,7 @@
       "publishedDate": "2026-11-08",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -798,7 +1220,7 @@
       "publishedDate": "2026-11-08",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -867,7 +1289,7 @@
       "publishedDate": "2026-11-06",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -936,7 +1358,7 @@
       "publishedDate": "2026-11-05",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1005,7 +1427,7 @@
       "publishedDate": "2026-11-04",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1074,7 +1496,7 @@
       "publishedDate": "2026-11-04",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1145,7 +1567,7 @@
       "publishedDate": "2026-11-04",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1214,7 +1636,7 @@
       "publishedDate": "2026-11-03",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1283,7 +1705,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1352,7 +1774,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1421,7 +1843,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-02T23:36:33Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1490,7 +1912,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-02T23:36:33Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1559,7 +1981,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1630,7 +2052,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1701,7 +2123,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1772,7 +2194,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1843,7 +2265,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1985,7 +2407,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2056,7 +2478,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2127,7 +2549,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2198,7 +2620,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2269,7 +2691,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2340,7 +2762,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2482,7 +2904,7 @@
       "publishedDate": "2026-10-31",
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2551,7 +2973,7 @@
       "publishedDate": "2026-10-29",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2620,7 +3042,7 @@
       "publishedDate": "2026-10-28",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2689,7 +3111,7 @@
       "publishedDate": "2026-10-28",
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2760,7 +3182,7 @@
       "publishedDate": "2026-10-28",
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2831,7 +3253,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2900,7 +3322,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3041,7 +3463,7 @@
       "publishedDate": "2026-10-26",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3113,7 +3535,7 @@
       "publishedDate": "2026-10-25",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3596,7 +4018,7 @@
       "publishedDate": "2026-10-20",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3739,7 +4161,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4153,7 +4575,7 @@
       "publishedDate": "2026-10-15",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4293,7 +4715,7 @@
       "publishedDate": "2026-10-13",
       "updatedDate": null,
       "firstObservedAt": "2026-10-15T19:54:50Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4503,7 +4925,7 @@
       "publishedDate": "2026-10-12",
       "updatedDate": null,
       "firstObservedAt": "2026-10-12T23:02:27Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5128,7 +5550,7 @@
       "publishedDate": "2026-10-06",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5200,7 +5622,7 @@
       "publishedDate": "2026-10-05",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5683,7 +6105,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -5752,7 +6174,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5890,7 +6312,7 @@
       "publishedDate": "2026-09-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T05:47:38Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6235,7 +6657,7 @@
       "publishedDate": "2026-09-22",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6377,7 +6799,7 @@
       "publishedDate": "2026-09-21",
       "updatedDate": null,
       "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-11-17T00:17:08Z",
+      "lastObservedAt": "2026-11-20T11:15:00Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6638,420 +7060,6 @@
                 "value": "Metaはマーケター向けに2026年ホリデーシーズンの計画支援ガイドを複数公開した。AI特化概要、エージェンシー向け、クリエイティブ解説に加え、SMB向けの統計データとチェックリスト、広告作成のポイント、上級広告主向けの購買行動統計と設定優先順位、商品リスティング最適化チェックリストを提供している。これらは同社のFestive Season Insights Centerに掲載され、プラットフォーム活用の最新トレンド情報を示す。",
                 "inputHash": "8027279a85b534fceb5baf19673545e86aec5ae9521d07716a8c428950c9438a",
                 "generatedAt": "2026-09-18T11:07:09Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "social-media-today-meta-ads-a0f66a34b7150065230b",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Facebook Pages get charged for link posts",
-      "url": "https://www.socialmediatoday.com/news/facebook-pages-get-charged-for-link-posts/830743/",
-      "publishedDate": "2026-09-17",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-15T19:54:50Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "a0f66a34b7150065230b3f172aaf6ff33d3271a7625781fbec17b9badca51efe",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta limits Facebook Pages to two link posts per month without subscription",
-            "summary": "Meta has expanded a test that began in December 2025, restricting non‑paying Pages to two link posts on Facebook each month unless they purchase a Meta One for Business subscription. Publisher Pages are exempt. A Q1 2026 report shows only 1.3% of U.S. post views included a link, down from 9.8% in 2022.",
-            "inputHash": "771c6743a7593974be5a75f68217b0bb362080044e08daa83b2e94472a7b9389",
-            "generatedAt": "2026-09-24T10:49:46Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta limits Facebook Pages to two link posts per month without subscription",
-                "inputHash": "771c6743a7593974be5a75f68217b0bb362080044e08daa83b2e94472a7b9389",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta has expanded a test that began in December 2025, restricting non‑paying Pages to two link posts on Facebook each month unless they purchase a Meta One for Business subscription. Publisher Pages are exempt. A Q1 2026 report shows only 1.3% of U.S. post views included a link, down from 9.8% in 2022.",
-                "inputHash": "771c6743a7593974be5a75f68217b0bb362080044e08daa83b2e94472a7b9389",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta One導入でFacebookページのリンク投稿が有料制限へ",
-            "summary": "Metaが提供する有料サブスクリプション「Meta One for Business」の開始に伴い、Facebookページのリンク付き投稿が月2件に制限され、追加投稿は有料プランでのみ可能になるテストが拡大された。対象は2025年12月に開始された同様のテスト対象外の出版社ページを除く。Metaはこのテストでリンク投稿が有料ユーザーにどれだけ価値をもたらすかを測定すると説明している。なお、2026年第1四半期の米国における調査では、リンク付き投稿の閲覧率は2022年の9.8%から1.3%に低下し、全体の98.7%が外部リンクを含まないと報告されている。",
-            "inputHash": "fefc4f6ab760d4f76ba3dc23c4c744921225bb0763183c2caf91fc9021df8f77",
-            "generatedAt": "2026-09-24T10:49:46Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta One導入でFacebookページのリンク投稿が有料制限へ",
-                "inputHash": "fefc4f6ab760d4f76ba3dc23c4c744921225bb0763183c2caf91fc9021df8f77",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaが提供する有料サブスクリプション「Meta One for Business」の開始に伴い、Facebookページのリンク付き投稿が月2件に制限され、追加投稿は有料プランでのみ可能になるテストが拡大された。対象は2025年12月に開始された同様のテスト対象外の出版社ページを除く。Metaはこのテストでリンク投稿が有料ユーザーにどれだけ価値をもたらすかを測定すると説明している。なお、2026年第1四半期の米国における調査では、リンク付き投稿の閲覧率は2022年の9.8%から1.3%に低下し、全体の98.7%が外部リンクを含まないと報告されている。",
-                "inputHash": "fefc4f6ab760d4f76ba3dc23c4c744921225bb0763183c2caf91fc9021df8f77",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "adsuploader-blog-1fbec7600390f4b78159",
-      "sourceId": "adsuploader-blog",
-      "title": "Facebook Dynamic Creative: What It Does and When to Use It",
-      "url": "https://adsuploader.com/blog/facebook-dynamic-creative",
-      "publishedDate": "2026-09-17",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "1fbec7600390f4b7815975ec194d295039c044321666abbec626a07e35cff23c",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Facebook Dynamic Creative mixes assets into ad variations",
-            "summary": "Facebook Dynamic Creative mixes uploaded assets into ad variations, works with certain objectives in 2026, and provides reporting details.",
-            "inputHash": "89ebccf13aa5a1b3dfe8be0ffa943f6d08cbc6510d673f7130cf80eeba7e67e3",
-            "generatedAt": "2026-10-06T06:25:59Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Facebook Dynamic Creative mixes assets into ad variations",
-                "inputHash": "89ebccf13aa5a1b3dfe8be0ffa943f6d08cbc6510d673f7130cf80eeba7e67e3",
-                "generatedAt": "2026-10-06T06:25:59Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Facebook Dynamic Creative mixes uploaded assets into ad variations, works with certain objectives in 2026, and provides reporting details.",
-                "inputHash": "89ebccf13aa5a1b3dfe8be0ffa943f6d08cbc6510d673f7130cf80eeba7e67e3",
-                "generatedAt": "2026-10-06T06:25:59Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Facebook ダイナミッククリエイティブの概要と活用時期",
-            "summary": "Facebook のダイナミッククリエイティブは、アップロードした画像や動画などの素材を組み合わせて複数の広告バリエーションを自動生成します。機能の概要や、2026 年時点で利用可能な広告目的、レポートの見方について説明しています。",
-            "inputHash": "be0f40a86c9e6c9d228b6c23ae416dcdd216de9c342f142fdd4decb82b088fe3",
-            "generatedAt": "2026-10-06T06:25:59Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Facebook ダイナミッククリエイティブの概要と活用時期",
-                "inputHash": "be0f40a86c9e6c9d228b6c23ae416dcdd216de9c342f142fdd4decb82b088fe3",
-                "generatedAt": "2026-10-06T06:25:59Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Facebook のダイナミッククリエイティブは、アップロードした画像や動画などの素材を組み合わせて複数の広告バリエーションを自動生成します。機能の概要や、2026 年時点で利用可能な広告目的、レポートの見方について説明しています。",
-                "inputHash": "be0f40a86c9e6c9d228b6c23ae416dcdd216de9c342f142fdd4decb82b088fe3",
-                "generatedAt": "2026-10-06T06:25:59Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "meta-product-news-rss-e034320b81aba92d5529",
-      "sourceId": "meta-product-news-rss",
-      "title": "Threads Expands Podcast Toolkit for Creators and Listeners",
-      "url": "https://about.fb.com/news/2026/09/threads-expands-podcast-toolkit-for-creators-and-listeners/",
-      "publishedDate": "2026-09-16",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-17T04:55:10Z",
-      "lastObservedAt": "2026-11-02T23:36:33Z",
-      "platformIds": [
-        "meta-platforms"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "e034320b81aba92d552992feecb7a25e4eb3741432ef02ca7d01ea8544d82c7b",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Threads adds new podcast tools for creators and listeners",
-            "summary": "Threads introduces podcast features: creators can show banners on profiles, feature episodes with a picker and tappable cards, share highlights via transcript, video and guest cards, and view insights on reach, clicks and saves. Listeners can save episodes, receive auto‑notifications to share new episodes, and join conversations.",
-            "inputHash": "dd770c52d5fdf34709326c136d72cb8b7f3f3b03bba2d3faad742658df6c6f47",
-            "generatedAt": "2026-09-18T11:07:09Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Threads adds new podcast tools for creators and listeners",
-                "inputHash": "dd770c52d5fdf34709326c136d72cb8b7f3f3b03bba2d3faad742658df6c6f47",
-                "generatedAt": "2026-09-18T11:07:09Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Threads introduces podcast features: creators can show banners on profiles, feature episodes with a picker and tappable cards, share highlights via transcript, video and guest cards, and view insights on reach, clicks and saves. Listeners can save episodes, receive auto‑notifications to share new episodes, and join conversations.",
-                "inputHash": "dd770c52d5fdf34709326c136d72cb8b7f3f3b03bba2d3faad742658df6c6f47",
-                "generatedAt": "2026-09-18T11:07:09Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Threads、ポッドキャスト向けツールを拡充",
-            "summary": "Threadsはポッドキャスト制作者とリスナー向けに新機能を追加した。プロフィールや投稿にバナーを表示でき、エピソードピッカーで好きな回をカード化して共有できる。ハイライトやゲスト情報を文字起こしや動画、ゲストカード付きで投稿可能。フィード上でエピソードを保存し、通知設定で新エピソードのシェアをリマインドできる。インサイトではリーチやエンゲージメント、クリック・保存数が確認できる。",
-            "inputHash": "28042457718948478fdcd08d17e58a74ff11acce78e4a788410ab984002f5c7e",
-            "generatedAt": "2026-09-18T11:07:09Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Threads、ポッドキャスト向けツールを拡充",
-                "inputHash": "28042457718948478fdcd08d17e58a74ff11acce78e4a788410ab984002f5c7e",
-                "generatedAt": "2026-09-18T11:07:09Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Threadsはポッドキャスト制作者とリスナー向けに新機能を追加した。プロフィールや投稿にバナーを表示でき、エピソードピッカーで好きな回をカード化して共有できる。ハイライトやゲスト情報を文字起こしや動画、ゲストカード付きで投稿可能。フィード上でエピソードを保存し、通知設定で新エピソードのシェアをリマインドできる。インサイトではリーチやエンゲージメント、クリック・保存数が確認できる。",
-                "inputHash": "28042457718948478fdcd08d17e58a74ff11acce78e4a788410ab984002f5c7e",
-                "generatedAt": "2026-09-18T11:07:09Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "social-media-today-meta-ads-7a3735fa2125245b701f",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Meta launches Meta One for Business add-on packages",
-      "url": "https://www.socialmediatoday.com/news/meta-launches-meta-one-for-business-add-on-packages/830469/",
-      "publishedDate": "2026-09-15",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-10-15T19:54:50Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "7a3735fa2125245b701f0403e70d5be9f38bfb2c05a2f55eb26f365c64100363",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta launches Meta One for Business subscription packages",
-            "summary": "Meta announced Meta One for Business subscription packages that add AI‑powered tools such as competitive insights, extended audience history, custom audience data, advanced content scheduling, Instagram post and Reel links, a bold Facebook follow button, WhatsApp Verified Channels and an AI chatbot. Plans range from $14.99 to $499 per month.",
-            "inputHash": "7de2762276cb59e3bfdc1341568a2092bc711038523c4e61fbbaea240ae00a8c",
-            "generatedAt": "2026-09-23T13:03:46Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta launches Meta One for Business subscription packages",
-                "inputHash": "7de2762276cb59e3bfdc1341568a2092bc711038523c4e61fbbaea240ae00a8c",
-                "generatedAt": "2026-09-23T13:03:46Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta announced Meta One for Business subscription packages that add AI‑powered tools such as competitive insights, extended audience history, custom audience data, advanced content scheduling, Instagram post and Reel links, a bold Facebook follow button, WhatsApp Verified Channels and an AI chatbot. Plans range from $14.99 to $499 per month.",
-                "inputHash": "7de2762276cb59e3bfdc1341568a2092bc711038523c4e61fbbaea240ae00a8c",
-                "generatedAt": "2026-09-23T13:03:46Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta、AI搭載のMeta One for Businessサブスクリプションを開始",
-            "summary": "Metaは、AI機能を組み込んだMeta One for Businessのサブスクリプションパッケージを発表した。月額14.99ドルから499ドルまでの4段階で、Instagramの競合分析や拡張インサイト履歴、Facebookのカスタムオーディエンス分析、コンテンツスケジューリング、投稿やリールへのリンク付与（プラン別上限あり）などを提供する。さらに、Facebookの目立つフォローボタン、WhatsAppのVerified Channels、24時間対応のAIチャットボット「Meta Business Agent」も利用可能となった。",
-            "inputHash": "93a5ef31ebe24309529d94734f1824dcd58a076ed84a10bbd388cda8677a66fc",
-            "generatedAt": "2026-09-24T10:49:46Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta、AI搭載のMeta One for Businessサブスクリプションを開始",
-                "inputHash": "93a5ef31ebe24309529d94734f1824dcd58a076ed84a10bbd388cda8677a66fc",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaは、AI機能を組み込んだMeta One for Businessのサブスクリプションパッケージを発表した。月額14.99ドルから499ドルまでの4段階で、Instagramの競合分析や拡張インサイト履歴、Facebookのカスタムオーディエンス分析、コンテンツスケジューリング、投稿やリールへのリンク付与（プラン別上限あり）などを提供する。さらに、Facebookの目立つフォローボタン、WhatsAppのVerified Channels、24時間対応のAIチャットボット「Meta Business Agent」も利用可能となった。",
-                "inputHash": "93a5ef31ebe24309529d94734f1824dcd58a076ed84a10bbd388cda8677a66fc",
-                "generatedAt": "2026-09-24T10:49:46Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "social-media-today-meta-ads-458f353eef407444549b",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Meta adds more creator partnership tools",
-      "url": "https://www.socialmediatoday.com/news/meta-adds-more-creator-partnership-tools/830480/",
-      "publishedDate": "2026-09-15",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-10-15T19:54:50Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "458f353eef407444549b3ec68b6489d82873f8642f1707db100854945d78bcbc",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "f7b0adb369ffcbd619c21c1721253078848aebcfffea27ff75c065de35b1c750",
-            "generatedAt": null,
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "f7b0adb369ffcbd619c21c1721253078848aebcfffea27ff75c065de35b1c750",
-                "generatedAt": null,
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "f7b0adb369ffcbd619c21c1721253078848aebcfffea27ff75c065de35b1c750",
-                "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta、クリエイターパートナーシップ向けツールを拡充",
-            "summary": "Metaは新たにCreator Marketing Hubを公開し、ブランドがクリエイターを検索・提携できる機能を統合したUIを提供した。予測アフィリエイト検索や目的別コンテンツ推奨、ワンクリック広告作成、コンテンツ権限管理、音楽・スタンプ除去などの広告編集機能を搭載。提携メッセージングやCreator Marketplace API・Messaging APIの拡充、Content Discovery APIで上位オーガニックコンテンツ推奨や高度なフィルタ検索が可能に。Meta AIビジネスアシスタントもHubに統合され、Instagram向けライブ動画広告が9月29日から開始される。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-17T04:55:10Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta、クリエイターパートナーシップ向けツールを拡充",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-17T04:55:10Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaは新たにCreator Marketing Hubを公開し、ブランドがクリエイターを検索・提携できる機能を統合したUIを提供した。予測アフィリエイト検索や目的別コンテンツ推奨、ワンクリック広告作成、コンテンツ権限管理、音楽・スタンプ除去などの広告編集機能を搭載。提携メッセージングやCreator Marketplace API・Messaging APIの拡充、Content Discovery APIで上位オーガニックコンテンツ推奨や高度なフィルタ検索が可能に。Meta AIビジネスアシスタントもHubに統合され、Instagram向けライブ動画広告が9月29日から開始される。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-17T04:55:10Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "meta-product-news-rss-7ec28c89eba18f710148",
-      "sourceId": "meta-product-news-rss",
-      "title": "Introducing Meta One: A Subscription Service With More Features and AI to Create, Connect, and Stand Out",
-      "url": "https://about.fb.com/news/2026/09/introducing-meta-one-subscription-service-more-features-ai/",
-      "publishedDate": "2026-09-15",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-16T07:17:13Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
-      "platformIds": [
-        "meta-platforms"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "7ec28c89eba18f71014806f8761c9662a7068ae8ed01ebd3e8b28d182c8a14ea",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "5c41c554fe0b0638450efe0176a2a866abd1bf60f0a97075524662431d80d0be",
-            "generatedAt": null,
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "5c41c554fe0b0638450efe0176a2a866abd1bf60f0a97075524662431d80d0be",
-                "generatedAt": null,
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "5c41c554fe0b0638450efe0176a2a866abd1bf60f0a97075524662431d80d0be",
-                "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta、個人・クリエイター・企業向けサブスクリプション「Meta One」開始",
-            "summary": "Metaは新たにサブスクリプションサービス「Meta One」を発表し、個人・クリエイター・企業向けにプランを提供する。Instagram Plus、Facebook Plus、WhatsApp Plusといった単体プランではカスタムフォントや通知、メッセンジャーのカスタマイズ、チャットバックアップなどの機能が追加され、Core・PremiumバンドルではAIによる画像・動画生成やRestyleなどの高度なAIツールが利用可能になる。価格は単体プランが月額2.99ドル、個人バンドルが7.99ドル、クリエイター・ビジネスバンドルが14.99ドルで、全世界で提供される。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-19T04:39:53Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta、個人・クリエイター・企業向けサブスクリプション「Meta One」開始",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-19T04:39:53Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaは新たにサブスクリプションサービス「Meta One」を発表し、個人・クリエイター・企業向けにプランを提供する。Instagram Plus、Facebook Plus、WhatsApp Plusといった単体プランではカスタムフォントや通知、メッセンジャーのカスタマイズ、チャットバックアップなどの機能が追加され、Core・PremiumバンドルではAIによる画像・動画生成やRestyleなどの高度なAIツールが利用可能になる。価格は単体プランが月額2.99ドル、個人バンドルが7.99ドル、クリエイター・ビジネスバンドルが14.99ドルで、全世界で提供される。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-19T04:39:53Z",
                 "reviewedAt": null
               }
             }
