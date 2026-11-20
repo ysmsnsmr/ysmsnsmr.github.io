@@ -128,8 +128,8 @@ class MalaysiaJevEditorialRoutingTests(unittest.TestCase):
         self.assertEqual(report["summary"]["selectedCount"], 2)
         self.assertEqual(report["results"][2]["publicationDecision"], "excluded_editorial_budget")
 
-    def test_default_editorial_budget_selects_thirty_items(self) -> None:
-        candidates = [item(f"Distinct update {index}", f"https://example.test/update-{index}") for index in range(31)]
+    def test_default_editorial_budget_selects_forty_items(self) -> None:
+        candidates = [item(f"Distinct update {index}", f"https://example.test/update-{index}") for index in range(41)]
         output, report = routing.route_candidates(
             payload(candidates),
             payload([]),
@@ -139,9 +139,9 @@ class MalaysiaJevEditorialRoutingTests(unittest.TestCase):
             post_json=lambda *_: response("direct_life_impact"),
         )
 
-        self.assertEqual(len(output["items"]), 30)
-        self.assertEqual(report["summary"]["selectedCount"], 30)
-        self.assertEqual(report["results"][30]["publicationDecision"], "excluded_editorial_budget")
+        self.assertEqual(len(output["items"]), 40)
+        self.assertEqual(report["summary"]["selectedCount"], 40)
+        self.assertEqual(report["results"][40]["publicationDecision"], "excluded_editorial_budget")
 
     def test_unclear_item_is_kept_only_when_the_legacy_baseline_selected_it(self) -> None:
         output, report = routing.route_candidates(

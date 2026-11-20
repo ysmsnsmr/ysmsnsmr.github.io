@@ -2276,3 +2276,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Extend the shared label enum and render disclosures; verify a saved news day with one artifact-only classification call before publication.
 - Revisit when: Actionable decisions or disaster information are repeatedly grouped as statements.; Grouping does not improve readability.
+
+<!-- idea-gate:20261120-malaysia-40-item-budget -->
+## Raise the existing selection and summary budgets from 30 to 40 on the next update
+
+- Record ID: `20261120-malaysia-40-item-budget`
+- Evaluated: 2026-11-20T09:00:00+08:00
+- Project: Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 85/100
+- Confidence: high - This is a reversible parameter change with focused boundary tests; the next real 40-item scheduled artifact remains to be observed.
+
+### Idea Card
+
+- Purpose: Allow more relevant news to receive summaries each day.
+- First experience: Next scheduled update can select and summarize up to 40 eligible articles.
+- Scope and cost: Existing budget constants and workflow configuration only; up to ten additional article generations, unchanged per-article limits and one shared display classification call.
+- Continuation boundary: Owner reviews duration, cost and output quality; revert the coordinated caps to 30 if unsuitable. Existing published news is not regenerated.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 12/15 |
+| `evidence_and_learning` | 11/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 19/20 |
+| **Total** | **85/100** |
+
+### Next Step
+
+- Action: Align all production budgets at 40, test 40/41 boundaries and fallback behavior, and merge without rerunning publication.
+- Revisit when: Runtime or cost becomes disproportionate.; Lower-priority news weakens the reading experience.
