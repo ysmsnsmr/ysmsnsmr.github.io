@@ -8,7 +8,7 @@ their JSON order until this cap is reached.
 import os
 
 
-DEFAULT_FORCE_ALL_REQUEST_CAP = 30
+DEFAULT_FORCE_ALL_REQUEST_CAP = 40
 
 
 def force_all_request_cap() -> int:
