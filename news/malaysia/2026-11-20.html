@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2026年11月20日のニュースまとめ | マレーシア生活ニュース</title>
+  <meta name="theme-color" content="#006b5f">
+  <meta name="apple-mobile-web-app-title" content="MY生活ニュース">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32-v1.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon-180-v1.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="./apple-touch-icon-167-v1.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="./apple-touch-icon-152-v1.png">
+  <link rel="manifest" href="./site.webmanifest">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7f4;
+      --panel: #ffffff;
+      --panel-subtle: #fbfcfa;
+      --panel-translucent: rgba(255, 255, 255, 0.68);
+      --ink: #1b2420;
+      --muted: #65716c;
+      --line: #dce3dd;
+      --accent: #006b5f;
+      --accent-strong: #004c45;
+      --accent-soft: #e5f3ef;
+      --warn: #8f4c00;
+      --focus: #f4c04d;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --radius-control: 6px;
+      --radius-card: 8px;
+      --radius-pill: 999px;
+      --target-min: 44px;
+      --shadow: 0 12px 28px rgba(27, 36, 32, 0.07);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+    }
+    main { width: min(880px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 56px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 8px; font-size: 1.65rem; line-height: 1.3; }
+    h2 { margin: 0; font-size: 1.25rem; }
+    h3 { margin: 0; font-size: 1.1rem; line-height: 1.55; overflow-wrap: anywhere; }
+    a { color: var(--accent); text-underline-offset: 0.18em; }
+    a:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: var(--radius-control); }
+    .page-header { margin-bottom: 28px; }
+    .page-nav { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 28px; }
+    .back-link { font-weight: 700; }
+    .markdown-link { color: var(--muted); font-size: .9rem; }
+    .eyebrow { margin-bottom: 3px; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .subhead { max-width: 650px; margin-bottom: 0; color: var(--muted); }
+    .category-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .category-nav a { border: 1px solid var(--line); border-radius: var(--radius-pill); background: var(--panel); padding: 6px 11px; color: var(--accent-strong); font-size: .9rem; font-weight: 700; text-decoration: none; }
+    .daily-category + .daily-category { margin-top: 32px; }
+    .daily-category-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; border-bottom: 2px solid var(--accent-soft); padding-bottom: 9px; }
+    .daily-category-head span { color: var(--muted); font-size: .9rem; }
+    .daily-item-list { display: grid; gap: 12px; margin-top: 12px; }
+    .daily-item { border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--panel); padding: 18px; box-shadow: var(--shadow); }
+    .daily-item-head { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+    .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
+    .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
+    .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .term-trigger { display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }
+    .term-trigger:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .term-icon { display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }
+    .term-popover { position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > h2 { color: var(--accent-strong); font-size: 1rem; }
+    .location-map > h2 span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .back-to-top { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 1001; display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--line); border-radius: 50%; background: var(--accent-strong); color: #fff; box-shadow: var(--shadow); text-decoration: none; font-size: 1.6rem; line-height: 1; }
+    .back-to-top[hidden] { display: none; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
+    .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
+    .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
+    .source-note { color: var(--muted); }
+    .source-only { margin-top: 32px; }
+    .source-only-list { width: 100%; max-width: 100%; margin: 12px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+    .source-only-list li { display: block; width: 100%; min-width: 0; max-width: 100%; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: .88rem; overflow-wrap: anywhere; }
+    .source-only-title { display: block; width: 100%; min-width: 0; max-width: 100%; color: var(--ink); white-space: normal; overflow-wrap: anywhere; word-break: break-all; }
+    .source-only-meta { color: var(--muted); font-size: .82rem; }
+    .muted { color: var(--muted); }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.4rem; }
+      main { width: min(100% - 20px, 880px); padding-top: 20px; }
+      .page-nav { align-items: flex-start; flex-direction: column; gap: 6px; margin-bottom: 24px; }
+      .daily-item { padding: 15px; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
+    }
+
+    :is(.disaster-group, .statement-group) { border-block: 1px solid var(--line); padding: 18px 0; margin-bottom: 28px; }
+    :is(.disaster-heading, .statement-heading) { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    :is(.disaster-heading, .statement-heading) h2 { font-size: 1.15rem; }
+    :is(.disaster-heading, .statement-heading) > span { color: var(--muted); font-size: .85rem; }
+    :is(.disaster-story, .statement-story) { border-bottom: 1px solid var(--line); }
+    :is(.disaster-story, .statement-story) > summary { position: relative; list-style: none; cursor: pointer; padding: 14px 30px 14px 0; min-height: 44px; font-weight: 700; overflow-wrap: anywhere; }
+    :is(.disaster-story, .statement-story, .disaster-more, .statement-more) > summary::-webkit-details-marker { display: none; }
+    :is(.disaster-story, .statement-story) > summary::after { content: '+'; position: absolute; right: 4px; top: 14px; color: var(--accent); font-size: 1.2rem; }
+    :is(.disaster-story, .statement-story)[open] > summary::after { content: '\2212'; }
+    .disaster-region { display: block; color: var(--accent-strong); font-size: .8rem; font-weight: 400; margin-bottom: 3px; }
+    :is(.disaster-story, .statement-story) > .daily-item { border: 0; border-radius: 0; box-shadow: none; background: transparent; padding: 0 0 18px; }
+    :is(.disaster-story, .statement-story) > .daily-item > h3 { display: none; }
+    :is(.disaster-story, .statement-story) .daily-item-head { display: none; }
+    :is(.disaster-more, .statement-more) { margin-top: 8px; }
+    :is(.disaster-more, .statement-more) > summary { cursor: pointer; list-style: none; min-height: 44px; padding: 8px 0; font-size: .9rem; color: var(--accent); font-weight: 700; }
+    :is(.disaster-more, .statement-more) > summary::before { content: '+ '; }
+    :is(.disaster-more, .statement-more)[open] > summary::before { content: '\2212 '; }
+    :is(.disaster-story, .statement-story, .disaster-more, .statement-more) > summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <main id="page-top" tabindex="-1">
+    <header class="page-header">
+      <nav class="page-nav" aria-label="ページ内ナビゲーション">
+        <a class="back-link" href="./index.html">← マレーシア生活ニュース</a>
+        <a class="markdown-link" href="./2026-11-20.md">Markdown版</a>
+      </nav>
+      <p class="eyebrow">Daily summary</p>
+      <h1>2026年11月20日のニュースまとめ</h1>
+      <p class="subhead">2026年11月20日 09:27 MYT 時点のまとめ。期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。</p>
+    </header>
+    <nav class="category-nav" aria-label="カテゴリへ移動">
+      <a href="#disaster-heading">自然災害関連 2件</a><a href="#category-1">暮らしに関わる更新 10件</a><a href="#category-2">社会・経済の動き 12件</a><a href="#statement-heading">政治・行政の発言 4件</a>
+    </nav>
+
+    <section class="location-map" id="news-map" aria-labelledby="map-heading">
+      <h2 id="map-heading">記事の場所を地図で見る <span>9地域</span></h2>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="ipoh" data-lat="4.6" data-lon="101.09" data-zoom="11"><strong>イポー</strong><ul><li><a href="#article-4">Leapmotor、イポーにAllure Auto運営のサービスセンター開設</a></li></ul></li>
+<li class="map-place" data-place-key="sabah" data-lat="5.6" data-lon="116.5" data-zoom="7"><strong>サバ州</strong><ul><li><a href="#article-8">MetMalaysia、11月19日に各地へ雷雨警報を発表</a></li>
+<li><a href="#article-23">TUDM将校5人を含む11人を逮捕、軍輸送手段を使う麻薬組織を摘発</a></li></ul></li>
+<li class="map-place" data-place-key="labuan" data-lat="5.28" data-lon="115.24" data-zoom="11"><strong>ラブアン</strong><ul><li><a href="#article-8">MetMalaysia、11月19日に各地へ雷雨警報を発表</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-8">MetMalaysia、11月19日に各地へ雷雨警報を発表</a></li></ul></li>
+<li class="map-place" data-place-key="putrajaya" data-lat="2.93" data-lon="101.68" data-zoom="11"><strong>プトラジャヤ</strong><ul><li><a href="#article-8">MetMalaysia、11月19日に各地へ雷雨警報を発表</a></li></ul></li>
+<li class="map-place" data-place-key="selangor" data-lat="3.1" data-lon="101.5" data-zoom="9"><strong>セランゴール州</strong><ul><li><a href="#article-8">MetMalaysia、11月19日に各地へ雷雨警報を発表</a></li></ul></li>
+<li class="map-place" data-place-key="johor" data-lat="2.0" data-lon="103.5" data-zoom="8"><strong>ジョホール州</strong><ul><li><a href="#article-8">MetMalaysia、11月19日に各地へ雷雨警報を発表</a></li>
+<li><a href="#article-9">ジョホール州、孤児やひとり親母らへの支援を拡充</a></li></ul></li>
+<li class="map-place" data-place-key="johor-bahru" data-lat="1.49" data-lon="103.76" data-zoom="11"><strong>ジョホールバル</strong><ul><li><a href="#article-8">MetMalaysia、11月19日に各地へ雷雨警報を発表</a></li></ul></li>
+<li class="map-place" data-place-key="kota-bharu" data-lat="6.13" data-lon="102.24" data-zoom="11"><strong>コタバル</strong><ul><li><a href="#article-28">消防救助局、コタバルからスバンへ臓器搬送便を運航</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </section>
+
+    <section class="disaster-group" aria-labelledby="disaster-heading"><div class="disaster-heading"><h2 id="disaster-heading">自然災害関連</h2><span>2件</span></div><details class="disaster-story"><summary><span class="disaster-region">Klang Valley周辺</span><span>MetMalaysia、11月19日に各地へ雷雨警報を発表</span></summary>
+      <article class="daily-item" id="article-8">
+        <div class="daily-item-head">
+          <span class="item-number">8</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>MetMalaysia、11月19日に各地へ雷雨警報を発表</h3>
+        <p class="daily-summary">マレーシア気象局（MetMalaysia）は11月19日午後0時45分、半島部の広範囲、<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>、<a class="place-link" data-place-key="labuan" href="https://www.openstreetmap.org/?mlat=5.28&amp;mlon=115.24#map=11/5.28/115.24" title="ラブアンの概略位置を地図で見る">ラブアン</a>に雷雨警報を発表しました。大雨、落雷、突風への警戒を呼びかけ、半島部中部・南部では午後3時まで、<a class="place-link" data-place-key="labuan" href="https://www.openstreetmap.org/?mlat=5.28&amp;mlon=115.24#map=11/5.28/115.24" title="ラブアンの概略位置を地図で見る">ラブアン</a>と<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>の対象地域では午後4時まで雷雨となる予報を示しました。対象は<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>、<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">プトラジャヤ</a>、ヌグリ・スンビラン、<a class="place-link" data-place-key="selangor" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=101.5#map=9/3.1/101.5" title="セランゴール州の概略位置を地図で見る">セランゴール州</a>の6地区、<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>の<a class="place-link" data-place-key="johor-bahru" href="https://www.openstreetmap.org/?mlat=1.49&amp;mlon=103.76#map=11/1.49/103.76" title="ジョホールバルの概略位置を地図で見る">ジョホールバル</a>、クライ、セガマト、クルアン、バトゥ・パハトのほか、<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>の内陸部・西海岸部、ラハダトゥ、サンダカン、クダッです。警報の終了時刻はいずれも過ぎています。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/19/metmalaysia-thunderstorms-to-hit-klang-valley-johor-sabah-and-labuan/243890">出典: Malay Mail（2026年11月19日）</a>
+      </article>
+    </details><details class="disaster-story"><summary><span>ランタウ・パンジャンのゴロク川、水位が警戒水準超え</span></summary>
+      <article class="daily-item" id="article-1">
+        <div class="daily-item-head">
+          <span class="item-number">1</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>ランタウ・パンジャンのゴロク川、水位が警戒水準超え</h3>
+        <p class="daily-summary">クランタン州にある河川水位の監視所4カ所のうち1カ所で、2026年11月19日午後10時45分時点に水位が警戒水準を超えた。該当地点はランタウ・パンジャンのゴロク川。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/sungai-golok-di-rantau-panjang-lepasi-paras-waspada">出典: Astro Awani（2026年11月19日）</a>
+      </article>
+    </details></section>
+            <section class="daily-category" aria-labelledby="category-1">
+              <div class="daily-category-head">
+                <h2 id="category-1">暮らしに関わる更新</h2>
+                <span>10件</span>
+              </div>
+              <div class="daily-item-list">
+
+      <article class="daily-item" id="article-2">
+        <div class="daily-item-head">
+          <span class="item-number">2</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>ペナンのジャラン・トゥン・ドクター・アワンで221日間の迂回</h3>
+        <p class="daily-summary">MRT Corpによると、ムティアラ線LRTの杭打ち工事と恒久構造物の建設に伴い、バヤン・レパスのジャラン・トゥン・ドクター・アワンでは、2026年11月21日から2027年6月30日まで、両方向で24時間の交通迂回が実施されます。対象は、コムプレックス・スリ・ルラウからSJKCミンシンまでの区間（コムター方面）と、アマリSPICEホテルからSPICEアクアティックセンターまでの区間（バヤン・レパス方面）です。MRT Corpは、対象区間を通行する道路利用者に注意を呼びかけています。交通整理と安全確保のため、現場には標識8基のほか、カラーコーンや誘導員を配置する予定です。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/19/penang-motorists-face-221-days-of-diversions-along-jalan-tun-dr-awang-for-lrt-works/243960">出典: Malay Mail（2026年11月19日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-3">
+        <div class="daily-item-head">
+          <span class="item-number">3</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>LeapmotorのB10など3車種、8年間の整備費を最大RM2,445節約</h3>
+        <p class="daily-summary">Leapmotor Malaysiaは、B10、C10、C10 Plusの整備スケジュールを2026年11月から更新しました。新しいスケジュールでは整備費が安くなり、8年間で最大RM2,445の節約になるとしています。</p>
+
+        <a class="source-link" href="https://paultan.org/2026/11/19/leapmotor-b10-c10-c10-evs-now-cheaper-to-service-up-to-rm2445-in-savings-over-eight-years/">出典: Paul Tan（2026年11月19日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-4">
+        <div class="daily-item-head">
+          <span class="item-number">4</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>Leapmotor、<a class="place-link" data-place-key="ipoh" href="https://www.openstreetmap.org/?mlat=4.6&amp;mlon=101.09#map=11/4.6/101.09" title="イポーの概略位置を地図で見る">イポー</a>にAllure Auto運営のサービスセンター開設</h3>
+        <p class="daily-summary">Leapmotorの新しいサービスセンターが<a class="place-link" data-place-key="ipoh" href="https://www.openstreetmap.org/?mlat=4.6&amp;mlon=101.09#map=11/4.6/101.09" title="イポーの概略位置を地図で見る">イポー</a>にオープンしました。正規販売店のAllure Autoが運営し、4,100平方フィートの施設には、アフターサービス担当者7人が対応する整備ベイが3つあります。Wi-Fiや飲み物を利用できる顧客ラウンジも設けられています。</p>
+
+        <a class="source-link" href="https://paultan.org/2026/11/19/leapmotor-allure-auto-ipoh-service-centre-is-now-open/">出典: Paul Tan（2026年11月19日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-5">
+        <div class="daily-item-head">
+          <span class="item-number">5</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>マレーシア、11月23日に国会周辺で緊急警報システムを試験</h3>
+        <p class="daily-summary">ファーミ通信相によると、マレーシアの国家緊急早期警報システムは、2026年11月23日に国会周辺でシミュレーション試験を行い、同月29日には全国で試験を実施する予定です。マレーシア通信・マルチメディア委員会（MCMC）は、携帯電話に届く警報メッセージや音について知らせる広報を行います。試験の通知は実際の緊急警報ではないと理解してもらうことが目的で、対応する携帯電話にはアプリのダウンロードやインストールなしで通知が届くとしています。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/19/fahmi-malaysia-to-test-emergency-alert-system-near-parliament-on-nov-23-nationwide-on-nov-29/243925">出典: Malay Mail（2026年11月19日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-6">
+        <div class="daily-item-head">
+          <span class="item-number">6</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>MCMC、緊急警報受信に携帯OSの更新呼びかけ</h3>
+        <p class="daily-summary">マレーシア通信・マルチメディア委員会（MCMC）は、新たな早期警報システム（EWS）の緊急通知を受け取れるよう、携帯電話のOSを更新するよう呼びかけています。システムは段階的に導入されており、指定地域内の対応端末へ一斉に通知を送るセルブロードキャスト（CBS）技術を採用。アプリのダウンロードや登録、専用サービスへの加入は不要です。 MCMCが初期の目安として示した対応機種は、iOS 27.2以降を搭載したiPhone 11以降、Android 12以降の端末、EMUI 16以降のHuawei端末です。ただし、最終的な技術確認が必要としています。利用者には、端末で利用できる最新のソフトウェア更新を適用し、更新後に再起動すること、該当する場合は緊急警報の設定を有効にすることも勧めています。MCMCは11月19日、報道機関の編集長らにEWSを紹介し、通知方法を説明する特別説明会を開いたとしています。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/19/update-your-phones-to-receive-malaysias-new-emergency-alerts-mcmc-tells-public/243909">出典: Malay Mail（2026年11月19日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-7">
+        <div class="daily-item-head">
+          <span class="item-number">7</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>MCRの11月19・20日公演に向け、Rapid KLが交通案内</h3>
+        <p class="daily-summary">Rapid KLは、マイ・ケミカル・ロマンスが11月19、20日にTMスタジアム・ナショナルで行う公演の来場者向けに、移動案内を発表しました。</p>
+
+        <a class="source-link" href="https://paultan.org/2026/11/19/my-chemical-romance-concert-tour-in-malaysia-rapid-kl/">出典: Paul Tan（2026年11月19日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-9">
+        <div class="daily-item-head">
+          <span class="item-number">9</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3><a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>、孤児やひとり親母らへの支援を拡充</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>政府は、2027年度州予算にBantuan Kasih <a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">Johor</a>（BKJ）の資金としてRM263.72 millionを計上しました。支援は25の対象カテゴリーに分けて行われ、州内の82万人超に届ける計画です。オン・ハフィズ・ガジ州首相によると、第5期と第6期の支援はそれぞれ2026年12月と2027年2月に実施される予定で、孤児、ひとり親の母親、露店商、配達員らが対象に含まれます。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/19/johor-extends-bantuan-kasih-aid-to-orphans-single-mothers-hawkers-and-delivery-riders/243870">出典: Malay Mail（2026年11月19日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-10">
+        <div class="daily-item-head">
+          <span class="item-number">10</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>ザヒド副首相、北東モンスーンに10万人超を動員しボート約2500隻を準備</h3>
+        <p class="daily-summary">ザヒド副首相によると、政府は今年の北東モンスーンに備え、対応・技術機関の職員10万人超を動員し、ボート約2,500隻を準備した。ほかに四輪駆動車2,000台超、トラック1,100台超、航空機28機、救命胴衣3万5,000着超も備えている。準備は国家災害管理庁（Nadma）が、政府機関や州・郡当局、戦略的パートナーと連携して調整したという。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/19/over-100000-personnel-2500-boats-mobilised-for-north-east-monsoon-says-zahid/243868">出典: Malay Mail（2026年11月19日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-11">
+        <div class="daily-item-head">
+          <span class="item-number">11</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>11月22日朝、KLでPDRMファンランに伴う道路閉鎖</h3>
+        <p class="daily-summary">PDRM Fun Run 2026の開催に伴い、11月22日（日）の朝、KL市内で道路が閉鎖される予定です。閉鎖される道路などの詳細は、出典記事で確認してください。</p>
+
+        <a class="source-link" href="https://paultan.org/2026/11/19/kl-road-closures-this-sun-morning-for-pdrm-fun-run/">出典: Paul Tan（2026年11月19日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-12">
+        <div class="daily-item-head">
+          <span class="item-number">12</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>UNHCR、難民登録業務を終了 政府主導の登録に移行</h3>
+        <p class="daily-summary">UNHCRマレーシアは2026年11月18日付で、難民・庇護希望者の登録と書類発行を終了した。政府が政府主導のプログラムで登録を引き継ぐことを受けたもので、UNHCRは政府の取り組みを全面的に支持すると表明した。UNHCRは、難民や庇護希望者の保護を移行期間中も維持することを目指す「移行ロードマップ案」について、政府と協議を続けている。案は保護措置、効果的な情報共有、関係者間の連携を重視するという。移行期間中も技術的助言や能力強化への協力を続けるほか、第三国定住や緊急の保護が必要な人への支援など、他の活動も継続するとしている。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/19/unhcr-ends-refugee-registration-role-for-malaysia-as-putrajaya-moves-in/243853">出典: Malay Mail（2026年11月19日）</a>
+      </article>
+
+              </div>
+            </section>
+
+
+            <section class="daily-category" aria-labelledby="category-2">
+              <div class="daily-category-head">
+                <h2 id="category-2">社会・経済の動き</h2>
+                <span>12件</span>
+              </div>
+              <div class="daily-item-list">
+
+      <article class="daily-item" id="article-13">
+        <div class="daily-item-head">
+          <span class="item-number">13</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>ECRL車内を紹介、座席は向きを変えて対面にも</h3>
+        <p class="daily-summary">東海岸鉄道リンク（ECRL）は、2026年12月に旅客営業を始める予定です。車両は6両編成の電車で、座席は向きを変えて向かい合わせにでき、家族やグループで座席配置を調整できます。エコノミーとビジネスの2クラスがあり、どちらも青い模様の座席と折りたたみ式テーブルを備えています。テーブルは最大25kgを支えられるとのことです。ビジネスクラスは2列ずつ、エコノミークラスは3列と2列の配置で、ビジネスクラスの座席にはヘッドレストがあり、座面が広く、よりクッション性のある仕様です。車内中央部にはビストロも設けられます。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/20/taking-the-ecrl-heres-what-to-expect-onboard-including-one-very-malaysian-necessity-video/243722">出典: Malay Mail（2026年11月20日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-14">
+        <div class="daily-item-head">
+          <span class="item-number">14</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>KPWKM、男性の問題や課題を調べる全国調査を実施</h3>
+        <p class="daily-summary">KPWKMは「Kajian Lelaki Budiman Negara」を実施し、男性が抱える問題や課題を調べる。回答者に選ばれたマレーシアの男性に、調査を成功させるため全面的に協力するよう呼びかけている。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/kpwkm-laksana-kajian-lelaki-budiman-negara-teliti-isu-dan-cabaran-golongan-itu">出典: Astro Awani（2026年11月20日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-16">
+        <div class="daily-item-head">
+          <span class="item-number">16</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>政治的意思と実効性ある制度が国の公正性強化の鍵</h3>
+        <p class="daily-summary">政治的な意思と効果的な制度が、国の公正性を強化する鍵となる。制度面にも目を向け、策定された政策や行動計画が不正行為の抑制や制度上の弱点への対処にどの程度有効かを評価する必要がある。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/keazaman-politik-sistem-berkesan-kunci-pengukuhan-integriti-negara">出典: Astro Awani（2026年11月20日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-17">
+        <div class="daily-item-head">
+          <span class="item-number">17</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>JKNS、病院で無停電電源装置の更新事業を実施</h3>
+        <p class="daily-summary">JKNSは、病院で無停電電源装置（UPS）を更新する複数の事業を実施した。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/projek-penggantian-sistem-bekalan-kuasa-tanpa-gangguan-dilaksanakan-jkns">出典: Astro Awani（2026年11月20日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-18">
+        <div class="daily-item-head">
+          <span class="item-number">18</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>調査回答者の72％、技能系卒業生は就職準備が不十分と回答</h3>
+        <p class="daily-summary">調査では、回答者の72％が技能分野の卒業生は就職に向けた準備ができていないと考えている。KESUMAとTalentCorpは、Industry ConnectプログラムとMyBakatエコシステムを通じて、産業界のニーズに技能を合わせるため、地元人材の育成を強化している。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/72-peratus-responden-berpendapat-graduan-bidang-kemahiran-belum-bersedia-bekerja-tinjauan">出典: Astro Awani（2026年11月20日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-19">
+        <div class="daily-item-head">
+          <span class="item-number">19</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>専門家、マレーシア・米国のAIクラウド協力で技術移転促進を指摘</h3>
+        <p class="daily-summary">専門家は、マレーシアと米国のAIクラウド協力が技術移転を促し、国内の専門性を高めるとの見方を示した。現地エンジニアは、設計・開発の段階から参加する必要があるという。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/kerjasama-awan-ai-malaysia-dorong-pemindahan-teknologi-bina-kepakaran-tempatan-pakar">出典: Astro Awani（2026年11月20日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-22">
+        <div class="daily-item-head">
+          <span class="item-number">22</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>MITIと税関、AIチップのマレーシア経由再輸出疑惑を調査</h3>
+        <p class="daily-summary">投資・貿易・産業省（MITI）は、マレーシア税関および関係する法執行機関と協力し、マレーシアに持ち込まれたAIチップが他国へ再輸出されたかどうかを調べています。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/miti-kastam-siasat-dakwaan-cip-ai-dieksport-semula-melalui-malaysia">出典: Astro Awani（2026年11月19日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-23">
+        <div class="daily-item-head">
+          <span class="item-number">23</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>TUDM将校5人を含む11人を逮捕、軍輸送手段を使う麻薬組織を摘発</h3>
+        <p class="daily-summary">マレーシア王立警察（PDRM）は、王立マレーシア空軍（TUDM）の航空輸送施設を使って麻薬を<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>に密輸し、国際市場に流通させていたとみられる麻薬密売組織を摘発しました。TUDMの将校5人を含む11人が逮捕されました。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/lima-pegawai-tudm-antara-11-ditahan-sindiket-dadah-guna-pengangkutan-tentera-terbongkar">出典: Astro Awani（2026年11月19日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-24">
+        <div class="daily-item-head">
+          <span class="item-number">24</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>UiTM副学長の後任、選考進行中で近く補充へ</h3>
+        <p class="daily-summary">高等教育相のザンブリー・アブドゥル・カディル氏は、マラ工科大学（UiTM）の副学長ポストについて、後任候補の選考が進んでいるため、近く空席が埋まる見通しだと述べました。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/kekosongan-jawatan-nc-uitm-akan-diisi-segera-proses-pemilihan-sedang-berjalan-zambry">出典: Astro Awani（2026年11月19日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-25">
+        <div class="daily-item-head">
+          <span class="item-number">25</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>洪水を受けFAMAが食料供給を継続監視、モハマド・サブ氏</h3>
+        <p class="daily-summary">モハマド・サブ氏によると、国内の複数地域を襲った洪水を受け、連邦農産物マーケティング庁（FAMA）は食料供給を引き続き監視している。掲載時点では、供給に影響する可能性のある急激な水位上昇について報告はないという。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/fama-terus-pantau-bekalan-makanan-susulan-banjir-mohamad-sabu">出典: Astro Awani（2026年11月19日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-27">
+        <div class="daily-item-head">
+          <span class="item-number">27</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>ナジブ氏支持者に自宅軟禁決定の擁護求める、議事録公開巡り</h3>
+        <p class="daily-summary">Projek SAMAとBersihは、ナジブ・ラザク氏の支持者に対し、恩赦委員会の会議議事録の公開を問題視するのではなく、同氏の自宅軟禁の決定を公に擁護するよう求めた。また、2018年のアンワル・イブラヒム氏の恩赦に関する議事録も公開するよう求める声を支持するよう呼びかけた。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/tahanan-rumah-najib-guna-butiran-minit-untuk-berhujah-jangan-pertikai-pendedahan--projek-sama">出典: Astro Awani（2026年11月19日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-28">
+        <div class="daily-item-head">
+          <span class="item-number">28</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>消防救助局、<a class="place-link" data-place-key="kota-bharu" href="https://www.openstreetmap.org/?mlat=6.13&amp;mlon=102.24#map=11/6.13/102.24" title="コタバルの概略位置を地図で見る">コタバル</a>からスバンへ臓器搬送便を運航</h3>
+        <p class="daily-summary">マレーシア消防救助局（JBPM）は11月19日、<a class="place-link" data-place-key="kota-bharu" href="https://www.openstreetmap.org/?mlat=6.13&amp;mlon=102.24#map=11/6.13/102.24" title="コタバルの概略位置を地図で見る">コタバル</a>からスバンへ複数の臓器を運ぶ航空便を運航しました。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/bomba-laksana-operasi-penerbangan-pemindahan-organ">出典: Astro Awani（2026年11月19日）</a>
+      </article>
+
+              </div>
+            </section>
+            <section class="statement-group" aria-labelledby="statement-heading"><div class="statement-heading"><h2 id="statement-heading">政治・行政の発言</h2><span>4件</span></div><details class="statement-story"><summary><span>ナンタ公共事業相、高速道路業界にメディアの指摘を改善の機会にするよう促す</span></summary>
+      <article class="daily-item" id="article-15">
+        <div class="daily-item-head">
+          <span class="item-number">15</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>ナンタ公共事業相、高速道路業界にメディアの指摘を改善の機会にするよう促す</h3>
+        <p class="daily-summary">アレクサンダー・ナンタ・リンギ公共事業相は、高速道路業界はメディアからの指摘を弱点の改善や、利用者向けサービスの質の向上につなげる機会と捉えるべきだと述べた。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/industri-lebuh-raya-perlu-terbuka-terima-teguran-media-nanta">出典: Astro Awani（2026年11月20日）</a>
+      </article>
+    </details><details class="statement-story"><summary><span>ファーミ氏、事業者に課題を政府へ伝えるよう促す</span></summary>
+      <article class="daily-item" id="article-20">
+        <div class="daily-item-head">
+          <span class="item-number">20</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>ファーミ氏、事業者に課題を政府へ伝えるよう促す</h3>
+        <p class="daily-summary">ファーミ氏は、事業者に対し、抱えている問題を政府に伝えるよう勧めた。政府は、ビジネス界が直面する課題を理解することに取り組むとしている。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/fahmi-saran-pengusaha-perniagaan-kemuka-isu-kepada-kerajaan">出典: Astro Awani（2026年11月20日）</a>
+      </article>
+    </details><details class="statement-story"><summary><span>MARA法改正案は最終段階、年内に下院提出の見通し</span></summary>
+      <article class="daily-item" id="article-21">
+        <div class="daily-item-head">
+          <span class="item-number">21</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>MARA法改正案は最終段階、年内に下院提出の見通し</h3>
+        <p class="daily-summary">マレーシア人民信託評議会（MARA）法（1966年）の改正案は最終段階にあり、今年の国会会期が終わる前に下院へ提出される見通しだと、アフマド・ザヒド副首相が述べました。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/pindaan-akta-mara-di-peringkat-akhir-dijangka-dibentang-tahun-ini-ahmad-zahid">出典: Astro Awani（2026年11月19日）</a>
+      </article>
+    </details><details class="statement-more"><summary>関連ニュースをさらに読む 1件</summary><details class="statement-story"><summary><span>ズルキフリ氏、イスラム慈善機関に統治・透明性の強化を求める</span></summary>
+      <article class="daily-item" id="article-26">
+        <div class="daily-item-head">
+          <span class="item-number">26</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>ズルキフリ氏、イスラム慈善機関に統治・透明性の強化を求める</h3>
+        <p class="daily-summary">国内のイスラム慈善機関は、社会からの信頼を高めるため、ガバナンスや透明性、専門性を強化する必要があるとズルキフリ氏が述べました。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/perkasa-tadbir-urus-ketelusan-institusi-amal-islam-zulkifli">出典: Astro Awani（2026年11月19日）</a>
+      </article>
+    </details></details></section>
+
+            <section class="source-only" aria-labelledby="source-only-heading">
+              <div class="daily-category-head">
+                <h2 id="source-only-heading">原文のみ</h2>
+                <span>2件</span>
+              </div>
+              <ul class="source-only-list">
+                <li>
+          <span class="source-only-title">原題：Setia Alam landslide: Road near Sri Pinang Apartments closed, no casualties</span>
+          <span class="source-only-meta">出典：Malay Mail（2026年11月19日）</span>
+          <a href="https://www.malaymail.com/news/malaysia/2026/11/19/setia-alam-landslide-road-near-sri-pinang-apartments-closed-no-casualties/243953">原文URL</a>
+        </li>
+<li>
+          <span class="source-only-title">原題：Number of flood evacuees drops in Perak, rises in Selangor</span>
+          <span class="source-only-meta">出典：Malay Mail（2026年11月19日）</span>
+          <a href="https://www.malaymail.com/news/malaysia/2026/11/19/number-of-flood-evacuees-drops-in-perak-rises-in-selangor/243876">原文URL</a>
+        </li>
+              </ul>
+            </section>
+
+  </main>
+  <a class="back-to-top" href="#page-top" aria-label="ページの先頭へ戻る" title="ページの先頭へ戻る" hidden><span aria-hidden="true">↑</span></a>
+  <script src="./daily-page.js" defer></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
+</body>
+</html>
