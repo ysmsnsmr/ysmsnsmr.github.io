@@ -2346,3 +2346,39 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Update existing relevance and display policies, retain conservative uncertainty handling, test and deploy the scoped change.
 - Revisit when: Isolated fires begin receiving disproportionate coverage.; Supplied RSS snippets omit the public effects needed for classification.
+
+<!-- idea-gate:20261121-malaysia-50-item-budget -->
+## Raise the existing selection and summary budgets from 40 to 50 on the next update
+
+- Record ID: `20261121-malaysia-50-item-budget`
+- Evaluated: 2026-11-21T15:30:00+08:00
+- Project: Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 85/100
+- Confidence: high - This is a reversible parameter change with focused boundary tests; actual 50-item runtime and quality remain to be observed.
+
+### Idea Card
+
+- Purpose: Allow more relevant news to receive summaries each day.
+- First experience: The next scheduled update can select and summarize up to 50 eligible articles.
+- Scope and cost: Existing budget constants and workflow configuration only; up to ten additional article generations, unchanged per-article limits and one shared display classification call.
+- Continuation boundary: Owner Yas reviews runtime, cost and output quality; revert coordinated caps to 40 if unsuitable. Stop after tests, CI and main integration; do not regenerate existing published news.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 12/15 |
+| `evidence_and_learning` | 11/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 19/20 |
+| **Total** | **85/100** |
+
+### Next Step
+
+- Action: Align production budgets at 50, test 50/51 boundaries and configuration fallback, then merge without rerunning publication.
+- Revisit when: Runtime or cost becomes disproportionate.; Lower-priority news weakens the reading experience.
+- Supersedes: `20261120-malaysia-40-item-budget`
