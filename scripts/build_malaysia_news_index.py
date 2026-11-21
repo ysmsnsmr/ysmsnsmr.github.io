@@ -704,7 +704,7 @@ def render_headline_group(day: NewsDay, items: list[tuple[int, NewsItem]], group
 
 
 def render_disaster_group(day: NewsDay) -> str:
-    return render_headline_group(day, disaster_items(day), "disaster", "自然災害関連")
+    return render_headline_group(day, disaster_items(day), "disaster", "災害・火災関連")
 
 
 def render_daily_sections(day: NewsDay) -> str:
@@ -743,7 +743,7 @@ def render_category_navigation(day: NewsDay) -> str:
     grouped = disaster_items(day)
     statements = statement_items(day)
     grouped_positions = {i for i, _ in grouped + statements}
-    links = [f'<a href="#disaster-heading">自然災害関連 {len(grouped)}件</a>'] if grouped else []
+    links = [f'<a href="#disaster-heading">災害・火災関連 {len(grouped)}件</a>'] if grouped else []
     for i, category in enumerate(CATEGORIES, 1):
         count = sum(item.category == category and position not in grouped_positions
                     for position, item in enumerate(ordered_items(day), 1))

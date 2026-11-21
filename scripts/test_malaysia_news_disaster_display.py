@@ -82,7 +82,7 @@ class DisasterDisplayTests(unittest.TestCase):
         self.assertEqual([i for i, _ in builder.disaster_items(day)], [2, 3, 4, 1])
         for home in (True, False):
             page = builder.render_daily_page(day, is_home=home)
-            self.assertIn("自然災害関連", page)
+            self.assertIn("災害・火災関連", page)
             self.assertIn("関連ニュースをさらに読む 1件", page)
             self.assertEqual(page.count('class="disaster-story"'), 4)
             self.assertEqual(page.count('class="daily-item"'), 6)
@@ -113,7 +113,7 @@ class DisasterDisplayTests(unittest.TestCase):
         self.assertNotIn('class="disaster-more"', page)
         self.assertEqual(page.count('class="daily-item"'), 6)
         day.display_labels = {}
-        self.assertNotIn("自然災害関連", builder.render_daily_sections(day))
+        self.assertNotIn("災害・火災関連", builder.render_daily_sections(day))
 
     def test_single_api_call_and_safe_diagnostics(self):
         completion = SimpleNamespace(parsed=response(), diagnostic={"usage": {"total_tokens": 300},

@@ -85,7 +85,7 @@ class StatementDisplayTests(unittest.TestCase):
         result = display.classify(self.path, api_key="not-a-key", request=request)
         request.assert_called_once()
         self.assertEqual(result["status"], "applied")
-        self.assertEqual(result["policy_version"], 2)
+        self.assertEqual(result["policy_version"], 3)
         self.assertEqual(len(result["labels"]), 9)
         self.assertEqual(request.call_args.kwargs["max_completion_tokens"], 6000)
         self.assertEqual(request.call_args.kwargs["timeout_seconds"], 90)

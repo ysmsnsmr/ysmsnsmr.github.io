@@ -18,7 +18,16 @@ this stage. It writes both outputs to the optional artifact:
 
 This distinction is intentional. Category and total limits are no longer used
 to decide which semantic candidates Jev sees. The limits are replaced after
-classification by one editorial budget of 20 cards.
+classification by one editorial budget of 40 cards.
+
+Relevance policy `malaysia-news-selector-relevance-v3` explicitly includes fires
+with supplied evidence of evacuation, road closures, power/public-service
+interruption, or harmful smoke affecting surrounding residents. Natural and
+human-caused fires use the same public-impact standard. Isolated fires reporting
+only casualties or property damage remain `unrelated_noise`; severity or location
+alone is not evidence of broader effects. Jev still reads only the RSS title and
+description, not the later enriched body. Display grouping uses the matching
+policy in [News Display Groups](malaysia-disaster-display.md) without adding a call.
 
 ## Public Display Categories
 
@@ -40,13 +49,13 @@ selection.
 
 | Jev choice | Publication handling |
 | --- | --- |
-| `direct_life_impact` | First priority within the 20-card editorial budget |
+| `direct_life_impact` | First priority within the 40-card editorial budget |
 | `public_information` | Fills remaining budget in deterministic candidate order |
-| `unclear` | Fills any remaining budget in deterministic candidate order |
+| `unclear` | Fills remaining budget only if selected by the legacy baseline |
 | `unrelated_noise` | Not included in the routed card set |
 
 `direct_life_impact` is protected from lower-priority candidates, but it is
-not an unlimited exception: the page remains bounded to 20 selected cards.
+not an unlimited exception: the page remains bounded to 40 selected cards.
 Each routing artifact records a stable fingerprint, candidate rank, baseline
 selection status, Jev choice, confidence, latency, and final publication
 decision. It never stores article text, URLs, raw provider responses, or

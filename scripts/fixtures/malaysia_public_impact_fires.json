@@ -1,0 +1,11 @@
+{
+  "provenance": "Synthetic policy examples; expected labels are editorial expectations, not observed model responses.",
+  "cases": [
+    {"title": "Warehouse fire forces nearby residents to evacuate in Shah Alam", "description": "Residents of neighbouring homes were evacuated because of the fire.", "headline": "シャーアラムの倉庫火災で周辺住民が避難", "summary": "火災を受け、周辺住宅の住民が避難しています。", "relevance": "direct_life_impact", "kind": "disruption", "area": "klang_valley", "area_evidence": "シャーアラム"},
+    {"title": "Fire closes a road in Petaling Jaya", "description": "The road is closed to public traffic while firefighters respond.", "headline": "ペタリンジャヤで火災、道路を通行止め", "summary": "消火活動に伴い、道路が通行止めになっています。", "relevance": "direct_life_impact", "kind": "disruption", "area": "klang_valley", "area_evidence": "ペタリンジャヤ"},
+    {"title": "Substation fire interrupts power to neighbourhoods in Tawau", "description": "Nearby households have lost power after the substation fire.", "headline": "タワウの変電所火災で周辺住宅が停電", "summary": "変電所の火災で周辺住宅への電力供給が停止しています。", "relevance": "direct_life_impact", "kind": "disruption", "area": "other", "area_evidence": "タワウ"},
+    {"title": "Smoke from factory fire affects nearby residents", "description": "Harmful smoke from the fire is affecting surrounding residential areas; the location is not supplied.", "headline": "工場火災の煙が周辺住宅に影響", "summary": "有害な煙が周辺住民に影響しています。対象地域の記載はありません。", "relevance": "direct_life_impact", "kind": "damage", "area": "unclear", "area_evidence": ""},
+    {"title": "House fire kills two people in Tawau", "description": "Two residents died in a house fire. No wider public effect is reported.", "headline": "タワウの住宅火災で2人死亡", "summary": "住宅が焼け、住人2人が死亡しました。", "relevance": "unrelated_noise", "kind": "none", "area": "unclear", "area_evidence": ""},
+    {"title": "Warehouse in Kuala Lumpur destroyed by fire", "description": "The fire destroyed 90 per cent of the warehouse. No evacuation, closure or service interruption is reported.", "headline": "クアラルンプールの倉庫が火災で大きな被害", "summary": "倉庫の90％が焼損しました。周辺への影響は記載されていません。", "relevance": "unrelated_noise", "kind": "none", "area": "unclear", "area_evidence": ""}
+  ]
+}
