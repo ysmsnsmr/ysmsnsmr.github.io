@@ -1,0 +1,267 @@
+{
+  "schema_version": 1,
+  "status": "applied",
+  "markdown_sha256": "a0d8a7f3ac05a36ac6801efb134b46b6402343ed993d97b463432636c79e3a67",
+  "labels": {
+    "8b9bfe7820f31876007e3ea1160e6ea93d2019667683176e3ed54322d1b07974": {
+      "id": 1,
+      "kind": "damage",
+      "area": "other",
+      "area_evidence": "セランゴール州"
+    },
+    "e61493ec422ce2632bb4af1239eff467909f73f7bf820317bf3d3ab92912da5e": {
+      "id": 2,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "41545b815dc91d687704886e192f86e35d7bb22a2a017f7846284b1f92b18898": {
+      "id": 3,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "25d9a335fc97ce2a6f76e563627e792104c5ae317ab6c4cea881a1027aa1da83": {
+      "id": 4,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "f6df3db235770a97cb7f3ae598f8327b8a702acf6ef3ddf24c89dc2790f08c76": {
+      "id": 5,
+      "kind": "damage",
+      "area": "other",
+      "area_evidence": "セランゴール州"
+    },
+    "4b90a84b9a955d741f553aa93ce7f26cc108159d35aef39f6726c15921bcd107": {
+      "id": 6,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "6eae698c2d84d46cd1da1111acee1507b4ebc321835d4ac394f3b0af8af80c4a": {
+      "id": 7,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "b458d0a2f5285072b30916a361b82b52c7f94c7dd45d79d005a0a541cbe1c0be": {
+      "id": 8,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "7a7965557a2dac321c61b5a14b2ee90bf4eee1281ab9e0d00dd131e9d2b597da": {
+      "id": 9,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "50efab75495ac4ea24e6f5d6c0da0b31c8908cf49aafac871d34761fa726c1da": {
+      "id": 10,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "5b8cdf676503785d3b13f1f0f7a95e8fa3e4ffb1826eb8014ecac3028b44e96e": {
+      "id": 11,
+      "kind": "political_statement",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "0040db9f1120dea7451862841fc95e88730d894d4a5ab41eee7fe73cfb7ecb08": {
+      "id": 12,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "ba6da488f6efb341b30ba0982662b2d1c36e4535e62f11228fc2f2177dba5b2f": {
+      "id": 13,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "ad2b714533164c15fad43ce8af94a6004db82083fe0b1e53ec39b347f0c02cd5": {
+      "id": 14,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "952fa75c2ca3f4547cb2758b84dee1ee8b78e1e52db495345902e609730f1a06": {
+      "id": 15,
+      "kind": "political_statement",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "b46b17cff9706dfe7e7f05b59a377be38844ae67c7eec74a2120447fb4ce004c": {
+      "id": 16,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "714cedad253b8eebce420ed1405d0f7d2832488e8ff9f8409cae08359644acce": {
+      "id": 17,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "9d57e6a8c4e99fc4e9652446003f20f32b5f34b33ca119673288e4bf2c7a243c": {
+      "id": 18,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "71fc592d695b6e216372a3f57839742f6010f0443780186a12d3a61a9496ddf7": {
+      "id": 19,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "42b65af65ecbdabf11830fbacf44b679e62eb8bb9a410db5deac2f1a7d7fdcfb": {
+      "id": 20,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "b806fc8094372aebaa132b099ff2a7e8170c680229b2d84938dc3c7e0d52a148": {
+      "id": 21,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "1e2596dfd67cf283b1b1d06292c48463343d07070f6f19b4e0f80f1f892094dd": {
+      "id": 22,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "d9633ad3a4ea7f55ccf09e3f15302a1e8593ef6ffcedf2464155b0ac4b85c815": {
+      "id": 23,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "d58a92fb7f17e8f6f868fc2235f741f75a17064a116f3d1b3747b1f152e0f304": {
+      "id": 24,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "f25d504e60269a61fc8069cab9a99017da7936b1f2edad6bb32404371279950e": {
+      "id": 25,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "5d6b72c2f5ec26d888258ed5739bf2b88ec2091aa1af6e3bfca42e4c2337e39c": {
+      "id": 26,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "520a321f1ec0bc958dc1a4c43683693afde1d3b850ae238887ddf9569878c1d5": {
+      "id": 27,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "089dcea277bc57ae733e704779d4ef930d9a5f3351e86c1bdd81fb53f54352e8": {
+      "id": 28,
+      "kind": "political_statement",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "e4cbbae07e3fcf2e1662d9b5e03b0efcf422dfa20cef34c9aa6f0b2518fc2843": {
+      "id": 29,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "8bdc9984229af7fb98bde5fc7cebf5b0f818e844dd4277828311b1328ed12056": {
+      "id": 30,
+      "kind": "political_statement",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "434fad3dc7ce8608642e9bf5f91f569a999e95ab313fedee0f8ef88c6182ac4c": {
+      "id": 31,
+      "kind": "political_statement",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "eff69269632475f09930b7b208ff18dcd0dc54a577ff55afd6d8d21c8665e3a7": {
+      "id": 32,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "e94891c95b00b8ea961a44ef8d1905a2dda966aa8294935a66cf5e17ef180417": {
+      "id": 33,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "52a180e7619959fab5db8efaadff1b949cb01eeaadcba853b46815a78b6eafbb": {
+      "id": 34,
+      "kind": "political_statement",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "173275a269a0ce2ac2df77306ca18ef9b5bfd9891c921cdddf0b5f2c3a389373": {
+      "id": 35,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "a44294b4bc5b7df9ca7e934c4768b221097002d392c7dd724353f3cb79b4e45d": {
+      "id": 36,
+      "kind": "political_statement",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "c13184a832246fc646bd5ede05c0a1aeefa91bc2598509a366a588f2d274e83b": {
+      "id": 37,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "fa527ce2a76c31b01e484b39956c9445830ba55979800082ccff172a93456856": {
+      "id": 38,
+      "kind": "political_statement",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "5f1fd830bcb49b2ee3038ed8c17df692239f06d54312ce79ea2be853562856c6": {
+      "id": 39,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "13ef0ec8bccca944fceec085e1c5c31d4ab5cde2c8f822c1243d1727f789c79f": {
+      "id": 40,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    }
+  },
+  "failure_class": "",
+  "validation_reason": "",
+  "warnings": [],
+  "diagnostic": {
+    "provider": "openai",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "medium",
+    "elapsed_ms": 19713,
+    "finish_reason": "stop",
+    "usage": {
+      "prompt_tokens": 9485,
+      "completion_tokens": 2340,
+      "total_tokens": 11825
+    },
+    "transport_status": "success",
+    "failure_class": "none",
+    "json_contract_reason": ""
+  },
+  "classification_source": "model",
+  "policy_version": 2
+}
