@@ -7,7 +7,7 @@ remain available. Publication budgets and Jev routing do not change.
 ## Political And Administrative Statements
 
 The same classification request can also return `political_statement` (policy
-version 2). The existing script, sidecar and artifact filenames are retained for
+version 2 onwards). The existing script, sidecar and artifact filenames are retained for
 compatibility; there is no second model call or higher token/time limit.
 
 Group articles whose main news is a politician/public official's opinion,
@@ -23,10 +23,16 @@ An empty group is omitted. The shared disclosure renderer and deep-link behavior
 keep the full article, source, map links and original anchors accessible.
 Old version-1 sidecars remain valid without any new label and need no migration.
 
-## Natural Disaster Impacts
+## Disaster And Fire Impacts
 
 - Group actual natural-disaster damage, specific warnings and concrete effects
   such as road closures, transport disruption, school closures and evacuation.
+- Policy version 3 also covers natural or human-caused fires with explicitly
+  stated public effects: evacuation, road closures, power/public-service
+  interruption (`disruption`), or harmful smoke affecting residents (`damage`).
+  Isolated fires reporting only casualties or property damage remain regular
+  news if already selected; do not infer wider effects from severity or location.
+  The visible section and navigation are named `災害・火災関連`.
 - Leave policy, budgets, long-term mitigation, preparedness, equipment checks,
   historical statistics and drills in their existing categories.
 - Show up to three headlines. Prefer explicitly affected Klang Valley places,
@@ -66,3 +72,8 @@ Inspect model grouping and geographic prioritization in real artifacts. These
 semantic choices are not guaranteed by the structural validator. If ambiguous,
 the prompt asks for regular display or no Klang Valley preference. Classification
 does not assert that a published warning remains currently valid.
+
+The shared synthetic fixture `scripts/fixtures/malaysia_public_impact_fires.json`
+records expected selection/display outcomes, not observed model judgments. Tests
+check prompt contracts, routing, one display call, locality priority and intact
+article links. Confirm semantic behavior in subsequent production artifacts.

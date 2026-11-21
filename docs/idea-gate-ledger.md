@@ -2311,3 +2311,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Align all production budgets at 40, test 40/41 boundaries and fallback behavior, and merge without rerunning publication.
 - Revisit when: Runtime or cost becomes disproportionate.; Lower-priority news weakens the reading experience.
+
+<!-- idea-gate:20261121-malaysia-public-impact-fires -->
+## Align relevance and display policies for fires with concrete public effects
+
+- Record ID: `20261121-malaysia-public-impact-fires`
+- Evaluated: 2026-11-21T12:00:00+08:00
+- Project: Malaysia News
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 85/100
+- Confidence: medium - The policy gap is verified; real-model selection accuracy is not established by mocked fixtures.
+
+### Idea Card
+
+- Purpose: Avoid missing fire news that changes residents' actions or access to services.
+- First experience: Selection and display both explicitly cover evacuation, road closures, power interruption and harmful smoke caused by fires.
+- Scope and cost: Extend existing prompts and display label, add focused fixtures; no extra model calls or budget changes.
+- Continuation boundary: Owner Yas reviews subsequent artifacts; revert this policy change if isolated incidents crowd out useful news. Stop implementation after tests and CI pass.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 12/15 |
+| `evidence_and_learning` | 11/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 19/20 |
+| **Total** | **85/100** |
+
+### Next Step
+
+- Action: Update existing relevance and display policies, retain conservative uncertainty handling, test and deploy the scoped change.
+- Revisit when: Isolated fires begin receiving disproportionate coverage.; Supplied RSS snippets omit the public effects needed for classification.

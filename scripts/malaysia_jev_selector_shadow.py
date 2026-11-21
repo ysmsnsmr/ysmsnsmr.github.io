@@ -27,7 +27,7 @@ from jev_shadow_transport import JevRequestError, post_jev_request
 SCHEMA_VERSION = "malaysia-news-jev-selector-shadow/v1"
 SELECTION_SCHEMA_VERSION = "malaysia-rss-selection-observation/v1"
 REQUESTED_MODEL_ID = "jev-1.13.0"
-QUESTION_SET_VERSION = "malaysia-news-selector-relevance-v2"
+QUESTION_SET_VERSION = "malaysia-news-selector-relevance-v3"
 QUESTION_ID = "malaysiaNewsRelevance"
 CHOICES = ("direct_life_impact", "public_information", "unrelated_noise", "unclear")
 MAX_DESCRIPTION_CHARS = 4_000
@@ -167,6 +167,11 @@ def build_request(item: dict[str, Any]) -> dict[str, Any]:
                         "safety, weather, transport, roads, utilities, or official procedures. A crime, "
                         "accident, or action involving a political figure qualifies only when the supplied "
                         "input shows a broader continuing effect on the public."
+                        " Fires, whether natural or human-caused, qualify when the supplied input "
+                        "shows concrete public effects such as evacuation, road closures, power or "
+                        "public-service interruption, or harmful smoke affecting surrounding residents. "
+                        "Do not infer these effects from the fire's size, casualties, property damage, "
+                        "or location alone."
                     ),
                     "public_information": (
                         "Relevant Malaysian policy, government, economic, education, health, or community "
@@ -177,6 +182,8 @@ def build_request(item: dict[str, Any]) -> dict[str, Any]:
                         "Primarily ceremonial, personality-driven, party-political manoeuvring, corporate "
                         "promotion, an isolated crime or accident without a broader public effect, or foreign "
                         "news without a stated effect on people or services in Malaysia."
+                        " An isolated fire reporting only casualties or property damage, without "
+                        "a stated broader public effect, is also unrelated noise."
                     ),
                     "unclear": "The supplied title and description do not support a safe classification.",
                 },
