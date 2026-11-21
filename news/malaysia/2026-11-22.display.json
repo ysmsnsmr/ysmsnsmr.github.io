@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "status": "applied",
+  "markdown_sha256": "ad54410a6cc5e7fbc83f699605e994c2ec61caf59a0cb30d6c66650e01dd55c0",
+  "labels": {
+    "8a501398864fd767a7a279061184baf956d5939e6829becf40463db29dae15b4": {
+      "id": 1,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "cddf0453a2d264daa980f7f24dd0da416b9d148e99f9d716a89da1fd0dd07c96": {
+      "id": 2,
+      "kind": "damage",
+      "area": "other",
+      "area_evidence": "イポーで女性が急流に流され"
+    },
+    "881fe297945402902e6629a3aa107fa9f2c9a1a610afb843e41f881c2f2cda7b": {
+      "id": 3,
+      "kind": "political_statement",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "51fdf9d5522ee3c11b7e539a6fa65724750268440efabb27ee268835f677b438": {
+      "id": 4,
+      "kind": "political_statement",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "9634170bb38069ce799cbcf4ebeeb45d48043e485294853f796bbb002034fb7f": {
+      "id": 5,
+      "kind": "political_statement",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "70453c24c8502b8df7a3547d007cecc575451b9694ce3ebcc6d0282c1a842de6": {
+      "id": 6,
+      "kind": "political_statement",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "1a28cfb53c30cd458709ee179e6a02f3881571c62a00ebb3e9b81f87e9940d64": {
+      "id": 7,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "8c5f8450f7f6fadb29b863837e6fba3f58bbfb383198711a2a4a0a71498c94f9": {
+      "id": 8,
+      "kind": "political_statement",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "7670bca4c9a61d2169c57968767ca75f2b643944718ed06ec175ec9b20b75bc1": {
+      "id": 9,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "a6d4bd68c3f365c10d97d71e0a938224117762b5ef16b969732d064615f5b98c": {
+      "id": 10,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "7526e27906c8c75a261befae038f56694f047b89cddad99f455c649dbf4581ca": {
+      "id": 11,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "234beb239e0ac9490018ec0633d6a2e9426189db0a3030ac886cb2181563a330": {
+      "id": 12,
+      "kind": "none",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "bcc44154f851c17511659fee6b2d2454562eb0be7e159e0818fc2bac02666312": {
+      "id": 13,
+      "kind": "political_statement",
+      "area": "unclear",
+      "area_evidence": ""
+    },
+    "d2bbed5eb6752807feb93fad3427f667bc503ea2aaa6354253729ad04cc020ae": {
+      "id": 14,
+      "kind": "political_statement",
+      "area": "unclear",
+      "area_evidence": ""
+    }
+  },
+  "failure_class": "",
+  "validation_reason": "",
+  "warnings": [],
+  "diagnostic": {
+    "provider": "openai",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "medium",
+    "elapsed_ms": 6878,
+    "finish_reason": "stop",
+    "usage": {
+      "prompt_tokens": 3094,
+      "completion_tokens": 736,
+      "total_tokens": 3830
+    },
+    "transport_status": "success",
+    "failure_class": "none",
+    "json_contract_reason": ""
+  },
+  "classification_source": "model",
+  "policy_version": 3
+}
