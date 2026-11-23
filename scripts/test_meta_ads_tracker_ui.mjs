@@ -407,6 +407,7 @@ try {
   assert(tagAxe.violations.length === 0, `tag directory accessibility violations: ${tagAxe.violations.map((item) => item.id).join(", ")}`);
   await tagPage.getByRole("link", { name: /広告マネージャー/ }).click();
   assert(new URL(tagPage.url()).searchParams.get("tag") === "ads-manager", "directory tag must filter the list");
+  await tagPage.locator('.tag-chip[aria-current="true"]').waitFor({ state: "visible" });
   assert(await tagPage.locator('.tag-chip[aria-current="true"]').count() === 1, "selected tag must remain visible");
   await tagPage.locator('.tag-chip[aria-current="true"]').click();
   assert(!new URL(tagPage.url()).searchParams.has("tag"), "clicking the active tag must clear it");
