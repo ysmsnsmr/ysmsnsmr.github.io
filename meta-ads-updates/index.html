@@ -19,7 +19,7 @@
     <script src="./tag-catalog.js" defer></script>
     <script src="./localized-feed.js" defer></script>
   </head>
-  <body>
+  <body id="top">
     <main class="tracker-shell">
       <section id="demo-banner" class="demo-banner" aria-label="Demo environment" hidden>
         <strong>Demo environment</strong>
@@ -57,6 +57,10 @@
       <section id="legacy-list-section" class="feed-group" hidden>
         <ol id="update-list" class="update-list" aria-live="polite"></ol>
       </section>
+      <nav id="feed-jumps" class="feed-jumps" aria-label="Jump to article section" hidden>
+        <a class="tag-chip" href="#official-group">Official</a>
+        <a class="tag-chip" href="#unofficial-group">Unofficial</a>
+      </nav>
       <section id="official-group" class="feed-group" aria-labelledby="official-group-heading" hidden>
         <header class="feed-group-heading"><h2 id="official-group-heading">Official updates</h2><p id="official-group-count" class="group-count"></p></header>
         <ol id="official-list" class="update-list" aria-live="polite"></ol>
@@ -79,6 +83,7 @@
         <p id="empty-copy"></p>
       </section>
 
+      <a class="tag-chip" href="#top">↑ Back to top</a>
       <p id="tracker-footer" class="tracker-footer">Official and unofficial information are clearly separated.</p>
     </main>
   </body>

@@ -2382,3 +2382,38 @@ must use `supersedes` instead of editing an earlier entry.
 - Action: Align production budgets at 50, test 50/51 boundaries and configuration fallback, then merge without rerunning publication.
 - Revisit when: Runtime or cost becomes disproportionate.; Lower-priority news weakens the reading experience.
 - Supersedes: `20261120-malaysia-40-item-budget`
+
+<!-- idea-gate:20261123-meta-ads-section-jumps -->
+## Jump between existing article sections
+
+- Record ID: `20261123-meta-ads-section-jumps`
+- Evaluated: 2026-11-23T00:00:00+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 90/100
+- Confidence: high - Native links target existing sections without a new dependency
+
+### Idea Card
+
+- Purpose: Avoid scrolling through long lists manually
+- First experience: Jump to either visible section and return to the top
+- Scope and cost: Native fragment links and local styles; no service or data changes
+- Continuation boundary: Keep if useful; remove links if they clutter the page
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 13/15 |
+| `evidence_and_learning` | 12/15 |
+| `expected_outcome` | 14/15 |
+| `scope_and_fit` | 15/15 |
+| `ownership_and_reversibility` | 19/20 |
+| **Total** | **90/100** |
+
+### Next Step
+
+- Action: Add and test navigation for both languages
+- Revisit when: Navigation crowds the mobile layout

@@ -407,6 +407,7 @@ try {
   assert(tagAxe.violations.length === 0, `tag directory accessibility violations: ${tagAxe.violations.map((item) => item.id).join(", ")}`);
   await tagPage.getByRole("link", { name: /広告マネージャー/ }).click();
   assert(new URL(tagPage.url()).searchParams.get("tag") === "ads-manager", "directory tag must filter the list");
+  await tagPage.locator('.tag-chip[aria-current="true"]').waitFor({ state: "visible" });
   assert(await tagPage.locator('.tag-chip[aria-current="true"]').count() === 1, "selected tag must remain visible");
   await tagPage.locator('.tag-chip[aria-current="true"]').click();
   assert(!new URL(tagPage.url()).searchParams.has("tag"), "clicking the active tag must clear it");
@@ -472,7 +473,14 @@ try {
     await assertTokens(page);
     await assertAccessibilityAndLayout(page, label);
     if (viewport.name === "desktop") {
+      await page.locator('#feed-jumps a[href="#unofficial-group"]').click();
+      assert(new URL(page.url()).hash === "#unofficial-group", "unofficial jump must target its section");
+      await page.locator('a[href="#top"]').click();
+      assert(new URL(page.url()).hash === "#top", "back-to-top must target the page top");
+      await page.locator('#feed-jumps a[href="#official-group"]').click();
+      assert(new URL(page.url()).hash === "#official-group", "official jump must target its section");
       await page.fill("#query-filter", "表示変更");
+      assert(!(await page.locator('#feed-jumps a[href="#official-group"]').isVisible()), "jump to a filtered-out section must be hidden");
       assert(await page.locator(".update-card").count() === 1, "personal feed query filter failed");
       assert(await page.locator("#unofficial-notice").isVisible(), "unofficial notice must remain visible when an unofficial article matches");
       await page.fill("#query-filter", "Meta公式の製品更新");

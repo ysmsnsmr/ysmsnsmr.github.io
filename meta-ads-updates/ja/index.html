@@ -19,7 +19,7 @@
     <script src="../tag-catalog.js" defer></script>
     <script src="../localized-feed.js" defer></script>
   </head>
-  <body>
+  <body id="top">
     <main class="tracker-shell">
       <section id="demo-banner" class="demo-banner" aria-label="デモ環境" hidden>
         <strong>デモ環境</strong>
@@ -31,6 +31,10 @@
       <section id="legacy-list-section" class="feed-group" hidden>
         <ol id="update-list" class="update-list" aria-live="polite"></ol>
       </section>
+      <nav id="feed-jumps" class="feed-jumps" aria-label="記事の区分へ移動" hidden>
+        <a class="tag-chip" href="#official-group">Meta公式</a>
+        <a class="tag-chip" href="#unofficial-group">非公式</a>
+      </nav>
       <section id="official-group" class="feed-group" aria-labelledby="official-group-heading" hidden>
         <header class="feed-group-heading"><h2 id="official-group-heading">Meta公式</h2><p id="official-group-count" class="group-count"></p></header>
         <ol id="official-list" class="update-list" aria-live="polite"></ol>
@@ -48,6 +52,7 @@
         <ol id="sdk-list" class="sdk-update-log" aria-live="polite"></ol>
       </section>
       <section id="empty-state" class="empty-state" aria-live="polite" hidden><h2 id="empty-title"></h2><p id="empty-copy"></p></section>
+      <a class="tag-chip" href="#top">↑ TOPに戻る</a>
       <p id="tracker-footer" class="tracker-footer">Meta公式・非公式の情報を区別して表示しています。</p>
     </main>
   </body>

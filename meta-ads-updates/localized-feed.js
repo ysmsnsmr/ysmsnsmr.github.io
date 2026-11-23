@@ -283,6 +283,12 @@
         el.sdkGroup.hidden = true;
         el.unofficialGroup.hidden = true;
       }
+      const jumps = document.querySelector("#feed-jumps");
+      if (jumps) {
+        jumps.querySelector('[href="#official-group"]').hidden = el.officialGroup.hidden;
+        jumps.querySelector('[href="#unofficial-group"]').hidden = el.unofficialGroup.hidden;
+        jumps.hidden = el.officialGroup.hidden && el.unofficialGroup.hidden;
+      }
       el.empty.hidden = items.length > 0;
       if (!items.length) {
         const filtered = Boolean(state.q.trim()) || Boolean(state.tag);
