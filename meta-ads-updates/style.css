@@ -776,6 +776,9 @@ h1 {
 
 .detail-card {
   display: grid;
+  grid-template-columns: minmax(0, 520px);
+  justify-content: center;
+  text-align: left;
   gap: var(--tracker-space-5);
   padding: clamp(var(--tracker-space-4), 4vw, var(--tracker-space-6));
   border: 1px solid var(--tracker-line);
@@ -795,15 +798,14 @@ h1 {
 }
 
 .detail-header h1 {
-  max-width: 28ch;
+  max-width: 100%;
   margin: 0;
   color: var(--tracker-ink);
-  text-wrap: balance;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  line-height: 1.32;
+  text-wrap: wrap;
+  word-break: normal;
   overflow-wrap: anywhere;
-}
-
-:lang(ja) .detail-header h1 {
-  max-width: 24ic;
 }
 
 .detail-section {
@@ -830,19 +832,11 @@ h1 {
 
 .detail-summary,
 .detail-original-title {
-  max-width: 70ch;
+  max-width: 100%;
   margin: 0;
   color: var(--tracker-ink);
   font-size: 1rem;
   line-height: 1.7;
-}
-
-.detail-summary {
-  text-wrap: pretty;
-}
-
-:lang(ja) .detail-summary {
-  max-width: 44ic;
 }
 
 .presentation-status {
