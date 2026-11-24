@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-11-20T11:15:00Z",
+  "generatedAt": "2026-11-24T02:56:17Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -91,6 +91,359 @@
   ],
   "items": [
     {
+      "id": "meta-business-help-discovered-207f30d0c75941ff72df",
+      "sourceId": "meta-business-help-discovered",
+      "title": "Set up custom attribution for Meta Ads",
+      "url": "https://www.facebook.com/business/help/1525812372527438",
+      "publishedDate": null,
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [
+        "discovered-via:jon-loomer-meta-ads"
+      ],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "207f30d0c75941ff72df6de98ce70a4d8dc86fb85bcd5a3baa891c1b135aa266",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Custom attribution for Meta Ads",
+            "summary": "Learn how to set up custom attribution for advertising on Meta technologies.",
+            "inputHash": "0cc366e528007ec0a81a21b84b6f6ab93fe79e8ee6add149f80f83cf0c6fe58a",
+            "generatedAt": "2026-11-24T02:56:17Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Custom attribution for Meta Ads",
+                "inputHash": "0cc366e528007ec0a81a21b84b6f6ab93fe79e8ee6add149f80f83cf0c6fe58a",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Learn how to set up custom attribution for advertising on Meta technologies.",
+                "inputHash": "0cc366e528007ec0a81a21b84b6f6ab93fe79e8ee6add149f80f83cf0c6fe58a",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta広告のカスタムアトリビューション設定",
+            "summary": "Metaのテクノロジー上で広告を掲載するための、カスタムアトリビューションの設定方法について説明しています。",
+            "inputHash": "db43ea5d3704f36c1132d78e643470034decf6f23a8035dea57f7b6718aa869c",
+            "generatedAt": "2026-11-24T02:56:17Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta広告のカスタムアトリビューション設定",
+                "inputHash": "db43ea5d3704f36c1132d78e643470034decf6f23a8035dea57f7b6718aa869c",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaのテクノロジー上で広告を掲載するための、カスタムアトリビューションの設定方法について説明しています。",
+                "inputHash": "db43ea5d3704f36c1132d78e643470034decf6f23a8035dea57f7b6718aa869c",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "adsuploader-blog-a813c55a02419290cb54",
+      "sourceId": "adsuploader-blog",
+      "title": "Meta Ads MCP in Codex (2026): Setup, What Works and the OAuth Fix",
+      "url": "https://adsuploader.com/blog/meta-ads-mcp-codex",
+      "publishedDate": "2026-11-24",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "a813c55a02419290cb545718f0f041a1e5224535f16586c317e90a33d7a50bf1",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta Ads MCP Setup in Codex",
+            "summary": "An overview of connecting Codex to Meta ads, covering Ads Uploader’s MCP, Meta’s server with a token or own-app OAuth fix, config.toml snippets, and bulk launches.",
+            "inputHash": "e2b69ba9ad6b948fbaf57ef7aa318a32c00e84f5b47666856616a3e689b9d788",
+            "generatedAt": "2026-11-24T02:56:17Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Ads MCP Setup in Codex",
+                "inputHash": "e2b69ba9ad6b948fbaf57ef7aa318a32c00e84f5b47666856616a3e689b9d788",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "An overview of connecting Codex to Meta ads, covering Ads Uploader’s MCP, Meta’s server with a token or own-app OAuth fix, config.toml snippets, and bulk launches.",
+                "inputHash": "e2b69ba9ad6b948fbaf57ef7aa318a32c00e84f5b47666856616a3e689b9d788",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "CodexでMeta Ads MCPを設定する方法",
+            "summary": "CodexとMeta広告を接続する方法を紹介。Ads UploaderのMCPを1コマンドで使う方法、トークンを使ったMetaのサーバー設定や独自アプリでのOAuth修正、config.tomlの設定例、広告の一括配信を扱います。",
+            "inputHash": "28d0b3c765f4c99a5bab9a4c8348abbb6bd1d20293e0a85213a31c2823551050",
+            "generatedAt": "2026-11-24T02:56:17Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "CodexでMeta Ads MCPを設定する方法",
+                "inputHash": "28d0b3c765f4c99a5bab9a4c8348abbb6bd1d20293e0a85213a31c2823551050",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "CodexとMeta広告を接続する方法を紹介。Ads UploaderのMCPを1コマンドで使う方法、トークンを使ったMetaのサーバー設定や独自アプリでのOAuth修正、config.tomlの設定例、広告の一括配信を扱います。",
+                "inputHash": "28d0b3c765f4c99a5bab9a4c8348abbb6bd1d20293e0a85213a31c2823551050",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "jon-loomer-meta-ads-69798ec2e9be5a620c17",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "Custom Attribution Setup in Events Manager",
+      "url": "https://www.jonloomer.com/qvt/custom-attribution-setup/",
+      "publishedDate": "2026-11-23",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "69798ec2e9be5a620c174730b08f83b3afdd986782cab299bddefe613133ce15",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Custom attribution setup in Events Manager",
+            "summary": "Events Manager may show a “Custom attribution source” section in Settings, with options to connect an analytics tool or partner platform. After integration or setup, Custom Attribution can be selected as an attribution model in an ad set.",
+            "inputHash": "10f02838cfbe95578e765c31f0da7bb88ba19a9cb3e1c81b17e596427972383e",
+            "generatedAt": "2026-11-24T02:56:17Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Custom attribution setup in Events Manager",
+                "inputHash": "10f02838cfbe95578e765c31f0da7bb88ba19a9cb3e1c81b17e596427972383e",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Events Manager may show a “Custom attribution source” section in Settings, with options to connect an analytics tool or partner platform. After integration or setup, Custom Attribution can be selected as an attribution model in an ad set.",
+                "inputHash": "10f02838cfbe95578e765c31f0da7bb88ba19a9cb3e1c81b17e596427972383e",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Events Managerにカスタムアトリビューション設定",
+            "summary": "Metaは、コンバージョンの報告方法を選べるカスタムアトリビューションを発表しました。Events Managerの設定から独自の分析ツールまたはパートナープラットフォームを接続できます。Adobe Analytics、Northbeam、DV Rockerbox、Triple Whaleとの連携が紹介されています。設定後は広告セットのアトリビューションモデルで選択できます。",
+            "inputHash": "08bfba63715aabad677185b4f1ab19d28c6dbc028f06da7c5639ac24c7bf409a",
+            "generatedAt": "2026-11-24T02:56:17Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Events Managerにカスタムアトリビューション設定",
+                "inputHash": "08bfba63715aabad677185b4f1ab19d28c6dbc028f06da7c5639ac24c7bf409a",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは、コンバージョンの報告方法を選べるカスタムアトリビューションを発表しました。Events Managerの設定から独自の分析ツールまたはパートナープラットフォームを接続できます。Adobe Analytics、Northbeam、DV Rockerbox、Triple Whaleとの連携が紹介されています。設定後は広告セットのアトリビューションモデルで選択できます。",
+                "inputHash": "08bfba63715aabad677185b4f1ab19d28c6dbc028f06da7c5639ac24c7bf409a",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      },
+      "officialReferences": [
+        "https://www.facebook.com/business/help/1525812372527438/"
+      ]
+    },
+    {
+      "id": "jon-loomer-meta-ads-018c47d0ee29544fa2d7",
+      "sourceId": "jon-loomer-meta-ads",
+      "title": "First Impression Ads",
+      "url": "https://www.jonloomer.com/qvt/first-impression-ads/",
+      "publishedDate": "2026-11-23",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "018c47d0ee29544fa2d78ffbd0d39f1c808dde5d25705ffd6c759c4c8159ee70",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta Tests First Impression Ads",
+            "summary": "Meta announced a US test of First Impression Ads, which lets advertisers reserve the first ad people see in their feeds. The author is concerned that high demand could make this placement less available to other advertisers.",
+            "inputHash": "dfb87d7c937d26867297f05c1c287607d5fdb739d8adc97d9064de4ecd553094",
+            "generatedAt": "2026-11-24T02:56:17Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta Tests First Impression Ads",
+                "inputHash": "dfb87d7c937d26867297f05c1c287607d5fdb739d8adc97d9064de4ecd553094",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta announced a US test of First Impression Ads, which lets advertisers reserve the first ad people see in their feeds. The author is concerned that high demand could make this placement less available to other advertisers.",
+                "inputHash": "dfb87d7c937d26867297f05c1c287607d5fdb739d8adc97d9064de4ecd553094",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、フィード最初の広告枠を予約する機能を米国でテスト",
+            "summary": "Metaは、利用者がフィードで最初に見る広告枠を広告主が予約できる機能「First Impression Ads」を米国でテストすると発表しました。新しい広告形式や掲載先ではなく、既存の広告枠を予約する仕組みと説明されています。テスト後に提供されるかは明らかになっていません。",
+            "inputHash": "8354e8631ca7da40bd8b30388eaf9dbf3ae93cf26b1645cc623c0664a31bab09",
+            "generatedAt": "2026-11-24T02:56:17Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、フィード最初の広告枠を予約する機能を米国でテスト",
+                "inputHash": "8354e8631ca7da40bd8b30388eaf9dbf3ae93cf26b1645cc623c0664a31bab09",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは、利用者がフィードで最初に見る広告枠を広告主が予約できる機能「First Impression Ads」を米国でテストすると発表しました。新しい広告形式や掲載先ではなく、既存の広告枠を予約する仕組みと説明されています。テスト後に提供されるかは明らかになっていません。",
+                "inputHash": "8354e8631ca7da40bd8b30388eaf9dbf3ae93cf26b1645cc623c0664a31bab09",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      },
+      "officialReferences": [
+        "https://www.facebook.com/business/news/meta-brand-building-summit-2026"
+      ]
+    },
+    {
+      "id": "adsuploader-blog-846fdba368a1c19b5343",
+      "sourceId": "adsuploader-blog",
+      "title": "Facebook Access Token (2026): Types, How to Get One and How Long They Last",
+      "url": "https://adsuploader.com/blog/facebook-access-token",
+      "publishedDate": "2026-11-22",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "846fdba368a1c19b534363c990f6ab91afc49c552977a6ad6cf490be2e7ea549",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Facebook Access Tokens: Types and Lifespans",
+            "summary": "An overview of Facebook access token types, how to get one, how long each lasts, why tokens may expire early, and how to connect AI agents without one.",
+            "inputHash": "29936a937c97144013e15459ec08b4db87e5e41e5126b465895f053ba6f9b23b",
+            "generatedAt": "2026-11-24T02:56:17Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebook Access Tokens: Types and Lifespans",
+                "inputHash": "29936a937c97144013e15459ec08b4db87e5e41e5126b465895f053ba6f9b23b",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "An overview of Facebook access token types, how to get one, how long each lasts, why tokens may expire early, and how to connect AI agents without one.",
+                "inputHash": "29936a937c97144013e15459ec08b4db87e5e41e5126b465895f053ba6f9b23b",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Facebookアクセストークンの種類や有効期間を解説",
+            "summary": "Facebook広告チーム向けに、アクセストークンの種類、取得方法、有効期間、早期に無効になる理由、トークンを使わずにAIエージェントを接続する方法を取り上げています。",
+            "inputHash": "541f2c3375afabd7f6bfb58c3f7b7c1067ee0850a9e67d7d0b98dab042012128",
+            "generatedAt": "2026-11-24T02:56:17Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Facebookアクセストークンの種類や有効期間を解説",
+                "inputHash": "541f2c3375afabd7f6bfb58c3f7b7c1067ee0850a9e67d7d0b98dab042012128",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Facebook広告チーム向けに、アクセストークンの種類、取得方法、有効期間、早期に無効になる理由、トークンを使わずにAIエージェントを接続する方法を取り上げています。",
+                "inputHash": "541f2c3375afabd7f6bfb58c3f7b7c1067ee0850a9e67d7d0b98dab042012128",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "meta-business-help-discovered-a6fbbdd05256e71d50d2",
       "sourceId": "meta-business-help-discovered",
       "title": "How to set up email sign-up offers for ads that lead to your website",
@@ -98,7 +451,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-11-20T11:15:00Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -169,7 +522,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-11-20T11:15:00Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -240,7 +593,7 @@
       "publishedDate": "2026-11-20",
       "updatedDate": null,
       "firstObservedAt": "2026-11-20T11:15:00Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -371,6 +724,144 @@
       }
     },
     {
+      "id": "social-media-today-meta-ads-1500492ef6aebc509130",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta launches shopping platform in Brazil",
+      "url": "https://www.socialmediatoday.com/news/meta-launches-shopping-platform-in-brazil/875290/",
+      "publishedDate": "2026-11-19",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "1500492ef6aebc509130bb01386881ff27c464e97273df5fc5807599dcb3255c",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta launches Achados shopping app in Brazil",
+            "summary": "Meta’s Achados app brings product listings from Marketplace, Facebook Groups and Instagram into one feed. Available on Android in Brazil, it also includes price comparisons, seller profiles, customer reviews and sales histories.",
+            "inputHash": "62f739b56807a21bec8179fdd597f46fcd5cd5b3e09fb4a8fe923279123a502f",
+            "generatedAt": "2026-11-24T02:56:17Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta launches Achados shopping app in Brazil",
+                "inputHash": "62f739b56807a21bec8179fdd597f46fcd5cd5b3e09fb4a8fe923279123a502f",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta’s Achados app brings product listings from Marketplace, Facebook Groups and Instagram into one feed. Available on Android in Brazil, it also includes price comparisons, seller profiles, customer reviews and sales histories.",
+                "inputHash": "62f739b56807a21bec8179fdd597f46fcd5cd5b3e09fb4a8fe923279123a502f",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta、ブラジルで買い物アプリ「Achados」を開始",
+            "summary": "Metaは、商品を購入できるマーケットプレイスアプリ「Achados」をブラジルで開始しました。Facebook MarketplaceやFacebookグループ、Instagramの出品をまとめて表示し、価格比較のほか、販売者のプロフィール、レビュー、販売履歴も確認できます。現時点ではAndroidのみで利用できます。",
+            "inputHash": "e9f5b606dade21244321b5482e904d3900e2f225f81263dab3a5f4f0b6e0829b",
+            "generatedAt": "2026-11-24T02:56:17Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta、ブラジルで買い物アプリ「Achados」を開始",
+                "inputHash": "e9f5b606dade21244321b5482e904d3900e2f225f81263dab3a5f4f0b6e0829b",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは、商品を購入できるマーケットプレイスアプリ「Achados」をブラジルで開始しました。Facebook MarketplaceやFacebookグループ、Instagramの出品をまとめて表示し、価格比較のほか、販売者のプロフィール、レビュー、販売履歴も確認できます。現時点ではAndroidのみで利用できます。",
+                "inputHash": "e9f5b606dade21244321b5482e904d3900e2f225f81263dab3a5f4f0b6e0829b",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "social-media-today-meta-ads-cf1ca5c9c52908d28d3b",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta brings its updated Creator Dashboard to the web",
+      "url": "https://www.socialmediatoday.com/news/meta-brings-its-updated-creator-dashboard-to-the-web/875143/",
+      "publishedDate": "2026-11-18",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "cf1ca5c9c52908d28d3b3d2f94eda119be840fb84638c7c5242a009d80140b80",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Meta’s updated Creator Dashboard launches on the web",
+            "summary": "Meta says its updated Creator Dashboard is now available on desktop. It includes a redesigned composer for feed posts and Reels, bulk video uploads, an improved content library, performance insights, content protection, follower invitations, web access to Messenger and monetization information.",
+            "inputHash": "a84c3f0b028f870d543cfc9f737347be7030c8a334eed93893946d89805231b5",
+            "generatedAt": "2026-11-24T02:56:17Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta’s updated Creator Dashboard launches on the web",
+                "inputHash": "a84c3f0b028f870d543cfc9f737347be7030c8a334eed93893946d89805231b5",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta says its updated Creator Dashboard is now available on desktop. It includes a redesigned composer for feed posts and Reels, bulk video uploads, an improved content library, performance insights, content protection, follower invitations, web access to Messenger and monetization information.",
+                "inputHash": "a84c3f0b028f870d543cfc9f737347be7030c8a334eed93893946d89805231b5",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Metaの新しいCreator Dashboardがウェブで利用可能に",
+            "summary": "Metaは、クリエイター向けの新しいCreator Dashboardをウェブで提供開始しました。アプリ内の活動を管理する主要な画面として、従来の管理ツールに代わるとしています。フィード投稿やリールの作成・プレビュー、動画の一括アップロード、コンテンツライブラリや分析情報、コンテンツ保護、フォロワーへの招待、ウェブ版Messenger、収益化に関する情報などを利用できます。",
+            "inputHash": "71a62cfb94a25abc84caf3c50a7cc021ed3c9840649ae83f2ef3cd3c2150dd4b",
+            "generatedAt": "2026-11-24T02:56:17Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Metaの新しいCreator Dashboardがウェブで利用可能に",
+                "inputHash": "71a62cfb94a25abc84caf3c50a7cc021ed3c9840649ae83f2ef3cd3c2150dd4b",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaは、クリエイター向けの新しいCreator Dashboardをウェブで提供開始しました。アプリ内の活動を管理する主要な画面として、従来の管理ツールに代わるとしています。フィード投稿やリールの作成・プレビュー、動画の一括アップロード、コンテンツライブラリや分析情報、コンテンツ保護、フォロワーへの招待、ウェブ版Messenger、収益化に関する情報などを利用できます。",
+                "inputHash": "71a62cfb94a25abc84caf3c50a7cc021ed3c9840649ae83f2ef3cd3c2150dd4b",
+                "generatedAt": "2026-11-24T02:56:17Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "adsuploader-blog-c04c6e7ddbab523f5a7f",
       "sourceId": "adsuploader-blog",
       "title": "Meta Marketing API (2026): What It Is, Access, Limits and When You Need It",
@@ -378,7 +869,7 @@
       "publishedDate": "2026-11-18",
       "updatedDate": null,
       "firstObservedAt": "2026-11-20T11:15:00Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -447,7 +938,7 @@
       "publishedDate": "2026-11-17",
       "updatedDate": null,
       "firstObservedAt": "2026-11-20T11:15:00Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -520,7 +1011,7 @@
       "publishedDate": "2026-11-16",
       "updatedDate": null,
       "firstObservedAt": "2026-11-17T00:17:08Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -589,7 +1080,7 @@
       "publishedDate": "2026-11-16",
       "updatedDate": null,
       "firstObservedAt": "2026-11-17T00:17:08Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -658,7 +1149,7 @@
       "publishedDate": "2026-11-14",
       "updatedDate": null,
       "firstObservedAt": "2026-11-17T00:17:08Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -727,7 +1218,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-11-12T22:17:09Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -798,7 +1289,7 @@
       "publishedDate": "2026-11-12",
       "updatedDate": null,
       "firstObservedAt": "2026-11-12T22:17:09Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -867,7 +1358,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -938,7 +1429,7 @@
       "publishedDate": "2026-11-10",
       "updatedDate": null,
       "firstObservedAt": "2026-11-12T22:17:09Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1010,7 +1501,7 @@
       "publishedDate": "2026-11-10",
       "updatedDate": null,
       "firstObservedAt": "2026-11-12T22:17:09Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1079,7 +1570,7 @@
       "publishedDate": "2026-11-09",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1151,7 +1642,7 @@
       "publishedDate": "2026-11-08",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1220,7 +1711,7 @@
       "publishedDate": "2026-11-08",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1289,7 +1780,7 @@
       "publishedDate": "2026-11-06",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1358,7 +1849,7 @@
       "publishedDate": "2026-11-05",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1427,7 +1918,7 @@
       "publishedDate": "2026-11-04",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1496,7 +1987,7 @@
       "publishedDate": "2026-11-04",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1567,7 +2058,7 @@
       "publishedDate": "2026-11-04",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1636,7 +2127,7 @@
       "publishedDate": "2026-11-03",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1705,7 +2196,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1774,7 +2265,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1843,7 +2334,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-02T23:36:33Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1912,7 +2403,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-02T23:36:33Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2123,7 +2614,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2194,7 +2685,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2265,7 +2756,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2407,7 +2898,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2478,7 +2969,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2620,7 +3111,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2691,7 +3182,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2762,7 +3253,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3042,7 +3533,7 @@
       "publishedDate": "2026-10-28",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3253,7 +3744,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3322,7 +3813,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3463,7 +3954,7 @@
       "publishedDate": "2026-10-26",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3535,7 +4026,7 @@
       "publishedDate": "2026-10-25",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4018,7 +4509,7 @@
       "publishedDate": "2026-10-20",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4161,7 +4652,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4715,7 +5206,7 @@
       "publishedDate": "2026-10-13",
       "updatedDate": null,
       "firstObservedAt": "2026-10-15T19:54:50Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4925,7 +5416,7 @@
       "publishedDate": "2026-10-12",
       "updatedDate": null,
       "firstObservedAt": "2026-10-12T23:02:27Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5550,7 +6041,7 @@
       "publishedDate": "2026-10-06",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5622,7 +6113,7 @@
       "publishedDate": "2026-10-05",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6105,7 +6596,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -6174,7 +6665,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6312,7 +6803,7 @@
       "publishedDate": "2026-09-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T05:47:38Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
+      "lastObservedAt": "2026-11-24T02:56:17Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6573,493 +7064,6 @@
                 "value": "本ガイドは2026年版のEコマース向けFacebook広告の手引きで、トラッキングやカタログ設定、Shopify連携、Advantage+ Sales構造、クリエイティブ作成、ターゲティング、利益率ベースの測定方法などを解説しています。",
                 "inputHash": "e02b1c2b82f3c92f56debd0b44b2a349cc3b4cbcf6bd8e7da57c5d19bd57f707",
                 "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "adsuploader-blog-22a0e5ef82287f7c466a",
-      "sourceId": "adsuploader-blog",
-      "title": "Catalog Ads at Scale: How to Run Thousands of SKUs",
-      "url": "https://adsuploader.com/blog/catalog-ads-at-scale",
-      "publishedDate": "2026-09-23",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-15T19:54:50Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "22a0e5ef82287f7c466a1a46ecbee9a1cf9a8169696abb2adaa9329677f0701c",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Catalog Ads at Scale: How to Run Thousands of SKUs",
-            "summary": "This feed explains how to run catalog ads at scale, covering why spend concentrates on a few SKUs, how to size the core product set, stop‑loss rules, and handling of stock and variants.",
-            "inputHash": "9a802eaa6f5ff11a33f135c39610fc178491c1f49141ce9d06c4e2c4fef0e1a9",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Catalog Ads at Scale: How to Run Thousands of SKUs",
-                "inputHash": "9a802eaa6f5ff11a33f135c39610fc178491c1f49141ce9d06c4e2c4fef0e1a9",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "This feed explains how to run catalog ads at scale, covering why spend concentrates on a few SKUs, how to size the core product set, stop‑loss rules, and handling of stock and variants.",
-                "inputHash": "9a802eaa6f5ff11a33f135c39610fc178491c1f49141ce9d06c4e2c4fef0e1a9",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "カタログ広告を大規模に運用する方法",
-            "summary": "カタログ広告を多数のSKUで実施する際、支出は限られた数のSKUに集中する傾向がある。コア製品セットの規模を適切に設定し、損失を抑えるストップロスルールを導入する。さらに在庫状況やバリアント（バリエーション）を考慮した管理が必要である。",
-            "inputHash": "893e294a18cef06ee4c801442f783fdec901bfb4f42144ce62257f3348424de0",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "カタログ広告を大規模に運用する方法",
-                "inputHash": "893e294a18cef06ee4c801442f783fdec901bfb4f42144ce62257f3348424de0",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "カタログ広告を多数のSKUで実施する際、支出は限られた数のSKUに集中する傾向がある。コア製品セットの規模を適切に設定し、損失を抑えるストップロスルールを導入する。さらに在庫状況やバリアント（バリエーション）を考慮した管理が必要である。",
-                "inputHash": "893e294a18cef06ee4c801442f783fdec901bfb4f42144ce62257f3348424de0",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-5f109c4c8b7d031b8c69",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "Meta One Business Plans: What You Get at Each Tier",
-      "url": "https://www.jonloomer.com/meta-one-business-plans/",
-      "publishedDate": "2026-09-22",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "missing",
-            "shortHeadline": null,
-            "summary": null,
-            "inputHash": "51ae475fee2503add60ffc043dd221b0e4eb0a2795ce49a5a9cfa815dd611904",
-            "generatedAt": null,
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "51ae475fee2503add60ffc043dd221b0e4eb0a2795ce49a5a9cfa815dd611904",
-                "generatedAt": null,
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "missing",
-                "value": null,
-                "inputHash": "51ae475fee2503add60ffc043dd221b0e4eb0a2795ce49a5a9cfa815dd611904",
-                "generatedAt": null,
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta One ビジネス向けサブスクリプション4プランと価格",
-            "summary": "MetaはMeta Oneというビジネス向けサブスクリプションを発表し、Essential（月額14.99ドル）、Advanced（49.99ドル）、Expert（149ドル）、Max（499ドル）の4段階を提供。価格はFacebookページ、Instagramプロファイル、WhatsApp Business番号ごとに適用。Essentialは認証バッジ、なりすまし保護、Instagramリンクページ（最大20件）やMeta Business Agentの拡張アクセスなどを含む。AdvancedはEssentialの機能に加え、月1件の人間サポートと投稿・リールでのクリック可能リンクをFacebookで8件、Instagramで4件利用可能にする。",
-            "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-            "generatedAt": "2026-09-23T10:27:45Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta One ビジネス向けサブスクリプション4プランと価格",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "MetaはMeta Oneというビジネス向けサブスクリプションを発表し、Essential（月額14.99ドル）、Advanced（49.99ドル）、Expert（149ドル）、Max（499ドル）の4段階を提供。価格はFacebookページ、Instagramプロファイル、WhatsApp Business番号ごとに適用。Essentialは認証バッジ、なりすまし保護、Instagramリンクページ（最大20件）やMeta Business Agentの拡張アクセスなどを含む。AdvancedはEssentialの機能に加え、月1件の人間サポートと投稿・リールでのクリック可能リンクをFacebookで8件、Instagramで4件利用可能にする。",
-                "inputHash": "61576cf2983407f0faa71cb8b7fa806dd1fa1c99b598ac869605365e91c098fe",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      },
-      "officialReferences": [
-        "https://www.facebook.com/business/news/introducing-meta-one-plans-for-businesses"
-      ]
-    },
-    {
-      "id": "meta-business-sdk-releases-eed8ce943afb8409ed2f",
-      "sourceId": "meta-business-sdk-releases",
-      "title": "v26.0.2",
-      "url": "https://github.com/facebook/facebook-nodejs-business-sdk/releases/tag/v26.0.2",
-      "publishedDate": "2026-09-21",
-      "updatedDate": "2026-09-21",
-      "firstObservedAt": "2026-09-22T05:01:36Z",
-      "lastObservedAt": "2026-10-22T20:11:32Z",
-      "platformIds": [
-        "meta-business-sdk",
-        "marketing-api"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "eed8ce943afb8409ed2fbdd518ba54d81c5644043e4ca8f976f188c790e98f76",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Version v26.0.2 released",
-            "summary": "A new release v26.0.2 of the Facebook Node.js Business SDK is now available.",
-            "inputHash": "4c5530127c3c8c2ff26218bb1f5ba1d799cb407ac3b20f68a72bf84d214893b9",
-            "generatedAt": "2026-09-22T05:01:36Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Version v26.0.2 released",
-                "inputHash": "4c5530127c3c8c2ff26218bb1f5ba1d799cb407ac3b20f68a72bf84d214893b9",
-                "generatedAt": "2026-09-22T05:01:36Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "A new release v26.0.2 of the Facebook Node.js Business SDK is now available.",
-                "inputHash": "4c5530127c3c8c2ff26218bb1f5ba1d799cb407ac3b20f68a72bf84d214893b9",
-                "generatedAt": "2026-09-22T05:01:36Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Facebook Node.js Business SDK v26.0.2 がリリース",
-            "summary": "Facebook の Node.js 用 Business SDK がバージョン 26.0.2 に更新されました。前バージョン 26.0.1 からの変更点や修正が含まれます。",
-            "inputHash": "beb4337907aa251cef65a3bb74274e4d5dbf02dcde101424b65e346b8c972d45",
-            "generatedAt": "2026-09-22T05:01:36Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Facebook Node.js Business SDK v26.0.2 がリリース",
-                "inputHash": "beb4337907aa251cef65a3bb74274e4d5dbf02dcde101424b65e346b8c972d45",
-                "generatedAt": "2026-09-22T05:01:36Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Facebook の Node.js 用 Business SDK がバージョン 26.0.2 に更新されました。前バージョン 26.0.1 からの変更点や修正が含まれます。",
-                "inputHash": "beb4337907aa251cef65a3bb74274e4d5dbf02dcde101424b65e346b8c972d45",
-                "generatedAt": "2026-09-22T05:01:36Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "jon-loomer-meta-ads-4aa58a1d9015c2e87532",
-      "sourceId": "jon-loomer-meta-ads",
-      "title": "What is the Landing Page Experience Enhancement?",
-      "url": "https://www.jonloomer.com/qvt/landing-page-experience-enhancement/",
-      "publishedDate": "2026-09-21",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-23T10:27:45Z",
-      "lastObservedAt": "2026-11-20T11:15:00Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "4aa58a1d9015c2e87532ffcf67da05612a70ab2224562cbe10a554a8efb30049",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta tests AI-generated visual landing pages for ads",
-            "summary": "Meta’s new test feature, Landing Page Experience, uses AI to create a visual landing page from an advertiser’s website, highlighting key services and calls to action. When enabled, users who tap an ad may see this page instead of the site. The feature can be turned off, and fewer than 5% of ad impressions use test features.",
-            "inputHash": "7b65bf9613de74a8f84257aa43bd452b3b6a4e8b208b27f7dd77bae04721fba1",
-            "generatedAt": "2026-09-23T10:27:45Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta tests AI-generated visual landing pages for ads",
-                "inputHash": "7b65bf9613de74a8f84257aa43bd452b3b6a4e8b208b27f7dd77bae04721fba1",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta’s new test feature, Landing Page Experience, uses AI to create a visual landing page from an advertiser’s website, highlighting key services and calls to action. When enabled, users who tap an ad may see this page instead of the site. The feature can be turned off, and fewer than 5% of ad impressions use test features.",
-                "inputHash": "7b65bf9613de74a8f84257aa43bd452b3b6a4e8b208b27f7dd77bae04721fba1",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Metaのテスト機能「Landing Page Experience」概要",
-            "summary": "広告設定で新AI生成機能のテストを有効にすると、Landing Page Experienceという新機能が表示される。MetaはAIでウェブサイトから視覚的なランディングページを生成し、主要サービスやCTAをハイライトして、広告タップ時にウェブサイトの代わりに表示する。テスト機能は個別または全体でオフにでき、広告インプレッションの5％未満で使用される。",
-            "inputHash": "925d4e8a8a66bf1fd30d1ef8b3b1810b1d69b79b1788a53ea21e28016971e1f8",
-            "generatedAt": "2026-09-23T10:27:45Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Metaのテスト機能「Landing Page Experience」概要",
-                "inputHash": "925d4e8a8a66bf1fd30d1ef8b3b1810b1d69b79b1788a53ea21e28016971e1f8",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "広告設定で新AI生成機能のテストを有効にすると、Landing Page Experienceという新機能が表示される。MetaはAIでウェブサイトから視覚的なランディングページを生成し、主要サービスやCTAをハイライトして、広告タップ時にウェブサイトの代わりに表示する。テスト機能は個別または全体でオフにでき、広告インプレッションの5％未満で使用される。",
-                "inputHash": "925d4e8a8a66bf1fd30d1ef8b3b1810b1d69b79b1788a53ea21e28016971e1f8",
-                "generatedAt": "2026-09-23T10:27:45Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "adsuploader-blog-1c4c213919734f43897d",
-      "sourceId": "adsuploader-blog",
-      "title": "Facebook Collection Ads Specs: Every Requirement for 2026",
-      "url": "https://adsuploader.com/blog/facebook-collection-ads-specs",
-      "publishedDate": "2026-09-21",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-10T00:01:03Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "1c4c213919734f43897d36fa4234d55c0174b2964a02170d8e5a707d3d1d1c1c",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Facebook Collection Ads Specs for 2026",
-            "summary": "A comprehensive overview of Facebook collection ad specifications, including cover media by placement, the four‑product minimum, Instant Experience requirements, character limits, and changes for 2026.",
-            "inputHash": "ca96144eeb98dbaecc4aaeaf08b1a1a3e6e9b882efd3cc7e9f389ac11e7208ff",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Facebook Collection Ads Specs for 2026",
-                "inputHash": "ca96144eeb98dbaecc4aaeaf08b1a1a3e6e9b882efd3cc7e9f389ac11e7208ff",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "A comprehensive overview of Facebook collection ad specifications, including cover media by placement, the four‑product minimum, Instant Experience requirements, character limits, and changes for 2026.",
-                "inputHash": "ca96144eeb98dbaecc4aaeaf08b1a1a3e6e9b882efd3cc7e9f389ac11e7208ff",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "2026年版 Facebook コレクション広告の仕様まとめ",
-            "summary": "Facebook のコレクション広告に関する全ての仕様をまとめた資料です。配置別のカバー画像や動画の要件、最低4点の製品掲載、Instant Experience の条件、文字数制限、そして2026年に適用される変更点が含まれます。",
-            "inputHash": "3bf595494bdd164c62fde106fa84ba3ceebc510331f5a28a1935cb7faaeaa4a2",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "2026年版 Facebook コレクション広告の仕様まとめ",
-                "inputHash": "3bf595494bdd164c62fde106fa84ba3ceebc510331f5a28a1935cb7faaeaa4a2",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Facebook のコレクション広告に関する全ての仕様をまとめた資料です。配置別のカバー画像や動画の要件、最低4点の製品掲載、Instant Experience の条件、文字数制限、そして2026年に適用される変更点が含まれます。",
-                "inputHash": "3bf595494bdd164c62fde106fa84ba3ceebc510331f5a28a1935cb7faaeaa4a2",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "adsuploader-blog-a0b325727f2455846e5f",
-      "sourceId": "adsuploader-blog",
-      "title": "Facebook Catalog Ad Overlays: Price, Discount and Shipping Labels",
-      "url": "https://adsuploader.com/blog/facebook-catalog-ad-overlays",
-      "publishedDate": "2026-09-19",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-06T06:25:59Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "a0b325727f2455846e5f330d4d03de57773a72b788c3d6e97acc0c7f0c1ffe7e",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Facebook catalog ad overlays: price, discount, shipping labels",
-            "summary": "Facebook catalog ad overlays add price, discount, and shipping labels to product images. The feed lists each overlay type, the required catalog fields, and reasons why an overlay may not appear.",
-            "inputHash": "33da59854a988ed65f09d35841a37e75f9b076d76b9da386d803b382a767f4fe",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Facebook catalog ad overlays: price, discount, shipping labels",
-                "inputHash": "33da59854a988ed65f09d35841a37e75f9b076d76b9da386d803b382a767f4fe",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Facebook catalog ad overlays add price, discount, and shipping labels to product images. The feed lists each overlay type, the required catalog fields, and reasons why an overlay may not appear.",
-                "inputHash": "33da59854a988ed65f09d35841a37e75f9b076d76b9da386d803b382a767f4fe",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Facebookカタログ広告のオーバーレイ：価格・割引・配送料ラベル",
-            "summary": "Facebookのカタログ広告では、商品画像に価格・割引・配送料のラベルを表示するオーバーレイが利用できます。各オーバーレイの種類と、表示に必要なカタログ項目、そしてラベルが表示されない原因が解説されています。",
-            "inputHash": "8b59189942ae6fcac1f36418b97b9572df5c9b8f1a513a2e0475ff528e09a88e",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Facebookカタログ広告のオーバーレイ：価格・割引・配送料ラベル",
-                "inputHash": "8b59189942ae6fcac1f36418b97b9572df5c9b8f1a513a2e0475ff528e09a88e",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Facebookのカタログ広告では、商品画像に価格・割引・配送料のラベルを表示するオーバーレイが利用できます。各オーバーレイの種類と、表示に必要なカタログ項目、そしてラベルが表示されない原因が解説されています。",
-                "inputHash": "8b59189942ae6fcac1f36418b97b9572df5c9b8f1a513a2e0475ff528e09a88e",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "social-media-today-meta-ads-ff23184ef3220928736c",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Meta shares holiday 2026 planning guides",
-      "url": "https://www.socialmediatoday.com/news/meta-shares-holiday-2026-planning-guides/830741/",
-      "publishedDate": "2026-09-17",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-18T11:07:09Z",
-      "lastObservedAt": "2026-10-15T19:54:50Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "ff23184ef3220928736c800efa6e9314e8a7760550fa387687cf9e2f0f7c072b",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta releases holiday planning guides for marketers",
-            "summary": "Meta published a set of holiday planning guides for marketers, covering AI‑focused overviews, agency and creative explainers, an SMB guide with stats and a checklist, ad creation tips, an advanced advertiser playbook with shopping behavior data, ad‑setup priorities, product‑listing checklist, and features in its Festive Season Insights Center.",
-            "inputHash": "7ee54e45b4b24a81a43bf99f5e9aed9a6dbc5fd7f964b8b712dccd1f7e85d24c",
-            "generatedAt": "2026-09-18T11:07:09Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta releases holiday planning guides for marketers",
-                "inputHash": "7ee54e45b4b24a81a43bf99f5e9aed9a6dbc5fd7f964b8b712dccd1f7e85d24c",
-                "generatedAt": "2026-09-18T11:07:09Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta published a set of holiday planning guides for marketers, covering AI‑focused overviews, agency and creative explainers, an SMB guide with stats and a checklist, ad creation tips, an advanced advertiser playbook with shopping behavior data, ad‑setup priorities, product‑listing checklist, and features in its Festive Season Insights Center.",
-                "inputHash": "7ee54e45b4b24a81a43bf99f5e9aed9a6dbc5fd7f964b8b712dccd1f7e85d24c",
-                "generatedAt": "2026-09-18T11:07:09Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Meta、2026年ホリデー向けマーケティングガイドを公開",
-            "summary": "Metaはマーケター向けに2026年ホリデーシーズンの計画支援ガイドを複数公開した。AI特化概要、エージェンシー向け、クリエイティブ解説に加え、SMB向けの統計データとチェックリスト、広告作成のポイント、上級広告主向けの購買行動統計と設定優先順位、商品リスティング最適化チェックリストを提供している。これらは同社のFestive Season Insights Centerに掲載され、プラットフォーム活用の最新トレンド情報を示す。",
-            "inputHash": "8027279a85b534fceb5baf19673545e86aec5ae9521d07716a8c428950c9438a",
-            "generatedAt": "2026-09-18T11:07:09Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta、2026年ホリデー向けマーケティングガイドを公開",
-                "inputHash": "8027279a85b534fceb5baf19673545e86aec5ae9521d07716a8c428950c9438a",
-                "generatedAt": "2026-09-18T11:07:09Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaはマーケター向けに2026年ホリデーシーズンの計画支援ガイドを複数公開した。AI特化概要、エージェンシー向け、クリエイティブ解説に加え、SMB向けの統計データとチェックリスト、広告作成のポイント、上級広告主向けの購買行動統計と設定優先順位、商品リスティング最適化チェックリストを提供している。これらは同社のFestive Season Insights Centerに掲載され、プラットフォーム活用の最新トレンド情報を示す。",
-                "inputHash": "8027279a85b534fceb5baf19673545e86aec5ae9521d07716a8c428950c9438a",
-                "generatedAt": "2026-09-18T11:07:09Z",
                 "reviewedAt": null
               }
             }
