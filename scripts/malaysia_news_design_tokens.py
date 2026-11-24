@@ -1,5 +1,11 @@
 """Canonical visual tokens for the generated Malaysia News index."""
 
+MALAYSIA_NEWS_FONT_LINK = (
+    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
+    'family=Inter:wght@400..800&amp;family=Noto+Sans+JP:wght@400..800&amp;display=swap" '
+    'referrerpolicy="no-referrer">'
+)
+
 MALAYSIA_NEWS_TOKENS_CSS = """    :root {
       color-scheme: light;
       --bg: #f5f7f4;
@@ -14,7 +20,7 @@ MALAYSIA_NEWS_TOKENS_CSS = """    :root {
       --accent-soft: #e5f3ef;
       --warn: #8f4c00;
       --focus: #f4c04d;
-      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-sans: "Inter", "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --radius-control: 6px;
       --radius-card: 8px;
       --radius-pill: 999px;

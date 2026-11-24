@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from malaysia_news_design_tokens import MALAYSIA_NEWS_TOKENS_CSS
+from malaysia_news_design_tokens import MALAYSIA_NEWS_FONT_LINK, MALAYSIA_NEWS_TOKENS_CSS
 from malaysia_news_disaster_display import article_key, load_labels
 from malaysia_news_places import ALIASES, Place, find_places
 from malaysia_news_display_categories import (
@@ -842,6 +842,7 @@ def render_daily_page(day: NewsDay, *, is_home: bool = False) -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{esc(format_date(day.date))}のニュースまとめ | マレーシア生活ニュース</title>
+  {MALAYSIA_NEWS_FONT_LINK}
   {shortcut_icon_head()}
   {'''<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">''' if location_map else ''}
   <style>
@@ -955,6 +956,7 @@ def render_html(days: list[NewsDay]) -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>過去のニュースまとめ | マレーシア生活ニュース</title>
+  {MALAYSIA_NEWS_FONT_LINK}
   {shortcut_icon_head()}
   <style>
 {MALAYSIA_NEWS_TOKENS_CSS}
