@@ -798,6 +798,12 @@ h1 {
   max-width: 28ch;
   margin: 0;
   color: var(--tracker-ink);
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+:lang(ja) .detail-header h1 {
+  max-width: 24ic;
 }
 
 .detail-section {
@@ -829,6 +835,14 @@ h1 {
   color: var(--tracker-ink);
   font-size: 1rem;
   line-height: 1.7;
+}
+
+.detail-summary {
+  text-wrap: pretty;
+}
+
+:lang(ja) .detail-summary {
+  max-width: 44ic;
 }
 
 .presentation-status {
