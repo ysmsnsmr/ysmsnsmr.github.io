@@ -2417,3 +2417,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Add and test navigation for both languages
 - Revisit when: Navigation crowds the mobile layout
+
+<!-- idea-gate:meta-ads-production-typography -->
+## Apply approved font mock to production
+
+- Record ID: `meta-ads-production-typography`
+- Evaluated: 2026-11-24T00:00:00+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 88/100
+- Confidence: high - Shared stylesheet limits scope and fallback remains available
+
+### Idea Card
+
+- Purpose: Use consistent Japanese and Latin typography
+- First experience: Production feed uses Inter and Noto Sans JP
+- Scope and cost: Shared stylesheet only; no paid service or collection changes
+- Continuation boundary: Yas can revert the stylesheet if typography or loading disappoints
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 17/20 |
+| `reason_to_make` | 13/15 |
+| `evidence_and_learning` | 12/15 |
+| `expected_outcome` | 14/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 18/20 |
+| **Total** | **88/100** |
+
+### Next Step
+
+- Action: Verify font loading and publish the stylesheet change
+- Revisit when: Font availability or layout degrades
