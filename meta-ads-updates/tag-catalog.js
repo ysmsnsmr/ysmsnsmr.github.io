@@ -13,6 +13,9 @@
     { id: "campaign", en: "Campaign", ja: "キャンペーン", pattern: /\bcampaigns?\b|キャンペーン/i },
     { id: "ai", en: "AI", ja: "AI", pattern: /\bai\b|\bartificial\s+intelligence\b|人工知能/i },
     { id: "exclusion", en: "Exclusions", ja: "除外", pattern: /\bexclud(?:e|es|ed|ing)\b|\bexclusions?\b|除外/i },
+    { id: "attribution", en: "Attribution", ja: "アトリビューション", pattern: /\battribution\b|アトリビューション/i },
+    { id: "partnership-ads", en: "Partnership Ads", ja: "パートナーシップ広告", pattern: /\b(?:partnership|branded[\s-]+content)[\s-]+ads?\b|パートナーシップ広告|ブランドコンテンツ広告/i },
+    { id: "mcp", en: "MCP", ja: "MCP", pattern: /\bmcp\b|\bmodel[\s-]+context[\s-]+protocol\b/i },
   ];
   function texts(item) {
     const p = item.presentation || {};

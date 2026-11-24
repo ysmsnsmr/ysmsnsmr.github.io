@@ -2452,3 +2452,38 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Verify font loading and publish the stylesheet change
 - Revisit when: Font availability or layout degrades
+
+<!-- idea-gate:meta-ads-recent-topic-tags -->
+## Add three recurring topics from the November feed
+
+- Record ID: `meta-ads-recent-topic-tags`
+- Evaluated: 2026-11-24T00:00:00+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 87/100
+- Confidence: high - Current articles demonstrate overlap within each topic
+
+### Idea Card
+
+- Purpose: Find related updates faster
+- First experience: Filter multiple existing articles by a specific topic
+- Scope and cost: Three reversible bilingual catalog entries; no new API
+- Continuation boundary: Yas can prune tags if they become noisy
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 16/20 |
+| `reason_to_make` | 13/15 |
+| `evidence_and_learning` | 13/15 |
+| `expected_outcome` | 13/15 |
+| `scope_and_fit` | 14/15 |
+| `ownership_and_reversibility` | 18/20 |
+| **Total** | **87/100** |
+
+### Next Step
+
+- Action: Add three specific tags and test matches and nonmatches
+- Revisit when: Tags become noisy or one-off

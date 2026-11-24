@@ -385,6 +385,14 @@ try {
       unrelatedExclude: matches("exclusion", "Exclusive feature"),
     };
   });
+  assert(await tagPage.evaluate(() => [
+    ["attribution", "Custom Attribution Setup", "アトリビューション設定", "attributions"],
+    ["partnership-ads", "Branded Content Ads", "パートナーシップ広告の設定", "Business partnership"],
+    ["mcp", "Meta Ads MCP Servers", "Model Context Protocol", "MCPX"],
+  ].every(([id, first, second, unrelated]) => {
+    const matches = (title) => window.MetaAdsTags.matches({ title }, id);
+    return matches(first) && matches(second) && !matches(unrelated);
+  })), "new topic tags must match specific mentions and reject near misses");
   assert(topicMatches.budget && topicMatches.campaign && topicMatches.ai && topicMatches.exclusion && topicMatches.summary && !topicMatches.unrelatedAi && !topicMatches.unrelatedBudget && !topicMatches.unrelatedExclude, "topic tags must match supported terms without partial-word false positives");
   await tagPage.getByRole("link", { name: "Meta One", exact: true }).click();
   assert(new URL(tagPage.url()).searchParams.get("tag") === "meta-one", "featured tag must update the URL");
