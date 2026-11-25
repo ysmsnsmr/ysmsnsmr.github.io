@@ -776,7 +776,7 @@ h1 {
 
 .detail-card {
   display: grid;
-  grid-template-columns: minmax(0, 520px);
+  grid-template-columns: minmax(0, 760px);
   justify-content: center;
   text-align: left;
   gap: var(--tracker-space-5);
