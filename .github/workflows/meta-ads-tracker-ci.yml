@@ -8,6 +8,27 @@ permissions:
   contents: read
 
 jobs:
+  one-time-headline-probe:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/codex/meta-ads-translation-probe'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-meta-ads-tracker.txt
+      - name: Translate three selected headlines
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          PROBE_OUTPUT: ${{ runner.temp }}/meta-ads-translation-probe.json
+        run: python scripts/meta_ads_translation_one_time_probe.py
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: meta-ads-headline-probe-${{ github.run_id }}
+          path: ${{ runner.temp }}/meta-ads-translation-probe.json
+          if-no-files-found: error
+          retention-days: 7
   contract-and-ui:
     runs-on: ubuntu-latest
     steps:
