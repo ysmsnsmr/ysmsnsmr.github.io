@@ -30,6 +30,7 @@ class HeadlineTranslationsTest(unittest.TestCase):
         self.assertEqual(self.feed, original)
         self.assertEqual(set(state["items"][self.item_id]), set(translations.LOCALES))
         self.assertEqual(len(calls), 3)
+        self.assertTrue(all(title == original["items"][0]["title"] for title, _ in calls))
         self.assertTrue(all(record["status"] == "machine" for record in state["items"][self.item_id].values()))
         again = translations.build_state(self.feed, state, generate=lambda *_: self.fail("unexpected retry"), now=self.now)
         self.assertEqual(state, again)
@@ -50,11 +51,29 @@ class HeadlineTranslationsTest(unittest.TestCase):
 
     def test_stale_input_is_regenerated(self):
         state = translations.build_state(self.feed, None, generate=lambda *_: "old", now=self.now)
-        self.feed["items"][0]["presentation"]["locales"]["en"]["shortHeadline"] = "Changed headline"
+        self.feed["items"][0]["title"] = "Changed original title"
         calls = []
         result = translations.build_state(self.feed, state, generate=lambda title, locale: calls.append(locale) or "new", now=self.now)
         self.assertEqual(len(calls), 3)
         self.assertEqual(result["items"][self.item_id]["es"]["value"], "new")
+
+    def test_english_or_japanese_display_changes_do_not_invalidate_translations(self):
+        state = translations.build_state(self.feed, None, generate=lambda *_: "old", now=self.now)
+        self.feed["items"][0]["presentation"]["locales"]["en"]["shortHeadline"] = "Changed English headline"
+        self.feed["items"][0]["presentation"]["locales"]["ja"]["shortHeadline"] = "日本語見出し変更"
+        result = translations.build_state(self.feed, state, generate=lambda *_: self.fail("unexpected regeneration"), now=self.now)
+        self.assertEqual(result, state)
+
+    def test_previous_revision_retries_all_three_without_modifying_previous(self):
+        from unittest.mock import patch
+        with patch.object(translations, "REVISION", "headline-translation-v1"):
+            previous = translations.build_state(self.feed, None, generate=lambda *_: "old", now=self.now)
+        original = copy.deepcopy(previous)
+        calls = []
+        result = translations.build_state(self.feed, previous, generate=lambda title, locale: calls.append(locale) or "new", now=self.now)
+        self.assertEqual(calls, list(translations.LOCALES))
+        self.assertEqual(previous, original)
+        self.assertNotEqual(result["items"][self.item_id]["es"]["inputHash"], previous["items"][self.item_id]["es"]["inputHash"])
 
     def test_contract_and_atomic_save(self):
         state = translations.build_state(self.feed, None, generate=lambda *_: "headline", now=self.now)
