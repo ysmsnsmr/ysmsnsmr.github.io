@@ -30,4 +30,4 @@ translation quality, fallbacks, costs, and publication/privacy implications.
 The current schema is an independent experimental contract, not an extension
 of public `personal-feed.json`.
 
-Offline verification: `python3 scripts/test_meta_ads_headline_translations.py`.
+Offline verification: `python3 scripts/test_meta_ads_personal_feed_headline_translations.py`.
