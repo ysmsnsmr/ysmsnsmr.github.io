@@ -234,7 +234,12 @@
     function render() {
       const items = visible();
       if (el.tags && personal && !demoMode && window.MetaAdsTags) {
-        const shownTags = window.MetaAdsTags.tags;
+        const featuredIds = ["ai", "campaign", "creative", "placements", "audiences"];
+        const shownTags = featuredIds.map((id) => window.MetaAdsTags.tags.find((tag) => tag.id === id)).filter(Boolean);
+        if (state.tag && !featuredIds.includes(state.tag)) {
+          const selected = window.MetaAdsTags.tags.find((tag) => tag.id === state.tag);
+          if (selected) shownTags.push(selected);
+        }
         const featured = shownTags.map((tag) => {
           const active = tag.id === state.tag;
           const link = make("a", "tag-chip", `${tag[locale]}${active ? " ×" : ""}`);

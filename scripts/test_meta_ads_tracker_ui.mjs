@@ -349,11 +349,11 @@ try {
   await tagPage.goto(`${server.origin}/meta-ads-updates/ja/`, { waitUntil: "networkidle" });
   assert((await tagPage.locator(".tag-hint").textContent()).includes("記事の主題とは限りません"), "home tag guidance must describe mentions");
   const homeTags = await tagPage.evaluate(() => ({
-    expected: window.MetaAdsTags.tags.map((tag) => tag.ja),
+    expected: ["AI", "キャンペーン", "クリエイティブ", "配置", "オーディエンス"],
     shown: [...document.querySelectorAll("#featured-tags .tag-chip:not(.tag-chip--all)")].map((link) => link.textContent),
     ids: window.MetaAdsTags.tags.map((tag) => tag.id),
   }));
-  assert(JSON.stringify(homeTags.shown) === JSON.stringify(homeTags.expected), "home must display every catalog tag exactly once");
+  assert(JSON.stringify(homeTags.shown) === JSON.stringify(homeTags.expected), "home must display the five selected tags in order");
   assert(homeTags.shown.includes("配置") && !homeTags.shown.includes("広告配置"), "placement tag must use the requested Japanese label");
   assert(["meta-pixel", "conversions-api", "advantage-plus"].every((id) => !homeTags.ids.includes(id)), "removed tags must not remain in the catalog");
   await tagPage.setViewportSize({ width: 375, height: 667 });
@@ -394,7 +394,9 @@ try {
     return matches(first) && matches(second) && !matches(unrelated);
   })), "new topic tags must match specific mentions and reject near misses");
   assert(topicMatches.budget && topicMatches.campaign && topicMatches.ai && topicMatches.exclusion && topicMatches.summary && !topicMatches.unrelatedAi && !topicMatches.unrelatedBudget && !topicMatches.unrelatedExclude, "topic tags must match supported terms without partial-word false positives");
-  await tagPage.getByRole("link", { name: "Meta One", exact: true }).click();
+  await tagPage.getByRole("link", { name: "すべてのタグ" }).click();
+  await tagPage.getByRole("link", { name: /^Meta One\s*\d+件$/ }).click();
+  await tagPage.locator('.tag-chip[aria-current="true"]').waitFor({ state: "visible" });
   assert(new URL(tagPage.url()).searchParams.get("tag") === "meta-one", "featured tag must update the URL");
   assert(await tagPage.locator(".update-card").count() > 0, "Meta One tag must show matching updates");
   assert(await tagPage.evaluate(() => !window.MetaAdsTags.matches({ title: "Unrelated update" }, "meta-one")), "unrelated articles must not match Meta One");
@@ -404,6 +406,7 @@ try {
   await tagPage.locator("#back-link").click();
   await tagPage.getByRole("link", { name: "すべてのタグ" }).click();
   assert((await tagPage.locator("h1").textContent()).includes("タグから記事を探す"), "tag directory must be reachable");
+  await tagPage.getByRole("link", { name: /広告マネージャー/ }).waitFor({ state: "visible" });
   assert((await tagPage.locator("#tags-list").textContent()).includes("広告マネージャー"), "tag directory must include all catalog tags");
   for (const label of ["予算", "キャンペーン", "AI", "除外"]) {
     assert(await tagPage.getByRole("link", { name: new RegExp(`^${label} *[0-9]+件$`) }).count() === 1, `tag directory must include ${label}`);
