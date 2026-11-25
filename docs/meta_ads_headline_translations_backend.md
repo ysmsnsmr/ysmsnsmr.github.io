@@ -8,8 +8,10 @@ revision, hashes, state and publication path are unchanged.
 
 `meta_ads_headline_translations.py` validates a v5 feed, takes an optional
 previous independently versioned state, and produces per-item, per-language
-headline records. Input is the existing English display headline when present,
-otherwise the original title. It does not send article bodies or summaries.
+headline records. Input is always the original article title, not the generated
+English headline. It does not send article bodies or summaries. The v2 input
+hash revision invalidates only prior three-language translations; English and
+Japanese presentation histories are not changed.
 `translate_headline` uses the existing OpenAI transport and safe failure
 classification; the input is treated as untrusted. `build_state` accepts a
 caller-supplied generator, so offline tests need no credentials. `save_state`

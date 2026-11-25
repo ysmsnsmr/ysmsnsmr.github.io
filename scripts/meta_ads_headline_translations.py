@@ -17,7 +17,7 @@ from jsonschema import Draft202012Validator, FormatChecker
 import meta_ads_personal_feed_presentation as presentation
 
 LOCALES = ("zh-Hans", "es", "ko")
-REVISION = "headline-translation-v1"
+REVISION = "headline-translation-v2-original-title"
 MAX_HEADLINE = 240
 SCHEMA = Path(__file__).parent / "schemas/meta_ads_headline_translations_v1.schema.json"
 FEED_SCHEMA = Path(__file__).parent / "schemas/meta_ads_personal_feed_v5.schema.json"
@@ -90,8 +90,7 @@ def build_state(feed: dict[str, Any], previous: dict[str, Any] | None, *,
         if item_id in seen:
             raise ValueError("duplicate feed item id")
         seen.add(item_id)
-        english = item["presentation"]["locales"]["en"].get("shortHeadline")
-        title = english if isinstance(english, str) and english.strip() else item["title"]
+        title = item["title"]
         locales: dict[str, Any] = {}
         for locale in LOCALES:
             encoded = json.dumps([REVISION, locale, title], ensure_ascii=False, separators=(",", ":"))
