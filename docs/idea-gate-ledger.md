@@ -2487,3 +2487,40 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Add three specific tags and test matches and nonmatches
 - Revisit when: Tags become noisy or one-off
+
+<!-- idea-gate:20261125-meta-ads-headline-translations-backend -->
+## Three-language headline translation backend without public UI
+
+- Record ID: `20261125-meta-ads-headline-translations-backend`
+- Evaluated: 2026-11-25T18:00:00+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **TRY**
+- Score: 81/100
+- Confidence: medium - The scope is clear, while production translation quality and running costs remain unmeasured.
+
+### Idea Card
+
+- Purpose: Explore making article headlines accessible in Chinese, Spanish and Korean.
+- First experience: Validate independent headline translation and failure handling without changing existing English or Japanese output.
+- Scope and cost: Backend contract and offline tests only; no scheduled generation, publication or paid live calls.
+- Continuation boundary: Only consider display and recurring execution after the contract and offline tests pass and the owner approves the next step.
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 16/20 |
+| `reason_to_make` | 12/15 |
+| `evidence_and_learning` | 10/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 13/15 |
+| `ownership_and_reversibility` | 18/20 |
+| **Total** | **81/100** |
+- Trial limit: Backend contract and tests, no paid calls or public UI.
+- Trial stop condition: Stop after offline validation and preserve the existing production path.
+
+### Next Step
+
+- Action: Implement an isolated, opt-in generation contract and test failures and English/Japanese compatibility.
+- Revisit when: Review translation quality, cost, publication and scheduling before enabling them.
