@@ -1,6 +1,7 @@
 """Bounded translation update for the already validated published feed."""
 import json
 import os
+import time
 from pathlib import Path
 
 import meta_ads_headline_translations as translation
@@ -26,13 +27,30 @@ def main():
             candidates.append(item)
     # Give untouched items priority over persistent failures.
     candidates.sort(key=lambda item: item["id"] in cached)
-    updated = translation.build_state(
-        {**feed, "items": candidates[:3]}, previous,
-        generate=lambda title, locale: translation.translate_headline(
-            api_key=key, title=title, locale=locale, timeout=15, max_attempts=1),
-    )
-    result = {**previous, "items": {**cached, **updated["items"]}}
+    result = {**previous, "items": cached}
     if result != previous:
+        translation.save_state(path, result)
+    deadline = time.monotonic() + 8 * 60
+    stop = None
+
+    def generate(title, locale):
+        nonlocal stop
+        if stop:
+            raise translation.presentation.PresentationError(stop)
+        try:
+            return translation.translate_headline(
+                api_key=key, title=title, locale=locale, timeout=15, max_attempts=1)
+        except translation.presentation.PresentationError as error:
+            if error.code in {"auth_401", "permission_403", "rate_limited_429"}:
+                stop = error.code
+            raise
+
+    for index, item in enumerate(candidates):
+        if stop or time.monotonic() >= deadline:
+            print(f"Headline translation deferred: {len(candidates) - index} articles ({stop or 'time budget'})")
+            break
+        update = translation.build_state({**feed, "items": [item]}, previous, generate=generate)
+        result["items"].update(update["items"])
         translation.save_state(path, result)
 
 

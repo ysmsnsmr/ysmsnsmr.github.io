@@ -110,10 +110,10 @@ jobs:
           esac
           python3 scripts/meta_ads_personal_feed.py "${args[@]}"
           python3 scripts/validate_meta_ads_personal_feed.py
-      - name: Generate up to nine translated headlines
+      - name: Translate pending article headlines
         if: steps.kill_switch.outputs.enabled == 'true' && vars.META_ADS_HEADLINE_TRANSLATIONS_ENABLED != 'false'
         continue-on-error: true
-        timeout-minutes: 4
+        timeout-minutes: 10
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python3 scripts/update_meta_ads_headline_translations.py
