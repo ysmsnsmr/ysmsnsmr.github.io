@@ -35,6 +35,7 @@ class CloudflareBuildTest(unittest.TestCase):
                 "meta-ads-updates/style.css", "meta-ads-updates/favorites.js",
                 "meta-ads-updates/localized-feed.js", "meta-ads-updates/localized-detail.js",
                 "meta-ads-updates/personal-feed.json", "meta-ads-updates/demo-latest.json",
+                "meta-ads-updates/headline-translations.json",
                 "meta-ads-updates/latest.json",
                 "meta-ads-updates/feed-icon.svg", "meta-ads-updates/icon-180.png",
                 "meta-ads-updates/icon-192.png", "meta-ads-updates/icon-512.png",

@@ -2524,3 +2524,39 @@ must use `supersedes` instead of editing an earlier entry.
 
 - Action: Implement an isolated, opt-in generation contract and test failures and English/Japanese compatibility.
 - Revisit when: Review translation quality, cost, publication and scheduling before enabling them.
+
+<!-- idea-gate:20261126-meta-ads-multilingual-production -->
+## Publish three translated headline views
+
+- Record ID: `20261126-meta-ads-multilingual-production`
+- Evaluated: 2026-11-26T09:00:00+08:00
+- Project: Meta Ads Update Feed
+- Rubric: 1.1.0
+- Decision: **BUILD**
+- Score: 80/100
+- Confidence: medium - Live generation worked, but only three articles were evaluated.
+
+### Idea Card
+
+- Purpose: Help readers scan headlines in three additional languages
+- First experience: Select a language, open English detail, and return to the selected list
+- Scope and cost: Headlines only; at most nine new translations per existing collection run
+- Continuation boundary: Keep English fallback and allow generation to be disabled independently
+
+### Assessment
+
+| Axis | Score |
+|---|---:|
+| `personal_value` | 16/20 |
+| `reason_to_make` | 12/15 |
+| `evidence_and_learning` | 11/15 |
+| `expected_outcome` | 12/15 |
+| `scope_and_fit` | 13/15 |
+| `ownership_and_reversibility` | 16/20 |
+| **Total** | **80/100** |
+
+### Next Step
+
+- Action: Integrate bounded generation and headline-only views
+- Revisit when: Pause generation if cost, errors or translation quality become problematic.
+- Supersedes: `20261125-meta-ads-headline-translations-backend`
