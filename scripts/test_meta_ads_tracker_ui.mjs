@@ -312,6 +312,16 @@ try {
   productionPage.on("pageerror", (error) => productionPageErrors.push(error.message));
   await productionPage.goto(`${server.origin}/meta-ads-updates/index.html`, { waitUntil: "networkidle" });
   const multilingualPage = await browser.newPage();
+  for (const [lang, placeholder, official] of [
+    ["zh-Hans", "搜索标题和摘要", "Meta 官方更新"],
+    ["es", "Buscar en titulares y resúmenes", "Novedades oficiales de Meta"],
+    ["ko", "제목 및 요약 검색", "Meta 공식 업데이트"],
+  ]) {
+    await multilingualPage.goto(`${server.origin}/meta-ads-updates/?lang=${lang}`);
+    assert(await multilingualPage.locator("html").getAttribute("lang") === lang, `Document language: ${lang}`);
+    assert(await multilingualPage.locator("#query-filter").getAttribute("placeholder") === placeholder, `Search copy: ${lang}`);
+    assert(await multilingualPage.locator("#official-group-heading").textContent() === official, `Section copy: ${lang}`);
+  }
   await multilingualPage.goto(`${server.origin}/meta-ads-updates/?lang=es`, { waitUntil: "networkidle" });
   const spanish = multilingualPage.locator("#headline-language-es");
   assert(await spanish.getAttribute("aria-current") === "page", "Spanish headline view must be selected");
