@@ -69,6 +69,2237 @@
         "generatedAt": "2026-11-25T11:34:01.577966Z",
         "error": null
       }
+    },
+    "adsuploader-blog-a813c55a02419290cb54": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Codex 中的 Meta Ads MCP（2026）：设置方法、可用功能及 OAuth 修复方案",
+        "inputHash": "c426017321c7fca981bbda9c85f184901f2f3b2839bdaba41c80e5278b6d2d06",
+        "generatedAt": "2026-11-26T11:45:06.487813Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta Ads MCP en Codex (2026): configuración, qué funciona y la solución para OAuth",
+        "inputHash": "68a540d44153e6bf77f2e19f196fb41379c1ba9e3943da432bb10f0506d130a2",
+        "generatedAt": "2026-11-26T11:45:06.487813Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Codex에서 Meta Ads MCP 사용하기(2026): 설정, 작동하는 기능과 OAuth 문제 해결",
+        "inputHash": "ee07d90f44d831aac9b269abc9d327d72cb409c6a75b84add0f153aa3717af2e",
+        "generatedAt": "2026-11-26T11:45:06.487813Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-69798ec2e9be5a620c17": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "事件管理器中的自定义归因设置",
+        "inputHash": "62259488b5313aa9accf129700520aca3b08e4633b49aa3c41456c9ecbbd3639",
+        "generatedAt": "2026-11-26T11:45:06.483861Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Configuración de atribución personalizada en el Administrador de eventos",
+        "inputHash": "bc73f240411746571afc0b8aaf278770f07bca0411feefe8b4491d03d38c0f97",
+        "generatedAt": "2026-11-26T11:45:06.483861Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "이벤트 관리자에서 맞춤 기여 설정",
+        "inputHash": "4dd88723c3aa61e0315aee3d68f655a658cd0a6d0c47b32ddd1491c9a1829126",
+        "generatedAt": "2026-11-26T11:45:06.483861Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-018c47d0ee29544fa2d7": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "第一印象广告",
+        "inputHash": "09a654024540c8715c10df9312c351bf8aa6abd727d3895c46e3ddf7851bae2d",
+        "generatedAt": "2026-11-26T11:45:06.490061Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Anuncios de primera impresión",
+        "inputHash": "110c14db3237732fe6bc64bfaf33bdd32b7a9aa0bc436543a6cadec8e0b135bb",
+        "generatedAt": "2026-11-26T11:45:06.490061Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "첫인상 광고",
+        "inputHash": "7704cc8a178e02b148304f612ec64018004f079345ff7c20c7e69d47d271c9ea",
+        "generatedAt": "2026-11-26T11:45:06.490061Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-846fdba368a1c19b5343": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Facebook 访问令牌（2026）：类型、如何获取以及有效期",
+        "inputHash": "c6fc985036c1e022002e56f1755f6511fa489f0365be8cb165d0e48e1260b6a9",
+        "generatedAt": "2026-11-26T11:45:06.494669Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Token de acceso de Facebook (2026): tipos, cómo obtener uno y cuánto duran",
+        "inputHash": "038cf7697e42bbe4f5f59f66ba600c401fc75977c0602e23ceb45609add3e197",
+        "generatedAt": "2026-11-26T11:45:06.494669Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Facebook 액세스 토큰(2026년): 종류, 발급 방법 및 유효 기간",
+        "inputHash": "96d2db0510b1006ce404cf80fac0e4f35094099af0bc555d3fc1a983857856f0",
+        "generatedAt": "2026-11-26T11:45:06.494669Z",
+        "error": null
+      }
+    },
+    "meta-business-help-discovered-25c2c205373c405cf2c3": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "关于 Meta Ads Manager 中的促销活动",
+        "inputHash": "fa1d703a3c4cea4f3f30d6c83103c4c49166eccfe7ca28aacd1424b878f6d07d",
+        "generatedAt": "2026-11-26T11:45:11.609442Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Acerca de las promociones en el Administrador de anuncios de Meta",
+        "inputHash": "3ca0a88223e283e77520bb9267759c243edaa5d13e4b78cceba1079a90c6ff65",
+        "generatedAt": "2026-11-26T11:45:11.609442Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta 광고 관리자에서 프로모션에 대해",
+        "inputHash": "00e78d79782a1a1712573381f78fe94e23b2a298f7975173010e87a7608683ef",
+        "generatedAt": "2026-11-26T11:45:11.609442Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-97177e0c940eb79a628e": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "2026年Facebook广告自动化：规则、AI代理以及哪些环节适合自动化",
+        "inputHash": "f16bf33684fc63298aacbe5c9a05273b988702e2717582cf9a6199b692e33e88",
+        "generatedAt": "2026-11-26T11:45:11.622605Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Automatización de anuncios de Facebook en 2026: reglas, agentes de IA y qué automatizar",
+        "inputHash": "3bfa6908703adc565b3f94f89ba55e53d17c6197245222f951955afb42a1ab5b",
+        "generatedAt": "2026-11-26T11:45:11.622605Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "2026년 페이스북 광고 자동화: 규칙, AI 에이전트, 그리고 자동화할 항목",
+        "inputHash": "3aabf7c7464e6730be2a463773faf3c145639a92833031441912a0374f9d5f52",
+        "generatedAt": "2026-11-26T11:45:11.622605Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-1500492ef6aebc509130": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta在巴西推出购物平台",
+        "inputHash": "4625c1fd8ac40c228aafccbf790de45912f5b044ac82b0f2e2fc7b4a0cec418c",
+        "generatedAt": "2026-11-26T11:45:17.237492Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta lanza una plataforma de compras en Brasil",
+        "inputHash": "6ef59fe76048d397cf493ef28df04233b92575e3440589036ca46d59e9612514",
+        "generatedAt": "2026-11-26T11:45:17.237492Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타, 브라질에서 쇼핑 플랫폼 출시",
+        "inputHash": "f136f03b4e058eef11becdc9dd46e45e51895f21f3db21e2cb2052a83d429303",
+        "generatedAt": "2026-11-26T11:45:17.237492Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-cf1ca5c9c52908d28d3b": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta 将更新后的创作者仪表板带到网页端",
+        "inputHash": "513b52f6b4ced0af7a525f372b3bea56cda35c3741eb495450d9f2f2de51e582",
+        "generatedAt": "2026-11-26T11:45:17.234139Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta lleva su panel de control para creadores actualizado a la web",
+        "inputHash": "b4babe3a1b23d2bd249f06c363600e5d73ac1f7d2fa658cc77e6f7cfa19d9375",
+        "generatedAt": "2026-11-26T11:45:17.234139Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타, 업데이트된 크리에이터 대시보드를 웹으로 제공",
+        "inputHash": "dce8f21c13db1b2221d9c40cbd325158ff17f4b23fdad009a76723f60e0c49c7",
+        "generatedAt": "2026-11-26T11:45:17.234139Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-c04c6e7ddbab523f5a7f": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta营销API（2026）：它是什么、如何获取访问权限、限制以及何时需要使用它",
+        "inputHash": "f7502e9959ee8fafae48ca81ed6aa7b54eb686fe7677b99073f026f134e91371",
+        "generatedAt": "2026-11-26T11:45:17.236617Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "API de marketing de Meta (2026): qué es, acceso, límites y cuándo la necesitas",
+        "inputHash": "54ecd687c7f903d968a1b4281985838c99890f898243e014d86ceec41d4a4f1e",
+        "generatedAt": "2026-11-26T11:45:17.236617Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta 마케팅 API(2026): 무엇인지, 액세스 방법, 제한 사항 및 필요한 경우",
+        "inputHash": "d9aa4eba2a6e31e5ada872ba3847f1df27bbcaaac954d375ede8e76da562482f",
+        "generatedAt": "2026-11-26T11:45:17.236617Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-0d25e2c444891f3c74ef": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta广告促销和电子邮件注册优惠：它们的作用以及如何关闭",
+        "inputHash": "9b8ce909bfd5ac7e0c9ed16ce83fd2d1236efd7ab6a20c57101fac9de56b5fac",
+        "generatedAt": "2026-11-26T11:45:17.240805Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Promociones de Meta Ads y ofertas de suscripción por correo electrónico: qué hacen y cómo desactivarlas",
+        "inputHash": "88f8ebe533f197959ca0a03d009f9b4b9ccdbd232dc7f445268cdc13049ee697",
+        "generatedAt": "2026-11-26T11:45:17.240805Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta Ads 프로모션 및 이메일 가입 혜택: 어떤 기능을 하며 끄는 방법",
+        "inputHash": "f60786b642b22dde1690d95f399a9de3f9fffeeae1d966d04725f61d36f10b62",
+        "generatedAt": "2026-11-26T11:45:17.240805Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-e52e3d87d33073b58005": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta简化视频自定义受众",
+        "inputHash": "c99bc3e8acee514c07bba4d6b7cc8ab83d07bdf5195a58cd02e0a4df591623b2",
+        "generatedAt": "2026-11-26T11:45:20.116410Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta simplifica los públicos personalizados de video",
+        "inputHash": "2958b62989546480f2e263c10ee71e921a08e4b0c7fcd28956a1bf70ba7c1525",
+        "generatedAt": "2026-11-26T11:45:20.116410Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타, 동영상 맞춤 타깃 간소화",
+        "inputHash": "5bca362e3eeff6da93bb6ec2ff7259ea573b6b98a9e1c18d593e60227b149ce9",
+        "generatedAt": "2026-11-26T11:45:20.116410Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-3d5ace75b80c704fbd7f": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "如何将 Claude 连接到 Meta 广告（2026）：设置、投放与审批",
+        "inputHash": "b55f4ee6947c5cd3f668dfd4fa7cbebe45a97880c70e209d764a6b16a9816b49",
+        "generatedAt": "2026-11-26T11:45:20.588749Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Cómo conectar Claude con Meta Ads (2026): configuración, lanzamientos y aprobaciones",
+        "inputHash": "12ea163f9ec1f2023c3efe45ffb8e6506e77991732a8be59e892cfc46e280edc",
+        "generatedAt": "2026-11-26T11:45:20.588749Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Claude를 Meta 광고에 연결하는 방법(2026): 설정, 광고 집행 및 승인",
+        "inputHash": "a40b7ab3343b1462177d9ff8de9852b3d8f3bcdd30d619eab9e48471fb3d81e7",
+        "generatedAt": "2026-11-26T11:45:20.588749Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-4401eb9368e171bf9e22": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "12个最佳 Meta Ads MCP 服务器，适用于 Facebook 和 Instagram 广告（2026年）",
+        "inputHash": "e0434bbe3a3ccea485c5ae246187d53b84fe7641d7c728a25e57368bf9e8f6a1",
+        "generatedAt": "2026-11-26T11:45:21.421924Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "12 mejores servidores MCP de Meta Ads para anuncios de Facebook e Instagram (2026)",
+        "inputHash": "0a0bb853d8b8b8f5bc6d99fba535c680f4f1c52978ef9bb4f1e258f5abf4b08b",
+        "generatedAt": "2026-11-26T11:45:21.421924Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "페이스북 및 인스타그램 광고를 위한 최고의 메타 광고 MCP 서버 12선 (2026)",
+        "inputHash": "900e3cc0f7a4232d224b002f576f7f2b9b02695660448b4cf5a8f7a1001ea5c6",
+        "generatedAt": "2026-11-26T11:45:21.421924Z",
+        "error": null
+      }
+    },
+    "meta-business-help-discovered-74154ec4f4cfaa675f60": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "关于在广告中使用 Meta Business Agent",
+        "inputHash": "921e84e26e96c83e80bea52bc5b83b173453d210acce9d5ed51b36e3ad323210",
+        "generatedAt": "2026-11-26T11:45:25.422358Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Acerca del uso de Meta Business Agent en tus anuncios",
+        "inputHash": "d85dd8d172d566564a9e868d53f9a0eb06c6696a00d5174b4422f09048b040dd",
+        "generatedAt": "2026-11-26T11:45:25.422358Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "광고에 Meta Business Agent를 사용하는 것에 관해",
+        "inputHash": "7e60478bfe1463769c096b9b6a516a201fad1e0a45b72e45b3efd702beed4db0",
+        "generatedAt": "2026-11-26T11:45:25.422358Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-5e65be6ffcc70cac6f23": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "品牌内容广告：现在叫什么，以及发生了哪些变化",
+        "inputHash": "206f443dde8ebe6a58f844a0d0f91a550dbca2398fd50e7c5c63aae742d1093f",
+        "generatedAt": "2026-11-26T11:45:25.423169Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Anuncios de contenido de marca: cómo se llaman ahora y qué ha cambiado",
+        "inputHash": "f98803d6a53e9ae59f2bbccf9b6c3b1aaece62fc6c74d2d4852c3e429d69effb",
+        "generatedAt": "2026-11-26T11:45:25.423169Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "브랜디드 콘텐츠 광고: 현재 명칭과 달라진 점",
+        "inputHash": "b61b57428111deec2ba17910183beb39b04c490dcbe0cf08ee491718592708e0",
+        "generatedAt": "2026-11-26T11:45:25.423169Z",
+        "error": null
+      }
+    },
+    "meta-business-help-discovered-e3da71d0dc97dfdc6277": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "关于在客户设备上衡量转化",
+        "inputHash": "03e5c2d2906db5b51d669b1173b3283d788deaa053a2264b15567475652454eb",
+        "generatedAt": "2026-11-26T11:45:25.420717Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Sobre la medición de conversiones en los dispositivos de los clientes",
+        "inputHash": "85bb3338be1ce1d70f5fc0f1ca20fa5287d72deaf9026a4b8ef606b568f81361",
+        "generatedAt": "2026-11-26T11:45:25.420717Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "고객 기기에서 전환을 측정하는 방법에 대해",
+        "inputHash": "277d41216185e7508ce0d3de0ac7a41ea5238a08bec0714569ec58ba94d1c0e3",
+        "generatedAt": "2026-11-26T11:45:25.420717Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-9e5779dd812fb56ad412": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "47项Meta广告创意优化：它们的作用以及何时关闭",
+        "inputHash": "f853a08cf6511d2b158dfc2fac139d7b0f71d4c164d720c97c0742fed6e3b4b5",
+        "generatedAt": "2026-11-26T11:45:25.421537Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "47 mejoras creativas de Meta Ads: qué hacen y cuándo desactivarlas",
+        "inputHash": "87afe83c3cc7696181a15dcb0a44463b1fd7bbc0c10b911e2df3da8c3c8b5f0d",
+        "generatedAt": "2026-11-26T11:45:25.421537Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타 광고 크리에이티브 개선 기능 47가지: 어떤 기능이며 언제 꺼야 할까",
+        "inputHash": "fd7ec5968b63727a640f8dd4adc3d5f8980102dfc1965da7bdbd1d0aa8b7749c",
+        "generatedAt": "2026-11-26T11:45:25.421537Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-04c0022f48e3786f152f": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "创作者白名单与合作广告：它们在 Meta 上如何运作",
+        "inputHash": "a6c20c863ed43cda637452a0dfe943c9a333adac32170d2c3c9558070876187d",
+        "generatedAt": "2026-11-26T11:45:29.339497Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Autorización de creadores frente a anuncios de colaboración: cómo funciona en Meta",
+        "inputHash": "c4fcb1b11037cc917f269b0202073a3f1e9eca3ab9f9657adf8121d381b3587f",
+        "generatedAt": "2026-11-26T11:45:29.339497Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "크리에이터 화이트리스팅 vs 파트너십 광고: Meta에서 작동하는 방식",
+        "inputHash": "79c740a186964f0cffe852ff4d328abb1b17a3abab44a4317c58116a07b295c9",
+        "generatedAt": "2026-11-26T11:45:29.339497Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-6e893207a2d51a986189": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "在客户设备上衡量转化",
+        "inputHash": "b625aa466b1909dbb53891eae9135ad91a7922fdbecd1fe33bc1a5b0156b8322",
+        "generatedAt": "2026-11-26T11:45:29.397451Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Mide las conversiones en los dispositivos de los clientes",
+        "inputHash": "eff7dba2a913a8a89940ad80fdd05939b0450811ee95c512b7a71d8b3ce4521c",
+        "generatedAt": "2026-11-26T11:45:29.397451Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "고객 기기에서 전환을 측정하세요",
+        "inputHash": "48cf682c93f27c9afa27cfbc3e5e688ebed812d49bd9806f0306e3169fd50ac4",
+        "generatedAt": "2026-11-26T11:45:29.397451Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-5ce336ec96b92002f241": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta 的 AI 广告中包含未经批准的折扣",
+        "inputHash": "b54de31b766b1b5c8280e9631bfd3dec588869b77878ea8db9faa596668b888a",
+        "generatedAt": "2026-11-26T11:45:29.485342Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Los anuncios de IA de Meta incluían descuentos no aprobados",
+        "inputHash": "4f43d45bb3304264b0c7581ed90f3cfa29966a9548044d394f22854703a88d1f",
+        "generatedAt": "2026-11-26T11:45:29.485342Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타의 AI 광고에 승인되지 않은 할인 혜택이 포함됐다",
+        "inputHash": "ca95cd9f00966282ced1240df6bcca0bbf70434f8253b2589af1821797f1b883",
+        "generatedAt": "2026-11-26T11:45:29.485342Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-44419924e18c2726ecfa": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Instagram 合作广告：如何在信息流、Reels 和快拍中设置并投放",
+        "inputHash": "c9f8f28e5aa0923c7d928d69c742d80a8ab58a23c096976c3e4f9e6be3790e16",
+        "generatedAt": "2026-11-26T11:45:30.507809Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Anuncios de colaboración de Instagram: cómo configurarlos y publicarlos en el feed, Reels y Stories",
+        "inputHash": "9fb73cc875cdb431aca25c0d6735df6acfbf765462d75868135e261ea7b1bb83",
+        "generatedAt": "2026-11-26T11:45:30.507809Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "인스타그램 파트너십 광고: 피드, 릴스 및 스토리에서 설정하고 운영하는 방법",
+        "inputHash": "d0be1b2c9aafe1bf8cbb61c524540efbae9ac1b184a31dac4781b9ce737f500f",
+        "generatedAt": "2026-11-26T11:45:30.507809Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-2342dd23dfb160fccfb8": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "合作广告代码：如何在 Instagram 和 Facebook 上获取、分享和使用",
+        "inputHash": "64d9aad171a557f09b94b0a7e92802551acd53d34e2f618ef803e7eb74bc3386",
+        "generatedAt": "2026-11-26T11:45:34.669454Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Código de anuncio de colaboración: cómo obtenerlo, compartirlo y usarlo en Instagram y Facebook",
+        "inputHash": "176221588da2c3d768ceb2050255390cd78d95faf284746ad33f572bc0167f46",
+        "generatedAt": "2026-11-26T11:45:34.669454Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "파트너십 광고 코드: Instagram과 Facebook에서 코드를 받고, 공유하고 사용하는 방법",
+        "inputHash": "2d83a101ed22ac0d7bbcc28ff69e63c4bd4d2d1faba131299e23e1e7ecb29c38",
+        "generatedAt": "2026-11-26T11:45:34.669454Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-b58e5af82711a0bb2d9c": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta为Graph API和Marketing API新增功能",
+        "inputHash": "784b50f82081ae7f3ed9623ffceab83ca6e3d3ef9d2a9e89344bf2f7100d9b8a",
+        "generatedAt": "2026-11-26T11:45:34.670252Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta añade nuevas capacidades a Graph y Marketing API",
+        "inputHash": "b941abc8146a12acb9b25ebd30a55bd7b1708b82cc870f7dd1a0915f5c980859",
+        "generatedAt": "2026-11-26T11:45:34.670252Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta, 그래프 및 마케팅 API에 새로운 기능 추가",
+        "inputHash": "fc41efd44bd87781c70b291949a564d8ba9f13ebe25b5f2ba0b4fa54b76c91b2",
+        "generatedAt": "2026-11-26T11:45:34.670252Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-e050377e208621f0d2cc": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Facebook将创作者快速通道计划扩展至巴西",
+        "inputHash": "bd0be8ee896f116492873553e59b4d3a2513e49fe4fbb99dcc5854605408e047",
+        "generatedAt": "2026-11-26T11:45:34.667038Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Facebook amplía el programa Creator Fast Track a Brasil",
+        "inputHash": "b42543c9773d1c6006d9cfc1e7063aee5f91e66b3327e44c97dfa567b1e4860f",
+        "generatedAt": "2026-11-26T11:45:34.667038Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "페이스북, 크리에이터 패스트 트랙 프로그램 브라질로 확대",
+        "inputHash": "8ee4f43ce265f39285c0d5fe64fec2ee38cff92c854c4f5f4147b28778107099",
+        "generatedAt": "2026-11-26T11:45:34.667038Z",
+        "error": null
+      }
+    },
+    "meta-developer-blog-discovered-f33605e9c6ed38be3440": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "推出 Graph API v27.0 和 Marketing API v27.0",
+        "inputHash": "cc2bf5f9d1ad08f9a668d1b5d974f62b018c16ba53747952559ffe6c79ee2bbf",
+        "generatedAt": "2026-11-26T11:45:34.666093Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Presentamos Graph API v27.0 y Marketing API v27.0",
+        "inputHash": "5d4ebc10cf74d5a0d92ca01f75139d03cdee7ab3a6d1336eb1db7c87428fbfcf",
+        "generatedAt": "2026-11-26T11:45:34.666093Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Graph API v27.0 및 Marketing API v27.0 소개",
+        "inputHash": "7d0f72593266406f47a3656d15a04498f40f8edbfd4f2adf6acf35d62f20a25a",
+        "generatedAt": "2026-11-26T11:45:34.666093Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-1741fcfde4f6cdd8a0d5": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta 合作广告：运作方式、设置方法和示例（2026年）",
+        "inputHash": "fa062edec65837b1d5e7889a3fc9eb1db16f8b31677b83ef66ff8a14e76896cd",
+        "generatedAt": "2026-11-26T11:45:38.215948Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Anuncios de colaboración de Meta: cómo funcionan, configuración y ejemplos (2026)",
+        "inputHash": "7deff039bb8a470654d05979d0efac250861ca91474ec122adaa96406804c293",
+        "generatedAt": "2026-11-26T11:45:38.215948Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타 파트너십 광고: 작동 방식, 설정 및 예시 (2026)",
+        "inputHash": "0bc1b3d060aa753de2cdcc7ddcb322588f5100f645a1e0623f77d14d91c99c10",
+        "generatedAt": "2026-11-26T11:45:38.215948Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-a5a8fdc7b1196fc5a716": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta可能改进受众细分的5种方式",
+        "inputHash": "56794baaf1e0c24ab8d8d3bdf59058af9da38a890b8940942b165832082f2109",
+        "generatedAt": "2026-11-26T11:45:38.388003Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "5 formas en que Meta podría mejorar los segmentos de audiencia",
+        "inputHash": "80b7f526beb1549c9d245d72acb114ec17ce9a778b4fef9806428a6e107d8f69",
+        "generatedAt": "2026-11-26T11:45:38.388003Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta가 오디언스 세그먼트를 개선할 수 있는 5가지 방법",
+        "inputHash": "316bb061d0f64e7328ee4e94b27b33dc0be447eafe20afbf0548b00cc7851185",
+        "generatedAt": "2026-11-26T11:45:38.388003Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-3d1154c7eb921aec81d8": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta更新创作者助手聊天机器人",
+        "inputHash": "ac9a12c7a833ae65db4e34536f2e0e394118366d49bc46c45ce6ff364e0c984c",
+        "generatedAt": "2026-11-26T11:45:38.493498Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta actualiza su chatbot asistente para creadores",
+        "inputHash": "4033734d49f22405c9bf44470a3369314cce300d9a26507e5389c2f8d5162f8d",
+        "generatedAt": "2026-11-26T11:45:38.493498Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타, 크리에이터 어시스턴트 챗봇 업데이트",
+        "inputHash": "4728f41d13dd1c17dcd0d1c5beaa3c222df72bb020bfc419cbdd1650a5d272ce",
+        "generatedAt": "2026-11-26T11:45:38.493498Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-31b8230cd8d18a8f406b": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta无限期推迟商业条款更新",
+        "inputHash": "b9669158b2f20a6b268069d3dc59afd86619fcdfa82fafa0a6130c5bbcd25582",
+        "generatedAt": "2026-11-26T11:45:38.683117Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta retrasa indefinidamente la actualización de las condiciones comerciales",
+        "inputHash": "571c613a593f6defc49757160a2bc4c2f4c5b0541d822c79e01103339fa02a08",
+        "generatedAt": "2026-11-26T11:45:38.683117Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta, 상업적 약관 업데이트 무기한 연기",
+        "inputHash": "5bf0d2d6f3c911c2eb604388b91d469eb3edf3475b1de91480e1549472574812",
+        "generatedAt": "2026-11-26T11:45:38.683117Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-469235a3a796139fa383": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "潜在客户广告系列的类似受众建议",
+        "inputHash": "fb1bf96f91ccc86f1b9a83800004aa92687d8c575f2f6a9ff4f82fe030372578",
+        "generatedAt": "2026-11-26T11:45:43.020588Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Sugerencias de públicos similares para campañas de clientes potenciales",
+        "inputHash": "1be998a7a61d5ea7126bfaf5962ade381489c55c91592bbaf00c93a599bd2be1",
+        "generatedAt": "2026-11-26T11:45:43.020588Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "리드 캠페인을 위한 유사 타겟 추천",
+        "inputHash": "1361df25764fb15bbfca6dfdfc5ae48c39a19a2b2dbfd530b94a47bd7e048028",
+        "generatedAt": "2026-11-26T11:45:43.020588Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-6b92db41d3cdc86fd2a7": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "面向 SaaS 的 Facebook 广告：目标、定位与成本",
+        "inputHash": "6e078a4f61471a501d30cd7beb6774413dad75dc4d2467afb23c839e60426fde",
+        "generatedAt": "2026-11-26T11:45:43.016297Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Anuncios de Facebook para SaaS: objetivos, segmentación y costos",
+        "inputHash": "7b531aeb8118471685e9cbabb2836a6dbd9bcb3b22c40fd9654d84a5530b7717",
+        "generatedAt": "2026-11-26T11:45:43.016297Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "SaaS 페이스북 광고: 목표, 타기팅 및 비용",
+        "inputHash": "56f0746b4f3950f759c88e29827f69c921023f449695181e140892b55439f8fa",
+        "generatedAt": "2026-11-26T11:45:43.016297Z",
+        "error": null
+      }
+    },
+    "meta-business-news-discovered-92b92b5c34f6a014f299": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "2026旺季：你赢不了竞价拍卖，但可以为它写好简报。",
+        "inputHash": "93fe85ffb483e8844c4197f1bd4b82bde73f7303ad3c58f910326cdff741e25b",
+        "generatedAt": "2026-11-26T11:45:43.021360Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Temporada alta 2026: No le ganas a la subasta. La preparas con un brief.",
+        "inputHash": "a21aae3146d028a3c47bcddbd8fdabda007c7d4b37b53f30b9de56435ad65dc8",
+        "generatedAt": "2026-11-26T11:45:43.021360Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "2026 성수기: 경매에서 이기는 게 아닙니다. 경매에 브리핑하는 겁니다.",
+        "inputHash": "46a688138f906b1917c5863dac1570fdaff218f6aba51f8b21af1c9782e70178",
+        "generatedAt": "2026-11-26T11:45:43.021360Z",
+        "error": null
+      }
+    },
+    "meta-business-news-discovered-1231b6977cfc6c742d68": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "推出面向企业的 Meta One 套餐",
+        "inputHash": "a85dda512d77234e96fbdc2363319bab6c987fe36fcb37453e54b426f550b819",
+        "generatedAt": "2026-11-26T11:45:43.022236Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Presentamos los planes Meta One para empresas",
+        "inputHash": "cd5971d8f9bdbf63ff514c1da5a246f5e1d73cc9271f05c6fe8223a9557ecc2c",
+        "generatedAt": "2026-11-26T11:45:43.022236Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "기업을 위한 Meta One 요금제를 소개합니다",
+        "inputHash": "2195a9350ab59523a440baeca399230ffc67326671db362bd34f831fb7636dc2",
+        "generatedAt": "2026-11-26T11:45:43.022236Z",
+        "error": null
+      }
+    },
+    "meta-business-help-discovered-fb4a1a125ac4feef5484": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "关于仅用于排除的自定义受众",
+        "inputHash": "960028b00592db566aa88387e5be2ecb52a694efae927567262fa93f10246d59",
+        "generatedAt": "2026-11-26T11:45:46.335669Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Acerca de los públicos personalizados solo de exclusión",
+        "inputHash": "1c76c94414bdaf0fc4f4bf93d29c55e9de63bfb0143272a246e9b77c6bcda7f1",
+        "generatedAt": "2026-11-26T11:45:46.335669Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "제외 전용 맞춤 타겟에 대해",
+        "inputHash": "d41984accb05f3c48b4fd30db11575ff6cdcbab1460d21a048c3b517e2688a4d",
+        "generatedAt": "2026-11-26T11:45:46.335669Z",
+        "error": null
+      }
+    },
+    "meta-business-help-discovered-dda0b96cd0050d7b9c29": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "创建一个获取新客户的营销活动",
+        "inputHash": "a0127cd48f2344c2b5eb538263d395b6efe8cdad3874366e5bdf79b3c7c6cd55",
+        "generatedAt": "2026-11-26T11:45:46.404889Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Crea una campaña para captar nuevos clientes",
+        "inputHash": "308acb012473669728dbfca36241fbf934c763976828d49d557980c8497f72cc",
+        "generatedAt": "2026-11-26T11:45:46.404889Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "신규 고객을 확보하기 위한 캠페인을 만드세요",
+        "inputHash": "e85f679d714c807e1a470bfc35b0d508d3dd5c3bfa411e7ddc4c270f0a38e8f9",
+        "generatedAt": "2026-11-26T11:45:46.404889Z",
+        "error": null
+      }
+    },
+    "meta-business-help-discovered-dca1e1809d7e0b093294": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "查看广告中各个媒体素材的创意效果",
+        "inputHash": "9e7f40a8f8672a2cf5412f18e3dc721d6c3e1b569d9d8c5fb40d48db3bc99be9",
+        "generatedAt": "2026-11-26T11:45:47.136527Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Consulta el rendimiento creativo de los recursos multimedia individuales de tu anuncio",
+        "inputHash": "f8ee692f3b3aecf5674ff9512c0176e4723fd8a1fb45d526168a72a8737e6a41",
+        "generatedAt": "2026-11-26T11:45:47.136527Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "광고 내 개별 미디어 에셋의 크리에이티브 성과 보기",
+        "inputHash": "617958d53200261002a1b387c6f74662101b5f428e9e4f8975e993dd20a2bca3",
+        "generatedAt": "2026-11-26T11:45:47.136527Z",
+        "error": null
+      }
+    },
+    "meta-business-help-discovered-d9e995c747f2a8845a36": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "关于使用生成式 AI 工具创建或编辑的广告中的 AI 信息",
+        "inputHash": "fc67d25022d15a4b188f3ba42995d7edb3f1afdef8815c932e6a30a85b892936",
+        "generatedAt": "2026-11-26T11:45:50.223409Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Acerca de la información sobre IA en anuncios creados o editados con herramientas de IA generativa",
+        "inputHash": "e26a084c30dd16245618abeb9b5017da494d709d9b0a0e3ae12c24c3e1513bf3",
+        "generatedAt": "2026-11-26T11:45:50.223409Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "생성형 AI 도구로 제작하거나 수정한 광고의 AI 정보에 대해",
+        "inputHash": "7d9cc2247c9be8ee07edc6ff46c738f4d2ee44cadf3c1c82988c5f8903adc583",
+        "generatedAt": "2026-11-26T11:45:50.223409Z",
+        "error": null
+      }
+    },
+    "meta-business-help-discovered-d03b347cd691b93841cc": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "关于自动事件",
+        "inputHash": "bc27ccbd0ae7b3fde3f6da7da4e430c40e77615e3a3684ce644840c7f8d0580b",
+        "generatedAt": "2026-11-26T11:45:53.984378Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Acerca de los eventos automáticos",
+        "inputHash": "1a3ef9d2940e92d1040c2206e4d192c8979dd0517e6a6cba96906a509de5e8ae",
+        "generatedAt": "2026-11-26T11:45:53.984378Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "자동 이벤트에 관하여",
+        "inputHash": "98bd99b0610c5a4a042093ba527e797c4e7ca3d67594c1a238ded521cd24571d",
+        "generatedAt": "2026-11-26T11:45:53.984378Z",
+        "error": null
+      }
+    },
+    "meta-business-help-discovered-c31b0550d860c88bbcf0": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "关于自定义归因",
+        "inputHash": "0ece816cf7087bb4b42ef652009f053aafbc24f52bad1e0bc6064588877d6c06",
+        "generatedAt": "2026-11-26T11:45:53.986788Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Acerca de la atribución personalizada",
+        "inputHash": "8a783f8176fd4100feae0ba693d756f4875a655cd29e8cb27d06c5aac31913c8",
+        "generatedAt": "2026-11-26T11:45:53.986788Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "맞춤 어트리뷰션에 대해",
+        "inputHash": "74600ee72f3a65f5016c05ac6f6f5432a5f5c587df8098e4eafa17195e5261ff",
+        "generatedAt": "2026-11-26T11:45:53.986788Z",
+        "error": null
+      }
+    },
+    "meta-business-help-discovered-b8086d6224e490eab9e9": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "关于 Ads Creative Studio",
+        "inputHash": "1845dfc2096504ec3bd6a27ca532fd5a7eb6f919fa39ddd2ee1350891ed03e0a",
+        "generatedAt": "2026-11-26T11:45:53.982609Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Acerca de Ads Creative Studio",
+        "inputHash": "ce5513f254a935041b94f7453f20803a955dee879b73f6be154acaa1714b5e08",
+        "generatedAt": "2026-11-26T11:45:53.982609Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Ads Creative Studio 소개",
+        "inputHash": "567a00c5f120d0ce04530b478e2b88b5bfe399b1c82852f7753572aa11716add",
+        "generatedAt": "2026-11-26T11:45:53.982609Z",
+        "error": null
+      }
+    },
+    "meta-business-help-discovered-ad575158846bcf435270": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "在 Meta 事件管理工具中设置自动事件",
+        "inputHash": "64720ffe72687b9f0f6c1250e2b99e4d226d74e7747b8e2a435189141ec666b7",
+        "generatedAt": "2026-11-26T11:45:53.983563Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Configura eventos automáticos en el Administrador de eventos de Meta",
+        "inputHash": "ceac811d2e42a8853930c8361aea53a42c0b8f3a142b75bdccd31fae37ea9bb8",
+        "generatedAt": "2026-11-26T11:45:53.983563Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta 이벤트 관리자에서 자동 이벤트 설정하기",
+        "inputHash": "574244887269c8f63f1665498ae51e3720f469fbb7a8a02a9261673f6486b4fd",
+        "generatedAt": "2026-11-26T11:45:53.983563Z",
+        "error": null
+      }
+    },
+    "meta-business-help-discovered-72fe3824bad4d12b0792": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta Ads Manager 中的版位设置有哪些新变化",
+        "inputHash": "de7096e87692917beed065a06ca0b7c2a85afd3a0d8a214861e28aa0fd4de515",
+        "generatedAt": "2026-11-26T11:45:56.774532Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Qué hay de nuevo en la configuración de ubicaciones en el Administrador de anuncios de Meta",
+        "inputHash": "5bca2dbd2549e4cf217ba452ca51025c8c8a4d3b3fa650ec39ad0588c71be75d",
+        "generatedAt": "2026-11-26T11:45:56.774532Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta 광고 관리자의 게재 위치 설정에 새롭게 추가된 기능",
+        "inputHash": "f874663742a34f500bc591e4bdaba9d29181861b2a482b24ef07dcacf54f78dc",
+        "generatedAt": "2026-11-26T11:45:56.774532Z",
+        "error": null
+      }
+    },
+    "meta-business-help-discovered-572d7b9ceebdccc05974": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "关于使用即时表单的潜在客户广告的转化事件",
+        "inputHash": "e36d032ef35a320e287640fd0160a5d41442bfe94c27c32a7360a0e8755edb23",
+        "generatedAt": "2026-11-26T11:45:57.151331Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Acerca de los eventos de conversión para anuncios de clientes potenciales con formulario instantáneo",
+        "inputHash": "3b45ed8f2c70f87584970ebe2b41612fcd8a0c270cd8ea624f47be777dccc170",
+        "generatedAt": "2026-11-26T11:45:57.151331Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "인스턴트 양식이 포함된 리드 광고의 전환 이벤트 정보",
+        "inputHash": "0c7acfa6e576218abf81a126185fdd0e469a92a8f5b9935d50c861f0babfd017",
+        "generatedAt": "2026-11-26T11:45:57.151331Z",
+        "error": null
+      }
+    },
+    "meta-business-help-discovered-510778d27a551d6a20f5": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "在 Meta 广告管理工具中设置创意测试",
+        "inputHash": "1e8f136d10049226ef0bdfca73142e00992df80f54ecf2f1b81bc0c741415b7b",
+        "generatedAt": "2026-11-26T11:45:57.277762Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Configura una prueba creativa en Meta Ads Manager",
+        "inputHash": "d6b2aeee4346a4089c4bbb8a653f21d3f3efa0c1a018a3d425cfd9b69fff3dcf",
+        "generatedAt": "2026-11-26T11:45:57.277762Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta 광고 관리자에서 크리에이티브 테스트 설정하기",
+        "inputHash": "1763c3c26a69ceef0127a36c80078c1f1cfaa997bc2ac1fc9b233e92d4a38fab",
+        "generatedAt": "2026-11-26T11:45:57.277762Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-9bfa8b2e337bcb6f14b3": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Facebook上的减肥广告：Meta允许和拒绝哪些内容",
+        "inputHash": "d37cc9a8b7a53952b172376a1e063aa45338d61b5aee7e03a2d7985d0f2696f4",
+        "generatedAt": "2026-11-26T11:45:57.329438Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Anuncios de pérdida de peso en Facebook: qué permite y qué rechaza Meta",
+        "inputHash": "432018092caf3e70dd83f725d0e92b5605a3d47653fc0ff20dbf6624441dab7e",
+        "generatedAt": "2026-11-26T11:45:57.329438Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "페이스북 체중 감량 광고: 메타가 허용하는 것과 거부하는 것",
+        "inputHash": "7622912e1d9c362a1ce7995cc0f9e38ce94c4e1ac310616f9edf2e25685c9a0b",
+        "generatedAt": "2026-11-26T11:45:57.329438Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-5847f530a469180f1b9c": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "面向教练的 Facebook 广告：营销漏斗、费用和 Meta 的规则",
+        "inputHash": "a33c51d0d5a4a672636bf54f4d467d2588a13515063e6a68c2072df2ae51e0d2",
+        "generatedAt": "2026-11-26T11:46:01.446588Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Anuncios de Facebook para coaches: embudos, costos y las reglas de Meta",
+        "inputHash": "e52b8a1c9b77d7f3abe12a8d99b52af7e675010193c641d9857ed3b56fb6ca88",
+        "generatedAt": "2026-11-26T11:46:01.446588Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "코치를 위한 페이스북 광고: 퍼널, 비용 및 메타의 규칙",
+        "inputHash": "a1a9038d82a84e96448c11cc133475e1326712c11d88bf7396963d4ed0602529",
+        "generatedAt": "2026-11-26T11:46:01.446588Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-6aef3e84220669b47391": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta表示，其扩大的处理能力正在推动广告成效",
+        "inputHash": "463c46a744e1f5d8c3b2a9db7d5d5fa0e6826461e90a38121f7d049d0f1045bd",
+        "generatedAt": "2026-11-26T11:46:01.445782Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta dice que su capacidad de procesamiento ampliada está impulsando los resultados de los anuncios",
+        "inputHash": "16c470f8703e0aeea30d0954c76c1bf94de516b5949f50689d1f4650f3d4021e",
+        "generatedAt": "2026-11-26T11:46:01.445782Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타는 확대된 처리 용량이 광고 성과를 견인하고 있다고 밝혔습니다",
+        "inputHash": "3d3d56acdacebdabac46266ea796730dfbef07fb01031d96a053e997941afd15",
+        "generatedAt": "2026-11-26T11:46:01.445782Z",
+        "error": null
+      }
+    },
+    "meta-business-news-discovered-9759afda47f94b4f1d11": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta 的广告系统如何在合适的时间将您的广告匹配给合适的人",
+        "inputHash": "2ec9691941428c16474ed85be2e87ad66c10b48fb1670986ebcfcb0a2b71d3bd",
+        "generatedAt": "2026-11-26T11:46:01.447365Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Cómo el sistema de anuncios de Meta hace coincidir tu anuncio con la persona adecuada en el momento adecuado",
+        "inputHash": "2daa5b4ea8d041003539bc9adf78886ea8b0a881736aedc1f61f3f841027d411",
+        "generatedAt": "2026-11-26T11:46:01.447365Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타의 광고 시스템은 적절한 시점에 적합한 사람에게 광고를 어떻게 연결할까",
+        "inputHash": "3bc9ffbceffe8a7d17173f1e03d404f3efca1f83a725460e2d3718020565c870",
+        "generatedAt": "2026-11-26T11:46:01.447365Z",
+        "error": null
+      }
+    },
+    "meta-business-news-discovered-8f0f771dc4fdf6cdf765": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "深入了解广告排名中的三项全新 AI 创新，提升您的广告表现",
+        "inputHash": "8bff6c5bef6b68da3b7f25df646da7c92f7a7d7b3ea0d64e11abe1bf41a889c0",
+        "generatedAt": "2026-11-26T11:46:01.441552Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Dentro de las tres nuevas innovaciones de IA en la clasificación de anuncios que mejoran el rendimiento de tus anuncios",
+        "inputHash": "d456e4a27192e9267b5b4b1c2896ee9f7f9c4a33ed3c4b375497af65dbef1fc9",
+        "generatedAt": "2026-11-26T11:46:01.441552Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "광고 성과를 개선하는 광고 순위 결정 분야의 세 가지 새로운 AI 혁신 살펴보기",
+        "inputHash": "13fec18bdeebc639c4dad6febacab8c894870e3e0c6fcdbb36da862bf34b2f9f",
+        "generatedAt": "2026-11-26T11:46:01.441552Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-5bfe62570b130d041fc6": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta为广告创意新增单项表现数据",
+        "inputHash": "2dbd1d3781eb459902ffceeb42d2a2235251ba7e3241015c60bc22238d0de068",
+        "generatedAt": "2026-11-26T11:46:04.906784Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta añade datos de rendimiento individuales para las creatividades publicitarias",
+        "inputHash": "e1769129c329bcdb604c91e5f3d0e79d6a76406fc6d995b92c0cd31c152ac92c",
+        "generatedAt": "2026-11-26T11:46:04.906784Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta, 개별 광고 소재의 성과 데이터 추가",
+        "inputHash": "3acf9ecd2f5881c86a2702f6ccf567ca548c6b1e422e9e10fc1c94c276c3aaac",
+        "generatedAt": "2026-11-26T11:46:04.906784Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-d96c4f062767fe7b4d3e": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta 澄清即将进行的版位控制变更",
+        "inputHash": "9c99d2138612c8f9e85c7919fc64dc8177a103ecb7501e104cf1e2abb2e5801a",
+        "generatedAt": "2026-11-26T11:46:04.965318Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta aclara los próximos cambios en los controles de ubicación",
+        "inputHash": "c892643664d88889f703c9e7d48548da672325cf3db8596479eada1bd28a60f6",
+        "generatedAt": "2026-11-26T11:46:04.965318Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타, 예정된 게재 위치 제어 변경 사항을 명확히 설명",
+        "inputHash": "7c47a78b3692dfe5f470a735c38f9d2d597972d2331a9417b455bb918f4be51c",
+        "generatedAt": "2026-11-26T11:46:04.965318Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-7c8bd1da6df1f4a4e99c": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Facebook汽车库存广告：经销商设置指南",
+        "inputHash": "0328c7b50c076e373a074dde2d1da6094f6e5f576cc324c9f34c9132f593f927",
+        "generatedAt": "2026-11-26T11:46:05.239098Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Anuncios de inventario automotriz de Facebook: guía de configuración para concesionarios",
+        "inputHash": "da09b6731a6dbd0ec6b8e676e742486e1e6dbc6316c19ede5b8c49b0805be31e",
+        "generatedAt": "2026-11-26T11:46:05.239098Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "페이스북 자동차 재고 광고: 딜러를 위한 설정 가이드",
+        "inputHash": "a01901c2673572bd59f3d699bb3fb8816ad47f2dbfd96a1a62be1b05bd1ba898",
+        "generatedAt": "2026-11-26T11:46:05.239098Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-d6b20c1d6e103dbcdeb6": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "广告超级爆发、首次印象广告和累计观看时长",
+        "inputHash": "ac6b538ebea7e2363256582eb2ea93b3bc81f13a7ca6ca690efa1556623db011",
+        "generatedAt": "2026-11-26T11:46:06.523628Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Anuncios Super Burst, anuncios de primera impresión y tiempo de visualización agregado",
+        "inputHash": "bf84389dde585e9a142c06259454aba9b102e38391b33f777ee591f370791f3a",
+        "generatedAt": "2026-11-26T11:46:06.523628Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "광고 슈퍼 버스트, 첫인상 광고 및 누적 시청 시간",
+        "inputHash": "f5278265749cd43a437226f59d5f5a6c40e82af9b140752b7a78746b2b6062ad",
+        "generatedAt": "2026-11-26T11:46:06.523628Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-81b45e003f81ff0815ef": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta称广告主应让广告活动收集数据",
+        "inputHash": "780afc14bb5fb0e22e684df14f7f73b3e952ea7763850763961ff3142f6d1ea9",
+        "generatedAt": "2026-11-26T11:46:11.974845Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta dice que los anunciantes deberían dejar que las campañas recopilen datos",
+        "inputHash": "e5c56271a0c22834f4b5af8cd1106d69123c9473dbb93cc6600191132e532df8",
+        "generatedAt": "2026-11-26T11:46:11.974845Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타는 광고주들이 캠페인에서 데이터를 수집하도록 해야 한다고 말한다.",
+        "inputHash": "a8810d38ddcaa68a995ec358020abf486f845b2f982eca5400acd1d3fe049605",
+        "generatedAt": "2026-11-26T11:46:11.974845Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-236997880e9139b3a608": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "教会 Facebook 广告示例：2026 年正在投放的 12 个真实广告",
+        "inputHash": "aabe5b3c36ee8b840cff172da462a4d2158a48aec95c9b6b8c6906bbe37af984",
+        "generatedAt": "2026-11-26T11:46:11.975735Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Ejemplos de anuncios de Facebook para iglesias: 12 anuncios reales en circulación en 2026",
+        "inputHash": "2648860d3302466ac453cc2b8fd149b9d02edfc8fba7fc9f744149e3da25f498",
+        "generatedAt": "2026-11-26T11:46:11.975735Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "교회 페이스북 광고 예시: 2026년에 실제로 집행 중인 광고 12개",
+        "inputHash": "d8cabb1b5b630ce92b0f5d40adae06e5b350db1f8f14468270a7d4e9711d42ee",
+        "generatedAt": "2026-11-26T11:46:11.975735Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-f2d2b3d53cc9647d5da4": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "如何复制 Meta 广告而不丢失点赞（也无需重新检查每项设置）",
+        "inputHash": "186993eb9511b4dc7262218ec7b3ff85da9563dba3872427b0fbbc008809916c",
+        "generatedAt": "2026-11-26T11:46:11.973925Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Cómo duplicar anuncios de Meta sin perder los Me gusta (ni volver a comprobar todos los ajustes)",
+        "inputHash": "8b3a831ec913754a329939a06bbeeb27c741748030551d0de86cbcb8ef177b44",
+        "generatedAt": "2026-11-26T11:46:11.973925Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "좋아요를 잃거나 모든 설정을 다시 확인하지 않고 Meta 광고를 복제하는 방법",
+        "inputHash": "f22d2c9d991d2ac6805169e78b7bef1a5978495c69dcd7249cab47eb93f8205c",
+        "generatedAt": "2026-11-26T11:46:11.973925Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-f930df35d4df417ce804": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta表示，购物是Muse的主要使用场景",
+        "inputHash": "b7ab4ecd02220ea2574326755c80d8790767a70d3b07e05e4770bce005ef9074",
+        "generatedAt": "2026-11-26T11:46:11.978188Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta afirma que las compras son el principal caso de uso de Muse",
+        "inputHash": "961fb7f3742000652963b20ebb26889e20ac462ba5327bb482458c2d9ee800b3",
+        "generatedAt": "2026-11-26T11:46:11.978188Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타, 쇼핑이 Muse의 주요 활용 사례라고 밝혀",
+        "inputHash": "5748e55a50cb944f580e662be58ec34e5f53fce63dde123c92379f060f243aad",
+        "generatedAt": "2026-11-26T11:46:11.978188Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-ce87778a5fd83e661113": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta分享各个平台增长情况的见解",
+        "inputHash": "e49a7355aec7751db8a78f4972e3afa7a19848512bf9929e3197b06143f871b9",
+        "generatedAt": "2026-11-26T11:46:15.396199Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta ofrece información sobre el crecimiento de cada plataforma",
+        "inputHash": "aa4fb2dbc0fa3688badd8c99d64a8705c1ecc0ae8f5a03e7fdcf9fedf8331da9",
+        "generatedAt": "2026-11-26T11:46:15.396199Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타, 각 플랫폼의 성장에 대한 인사이트 제공",
+        "inputHash": "6b911c1c4c68f7744d7ed24a8813b2137b5a8d9448767e1c0bc16a02ecc3ae5c",
+        "generatedAt": "2026-11-26T11:46:15.396199Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-c16ca0d2ff85d661dee7": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta为广告提供创意定向功能",
+        "inputHash": "82c30771fb01305a5fbeaf77a8f681cf01d95c2732cc4fe22b00f6b4da1fa2fe",
+        "generatedAt": "2026-11-26T11:46:15.758414Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta ofrece segmentación creativa para anuncios",
+        "inputHash": "3f97b4ded716792d78c06c520450a670e6a4e82afcbeae7f2e2c4a8503026970",
+        "generatedAt": "2026-11-26T11:46:15.758414Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타, 광고에 크리에이티브 타기팅 제공",
+        "inputHash": "a032914fe2f3cab129626458ef9812ecf849f1db923291ba47227d8f4ab3bb4c",
+        "generatedAt": "2026-11-26T11:46:15.758414Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-d75f47f36289b0205125": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta广告版位自定义：为每个版位上传不同的图片或视频（2026年）",
+        "inputHash": "c1cfc6c6de14fd67ccc3e1ec87926e172387fd1debf1793d82d729e9024b56d3",
+        "generatedAt": "2026-11-26T11:46:15.764401Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Personalización de ubicaciones de Meta Ads: sube una imagen o un video diferente para cada ubicación (2026)",
+        "inputHash": "cfa194e7b102b882b79e5b88732b3bb00075a528d6a727d6bc805103f62bc4f1",
+        "generatedAt": "2026-11-26T11:46:15.764401Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta 광고 게재 위치 맞춤 설정: 각 게재 위치마다 다른 이미지 또는 동영상 업로드 (2026)",
+        "inputHash": "04575ed3259126842e4692114f5d15471502b03dde3b73a0a6348bcefd82339c",
+        "generatedAt": "2026-11-26T11:46:15.764401Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-ea07503f9d2f7797aec1": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "为每个广告创意选择受众",
+        "inputHash": "3fc0c40462dfaec19dfcbcd2ced8bc4ee5014ef049a84ab375c1398e197aa5b7",
+        "generatedAt": "2026-11-26T11:46:15.942597Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Elige una audiencia para cada creatividad publicitaria",
+        "inputHash": "c6521b0f971fe99f74f1abc35e3e6e16675e199721ea8318410db38303bce008",
+        "generatedAt": "2026-11-26T11:46:15.942597Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "각 광고 소재별 타깃 고객을 선택하세요",
+        "inputHash": "4c9bb961be08ed4794a24ca58210c5e967a6b74e969f911dd729794f92982568",
+        "generatedAt": "2026-11-26T11:46:15.942597Z",
+        "error": null
+      }
+    },
+    "meta-developer-blog-discovered-86864d2e57f05735882c": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "为每个广告创意选择受众",
+        "inputHash": "3fc0c40462dfaec19dfcbcd2ced8bc4ee5014ef049a84ab375c1398e197aa5b7",
+        "generatedAt": "2026-11-26T11:46:20.095094Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Elige un público para cada creatividad del anuncio",
+        "inputHash": "c6521b0f971fe99f74f1abc35e3e6e16675e199721ea8318410db38303bce008",
+        "generatedAt": "2026-11-26T11:46:20.095094Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "각 광고 소재에 맞는 타겟을 선택하세요",
+        "inputHash": "4c9bb961be08ed4794a24ca58210c5e967a6b74e969f911dd729794f92982568",
+        "generatedAt": "2026-11-26T11:46:20.095094Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-9c21e8eb6a68d8b37cf0": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "美国政治广告限制期",
+        "inputHash": "76d7fd14b193e12ed45644a4ca32cb96d3d928a94e32b42dda572acbc89f0ea4",
+        "generatedAt": "2026-11-26T11:46:20.091864Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Periodo de restricción para los anuncios políticos en EE. UU.",
+        "inputHash": "5a24224f5866bd7ca08919257544c1b624be539a283d39842627242687261869",
+        "generatedAt": "2026-11-26T11:46:20.091864Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "미국 정치 광고 제한 기간",
+        "inputHash": "f08d0802c2762cfc5b00a7b448c2ea15ffeb50f711deb8eea7c9d920c5d7c1e5",
+        "generatedAt": "2026-11-26T11:46:20.091864Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-f02784ae8650dc3ae212": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "健身房 Facebook 广告：成本、优惠，以及能带来回报的计算方式",
+        "inputHash": "6c9c3f934262aa73261b5b1646bb34df6facc8363c1a4336e078cfffc43776c0",
+        "generatedAt": "2026-11-26T11:46:20.094294Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Anuncios de Facebook para gimnasios: costos, ofertas y los cálculos que resultan rentables",
+        "inputHash": "24ad866d053ccc9ef5947530c4371b15b6c00d1e73876fe184291e99fae2735f",
+        "generatedAt": "2026-11-26T11:46:20.094294Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "헬스장을 위한 페이스북 광고: 비용, 혜택, 그리고 수익을 내는 계산법",
+        "inputHash": "fcbfd92207a4b8b3a4f6818f20cc50cdb5801244d5c00a427e5737fd82d847c3",
+        "generatedAt": "2026-11-26T11:46:20.094294Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-e6b833e73fe70dcdbed5": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "因外界担忧数据抓取问题，Meta更新服务条款",
+        "inputHash": "8162c195c4180247f27e15be8a4b63242d694955b71904fd3e219849a2083732",
+        "generatedAt": "2026-11-26T11:46:20.090995Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta actualiza sus términos de servicio ante la preocupación por la extracción de datos",
+        "inputHash": "3ecba6c125e6b056d2dcf1d7dc9b47a57c2c885692d4b279f79271e972a64d02",
+        "generatedAt": "2026-11-26T11:46:20.090995Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "데이터 스크래핑 우려 속 메타, 서비스 이용약관 업데이트",
+        "inputHash": "bb24c7c1c6c2d9a0bbbbfa5748552a2f11f0829a91f069eb18f7a1a6aa50353f",
+        "generatedAt": "2026-11-26T11:46:20.090995Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-14ee9261deab99beaad0": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta 概述 Muse AI 面向企业的使用场景",
+        "inputHash": "dfce15985911322ba72a5d250994943acdc397b48fff1b80019729f797ef8273",
+        "generatedAt": "2026-11-26T11:46:23.104675Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta expone casos de uso de Muse AI para empresas",
+        "inputHash": "674dd0142f669a115e81845d3e90a0c49e2fbc0268dafba72933c9996bf4a75c",
+        "generatedAt": "2026-11-26T11:46:23.104675Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타, 기업용 Muse AI 활용 사례 소개",
+        "inputHash": "72a329b998692b3f581c42f1af67b457cf2cc28b5c42e2c05329b8ff2c193ba8",
+        "generatedAt": "2026-11-26T11:46:23.104675Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-bcd4975208cfc1001e72": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "客户评价类 Facebook 广告示例：12 个真实广告（2026）",
+        "inputHash": "4ca136a1c184db484c1a1d7664ed29e61dd06105790e5237d22d3ab71f985181",
+        "generatedAt": "2026-11-26T11:46:23.230994Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Ejemplos de anuncios de Facebook con testimonios: 12 anuncios reales (2026)",
+        "inputHash": "215b20efce3a6268ec418f7494dc25eea5567358d23b9067115a319d8b5fb3cb",
+        "generatedAt": "2026-11-26T11:46:23.230994Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "고객 후기 페이스북 광고 예시: 실제 광고 12개 (2026년)",
+        "inputHash": "dc934f56bdee344a83c965a5b0d7276619da6c2d1ebbb28e2f2fc9f3e8b8f5de",
+        "generatedAt": "2026-11-26T11:46:23.230994Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-b0804d00bed1b106c2cb": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta 提供增强的广告活动曝光度",
+        "inputHash": "3c16cc9c2bea0a7673d0497f9fb92c576623a19931f94551822ca08115be99cf",
+        "generatedAt": "2026-11-26T11:46:23.949141Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta ofrece mayor exposición a las campañas publicitarias",
+        "inputHash": "a6b594ecffabeff4cd0d1f415989a802c29a6dec481f3e8562b6244ea3ee3331",
+        "generatedAt": "2026-11-26T11:46:23.949141Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타, 광고 캠페인 노출 강화 제공",
+        "inputHash": "73d88c8162f77d50d880df9ebd385562e70bad20bf80d36a5783e5b7bacf4151",
+        "generatedAt": "2026-11-26T11:46:23.949141Z",
+        "error": null
+      }
+    },
+    "meta-business-news-discovered-87773f83abd0a8fb86ac": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta品牌建设峰会：帮助营销人员在Meta打造令人难忘品牌的新方式",
+        "inputHash": "1420a31cbbc48d4a57a731304a459102c713f037cb320c3d15538dd2bc0c9294",
+        "generatedAt": "2026-11-26T11:46:24.305886Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Cumbre de desarrollo de marca de Meta: nuevas formas de ayudar a los profesionales del marketing a crear marcas inolvidables en Meta",
+        "inputHash": "2e9e999694292915db4211b524a998263457de310f21fe5966f6c1a14e9cca0f",
+        "generatedAt": "2026-11-26T11:46:24.305886Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta 브랜드 구축 서밋: 마케터가 Meta에서 잊지 못할 브랜드를 구축하도록 돕는 새로운 방법",
+        "inputHash": "aaedd078f3191d0357725e2215ddbb18868c9b04d4de32dc698bef398d8fbd05",
+        "generatedAt": "2026-11-26T11:46:24.305886Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-868fed1cee3c4667b457": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Facebook旅游广告：Meta产品与旅游营销策略指南",
+        "inputHash": "52032b36e2d732d34b4fdb2016fbb99b0b14e576efc4c068b1943ee99f83b6db",
+        "generatedAt": "2026-11-26T11:46:28.384062Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Anuncios de viajes en Facebook: el producto de Meta y el manual de estrategias para viajes",
+        "inputHash": "a18deaefd35cdf992e704bf5724a35645a4d663b8f7628081a0d92eab69cac48",
+        "generatedAt": "2026-11-26T11:46:28.384062Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "페이스북 여행 광고: 메타의 제품과 여행 업계 전략 가이드",
+        "inputHash": "a40838828120118240cefa1b41c07c2a826b4384c94cc91f01cf706d6306ffd3",
+        "generatedAt": "2026-11-26T11:46:28.384062Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-ced6b82ff8729175718e": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta新增自动排除客户功能",
+        "inputHash": "b68967d043625db4847fcf0450be8f04c6b23152230ecfe3486f9cecaef9b976",
+        "generatedAt": "2026-11-26T11:46:28.378234Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta añade exclusiones automáticas de clientes",
+        "inputHash": "0320ec84bb306ae442ec71d79c392e678aebaf760b4dd6b28db9062042b6e0dc",
+        "generatedAt": "2026-11-26T11:46:28.378234Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타, 고객 자동 제외 기능 추가",
+        "inputHash": "1d6a86fa6dd12a6df935ee9c6eeebb0167002f29be208b5540e878d05f55d556",
+        "generatedAt": "2026-11-26T11:46:28.378234Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-49248bddefcf06ed188c": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "转化广告案例：14个真实的 Meta 广告及其奏效原因",
+        "inputHash": "9bab10835150d56a3e92b281e28f90bf4e3ea7d93d468d548d33cc7d0014b6e3",
+        "generatedAt": "2026-11-26T11:46:28.382433Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Ejemplos de anuncios de conversión: 14 anuncios reales de Meta y qué los hace funcionar",
+        "inputHash": "e67f744fc8627bd616a2e112134699da66bd477ba159f289d7a4d01ba04ca3aa",
+        "generatedAt": "2026-11-26T11:46:28.382433Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "전환 광고 사례: 실제 메타 광고 14개와 효과적인 이유",
+        "inputHash": "fad3064ffcaf7737c381d5e86d2a4acee72c0b4ef8bc70e68ba24adc9e26b049",
+        "generatedAt": "2026-11-26T11:46:28.382433Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-7ba2707808fc98d06dff": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta 提供更新版广告版位控制指南",
+        "inputHash": "30c990cb5ba73ecd928c196611e8b9f51840bcb24891839cc472d57a2ed48dd8",
+        "generatedAt": "2026-11-26T11:46:28.383249Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta ofrece orientación actualizada sobre el control de la ubicación de los anuncios",
+        "inputHash": "50d4a8d9f9f3e2daada79307d671c90c5004781a27db72fd46bec531309927c5",
+        "generatedAt": "2026-11-26T11:46:28.383249Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta, 업데이트된 광고 게재 위치 제어 가이드 제공",
+        "inputHash": "2844c4681efb260a928398a4965ad4c7bf9cec180d598923f7283637df956488",
+        "generatedAt": "2026-11-26T11:46:28.383249Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-eead0251a70d1bb6b637": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "你应该使用哪个 CTA 按钮？",
+        "inputHash": "c21df8c96b8eb10c51b818e5dc52097f9c30db3b0a73da0b577efd29adf86740",
+        "generatedAt": "2026-11-26T11:46:31.668943Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "¿Qué botón de llamada a la acción deberías usar?",
+        "inputHash": "fe1caf21e3fd3d54e3c1623ee222a912dcf959c9ad9d3bbcd11a2ad537674fdf",
+        "generatedAt": "2026-11-26T11:46:31.668943Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "어떤 CTA 버튼을 사용해야 할까요?",
+        "inputHash": "a5a0480c5be3c5db0aef91a6309ed038e3da29ea384cecc0d0aed19da244a8fc",
+        "generatedAt": "2026-11-26T11:46:31.668943Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-c6e4ce6fc637053911a6": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta取消对开发者的访问验证",
+        "inputHash": "a1a05f94d4807286fb014d4900fe81593c6dc74e7da12231263e647a0b6c1e1d",
+        "generatedAt": "2026-11-26T11:46:32.209190Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta elimina la verificación de acceso para desarrolladores",
+        "inputHash": "ff8c79b24c1aa4a656a0d5178105c556c4ef682f965402d38469d14169a4f20a",
+        "generatedAt": "2026-11-26T11:46:32.209190Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타, 개발자 대상 액세스 인증 폐지",
+        "inputHash": "1f0115a3d77e86c79339a65148bfee505fc2ecc265391b9cc45c543163f1691f",
+        "generatedAt": "2026-11-26T11:46:32.209190Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-7b2d5018d4e41e838f50": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "脊椎按摩师的 Facebook 广告：优惠方案、合规要求与到诊率",
+        "inputHash": "5796cb6906cad0f14f66bc40aa4977ff86c950d53e98010e05bbdaf2fd022fb1",
+        "generatedAt": "2026-11-26T11:46:32.948116Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Anuncios de Facebook para quiroprácticos: ofertas, cumplimiento normativo y tasas de asistencia",
+        "inputHash": "d2ad43fbe4af40efb36a9e92ccc5e0acc428a39654136b8630997437805c33a4",
+        "generatedAt": "2026-11-26T11:46:32.948116Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "카이로프랙터를 위한 페이스북 광고: 오퍼, 규정 준수 및 예약 참석률",
+        "inputHash": "1fb4a7c85e551eda97872731239d954c840c067bf0ba5cb7d169ee477f08bf4b",
+        "generatedAt": "2026-11-26T11:46:32.948116Z",
+        "error": null
+      }
+    },
+    "meta-developer-blog-discovered-b0401be977f82a8365a3": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "停用技术服务提供商应用的访问验证",
+        "inputHash": "b6dad163264f53273e27e98e57d5a2bbd0abe270d671bc8de916913681eebf29",
+        "generatedAt": "2026-11-26T11:46:33.688282Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Retirada de la verificación de acceso para las aplicaciones de proveedores tecnológicos",
+        "inputHash": "1c7b6ed6570bc79ef5add0b0652625ab0ace7a89776abfcde9fed468ec1235e0",
+        "generatedAt": "2026-11-26T11:46:33.688282Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "기술 제공업체 앱에 대한 액세스 확인 폐지",
+        "inputHash": "0c40e687c1839e05c5e169fd123885784727a9650794be1ddbf1428fc174ea15",
+        "generatedAt": "2026-11-26T11:46:33.688282Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-ca9230e43ba0221eef6e": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Facebook广告文案撰写：2026年运营者指南",
+        "inputHash": "06fd08d68a38a22dcfd46a2944da43970620415d93a28a7d016834feed5661a0",
+        "generatedAt": "2026-11-26T11:46:38.366399Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Redacción publicitaria para Facebook Ads: guía de un operador para 2026",
+        "inputHash": "bf54361248d46d3736bfc9f9e695c787c6e280838e5af285a80388f3af9ec8ce",
+        "generatedAt": "2026-11-26T11:46:38.366399Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "페이스북 광고 카피라이팅: 2026년 운영자를 위한 가이드",
+        "inputHash": "9a7c584bd11f5bc77a0ca1566db9c55d1e4b8b9eacd4cdb1ac01106b0c9f3ee6",
+        "generatedAt": "2026-11-26T11:46:38.366399Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-00edc71a77fe43551912": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Facebook房地产广告：规则、格式和基准（2026年）",
+        "inputHash": "ade7880e80a1bc27603ead6fa22a390dfeb5c1cad4fa761d8f251b752075b8f5",
+        "generatedAt": "2026-11-26T11:46:38.362086Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Anuncios inmobiliarios en Facebook: reglas, formatos y métricas de referencia (2026)",
+        "inputHash": "539012982cc3dfedefe1102f95accc93d04a3fd41a8bd318234809dac9dda730",
+        "generatedAt": "2026-11-26T11:46:38.362086Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "페이스북 부동산 광고: 규칙, 형식 및 벤치마크(2026)",
+        "inputHash": "26316aa66fbe4c19af5f5e45f58f1197fbefb30aa5e6d5a7c9cd6fa00c9d5436",
+        "generatedAt": "2026-11-26T11:46:38.362086Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-f9e2816e53d1636250a2": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta在印度测试优先展示Reels的Facebook信息流",
+        "inputHash": "613da490d7752a7a1c9c179bb442c1e56213a7ff674d7724fbe11604d6aca975",
+        "generatedAt": "2026-11-26T11:46:38.367216Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta prueba en India un feed de Facebook que prioriza Reels",
+        "inputHash": "de7cd0f088de96c75d9360478bda9081b889827d9567c102503572c3f324fec9",
+        "generatedAt": "2026-11-26T11:46:38.367216Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타, 인도에서 릴스 우선 페이스북 피드 테스트",
+        "inputHash": "dbe047ee881ef7c8fe551596486ed515e2384a4523ea4dfb92acf28dd6a193ef",
+        "generatedAt": "2026-11-26T11:46:38.367216Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-c0fafb06c7f24db9471c": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta在广告周推出新的人工智能驱动工具",
+        "inputHash": "cbbc97c6f3ec046d22422d68bdfcecfc5f0f7ce10563e1874d8cb19fcc64a2fd",
+        "generatedAt": "2026-11-26T11:46:38.367970Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta presenta nuevas herramientas impulsadas por IA en Advertising Week",
+        "inputHash": "0b7c4aeaf4ddee26358ddaef5488b73bcdae83539763e850fe05d20fd7d80a90",
+        "generatedAt": "2026-11-26T11:46:38.367970Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타, 애드버타이징 위크에서 새로운 AI 기반 도구 선보여",
+        "inputHash": "220e9e248984699caa52a9215441e541fa242eb206a3c5afdf4798d03639cfa2",
+        "generatedAt": "2026-11-26T11:46:38.367970Z",
+        "error": null
+      }
+    },
+    "meta-business-news-discovered-8970dc3ea43579bc67fe": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "纽约广告周2026：全新人工智能功能将为广告活动提供指导并触达客户",
+        "inputHash": "9f5fad6dc19302c59401a86ca677896086b995df91b88036c229ba6f9aaf6b9b",
+        "generatedAt": "2026-11-26T11:46:41.820864Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Advertising Week New York 2026: nuevas capacidades de IA para orientar campañas y llegar a los clientes",
+        "inputHash": "7444af9de7584eb54914606e98d9d00dec755f7ca544200dadd66af6f67bd973",
+        "generatedAt": "2026-11-26T11:46:41.820864Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Advertising Week New York 2026: 캠페인을 이끌고 고객에게 도달하도록 지원하는 새로운 AI 기능",
+        "inputHash": "7dafd8dbef6ac4f968d3ed4c6ed162d6746ef3982fde3fb2fbcb1074382fa0d1",
+        "generatedAt": "2026-11-26T11:46:41.820864Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-c416f019212a3f04fec6": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta 序列事件：针对合格的网站潜在客户进行优化",
+        "inputHash": "72697a2873eaaf90144f68da19be0ece00c05202d31bf2a8500a89cf1675edfd",
+        "generatedAt": "2026-11-26T11:46:41.848715Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Eventos secuenciados de Meta: optimiza para obtener clientes potenciales cualificados en el sitio web",
+        "inputHash": "011e2449c8b357bf51c39ae2bd7e6a554dba8a6d732a5316fb0d59814605e4fc",
+        "generatedAt": "2026-11-26T11:46:41.848715Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta 순차 이벤트: 적격 웹사이트 리드에 최적화",
+        "inputHash": "115edbf332553fc08227fb80ec3159db9c35a4ca5b1dc715b77334bf2b7abdaa",
+        "generatedAt": "2026-11-26T11:46:41.848715Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-fc3ed58fb62c4b0612cd": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "你应该针对自定义转化进行优化吗？",
+        "inputHash": "5fa84d036cfd39c9afe6171e13fdf2811d26a28b19fffec69788e6cadc02860f",
+        "generatedAt": "2026-11-26T11:46:42.454750Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "¿Deberías optimizar para una conversión personalizada?",
+        "inputHash": "c24b144a053005386023baf82ed9eb06ec4feb33408c7694f8499a1f309a0059",
+        "generatedAt": "2026-11-26T11:46:42.454750Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "맞춤 전환에 최적화해야 할까요?",
+        "inputHash": "608374455b2b94469352433b422d5e450742e5cf8a0061ed8ecca9c6fb7cfc53",
+        "generatedAt": "2026-11-26T11:46:42.454750Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-edb482d367dd7aba3c57": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "太阳能 Facebook 广告案例：2026 年正在投放的 6 个经验证广告",
+        "inputHash": "a5fa5d59533e13f86f39a9134d503a099aae071c61dd2f2179e8c48375e17b1f",
+        "generatedAt": "2026-11-26T11:46:42.726896Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Ejemplos de anuncios solares en Facebook: 6 anuncios probados en circulación en 2026",
+        "inputHash": "5d013e7c1e578af3ab75f39f33250c7a36b517d917f584aa4011a71616afbce1",
+        "generatedAt": "2026-11-26T11:46:42.726896Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "태양광 페이스북 광고 사례: 2026년에 집행 중인 검증된 광고 6개",
+        "inputHash": "87a7a93abe578c2d5318dda398ab7fcad5fcca59ec164fa4a3d528c17fd9586c",
+        "generatedAt": "2026-11-26T11:46:42.726896Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-4538ab0e720c5f348571": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "牙科诊所的 Facebook 广告：优惠、成本与合规",
+        "inputHash": "4cdc4662cae65be5ba9535784f3d21b8e145ac8be50999c40a2677fcd0819844",
+        "generatedAt": "2026-11-26T11:46:46.574432Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Anuncios de Facebook para consultorios dentales: ofertas, costos y cumplimiento",
+        "inputHash": "7bad113196ea6b3b3f1424d909154761f05d618a1ca17298353d0f0659478819",
+        "generatedAt": "2026-11-26T11:46:46.574432Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "치과 병원을 위한 페이스북 광고: 프로모션, 비용 및 규정 준수",
+        "inputHash": "27e7c33d31c163237df84445958b0eab0840670b4afdcb5640fd8cd0e03e07bb",
+        "generatedAt": "2026-11-26T11:46:46.574432Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-6e0a5c7bfd87debec9d4": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Facebook广告示例：按格式分类的13个真实广告（2026年）",
+        "inputHash": "96db783a9af27ed317075be7762189d002ddf4b14543b7f2152c82109b98b283",
+        "generatedAt": "2026-11-26T11:46:46.571270Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Ejemplos de anuncios de Facebook: 13 anuncios reales por formato (2026)",
+        "inputHash": "ae5c8e987e2171e28cc6581bf5d64e36e06cf63d08680c66ea329298a5b9529f",
+        "generatedAt": "2026-11-26T11:46:46.571270Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "페이스북 광고 예시: 형식별 실제 광고 13개(2026년)",
+        "inputHash": "59687b601b08298c7fca24119a062868b37188bf4c16f2ee6c559ec2e5e3b9d0",
+        "generatedAt": "2026-11-26T11:46:46.571270Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-b70ce5d3837f37840dd5": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta广告MCP服务器：配置、工具、限制和安全（2026）",
+        "inputHash": "1f48f668e58935f3d80884a7e2ec3b1ebe16e6dfdd50382388400e5dfc36f887",
+        "generatedAt": "2026-11-26T11:46:46.570446Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Servidor MCP de Meta Ads: configuración, herramientas, límites y seguridad (2026)",
+        "inputHash": "0dd03fcccdcc6f4d73d8fff4f203c0276af762aa568976c9ad4fa6b1c2872e24",
+        "generatedAt": "2026-11-26T11:46:46.570446Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta Ads MCP 서버: 설정, 도구, 제한 사항 및 안전성(2026)",
+        "inputHash": "aa6cb1b03f0424839b3de7280603edeb958f56bf93167c7f7299fe80fbb80f90",
+        "generatedAt": "2026-11-26T11:46:46.570446Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-809565cf26ad179a2736": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta Ads CLI：Meta 官方广告 CLI 的设置、命令和限制（2026）",
+        "inputHash": "3b43e01a6fd9cb71e91e366fdce8818978c0c14fad5f92098c2f0911adef58e0",
+        "generatedAt": "2026-11-26T11:46:46.572096Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "CLI de Meta Ads: configuración, comandos y límites de la CLI oficial de anuncios de Meta (2026)",
+        "inputHash": "ddd7186baa7fd3565868693bded8127f9f73ea8c45272395f9e5aff3867229de",
+        "generatedAt": "2026-11-26T11:46:46.572096Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta Ads CLI: Meta 공식 광고 CLI의 설정, 명령어 및 한계 (2026)",
+        "inputHash": "179cbccefbc11ab593fd396743aaef94e8a41ac5306f6c9b7de72407933c83e3",
+        "generatedAt": "2026-11-26T11:46:46.572096Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-bbaebd4d8fcfa00cf474": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta为中小企业推出Muse AI",
+        "inputHash": "712b6bffd290d13b3c5be47dcdea2e027162a3a02474c53412b6ac25b723ba6e",
+        "generatedAt": "2026-11-26T11:46:50.041836Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta lanza Muse AI para pymes",
+        "inputHash": "1958addee544ad16f4ec4574030e1be7908ad081f05dbf31a4dc45d072a76a71",
+        "generatedAt": "2026-11-26T11:46:50.041836Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타, 중소기업용 뮤즈 AI 출시",
+        "inputHash": "9075759484c78a3f8e151ee2a2a94cc006d0fbb4bcb4a0bb5bcb485519c7168a",
+        "generatedAt": "2026-11-26T11:46:50.041836Z",
+        "error": null
+      }
+    },
+    "meta-product-news-rss-5246d21d9b0bec1aaa7c": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "未来属于每个人：面向小企业的 Muse",
+        "inputHash": "1b0c8e37a098e350ceaa756a89f6119236eec71d7778937f15b5b8d0e3480614",
+        "generatedAt": "2026-11-26T11:46:50.157769Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "El futuro es para todos: Muse para pequeñas empresas",
+        "inputHash": "4d66c581755c561a5c2879d79226e70bf04bca310a5303044e1404bf20587f63",
+        "generatedAt": "2026-11-26T11:46:50.157769Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "미래는 모두의 것: 소규모 비즈니스를 위한 Muse",
+        "inputHash": "4da5ac1c1bb38308cf7d60c4db42b60581ddfd36479ce11753bd9ab257d8081c",
+        "generatedAt": "2026-11-26T11:46:50.157769Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-4d749c553b69bf363724": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "创建 Meta 广告的基本原则",
+        "inputHash": "215227f09ef64850a8fc6b6e553fcf6fab2152eaddeebc179d23e36bd6611d05",
+        "generatedAt": "2026-11-26T11:46:50.331852Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Los principios fundamentales para crear anuncios de Meta",
+        "inputHash": "986ae0e3289bb41686048e3f3ba9fb7251909136308827ce8285e4bb81ccc943",
+        "generatedAt": "2026-11-26T11:46:50.331852Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta 광고 제작의 기본 원칙",
+        "inputHash": "ea1e1492592462e7c7cf007e1ec76ac6ba53af84f39e2779ead852a6f74d3d8d",
+        "generatedAt": "2026-11-26T11:46:50.331852Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-e42aaaa8929d65b4fb0e": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "按行业划分的 Facebook 广告：2026 年基准数据及各行业领域的有效做法",
+        "inputHash": "4b94073417dbefbbcedc53a4453100e39a7c31cb275a544e0d5f5328e1d6f48b",
+        "generatedAt": "2026-11-26T11:46:50.452396Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Anuncios de Facebook por sector: referencias de 2026 y qué funciona en cada vertical",
+        "inputHash": "f10e24c453899264c1840e9f8c8ecf4eca45b4066a9a7b10ca4f671d232e7113",
+        "generatedAt": "2026-11-26T11:46:50.452396Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "업종별 페이스북 광고: 2026년 벤치마크와 각 업종에서 효과적인 전략",
+        "inputHash": "4469920a4b9e31cedd3acdd4f3194361609044d30b6b6fe11dc97f77623edf08",
+        "generatedAt": "2026-11-26T11:46:50.452396Z",
+        "error": null
+      }
+    },
+    "jon-loomer-meta-ads-57736eb5316a3299a116": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "面向本地企业的 Meta 广告",
+        "inputHash": "3a277767b0b69ad398d9c8cab4ea481780f51721f299f4f77120ee570a7f19fb",
+        "generatedAt": "2026-11-26T11:46:54.442765Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Anuncios de Meta para negocios locales",
+        "inputHash": "dd97c56607fa2562683bbeef9024a75680464448f98ac08a61fa22906af9a8bc",
+        "generatedAt": "2026-11-26T11:46:54.442765Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "지역 비즈니스를 위한 Meta 광고",
+        "inputHash": "54d3d5f6f7432d4df65852be6a86cde660dad143a2b664cee38e9febdc0fd91f",
+        "generatedAt": "2026-11-26T11:46:54.442765Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-29702f759b8334876c56": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta 能否被信任将用户数据用于驱动其 AI 智能体？",
+        "inputHash": "f37670c07eb6b9e6e8e7bb6626c9bfe3612b84e87ac030f23ed98b40b69bb8cd",
+        "generatedAt": "2026-11-26T11:46:54.440070Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "¿Se puede confiar en Meta para que utilice los datos de los usuarios con el fin de impulsar sus agentes de IA?",
+        "inputHash": "236755c18841ca81aacc5078044564569030fbc30915750d1229205f6d4d848d",
+        "generatedAt": "2026-11-26T11:46:54.440070Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "AI 에이전트를 구동하기 위해 사용자 데이터를 맡길 만큼 메타를 신뢰할 수 있을까?",
+        "inputHash": "6b6898d4713181fda24b9ff12bc9232b052d11237802f47dc87c6c7b55b4624d",
+        "generatedAt": "2026-11-26T11:46:54.440070Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-6b85c81589f8f2f2bd31": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Facebook广告中的商品标签：如何打造可购物广告",
+        "inputHash": "d3a95b80f7d547503bef6349d3bdc4ada4f8e3555615a1da3d54b97e8f45e6d4",
+        "generatedAt": "2026-11-26T11:46:54.444427Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Etiquetas de productos en los anuncios de Facebook: cómo permitir comprar desde los anuncios",
+        "inputHash": "c05e8585e2d09bd045a265b5ae4c4d447161fa0aca3fe07a21c281e8effe4dcb",
+        "generatedAt": "2026-11-26T11:46:54.444427Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Facebook 광고의 제품 태그: 광고를 쇼핑 가능하게 만드는 방법",
+        "inputHash": "24eeda6db9611dfefbd87a04e0b449d5d8a209b31f45ff82eed4a609dd7da5ed",
+        "generatedAt": "2026-11-26T11:46:54.444427Z",
+        "error": null
+      }
+    },
+    "adsuploader-blog-ff8f58f242be3bcb62d2": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "电商 Facebook 广告：2026 年规模化增长指南",
+        "inputHash": "4c5f1080ff2ab48e23c50ed7e5d0ee0171916ae7be09fc403547afcc392cc742",
+        "generatedAt": "2026-11-26T11:46:54.443608Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Anuncios de Facebook para comercio electrónico: la guía de 2026 para escalar",
+        "inputHash": "949b2c6515a9d7abb6e40209dfbb8e35a230ca919214510880485ee4516f2636",
+        "generatedAt": "2026-11-26T11:46:54.443608Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "이커머스를 위한 Facebook 광고: 규모 확장을 위한 2026년 플레이북",
+        "inputHash": "9e12e546e03b00c27d3b04c9855bfa8654927d37dffb390e45c69635ea066695",
+        "generatedAt": "2026-11-26T11:46:54.443608Z",
+        "error": null
+      }
     }
   }
 }
