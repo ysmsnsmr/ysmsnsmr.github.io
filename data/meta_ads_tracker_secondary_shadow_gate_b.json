@@ -2,15 +2,32 @@
   "schemaVersion": "meta-ads-secondary-shadow-gate-b-record/v2",
   "baselineGeneration": "rss-migration-2026-08",
   "baseline": {
-    "cutoffAt": null,
-    "workflowRunId": null,
-    "stateBranchCommit": null,
-    "artifactSha256": null
+    "cutoffAt": "2026-08-24T02:37:37Z",
+    "workflowRunId": "32683676557",
+    "stateBranchCommit": "96dd7423212a007c886965bde9f9f268cc59412c",
+    "artifactSha256": "5bd141868b8cde7f267a83c39ddbee7ca46d84b2912ec02ec4c1728a0bf3a619"
   },
   "observationWindow": {
     "startedAt": null,
     "endedAt": null
   },
-  "reviews": [],
+  "reviews": [
+    {
+      "reviewId": "review-jon-loomer-meta-ads-575fb7a07d55a89363af",
+      "baselineGeneration": "rss-migration-2026-08",
+      "sourceId": "jon-loomer-meta-ads",
+      "signalId": "jon-loomer-meta-ads-575fb7a07d55a89363af",
+      "observedAt": "2026-08-26T02:39:04Z",
+      "reviewedAt": "2026-08-26T20:30:46+08:00",
+      "workflowRunId": "32923505612",
+      "stateBranchCommit": "298e064b4789a2ed9c030dc8919c368a11861eb4",
+      "artifactSha256": "1a990422c2c1e8aef54ddc61349d8c9168ae192b6d577bdedd200f27cd8f7066",
+      "outcome": "useful",
+      "officialVerification": "not_found",
+      "officialReferenceUrl": null,
+      "minutesSpent": 3,
+      "notes": "人間がJon LoomerのRSSシグナル本文を確認。Meta Adsに関連する有用な早期警戒シグナルと判断したが、公式一次情報は確認できなかった。artifact SHA-256はGitHub Actions artifact archive。"
+    }
+  ],
   "findings": []
 }
