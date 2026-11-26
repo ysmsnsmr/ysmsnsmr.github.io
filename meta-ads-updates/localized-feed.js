@@ -36,6 +36,42 @@
     summary: document.querySelector("#result-summary"), legacy: document.querySelector("#legacy-list-section"), list: document.querySelector("#update-list"), officialGroup: document.querySelector("#official-group"), officialCount: document.querySelector("#official-group-count"), officialList: document.querySelector("#official-list"), sdkGroup: document.querySelector("#sdk-group"), sdkHeading: document.querySelector("#sdk-group-heading"), sdkList: document.querySelector("#sdk-list"), unofficialGroup: document.querySelector("#unofficial-group"), unofficialCount: document.querySelector("#unofficial-group-count"), unofficialList: document.querySelector("#unofficial-list"), empty: document.querySelector("#empty-state"), emptyTitle: document.querySelector("#empty-title"), emptyCopy: document.querySelector("#empty-copy"),
     footer: document.querySelector("#tracker-footer"), en: document.querySelector("#locale-en"), ja: document.querySelector("#locale-ja"), tags: document.querySelector("#featured-tags")
   };
+  if (headingLocale) {
+    const copy = {
+      "zh-Hans": {
+        common: ["语言","搜索更新","关键词","搜索标题和摘要","标签","标签表示标题或 AI 摘要中提到的内容，不一定是文章主题。","跳转到文章分区","关于非官方信息","非官方来源仅供参考，不代表 Meta 的官方立场。做出重要决定前，请核对其他来源和实际环境。","↑ 返回顶部","官方与非官方信息分开展示。"],
+        words: {official:"官方", unofficial:"非官方", officialGroup:"Meta 官方更新", unofficialGroup:"非官方更新", groupCount:"{count} 篇", retrieved:"上次获取", waiting:"等待首次获取", shown:"显示 ", automatic:" 篇 · 自动获取，请核实", addFavorite:"添加到收藏", removeFavorite:"取消收藏", noMatches:"没有符合条件的文章", noMatchesCopy:"请更改关键词或标签。", noItems:"暂无文章", noItemsCopy:"首次成功获取后将显示文章。", error:"无法加载资讯", errorTitle:"暂时无法显示资讯", errorCopy:"请稍后重试。", sdkGroup:"SDK 更新日志", sdkLink:"打开 GitHub 版本", allTags:"所有标签", clearTag:"取消选择标签"}
+      },
+      es: {
+        common: ["Idioma","Buscar novedades","Palabra clave","Buscar en titulares y resúmenes","Etiquetas","Las etiquetas indican menciones en titulares y resúmenes de IA; no siempre son el tema principal.","Ir a una sección","Acerca de la información no oficial","Las fuentes no oficiales sirven de referencia y no representan la postura de Meta. Antes de tomar decisiones importantes, consulta otras fuentes y comprueba tu entorno.","↑ Volver arriba","La información oficial y no oficial se muestra por separado."],
+        words: {official:"Oficial", unofficial:"No oficial", officialGroup:"Novedades oficiales de Meta", unofficialGroup:"Novedades no oficiales", groupCount:"{count} artículos", retrieved:"Última actualización", waiting:"Pendiente de la primera actualización", shown:"Se muestran ", automatic:" artículos · recopilación automática, verifica la información", addFavorite:"Añadir a favoritos", removeFavorite:"Quitar de favoritos", noMatches:"No hay artículos que coincidan", noMatchesCopy:"Cambia la palabra clave o la etiqueta.", noItems:"Todavía no hay artículos", noItemsCopy:"Los artículos aparecerán después de la primera actualización.", error:"No se pudieron cargar las novedades", errorTitle:"No se pueden mostrar las novedades", errorCopy:"Inténtalo de nuevo más tarde.", sdkGroup:"Registro de actualizaciones del SDK", sdkLink:"Abrir la versión en GitHub", allTags:"Todas las etiquetas", clearTag:"Quitar etiqueta"}
+      },
+      ko: {
+        common: ["언어","업데이트 검색","검색어","제목 및 요약 검색","태그","태그는 제목이나 AI 요약에서 언급된 내용을 나타내며, 기사의 주제와 다를 수 있습니다.","기사 섹션으로 이동","비공식 정보 안내","비공식 출처는 참고용이며 Meta의 공식 입장이 아닙니다. 중요한 결정을 내리기 전에 다른 출처와 실제 환경에서 확인하세요.","↑ 맨 위로","공식 정보와 비공식 정보를 구분해 표시합니다."],
+        words: {official:"공식", unofficial:"비공식", officialGroup:"Meta 공식 업데이트", unofficialGroup:"비공식 업데이트", groupCount:"{count}건", retrieved:"마지막 수집", waiting:"첫 수집 대기 중", shown:"표시 중: ", automatic:"건 · 자동 수집, 확인 필요", addFavorite:"즐겨찾기에 추가", removeFavorite:"즐겨찾기에서 삭제", noMatches:"조건과 일치하는 기사가 없습니다", noMatchesCopy:"검색어나 태그를 변경하세요.", noItems:"수집된 기사가 없습니다", noItemsCopy:"첫 수집에 성공하면 기사가 표시됩니다.", error:"업데이트를 불러올 수 없습니다", errorTitle:"업데이트를 표시할 수 없습니다", errorCopy:"잠시 후 다시 시도하세요.", sdkGroup:"SDK 업데이트 기록", sdkLink:"GitHub 릴리스 열기", allTags:"모든 태그", clearTag:"태그 해제"}
+      }
+    }[headingLocale];
+    Object.assign(words, copy.words);
+    document.documentElement.lang = headingLocale;
+    const [language, search, keyword, placeholder, tags, hint, jumps, notice, warning, top, footer] = copy.common;
+    el.en.parentElement.setAttribute("aria-label", language);
+    el.form.closest(".control-panel").setAttribute("aria-label", search);
+    el.form.querySelector('label[for="query-filter"]').textContent = keyword;
+    el.query.placeholder = placeholder;
+    el.tags.setAttribute("aria-label", tags);
+    el.form.querySelector(".tag-hint").textContent = hint;
+    const navigation = document.querySelector("#feed-jumps");
+    navigation.setAttribute("aria-label", jumps);
+    navigation.querySelector('[href="#official-group"]').textContent = words.official;
+    navigation.querySelector('[href="#unofficial-group"]').textContent = words.unofficial;
+    document.querySelector("#official-group-heading").textContent = words.officialGroup;
+    document.querySelector("#unofficial-group-heading").textContent = words.unofficialGroup;
+    el.notice.setAttribute("aria-label", notice);
+    el.notice.querySelector("strong").textContent = notice;
+    el.notice.querySelector("span").textContent = warning;
+    document.querySelector('main > a[href="#top"]').textContent = top;
+    el.footer.textContent = footer;
+  }
   const state = { q: "", tag: "" };
 
   function malaysiaTimestamp(value) {
@@ -301,7 +337,7 @@
           const fixture = params.get("personal-fixture");
           if (["1", "v3", "v4", "v5", "fields"].includes(fixture)) target.set("personal-fixture", fixture);
           link.href = target.size ? `?${target}` : "./";
-          if (active) { link.setAttribute("aria-current", "true"); link.setAttribute("aria-label", locale === "ja" ? `${tag.ja}の選択を解除` : `Clear ${tag.en} tag`); }
+          if (active) { link.setAttribute("aria-current", "true"); link.setAttribute("aria-label", headingLocale ? `${words.clearTag}: ${tag.en}` : locale === "ja" ? `${tag.ja}の選択を解除` : `Clear ${tag.en} tag`); }
           link.addEventListener("click", (event) => {
             if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
             event.preventDefault(); state.tag = active ? "" : tag.id; updateAddress(); render();
@@ -309,7 +345,7 @@
           });
           return link;
         });
-        const all = make("a", "tag-chip tag-chip--all", locale === "ja" ? "すべてのタグ" : "All tags");
+        const all = make("a", "tag-chip tag-chip--all", words.allTags || (locale === "ja" ? "すべてのタグ" : "All tags"));
         all.href = "./tags.html";
         el.tags.replaceChildren(...featured, all);
       }
