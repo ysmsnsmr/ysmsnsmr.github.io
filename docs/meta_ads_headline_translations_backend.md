@@ -1,8 +1,11 @@
 # Three-language headline backend experiment
 
 The existing collector generates Simplified Chinese (`zh-Hans`), Spanish
-(`es`), and Korean (`ko`) headlines for up to three articles per run, with
-one attempt per language. Set `META_ADS_HEADLINE_TRANSLATIONS_ENABLED=false`
+(`es`), and Korean (`ko`) headlines for all pending articles, with one
+attempt per language and an eight-minute processing budget. Progress is saved
+per article; remaining work is deferred after a rate limit or authorization
+failure, or when the time budget is reached.
+Set `META_ADS_HEADLINE_TRANSLATIONS_ENABLED=false`
 to stop new generation. Missing or stale translations fall back to English.
 The existing English/Japanese schema and generation history are unchanged.
 
