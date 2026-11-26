@@ -5,6 +5,9 @@
   const locale = document.documentElement.lang === "ja" ? "ja" : "en";
   const demoMode = params.get("demo") === "1";
   const fixtureMode = params.has("fixture");
+  const headingLanguages = new Map([["zh-Hans", "简体中文"], ["es", "Español"], ["ko", "한국어"]]);
+  const headingLocale = locale === "en" && !demoMode && !fixtureMode && headingLanguages.has(params.get("lang")) ? params.get("lang") : null;
+  const translated = new Map();
   const root = locale === "ja" ? "../" : "./";
   const personalVersions = new Set(["meta-ads-personal-feed/v1", "meta-ads-personal-feed/v2", "meta-ads-personal-feed/v3", "meta-ads-personal-feed/v4", "meta-ads-personal-feed/v5"]);
   const words = locale === "ja" ? {
@@ -79,6 +82,23 @@
     japanese.search = query.toString();
     el.en.href = `${english.pathname}${english.search}`;
     el.ja.href = `${japanese.pathname}${japanese.search}`;
+    if (!demoMode && !fixtureMode) {
+      el.en.parentElement.classList.add("locale-switch--headlines");
+      for (const [code, label] of headingLanguages) {
+        let link = document.querySelector(`#headline-language-${code}`);
+        if (!link) {
+          link = make("a", "", label);
+          link.id = `headline-language-${code}`;
+          link.lang = code;
+          el.en.parentElement.append(link);
+        }
+        const target = new URL(english);
+        target.searchParams.set("lang", code);
+        link.href = target.href;
+        if (code === headingLocale) link.setAttribute("aria-current", "page");
+      }
+      if (headingLocale) el.en.removeAttribute("aria-current");
+    }
   }
 
   function presentation(item) {
@@ -100,12 +120,13 @@
     return { status: "missing", shortHeadline: null, summary: null };
   }
 
-  function headline(item) { return presentation(item).shortHeadline || item.title; }
+  function headline(item) { return translated.get(item.id) || presentation(item).shortHeadline || item.title; }
 
   function countLabel(template, count) { return template.replace("{count}", String(count)); }
 
   function detailUrl(item) {
     const query = new URLSearchParams({ id: item.id });
+    if (headingLocale) query.set("fromLang", headingLocale);
     if (state.q.trim()) query.set("q", state.q.trim());
     if (state.tag) query.set("tag", state.tag);
     const fixture = params.get("personal-fixture");
@@ -133,15 +154,16 @@
     const card = make("article", `update-card update-card--${source.classification}`);
     const itemPresentation = presentation(item);
     const favorite = favoriteButton(item);
-    const titleText = itemPresentation.shortHeadline || item.title;
+    const titleText = headline(item);
     const titleLink = make("a", "update-title-link", titleText);
+    if (translated.has(item.id)) titleLink.lang = headingLocale;
     titleLink.href = detailUrl(item);
     titleLink.setAttribute("aria-label", titleText);
     const title = make("h2");
     title.append(titleLink);
     const main = make("div", "update-main");
     main.append(title);
-    if (itemPresentation.status === "machine" && itemPresentation.shortHeadline && itemPresentation.summary) {
+    if (!headingLocale && itemPresentation.status === "machine" && itemPresentation.shortHeadline && itemPresentation.summary) {
       main.append(make("p", "update-summary", itemPresentation.summary));
     }
     card.append(main);
@@ -180,12 +202,40 @@
   }
 
   setupLocaleLinks();
+  if (headingLocale) {
+    const notices = {
+      "zh-Hans": "仅翻译标题；无译文时显示英文。文章详情为英文。",
+      es: "Solo se traducen los titulares. Si no hay traducción, se muestra el inglés. Los detalles están en inglés.",
+      ko: "제목만 번역됩니다. 번역이 없으면 영어로 표시되며, 상세 페이지는 영어입니다."
+    };
+    const note = make("p", "headline-language-note", notices[headingLocale]);
+    note.lang = headingLocale;
+    el.form.before(note);
+  }
   try {
     const reportPath = demoMode ? `${root}demo-latest.json` : fixtureMode ? `${root}latest.json` : `${root}personal-feed.json`;
     const response = await fetch(reportPath, { cache: "no-store" });
     if (!response.ok) throw new Error(`report HTTP ${response.status}`);
     const report = await response.json();
     const personal = personalVersions.has(report.schemaVersion);
+    if (personal && headingLocale && window.crypto?.subtle) {
+      try {
+        const overlayResponse = await fetch(`${root}headline-translations.json`, { cache: "no-store", signal: AbortSignal.timeout(3000) });
+        if (overlayResponse.ok) {
+          const overlay = await overlayResponse.json();
+          if (overlay.schemaVersion === "meta-ads-headline-translations/v1") {
+            await Promise.all(report.items.map(async (item) => {
+              const record = overlay.items?.[item.id]?.[headingLocale];
+              if (record?.status !== "machine" || typeof record.value !== "string" || !record.value.trim() || record.value.length > 480) return;
+              const input = JSON.stringify(["headline-translation-v2-original-title", headingLocale, item.title]);
+              const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(input));
+              const hash = Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+              if (record.inputHash === hash) translated.set(item.id, record.value);
+            }));
+          }
+        }
+      } catch { /* English fallback when translations are unavailable. */ }
+    }
     const sources = new Map((report.sources || []).map((source) => [source.id, source]));
     el.list.classList.toggle("update-list--personal", personal);
     el.officialList.classList.toggle("update-list--personal", personal);
@@ -212,6 +262,7 @@
     function updateAddress() {
       if (!personal || demoMode || fixtureMode) return;
       const next = new URLSearchParams();
+      if (headingLocale) next.set("lang", headingLocale);
       if (state.q.trim()) next.set("q", state.q.trim());
       if (state.tag) next.set("tag", state.tag);
       const fixture = params.get("personal-fixture");
@@ -224,7 +275,7 @@
     function visible() {
       const needle = state.q.trim().toLocaleLowerCase(locale);
       return (report.items || []).filter((item) => {
-        const texts = personal && window.MetaAdsTags ? window.MetaAdsTags.texts(item) : [item.title];
+        const texts = personal && window.MetaAdsTags ? [...window.MetaAdsTags.texts(item), headline(item)] : [item.title];
         return (!needle || texts.some((text) => typeof text === "string" && text.toLocaleLowerCase(locale).includes(needle))) && (!state.tag || window.MetaAdsTags.matches(item, state.tag));
       }).sort((left, right) => {
         const newest = (item) => [item.publishedDate, item.updatedDate].filter(Boolean).sort().pop() || item.firstObservedAt || "";

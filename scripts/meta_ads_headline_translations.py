@@ -36,7 +36,12 @@ def validate_state(value: Any) -> None:
                 raise ValueError("unsupported failure code")
 
 
-def translate_headline(*, api_key: str, title: str, locale: str, timeout: float = 30) -> str:
+def input_hash(locale: str, title: str) -> str:
+    encoded = json.dumps([REVISION, locale, title], ensure_ascii=False, separators=(",", ":"))
+    return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
+
+
+def translate_headline(*, api_key: str, title: str, locale: str, timeout: float = 30, max_attempts: int = 2) -> str:
     """Translate only the supplied title using the existing bounded Luna transport."""
     languages = {"zh-Hans": "Simplified Chinese", "es": "Spanish", "ko": "Korean"}
     if locale not in languages:
@@ -57,7 +62,7 @@ def translate_headline(*, api_key: str, title: str, locale: str, timeout: float 
                                    "properties": {"headline": {"type": "string"}}}},
     }
     content, attempts = presentation._openai_completion(
-        api_key=api_key, messages=messages, timeout=timeout, response_format=response_format
+        api_key=api_key, messages=messages, timeout=timeout, response_format=response_format, max_attempts=max_attempts
     )
     try:
         result = json.loads(content)
@@ -93,8 +98,7 @@ def build_state(feed: dict[str, Any], previous: dict[str, Any] | None, *,
         title = item["title"]
         locales: dict[str, Any] = {}
         for locale in LOCALES:
-            encoded = json.dumps([REVISION, locale, title], ensure_ascii=False, separators=(",", ":"))
-            fingerprint = hashlib.sha256(encoded.encode("utf-8")).hexdigest()
+            fingerprint = input_hash(locale, title)
             old = previous_items.get(item_id, {}).get(locale)
             if old and old["status"] == "machine" and old["inputHash"] == fingerprint:
                 locales[locale] = dict(old)

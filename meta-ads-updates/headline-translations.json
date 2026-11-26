@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "meta-ads-headline-translations/v1",
+  "items": {
+    "meta-business-help-discovered-207f30d0c75941ff72df": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "为 Meta Ads 设置自定义归因",
+        "inputHash": "4ed396b18ac4611cad790870628b1be9ebff0f778ff542abaa547760ef17fa23",
+        "generatedAt": "2026-11-25T11:34:01.577966Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Configura una atribución personalizada para Meta Ads",
+        "inputHash": "6de75b087740ca9aeb288b17f89054dd97a8f969ab84701efa7a1c11d352990b",
+        "generatedAt": "2026-11-25T11:34:01.577966Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "Meta Ads 맞춤 기여 분석 설정하기",
+        "inputHash": "890d45c96e04c811b63e7df402fac672f1696b9483d6495782f117f1dee2d8d7",
+        "generatedAt": "2026-11-25T11:34:01.577966Z",
+        "error": null
+      }
+    },
+    "meta-business-help-discovered-a6fbbdd05256e71d50d2": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "如何为引导用户访问你网站的广告设置电子邮件注册优惠",
+        "inputHash": "4868c224d2396f5e988851f3edc1df68b850edbdea9e7712a7df7296494d6d88",
+        "generatedAt": "2026-11-25T11:34:01.577966Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Cómo configurar ofertas de registro por correo electrónico para anuncios que dirigen a tu sitio web",
+        "inputHash": "f5402c4385cbe90525b9908ede0fb1fc39ec1430d31e2d7f7fee0f0606bdf8b0",
+        "generatedAt": "2026-11-25T11:34:01.577966Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "웹사이트로 연결되는 광고에 이메일 가입 혜택을 설정하는 방법",
+        "inputHash": "ca26a639817e4e42ca7fbfdd53b12a1a9d7460b18ef8bff561eae5eb90f354c1",
+        "generatedAt": "2026-11-25T11:34:01.577966Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-3d214e350b57f2ef67ea": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta在巴西推出购物平台 Achados",
+        "inputHash": "dede0db559cff83db52290d8fa50815b559ac63d499fcb22f864897dcf31eb0d",
+        "generatedAt": "2026-11-25T11:34:01.577966Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta lanza la plataforma de compras Achados en Brasil",
+        "inputHash": "14c251b2e68c90c6bb9627e2e2ebfb9360d1588863022c0990bcd7d53c90b34b",
+        "generatedAt": "2026-11-25T11:34:01.577966Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타, 브라질에서 쇼핑 플랫폼 ‘Achados’ 출시",
+        "inputHash": "6d1cdabfd2a404bd19b6883c96e8fff87693f4e2c457f94c7c27c94e3364e6bb",
+        "generatedAt": "2026-11-25T11:34:01.577966Z",
+        "error": null
+      }
+    }
+  }
+}

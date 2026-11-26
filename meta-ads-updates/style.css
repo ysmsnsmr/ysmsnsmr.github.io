@@ -191,6 +191,10 @@ button:hover {
   border-left: 1px solid var(--tracker-line);
 }
 
+.locale-switch--headlines {
+  flex-wrap: wrap;
+}
+
 .locale-switch a[aria-current="page"] {
   background: var(--tracker-navy);
   color: #fff;
