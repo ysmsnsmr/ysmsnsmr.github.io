@@ -311,6 +311,17 @@ try {
   productionPage.on("console", (message) => { if (message.type() === "error") productionConsoleErrors.push(message.text()); });
   productionPage.on("pageerror", (error) => productionPageErrors.push(error.message));
   await productionPage.goto(`${server.origin}/meta-ads-updates/index.html`, { waitUntil: "networkidle" });
+  const multilingualPage = await browser.newPage();
+  await multilingualPage.goto(`${server.origin}/meta-ads-updates/?lang=es`, { waitUntil: "networkidle" });
+  const spanish = multilingualPage.locator("#headline-language-es");
+  assert(await spanish.getAttribute("aria-current") === "page", "Spanish headline view must be selected");
+  const multilingualDetail = multilingualPage.locator(".update-title-link").first();
+  await multilingualDetail.click();
+  assert(new URL(multilingualPage.url()).pathname === "/meta-ads-updates/detail.html", "Translated headline must open English detail");
+  assert(new URL(multilingualPage.url()).searchParams.get("fromLang") === "es", "Detail must retain the source language");
+  await multilingualPage.locator("#back-link").click();
+  assert(new URL(multilingualPage.url()).searchParams.get("lang") === "es", "Back must return to the Spanish list");
+  await multilingualPage.close();
   const productionCards = await productionPage.locator(".update-card").count();
   const productionRegularItems = personalFeedReport.items.filter((item) => item.sourceId !== "meta-business-sdk-releases").length;
   const productionSdkItems = personalFeedReport.items.filter((item) => item.sourceId === "meta-business-sdk-releases").length;

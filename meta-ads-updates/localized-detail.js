@@ -36,7 +36,10 @@
   function setupNavigation() {
     const listQuery = new URLSearchParams();
     for (const key of ["q", "tag", "personal-fixture"]) { const value = params.get(key); if (value) listQuery.set(key, value.slice(0, 160)); }
-    setHref(el.back, "./", listQuery);
+    const fromLang = params.get("fromLang");
+    const translatedList = ["zh-Hans", "es", "ko"].includes(fromLang);
+    if (translatedList) listQuery.set("lang", fromLang);
+    setHref(el.back, translatedList ? root : "./", listQuery);
     const fullQuery = selectedQuery();
     setHref(el.en, locale === "ja" ? "../detail.html" : "./detail.html", fullQuery);
     setHref(el.ja, locale === "ja" ? "./detail.html" : "./ja/detail.html", fullQuery);
