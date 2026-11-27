@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2026年11月27日のニュースまとめ | マレーシア生活ニュース</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&amp;family=Noto+Sans+JP:wght@400..800&amp;display=swap" referrerpolicy="no-referrer">
+  <meta name="theme-color" content="#006b5f">
+  <meta name="apple-mobile-web-app-title" content="MY生活ニュース">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32-v1.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon-180-v1.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="./apple-touch-icon-167-v1.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="./apple-touch-icon-152-v1.png">
+  <link rel="manifest" href="./site.webmanifest">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7f4;
+      --panel: #ffffff;
+      --panel-subtle: #fbfcfa;
+      --panel-translucent: rgba(255, 255, 255, 0.68);
+      --ink: #1b2420;
+      --muted: #65716c;
+      --line: #dce3dd;
+      --accent: #006b5f;
+      --accent-strong: #004c45;
+      --accent-soft: #e5f3ef;
+      --warn: #8f4c00;
+      --focus: #f4c04d;
+      --font-sans: "Inter", "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --radius-control: 6px;
+      --radius-card: 8px;
+      --radius-pill: 999px;
+      --target-min: 44px;
+      --shadow: 0 12px 28px rgba(27, 36, 32, 0.07);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+    }
+    main { width: min(880px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 56px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 8px; font-size: 1.65rem; line-height: 1.3; }
+    h2 { margin: 0; font-size: 1.25rem; }
+    h3 { margin: 0; font-size: 1.1rem; line-height: 1.55; overflow-wrap: anywhere; }
+    a { color: var(--accent); text-underline-offset: 0.18em; }
+    a:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: var(--radius-control); }
+    .page-header { margin-bottom: 28px; }
+    .page-nav { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 28px; }
+    .back-link { font-weight: 700; }
+    .markdown-link { color: var(--muted); font-size: .9rem; }
+    .eyebrow { margin-bottom: 3px; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .subhead { max-width: 650px; margin-bottom: 0; color: var(--muted); }
+    .category-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .category-nav a { border: 1px solid var(--line); border-radius: var(--radius-pill); background: var(--panel); padding: 6px 11px; color: var(--accent-strong); font-size: .9rem; font-weight: 700; text-decoration: none; }
+    .daily-category + .daily-category { margin-top: 32px; }
+    .daily-category-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; border-bottom: 2px solid var(--accent-soft); padding-bottom: 9px; }
+    .daily-category-head span { color: var(--muted); font-size: .9rem; }
+    .daily-item-list { display: grid; gap: 12px; margin-top: 12px; }
+    .daily-item { border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--panel); padding: 18px; box-shadow: var(--shadow); }
+    .daily-item-head { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+    .item-number { display: inline-grid; width: 1.6rem; height: 1.6rem; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: .8rem; font-weight: 700; }
+    .item-category { margin: 0; color: var(--accent-strong); font-size: .85rem; font-weight: 700; }
+    .daily-summary { margin: 16px 0 0; overflow-wrap: anywhere; }
+    .place-link { text-decoration-style: dotted; text-underline-offset: .17em; }
+    .term-trigger { display: inline; border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #a26236; text-underline-offset: .18em; }
+    .term-trigger:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .term-icon { display: inline-block; margin-left: .18em; color: #8b4e27; font-size: .7em; vertical-align: super; }
+    .term-popover { position: fixed; inset: auto 16px 16px auto; width: min(20rem, calc(100vw - 32px)); margin: 0; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px #0003; font-size: .9rem; line-height: 1.6; }
+    .location-map { margin: 0 0 26px; border-block: 1px solid var(--line); padding: 12px 0; }
+    .location-map > h2 { color: var(--accent-strong); font-size: 1rem; }
+    .location-map > h2 span { margin-left: 8px; color: var(--muted); font-size: .86rem; font-weight: 400; }
+    .back-to-top { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 1001; display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--line); border-radius: 50%; background: var(--accent-strong); color: #fff; box-shadow: var(--shadow); text-decoration: none; font-size: 1.6rem; line-height: 1; }
+    .back-to-top[hidden] { display: none; }
+    .map-note { margin: 10px 0; color: var(--muted); font-size: .86rem; }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(180px, 1fr); gap: 12px; }
+    #location-map-canvas { min-height: 320px; background: var(--panel-subtle); }
+    .map-index { max-height: 320px; overflow: auto; padding: 4px 12px; }
+    .map-index h2 { font-size: 1rem; }
+    .map-index > ul { margin: 8px 0; padding-left: 20px; }
+    .map-place { margin-bottom: 10px; }
+    .map-place ul { padding-left: 16px; font-size: .84rem; }
+    .map-status { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
+    .leaflet-popup-content a { display: block; margin-top: 5px; }
+    .item-asof { margin: 10px 0 0; color: var(--muted); font-size: .8rem; }
+    .source-link, .source-note { display: block; margin: 16px 0 0; font-size: .88rem; overflow-wrap: anywhere; }
+    .source-note { color: var(--muted); }
+    .source-only { margin-top: 32px; }
+    .source-only-list { width: 100%; max-width: 100%; margin: 12px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+    .source-only-list li { display: block; width: 100%; min-width: 0; max-width: 100%; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: .88rem; overflow-wrap: anywhere; }
+    .source-only-title { display: block; width: 100%; min-width: 0; max-width: 100%; color: var(--ink); white-space: normal; overflow-wrap: anywhere; word-break: break-all; }
+    .source-only-meta { color: var(--muted); font-size: .82rem; }
+    .muted { color: var(--muted); }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.4rem; }
+      main { width: min(100% - 20px, 880px); padding-top: 20px; }
+      .page-nav { align-items: flex-start; flex-direction: column; gap: 6px; margin-bottom: 24px; }
+      .daily-item { padding: 15px; }
+      .map-layout { grid-template-columns: 1fr; }
+      #location-map-canvas { min-height: 260px; }
+      .map-index { max-height: 170px; padding: 4px 0; }
+    }
+
+    :is(.disaster-group, .statement-group) { border-block: 1px solid var(--line); padding: 18px 0; margin-bottom: 28px; }
+    :is(.disaster-heading, .statement-heading) { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    :is(.disaster-heading, .statement-heading) h2 { font-size: 1.15rem; }
+    :is(.disaster-heading, .statement-heading) > span { color: var(--muted); font-size: .85rem; }
+    :is(.disaster-story, .statement-story) { border-bottom: 1px solid var(--line); }
+    :is(.disaster-story, .statement-story) > summary { position: relative; list-style: none; cursor: pointer; padding: 14px 30px 14px 0; min-height: 44px; font-weight: 700; overflow-wrap: anywhere; }
+    :is(.disaster-story, .statement-story, .disaster-more, .statement-more) > summary::-webkit-details-marker { display: none; }
+    :is(.disaster-story, .statement-story) > summary::after { content: '+'; position: absolute; right: 4px; top: 14px; color: var(--accent); font-size: 1.2rem; }
+    :is(.disaster-story, .statement-story)[open] > summary::after { content: '\2212'; }
+    .disaster-region { display: block; color: var(--accent-strong); font-size: .8rem; font-weight: 400; margin-bottom: 3px; }
+    :is(.disaster-story, .statement-story) > .daily-item { border: 0; border-radius: 0; box-shadow: none; background: transparent; padding: 0 0 18px; }
+    :is(.disaster-story, .statement-story) > .daily-item > h3 { display: none; }
+    :is(.disaster-story, .statement-story) .daily-item-head { display: none; }
+    :is(.disaster-more, .statement-more) { margin-top: 8px; }
+    :is(.disaster-more, .statement-more) > summary { cursor: pointer; list-style: none; min-height: 44px; padding: 8px 0; font-size: .9rem; color: var(--accent); font-weight: 700; }
+    :is(.disaster-more, .statement-more) > summary::before { content: '+ '; }
+    :is(.disaster-more, .statement-more)[open] > summary::before { content: '\2212 '; }
+    :is(.disaster-story, .statement-story, .disaster-more, .statement-more) > summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <main id="page-top" tabindex="-1">
+    <header class="page-header">
+      <nav class="page-nav" aria-label="ページ内ナビゲーション">
+        <a class="back-link" href="./index.html">← マレーシア生活ニュース</a>
+        <a class="markdown-link" href="./2026-11-27.md">Markdown版</a>
+      </nav>
+      <p class="eyebrow">Daily summary</p>
+      <h1>2026年11月27日のニュースまとめ</h1>
+      <p class="subhead">2026年11月27日 10:25 MYT 時点のまとめ。期限付きの警報・運行案内は掲載時点の記録です。現在の発表は出典で確認してください。</p>
+    </header>
+    <nav class="category-nav" aria-label="カテゴリへ移動">
+      <a href="#disaster-heading">災害関連 1件</a><a href="#category-1">暮らしに関わる更新 7件</a><a href="#category-2">社会・経済の動き 35件</a><a href="#statement-heading">政治・行政の発言 7件</a>
+    </nav>
+
+    <section class="location-map" id="news-map" aria-labelledby="map-heading">
+      <h2 id="map-heading">記事の場所を地図で見る <span>12地域</span></h2>
+      <p class="map-note">地図の印は地域の概略位置です。記事の発生地点を示すものではありません。地図データ: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+      <div class="map-layout">
+        <div id="location-map-canvas" role="region" aria-label="記事に登場する地域の地図"></div>
+        <div class="map-index"><h2>地域と記事</h2><ul><li class="map-place" data-place-key="sabah" data-lat="5.6" data-lon="116.5" data-zoom="7"><strong>サバ州</strong><ul><li><a href="#article-1">サバ電力、ラナウの送電塔倒壊現場に仮設塔の資材到着</a></li>
+<li><a href="#article-2">サバ電力、ラナウの鉄塔倒壊で東海岸への送電復旧を12月2日目標に</a></li>
+<li><a href="#article-3">サバ州の停電、仮設ERS鉄塔の部材がラナウに到着</a></li>
+<li><a href="#article-17">裁判官、サバ州法務長官に訴訟での立場を3日以内に明確化するよう命令</a></li>
+<li><a href="#article-48">サバ州東部の3空港、停電中も発電機で通常運航</a></li>
+<li><a href="#article-50">サバ州のウェルネス会社、無登録診療所運営で罰金3万リンギット</a></li></ul></li>
+<li class="map-place" data-place-key="terengganu" data-lat="5.0" data-lon="103.0" data-zoom="8"><strong>トレンガヌ州</strong><ul><li><a href="#article-4">MetMalaysia、トレンガヌ州全域などに11月29日まで大雨警報</a></li></ul></li>
+<li class="map-place" data-place-key="kota-bharu" data-lat="6.13" data-lon="102.24" data-zoom="11"><strong>コタバル</strong><ul><li><a href="#article-4">MetMalaysia、トレンガヌ州全域などに11月29日まで大雨警報</a></li></ul></li>
+<li class="map-place" data-place-key="penang" data-lat="5.4" data-lon="100.3" data-zoom="9"><strong>ペナン州</strong><ul><li><a href="#article-5">JPJ、損傷・規格外の二輪車ヘルメット交換を呼びかけ</a></li></ul></li>
+<li class="map-place" data-place-key="johor" data-lat="2.0" data-lon="103.5" data-zoom="8"><strong>ジョホール州</strong><ul><li><a href="#article-6">ジョホール州、バス停検索や到着予測に対応した交通アプリを開始</a></li>
+<li><a href="#article-7">ジョホール・シンガポール・コーズウェイで12月1日から平日朝に対面通行</a></li>
+<li><a href="#article-8">RTSリンク運賃、2027年1月発表の見通し</a></li></ul></li>
+<li class="map-place" data-place-key="johor-bahru" data-lat="1.49" data-lon="103.76" data-zoom="11"><strong>ジョホールバル</strong><ul><li><a href="#article-8">RTSリンク運賃、2027年1月発表の見通し</a></li></ul></li>
+<li class="map-place" data-place-key="kuala-lumpur" data-lat="3.14" data-lon="101.69" data-zoom="11"><strong>クアラルンプール</strong><ul><li><a href="#article-9">リム氏、KLSCAHの土地賃貸調査でMACCに二重基準と批判</a></li>
+<li><a href="#article-45">ヨー氏の政務秘書、KLSCAH土地賃貸延長でMACCに供述</a></li></ul></li>
+<li class="map-place" data-place-key="sarawak" data-lat="3.1" data-lon="113.0" data-zoom="7"><strong>サラワク州</strong><ul><li><a href="#article-11">サラワク州ダロ沖で全長約10フィートの雌ワニを捕獲</a></li>
+<li><a href="#article-14">PKR撤退でGPSが最大44議席を無投票獲得の可能性、DAP青年部幹部</a></li>
+<li><a href="#article-18">IKEA、クチンに東マレーシア初の店舗を開業</a></li>
+<li><a href="#article-30">サラワク名産のエンパウラウ、1キロ最大RM2,500で取引</a></li>
+<li><a href="#article-41">DAPはサラワク州選に出馬、州外出身の連邦閣僚は選挙運動に参加せず</a></li>
+<li><a href="#article-49">アンワル首相、サラワク州議選を見送るPKRを擁護</a></li></ul></li>
+<li class="map-place" data-place-key="kuching" data-lat="1.55" data-lon="110.35" data-zoom="11"><strong>クチン</strong><ul><li><a href="#article-18">IKEA、クチンに東マレーシア初の店舗を開業</a></li></ul></li>
+<li class="map-place" data-place-key="putrajaya" data-lat="2.93" data-lon="101.68" data-zoom="11"><strong>プトラジャヤ</strong><ul><li><a href="#article-45">ヨー氏の政務秘書、KLSCAH土地賃貸延長でMACCに供述</a></li></ul></li>
+<li class="map-place" data-place-key="tawau" data-lat="4.25" data-lon="117.89" data-zoom="11"><strong>タワウ</strong><ul><li><a href="#article-48">サバ州東部の3空港、停電中も発電機で通常運航</a></li></ul></li>
+<li class="map-place" data-place-key="kota-kinabalu" data-lat="5.98" data-lon="116.07" data-zoom="11"><strong>コタキナバル</strong><ul><li><a href="#article-50">サバ州のウェルネス会社、無登録診療所運営で罰金3万リンギット</a></li></ul></li></ul></div>
+      </div>
+      <p id="location-map-status" class="map-status" hidden>地図を読み込めませんでした。右の地域一覧から記事を開けます。</p>
+    </section>
+
+    <section class="disaster-group" aria-labelledby="disaster-heading"><div class="disaster-heading"><h2 id="disaster-heading">災害関連</h2><span>1件</span></div><details class="disaster-story"><summary><span>MetMalaysia、トレンガヌ州全域などに11月29日まで大雨警報</span></summary>
+      <article class="daily-item" id="article-4">
+        <div class="daily-item-head">
+          <span class="item-number">4</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>MetMalaysia、<a class="place-link" data-place-key="terengganu" href="https://www.openstreetmap.org/?mlat=5.0&amp;mlon=103.0#map=8/5.0/103.0" title="トレンガヌ州の概略位置を地図で見る">トレンガヌ州</a>全域などに11月29日まで大雨警報</h3>
+        <p class="daily-summary">マレーシア気象局（MetMalaysia）は、<a class="place-link" data-place-key="terengganu" href="https://www.openstreetmap.org/?mlat=5.0&amp;mlon=103.0#map=8/5.0/103.0" title="トレンガヌ州の概略位置を地図で見る">トレンガヌ州</a>全域とクランタン州の一部に、2026年11月29日（日）まで続く大雨の警報を発令しました。クランタン州では、パシルプテ、バチョ、<a class="place-link" data-place-key="kota-bharu" href="https://www.openstreetmap.org/?mlat=6.13&amp;mlon=102.24#map=11/6.13/102.24" title="コタバルの概略位置を地図で見る">コタバル</a>、トゥンパ、パシルマス、マチャン、タナメラ、ジュリ、クアラクライが対象です。気象予測モデルの分析では、同日まで半島東部で風の収束が見込まれ、両州で継続的な雨となる可能性があるとしています。最新の気象情報は、MetMalaysiaの公式ウェブサイトやSNS、myCuacaアプリで確認できます。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/26/metmalaysia-warns-of-continuous-rain-across-terengganu-parts-of-kelantan-until-sunday/244904">出典: Malay Mail（2026年11月26日）</a>
+      </article>
+    </details></section>
+            <section class="daily-category" aria-labelledby="category-1">
+              <div class="daily-category-head">
+                <h2 id="category-1">暮らしに関わる更新</h2>
+                <span>7件</span>
+              </div>
+              <div class="daily-item-list">
+
+      <article class="daily-item" id="article-1">
+        <div class="daily-item-head">
+          <span class="item-number">1</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>サバ電力、ラナウの送電塔倒壊現場に仮設塔の資材到着</h3>
+        <p class="daily-summary">サバ電力によると、倒壊した送電塔T313があるラナウの現場に、緊急復旧システム（ERS）の仮設塔を運ぶトラックが11月27日午前1時7分に到着しました。技術チームは安全と手順の順守を優先し、仮設塔の設置に向けた準備作業を進めています。<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>西海岸と東海岸を結ぶ送電線の復旧を急いでおり、同社は停電の影響を受けた利用者に不便をわび、理解と協力に謝意を示しました。T313は11月26日に倒壊したということです。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/27/temporary-tower-reaches-ranau-as-sabah-electricity-works-to-restore-severed-grid/244944">出典: Malay Mail（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-2">
+        <div class="daily-item-head">
+          <span class="item-number">2</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>サバ電力、ラナウの鉄塔倒壊で東海岸への送電復旧を12月2日目標に</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>のラナウで2026年11月26日に送電鉄塔T313が倒壊し、西海岸から東海岸へ送電する275キロボルトの2回線が切断されました。これにより8地区で電力供給に支障が出て、登録消費者153,599人に影響しました。サバ電力のサアディア・アジズ会長は11月26日夜、影響を受けた送電網の再接続に6日間を見込み、12月2日までの全面復旧を目指すと説明しました。さらに、復旧は予定より早まる可能性もあると述べています。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/27/sabah-electricity-scrambles-to-reconnect-east-coast-after-ranau-tower-collapse-eyes-dec-2-recovery/244934">出典: Malay Mail（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-3">
+        <div class="daily-item-head">
+          <span class="item-number">3</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>の停電、仮設ERS鉄塔の部材がラナウに到着</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>の停電に関連し、仮設ERS鉄塔の部材を積んだコンテナを運ぶトラックが、送電鉄塔T313の設置場所に午前1時7分、無事到着した。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/gangguan-elektrik-sabah-komponen-menara-sementara-ers-tiba-di-ranau">出典: Astro Awani（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-5">
+        <div class="daily-item-head">
+          <span class="item-number">5</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>JPJ、損傷・規格外の二輪車ヘルメット交換を呼びかけ</h3>
+        <p class="daily-summary">JPJは、損傷したり摩耗したりした規格外のヘルメットを交換するよう、二輪車の運転者に呼びかけています。不適切な頭部保護具の使用は、事故の際に重傷を負うリスクを高めるおそれがあると警告しました。<a class="place-link" data-place-key="penang" href="https://www.openstreetmap.org/?mlat=5.4&amp;mlon=100.3#map=9/5.4/100.3" title="ペナン州の概略位置を地図で見る">ペナン州</a>JPJのズルキフリー・イスマイル局長は、バイザーの欠損、あごひもの破損、傷やひび割れがあるヘルメットは、運転者の安全を損なう可能性があると述べています。</p>
+
+        <a class="source-link" href="https://paultan.org/2026/11/26/jpj-warns-against-wearing-damaged-non-compliant-motorcycle-helmets/">出典: Paul Tan（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-6">
+        <div class="daily-item-head">
+          <span class="item-number">6</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3><a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>、バス停検索や到着予測に対応した交通アプリを開始</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>公共事業・交通・インフラ・通信委員会のモハマド・ファズリ・モハマド・サレー委員長によると、州の公共交通機関PAJが、利用者向けアプリ「My<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">Johor</a> Transport（MyJT）」を開発した。近くのバス停を探したり、バスの到着予定時刻や路線時刻表を確認したりでき、特にバス利用者の利便性向上を目指す。ファズリ委員長は、Bas Muafakat <a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">Johor</a>の利用者がより正確に移動計画を立てられる機能があると説明した。また、既存のバス停情報をデジタル化する方針も示した。アプリの発表イベントでは、オンデマンドバスサービス「Bus On Demand」も開始された。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/26/johor-launches-myjt-transport-app-to-help-commuters-track-buses-plan-journeys/244879">出典: Malay Mail（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-7">
+        <div class="daily-item-head">
+          <span class="item-number">7</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>ジョホール・シンガポール・コーズウェイで12月1日から平日朝に対面通行</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>政府は、祝祭期間に実施したことがある潮流式の対面通行（コントラレーン）を、12月1日からジョホール・シンガポール・コーズウェイで平日の特定時間帯に導入すると発表しました。</p>
+
+        <a class="source-link" href="https://paultan.org/2026/11/26/contra-lane-system-to-be-implemented-on-weekday-mornings-at-jb-singapore-causeway-from-december-1/">出典: Paul Tan（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-8">
+        <div class="daily-item-head">
+          <span class="item-number">8</span>
+          <p class="item-category">暮らしに関わる更新</p>
+        </div>
+        <h3>RTSリンク運賃、2027年1月発表の見通し</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="johor-bahru" href="https://www.openstreetmap.org/?mlat=1.49&amp;mlon=103.76#map=11/1.49/103.76" title="ジョホールバルの概略位置を地図で見る">ジョホールバル</a>―シンガポール間のRTSリンクの運賃は、運輸省が2027年1月に発表する見通しだと<a class="place-link" data-place-key="johor" href="https://www.openstreetmap.org/?mlat=2.0&amp;mlon=103.5#map=8/2.0/103.5" title="ジョホール州の概略位置を地図で見る">ジョホール州</a>政府が示した。鉄道サービスは2027年2月の開業が予定されている。</p>
+
+        <a class="source-link" href="https://paultan.org/2026/11/26/rts-link-fares-set-to-be-announced-in-january/">出典: Paul Tan（2026年11月26日）</a>
+      </article>
+
+              </div>
+            </section>
+
+
+            <section class="daily-category" aria-labelledby="category-2">
+              <div class="daily-category-head">
+                <h2 id="category-2">社会・経済の動き</h2>
+                <span>35件</span>
+              </div>
+              <div class="daily-item-list">
+
+      <article class="daily-item" id="article-10">
+        <div class="daily-item-head">
+          <span class="item-number">10</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>マレー半島の電力需要、2050年に49.8GWへ増加の見通し</h3>
+        <p class="daily-summary">マレーシア半島部の電力需要は、データセンター、AI、電気自動車（EV）に押し上げられ、2050年までに49.8GWに達する見通しです。原子力発電は2040年以降に導入される可能性があります。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/permintaan-elektrik-semenanjung-malaysiadijangka-cecah-498-gw-menjelang-2050">出典: Astro Awani（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-11">
+        <div class="daily-item-head">
+          <span class="item-number">11</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3><a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>ダロ沖で全長約10フィートの雌ワニを捕獲</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>ダロのカンプン・セディ沖で11月26日、全長約10フィートの雌ワニが生きたまま捕獲された。ワニ捕獲の лиценз許可を持つジェフリー・シュー氏によると、ワニは川岸に引き上げられた後に釣り針から外れて逃げようとしたが、チームが取り押さえた。シュー氏は、今月この地域で捕獲されたワニは2頭目だと説明。11月3日には同じカンプン・セディで、全長5.43メートル、体重600キロ超の雄が捕獲されたという。地元の漁師は生計のために漁に出ているとして、シュー氏は特にこの地域で頻繁に漁をする住民にワニの存在への警戒を呼びかけた。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/27/croc-no-2-in-a-month-10-foot-female-caught-alive-off-daro-waters-in-sarawak/244942">出典: Malay Mail（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-12">
+        <div class="daily-item-head">
+          <span class="item-number">12</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>ファーミ氏、NADIが2026年に1,099カ所へ増加と発表</h3>
+        <p class="daily-summary">地域デジタルセンター「NADI」の数は、2022年の911カ所から2026年には1,099カ所に増えたとファーミ氏が述べました。これにより、デジタル利用へのアクセスや技能訓練、起業の機会が広がっているとしています。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/jumlah-pusat-digital-komuniti-meningkat-kepada-1099-fahmi">出典: Astro Awani（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-13">
+        <div class="daily-item-head">
+          <span class="item-number">13</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>マレーシア政府、税務当局の統合は当面予定せず</h3>
+        <p class="daily-summary">財務省は、マレーシア内国歳入庁（IRBM）と王立マレーシア税関局（RMCD）を統合し、単一の税務当局を設ける計画は当面ないと明らかにしました。再編案には、国の歳入徴収の効率を高め、税収の漏れを抑え、企業の納税対応コストを減らす効果が期待されるとしています。政府は両機関を通じたガバナンスの強化と歳入徴収の改善を続け、情報共有や合同の取り締まりを行う方針です。財務省は、世界銀行グループなどの国際機関との協力や、国内の税務専門家との意見交換も続けていると説明しました。これらは、Datuk Seri Mohd Shafie Apdal氏の質問に対する書面回答として、11月26日に下院ウェブサイトで公開されました。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/27/one-tax-authority-not-yet-says-mof-as-irb-customs-stay-separate/244941">出典: Malay Mail（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-15">
+        <div class="daily-item-head">
+          <span class="item-number">15</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>2027年度予算案が下院通過、アンワル首相は実行に期待</h3>
+        <p class="daily-summary">2027年度予算案が下院（Dewan Rakyat）で可決され、アンワル首相は計画や施策を効果的に実行し、国民に目に見える恩恵をもたらすことに期待を示しました。アンワル氏は11月26日のFacebook投稿で、予算は国の強靱性を高め、将来を守る取り組みも含むと述べました。予算に盛り込まれた政府配分はRM459.8 billionで、政府系投資会社によるRM25 billionの投資、官民投資RM11 billion、さらにRM14.2 billionの投資も含まれます。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/27/anwar-looks-to-delivery-after-parliament-signs-off-on-rm510b-budget-2027/244937">出典: Malay Mail（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-16">
+        <div class="daily-item-head">
+          <span class="item-number">16</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>海事専門家、異なる国のパーム油を同一船槽で混ぜる規則の明確化を要請</h3>
+        <p class="daily-summary">海事専門家のDatuk Seri Jeyenderan Ramasamy氏は、異なる国のパーム油製品を同じ船舶タンクに入れる場合の規則を、マレーシア・パーム油委員会（MPOB）が明確にするよう求めた。輸出書類で原産国をどう記載するかなど、明確な指針が必要だとしている。原産国に加え、パーム油貨物の等級や数量を正確に記録することも重要だと述べた。問題は輸送中の取り扱いだけでなく、輸出書類やライセンス要件、主要なパーム油輸出国としてのマレーシアの評判にも関わるという。同氏は、同じ種類・等級の製品を混ぜることと、異なる種類・等級の製品を混ぜることを区別する必要があると指摘した。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/money/2026/11/27/maritime-expert-urges-mpob-to-clarify-rules-on-mixing-palm-oil-from-different-countries-in-one-tank/244935">出典: Malay Mail（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-17">
+        <div class="daily-item-head">
+          <span class="item-number">17</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>裁判官、<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>法務長官に訴訟での立場を3日以内に明確化するよう命令</h3>
+        <p class="daily-summary">高等裁判所のアレクサンダー・シュー・ハウ・ワイ判事は、<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>の大陸棚をめぐり、NGOのサバールが連邦政府を相手取った訴訟で、<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>法務長官室に3日以内に正確な立場を示すよう求めました。判事は、同室が示した「サバールの立場により近い」という説明は曖昧だとして受け入れませんでした。<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>法務長官のブレンダン・ソー氏は、州政府の立場を明確にするため、追加の宣誓供述書を提出すると述べました。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/27/halfway-aligned-judge-gives-sabah-ag-three-days-to-say-which-side-its-on-in-ngos-continental-shelf-suit-against-putrajaya/244932">出典: Malay Mail（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-18">
+        <div class="daily-item-head">
+          <span class="item-number">18</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>IKEA、<a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>に東マレーシア初の店舗を開業</h3>
+        <p class="daily-summary">IKEAは2026年11月27日、<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a><a class="place-link" data-place-key="kuching" href="https://www.openstreetmap.org/?mlat=1.55&amp;mlon=110.35#map=11/1.55/110.35" title="クチンの概略位置を地図で見る">クチン</a>のザ・パインズ・モールに、東マレーシア初の店舗を開業しました。<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>ではこれまで商品受取拠点を運営しており、今回はマレーシア初の小型店舗コンセプトを採用した実店舗です。売り場面積は3,634平方メートルで、約5,180点のホームファニシング商品を扱います。店舗マネジャーのPathmalingam Arumugam氏によると、価格はマレー半島のIKEA店舗と同水準で、約2,400点は購入後すぐに持ち帰れる商品です。店内にはショールーム、マーケットホール、IKEAプランニングスタジオ、法人向けサービス、持ち帰り用のIKEAフードコーナーなどがあります。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/27/hej-kuching-ikea-opens-its-first-east-malaysia-store-at-the-pines-mall-today/244931">出典: Malay Mail（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-19">
+        <div class="daily-item-head">
+          <span class="item-number">19</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>マレーシア、東南アジア初のOSTS足場訓練センターを開設</h3>
+        <p class="daily-summary">マレーシアで、東南アジア初となるOSTS足場訓練センターが開設された。MKRS Training InstituteはNASCと英国CISRSの認定を受け、国際基準に沿った足場作業員の訓練を行う地域拠点となる。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/malaysia-lancar-pusat-latihan-perancah-osts-pertama-di-asia-tenggara">出典: Astro Awani（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-20">
+        <div class="daily-item-head">
+          <span class="item-number">20</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>元司法長官アブドゥル・ガニ・パタイル氏が71歳で死去</h3>
+        <p class="daily-summary">元司法長官のタン・スリ・アブドゥル・ガニ・パタイル氏が、2026年11月26日夜に死去した。司法長官のタン・スリ・モハメド・ドゥスキ・モクタル氏が訃報を確認し、午後9時ごろに息を引き取ったと述べた。遺族の子どもも、同氏がプリンス・コート・メディカル・センターで午後9時15分に亡くなったと話した。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/27/former-attorney-general-abdul-gani-patail-dies-at-71/244929">出典: Malay Mail（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-21">
+        <div class="daily-item-head">
+          <span class="item-number">21</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>リンギット、地政学・経済不安で対米ドル横ばい</h3>
+        <p class="daily-summary">リンギットは11月27日午前8時、対米ドルで4.1135／1200となり、前日の終値4.1135／1175から横ばいで始まった。地政学的・経済的な不確実性を背景に、外国為替市場で慎重な姿勢が続き、米ドル需要を支えた。バンク・ムアマラット・マレーシアのチーフエコノミスト、モハド・アフザニザム・アブドゥル・ラシッド氏は、西アジアの緊張や世界経済の動向への懸念から、為替市場は引き続き慎重な展開になるとの見方を示した。サウジアラビア南部ジャザン州の製油所への攻撃で施設の一部操業が一時停止した後、ブレント原油価格は2.07％上昇し、1バレルUS$96.57となった。また、市場では米連邦準備制度理事会（FRB）が12月の会合で政策金利を0.25ポイント引き上げるとの見方が織り込まれているという。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/money/2026/11/27/ringgit-opens-flat-against-us-dollar-as-geopolitical-economic-jitters-keep-investors-cautious/244927">出典: Malay Mail（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-22">
+        <div class="daily-item-head">
+          <span class="item-number">22</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>学校牛乳プログラム、B40層の児童の栄養不足対策を支援</h3>
+        <p class="daily-summary">Farm Freshは、教育省（KPM）の学校牛乳プログラムを通じて、年間約8000万パックのUHT牛乳を供給しています。全国5つの地域で、補食プログラムの対象となる児童に届けられ、B40層の児童の栄養不足への対処を支援します。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/program-susu-sekolah-bantu-tangani-kekurangan-zat-makanan-murid-b40">出典: Astro Awani（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-23">
+        <div class="daily-item-head">
+          <span class="item-number">23</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>研究者と産業界の連携で国内技術開発を加速へ</h3>
+        <p class="daily-summary">研究者と産業界の連携が、国内技術の開発を加速させるとされている。マレーシアは、企業部門による研究開発（R&amp;D）支出の割合を、2022年の51％から2030年までに70％へ高めることを目指している。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/kerjasama-penyelidik-industri-percepat-pembangunan-teknologi-tempatan">出典: Astro Awani（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-24">
+        <div class="daily-item-head">
+          <span class="item-number">24</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>アミール・ハムザ氏、上場企業にRM3,400の適正賃金基準導入を要請</h3>
+        <p class="daily-summary">アミール・ハムザ氏は、上場企業にRM3,400の適正賃金基準を導入するよう求めた。公正で十分な賃金の実施により、労働者が基本的なニーズを満たし、適切な生活水準を保てるようになるとしている。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/syarikat-senaraian-awam-digesa-laksanakan-tanda-aras-gaji-wajar-rm3400-amir-hamzah">出典: Astro Awani（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-25">
+        <div class="daily-item-head">
+          <span class="item-number">25</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>アブドゥル・ハリム氏、サイバー対策を事後対応から転換すべきと主張</h3>
+        <p class="daily-summary">アブドゥル・ハリム氏は、AIを使った攻撃を含む高度化するサイバー脅威に対応するため、マレーシアは事後対応型から、情報分析や分析技術、予測能力に基づく、より先回りした対策へ移行する必要があると述べた。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/keselamatan-siber-perlu-beralih-daripada-reaktif-kepada-proaktif-abdul-halim">出典: Astro Awani（2026年11月27日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-27">
+        <div class="daily-item-head">
+          <span class="item-number">27</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>国会議事堂の改修工事、予定より17日早く完了</h3>
+        <p class="daily-summary">マレーシア国会議事堂の改修・修繕工事「フェーズ2C（II）」が、RM115 jutaをかけて予定より17日早く完了しました。工事は2026年11月26日にマレーシア国会へ引き渡されました。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/projek-naik-taraf-bangunan-parlimen-fasa-2c-ii-siap-17-hari-lebih-awal-diserah-hari-ini">出典: Astro Awani（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-29">
+        <div class="daily-item-head">
+          <span class="item-number">29</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>FAM、KRW FCのFIFA選手制限措置の解決を仲介する用意</h3>
+        <p class="daily-summary">マレーシアサッカー協会（FAM）は、国際サッカー連盟（FIFA）がケランタン・レッド・ウォリアーFC（KRW FC）に科した選手に関する制限措置の解決を支援するため、仲介役を務める用意があると明らかにした。支援には、異議申し立ての手続きも含まれる。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-sukan-terkini-malaysia/fam-sedia-jadi-jambatan-bantu-krw-fc-selesai-sekatan-fifa">出典: Astro Awani（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-30">
+        <div class="daily-item-head">
+          <span class="item-number">30</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>サラワク名産のエンパウラウ、1キロ最大RM2,500で取引</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>の魚類供給業者、Jeferry Siew Seng Kwong氏の施設に、重さ12キログラムを超えるエンパウラウが持ち込まれた。エンパウラウは国際市場で1キログラム当たりRM2,000～RM2,500で取引され、高級レストランや卸売業者、香港、中国、シンガポール、マレー半島の市場で需要があるという。魚は遠隔地の上流域で漁獲され、漁師や供給業者、航空輸送を経て食卓に届く。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/26/from-remote-batang-rajang-to-luxury-tables-sarawaks-prized-empurau-commands-up-to-rm2500-per-kg/244863">出典: Malay Mail（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-31">
+        <div class="daily-item-head">
+          <span class="item-number">31</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>AKPS、麻薬密輸16件を摘発 押収額はRM322.74 juta</h3>
+        <p class="daily-summary">マレーシア国境管理・保護庁（AKPS）は、2026年10月までに1万6,357件の法執行事案で、RM322.74 juta相当を押収したと発表しました。押収額は2025年のRM82.10 jutaと比べて4倍超に増加しました。記事タイトルによると、AKPSは麻薬密輸16件も摘発しました。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/akps-catat-rampasan-rm32274-juta-tumpas-16-kes-penyeludupan-dadah">出典: Astro Awani（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-32">
+        <div class="daily-item-head">
+          <span class="item-number">32</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>マレーシア下院、2027年度予算案を可決</h3>
+        <p class="daily-summary">マレーシア下院（Dewan Rakyat）は11月26日、アンワル・イブラヒム首相兼財務相が10月9日に提出した2027年度予算案の法案を可決しました。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/dewan-rakyat-lulus-belanjawan-2027">出典: Astro Awani（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-33">
+        <div class="daily-item-head">
+          <span class="item-number">33</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>マレーシア警察、トニー・プア氏らのFacebook投稿を捜査</h3>
+        <p class="daily-summary">マレーシア警察（PDRM）は、DAPの指導者トニー・プア氏と、コタ・ムラカ選出のクー・ポアイ・ティオン国会議員によるFacebook投稿をめぐり、それぞれ別個に2件の捜査書類を作成した。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/pdrm-buka-kertas-siasatan-terhadap-tony-pua-ahli-parlimen-kota-melaka">出典: Astro Awani（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-34">
+        <div class="daily-item-head">
+          <span class="item-number">34</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>マレーシア新安全保障政策、サイバー分野を重点化</h3>
+        <p class="daily-summary">アンワル首相は11月26日、国家安全保障政策2026～2030を発表した。今後5年間の安全保障上の優先課題を示し、サイバーセキュリティーと技術に新たな重点を置く。アンワル首相によると、政策は政治、経済、社会、環境、公共の安全、技術を含む「包括的安全保障」の考え方を採用し、政府機関、民間部門、学術界、非政府組織、国民の連携を掲げる。首相は、従来型の脅威に限らず複雑化する脅威に備えるため、サイバー能力の強化や人材育成、インフラ整備が必要だと述べた。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/26/cybersecurity-gets-its-own-priority-in-malaysias-new-national-security-policy/244925">出典: Malay Mail（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-35">
+        <div class="daily-item-head">
+          <span class="item-number">35</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>教育省、開発予算RM1b削減説を否定 移管分は復元へ</h3>
+        <p class="daily-summary">教育省は、2027年度予算で同省の開発予算がRM1 billion削減されたとの見方を否定した。ウォン・カー・ウォー副教育相によると、RM1 billionは運営費に移されていたが、教育省の申請を受けて財務省が開発予算への復元に同意した。これにより、開発予算は前年度のRM5.515 billionからRM6.515 billionに増え、2026年度の開発予算と比べてRM200 million増となるという。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/26/no-reduction-deputy-minister-clears-the-air-over-rm1b-education-ministry-budget-cut-claims/244923">出典: Malay Mail（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-36">
+        <div class="daily-item-head">
+          <span class="item-number">36</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>MCMC、SNSアカウントの段階的な年齢確認を検討</h3>
+        <p class="daily-summary">マレーシア通信・マルチメディア委員会（MCMC）は、年齢情報の食い違いを見つけ、16歳未満の利用者が所有すると疑われるアカウントを確認するため、段階的な年齢確認の方法を検討している。テオ氏によると、現在その手法を調査している。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/mcmc-teliti-pengesahan-umur-secara-pelapisan-bagi-akaun-media-sosial-teo">出典: Astro Awani（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-37">
+        <div class="daily-item-head">
+          <span class="item-number">37</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>警察、ナジブ氏恩赦投稿と金曜礼拝発言で議員2人を捜査</h3>
+        <p class="daily-summary">警察長官のタン・スリ・モハド・ハリド・イスマイル氏は、元ダマンサラ選出議員のトニー・プア氏と現職のコタ・ムラカ選出議員クー・ポアイ・ティオン氏を、それぞれのFacebook投稿をめぐって別々に捜査していると明らかにしました。プア氏はナジブ元首相の恩赦に関する文書の機密解除をめぐる投稿、クー氏はクアラ・トレンガヌで金曜礼拝中に事業者が営業を停止したことに関する発言が対象です。警察にはプア氏の投稿について55件、クー氏の発言について2件の通報があったといいます。プア氏は情報開示に関する刑法203A条でも捜査されており、同条の罰則は最高RM1 millionの罰金、最長1年の拘禁、またはその両方です。ハリド氏は26日夜の声明で、社会不安を招きかねない発言を意図的に行ったり広めたりした者には、妥協なく厳正に対処すると述べました。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/26/igp-says-police-investigating-tony-pua-over-najib-pardon-post-khoo-poay-tiong-over-friday-prayer-remarks/244921">出典: Malay Mail（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-38">
+        <div class="daily-item-head">
+          <span class="item-number">38</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>空軍将校3人ら6人、軍用資産を使った薬物密輸で罪に問われる予定</h3>
+        <p class="daily-summary">ブキット・アマン麻薬犯罪捜査局のフセイン・オマル・カーン局長によると、マレーシア空軍（RMAF）の将校3人と民間人3人の計6人が、軍用資産を使った薬物密輸事件に関連して、2026年11月27日にシャーアラムの治安判事裁判所で危険薬物法第39B条に基づき罪に問われる予定です。捜査書類は検察庁に送られたといいます。また、事件で逮捕されたほかの7人については、1985年危険薬物（特別予防措置）法に基づく措置が取られる予定です。計13人は、麻薬犯罪捜査局と空軍憲兵隊による合同作戦で、11月17日から19日にかけて逮捕されました。先行報道によると、スバンで空軍機に積み込まれる直前、覚醒剤とみられる薬物96.64キログラム（RM4.83 million）と化学物質6.98キログラムが見つかったということです。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/26/three-rmaf-officers-among-six-to-be-charged-in-shah-alam-tomorrow-over-drug-smuggling-using-military-assets/244918">出典: Malay Mail（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-40">
+        <div class="daily-item-head">
+          <span class="item-number">40</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>2027年度供給法案、アンワル氏のCSA合意から4週間後に可決</h3>
+        <p class="daily-summary">マレーシア下院（Dewan Rakyat）は2026年11月26日、2027年度供給法案を第3読会での発声採決により可決しました。野党議員からブロック投票の要求はなく、発声採決では賛成議員数が記録されないため、法案を支持した議員の人数は分かりません。アンワル首相にとって5回目で、過去最大の連邦予算となります。政府系投資会社、法定機関、財務相設立会社、官民連携事業による投資を含めると、支出計画はRM459.8 billionからRM510 billionになります。連邦政府の直接配分RM459.8 billionのうち、RM376.8 billionは経常支出に充てられる予定です。開発支出は、2023年に発表された過去最高のRM97 billionをなお下回るとされています。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/26/budget-2027-sails-through-dewan-rakyat-by-voice-vote-four-weeks-after-anwars-csa-deal/244916">出典: Malay Mail（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-42">
+        <div class="daily-item-head">
+          <span class="item-number">42</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>トランプ氏の新関税案、アジア各国に米国との協定迫る</h3>
+        <p class="daily-summary">トランプ米大統領が新たな関税案を発表し、アジア各国に米国との貿易協定を結ぶよう圧力をかけていると、アナリストらは指摘しています。対象には中国のほか、韓国や日本などの米国の同盟国も含まれ、輸出品には最大20％の関税が課される可能性があります。関税案は発効前に意見募集の期間を設けるため、実施は早くても1月になる見通しです。対象国の一部には米国とすでに交渉した関税率があり、MUFGのエコノミスト、ロイド・チャン氏は、これが適用税率の上限として機能すると述べました。また、新たな関税は強制労働をめぐり60カ国に課された関税に上乗せせず、より高い税率を適用する方針だと米国は示しています。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/money/2026/11/26/trumps-fresh-tariff-threat-puts-asian-nations-under-pressure-to-seal-us-trade-deals/244914">出典: Malay Mail（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-43">
+        <div class="daily-item-head">
+          <span class="item-number">43</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>Xpeng Malaysia、Bermazから販売代理業務を引き継ぎ</h3>
+        <p class="daily-summary">Xpengは2026年11月26日付で、マレーシアにおけるBermazとの販売代理店契約を終了しました。現地事業を運営する直営の全国販売会社「Xpeng Malaysia」を設立し、販売代理業務を引き継ぎます。同社によると、保証とアフターサービスに変更はありません。</p>
+
+        <a class="source-link" href="https://paultan.org/2026/11/26/xpeng-malaysia-officially-takes-over-distributorship-from-bermaz-warranties-after-sales-unaffected/">出典: Paul Tan（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-44">
+        <div class="daily-item-head">
+          <span class="item-number">44</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>商用車事故、2026年累計が2025年通年を上回るとAPAD</h3>
+        <p class="daily-summary">陸上公共交通庁（APAD）の長官によると、2026年に入ってから記録された商用車が関わる事故は、2025年の通年件数を上回っています。APADによれば、2025年の事故は105件でした。</p>
+
+        <a class="source-link" href="https://paultan.org/2026/11/26/more-accidents-involving-commercial-vehicles-so-far-this-year-than-in-full-year-of-2025-apad-director-general/">出典: Paul Tan（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-45">
+        <div class="daily-item-head">
+          <span class="item-number">45</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>ヨー氏の政務秘書、KLSCAH土地賃貸延長でMACCに供述</h3>
+        <p class="daily-summary">ハンナ・ヨー連邦直轄領相の政務秘書ヤップ・イー・ヴォン氏は2026年11月26日、<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>・セランゴール華人大会堂（KLSCAH）の土地賃貸契約延長をめぐるマレーシア汚職防止委員会（MACC）の調査に協力するため、弁護士とともに<a class="place-link" data-place-key="putrajaya" href="https://www.openstreetmap.org/?mlat=2.93&amp;mlon=101.68#map=11/2.93/101.68" title="プトラジャヤの概略位置を地図で見る">プトラジャヤ</a>のMACC本部を訪れ、供述したと明らかにしました。ヤップ氏は、契約延長に不正はなく「隠すことも恐れることもない」と述べ、供述に全面的に協力したと説明。追加情報や説明が必要な場合も応じる用意があるとしています。また、ヨー氏が国会下院で説明したように、決定は十分な検討を経て所定の手続きに従って行われたとの見解を示しました。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/26/hannah-yeohs-pol-sec-says-nothing-to-hide-after-giving-macc-statement-on-klscah-lease/244913">出典: Malay Mail（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-46">
+        <div class="daily-item-head">
+          <span class="item-number">46</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>地域市場の好調を受け、マレーシア株が上昇</h3>
+        <p class="daily-summary">Bursa Malaysiaは11月26日、地域市場の好調な動きや金融サービス、消費者向け製品・サービス関連の大型株への買いを背景に上昇して取引を終えました。FBM KLCIは前日比8.69ポイント（0.55％）高の1,570.98でした。一方、値下がり銘柄は703銘柄で、値上がり銘柄の412銘柄を上回りました。売買高は前日の25億3,000万ユニットから33億5,000万ユニットに増加しました。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/money/2026/11/26/bursa-malaysia-climbs-as-upbeat-regional-sentiment-lifts-heavyweight-stocks/244912">出典: Malay Mail（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-47">
+        <div class="daily-item-head">
+          <span class="item-number">47</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>アンワル首相、アジア・パワー・インデックスで世界10位</h3>
+        <p class="daily-summary">アンワル首相は、ローウィー研究所の「2026年アジア・パワー・インデックス」で、政治的リーダーシップの有効性を評価する世界ランキング10位となり、46点を獲得しました。同ランキングは、各国の外交上の利益を国際的に推進する指導者の能力について、専門家への調査をもとにまとめられています。世界トップ10に入ったASEANの指導者はアンワル首相のほか、3位のシンガポールのローレンス・ウォン首相と8位のベトナムのトー・ラム国家主席です。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/26/top-10-and-counting-anwar-makes-the-cut-in-asia-power-index/244910">出典: Malay Mail（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-48">
+        <div class="daily-item-head">
+          <span class="item-number">48</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>東部の3空港、停電中も発電機で通常運航</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>東部の電力供給が途絶えた後も、<a class="place-link" data-place-key="tawau" href="https://www.openstreetmap.org/?mlat=4.25&amp;mlon=117.89#map=11/4.25/117.89" title="タワウの概略位置を地図で見る">タワウ</a>、サンダカン、ラハダトゥの各空港は発電機を使って通常どおり運航している。マレーシア・エアポーツは、電力供給を維持しながら通常運営を続けており、状況を注視して必要に応じて情報を更新すると発表した。送電塔T313が2026年11月26日早朝にラナウで倒壊し、送電線の2回線に影響。サバ・エレクトリシティが同日午前6時4分に送電上の異常を確認し、<a class="place-link" data-place-key="tawau" href="https://www.openstreetmap.org/?mlat=4.25&amp;mlon=117.89#map=11/4.25/117.89" title="タワウの概略位置を地図で見る">タワウ</a>、サンダカン、センポルナ、ラハダトゥ、クナック、ブルラン、トゥリピッド、キナバタンガンの8地区で停電が発生した。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/26/tawau-sandakan-lahad-datu-airports-keep-flying-on-gensets-after-outage/244909">出典: Malay Mail（2026年11月26日）</a>
+      </article>
+
+
+      <article class="daily-item" id="article-50">
+        <div class="daily-item-head">
+          <span class="item-number">50</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3><a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>のウェルネス会社、無登録診療所運営で罰金3万リンギット</h3>
+        <p class="daily-summary">Katalina Aesthetic &amp; Wellness Sdn Bhdは、無登録の民間診療所を運営したとして、<a class="place-link" data-place-key="kota-kinabalu" href="https://www.openstreetmap.org/?mlat=5.98&amp;mlon=116.07#map=11/5.98/116.07" title="コタキナバルの概略位置を地図で見る">コタキナバル</a>のセッションズ裁判所から罰金3万リンギットを言い渡されました。納付できない場合は禁錮6カ月です。取締役が会社を代表して罪を認めました。問題の行為は2019年10月24日、ジャラン・ケパヤン近くのAeropodで起きたとされ、<a class="place-link" data-place-key="sabah" href="https://www.openstreetmap.org/?mlat=5.6&amp;mlon=116.5#map=7/5.6/116.5" title="サバ州の概略位置を地図で見る">サバ州</a>保健局の職員が施設を立ち入り検査した際、診療所の登録証明書やライセンスを提示できなかったため、書類や医薬品、機器が押収されました。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/26/no-licence-no-registration-sabah-wellness-company-fined-rm30000/244901">出典: Malay Mail（2026年11月26日）</a>
+      </article>
+
+              </div>
+            </section>
+            <section class="statement-group" aria-labelledby="statement-heading"><div class="statement-heading"><h2 id="statement-heading">政治・行政の発言</h2><span>7件</span></div><details class="statement-story"><summary><span>リム氏、KLSCAHの土地賃貸調査でMACCに二重基準と批判</span></summary>
+      <article class="daily-item" id="article-9">
+        <div class="daily-item-head">
+          <span class="item-number">9</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>リム氏、KLSCAHの土地賃貸調査でMACCに二重基準と批判</h3>
+        <p class="daily-summary">バガン選出のリム・グアンエン議員は11月27日、<a class="place-link" data-place-key="kuala-lumpur" href="https://www.openstreetmap.org/?mlat=3.14&amp;mlon=101.69#map=11/3.14/101.69" title="クアラルンプールの概略位置を地図で見る">クアラルンプール</a>・セランゴール華人大会堂（KLSCAH）の土地賃貸契約延長をめぐり、マレーシア汚職防止委員会（MACC）が二重基準を設けていると批判した。KLSCAHの99年間の契約延長は、推定RM4.67 millionのプレミアムに対し、名目額のRM1,000で承認された。MACCは前日の11月26日、この承認をめぐってハンナ・ヨー連邦直轄領相の政治秘書ヤップ・イー・ヴォン氏を5時間にわたり事情聴取した。リム氏は、同じRM1,000のプレミアムで99年間の延長を受けた他の7団体は調査されていないと指摘し、KLSCAHに特別扱いはなかったと主張。7件はUMNO主導の省が承認した一方、KLSCAHの案件はDAP所属大臣が率いる省の下で扱われたため、選択的な調査との印象を与えていると述べた。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/27/same-rm1000-lease-for-seven-others-so-why-only-klscah-lim-guan-eng-asks-macc/244948">出典: Malay Mail（2026年11月27日）</a>
+      </article>
+    </details><details class="statement-story"><summary><span>PKR撤退でGPSが最大44議席を無投票獲得の可能性、DAP青年部幹部</span></summary>
+      <article class="daily-item" id="article-14">
+        <div class="daily-item-head">
+          <span class="item-number">14</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>PKR撤退でGPSが最大44議席を無投票獲得の可能性、DAP青年部幹部</h3>
+        <p class="daily-summary">DAP<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>青年部副代表のジョーダン・スー氏は、PKRの撤退を受け、第13回<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>選挙でGPSが最大44議席を無投票で獲得する可能性があると述べた。実現すれば、投票前の候補者指名日に次期州政府を樹立するのに十分な多数を確保できるという。スー氏は該当する選挙区を明らかにしていない。また、連邦レベルでの政党間協力を、州レベルで他党に圧力をかけたり、民主的な競争を制限したりする手段にしてはならないと指摘した。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/27/gps-could-walk-into-44-sarawak-seats-unopposed-after-pkr-pulls-out-says-dap-youth-leader/244940">出典: Malay Mail（2026年11月27日）</a>
+      </article>
+    </details><details class="statement-story"><summary><span>アンワル氏、2027年度予算案の下院可決を重要な一歩と評価</span></summary>
+      <article class="daily-item" id="article-26">
+        <div class="daily-item-head">
+          <span class="item-number">26</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>アンワル氏、2027年度予算案の下院可決を重要な一歩と評価</h3>
+        <p class="daily-summary">アンワル氏は、2026年11月26日に下院で可決された2027年度予算案について、MADANI政権が国民の生活をより良くするための重要な一歩だと述べました。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/belanjawan-2027-lulus-langkah-penting-kerajaan-madani-angkat-kehidupan-rakyat-anwar">出典: Astro Awani（2026年11月26日）</a>
+      </article>
+    </details><details class="statement-more"><summary>関連ニュースをさらに読む 4件</summary><details class="statement-story"><summary><span>UiTM学生担当副学長、2法改正は学生の知的成熟の評価と指摘</span></summary>
+      <article class="daily-item" id="article-28">
+        <div class="daily-item-head">
+          <span class="item-number">28</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>UiTM学生担当副学長、2法改正は学生の知的成熟の評価と指摘</h3>
+        <p class="daily-summary">UiTMの学生担当副学長は、政府が1976年大学法（法律173号）と1976年教育機関規律法（法律174号）の改正を急ぐ姿勢について、学生の知的成熟を国の指導層が大きく評価したものだと述べた。</p>
+
+        <a class="source-link" href="https://www.astroawani.com/berita-malaysia/pindaan-akta-173-dan-akta-174-iktiraf-kematangan-intelektual-mahasiswa-tnc-hep-uitm">出典: Astro Awani（2026年11月26日）</a>
+      </article>
+    </details><details class="statement-story"><summary><span>アンワル首相、ミャンマー問題と南シナ海で外交優先を強調</span></summary>
+      <article class="daily-item" id="article-39">
+        <div class="daily-item-head">
+          <span class="item-number">39</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>アンワル首相、ミャンマー問題と南シナ海で外交優先を強調</h3>
+        <p class="daily-summary">アンワル首相は2026年11月26日、国家安全保障政策2026～2030の発表で、地域の安全保障課題に対応するには外交を優先し、隣国との良好な関係を保つ必要があると述べました。ミャンマー政府との外交対話を続け、マレーシアにいるミャンマー難民の帰還をめぐる問題に取り組む考えを示しました。また、マレーシア国内にいるミャンマー国籍者20万人の問題は国際機関や外国に任せず、自ら解決しなければならないと述べました。南シナ海については、ASEANを通じて行動規範の策定を進める方針を示し、外交と並行して自国の防衛能力を強化する必要性にも言及しました。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/26/diplomacy-first-on-myanmar-refugees-and-south-china-sea-anwar-says-at-national-security-policy-launch/244917">出典: Malay Mail（2026年11月26日）</a>
+      </article>
+    </details><details class="statement-story"><summary><span>DAPはサラワク州選に出馬、州外出身の連邦閣僚は選挙運動に参加せず</span></summary>
+      <article class="daily-item" id="article-41">
+        <div class="daily-item-head">
+          <span class="item-number">41</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>DAPは<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>選に出馬、州外出身の連邦閣僚は選挙運動に参加せず</h3>
+        <p class="daily-summary"><a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>DAPの州代表チョン・チェンジェン氏は2026年11月26日、DAPは州選挙に出馬する一方、州外出身で連邦閣僚または副大臣を務める党幹部は選挙運動に参加しないと発表した。チョン氏によると、PKRが選挙から撤退する決定をした後、DAPのアンソニー・ローク書記長と協議し、<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>DAPが出馬する議席や候補者の選定を決める方針で一致した。党本部の中央執行委員会も、州支部の自主性を尊重し、この取り決めに従うとしている。州外出身の連邦閣僚らが選挙運動に加わらないのは、連邦のマダニ政権の精神と連立相手への配慮によるとチョン氏は説明した。選挙運動は<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>DAPが主導するという。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/26/dap-still-contesting-sarawak-polls-but-non-sarawakian-ministers-to-stay-off-campaign-trail-says-chong-chieng-jen/244915">出典: Malay Mail（2026年11月26日）</a>
+      </article>
+    </details><details class="statement-story"><summary><span>アンワル首相、サラワク州議選を見送るPKRを擁護</span></summary>
+      <article class="daily-item" id="article-49">
+        <div class="daily-item-head">
+          <span class="item-number">49</span>
+          <p class="item-category">社会・経済の動き</p>
+        </div>
+        <h3>アンワル首相、<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>議選を見送るPKRを擁護</h3>
+        <p class="daily-summary">アンワル首相は、人民正義党（PKR）が<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>議会選挙に候補者を立てない決定を擁護し、連邦レベルの政治関係を保つためにサラワク政党連合（GPS）に屈したとの見方を否定しました。「服従ではなく協力だ」と述べましたが、GPSとの協力の具体的な内容は説明しませんでした。<a class="place-link" data-place-key="sarawak" href="https://www.openstreetmap.org/?mlat=3.1&amp;mlon=113.0#map=7/3.1/113.0" title="サラワク州の概略位置を地図で見る">サラワク州</a>民主行動党（DAP）のチョン・チェンジェン州委員長は、連邦政府へのGPSの支持を得るために「サラワクの民主主義を犠牲にしている」とPKRを批判しています。これまでに12人の候補者を発表したDAPが、選挙に臨む唯一の希望連盟（PH）構成党で、国民信託党（Amanah）も立候補を見送っています。GPSの情報責任者アブドゥル・カリム・ラーマン・ハムザ氏は、全国政党が選挙を見送るのは民主的権利の行使だと擁護し、サラワクの政治は協力と安定を重視すると述べました。</p>
+
+        <a class="source-link" href="https://www.malaymail.com/news/malaysia/2026/11/26/cooperating-not-submitting-anwar-defends-pkrs-decision-to-sit-out-sarawak-polls/244902">出典: Malay Mail（2026年11月26日）</a>
+      </article>
+    </details></details></section>
+
+  </main>
+  <a class="back-to-top" href="#page-top" aria-label="ページの先頭へ戻る" title="ページの先頭へ戻る" hidden><span aria-hidden="true">↑</span></a>
+  <script src="./daily-page.js" defer></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
+<script src="./location-map.js" defer></script>
+</body>
+</html>
