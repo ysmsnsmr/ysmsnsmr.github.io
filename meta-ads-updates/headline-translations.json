@@ -231,29 +231,6 @@
         "error": null
       }
     },
-    "social-media-today-meta-ads-cf1ca5c9c52908d28d3b": {
-      "zh-Hans": {
-        "status": "machine",
-        "value": "Meta 将更新后的创作者仪表板带到网页端",
-        "inputHash": "513b52f6b4ced0af7a525f372b3bea56cda35c3741eb495450d9f2f2de51e582",
-        "generatedAt": "2026-11-26T11:45:17.234139Z",
-        "error": null
-      },
-      "es": {
-        "status": "machine",
-        "value": "Meta lleva su panel de control para creadores actualizado a la web",
-        "inputHash": "b4babe3a1b23d2bd249f06c363600e5d73ac1f7d2fa658cc77e6f7cfa19d9375",
-        "generatedAt": "2026-11-26T11:45:17.234139Z",
-        "error": null
-      },
-      "ko": {
-        "status": "machine",
-        "value": "메타, 업데이트된 크리에이터 대시보드를 웹으로 제공",
-        "inputHash": "dce8f21c13db1b2221d9c40cbd325158ff17f4b23fdad009a76723f60e0c49c7",
-        "generatedAt": "2026-11-26T11:45:17.234139Z",
-        "error": null
-      }
-    },
     "adsuploader-blog-c04c6e7ddbab523f5a7f": {
       "zh-Hans": {
         "status": "machine",
@@ -2278,26 +2255,49 @@
         "error": null
       }
     },
-    "adsuploader-blog-ff8f58f242be3bcb62d2": {
+    "adsuploader-blog-5e88a3656a3cc3be07bd": {
       "zh-Hans": {
         "status": "machine",
-        "value": "电商 Facebook 广告：2026 年规模化增长指南",
-        "inputHash": "4c5f1080ff2ab48e23c50ed7e5d0ee0171916ae7be09fc403547afcc392cc742",
-        "generatedAt": "2026-11-26T11:46:54.443608Z",
+        "value": "Meta 上的 AI 媒体投放：AI 媒体买手如今（2026 年）能做什么",
+        "inputHash": "8c74f6dc04dea714b7472e4519f1e5c2c9275e5555dc61c7baf2fcbfb6e3cef1",
+        "generatedAt": "2026-11-27T00:40:04.203280Z",
         "error": null
       },
       "es": {
         "status": "machine",
-        "value": "Anuncios de Facebook para comercio electrónico: la guía de 2026 para escalar",
-        "inputHash": "949b2c6515a9d7abb6e40209dfbb8e35a230ca919214510880485ee4516f2636",
-        "generatedAt": "2026-11-26T11:46:54.443608Z",
+        "value": "Compra de medios con IA en Meta: qué puede hacer hoy un comprador de medios con IA (2026)",
+        "inputHash": "3bfecd4f592ae636e095e2060263ea6cba0423ada97e20c59194580846148c1b",
+        "generatedAt": "2026-11-27T00:40:04.203280Z",
         "error": null
       },
       "ko": {
         "status": "machine",
-        "value": "이커머스를 위한 Facebook 광고: 규모 확장을 위한 2026년 플레이북",
-        "inputHash": "9e12e546e03b00c27d3b04c9855bfa8654927d37dffb390e45c69635ea066695",
-        "generatedAt": "2026-11-26T11:46:54.443608Z",
+        "value": "메타에서의 AI 미디어 바잉: AI 미디어 바이어가 현재 할 수 있는 일 (2026)",
+        "inputHash": "faa977a477ca46fa4764419c6cfa902c5eb89e630161ba04677c876e36ef8e75",
+        "generatedAt": "2026-11-27T00:40:04.203280Z",
+        "error": null
+      }
+    },
+    "social-media-today-meta-ads-e681328a806258c69bbc": {
+      "zh-Hans": {
+        "status": "machine",
+        "value": "Meta称社交媒体是节日发现的重要驱动力",
+        "inputHash": "f843082d3c47f39fe18c280d805f16b378e6edc700cceec159022ed14319d2f2",
+        "generatedAt": "2026-11-27T00:40:10.067968Z",
+        "error": null
+      },
+      "es": {
+        "status": "machine",
+        "value": "Meta afirma que las redes sociales son un factor clave para descubrir cosas durante las fiestas",
+        "inputHash": "e84dd125cd71fe7935cfe0d6d6a41bd49eb04ff7343f3c3bdfe4d6ecaaabe9c8",
+        "generatedAt": "2026-11-27T00:40:10.067968Z",
+        "error": null
+      },
+      "ko": {
+        "status": "machine",
+        "value": "메타, 연말연시 발견의 핵심 동력은 소셜 미디어라고 밝혀",
+        "inputHash": "f5a794f88dfd209082350f44fa62371d95f8c133a2196eb232348ef380c8366c",
+        "generatedAt": "2026-11-27T00:40:10.067968Z",
         "error": null
       }
     }

@@ -5,7 +5,7 @@
     "en",
     "ja"
   ],
-  "generatedAt": "2026-11-24T02:56:17Z",
+  "generatedAt": "2026-11-27T00:38:39Z",
   "sources": [
     {
       "id": "meta-product-news-rss",
@@ -91,6 +91,75 @@
   ],
   "items": [
     {
+      "id": "adsuploader-blog-5e88a3656a3cc3be07bd",
+      "sourceId": "adsuploader-blog",
+      "title": "AI Media Buying on Meta: What an AI Media Buyer Can Do Today (2026)",
+      "url": "https://adsuploader.com/blog/agentic-media-buying",
+      "publishedDate": "2026-11-26",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-27T00:38:39Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "5e88a3656a3cc3be07bdbc522932641558fe7f8e304b40f534cee38df1e9b140",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "AI Media Buying on Meta in 2026",
+            "summary": "An overview of what an AI media buyer can read, propose, and launch on Meta, what a human should approve, and how to run the process with approvals.",
+            "inputHash": "0f3695a8c580202687f78fe4c7320eee66bc88f09c12f3a6a92c4ca02acc5b08",
+            "generatedAt": "2026-11-27T00:38:39Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "AI Media Buying on Meta in 2026",
+                "inputHash": "0f3695a8c580202687f78fe4c7320eee66bc88f09c12f3a6a92c4ca02acc5b08",
+                "generatedAt": "2026-11-27T00:38:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "An overview of what an AI media buyer can read, propose, and launch on Meta, what a human should approve, and how to run the process with approvals.",
+                "inputHash": "0f3695a8c580202687f78fe4c7320eee66bc88f09c12f3a6a92c4ca02acc5b08",
+                "generatedAt": "2026-11-27T00:38:39Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "2026年、Meta広告でAIメディアバイヤーができること",
+            "summary": "2026年のMeta広告におけるAIメディアバイヤーについて、AIが読み取り・提案・配信開始できること、人が引き続き承認すべきこと、承認を組み込んだ運用方法を扱います。",
+            "inputHash": "29bb2ec28b4cbd15b2a664b0c468acba27700bf300af6a7f82259a013e378907",
+            "generatedAt": "2026-11-27T00:38:39Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "2026年、Meta広告でAIメディアバイヤーができること",
+                "inputHash": "29bb2ec28b4cbd15b2a664b0c468acba27700bf300af6a7f82259a013e378907",
+                "generatedAt": "2026-11-27T00:38:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "2026年のMeta広告におけるAIメディアバイヤーについて、AIが読み取り・提案・配信開始できること、人が引き続き承認すべきこと、承認を組み込んだ運用方法を扱います。",
+                "inputHash": "29bb2ec28b4cbd15b2a664b0c468acba27700bf300af6a7f82259a013e378907",
+                "generatedAt": "2026-11-27T00:38:39Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "meta-business-help-discovered-207f30d0c75941ff72df",
       "sourceId": "meta-business-help-discovered",
       "title": "Set up custom attribution for Meta Ads",
@@ -98,7 +167,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-11-24T02:56:17Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -162,6 +231,75 @@
       }
     },
     {
+      "id": "social-media-today-meta-ads-e681328a806258c69bbc",
+      "sourceId": "social-media-today-meta-ads",
+      "title": "Meta says social media is key driver for holiday discovery",
+      "url": "https://www.socialmediatoday.com/news/meta-says-social-media-is-key-driver-for-holiday-discovery/875523/",
+      "publishedDate": "2026-11-24",
+      "updatedDate": null,
+      "firstObservedAt": "2026-11-27T00:38:39Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
+      "platformIds": [
+        "meta-ads"
+      ],
+      "matchEvidence": [],
+      "presentation": {
+        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+        "sourceFingerprint": "e681328a806258c69bbc9ed6e1fb5fbf2c8201c366bf49e67c80dad9f645ad4a",
+        "generatorRevision": "bilingual-v1",
+        "locales": {
+          "en": {
+            "status": "machine",
+            "shortHeadline": "Social media drives holiday gift discovery, Meta says",
+            "summary": "Meta shared Ipsos research surveying 14,473 shoppers across 18 countries. It found 37% use social media for holiday gift discovery, compared with 41% for search engines and 27% for TV ads. Video was the most influential content type. Among social shoppers, 49% plan to spend more year over year, versus 36% overall.",
+            "inputHash": "2842fd3b53136c31ad62dcf5b9f56a3617f255889f1371794cf731bb14cc136d",
+            "generatedAt": "2026-11-27T00:38:39Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Social media drives holiday gift discovery, Meta says",
+                "inputHash": "2842fd3b53136c31ad62dcf5b9f56a3617f255889f1371794cf731bb14cc136d",
+                "generatedAt": "2026-11-27T00:38:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Meta shared Ipsos research surveying 14,473 shoppers across 18 countries. It found 37% use social media for holiday gift discovery, compared with 41% for search engines and 27% for TV ads. Video was the most influential content type. Among social shoppers, 49% plan to spend more year over year, versus 36% overall.",
+                "inputHash": "2842fd3b53136c31ad62dcf5b9f56a3617f255889f1371794cf731bb14cc136d",
+                "generatedAt": "2026-11-27T00:38:39Z",
+                "reviewedAt": null
+              }
+            }
+          },
+          "ja": {
+            "status": "machine",
+            "shortHeadline": "Meta調査、ホリデー商品の発見でSNSが重要な経路に",
+            "summary": "Metaが公表したIpsosの調査は、18か国の買い物客14,473人を対象に実施。ホリデーギフトの発見やアイデア探しにSNSを使う人は37％で、検索エンジンの41％に近く、テレビ広告の27％を上回りました。動画が最も影響力のあるコンテンツ形式で、高品質な商品写真も購買を後押しする要素として挙げられています。SNS経由の買い物客では、前年比で支出を増やす意向がある人は49％（全体36％）、購入商品カテゴリー数は平均5.4（全体4.3）、自分用の購入をする人は83％（全体67％）でした。",
+            "inputHash": "b702610b389744a2a4a8c2a89e322fe0a787edceafcbbdd7d571a06c0e66a4fe",
+            "generatedAt": "2026-11-27T00:38:39Z",
+            "reviewedAt": null,
+            "fields": {
+              "shortHeadline": {
+                "status": "machine",
+                "value": "Meta調査、ホリデー商品の発見でSNSが重要な経路に",
+                "inputHash": "b702610b389744a2a4a8c2a89e322fe0a787edceafcbbdd7d571a06c0e66a4fe",
+                "generatedAt": "2026-11-27T00:38:39Z",
+                "reviewedAt": null
+              },
+              "summary": {
+                "status": "machine",
+                "value": "Metaが公表したIpsosの調査は、18か国の買い物客14,473人を対象に実施。ホリデーギフトの発見やアイデア探しにSNSを使う人は37％で、検索エンジンの41％に近く、テレビ広告の27％を上回りました。動画が最も影響力のあるコンテンツ形式で、高品質な商品写真も購買を後押しする要素として挙げられています。SNS経由の買い物客では、前年比で支出を増やす意向がある人は49％（全体36％）、購入商品カテゴリー数は平均5.4（全体4.3）、自分用の購入をする人は83％（全体67％）でした。",
+                "inputHash": "b702610b389744a2a4a8c2a89e322fe0a787edceafcbbdd7d571a06c0e66a4fe",
+                "generatedAt": "2026-11-27T00:38:39Z",
+                "reviewedAt": null
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "adsuploader-blog-a813c55a02419290cb54",
       "sourceId": "adsuploader-blog",
       "title": "Meta Ads MCP in Codex (2026): Setup, What Works and the OAuth Fix",
@@ -169,7 +307,7 @@
       "publishedDate": "2026-11-24",
       "updatedDate": null,
       "firstObservedAt": "2026-11-24T02:56:17Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -238,7 +376,7 @@
       "publishedDate": "2026-11-23",
       "updatedDate": null,
       "firstObservedAt": "2026-11-24T02:56:17Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -310,7 +448,7 @@
       "publishedDate": "2026-11-23",
       "updatedDate": null,
       "firstObservedAt": "2026-11-24T02:56:17Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -382,7 +520,7 @@
       "publishedDate": "2026-11-22",
       "updatedDate": null,
       "firstObservedAt": "2026-11-24T02:56:17Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -451,7 +589,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-11-20T11:15:00Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -522,7 +660,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-11-20T11:15:00Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -593,7 +731,7 @@
       "publishedDate": "2026-11-20",
       "updatedDate": null,
       "firstObservedAt": "2026-11-20T11:15:00Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -731,7 +869,7 @@
       "publishedDate": "2026-11-19",
       "updatedDate": null,
       "firstObservedAt": "2026-11-24T02:56:17Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -793,75 +931,6 @@
       }
     },
     {
-      "id": "social-media-today-meta-ads-cf1ca5c9c52908d28d3b",
-      "sourceId": "social-media-today-meta-ads",
-      "title": "Meta brings its updated Creator Dashboard to the web",
-      "url": "https://www.socialmediatoday.com/news/meta-brings-its-updated-creator-dashboard-to-the-web/875143/",
-      "publishedDate": "2026-11-18",
-      "updatedDate": null,
-      "firstObservedAt": "2026-11-20T11:15:00Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "cf1ca5c9c52908d28d3b3d2f94eda119be840fb84638c7c5242a009d80140b80",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Meta’s updated Creator Dashboard launches on the web",
-            "summary": "Meta says its updated Creator Dashboard is now available on desktop. It includes a redesigned composer for feed posts and Reels, bulk video uploads, an improved content library, performance insights, content protection, follower invitations, web access to Messenger and monetization information.",
-            "inputHash": "a84c3f0b028f870d543cfc9f737347be7030c8a334eed93893946d89805231b5",
-            "generatedAt": "2026-11-24T02:56:17Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Meta’s updated Creator Dashboard launches on the web",
-                "inputHash": "a84c3f0b028f870d543cfc9f737347be7030c8a334eed93893946d89805231b5",
-                "generatedAt": "2026-11-24T02:56:17Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Meta says its updated Creator Dashboard is now available on desktop. It includes a redesigned composer for feed posts and Reels, bulk video uploads, an improved content library, performance insights, content protection, follower invitations, web access to Messenger and monetization information.",
-                "inputHash": "a84c3f0b028f870d543cfc9f737347be7030c8a334eed93893946d89805231b5",
-                "generatedAt": "2026-11-24T02:56:17Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "Metaの新しいCreator Dashboardがウェブで利用可能に",
-            "summary": "Metaは、クリエイター向けの新しいCreator Dashboardをウェブで提供開始しました。アプリ内の活動を管理する主要な画面として、従来の管理ツールに代わるとしています。フィード投稿やリールの作成・プレビュー、動画の一括アップロード、コンテンツライブラリや分析情報、コンテンツ保護、フォロワーへの招待、ウェブ版Messenger、収益化に関する情報などを利用できます。",
-            "inputHash": "71a62cfb94a25abc84caf3c50a7cc021ed3c9840649ae83f2ef3cd3c2150dd4b",
-            "generatedAt": "2026-11-24T02:56:17Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Metaの新しいCreator Dashboardがウェブで利用可能に",
-                "inputHash": "71a62cfb94a25abc84caf3c50a7cc021ed3c9840649ae83f2ef3cd3c2150dd4b",
-                "generatedAt": "2026-11-24T02:56:17Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "Metaは、クリエイター向けの新しいCreator Dashboardをウェブで提供開始しました。アプリ内の活動を管理する主要な画面として、従来の管理ツールに代わるとしています。フィード投稿やリールの作成・プレビュー、動画の一括アップロード、コンテンツライブラリや分析情報、コンテンツ保護、フォロワーへの招待、ウェブ版Messenger、収益化に関する情報などを利用できます。",
-                "inputHash": "71a62cfb94a25abc84caf3c50a7cc021ed3c9840649ae83f2ef3cd3c2150dd4b",
-                "generatedAt": "2026-11-24T02:56:17Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "id": "adsuploader-blog-c04c6e7ddbab523f5a7f",
       "sourceId": "adsuploader-blog",
       "title": "Meta Marketing API (2026): What It Is, Access, Limits and When You Need It",
@@ -869,7 +938,7 @@
       "publishedDate": "2026-11-18",
       "updatedDate": null,
       "firstObservedAt": "2026-11-20T11:15:00Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -938,7 +1007,7 @@
       "publishedDate": "2026-11-17",
       "updatedDate": null,
       "firstObservedAt": "2026-11-20T11:15:00Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1011,7 +1080,7 @@
       "publishedDate": "2026-11-16",
       "updatedDate": null,
       "firstObservedAt": "2026-11-17T00:17:08Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1080,7 +1149,7 @@
       "publishedDate": "2026-11-16",
       "updatedDate": null,
       "firstObservedAt": "2026-11-17T00:17:08Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1149,7 +1218,7 @@
       "publishedDate": "2026-11-14",
       "updatedDate": null,
       "firstObservedAt": "2026-11-17T00:17:08Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1218,7 +1287,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-11-12T22:17:09Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1289,7 +1358,7 @@
       "publishedDate": "2026-11-12",
       "updatedDate": null,
       "firstObservedAt": "2026-11-12T22:17:09Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1358,7 +1427,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1429,7 +1498,7 @@
       "publishedDate": "2026-11-10",
       "updatedDate": null,
       "firstObservedAt": "2026-11-12T22:17:09Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1501,7 +1570,7 @@
       "publishedDate": "2026-11-10",
       "updatedDate": null,
       "firstObservedAt": "2026-11-12T22:17:09Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1570,7 +1639,7 @@
       "publishedDate": "2026-11-09",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1642,7 +1711,7 @@
       "publishedDate": "2026-11-08",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1711,7 +1780,7 @@
       "publishedDate": "2026-11-08",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1780,7 +1849,7 @@
       "publishedDate": "2026-11-06",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1849,7 +1918,7 @@
       "publishedDate": "2026-11-05",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1918,7 +1987,7 @@
       "publishedDate": "2026-11-04",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -1987,7 +2056,7 @@
       "publishedDate": "2026-11-04",
       "updatedDate": null,
       "firstObservedAt": "2026-11-10T00:17:31Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2058,7 +2127,7 @@
       "publishedDate": "2026-11-04",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2127,7 +2196,7 @@
       "publishedDate": "2026-11-03",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2196,7 +2265,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2265,7 +2334,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-05T22:04:36Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2334,7 +2403,7 @@
       "publishedDate": "2026-11-02",
       "updatedDate": null,
       "firstObservedAt": "2026-11-02T23:36:33Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2614,7 +2683,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2685,7 +2754,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2756,7 +2825,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2898,7 +2967,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -2969,7 +3038,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3111,7 +3180,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3182,7 +3251,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3253,7 +3322,7 @@
       "publishedDate": null,
       "updatedDate": null,
       "firstObservedAt": "2026-10-31T02:08:43Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3533,7 +3602,7 @@
       "publishedDate": "2026-10-28",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3744,7 +3813,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-29T21:12:33Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3813,7 +3882,7 @@
       "publishedDate": "2026-10-27",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -3954,7 +4023,7 @@
       "publishedDate": "2026-10-26",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4026,7 +4095,7 @@
       "publishedDate": "2026-10-25",
       "updatedDate": null,
       "firstObservedAt": "2026-10-27T12:55:38Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4509,7 +4578,7 @@
       "publishedDate": "2026-10-20",
       "updatedDate": null,
       "firstObservedAt": "2026-10-22T20:11:32Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -4652,7 +4721,7 @@
       "publishedDate": "2026-10-19",
       "updatedDate": null,
       "firstObservedAt": "2026-10-19T21:07:34Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5206,7 +5275,7 @@
       "publishedDate": "2026-10-13",
       "updatedDate": null,
       "firstObservedAt": "2026-10-15T19:54:50Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -5416,7 +5485,7 @@
       "publishedDate": "2026-10-12",
       "updatedDate": null,
       "firstObservedAt": "2026-10-12T23:02:27Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6041,7 +6110,7 @@
       "publishedDate": "2026-10-06",
       "updatedDate": null,
       "firstObservedAt": "2026-10-09T06:14:01Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6113,7 +6182,7 @@
       "publishedDate": "2026-10-05",
       "updatedDate": null,
       "firstObservedAt": "2026-10-06T06:25:59Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6596,7 +6665,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-platforms"
       ],
@@ -6665,7 +6734,7 @@
       "publishedDate": "2026-09-29",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6803,7 +6872,7 @@
       "publishedDate": "2026-09-28",
       "updatedDate": null,
       "firstObservedAt": "2026-09-29T05:47:38Z",
-      "lastObservedAt": "2026-11-24T02:56:17Z",
+      "lastObservedAt": "2026-11-27T00:38:39Z",
       "platformIds": [
         "meta-ads"
       ],
@@ -6994,75 +7063,6 @@
                 "status": "machine",
                 "value": "Facebook広告に商品タグを付けると、クリエイティブ内でカタログ商品を直接購入できるようになります。タグの設定方法は4つのパターンがあり、最近の変更点や具体的な設定手順について解説しています。",
                 "inputHash": "d68aeef64e38ee7359da13b2fa58c1e09487f7a0afdfd6712fc3326aeaaaef74",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "adsuploader-blog-ff8f58f242be3bcb62d2",
-      "sourceId": "adsuploader-blog",
-      "title": "Facebook Ads for Ecommerce: The 2026 Playbook That Scales",
-      "url": "https://adsuploader.com/blog/facebook-ads-for-ecommerce",
-      "publishedDate": "2026-09-25",
-      "updatedDate": null,
-      "firstObservedAt": "2026-09-29T13:20:20Z",
-      "lastObservedAt": "2026-10-15T19:54:50Z",
-      "platformIds": [
-        "meta-ads"
-      ],
-      "matchEvidence": [],
-      "presentation": {
-        "schemaVersion": "meta-ads-personal-feed-presentation/v3",
-        "sourceFingerprint": "ff8f58f242be3bcb62d2e03880f29314a38d796cbf28e7b0f1142d3eeefd06e2",
-        "generatorRevision": "bilingual-v1",
-        "locales": {
-          "en": {
-            "status": "machine",
-            "shortHeadline": "Facebook Ads for Ecommerce: 2026 Playbook",
-            "summary": "A 2026 guide covering Facebook ad tracking, catalog setup, Shopify integration, Advantage+ Sales structure, creative strategies, targeting options, and margin‑based measurement for ecommerce.",
-            "inputHash": "63c62be20affa2b3f8a5f66d65ddc09c59668456bd03ae91fd3d357b4713d505",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "Facebook Ads for Ecommerce: 2026 Playbook",
-                "inputHash": "63c62be20affa2b3f8a5f66d65ddc09c59668456bd03ae91fd3d357b4713d505",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "A 2026 guide covering Facebook ad tracking, catalog setup, Shopify integration, Advantage+ Sales structure, creative strategies, targeting options, and margin‑based measurement for ecommerce.",
-                "inputHash": "63c62be20affa2b3f8a5f66d65ddc09c59668456bd03ae91fd3d357b4713d505",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              }
-            }
-          },
-          "ja": {
-            "status": "machine",
-            "shortHeadline": "2026年版 Eコマース向けFacebook広告のスケールガイド",
-            "summary": "本ガイドは2026年版のEコマース向けFacebook広告の手引きで、トラッキングやカタログ設定、Shopify連携、Advantage+ Sales構造、クリエイティブ作成、ターゲティング、利益率ベースの測定方法などを解説しています。",
-            "inputHash": "e02b1c2b82f3c92f56debd0b44b2a349cc3b4cbcf6bd8e7da57c5d19bd57f707",
-            "generatedAt": "2026-09-29T13:20:20Z",
-            "reviewedAt": null,
-            "fields": {
-              "shortHeadline": {
-                "status": "machine",
-                "value": "2026年版 Eコマース向けFacebook広告のスケールガイド",
-                "inputHash": "e02b1c2b82f3c92f56debd0b44b2a349cc3b4cbcf6bd8e7da57c5d19bd57f707",
-                "generatedAt": "2026-09-29T13:20:20Z",
-                "reviewedAt": null
-              },
-              "summary": {
-                "status": "machine",
-                "value": "本ガイドは2026年版のEコマース向けFacebook広告の手引きで、トラッキングやカタログ設定、Shopify連携、Advantage+ Sales構造、クリエイティブ作成、ターゲティング、利益率ベースの測定方法などを解説しています。",
-                "inputHash": "e02b1c2b82f3c92f56debd0b44b2a349cc3b4cbcf6bd8e7da57c5d19bd57f707",
                 "generatedAt": "2026-09-29T13:20:20Z",
                 "reviewedAt": null
               }

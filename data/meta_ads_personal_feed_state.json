@@ -1,6 +1,6 @@
 {
   "schemaVersion": "meta-ads-personal-feed-state/v5",
-  "updatedAt": "2026-11-24T02:56:17Z",
+  "updatedAt": "2026-11-27T00:38:39Z",
   "sources": {
     "meta-product-news-rss": {
       "relevanceRevision": "meta-ads-lanes-v1",
@@ -914,7 +914,7 @@
           ],
           "fingerprint": "3a6042854a6149112069769c01503fa0a22b366f14a78569a9fc7646992b43ef",
           "firstObservedAt": "2026-09-25T05:01:44Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3a6042854a6149112069769c01503fa0a22b366f14a78569a9fc7646992b43ef",
@@ -983,7 +983,7 @@
           ],
           "fingerprint": "5246d21d9b0bec1aaa7cc2d1a4fc6fc647224b94bc170e314730f8ca94dc7a5a",
           "firstObservedAt": "2026-09-29T13:20:20Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5246d21d9b0bec1aaa7cc2d1a4fc6fc647224b94bc170e314730f8ca94dc7a5a",
@@ -1052,7 +1052,7 @@
           ],
           "fingerprint": "f4eb6e6aef14c99f36f113e388017c2ea1bd54d084dbec62a26733b05d947f66",
           "firstObservedAt": "2026-10-06T06:25:59Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f4eb6e6aef14c99f36f113e388017c2ea1bd54d084dbec62a26733b05d947f66",
@@ -1121,7 +1121,7 @@
           ],
           "fingerprint": "37c9fe7686b0a7083c37639fa74bbb69f3bf42280b4fc41cf5e56352607c98af",
           "firstObservedAt": "2026-10-15T19:54:50Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "37c9fe7686b0a7083c37639fa74bbb69f3bf42280b4fc41cf5e56352607c98af",
@@ -1190,7 +1190,7 @@
           ],
           "fingerprint": "f8ae1876567043552745b806ba4aaceae86231a4856c941a44c0db0367717b67",
           "firstObservedAt": "2026-10-15T19:54:50Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f8ae1876567043552745b806ba4aaceae86231a4856c941a44c0db0367717b67",
@@ -1259,7 +1259,7 @@
           ],
           "fingerprint": "2e93b8e8311c3f32ea128b2aca39f058b1c1015b5fa128b49ece07ebd6524cba",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "2e93b8e8311c3f32ea128b2aca39f058b1c1015b5fa128b49ece07ebd6524cba",
@@ -1328,7 +1328,7 @@
           ],
           "fingerprint": "d04eda5bc8b0d1612863ca51f85a8e55c27a4c8b79839bb1d9947863d093a9f5",
           "firstObservedAt": "2026-11-05T22:04:36Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d04eda5bc8b0d1612863ca51f85a8e55c27a4c8b79839bb1d9947863d093a9f5",
@@ -1397,7 +1397,7 @@
           ],
           "fingerprint": "4a58572ffe672198587dd52569d21380d143af9cc1b456ea0cb712359c6733f7",
           "firstObservedAt": "2026-11-05T22:04:36Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4a58572ffe672198587dd52569d21380d143af9cc1b456ea0cb712359c6733f7",
@@ -1466,7 +1466,7 @@
           ],
           "fingerprint": "20e0f10a25f66e1304915af0c773507fbdf9d2246c02593f4e9a1eb0e3fb978a",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "20e0f10a25f66e1304915af0c773507fbdf9d2246c02593f4e9a1eb0e3fb978a",
@@ -1535,7 +1535,7 @@
           ],
           "fingerprint": "57af0f4300593fb53bfcedb110f54b8358f33641fe06d8f505da81853a1b6d9e",
           "firstObservedAt": "2026-11-20T11:15:00Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "57af0f4300593fb53bfcedb110f54b8358f33641fe06d8f505da81853a1b6d9e",
@@ -5349,7 +5349,7 @@
           ],
           "fingerprint": "b4c7c91b12926f2977f1d6d79c7892a2f269f87a9f140746065db4497703200e",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b4c7c91b12926f2977f1d6d79c7892a2f269f87a9f140746065db4497703200e",
@@ -5418,7 +5418,7 @@
           ],
           "fingerprint": "81b45e003f81ff0815ef3f36c7a18f7a9eedddf9728f5354748eeecba7c1dbbc",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "81b45e003f81ff0815ef3f36c7a18f7a9eedddf9728f5354748eeecba7c1dbbc",
@@ -5763,7 +5763,7 @@
           ],
           "fingerprint": "6aef3e84220669b4739110ad3a54498d15c8dbcd9475b415a97b9ddc588e8df4",
           "firstObservedAt": "2026-10-29T21:12:33Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "6aef3e84220669b4739110ad3a54498d15c8dbcd9475b415a97b9ddc588e8df4",
@@ -5832,7 +5832,7 @@
           ],
           "fingerprint": "5bfe62570b130d041fc660970b3a37b83e0a50c5f822425df107d73e00305b57",
           "firstObservedAt": "2026-10-29T21:12:33Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5bfe62570b130d041fc660970b3a37b83e0a50c5f822425df107d73e00305b57",
@@ -5901,7 +5901,7 @@
           ],
           "fingerprint": "59db08bd7ada8d8ac84322ba8ea3827a5898a97bbaa35ec87d4208252829eeb4",
           "firstObservedAt": "2026-11-02T23:36:33Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "59db08bd7ada8d8ac84322ba8ea3827a5898a97bbaa35ec87d4208252829eeb4",
@@ -5970,7 +5970,7 @@
           ],
           "fingerprint": "e050377e208621f0d2ccb1962585909b6deaa9c27146fb7e2d493252a12ae047",
           "firstObservedAt": "2026-11-05T22:04:36Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e050377e208621f0d2ccb1962585909b6deaa9c27146fb7e2d493252a12ae047",
@@ -6039,7 +6039,7 @@
           ],
           "fingerprint": "31b8230cd8d18a8f406bf29f370da5b03d6ce4d8c9d6012b6bbf8cc9b1c2bf29",
           "firstObservedAt": "2026-11-05T22:04:36Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "31b8230cd8d18a8f406bf29f370da5b03d6ce4d8c9d6012b6bbf8cc9b1c2bf29",
@@ -6108,7 +6108,7 @@
           ],
           "fingerprint": "3d1154c7eb921aec81d805deda0d176695096fb47fc27b69def10d937d59e659",
           "firstObservedAt": "2026-11-05T22:04:36Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3d1154c7eb921aec81d805deda0d176695096fb47fc27b69def10d937d59e659",
@@ -6177,7 +6177,7 @@
           ],
           "fingerprint": "5ce336ec96b92002f2413b548f71790d17f16d88165fe11c75bc6e3bef5922e7",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5ce336ec96b92002f2413b548f71790d17f16d88165fe11c75bc6e3bef5922e7",
@@ -6246,7 +6246,7 @@
           ],
           "fingerprint": "6caca36084a7f1a0b6a00c740cbc3301560b1ec0f3c8624f3d54d14a42de2631",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "6caca36084a7f1a0b6a00c740cbc3301560b1ec0f3c8624f3d54d14a42de2631",
@@ -6315,7 +6315,7 @@
           ],
           "fingerprint": "164345463805a9d7d7d26b3fdd53ec2ff8d01eeadadc5cf0eccce3a4788781e7",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "164345463805a9d7d7d26b3fdd53ec2ff8d01eeadadc5cf0eccce3a4788781e7",
@@ -6384,7 +6384,7 @@
           ],
           "fingerprint": "b58e5af82711a0bb2d9c2530512e2f36f7d27e03bb64ed5812ffe6d9e35578ba",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b58e5af82711a0bb2d9c2530512e2f36f7d27e03bb64ed5812ffe6d9e35578ba",
@@ -6453,7 +6453,7 @@
           ],
           "fingerprint": "84f03e5a1f064d299db857bd9c2526948dbbd9f6e8e528c4af96efb359e8e5ee",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "84f03e5a1f064d299db857bd9c2526948dbbd9f6e8e528c4af96efb359e8e5ee",
@@ -6522,7 +6522,7 @@
           ],
           "fingerprint": "f530e1f6f7ec46c22d09f298ca5373f5e18de1939c1c499bd1020376f4b41439",
           "firstObservedAt": "2026-11-12T22:17:09Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f530e1f6f7ec46c22d09f298ca5373f5e18de1939c1c499bd1020376f4b41439",
@@ -6591,7 +6591,7 @@
           ],
           "fingerprint": "542f2811d8cca22137c48f421790156224c75a8dcf7ee9504fe18625689045ef",
           "firstObservedAt": "2026-11-12T22:17:09Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "542f2811d8cca22137c48f421790156224c75a8dcf7ee9504fe18625689045ef",
@@ -6660,7 +6660,7 @@
           ],
           "fingerprint": "c22f540ec6306da4843cddcb4c07c0795a5e99807e455497d6a5403e29ecf871",
           "firstObservedAt": "2026-11-17T00:17:08Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "c22f540ec6306da4843cddcb4c07c0795a5e99807e455497d6a5403e29ecf871",
@@ -6729,7 +6729,7 @@
           ],
           "fingerprint": "390adedfa51a98156521977c69ac2d6472b84d03ec85c5cc7813f357649549cd",
           "firstObservedAt": "2026-11-17T00:17:08Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "390adedfa51a98156521977c69ac2d6472b84d03ec85c5cc7813f357649549cd",
@@ -6861,13 +6861,13 @@
           "publishedDate": "2026-11-18",
           "updatedDate": null,
           "matchEvidence": [],
-          "publicationStatus": "included",
+          "publicationStatus": "drop",
           "publicationEvidence": [
-            "jev:strategic_signal"
+            "jev:unrelated"
           ],
           "fingerprint": "cf1ca5c9c52908d28d3b3d2f94eda119be840fb84638c7c5242a009d80140b80",
           "firstObservedAt": "2026-11-20T11:15:00Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "cf1ca5c9c52908d28d3b3d2f94eda119be840fb84638c7c5242a009d80140b80",
@@ -6936,7 +6936,7 @@
           ],
           "fingerprint": "1500492ef6aebc509130bb01386881ff27c464e97273df5fc5807599dcb3255c",
           "firstObservedAt": "2026-11-24T02:56:17Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1500492ef6aebc509130bb01386881ff27c464e97273df5fc5807599dcb3255c",
@@ -6992,6 +6992,75 @@
               }
             }
           }
+        },
+        "https://www.socialmediatoday.com/news/meta-says-social-media-is-key-driver-for-holiday-discovery/875523/": {
+          "url": "https://www.socialmediatoday.com/news/meta-says-social-media-is-key-driver-for-holiday-discovery/875523/",
+          "title": "Meta says social media is key driver for holiday discovery",
+          "publishedDate": "2026-11-24",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:strategic_signal"
+          ],
+          "fingerprint": "e681328a806258c69bbc9ed6e1fb5fbf2c8201c366bf49e67c80dad9f645ad4a",
+          "firstObservedAt": "2026-11-27T00:38:39Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "e681328a806258c69bbc9ed6e1fb5fbf2c8201c366bf49e67c80dad9f645ad4a",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "Social media drives holiday gift discovery, Meta says",
+                "summary": "Meta shared Ipsos research surveying 14,473 shoppers across 18 countries. It found 37% use social media for holiday gift discovery, compared with 41% for search engines and 27% for TV ads. Video was the most influential content type. Among social shoppers, 49% plan to spend more year over year, versus 36% overall.",
+                "inputHash": "2842fd3b53136c31ad62dcf5b9f56a3617f255889f1371794cf731bb14cc136d",
+                "generatedAt": "2026-11-27T00:38:39Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Social media drives holiday gift discovery, Meta says",
+                    "inputHash": "2842fd3b53136c31ad62dcf5b9f56a3617f255889f1371794cf731bb14cc136d",
+                    "generatedAt": "2026-11-27T00:38:39Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Meta shared Ipsos research surveying 14,473 shoppers across 18 countries. It found 37% use social media for holiday gift discovery, compared with 41% for search engines and 27% for TV ads. Video was the most influential content type. Among social shoppers, 49% plan to spend more year over year, versus 36% overall.",
+                    "inputHash": "2842fd3b53136c31ad62dcf5b9f56a3617f255889f1371794cf731bb14cc136d",
+                    "generatedAt": "2026-11-27T00:38:39Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "Meta調査、ホリデー商品の発見でSNSが重要な経路に",
+                "summary": "Metaが公表したIpsosの調査は、18か国の買い物客14,473人を対象に実施。ホリデーギフトの発見やアイデア探しにSNSを使う人は37％で、検索エンジンの41％に近く、テレビ広告の27％を上回りました。動画が最も影響力のあるコンテンツ形式で、高品質な商品写真も購買を後押しする要素として挙げられています。SNS経由の買い物客では、前年比で支出を増やす意向がある人は49％（全体36％）、購入商品カテゴリー数は平均5.4（全体4.3）、自分用の購入をする人は83％（全体67％）でした。",
+                "inputHash": "b702610b389744a2a4a8c2a89e322fe0a787edceafcbbdd7d571a06c0e66a4fe",
+                "generatedAt": "2026-11-27T00:38:39Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "Meta調査、ホリデー商品の発見でSNSが重要な経路に",
+                    "inputHash": "b702610b389744a2a4a8c2a89e322fe0a787edceafcbbdd7d571a06c0e66a4fe",
+                    "generatedAt": "2026-11-27T00:38:39Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "Metaが公表したIpsosの調査は、18か国の買い物客14,473人を対象に実施。ホリデーギフトの発見やアイデア探しにSNSを使う人は37％で、検索エンジンの41％に近く、テレビ広告の27％を上回りました。動画が最も影響力のあるコンテンツ形式で、高品質な商品写真も購買を後押しする要素として挙げられています。SNS経由の買い物客では、前年比で支出を増やす意向がある人は49％（全体36％）、購入商品カテゴリー数は平均5.4（全体4.3）、自分用の購入をする人は83％（全体67％）でした。",
+                    "inputHash": "b702610b389744a2a4a8c2a89e322fe0a787edceafcbbdd7d571a06c0e66a4fe",
+                    "generatedAt": "2026-11-27T00:38:39Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -7010,7 +7079,7 @@
           ],
           "fingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
           "firstObservedAt": "2026-09-02T04:36:59Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1d7817ec1f2ea9cdd05e9d657548b760a84b400d1245ca481458e86e09142547",
@@ -7083,7 +7152,7 @@
           ],
           "fingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3ce7456cf5a0fb23730c8249bfc0a10913485292c0de9604a59c4e3daae886c7",
@@ -7152,7 +7221,7 @@
           ],
           "fingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d244cc3298bed37cd7fb31bc5f8af71dfd11e5db2330d04ade874510a9d80438",
@@ -7221,7 +7290,7 @@
           ],
           "fingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "31a647f219704abc5612c41ca329a2faa515f344ae31536f976101a592bc23bd",
@@ -7290,7 +7359,7 @@
           ],
           "fingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "43e38784bd796ab199234bc5cbf7d8095c9fad8538d0c21652962374d0681023",
@@ -7359,7 +7428,7 @@
           ],
           "fingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "57b0bdaec5991d06611178681298430fe3bae98aadfb1dbab03fa32f8118287b",
@@ -7428,7 +7497,7 @@
           ],
           "fingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "41445e57f0d4463c3b0f2e43f698930a82efb831194647d5009ca72449d7446d",
@@ -7500,7 +7569,7 @@
           ],
           "fingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "36ef70aa6065feea758659a2e41a385edc0c370f353b3285990dc55c5d293459",
@@ -7569,7 +7638,7 @@
           ],
           "fingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "152caae0169d70f7130eb540d71b1fdc49210cfa37569abc5d5d77ba4009685f",
@@ -7638,7 +7707,7 @@
           ],
           "fingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d72c544077adb9a78d9647a0272d69e216e7b4266c858e76ee4193bdfc6b6565",
@@ -7707,7 +7776,7 @@
           ],
           "fingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e09a122675845e3c27ec77302c7fd16cad9d591ef0a8bb4adbc09641b780cd0d",
@@ -7776,7 +7845,7 @@
           ],
           "fingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fb3d929dd60ff6ac44fac66315969524dea7e1da3b0029a7b676d90f7be88479",
@@ -7845,7 +7914,7 @@
           ],
           "fingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3dd34ba2e6710fc9879bb8676174a03315c315d146b0894ca2dddad5ddc0ac6c",
@@ -7918,7 +7987,7 @@
           ],
           "fingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fd97dd57f31971b4b7bea5e9f77a059c6cf66028b589e850f70737389b4b1087",
@@ -7987,7 +8056,7 @@
           ],
           "fingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "b2ef048b0c23833baaffc32911d6ff272abc7865b41506abd9aa0701f2cefba9",
@@ -8056,7 +8125,7 @@
           ],
           "fingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
           "firstObservedAt": "2026-08-29T09:59:42Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ec1e46cc06a4c6e1d03d508923886e800aa20515d9c51890eb63cacc7b32858e",
@@ -9250,7 +9319,7 @@
           ],
           "fingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
           "firstObservedAt": "2026-09-09T04:45:10Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d457987942b9d8c7373586e699d8364794b43e2687d0897fb23bf05d2774d2a8",
@@ -9319,7 +9388,7 @@
           ],
           "fingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
           "firstObservedAt": "2026-09-16T07:17:13Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "74b238dbbb04827cdb2d64569cd4c163327eb6afef9a9093c58ac3c2bdbbdb53",
@@ -9388,7 +9457,7 @@
           ],
           "fingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5f109c4c8b7d031b8c6931e0f1123ecb9efb5f69a574fa911e466c43661f43b3",
@@ -9460,7 +9529,7 @@
           ],
           "fingerprint": "4aa58a1d9015c2e87532ffcf67da05612a70ab2224562cbe10a554a8efb30049",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4aa58a1d9015c2e87532ffcf67da05612a70ab2224562cbe10a554a8efb30049",
@@ -9529,7 +9598,7 @@
           ],
           "fingerprint": "7b84af3e65c26a3c2facace38301e1a3b57887ef09a34e1cfa0008852dcd1f8c",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7b84af3e65c26a3c2facace38301e1a3b57887ef09a34e1cfa0008852dcd1f8c",
@@ -9598,7 +9667,7 @@
           ],
           "fingerprint": "7e118c18c9a7eafed3392219c9c930ab728955ad17119f4b83752bb90596e63a",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "7e118c18c9a7eafed3392219c9c930ab728955ad17119f4b83752bb90596e63a",
@@ -9667,7 +9736,7 @@
           ],
           "fingerprint": "36c97d1dd653bebefad321d32289082419452d7186bd74a6ac68a8b102dd120b",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "36c97d1dd653bebefad321d32289082419452d7186bd74a6ac68a8b102dd120b",
@@ -9736,7 +9805,7 @@
           ],
           "fingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d790a87e09995a2a2cf0915ce0591603fcd637c1b64d7b13b65c94db0913c672",
@@ -9805,7 +9874,7 @@
           ],
           "fingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "41dc1cabbe623895d31d313a75c3064ada1f1d29a0ca5dbeb4bdb50276c27cf7",
@@ -9874,7 +9943,7 @@
           ],
           "fingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25aec168c1f57351dbfd3a86804e99fa13ff72d105be645f00614eb2c5774753",
@@ -9943,7 +10012,7 @@
           ],
           "fingerprint": "2b92989d8e83f9d6a4e793958554dcf47ff39977e08bb8078a17f8ee2d7ca70f",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "2b92989d8e83f9d6a4e793958554dcf47ff39977e08bb8078a17f8ee2d7ca70f",
@@ -10015,7 +10084,7 @@
           ],
           "fingerprint": "740954a5f394867bf9fe5eb3e01abe0ae085d6f24477c5c260af08363e10ac76",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "740954a5f394867bf9fe5eb3e01abe0ae085d6f24477c5c260af08363e10ac76",
@@ -10084,7 +10153,7 @@
           ],
           "fingerprint": "71ba278f719424a43f5e5b3edf7b2b5db300c1033f3f3bea14595c68e91b4a8f",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "71ba278f719424a43f5e5b3edf7b2b5db300c1033f3f3bea14595c68e91b4a8f",
@@ -10153,7 +10222,7 @@
           ],
           "fingerprint": "bcd54ad6dad960c22cd207d1c9480c82c88d455d2161303c3ab0ea69ade9d260",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "bcd54ad6dad960c22cd207d1c9480c82c88d455d2161303c3ab0ea69ade9d260",
@@ -10222,7 +10291,7 @@
           ],
           "fingerprint": "ed38006cc4837fe23ac660bf174e18b9a2bd7f250705e0a27997c323cc136b53",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ed38006cc4837fe23ac660bf174e18b9a2bd7f250705e0a27997c323cc136b53",
@@ -10291,7 +10360,7 @@
           ],
           "fingerprint": "8d1d52727a5ae35c48f40a200de5b33f0ffd37a05d60b4b7c39ca83704aa8564",
           "firstObservedAt": "2026-09-23T10:27:45Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "8d1d52727a5ae35c48f40a200de5b33f0ffd37a05d60b4b7c39ca83704aa8564",
@@ -10777,7 +10846,7 @@
           ],
           "fingerprint": "57736eb5316a3299a1161d64d8be94c9e2e7083572a4d70ee15783c022ecf4c6",
           "firstObservedAt": "2026-09-29T05:47:38Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "57736eb5316a3299a1161d64d8be94c9e2e7083572a4d70ee15783c022ecf4c6",
@@ -10846,7 +10915,7 @@
           ],
           "fingerprint": "4d749c553b69bf36372452f017309a3b51ad63b6e1bc65eae5ef113590eff47d",
           "firstObservedAt": "2026-09-29T13:20:20Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4d749c553b69bf36372452f017309a3b51ad63b6e1bc65eae5ef113590eff47d",
@@ -10915,7 +10984,7 @@
           ],
           "fingerprint": "fc3ed58fb62c4b0612cdab6041acb27a164e4d3089b6ffbca62063518953f3c9",
           "firstObservedAt": "2026-10-06T06:25:59Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fc3ed58fb62c4b0612cdab6041acb27a164e4d3089b6ffbca62063518953f3c9",
@@ -10984,7 +11053,7 @@
           ],
           "fingerprint": "c416f019212a3f04fec6308c4b416dc3382280279f22d72225ba2b149dc6ca51",
           "firstObservedAt": "2026-10-09T06:14:01Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "c416f019212a3f04fec6308c4b416dc3382280279f22d72225ba2b149dc6ca51",
@@ -11056,7 +11125,7 @@
           ],
           "fingerprint": "eead0251a70d1bb6b63799b2c81cc151f15289a3c338e4b9bb07a8200f990a72",
           "firstObservedAt": "2026-10-12T23:02:27Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "eead0251a70d1bb6b63799b2c81cc151f15289a3c338e4b9bb07a8200f990a72",
@@ -11125,7 +11194,7 @@
           ],
           "fingerprint": "ced6b82ff8729175718e510ec2e2ba41d1301c596d2fef17b509608098732228",
           "firstObservedAt": "2026-10-15T19:54:50Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ced6b82ff8729175718e510ec2e2ba41d1301c596d2fef17b509608098732228",
@@ -11197,7 +11266,7 @@
           ],
           "fingerprint": "9c21e8eb6a68d8b37cf082dfcd35b8170238aa51547968578a1948b2b41ec384",
           "firstObservedAt": "2026-10-19T21:07:34Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "9c21e8eb6a68d8b37cf082dfcd35b8170238aa51547968578a1948b2b41ec384",
@@ -11266,7 +11335,7 @@
           ],
           "fingerprint": "ea07503f9d2f7797aec11c3c6bac1e76383775bc37c0dd7ef7c690a80afd2f5d",
           "firstObservedAt": "2026-10-22T20:11:32Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ea07503f9d2f7797aec11c3c6bac1e76383775bc37c0dd7ef7c690a80afd2f5d",
@@ -11338,7 +11407,7 @@
           ],
           "fingerprint": "d96c4f062767fe7b4d3e08cfb3ea443ce2a32d2a1990a00e018dc989bb77d9e8",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d96c4f062767fe7b4d3e08cfb3ea443ce2a32d2a1990a00e018dc989bb77d9e8",
@@ -11410,7 +11479,7 @@
           ],
           "fingerprint": "d6b20c1d6e103dbcdeb60ef8a7bea2a2bc9f152a6393ce16ae5247f9053e164c",
           "firstObservedAt": "2026-10-27T12:55:38Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d6b20c1d6e103dbcdeb60ef8a7bea2a2bc9f152a6393ce16ae5247f9053e164c",
@@ -11482,7 +11551,7 @@
           ],
           "fingerprint": "469235a3a796139fa3837a7b07c7d32a2271c1c03973c7303c392689f8bdc737",
           "firstObservedAt": "2026-11-02T23:36:33Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "469235a3a796139fa3837a7b07c7d32a2271c1c03973c7303c392689f8bdc737",
@@ -11551,7 +11620,7 @@
           ],
           "fingerprint": "a5a8fdc7b1196fc5a71600f2d967d6fd1463f1705bc09804fad723990a7b34a7",
           "firstObservedAt": "2026-11-05T22:04:36Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a5a8fdc7b1196fc5a71600f2d967d6fd1463f1705bc09804fad723990a7b34a7",
@@ -11620,7 +11689,7 @@
           ],
           "fingerprint": "6e893207a2d51a9861891d8ace50d65c728dbfaf42217a42aa6d368beef92a6f",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "6e893207a2d51a9861891d8ace50d65c728dbfaf42217a42aa6d368beef92a6f",
@@ -11692,7 +11761,7 @@
           ],
           "fingerprint": "9e5779dd812fb56ad4122a2cd63a99f55327dc0bfd38499838b9470d21f9d2ea",
           "firstObservedAt": "2026-11-12T22:17:09Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "9e5779dd812fb56ad4122a2cd63a99f55327dc0bfd38499838b9470d21f9d2ea",
@@ -11764,7 +11833,7 @@
           ],
           "fingerprint": "e52e3d87d33073b580057cbd018c95be2dc4163c71ac44857ca04a450a58f2dd",
           "firstObservedAt": "2026-11-17T00:17:08Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e52e3d87d33073b580057cbd018c95be2dc4163c71ac44857ca04a450a58f2dd",
@@ -11833,7 +11902,7 @@
           ],
           "fingerprint": "0d25e2c444891f3c74ef943e8c41addef804ca30916082d6e741a3bd99a2e2e8",
           "firstObservedAt": "2026-11-20T11:15:00Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "0d25e2c444891f3c74ef943e8c41addef804ca30916082d6e741a3bd99a2e2e8",
@@ -11906,7 +11975,7 @@
           ],
           "fingerprint": "69798ec2e9be5a620c174730b08f83b3afdd986782cab299bddefe613133ce15",
           "firstObservedAt": "2026-11-24T02:56:17Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "69798ec2e9be5a620c174730b08f83b3afdd986782cab299bddefe613133ce15",
@@ -11978,7 +12047,7 @@
           ],
           "fingerprint": "018c47d0ee29544fa2d78ffbd0d39f1c808dde5d25705ffd6c759c4c8159ee70",
           "firstObservedAt": "2026-11-24T02:56:17Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "018c47d0ee29544fa2d78ffbd0d39f1c808dde5d25705ffd6c759c4c8159ee70",
@@ -14056,7 +14125,7 @@
           ],
           "fingerprint": "1741fcfde4f6cdd8a0d5bc4256d71e3cad62eef46aabdb4303803916a292fb1e",
           "firstObservedAt": "2026-11-05T22:04:36Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "1741fcfde4f6cdd8a0d5bc4256d71e3cad62eef46aabdb4303803916a292fb1e",
@@ -14125,7 +14194,7 @@
           ],
           "fingerprint": "44419924e18c2726ecfa02578bba24ad813179f38994cfef1ce06520f526ecb2",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "44419924e18c2726ecfa02578bba24ad813179f38994cfef1ce06520f526ecb2",
@@ -14194,7 +14263,7 @@
           ],
           "fingerprint": "2342dd23dfb160fccfb8b8ef13e77f3f44e690f64dde1c2c11e8b78d8620c89b",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "2342dd23dfb160fccfb8b8ef13e77f3f44e690f64dde1c2c11e8b78d8620c89b",
@@ -14263,7 +14332,7 @@
           ],
           "fingerprint": "5e65be6ffcc70cac6f237fab28abe106801c7751f93d7ab717234888208767c4",
           "firstObservedAt": "2026-11-12T22:17:09Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "5e65be6ffcc70cac6f237fab28abe106801c7751f93d7ab717234888208767c4",
@@ -14332,7 +14401,7 @@
           ],
           "fingerprint": "04c0022f48e3786f152fe0e9dad10d4eb28e2c200f58fb544cc6b44e4eca5eb8",
           "firstObservedAt": "2026-11-12T22:17:09Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "04c0022f48e3786f152fe0e9dad10d4eb28e2c200f58fb544cc6b44e4eca5eb8",
@@ -14401,7 +14470,7 @@
           ],
           "fingerprint": "3d5ace75b80c704fbd7f1e95ffc966bae17e55dbe93cd3eef3fa82824699de64",
           "firstObservedAt": "2026-11-17T00:17:08Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "3d5ace75b80c704fbd7f1e95ffc966bae17e55dbe93cd3eef3fa82824699de64",
@@ -14470,7 +14539,7 @@
           ],
           "fingerprint": "4401eb9368e171bf9e22a91c99399a7380db6959b62e697a6618a846fbce6ec1",
           "firstObservedAt": "2026-11-17T00:17:08Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "4401eb9368e171bf9e22a91c99399a7380db6959b62e697a6618a846fbce6ec1",
@@ -14539,7 +14608,7 @@
           ],
           "fingerprint": "97177e0c940eb79a628e6e57fceac7869bb94f427a3f11066ac5fa8806c651da",
           "firstObservedAt": "2026-11-20T11:15:00Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "97177e0c940eb79a628e6e57fceac7869bb94f427a3f11066ac5fa8806c651da",
@@ -14608,7 +14677,7 @@
           ],
           "fingerprint": "c04c6e7ddbab523f5a7f37d8cbcd6cdf56e53e5c144c3b67d44ddca128a0d874",
           "firstObservedAt": "2026-11-20T11:15:00Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "c04c6e7ddbab523f5a7f37d8cbcd6cdf56e53e5c144c3b67d44ddca128a0d874",
@@ -14677,7 +14746,7 @@
           ],
           "fingerprint": "a813c55a02419290cb545718f0f041a1e5224535f16586c317e90a33d7a50bf1",
           "firstObservedAt": "2026-11-24T02:56:17Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a813c55a02419290cb545718f0f041a1e5224535f16586c317e90a33d7a50bf1",
@@ -14746,7 +14815,7 @@
           ],
           "fingerprint": "846fdba368a1c19b534363c990f6ab91afc49c552977a6ad6cf490be2e7ea549",
           "firstObservedAt": "2026-11-24T02:56:17Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "846fdba368a1c19b534363c990f6ab91afc49c552977a6ad6cf490be2e7ea549",
@@ -14796,6 +14865,75 @@
                     "value": "Facebook広告チーム向けに、アクセストークンの種類、取得方法、有効期間、早期に無効になる理由、トークンを使わずにAIエージェントを接続する方法を取り上げています。",
                     "inputHash": "541f2c3375afabd7f6bfb58c3f7b7c1067ee0850a9e67d7d0b98dab042012128",
                     "generatedAt": "2026-11-24T02:56:17Z",
+                    "reviewedAt": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "https://adsuploader.com/blog/agentic-media-buying": {
+          "url": "https://adsuploader.com/blog/agentic-media-buying",
+          "title": "AI Media Buying on Meta: What an AI Media Buyer Can Do Today (2026)",
+          "publishedDate": "2026-11-26",
+          "updatedDate": null,
+          "matchEvidence": [],
+          "publicationStatus": "included",
+          "publicationEvidence": [
+            "jev:direct_impact"
+          ],
+          "fingerprint": "5e88a3656a3cc3be07bdbc522932641558fe7f8e304b40f534cee38df1e9b140",
+          "firstObservedAt": "2026-11-27T00:38:39Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
+          "presentation": {
+            "schemaVersion": "meta-ads-personal-feed-presentation/v3",
+            "sourceFingerprint": "5e88a3656a3cc3be07bdbc522932641558fe7f8e304b40f534cee38df1e9b140",
+            "generatorRevision": "bilingual-v1",
+            "locales": {
+              "en": {
+                "status": "machine",
+                "shortHeadline": "AI Media Buying on Meta in 2026",
+                "summary": "An overview of what an AI media buyer can read, propose, and launch on Meta, what a human should approve, and how to run the process with approvals.",
+                "inputHash": "0f3695a8c580202687f78fe4c7320eee66bc88f09c12f3a6a92c4ca02acc5b08",
+                "generatedAt": "2026-11-27T00:38:39Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "AI Media Buying on Meta in 2026",
+                    "inputHash": "0f3695a8c580202687f78fe4c7320eee66bc88f09c12f3a6a92c4ca02acc5b08",
+                    "generatedAt": "2026-11-27T00:38:39Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "An overview of what an AI media buyer can read, propose, and launch on Meta, what a human should approve, and how to run the process with approvals.",
+                    "inputHash": "0f3695a8c580202687f78fe4c7320eee66bc88f09c12f3a6a92c4ca02acc5b08",
+                    "generatedAt": "2026-11-27T00:38:39Z",
+                    "reviewedAt": null
+                  }
+                }
+              },
+              "ja": {
+                "status": "machine",
+                "shortHeadline": "2026年、Meta広告でAIメディアバイヤーができること",
+                "summary": "2026年のMeta広告におけるAIメディアバイヤーについて、AIが読み取り・提案・配信開始できること、人が引き続き承認すべきこと、承認を組み込んだ運用方法を扱います。",
+                "inputHash": "29bb2ec28b4cbd15b2a664b0c468acba27700bf300af6a7f82259a013e378907",
+                "generatedAt": "2026-11-27T00:38:39Z",
+                "reviewedAt": null,
+                "fields": {
+                  "shortHeadline": {
+                    "status": "machine",
+                    "value": "2026年、Meta広告でAIメディアバイヤーができること",
+                    "inputHash": "29bb2ec28b4cbd15b2a664b0c468acba27700bf300af6a7f82259a013e378907",
+                    "generatedAt": "2026-11-27T00:38:39Z",
+                    "reviewedAt": null
+                  },
+                  "summary": {
+                    "status": "machine",
+                    "value": "2026年のMeta広告におけるAIメディアバイヤーについて、AIが読み取り・提案・配信開始できること、人が引き続き承認すべきこと、承認を組み込んだ運用方法を扱います。",
+                    "inputHash": "29bb2ec28b4cbd15b2a664b0c468acba27700bf300af6a7f82259a013e378907",
+                    "generatedAt": "2026-11-27T00:38:39Z",
                     "reviewedAt": null
                   }
                 }
@@ -15750,7 +15888,7 @@
           ],
           "fingerprint": "f33605e9c6ed38be3440fc2122af8dac2e5cf41e0515afc39d0b6c4fa17413b7",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "f33605e9c6ed38be3440fc2122af8dac2e5cf41e0515afc39d0b6c4fa17413b7",
@@ -15826,7 +15964,7 @@
           ],
           "fingerprint": "72fe3824bad4d12b0792796a4772781b3fd8bb5f28b9bd8cd82db9c8564e0622",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "72fe3824bad4d12b0792796a4772781b3fd8bb5f28b9bd8cd82db9c8564e0622",
@@ -15897,7 +16035,7 @@
           ],
           "fingerprint": "dda0b96cd0050d7b9c296233601ee97e4dc501c2b4ebd28fefff95f977578fbe",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "dda0b96cd0050d7b9c296233601ee97e4dc501c2b4ebd28fefff95f977578fbe",
@@ -15968,7 +16106,7 @@
           ],
           "fingerprint": "572d7b9ceebdccc05974b2154aee3caa8191f074de516482ed71d3f8196855f9",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "572d7b9ceebdccc05974b2154aee3caa8191f074de516482ed71d3f8196855f9",
@@ -16039,7 +16177,7 @@
           ],
           "fingerprint": "d03b347cd691b93841ccfc9132960e4bf193390ac5123db07761cd53911973b1",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "d03b347cd691b93841ccfc9132960e4bf193390ac5123db07761cd53911973b1",
@@ -16110,7 +16248,7 @@
           ],
           "fingerprint": "ad575158846bcf435270b1451363dfc293656a6c58a5f5d0e42611b7049b0f6b",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "ad575158846bcf435270b1451363dfc293656a6c58a5f5d0e42611b7049b0f6b",
@@ -16181,7 +16319,7 @@
           ],
           "fingerprint": "c31b0550d860c88bbcf089e13ebb460e6ba205c80991c87892f8c76f09076276",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "c31b0550d860c88bbcf089e13ebb460e6ba205c80991c87892f8c76f09076276",
@@ -16252,7 +16390,7 @@
           ],
           "fingerprint": "fb4a1a125ac4feef548401eca2aadbaa3c573e0203c2b4edb3c30ad7afc35ec4",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "fb4a1a125ac4feef548401eca2aadbaa3c573e0203c2b4edb3c30ad7afc35ec4",
@@ -16536,7 +16674,7 @@
           ],
           "fingerprint": "dca1e1809d7e0b09329456acdb173c4364e656ee1a193a6916ad4fb9a79acf34",
           "firstObservedAt": "2026-10-31T02:08:43Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "dca1e1809d7e0b09329456acdb173c4364e656ee1a193a6916ad4fb9a79acf34",
@@ -16607,7 +16745,7 @@
           ],
           "fingerprint": "19a1c652b1559c7d4d5daf23d082039b626cb78ea6bb7fb4a4ef7e22103b7e4c",
           "firstObservedAt": "2026-11-05T22:04:36Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "19a1c652b1559c7d4d5daf23d082039b626cb78ea6bb7fb4a4ef7e22103b7e4c",
@@ -16678,7 +16816,7 @@
           ],
           "fingerprint": "e3da71d0dc97dfdc62774665097a848556736a3a4ad1de4761260eb3a017b9eb",
           "firstObservedAt": "2026-11-10T00:17:31Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "e3da71d0dc97dfdc62774665097a848556736a3a4ad1de4761260eb3a017b9eb",
@@ -16749,7 +16887,7 @@
           ],
           "fingerprint": "74154ec4f4cfaa675f609d75e441f5ee8a894a8bf47370599c4817f85e9592f4",
           "firstObservedAt": "2026-11-12T22:17:09Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "74154ec4f4cfaa675f609d75e441f5ee8a894a8bf47370599c4817f85e9592f4",
@@ -16820,7 +16958,7 @@
           ],
           "fingerprint": "25c2c205373c405cf2c3a6735dea0e0f81753e4356f6d25337b791b9a93cbc5b",
           "firstObservedAt": "2026-11-20T11:15:00Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "25c2c205373c405cf2c3a6735dea0e0f81753e4356f6d25337b791b9a93cbc5b",
@@ -16891,7 +17029,7 @@
           ],
           "fingerprint": "a6fbbdd05256e71d50d2c3db952faed36e42e78b117689b4493ea8b05401ff04",
           "firstObservedAt": "2026-11-20T11:15:00Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "a6fbbdd05256e71d50d2c3db952faed36e42e78b117689b4493ea8b05401ff04",
@@ -16962,7 +17100,7 @@
           ],
           "fingerprint": "207f30d0c75941ff72df6de98ce70a4d8dc86fb85bcd5a3baa891c1b135aa266",
           "firstObservedAt": "2026-11-24T02:56:17Z",
-          "lastObservedAt": "2026-11-24T02:56:17Z",
+          "lastObservedAt": "2026-11-27T00:38:39Z",
           "presentation": {
             "schemaVersion": "meta-ads-personal-feed-presentation/v3",
             "sourceFingerprint": "207f30d0c75941ff72df6de98ce70a4d8dc86fb85bcd5a3baa891c1b135aa266",
@@ -17025,25 +17163,26 @@
   "articlePageScans": {
     "social-media-today-meta-ads": {
       "0b64bffab387de94ff341323304e0ea738d49ce3777fc6b806647e6f26982096": "2026-11-24T02:56:17Z",
-      "49e0764267fe8be8bbdfea1f5661474fe13d201d83d906ef5679cba3620cda80": "2026-11-20T11:15:00Z",
-      "e40bb82517038e8b08fda33f5da8ae211913c59bb2aa57a20dfbf0671070b254": "2026-11-20T11:15:00Z",
-      "7faa26c5281915b0c2418fffc9fc9b31c47d4a00ad4f70dd24fe0388e4efe825": "2026-11-20T11:15:00Z",
+      "49e0764267fe8be8bbdfea1f5661474fe13d201d83d906ef5679cba3620cda80": "2026-11-27T00:38:39Z",
+      "e40bb82517038e8b08fda33f5da8ae211913c59bb2aa57a20dfbf0671070b254": "2026-11-27T00:38:39Z",
+      "7faa26c5281915b0c2418fffc9fc9b31c47d4a00ad4f70dd24fe0388e4efe825": "2026-11-27T00:38:39Z",
       "b2e678302909ffcd62fb6e025c071ed2246674107af3562e885ae78530c62b84": "2026-11-24T02:56:17Z",
-      "02f9de8ecd0bc2cb296ce38d622e642b5df6567a8f10fc916d68afc43a7ba52a": "2026-11-20T11:15:00Z",
+      "02f9de8ecd0bc2cb296ce38d622e642b5df6567a8f10fc916d68afc43a7ba52a": "2026-11-27T00:38:39Z",
       "81f9f02f4b3acd0827dd8134065fe7fa87e0aec540862e955be5b1eecb90498d": "2026-11-24T02:56:17Z",
-      "28655bc45e91edf029cbe5c19304eb7a3a2c866299df868c05ec6fdb3f5e68b8": "2026-11-20T11:15:00Z",
-      "e54b131a21ad0d457a6d79f1cd12a732712d1fe220652200069af3181cded140": "2026-11-20T11:15:00Z",
+      "28655bc45e91edf029cbe5c19304eb7a3a2c866299df868c05ec6fdb3f5e68b8": "2026-11-27T00:38:39Z",
+      "e54b131a21ad0d457a6d79f1cd12a732712d1fe220652200069af3181cded140": "2026-11-27T00:38:39Z",
       "ca8d5f2b0182f8057250ec19ae0fd70a6ae0552e43c3355b0ec569332021f739": "2026-11-24T02:56:17Z",
       "f78f89cc95afeda8e9fdd836d2c53e57c2201d3706b13ddf9021f046f131a6d8": "2026-11-24T02:56:17Z",
       "705913cae67310ea583003bb1fb3afba4fe261a339dc25587f2754702032aceb": "2026-11-24T02:56:17Z",
-      "c2e950f5250df75887fca1d6f6b0cdbda5d0b63dadb1fa34197fbb2988ad3795": "2026-11-24T02:56:17Z",
+      "c2e950f5250df75887fca1d6f6b0cdbda5d0b63dadb1fa34197fbb2988ad3795": "2026-11-27T00:38:39Z",
       "cb19976cd11eb46e7d0feedf011bd8833b37d9067ed69457322346b9240c497c": "2026-11-24T02:56:17Z",
-      "944f5c65fe4518105c1773781e8952256edf8d33ed320351be5adb76aff02f5f": "2026-11-24T02:56:17Z",
-      "94916e0fb9f6c90309956f2889452dd983b70ba6d115d784b05b17e782aea2b3": "2026-11-24T02:56:17Z"
+      "944f5c65fe4518105c1773781e8952256edf8d33ed320351be5adb76aff02f5f": "2026-11-27T00:38:39Z",
+      "94916e0fb9f6c90309956f2889452dd983b70ba6d115d784b05b17e782aea2b3": "2026-11-27T00:38:39Z",
+      "0e2d29fb088850bd11f184251346c5231471de4bf507c7a29778289f382fde0b": "2026-11-27T00:38:39Z"
     },
     "jon-loomer-meta-ads": {
-      "c02865c594cb77e7f91e237135e0e966a0795d5bf0854ee6c000a5399ae778a8": "2026-11-10T00:17:31Z",
-      "a3c91b783869d62d65fe403f8bb0be3ea4f83f834b2f7e2275210cecb58a53ca": "2026-11-10T00:17:31Z",
+      "c02865c594cb77e7f91e237135e0e966a0795d5bf0854ee6c000a5399ae778a8": "2026-11-27T00:38:39Z",
+      "a3c91b783869d62d65fe403f8bb0be3ea4f83f834b2f7e2275210cecb58a53ca": "2026-11-27T00:38:39Z",
       "eecdd2c4c7b550e96dddb3d46fbb5646284863c800529b58d9f0faebd5767e6c": "2026-11-24T02:56:17Z",
       "2acb78f17521a3ca06b43166efe6b41ae6736dafeee0a9528f073b215f6e410d": "2026-11-12T22:17:09Z",
       "e8b0b6e46c9192a51793549f1de2c8686207a17592024cac94c89e36a1ebb20c": "2026-11-24T02:56:17Z",
@@ -17052,13 +17191,13 @@
       "f8db73d840c221fd2a9bd375a2f82e7259299c9082d00f4b833f2c6582e415a8": "2026-11-24T02:56:17Z",
       "2e2dd94c3cda6be160162fdf7938b65c022985834e946f6ac316371fe628fe4f": "2026-11-24T02:56:17Z",
       "dda4539bea31d6357947139ea5bbc9a8d0770de8153c00262ad087cb95b59c25": "2026-11-24T02:56:17Z",
-      "01b6c0d98d5c0170726bd3f8ed40bb6d6188d5375170008e58e5961787833d8b": "2026-11-12T22:17:09Z",
-      "3d8a86c0dddc0fc4aab1cc95490df0f81fa48f94ff1c807444b0ac4438494be0": "2026-11-12T22:17:09Z",
-      "973f5c8f453a1d12cef6de78edb4537cd0db01b2455d78f79309640bebd63c41": "2026-11-12T22:17:09Z",
-      "68734a1b073f701865d92d1bc95b491ad84f58668dfcecba3d7fe3c4446bba90": "2026-11-12T22:17:09Z",
-      "a78fcc15f39c8b2632a9bc7634fa156e01a46ad3ae8c01a58369bf83a7f341de": "2026-11-12T22:17:09Z",
-      "c70ef957ec35e7936dbc66e6d2aa4d461f5a722cf80a9a5021bbceb29d517132": "2026-11-12T22:17:09Z",
-      "e3ac37234dddc21d25845b6003c04317cc136d160785b6939f27a5ce3c19c58a": "2026-11-12T22:17:09Z",
+      "01b6c0d98d5c0170726bd3f8ed40bb6d6188d5375170008e58e5961787833d8b": "2026-11-27T00:38:39Z",
+      "3d8a86c0dddc0fc4aab1cc95490df0f81fa48f94ff1c807444b0ac4438494be0": "2026-11-27T00:38:39Z",
+      "973f5c8f453a1d12cef6de78edb4537cd0db01b2455d78f79309640bebd63c41": "2026-11-27T00:38:39Z",
+      "68734a1b073f701865d92d1bc95b491ad84f58668dfcecba3d7fe3c4446bba90": "2026-11-27T00:38:39Z",
+      "a78fcc15f39c8b2632a9bc7634fa156e01a46ad3ae8c01a58369bf83a7f341de": "2026-11-27T00:38:39Z",
+      "c70ef957ec35e7936dbc66e6d2aa4d461f5a722cf80a9a5021bbceb29d517132": "2026-11-27T00:38:39Z",
+      "e3ac37234dddc21d25845b6003c04317cc136d160785b6939f27a5ce3c19c58a": "2026-11-27T00:38:39Z",
       "251851cc5714019fa1eeff587f95d49f80bf814dd176e3ae16b96c454f139cad": "2026-11-17T00:17:08Z",
       "159f96ccfcc274969c8d7dfadd4cb8711e77dabb9713d492816a0fae84648439": "2026-11-17T00:17:08Z",
       "8db615c72dc35571a643ddab5657aaf441e1107955847176b6784285b2f89128": "2026-11-17T00:17:08Z",
@@ -17078,7 +17217,7 @@
       "97e8eda3309647a975930e724975e475fb69c70b6415aae99e4ac0a19b620083": "2026-11-20T11:15:00Z",
       "567887d1ad885dab7ea934312494dd814cd5d4980fc98b6662a1c57b5026eb53": "2026-11-24T02:56:17Z",
       "64adba5259bab72740f318afeb2d374e26f0d66f1c7128c1b0dd5dcf2eb71824": "2026-11-24T02:56:17Z",
-      "20de98269450a5f97bb7c3ec06786b38f722e3c77172c4efd5d372ac20737cc3": "2026-11-12T22:17:09Z",
+      "20de98269450a5f97bb7c3ec06786b38f722e3c77172c4efd5d372ac20737cc3": "2026-11-27T00:38:39Z",
       "9f4c2071fbb39cfabf8506c8ae00707b57bdd61bb27a6cbe0bbf2ca4bb5a4ab8": "2026-11-17T00:17:08Z",
       "9645a574b6ed9eaaf64a56d4780483265d6e3abaa72a4d05563b2041612345d4": "2026-11-20T11:15:00Z",
       "910ff1e172bfcc1fa55d3e07b8c9e1a378600d0f12be1f6fe316838bc7ddf7a3": "2026-11-24T02:56:17Z",
